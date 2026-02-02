@@ -1,0 +1,42 @@
+site_name: Termux App Store
+site_description: Manajer paket GUI untuk Termux
+site_author: djunekz
+site_url: https://djunekz.github.io/termux-app-store/
+repo_url: https://github.com/djunekz/termux-app-store
+repo_name: GitHub
+
+theme:
+  name: material
+  palette:
+    primary: 'indigo'
+    accent: 'green'
+  font: 'Roboto'
+
+nav:
+  - Home: index.md
+  - Install: INSTALL.md
+  - FAQ: FAQ.md
+  - Troubleshooting: TROUBLESHOOTING.md
+  - Architecture: ARCHITECTURE.md
+  - Changelog: CHANGELOG.md
+  - License: LICENSE
+  - Security: SECURITY.md
+  - Privacy: PRIVACY.md
+  - Disclaimer: DISCLAIMER.md
+  - Binary Disclaimer: BINARY_DISCLAIMER.md
+  - Contributing: CONTRIBUTING.md
+  - Code of Conduct: CODE_OF_CONDUCT.md
+
+markdown_extensions:
+  - toc:
+      permalink: true
+  - admonition
+  - footnotes
+  - codehilite
+  - pymdownx.superfences
+  - pymdownx.details
+  - pymdownx.snippets
+
+plugins:
+  - search
+  - mkdocs-material
