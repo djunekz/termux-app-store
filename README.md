@@ -36,7 +36,7 @@
 ---
 
 ## 🧱 Arsitektur
-Detail: lihat `ARCHITECTURE.md`
+Detail: lihat [ARCHITECTURE.md](ARCHITECTURE.md)
 
 ---
 
