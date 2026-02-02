@@ -78,8 +78,25 @@ else
     else
         tar -xf "$SRC_FILE" -C "$WORK_DIR/src"
     fi
-    SRC_ROOT="$(find "$WORK_DIR/src" -mindepth 1 -maxdepth 1 -type d | head -n1)"
-    mv "$SRC_ROOT" "$WORK_DIR/src/root"
+
+    # Tentukan SRC_ROOT
+    FOLDER_COUNT=$(find "$WORK_DIR/src" -mindepth 1 -maxdepth 1 -type d | wc -l)
+    if [[ "$FOLDER_COUNT" -eq 1 ]]; then
+        SRC_ROOT="$(find "$WORK_DIR/src" -mindepth 1 -maxdepth 1 -type d | head -n1)"
+        mv "$SRC_ROOT" "$WORK_DIR/src/root"
+        SRC_ROOT="$WORK_DIR/src/root"
+    else
+        # Bisa jadi tar hanya file tunggal
+        SRC_FILE_ONLY=$(find "$WORK_DIR/src" -mindepth 1 -maxdepth 1 ! -type d | head -n1)
+        if [[ -n "$SRC_FILE_ONLY" ]]; then
+            mkdir -p "$WORK_DIR/src/root"
+            mv "$SRC_FILE_ONLY" "$WORK_DIR/src/root/"
+            SRC_ROOT="$WORK_DIR/src/root"
+        else
+            # fallback: ambil semua isi src
+            SRC_ROOT="$WORK_DIR/src"
+        fi
+    fi
 fi
 
 # ---------------- ENV ----------------
