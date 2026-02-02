@@ -70,4 +70,6 @@ Please explain **why** the feature is needed, not just **what** it does.
 ```bash
 git clone https://github.com/djunekz/termux-app-store
 cd termux-app-store
-python termux-app-store.py
+chnod +x install.sh
+./install.sh
+```
