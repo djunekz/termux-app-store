@@ -1,5 +1,14 @@
 # Termux App Store
 
+![Release](https://img.shields.io/github/v/release/djunekz/termux-app-store?logo=iterm2&style=flat-square)
+![License](https://img.shields.io/github/license/djunekz/termux-app-store?logo=open-source-initiative&style=flat-square)
+![Issues](https://img.shields.io/github/issues/djunekz/termux-app-store?logo=openbugbounty&style=flat-square)
+![PRs](https://img.shields.io/github/issues-pr/djunekz/termux-app-store?logo=git&style=flat-square)
+![Downloads](https://img.shields.io/github/downloads/djunekz/termux-app-store/total?logo=abdownloadmanager&style=flat-square)
+![Contributors](https://img.shields.io/github/contributors/djunekz/termux-app-store?logo=github&style=flat-square)
+![Stars](https://img.shields.io/github/stars/djunekz/termux-app-store?logo=starship&style=flat-square)
+![Forks](https://img.shields.io/github/forks/djunekz/termux-app-store?logo=refinedgithub&style=flat-square)
+
 > 🧠 **Offline-first • Source-based • Binary-safe • Termux-native**
 
 **Termux App Store** adalah **TUI (Terminal User Interface)** berbasis **Textual (Python)** yang memungkinkan pengguna Termux untuk **menelusuri, membangun, dan mengelola aplikasi** dari skrip build secara lokal — tanpa akun, tanpa telemetry, dan tanpa ketergantungan cloud.
