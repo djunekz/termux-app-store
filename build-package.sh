@@ -41,11 +41,9 @@ mkdir -p "$WORK_DIR/src" "$WORK_DIR/pkg" "$DEB_DIR" "$CACHE_DIR"
 
 # ---------------- DOWNLOAD ----------------
 echo "==> Downloading source..."
-SRC_FILE="$CACHE_DIR/${PACKAGE}_$(basename $TERMUX_PKG_SRCURL)"
+SRC_FILE="$CACHE_DIR/${PACKAGE}_$(basename "$TERMUX_PKG_SRCURL")"
 if [[ ! -f "$SRC_FILE" ]]; then
     curl -fL "$TERMUX_PKG_SRCURL" -o "$SRC_FILE"
-else
-    echo "[*] Using cached source: $SRC_FILE"
 fi
 
 # ---------------- SHA256 ----------------
@@ -62,43 +60,54 @@ if [[ -n "${TERMUX_PKG_SHA256:-}" ]]; then
     echo "[✔] SHA256 valid"
 fi
 
-# ---------------- EXTRACT / HANDLE .deb ----------------
-if [[ "$TERMUX_PKG_SRCURL" == *.deb ]]; then
+# ---------------- EXTRACT ----------------
+echo "==> Extracting source..."
+SRC_DEST="$WORK_DIR/src"
+
+if [[ "$SRC_FILE" == *.deb ]]; then
     echo "[*] Source is a .deb package, skipping extraction."
-    SRC_IS_DEB=true
+elif [[ "$SRC_FILE" == *.zip ]]; then
+    unzip -q "$SRC_FILE" -d "$SRC_DEST"
 else
-    echo "==> Extracting source..."
-    if [[ "$TERMUX_PKG_SRCURL" == *.zip ]]; then
-        unzip -q "$SRC_FILE" -d "$WORK_DIR/src"
-    else
-        tar -xf "$SRC_FILE" -C "$WORK_DIR/src"
-    fi
-    SRC_ROOT="$(find "$WORK_DIR/src" -mindepth 1 -maxdepth 1 -type d | head -n1 || true)"
-    if [[ -n "$SRC_ROOT" ]]; then
-        mv "$SRC_ROOT" "$WORK_DIR/src/root"
-    else
-        mkdir -p "$WORK_DIR/src/root"
-        cp -r "$WORK_DIR/src/"* "$WORK_DIR/src/root/"
-    fi
-    SRC_IS_DEB=false
+    tar -xf "$SRC_FILE" -C "$SRC_DEST"
 fi
+
+# Tentukan SRC_ROOT
+SRC_ROOT_CANDIDATES=( $(find "$SRC_DEST" -mindepth 1 -maxdepth 1 -type d) )
+if [[ ${#SRC_ROOT_CANDIDATES[@]} -eq 1 ]]; then
+    SRC_ROOT="${SRC_ROOT_CANDIDATES[0]}"
+else
+    SRC_ROOT="$SRC_DEST"
+fi
+
+export TERMUX_PKG_SRCDIR="$SRC_ROOT"
+echo "[*] Source root: $TERMUX_PKG_SRCDIR"
 
 # ---------------- ENV ----------------
 export TERMUX_PREFIX="$PREFIX"
-export TERMUX_PKG_SRCDIR="$WORK_DIR/src/root"
-export DESTDIR="$WORK_DIR/pkg"
+DESTDIR="$WORK_DIR/pkg"
 
 # ---------------- INSTALL ----------------
-if [[ "$SRC_IS_DEB" == true ]]; then
-    echo "==> Installing binary from .deb..."
-    dpkg -x "$SRC_FILE" "$WORK_DIR/pkg"
+if [[ "$SRC_FILE" == *.deb ]]; then
+    echo "[*] Installing binary from .deb..."
+    dpkg -x "$SRC_FILE" "$DESTDIR"
+elif [[ -f "$SRC_ROOT/Cargo.toml" ]]; then
+    echo "[*] Rust project detected, building with cargo..."
+    cargo build --release
+    BIN_NAME="${PACKAGE}"  # bisa diubah jika nama binary beda
+    mkdir -p "$DESTDIR/bin"
+    install -Dm700 "target/release/$BIN_NAME" "$DESTDIR/bin/$BIN_NAME"
 else
-    echo "==> Running install (DESTDIR)..."
-    termux_step_make_install || true
+    if declare -f termux_step_make_install >/dev/null 2>&1; then
+        echo "==> Running install (DESTDIR)..."
+        termux_step_make_install
+    else
+        echo "[!] No install method found, skipping."
+    fi
 fi
 
 # ---------------- CONTROL ----------------
-CONTROL_DIR="$WORK_DIR/pkg/DEBIAN"
+CONTROL_DIR="$DESTDIR/DEBIAN"
 mkdir -p "$CONTROL_DIR"
 chmod 0755 "$CONTROL_DIR"
 
@@ -117,10 +126,10 @@ chmod 0644 "$CONTROL_DIR/control"
 # ---------------- BUILD DEB ----------------
 DEB_FILE="$DEB_DIR/${PACKAGE}_${TERMUX_PKG_VERSION}_${ARCH}.deb"
 echo "==> Building deb: $(basename "$DEB_FILE")"
-dpkg-deb --build "$WORK_DIR/pkg" "$DEB_FILE"
+dpkg-deb --build "$DESTDIR" "$DEB_FILE"
 
 # ---------------- INSTALL ----------------
 echo "==> Installing package..."
 dpkg -i "$DEB_FILE"
-echo "[*] Cached sources: $SRC_FILE"
+
 echo "==> DONE: $PACKAGE installed"
