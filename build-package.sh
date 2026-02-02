@@ -44,12 +44,19 @@ echo "==> Downloading source..."
 SRC_FILE="$WORK_DIR/source"
 curl -fL "$TERMUX_PKG_SRCURL" -o "$SRC_FILE"
 
-# ---------------- SHA256 ----------------
+# ---------------- SHA256 (STRICT VALIDATION) ----------------
 if [[ -n "${TERMUX_PKG_SHA256:-}" ]]; then
     echo "==> Verifying SHA256..."
-    echo "$TERMUX_PKG_SHA256  $SRC_FILE" | sha256sum -c -
+    CALC_SHA256="$(sha256sum "$SRC_FILE" | awk '{print $1}')"
+    if [[ "$CALC_SHA256" != "$TERMUX_PKG_SHA256" ]]; then
+        echo "[FATAL] SHA256 mismatch!"
+        echo "Expected: $TERMUX_PKG_SHA256"
+        echo "Got     : $CALC_SHA256"
+        rm -f "$SRC_FILE"
+        exit 1
+    fi
+    echo "[✔] SHA256 valid"
 fi
-
 # ---------------- EXTRACT ----------------
 echo "==> Extracting source..."
 if [[ "$TERMUX_PKG_SRCURL" == *.zip ]]; then
