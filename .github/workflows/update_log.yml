@@ -15,64 +15,44 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Scan packages and prepare changelog entries
+      - name: Scan packages and update changelog
         run: |
-          set -euo pipefail
+          set -e
           CHANGELOG="CHANGELOG.md"
           PACKAGES_DIR="packages"
 
-          ADDED=""
-          CHANGED=""
-          FIXED=""
+          [[ -f "$CHANGELOG" ]] || echo -e "# Changelog\n\n## [Unreleased]\n" > "$CHANGELOG"
 
-          echo "Scanning packages for updates..."
+          ADDED=""
 
           for pkg in "$PACKAGES_DIR"/*; do
-            [[ -d "$pkg" ]] || continue
-            BUILD_FILE="$pkg/build.sh"
-            [[ -f "$BUILD_FILE" ]] || continue
+              [[ -d "$pkg" ]] || continue
+              BUILD_FILE="$pkg/build.sh"
+              [[ -f "$BUILD_FILE" ]] || continue
 
-            PKG_NAME=$(basename "$pkg")
-            PKG_VERSION=$(grep "^TERMUX_PKG_VERSION=" "$BUILD_FILE" | cut -d'=' -f2 | tr -d '"')
+              PKG_NAME=$(basename "$pkg")
+              PKG_VERSION=$(grep "^TERMUX_PKG_VERSION=" "$BUILD_FILE" | cut -d'=' -f2 | tr -d '"')
 
-            if [[ -z "$PKG_VERSION" ]]; then
-              echo "Skipping $PKG_NAME: TERMUX_PKG_VERSION not found"
-              continue
-            fi
+              [[ -z "$PKG_VERSION" ]] && continue
 
-            if ! grep -q "$PKG_NAME v$PKG_VERSION" "$CHANGELOG"; then
-              ADDED="${ADDED}- Package \`${PKG_NAME}\` v${PKG_VERSION}"$'\n'
-            fi
+              if ! grep -q "$PKG_NAME v$PKG_VERSION" "$CHANGELOG"; then
+                  ADDED="${ADDED}- Package \`${PKG_NAME}\` v${PKG_VERSION}"$'\n'
+              fi
           done
 
-          if [[ -z "$ADDED$CHANGED$FIXED" ]]; then
-            echo "No new entries detected."
-            exit 0
+          [[ -z "$ADDED" ]] && exit 0
+
+          TMP=$(mktemp)
+          printf "%s\n" "$ADDED" > "$TMP"
+
+          if ! grep -q "### Added" "$CHANGELOG"; then
+              sed -i "/## \[Unreleased\]/a ### Added" "$CHANGELOG"
           fi
 
-          if ! grep -q "## \[Unreleased\]" "$CHANGELOG"; then
-            echo -e "## [Unreleased]\n" | cat - "$CHANGELOG" > temp && mv temp "$CHANGELOG"
-          fi
+          sed -i "/### Added/r $TMP" "$CHANGELOG"
+          rm "$TMP"
 
-          insert_section() {
-            local section="$1"
-            local content="$2"
-            TMPFILE=$(mktemp)
-            printf "%s\n" "$content" > "$TMPFILE"
-            if grep -q "### $section" "$CHANGELOG"; then
-              sed -i "/### $section/r $TMPFILE" "$CHANGELOG"
-            else
-              sed -i "/## \[Unreleased\]/a ### $section" "$CHANGELOG"
-              sed -i "/### $section/r $TMPFILE" "$CHANGELOG"
-            fi
-            rm "$TMPFILE"
-          }
-
-          [[ -n "$ADDED" ]] && insert_section "Added" "$ADDED"
-          [[ -n "$CHANGED" ]] && insert_section "Changed" "$CHANGED"
-          [[ -n "$FIXED" ]] && insert_section "Fixed" "$FIXED"
-
-      - name: Commit changelog updates
+      - name: Commit changelog updates (only if changed)
         run: |
           git config user.name "Termux App Store"
           git config user.email "258516621+termux-app-store@users.noreply.github.com"
