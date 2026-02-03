@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+set -e
+
+COMMAND="${1:-}"
+BASE_DIR="$(dirname "$0")"
+
+case "$COMMAND" in
+    lint)
+        shift
+        exec "$BASE_DIR/tools/termux-build-lint.sh" "$@"
+        ;;
+
+    check-pr)
+        exec "$BASE_DIR/tools/termux-build-check-pr.sh" "$@"
+        ;;
+
+    doctor)
+        exec "$BASE_DIR/tools/termux-build-doctor.sh"
+        ;;
+
+    suggest)
+        shift
+        exec "$BASE_DIR/tools/termux-build-suggest.sh" "$@"
+        ;;
+
+    explain)
+        shift
+        exec "$BASE_DIR/tools/termux-build-explain.sh" "$@"
+        ;;
+
+    template)
+        exec "$BASE_DIR/tools/termux-build-template.sh"
+        ;;
+
+    guide)
+        exec "$BASE_DIR/tools/termux-build-guide.sh"
+        ;;
+
+    *)
+        echo "Usage:"
+        echo "  ./termux-build lint [path | package-name]"
+        echo "  ./termux-build check-pr <package>"
+        echo "  ./termux-build doctor"
+        echo "  ./termux-build suggest <package>"
+        echo "  ./termux-build explain <package>"
+        echo "  ./termux-build template"
+        echo "  ./termux-build guide"
+        exit 1
+        ;;
+esac
