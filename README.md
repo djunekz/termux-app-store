@@ -63,10 +63,10 @@ termux-app-store
 ---
 
 ## 🧠 Cara Kerja
-1. Aplikasi mencari folder termux-app-store/packages
-2. Membaca metadata dari build.sh
+1. Aplikasi mencari folder `termux-app-store/packages`
+2. Membaca metadata dari `build.sh`
 3. Menampilkan paket di UI
-4. Menjalankan build via build-package.sh
+4. Menjalankan build via `build-package.sh`
 5. Menampilkan log & progress real-time
 
 ---
@@ -88,6 +88,31 @@ TERMUX_PKG_SHA256=
 ```
 Contoh file `build.sh`:
 berada di folder `template/build.sh`
+atau bisa ketik di command `./termux-build template`
+
+---
+
+## 🛠️ termux-build (Check-only Tool)
+termux-build adalah tool validasi & reviewer helper, BUKAN tool upload atau publish.
+Contoh perintah:
+- `./termux-build lint <packages/nama_package>`
+atau `./termux-build lint <package>`
+- `./termux-build check-pr <package>`
+- `./termux-build doctor`
+- `./termux-build suggest <package>`
+- `./termux-build explain <package>`
+- `./termux-build template`
+- `./termux-build guide`
+### Prinsip utama:
+- ❌ Tidak mengubah file
+- ❌ Tidak build otomatis
+- ❌ Tidak upload ke GitHub
+- ✅ Hanya membaca & memvalidasi
+Tool ini dirancang untuk:
+- Contributor
+- Reviewer
+- Maintainer
+- CI check
 
 ---
 
@@ -136,7 +161,6 @@ Panduan: [CONTRIBUTING.md](CONTRIBUTING.md)
 
 ---
 
-
 ## 📜 Lisensi
 Proyek ini dilisensikan di bawah:
 **MIT License**
@@ -144,18 +168,10 @@ Lihat file [LICENSE](LICENSE)
 
 ---
 
-## 🧭 Roadmap
-- [ ] Package rating
-- [ ] Dependency graph visual
-- [ ] Offline package cache
-- [ ] Multi-arch prebuilt cache
-- [ ] Plugin system
-
----
-
 ## ❓ FAQ & Bantuan
 - **FAQ.md** [disini](FAQ.md)
 - **TROUBLESHOOTING.md** [disini](TROUBLESHOOTING.md)
+- **HOW_TO_UPLOAD.md** [disini](HOW_TO_UPLOAD.md)
 
 ---
 
@@ -165,19 +181,31 @@ Termux App Store dibuat untuk pengguna yang ingin:
 - Memahami apa yang dijalankan
 - Mengontrol build
 - Menghindari vendor lock-in
+- Mengupload tool ke public
 
 ---
 
+## 📦 Cara Upload Tool
+Upload tool ke Termux App Store dibuat untuk:
+- Tool diunduh banyak orang
+Keuntungan bagi yang punya tool di Termux App Store:
+- Update tool hanya mengubah versi dan sha256 di build.sh
+
+Cara upload tool:
+klik dan baca [HOW_TO_UPLOAD](HOW_TO_UPLOAD.md)
+---
+
 ## 👤 Maintainer / Developer
-@djunekz
-Independent Developer
+Independent Developer and Official Developer:
+- Name: [Djunekz](https://github.com/djunekz)
+- Email: gab288.gab288@passinbox.com
 
 ---
 
 ## ⭐ Dukungan
-Jika proyek ini membantu:
+Jika proyek ini berguna dan membantu:
 - ⭐ Star repo
 - 🐛 Laporkan issue
-- 🔀 Kirim PR
+- 🔀 Kirim PR (Pull Request)
 
-© Termux App Store — Built for everyone.
+© Termux App Store — Built tools for everyone.
