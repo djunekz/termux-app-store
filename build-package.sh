@@ -59,17 +59,27 @@ fi
 # ---------------- EXTRACT ----------------
 echo "==> Extracting source..."
 PREBUILT_DEB=""
+
 if [[ "$TERMUX_PKG_SRCURL" == *.deb ]]; then
     echo "[*] Prebuilt .deb detected, skipping extraction."
     PREBUILT_DEB="$SRC_FILE"
     SRC_ROOT="$WORK_DIR/src"
+
 elif [[ "$TERMUX_PKG_SRCURL" == *.zip ]]; then
     unzip -q "$SRC_FILE" -d "$WORK_DIR/src"
-    SRC_ROOT="$(find "$WORK_DIR/src" -mindepth 1 -maxdepth 1 -type d | head -n1)"
+
 else
     tar -xf "$SRC_FILE" -C "$WORK_DIR/src"
-    SRC_ROOT="$(find "$WORK_DIR/src" -mindepth 1 -maxdepth 1 -type d | head -n1)"
 fi
+
+# ---------- FIX KRUSIAL: FLAT vs DIRECTORY ----------
+SUBDIR="$(find "$WORK_DIR/src" -mindepth 1 -maxdepth 1 -type d | head -n1)"
+if [[ -n "$SUBDIR" ]]; then
+    SRC_ROOT="$SUBDIR"
+else
+    SRC_ROOT="$WORK_DIR/src"
+fi
+
 echo "[*] Source root: $SRC_ROOT"
 
 # ---------------- ENV ----------------
@@ -111,7 +121,7 @@ elif [[ -f "$SRC_ROOT/Cargo.toml" ]]; then
     cargo build --release --target "$RUST_TARGET" --manifest-path "$SRC_ROOT/Cargo.toml"
     BIN_PATH="$SRC_ROOT/target/$RUST_TARGET/release/$PACKAGE"
     [[ -f "$BIN_PATH" ]] || { echo "[FATAL] Binary not found: $BIN_PATH"; exit 1; }
-    install -Dm700 "$BIN_PATH" "$TERMUX_PREFIX/bin/$PACKAGE"
+    install -Dm755 "$BIN_PATH" "$WORK_DIR/pkg/$PREFIX/bin/$PACKAGE"
 
 else
     if type termux_step_make_install &>/dev/null; then
@@ -120,20 +130,25 @@ else
     else
         MAIN_FILE="$(find "$SRC_ROOT" -maxdepth 1 -type f -perm /111 | head -n1 || true)"
         if [[ -z "$MAIN_FILE" ]]; then
-            MAIN_FILE="$(find "$SRC_ROOT" -maxdepth 1 -type f \( -name '*.py' -o -name '*.sh' \) | head -n1 || true)"
+            MAIN_FILE="$(find "$SRC_ROOT" -maxdepth 1 -type f -name '*.py' | head -n1 || true)"
         fi
+
         if [[ -n "$MAIN_FILE" ]]; then
             BASENAME="$(basename "$MAIN_FILE")"
-            mkdir -p "$PREFIX/lib/$PACKAGE"
-            cp "$MAIN_FILE" "$PREFIX/lib/$PACKAGE/$BASENAME"
-            chmod +x "$PREFIX/lib/$PACKAGE/$BASENAME"
 
-            cat > "$PREFIX/bin/$PACKAGE" <<EOF
+            mkdir -p "$WORK_DIR/pkg/$PREFIX/lib/$PACKAGE"
+            cp "$SRC_ROOT"/*.py "$WORK_DIR/pkg/$PREFIX/lib/$PACKAGE/" 2>/dev/null || true
+            cp "$MAIN_FILE" "$WORK_DIR/pkg/$PREFIX/lib/$PACKAGE/$BASENAME"
+            chmod +x "$WORK_DIR/pkg/$PREFIX/lib/$PACKAGE/$BASENAME"
+
+            mkdir -p "$WORK_DIR/pkg/$PREFIX/bin"
+            cat > "$WORK_DIR/pkg/$PREFIX/bin/$PACKAGE" <<EOF
 #!/usr/bin/env bash
-exec "$PREFIX/lib/$PACKAGE/$BASENAME" "\$@"
+exec python3 "$PREFIX/lib/$PACKAGE/$BASENAME" "\$@"
 EOF
-            chmod +x "$PREFIX/bin/$PACKAGE"
-            echo "[✔] Wrapper created: $PREFIX/bin/$PACKAGE -> $BASENAME"
+            chmod +x "$WORK_DIR/pkg/$PREFIX/bin/$PACKAGE"
+
+            echo "[✔] Python wrapper created: $PREFIX/bin/$PACKAGE"
         else
             echo "[!] No executable/main file found in $SRC_ROOT, skipping install."
         fi
