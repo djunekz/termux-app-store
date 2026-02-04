@@ -8,6 +8,7 @@ on:
 jobs:
   update-changelog:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -58,9 +59,12 @@ jobs:
           git config user.name "Termux App Store"
           git config user.email "258516621+users.noreply.github.com"
           git add CHANGELOG.md
+
           if ! git diff --cached --quiet; then
             git commit -m "Update changelog: new package versions"
-            git push https://${PAT_TOKEN}@github.com/djunekz/termux-app-store.git HEAD:master
+
+            git remote set-url origin https://${PAT_TOKEN}@github.com/djunekz/termux-app-store.git
+            git push origin master
           else
             echo "No changes to commit."
           fi
