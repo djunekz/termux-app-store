@@ -51,7 +51,6 @@ jobs:
 
           sed -i "/### Added/r $TMP" "$CHANGELOG"
           rm "$TMP"
-
       - name: Commit and push changelog updates
         env:
           PAT_TOKEN: ${{ secrets.termuxappstore }}
@@ -61,7 +60,7 @@ jobs:
           git add CHANGELOG.md
           if ! git diff --cached --quiet; then
             git commit -m "Update changelog: new package versions"
-            git push https://${PAT_TOKEN}@github.com/${GITHUB_REPOSITORY}.git HEAD:master
+            git push https://${PAT_TOKEN}@github.com/djunekz/termux-app-store.git HEAD:master
           else
             echo "No changes to commit."
           fi
