@@ -4,18 +4,18 @@ on:
   push:
     branches:
       - master
-  workflow_dispatch:
 
 jobs:
   update-changelog:
     runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, '[ci skip]')"
 
     steps:
-      - name: Checkout repository with PAT
+      - name: Checkout repository
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-          token: ${{ secrets.TERMUXAPPSTORE }}
+          token: ${{ secrets.TERMUX_PAT }}
 
       - name: Scan packages and update changelog
         run: |
@@ -34,7 +34,6 @@ jobs:
 
               PKG_NAME=$(basename "$pkg")
               PKG_VERSION=$(grep "^TERMUX_PKG_VERSION=" "$BUILD_FILE" | cut -d'=' -f2 | tr -d '"')
-
               [[ -z "$PKG_VERSION" ]] && continue
 
               if ! grep -q "$PKG_NAME v$PKG_VERSION" "$CHANGELOG"; then
@@ -60,7 +59,7 @@ jobs:
           git config user.email "258516621+users.noreply.github.com"
           git add CHANGELOG.md
           if ! git diff --cached --quiet; then
-            git commit -m "Update changelog: new package versions"
+            git commit -m "Update changelog: new package versions [ci skip]"
             git push origin HEAD:master
           else
             echo "No changes to commit."
