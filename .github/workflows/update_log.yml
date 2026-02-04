@@ -9,11 +9,13 @@ on:
 jobs:
   update-changelog:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout repository
+      - name: Checkout repository with PAT
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
+          token: ${{ secrets.termuxappstore }}
 
       - name: Scan packages and update changelog
         run: |
@@ -24,7 +26,6 @@ jobs:
           [[ -f "$CHANGELOG" ]] || echo -e "# Changelog\n\n## [Unreleased]\n" > "$CHANGELOG"
 
           ADDED=""
-
           for pkg in "$PACKAGES_DIR"/*; do
               [[ -d "$pkg" ]] || continue
               BUILD_FILE="$pkg/build.sh"
@@ -32,7 +33,6 @@ jobs:
 
               PKG_NAME=$(basename "$pkg")
               PKG_VERSION=$(grep "^TERMUX_PKG_VERSION=" "$BUILD_FILE" | cut -d'=' -f2 | tr -d '"')
-
               [[ -z "$PKG_VERSION" ]] && continue
 
               if ! grep -q "$PKG_NAME v$PKG_VERSION" "$CHANGELOG"; then
@@ -51,16 +51,15 @@ jobs:
 
           sed -i "/### Added/r $TMP" "$CHANGELOG"
           rm "$TMP"
+
       - name: Commit and push changelog updates
-        env:
-          PAT_TOKEN: ${{ secrets.TERMUXAPPSTORE }}
         run: |
           git config user.name "Termux App Store"
           git config user.email "258516621+users.noreply.github.com"
           git add CHANGELOG.md
           if ! git diff --cached --quiet; then
             git commit -m "Update changelog: new package versions"
-            git push https://$PAT_TOKEN@github.com/djunekz/termux-app-store.git HEAD:master
+            git push origin HEAD:master
           else
             echo "No changes to commit."
           fi
