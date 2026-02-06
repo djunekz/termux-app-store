@@ -45,7 +45,14 @@ jobs:
           
       - name: Validate build scripts
         run: |
-          ./tools/validate-build.sh packages/
+          set -e
+          for pkg in packages/*; do
+            [[ -d "$pkg" ]] || continue
+            BUILD="$pkg/build.sh"
+            [[ -f "$BUILD" ]] || continue
+            echo "✅ Validating $BUILD"
+            ./tools/validate-build.sh "$BUILD"
+          done
 
       - name: Generate templates (dry-run)
         run: |
