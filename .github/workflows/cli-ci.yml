@@ -1,0 +1,33 @@
+name: Termux App Store CLI CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  cli-validation:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Make scripts executable
+        run: |
+          chmod +x termux-build
+          chmod +x tasctl || true
+
+      - name: Run termux-build validation (Python)
+        run: |
+          python ci/run_termux_build.py
