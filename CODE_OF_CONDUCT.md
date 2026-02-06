@@ -2,12 +2,13 @@
 
 ## Our Pledge
 
-We, as contributors and maintainers of **Termux App Store**, pledge to make
-participation in this project a respectful and harassment-free experience
-for everyone.
-
-We are committed to fostering an open, professional, and constructive
-environment.
+We as members, contributors, and maintainers of **Termux App Store**
+pledge to make participation in our community a harassment-free
+experience for everyone, regardless of age, body size, visible or
+invisible disability, ethnicity, sex characteristics, gender identity
+and expression, level of experience, education, socio-economic status,
+nationality, personal appearance, race, religion, or sexual identity
+and orientation.
 
 ---
 
@@ -15,59 +16,69 @@ environment.
 
 Examples of behavior that contributes to a positive environment include:
 
-- Using welcoming and respectful language
-- Being constructive when giving feedback
-- Focusing on technical merit and project goals
-- Respecting differing opinions and experiences
-- Accepting criticism gracefully
+- Being respectful and considerate
+- Using welcoming and inclusive language
+- Accepting constructive criticism
+- Focusing on what is best for the community
+- Showing empathy towards other community members
 
 Examples of unacceptable behavior include:
 
-- Harassment, insults, or personal attacks
-- Trolling, flame wars, or deliberate disruption
-- Publishing private information without consent
-- Discrimination or exclusionary behavior
-- Repeatedly ignoring project guidelines
-
----
-
-## Enforcement Responsibilities
-
-Project maintainers are responsible for clarifying and enforcing standards.
-
-They have the right to remove, edit, or reject contributions, issues, or
-comments that violate this Code of Conduct.
+- Harassment, intimidation, or discrimination
+- Trolling, insulting, or derogatory comments
+- Publishing others' private information without consent
+- Personal or political attacks
+- Sustained disruption of discussions or collaboration
 
 ---
 
 ## Scope
 
-This Code of Conduct applies within all project spaces, including:
+This Code of Conduct applies to all community spaces, including:
+- GitHub issues
+- Pull requests
+- Discussions
+- Commit messages
+- Any official communication channels related to this project
 
-- GitHub issues and pull requests
-- Discussions and comments
-- Community or developer communication related to the project
+---
+
+## Enforcement Responsibilities
+
+Project maintainers are responsible for clarifying and enforcing
+standards of acceptable behavior and will take appropriate and fair
+corrective action in response to any instances of unacceptable behavior.
+
+Maintainers have the right and responsibility to remove, edit, or
+reject contributions that do not align with this Code of Conduct.
+
+---
+
+## Enforcement Guidelines
+
+Maintainers may take actions including, but not limited to:
+
+1. **Warning** – A private or public notice explaining the violation
+2. **Temporary Restriction** – Limited interaction with the project
+3. **Permanent Ban** – Removal from the community for severe or repeated violations
+
+The severity of the response will be proportional to the violation.
 
 ---
 
 ## Reporting
 
 If you experience or witness unacceptable behavior, please report it
-privately to the project maintainer.
+to the project maintainers privately.
 
-Public accusations or call-out posts are discouraged.
+Reports will be handled with discretion and confidentiality.
 
 ---
 
-## Enforcement
+## No Retaliation
 
-Maintainers may take appropriate action, including:
-
-- Warning the offender
-- Temporary or permanent bans
-- Removing content or contributions
-
-Decisions are made at the maintainers’ discretion and are final.
+Retaliation against anyone who reports or participates in an
+investigation of a Code of Conduct violation is strictly prohibited.
 
 ---
 
