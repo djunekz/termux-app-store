@@ -1,6 +1,6 @@
 # Termux App Store
 
-![Release](https://img.shields.io/github/v/release/djunekz/termux-app-store?logo=iterm2&style=flat-square)
+![Version](https://img.shields.io/github/v/release/djunekz/termux-app-store?logo=iterm2&style=flat-square)
 ![License](https://img.shields.io/github/license/djunekz/termux-app-store?logo=open-source-initiative&style=flat-square)
 ![Issues](https://img.shields.io/github/issues/djunekz/termux-app-store?logo=openbugbounty&style=flat-square)
 ![PRs](https://img.shields.io/github/issues-pr/djunekz/termux-app-store?logo=git&style=flat-square)
