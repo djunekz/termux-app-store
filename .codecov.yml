@@ -1,0 +1,49 @@
+comment:
+  layout: "header, diff, changes, footer"
+  behavior: default
+  require_changes: true
+  max_comments: 1
+  show_results: changed
+  emoji: true
+
+comment_header: |
+  📊 **Codecov Coverage Report**
+  Hello @{{author}}! Here's your PR coverage:
+
+comment_footer: |
+  🚀 Keep your coverage high, stay safe!
+  Full report: [{{build_url}}]
+
+comment_changes:
+  highlight: 
+    - pattern: ".*"
+      thresholds:
+        drop: 10
+      icon: "🔥"
+      message: "Coverage dropped here! Add more 💡"
+
+coverage:
+  status:
+    project:
+      default:
+        target: 80%
+    patch:
+      default:
+        target: 80%
+        precision: 2
+  thresholds:
+    changed: 75
+
+ignore:
+  - "docs/*"
+  - "scripts/*"
+  - "*.md"
+
+parsers:
+  python:
+    - coverage.xml
+    - htmlcov/*
+
+merge:
+  method: sum
+  prefer_source: true
