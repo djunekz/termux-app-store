@@ -1,0 +1,70 @@
+name: Lint PR Checker & Helper
+
+on:
+  pull_request:
+    paths:
+      - '**/build.sh'
+
+jobs:
+  lint-and-fix:
+    runs-on: ubuntu-latest
+    name: Lint + Auto-Fix build.sh + Clean Label
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Find changed build.sh files
+        id: files
+        run: |
+          echo "Finding changed build.sh files..."
+          FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep 'build.sh' || true)
+          echo "changed_files=$FILES" >> $GITHUB_OUTPUT
+
+      - name: Auto-Fix Minor Issues
+        id: autofix
+        run: |
+          set -e
+          ERROR=0
+          for file in ${{ steps.files.outputs.changed_files }}; do
+            echo "Processing $file..."
+
+            # Fix permissions
+            chmod +x "$file"
+
+            # Fix line endings to LF
+            sed -i 's/\r$//' "$file"
+
+            # Check syntax
+            if ! bash -n "$file"; then
+              echo "❌ Syntax error in $file (cannot auto-fix)"
+              ERROR=1
+            fi
+          done
+          echo "lint_status=$ERROR" >> $GITHUB_OUTPUT
+          if [ $ERROR -eq 1 ]; then
+            exit 1
+          fi
+
+      - name: Remove old lint labels
+        uses: actions-ecosystem/action-remove-labels@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          labels: review-approved, review-failed
+
+      - name: Add current lint label
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          labels: ${{ steps.autofix.outputs.lint_status == '0' && 'review-approved' || 'review-failed' }}
+
+      - name: Comment on PR if lint fails
+        if: steps.autofix.outputs.lint_status == '1'
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            ⚠️ Lint check failed for **build.sh**.
+            Minor issues were auto-fixed (permissions/line endings).
+            Mohon periksa syntax file `build.sh` sebelum PR bisa di-merge.
