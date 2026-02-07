@@ -1,0 +1,17 @@
+{
+  "extends": ["config:base"],
+  "automerge": false,
+  "packageRules": [
+    {
+      "updateTypes": ["patch", "minor"],
+      "automerge": false
+    },
+    {
+      "updateTypes": ["major"],
+      "automerge": false
+    }
+  ],
+  "reviewers": ["djunekz"],
+  "schedule": ["at any time"],
+  "prBodyNotes": ["⚠️ PR from Renovate Bot. All merges must be approved by a human."]
+}

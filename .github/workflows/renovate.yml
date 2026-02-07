@@ -1,0 +1,128 @@
+name: Renovate PR Checker
+
+on:
+  pull_request:
+    paths:
+      - '**/build.sh'
+      - '**/package.json'
+      - '**/Cargo.toml'
+      - '**/requirements.txt'
+    types: [opened, synchronize, reopened]
+
+jobs:
+  lint-and-pr-check:
+    runs-on: ubuntu-latest
+    if: github.actor == 'renovate[bot]'  # Hanya PR dari Renovate Bot
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # -----------------------------
+      # LINT CHECKER
+      # -----------------------------
+      - name: Lint build.sh
+        id: lint
+        run: |
+          echo "🧹 Running lint-checker for Renovate PR..."
+          FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep 'build.sh' || true)
+          ERROR=0
+
+          if [[ -z "$FILES" ]]; then
+            echo "No build.sh files changed."
+          fi
+
+          for file in $FILES; do
+            echo "Processing $file..."
+            chmod +x "$file"
+            sed -i 's/\r$//' "$file"
+            if ! bash -n "$file"; then
+              echo "❌ Syntax error in $file"
+              ERROR=1
+            else
+              echo "✅ Syntax OK for $file"
+            fi
+          done
+
+          echo "lint_status=$ERROR" >> $GITHUB_OUTPUT
+          if [ $ERROR -eq 1 ]; then
+            echo "❌ Lint check failed for Renovate PR."
+            exit 1
+          fi
+
+      # -----------------------------
+      # PR CHECKER
+      # -----------------------------
+      - name: PR Checker
+        id: prcheck
+        run: |
+          echo "📦 Running PR package metadata check..."
+          FAIL=0
+
+          PKGS=$(git diff origin/master...HEAD --name-only \
+            | awk -F/ '/^packages\//{print $2}' \
+            | sort -u)
+
+          if [[ -z "$PKGS" ]]; then
+            echo "ℹ️ No package changes detected."
+          fi
+
+          for PKG in $PKGS; do
+            echo "Checking package: $PKG"
+            BUILD_SH="packages/$PKG/build.sh"
+            if [[ ! -f "$BUILD_SH" ]]; then
+              echo "❌ build.sh missing for $PKG"
+              FAIL=1
+              continue
+            fi
+
+            # Load package metadata
+            source "$BUILD_SH" || true
+
+            MISSING=0
+            for var in TERMUX_PKG_VERSION TERMUX_PKG_SRCURL TERMUX_PKG_SHA256; do
+              if [[ -z "${!var}" ]]; then
+                echo "❌ Missing $var in $PKG"
+                MISSING=1
+              fi
+            done
+
+            if [ $MISSING -eq 1 ]; then
+              FAIL=1
+              continue
+            fi
+
+            echo "✅ Metadata check passed for $PKG"
+          done
+
+          echo "prcheck_status=$FAIL" >> $GITHUB_OUTPUT
+          if [ $FAIL -eq 1 ]; then
+            echo "❌ PR metadata check failed for Renovate PR."
+            exit 1
+          fi
+
+      # -----------------------------
+      # COMMENT REMINDER
+      # -----------------------------
+      - name: Comment reminder
+        if: success()
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            ⚠️ PR from Renovate Bot detected.
+            **Reminder:** All merges must be approved by a human reviewer.  
+            ✅ Lint check passed for build.sh  
+            ✅ Package metadata check passed
+
+      - name: Comment failure notice
+        if: failure()
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            ⚠️ PR from Renovate Bot detected.
+            ❌ Lint or package metadata check **failed**.
+            Please review and fix before merging.
