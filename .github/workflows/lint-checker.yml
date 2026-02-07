@@ -7,8 +7,9 @@ on:
 
 jobs:
   lint-and-fix:
+    if: github.actor != 'dependabot[bot]'
     runs-on: ubuntu-latest
-    name: Lint + Auto-Fix build.sh + Clean Label
+    name: Lint auto checker build.sh
 
     steps:
       - name: Checkout code
@@ -29,13 +30,10 @@ jobs:
           for file in ${{ steps.files.outputs.changed_files }}; do
             echo "Processing $file..."
 
-            # Fix permissions
             chmod +x "$file"
 
-            # Fix line endings to LF
             sed -i 's/\r$//' "$file"
 
-            # Check syntax
             if ! bash -n "$file"; then
               echo "❌ Syntax error in $file (cannot auto-fix)"
               ERROR=1
@@ -67,4 +65,4 @@ jobs:
           body: |
             ⚠️ Lint check failed for **build.sh**.
             Minor issues were auto-fixed (permissions/line endings).
-            Mohon periksa syntax file `build.sh` sebelum PR bisa di-merge.
+            Please check the syntax of the `build.sh` file before this PR can be merged.
