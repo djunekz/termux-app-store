@@ -29,13 +29,10 @@ jobs:
           ERROR=0
           for file in ${{ steps.files.outputs.changed_files }}; do
             echo "Processing $file..."
-
             chmod +x "$file"
-
             sed -i 's/\r$//' "$file"
-
             if ! bash -n "$file"; then
-              echo "❌ Syntax error in $file (cannot auto-fix)"
+              echo "❌ Syntax error in $file"
               ERROR=1
             fi
           done
@@ -43,18 +40,6 @@ jobs:
           if [ $ERROR -eq 1 ]; then
             exit 1
           fi
-
-      - name: Remove old lint labels
-        uses: actions-ecosystem/action-remove-labels@v1
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          labels: review-approved, review-failed
-
-      - name: Add current lint label
-        uses: actions-ecosystem/action-add-labels@v1
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          labels: ${{ steps.autofix.outputs.lint_status == '0' && 'review-approved' || 'review-failed' }}
 
       - name: Comment on PR if lint fails
         if: steps.autofix.outputs.lint_status == '1'
@@ -66,3 +51,17 @@ jobs:
             ⚠️ Lint check failed for **build.sh**.
             Minor issues were auto-fixed (permissions/line endings).
             Please check the syntax of the `build.sh` file before this PR can be merged.
+
+      - name: Remove old lint labels
+        if: github.repository == github.event.pull_request.base.repo.full_name
+        uses: actions-ecosystem/action-remove-labels@v1
+        with:
+          github_token: ${{ secrets.PAT_TOKEN }}
+          labels: review-approved, review-failed
+
+      - name: Add current lint label
+        if: github.repository == github.event.pull_request.base.repo.full_name
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          github_token: ${{ secrets.PAT_TOKEN }}
+          labels: ${{ steps.autofix.outputs.lint_status == '0' && 'review-approved' || 'review-failed' }}
