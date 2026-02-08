@@ -9,7 +9,7 @@ jobs:
   lint-and-fix:
     if: github.actor != 'dependabot[bot]'
     runs-on: ubuntu-latest
-    name: Lint auto checker build.sh
+    name: Lint Auto Checker build.sh
 
     steps:
       - name: Checkout code
