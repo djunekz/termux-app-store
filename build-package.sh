@@ -49,8 +49,6 @@ if [[ -n "${TERMUX_PKG_SHA256:-}" ]]; then
     CALC_SHA256="$(sha256sum "$SRC_FILE" | awk '{print $1}')"
     if [[ "$CALC_SHA256" != "$TERMUX_PKG_SHA256" ]]; then
         echo "[FATAL] SHA256 mismatch!"
-        echo "Expected: $TERMUX_PKG_SHA256"
-        echo "Got     : $CALC_SHA256"
         exit 1
     fi
     echo "[✔] SHA256 valid"
@@ -59,27 +57,20 @@ fi
 # ---------------- EXTRACT ----------------
 echo "==> Extracting source..."
 PREBUILT_DEB=""
+SRC_ROOT="$WORK_DIR/src"
 
 if [[ "$TERMUX_PKG_SRCURL" == *.deb ]]; then
     echo "[*] Prebuilt .deb detected, skipping extraction."
     PREBUILT_DEB="$SRC_FILE"
-    SRC_ROOT="$WORK_DIR/src"
-
 elif [[ "$TERMUX_PKG_SRCURL" == *.zip ]]; then
-    unzip -q "$SRC_FILE" -d "$WORK_DIR/src"
-
+    unzip -q "$SRC_FILE" -d "$SRC_ROOT"
 else
-    tar -xf "$SRC_FILE" -C "$WORK_DIR/src"
+    tar -xf "$SRC_FILE" -C "$SRC_ROOT"
 fi
 
-# ---------- FIX KRUSIAL: FLAT vs DIRECTORY ----------
-SUBDIR="$(find "$WORK_DIR/src" -mindepth 1 -maxdepth 1 -type d | head -n1)"
-if [[ -n "$SUBDIR" ]]; then
-    SRC_ROOT="$SUBDIR"
-else
-    SRC_ROOT="$WORK_DIR/src"
-fi
-
+# ---------------- FLATTEN ----------------
+SUBDIR="$(find "$SRC_ROOT" -mindepth 1 -maxdepth 1 -type d | head -n1)"
+[[ -n "$SUBDIR" ]] && SRC_ROOT="$SUBDIR"
 echo "[*] Source root: $SRC_ROOT"
 
 # ---------------- ENV ----------------
@@ -93,7 +84,6 @@ echo "==> Running install (DESTDIR)..."
 if [[ -n "$PREBUILT_DEB" ]]; then
     echo "[*] Installing prebuilt .deb..."
     dpkg -x "$PREBUILT_DEB" "$WORK_DIR/pkg"
-
     BIN_FILE="$(find "$WORK_DIR/pkg" -type f -name "$PACKAGE*" -executable | head -n1 || true)"
     if [[ -n "$BIN_FILE" ]]; then
         mkdir -p "$PREFIX/lib/$PACKAGE"
@@ -106,8 +96,6 @@ exec "$PREFIX/lib/$PACKAGE/$PACKAGE" "\$@"
 EOF
         chmod +x "$PREFIX/bin/$PACKAGE"
         echo "[✔] $PACKAGE installed and executable at $PREFIX/bin/$PACKAGE"
-    else
-        echo "[!] No executable found in prebuilt .deb, skipping wrapper."
     fi
 
 elif [[ -f "$SRC_ROOT/Cargo.toml" ]]; then
@@ -124,34 +112,37 @@ elif [[ -f "$SRC_ROOT/Cargo.toml" ]]; then
     install -Dm755 "$BIN_PATH" "$WORK_DIR/pkg/$PREFIX/bin/$PACKAGE"
 
 else
-    if type termux_step_make_install &>/dev/null; then
-        echo "[*] Using termux_step_make_install() from build.sh..."
-        termux_step_make_install
-    else
-        MAIN_FILE="$(find "$SRC_ROOT" -maxdepth 1 -type f -perm /111 | head -n1 || true)"
-        if [[ -z "$MAIN_FILE" ]]; then
-            MAIN_FILE="$(find "$SRC_ROOT" -maxdepth 1 -type f -name '*.py' | head -n1 || true)"
-        fi
+    # ---------------- AUTO LANGUAGE DETECTION ----------------
+    MAIN_FILE="$(find "$SRC_ROOT" -maxdepth 1 -type f -perm /111 | head -n1 || true)"
 
-        if [[ -n "$MAIN_FILE" ]]; then
-            BASENAME="$(basename "$MAIN_FILE")"
+    # if no executable, check for Python
+    [[ -z "$MAIN_FILE" ]] && MAIN_FILE="$(find "$SRC_ROOT" -maxdepth 1 -type f -name '*.py' | head -n1 || true)"
 
-            mkdir -p "$WORK_DIR/pkg/$PREFIX/lib/$PACKAGE"
-            cp "$SRC_ROOT"/*.py "$WORK_DIR/pkg/$PREFIX/lib/$PACKAGE/" 2>/dev/null || true
-            cp "$MAIN_FILE" "$WORK_DIR/pkg/$PREFIX/lib/$PACKAGE/$BASENAME"
-            chmod +x "$WORK_DIR/pkg/$PREFIX/lib/$PACKAGE/$BASENAME"
+    if [[ -n "$MAIN_FILE" ]]; then
+        BASENAME="$(basename "$MAIN_FILE")"
+        mkdir -p "$WORK_DIR/pkg/$PREFIX/lib/$PACKAGE"
+        cp "$SRC_ROOT"/* "$WORK_DIR/pkg/$PREFIX/lib/$PACKAGE/" 2>/dev/null || true
+        chmod +x "$WORK_DIR/pkg/$PREFIX/lib/$PACKAGE/$BASENAME"
 
-            mkdir -p "$WORK_DIR/pkg/$PREFIX/bin"
-            cat > "$WORK_DIR/pkg/$PREFIX/bin/$PACKAGE" <<EOF
-#!/usr/bin/env bash
-exec python3 "$PREFIX/lib/$PACKAGE/$BASENAME" "\$@"
-EOF
-            chmod +x "$WORK_DIR/pkg/$PREFIX/bin/$PACKAGE"
-
-            echo "[✔] Python wrapper created: $PREFIX/bin/$PACKAGE"
+        mkdir -p "$WORK_DIR/pkg/$PREFIX/bin"
+        # detect interpreter
+        FIRST_LINE="$(head -n1 "$MAIN_FILE")"
+        if [[ "$FIRST_LINE" =~ ^#! ]]; then
+            INTERPRETER=$(awk '{print $1}' <<<"$FIRST_LINE" | sed 's|#!||')
+        elif [[ "$MAIN_FILE" == *.py ]]; then
+            INTERPRETER="python3"
         else
-            echo "[!] No executable/main file found in $SRC_ROOT, skipping install."
+            INTERPRETER="bash"
         fi
+
+        cat > "$WORK_DIR/pkg/$PREFIX/bin/$PACKAGE" <<EOF
+#!/usr/bin/env bash
+exec $INTERPRETER "$PREFIX/lib/$PACKAGE/$BASENAME" "\$@"
+EOF
+        chmod +x "$WORK_DIR/pkg/$PREFIX/bin/$PACKAGE"
+        echo "[✔] Wrapper created: $PREFIX/bin/$PACKAGE -> $INTERPRETER"
+    else
+        echo "[!] No executable/main file found in $SRC_ROOT, skipping install."
     fi
 fi
 
