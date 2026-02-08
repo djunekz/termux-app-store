@@ -1,5 +1,15 @@
+# ==================================================
+# Codecov configuration
+# Docs: https://docs.codecov.com/docs/codecov-yaml
+# ==================================================
+
+codecov:
+  require_ci_to_pass: true
+  notify:
+    after_n_builds: 1
+
 comment:
-  layout: "header, diff, changes, footer"
+  layout: "header, diff, footer"
   behavior: default
   require_changes: true
   max_comments: 1
@@ -8,42 +18,42 @@ comment:
 
 comment_header: |
   📊 **Codecov Coverage Report**
-  Hello @{{author}}! Here's your PR coverage:
+  Hello @{{author}}! Here's your pull request coverage summary.
 
 comment_footer: |
-  🚀 Keep your coverage high, stay safe!
+  🚀 Keep your coverage high — quality matters.
   Full report: [{{build_url}}]
 
-comment_changes:
-  highlight: 
-    - pattern: ".*"
-      thresholds:
-        drop: 10
-      icon: "🔥"
-      message: "Coverage dropped here! Add more 💡"
-
 coverage:
+  precision: 2
+  round: down
+  range: "70...100"
+
   status:
     project:
       default:
         target: 80%
+        threshold: 1%
+        informational: false
+
     patch:
       default:
         target: 80%
-        precision: 2
-  thresholds:
-    changed: 75
+        threshold: 1%
+        informational: false
 
 ignore:
-  - "docs/*"
-  - "scripts/*"
-  - "*.md"
+  - "docs/**"
+  - "scripts/**"
+  - "examples/**"
+  - "tests/**"
+  - "**/*.md"
+  - "**/__init__.py"
 
-parsers:
-  python:
-    - coverage.xml
-    - htmlcov/*
-
-merge:
-  method: sum
-  prefer_source: true
+flags:
+  backend:
+    paths:
+      - "src/**"
+  cli:
+    paths:
+      - "cli/**"
