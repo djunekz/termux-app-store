@@ -41,22 +41,29 @@ jobs:
             exit 1
           fi
 
+      # -----------------------------
+      # Remove old lint labels (fork & internal)
+      # -----------------------------
       - name: Remove old lint labels
-        if: github.repository == github.event.pull_request.base.repo.full_name
         uses: actions-ecosystem/action-remove-labels@v1
         with:
           github_token: ${{ secrets.PAT_TOKEN }}
           labels: review-approved, review-failed
 
+      # -----------------------------
+      # Add current lint label (fork & internal)
+      # -----------------------------
       - name: Add current lint label
-        if: github.repository == github.event.pull_request.base.repo.full_name
         uses: actions-ecosystem/action-add-labels@v1
         with:
           github_token: ${{ secrets.PAT_TOKEN }}
           labels: ${{ steps.autofix.outputs.lint_status == '0' && 'review-approved' || 'review-failed' }}
 
+      # -----------------------------
+      # Comment on PR if lint fails
+      # -----------------------------
       - name: Comment on PR if lint fails
-        if: steps.autofix.outputs.lint_status == '1' && github.repository == github.event.pull_request.base.repo.full_name
+        if: steps.autofix.outputs.lint_status == '1'
         uses: peter-evans/create-or-update-comment@v4
         with:
           token: ${{ secrets.PAT_TOKEN }}
