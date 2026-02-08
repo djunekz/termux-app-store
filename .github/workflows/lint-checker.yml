@@ -41,17 +41,6 @@ jobs:
             exit 1
           fi
 
-      - name: Comment on PR if lint fails
-        if: steps.autofix.outputs.lint_status == '1'
-        uses: peter-evans/create-or-update-comment@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          issue-number: ${{ github.event.pull_request.number }}
-          body: |
-            ⚠️ Lint check failed for **build.sh**.
-            Minor issues were auto-fixed (permissions/line endings).
-            Please check the syntax of the `build.sh` file before this PR can be merged.
-
       - name: Remove old lint labels
         if: github.repository == github.event.pull_request.base.repo.full_name
         uses: actions-ecosystem/action-remove-labels@v1
@@ -65,3 +54,14 @@ jobs:
         with:
           github_token: ${{ secrets.PAT_TOKEN }}
           labels: ${{ steps.autofix.outputs.lint_status == '0' && 'review-approved' || 'review-failed' }}
+
+      - name: Comment on PR if lint fails
+        if: steps.autofix.outputs.lint_status == '1' && github.repository == github.event.pull_request.base.repo.full_name
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          token: ${{ secrets.PAT_TOKEN }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            ⚠️ Lint check failed for **build.sh**.
+            Minor issues were auto-fixed (permissions/line endings).
+            Please check the syntax of the `build.sh` file before this PR can be merged.
