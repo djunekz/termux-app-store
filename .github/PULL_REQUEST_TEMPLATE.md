@@ -1,55 +1,52 @@
-## 👋 Halo, terima kasih sudah berkontribusi!
-Pull Request ini digunakan untuk mengajukan penambahan atau pembaruan aplikasi / tool ke dalam **termux-app-store**.
+## 👋 Hi there! Thanks for contributing
 
-Jika ini kontribusi pertamamu, tidak apa-apa — isi sebisa mungkin 😊
+This Pull Request is used to submit a **new application/tool** or **update an existing one** in **termux-app-store**.
 
----
-
-## 🔧 Jenis Perubahan
-(Pilih salah satu atau lebih)
-- [ ] Menambahkan aplikasi / tool baru
-- [ ] Memperbarui aplikasi / tool yang sudah ada
-- [ ] Memperbaiki metadata (deskripsi, kategori, dll)
+If this is your first contribution — no worries!
+Fill in what you can, maintainers will help if something needs adjustment 😊
 
 ---
 
-## 📦 Informasi Aplikasi
-**Nama aplikasi / tool:**  
-Isi nama aplikasi
+## 🔧 Type of Change
+(Select one or more with type x in [])
+(Example: [x] Add new application / tool)
 
-**Lokasi direktori aplikasi:**  
-apps/<nama-aplikasi>/
-
-**Deskripsi singkat (1–2 kalimat):**  
-Jelaskan fungsi utama aplikasi / tool ini secara ringkas.
-
-**Kategori aplikasi:**  
-Contoh: Utility, Development, Networking, Security, dll.
+- [ ] Add a new application / tool
+- [ ] Update an existing application / tool
+- [ ] Fix or improve metadata (description, category, etc.)
 
 ---
 
-## 🔗 Sumber & Lisensi
-**Repository / source resmi:**  
-Link ke source code aplikasi
+## 📦 Application Information
 
-**Lisensi aplikasi:**  
-Contoh: MIT, GPL-3.0, Apache-2.0, dll
+- Application / Tool name: <!-- Example: neovim, htop, curl -->
+- Application directory path: <!-- Example: packages/<app-name>/ -->
+- Short description: <!-- Example: Briefly explain what this application does -->
+- Application category: <!-- Example: Utility, Development, Networking, Security, Multimedia -->
+
+---
+
+## 🔗 Source & License
+
+- Official repository / source URL: <!-- Example: htps://example.com/username/repo -->
+- License: <!-- Example: MIT, GPL-3.0, Apache-2.0 -->
 
 Checklist:
-- [ ] Source dapat diverifikasi
-- [ ] Lisensi jelas dan open-source
-- [ ] Aplikasi legal untuk didistribusikan
+- [ ] Source code is publicly accessible
+- [ ] License is clear and open-source
+- [ ] The application is legal to distribute
 
 ---
 
-## ✅ Pengecekan Dasar
-(Tidak harus sempurna)
-- [ ] Struktur folder sudah sesuai
-- [ ] Metadata aplikasi sudah diisi
-- [ ] Aplikasi bisa dijalankan di Termux
-- [ ] Tidak menambahkan file yang tidak diperlukan
+## ✅ Basic Checks
+(Not all items are required, but recommended)
+- [ ] Directory structure follows repository conventions
+- [ ] Metadata is complete and accurate
+- [ ] Application runs properly in Termux
+- [ ] No unnecessary files are included
 
 ---
 
-## 📝 Catatan Tambahan (Opsional)
-Tulis catatan apa pun untuk maintainer (kendala, pertanyaan, atau info tambahan).
+## 📝 Additional Notes for review maintainer(Optional)
+<!-- Add anything maintainers should know.
+     Example: known issues, build notes, special requirements, etc. -->
