@@ -2,7 +2,7 @@ name: Renovate PR Checker
 
 on:
   pull_request_target:
-    types: [opened, synchronize, reopened]
+    types: [opened, synchronize, reopened, labeled]
 
 permissions:
   contents: read
@@ -12,11 +12,16 @@ jobs:
   renovate-check:
     name: renovate-check
     runs-on: ubuntu-latest
-    if: github.event.pull_request.user.login == 'renovate[bot]'
+
+    if: |
+      contains(
+        join(github.event.pull_request.labels.*.name, ','),
+        'renovate'
+      )
 
     steps:
       - name: Checkout PR code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.sha }}
@@ -41,7 +46,6 @@ jobs:
 
       - name: Lint build.sh (syntax)
         if: contains(steps.files.outputs.files, 'build.sh')
-        shell: bash
         run: |
           set -e
           for file in $(echo "${{ steps.files.outputs.files }}" | grep build.sh); do
@@ -51,7 +55,6 @@ jobs:
           done
 
       - name: Validate package metadata
-        shell: bash
         run: |
           FAIL=0
           BASE="${{ github.event.pull_request.base.sha }}"
@@ -62,25 +65,18 @@ jobs:
 
           for PKG in $PKGS; do
             BUILD="packages/$PKG/build.sh"
-            echo "📦 $PKG"
-
             get() { grep -E "^$1=" "$BUILD" | cut -d= -f2- | head -n1; }
 
-            VERSION=$(get TERMUX_PKG_VERSION)
-            SRCURL=$(get TERMUX_PKG_SRCURL)
-            SHA256=$(get TERMUX_PKG_SHA256)
-
-            [[ -z "$VERSION" || -z "$SRCURL" || -z "$SHA256" ]] && FAIL=1
-            [[ "$SHA256" =~ ^[a-f0-9]{64}$ ]] || FAIL=1
+            [[ -z "$(get TERMUX_PKG_VERSION)" ]] && FAIL=1
+            [[ -z "$(get TERMUX_PKG_SRCURL)" ]] && FAIL=1
+            [[ "$(get TERMUX_PKG_SHA256)" =~ ^[a-f0-9]{64}$ ]] || FAIL=1
           done
 
           [ "$FAIL" -eq 0 ]
 
       - name: Comment success
-        if: success()
         uses: peter-evans/create-or-update-comment@v5
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.pull_request.number }}
           body: |
             🤖 **Renovate PR detected**
