@@ -1,22 +1,22 @@
 name: PR Package Checker & Report
 
 on:
-  pull_request:
+  pull_request_target:
     types:
       - labeled
 
 permissions:
-  pull-requests: write
   contents: read
+  pull-requests: write
 
 jobs:
   review-packages:
-    if: github.event.label.name == 'review-approved'
+    name: pr-checker
     runs-on: ubuntu-latest
-    name: Validate changed packages
+    if: github.event.label.name == 'review-approved'
 
     steps:
-      - name: Checkout PR code
+      - name: Checkout PR code (safe)
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
@@ -27,6 +27,7 @@ jobs:
         shell: bash
         run: |
           BASE_SHA="${{ github.event.pull_request.base.sha }}"
+
           PKGS=$(git diff "$BASE_SHA"...HEAD --name-only \
             | awk -F/ '/^packages\/[^/]+\/build.sh$/ {print $2}' \
             | sort -u)
