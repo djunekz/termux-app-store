@@ -18,12 +18,16 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
 
       - name: Find changed build.sh files
         id: files
         run: |
           echo "Finding changed build.sh files..."
-          FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep 'build.sh' || true)
+          BASE_SHA=${{ github.event.pull_request.base.sha }}
+          HEAD_SHA=${{ github.sha }}
+          FILES=$(git diff --name-only "$BASE_SHA" "$HEAD_SHA" | grep 'build.sh' || true)
           echo "changed_files=$FILES" >> $GITHUB_OUTPUT
 
       - name: Auto-Fix Minor Issues
@@ -46,12 +50,14 @@ jobs:
           fi
 
       - name: Remove old lint labels
+        if: github.event.pull_request.head.repo.full_name == github.repository
         uses: actions-ecosystem/action-remove-labels@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           labels: review-approved, review-failed
 
       - name: Add current lint label
+        if: github.event.pull_request.head.repo.full_name == github.repository
         uses: actions-ecosystem/action-add-labels@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
