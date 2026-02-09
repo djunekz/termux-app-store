@@ -2,7 +2,8 @@ name: Auto Update Packages Changelog
 
 on:
   push:
-    branches: [ master ]
+    branches:
+      - master
 
 jobs:
   changelog:
@@ -22,7 +23,6 @@ jobs:
 
           CHANGELOG="CHANGELOG.md"
 
-          # create changelog if it doesn't exist
           if [[ ! -f "$CHANGELOG" ]]; then
 cat <<EOF > "$CHANGELOG"
 # Changelog
@@ -34,24 +34,21 @@ cat <<EOF > "$CHANGELOG"
 EOF
           fi
 
-          # detect changed build.sh files
-          git diff --name-only HEAD~1 HEAD \
+          git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" \
             | grep '^packages/.*/build.sh' > /tmp/changed || true
 
           [[ -s /tmp/changed ]] || exit 0
 
           while read -r build; do
-            pkg=$(basename "$(dirname "$build")")
-            ver=$(grep '^TERMUX_PKG_VERSION=' "$build" | cut -d= -f2)
+            pkg="$(basename "$(dirname "$build")")"
+            ver="$(grep '^TERMUX_PKG_VERSION=' "$build" | cut -d= -f2)"
 
-            # decide section
             if grep -q "Package \`${pkg}\`" "$CHANGELOG"; then
               section="Updated"
             else
               section="Added"
             fi
 
-            # avoid duplicates
             if ! awk '/## \[Unreleased\]/,/^## \[/' "$CHANGELOG" \
               | grep -q "\`${pkg}\` v${ver}"; then
 
