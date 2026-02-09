@@ -70,7 +70,7 @@ jobs:
 
       - name: Comment on PR if lint fails
         if: steps.lint.outputs.lint_status == '1'
-        uses: peter-evans/create-or-update-comment@v4
+        uses: peter-evans/create-or-update-comment@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.pull_request.number }}
