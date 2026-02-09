@@ -2,19 +2,25 @@ name: PR Package Checker & Report
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened, labeled]
+    types:
+      - labeled
+
+permissions:
+  pull-requests: write
+  contents: read
 
 jobs:
   review-packages:
-    if: contains(github.event.pull_request.labels.*.name, 'review-approved')
+    if: github.event.label.name == 'review-approved'
     runs-on: ubuntu-latest
     name: Validate changed packages
 
     steps:
-      - name: Checkout repository
+      - name: Checkout PR code
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Detect changed packages
         id: packages
@@ -22,8 +28,9 @@ jobs:
         run: |
           BASE_SHA="${{ github.event.pull_request.base.sha }}"
           PKGS=$(git diff "$BASE_SHA"...HEAD --name-only \
-            | awk -F/ '/^packages\/[^/]+\/build.sh/{print $2}' \
+            | awk -F/ '/^packages\/[^/]+\/build.sh$/ {print $2}' \
             | sort -u)
+
           echo "changed=$PKGS" >> "$GITHUB_OUTPUT"
 
       - name: Validate build.sh metadata
