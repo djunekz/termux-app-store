@@ -1,0 +1,7 @@
+TERMUX_PKG_HOMEPAGE=https://github.com/droidv1/pymaker
+TERMUX_PKG_DESCRIPTION="Simple tool for create python script"
+TERMUX_PKG_LICENSE="MIT"
+TERMUX_PKG_MAINTAINER="@droidv1"
+TERMUX_PKG_VERSION=1.0.0
+TERMUX_PKG_SRCURL=https://github.com/droidv1/pymaker/releases/download/{$TERMUX_PKG_VERSION}/pymaker-{$TERMUX_PKG_VERSION}.tar.gz
+TERMUX_PKG_SHA256=2fe03f6839e7b550f888d477628b852d648ea4ed688643122d3c182d495564e4
