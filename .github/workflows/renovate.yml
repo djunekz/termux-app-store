@@ -3,11 +3,6 @@ name: Renovate PR Checker
 on:
   pull_request_target:
     types: [opened, synchronize, reopened]
-    paths:
-      - '**/build.sh'
-      - '**/package.json'
-      - '**/Cargo.toml'
-      - '**/requirements.txt'
 
 permissions:
   contents: read
@@ -15,9 +10,9 @@ permissions:
 
 jobs:
   renovate-check:
-    if: github.event.pull_request.user.login == 'renovate[bot]'
+    name: renovate-check
     runs-on: ubuntu-latest
-    name: Validate Renovate PR
+    if: github.event.pull_request.user.login == 'renovate[bot]'
 
     steps:
       - name: Checkout PR code
@@ -26,91 +21,61 @@ jobs:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.sha }}
 
-      # -----------------------------
-      # DETECT CHANGED FILES
-      # -----------------------------
-      - name: Detect changed build.sh files
+      - name: Detect changed files
         id: files
         shell: bash
         run: |
-          BASE_SHA="${{ github.event.pull_request.base.sha }}"
-          FILES=$(git diff "$BASE_SHA"...HEAD --name-only | grep 'build.sh' || true)
+          BASE="${{ github.event.pull_request.base.sha }}"
+          FILES=$(git diff "$BASE"...HEAD --name-only || true)
           echo "files=$FILES" >> "$GITHUB_OUTPUT"
 
-      # -----------------------------
-      # LINT CHECKER (SYNTAX ONLY)
-      # -----------------------------
+      - name: Skip if no relevant changes
+        if: |
+          !contains(steps.files.outputs.files, 'build.sh') &&
+          !contains(steps.files.outputs.files, 'package.json') &&
+          !contains(steps.files.outputs.files, 'Cargo.toml') &&
+          !contains(steps.files.outputs.files, 'requirements.txt')
+        run: |
+          echo "ℹ️ No relevant files changed by Renovate"
+          exit 0
+
       - name: Lint build.sh (syntax)
-        if: steps.files.outputs.files != ''
+        if: contains(steps.files.outputs.files, 'build.sh')
         shell: bash
         run: |
           set -e
-          ERROR=0
-          for file in ${{ steps.files.outputs.files }}; do
+          for file in $(echo "${{ steps.files.outputs.files }}" | grep build.sh); do
             echo "🧹 Checking $file"
             sed -i 's/\r$//' "$file"
-            if ! bash -n "$file"; then
-              echo "❌ Syntax error in $file"
-              ERROR=1
-            else
-              echo "✅ Syntax OK"
-            fi
+            bash -n "$file"
           done
 
-          if [ $ERROR -eq 1 ]; then
-            exit 1
-          fi
-
-      # -----------------------------
-      # METADATA CHECK (SAFE PARSE)
-      # -----------------------------
       - name: Validate package metadata
-        id: metadata
         shell: bash
         run: |
           FAIL=0
-          BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          BASE="${{ github.event.pull_request.base.sha }}"
 
-          PKGS=$(git diff "$BASE_SHA"...HEAD --name-only \
+          PKGS=$(git diff "$BASE"...HEAD --name-only \
             | awk -F/ '/^packages\/[^/]+\/build.sh$/ {print $2}' \
             | sort -u)
 
-          if [[ -z "$PKGS" ]]; then
-            echo "ℹ️ No package changes detected"
-          fi
-
           for PKG in $PKGS; do
-            echo "📦 Checking $PKG"
-            BUILD_SH="packages/$PKG/build.sh"
+            BUILD="packages/$PKG/build.sh"
+            echo "📦 $PKG"
 
-            get_var() {
-              grep -E "^$1=" "$BUILD_SH" | head -n1 | cut -d= -f2-
-            }
+            get() { grep -E "^$1=" "$BUILD" | cut -d= -f2- | head -n1; }
 
-            VERSION=$(get_var TERMUX_PKG_VERSION)
-            SRCURL=$(get_var TERMUX_PKG_SRCURL)
-            SHA256=$(get_var TERMUX_PKG_SHA256)
+            VERSION=$(get TERMUX_PKG_VERSION)
+            SRCURL=$(get TERMUX_PKG_SRCURL)
+            SHA256=$(get TERMUX_PKG_SHA256)
 
-            for v in VERSION SRCURL SHA256; do
-              if [[ -z "${!v}" ]]; then
-                echo "❌ Missing TERMUX_PKG_$v in $PKG"
-                FAIL=1
-              fi
-            done
-
-            if [[ -n "$SHA256" && ! "$SHA256" =~ ^[a-f0-9]{64}$ ]]; then
-              echo "❌ Invalid SHA256 format in $PKG"
-              FAIL=1
-            fi
+            [[ -z "$VERSION" || -z "$SRCURL" || -z "$SHA256" ]] && FAIL=1
+            [[ "$SHA256" =~ ^[a-f0-9]{64}$ ]] || FAIL=1
           done
 
-          if [ $FAIL -eq 1 ]; then
-            exit 1
-          fi
+          [ "$FAIL" -eq 0 ]
 
-      # -----------------------------
-      # COMMENT RESULT
-      # -----------------------------
       - name: Comment success
         if: success()
         uses: peter-evans/create-or-update-comment@v5
@@ -119,17 +84,5 @@ jobs:
           issue-number: ${{ github.event.pull_request.number }}
           body: |
             🤖 **Renovate PR detected**
-            ✅ build.sh syntax check passed
-            ✅ Package metadata looks valid
-            🔍 Human review still required before merge
-
-      - name: Comment failure
-        if: failure()
-        uses: peter-evans/create-or-update-comment@v5
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          issue-number: ${{ github.event.pull_request.number }}
-          body: |
-            🤖 **Renovate PR detected**
-            ❌ Lint or metadata check failed
-            Please review the errors above before merging.
+            ✅ Checks passed
+            🔒 Manual review still required
