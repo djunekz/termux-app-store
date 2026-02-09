@@ -1,4 +1,4 @@
-name: Termux App Store CLI CI
+name: cli-validation
 
 on:
   push:
@@ -10,6 +10,7 @@ on:
 
 jobs:
   cli-validation:
+    name: cli-validation
     runs-on: ubuntu-latest
 
     steps:
@@ -25,7 +26,7 @@ jobs:
 
       - name: Make scripts executable
         run: |
-          chmod +x termux-build
+          chmod +x termux-build || true
           chmod +x tasctl || true
 
       - name: Run termux-build validation (Python)

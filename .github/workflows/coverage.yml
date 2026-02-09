@@ -1,13 +1,16 @@
-name: Termux App Store Coverage
+name: coverage
 
 on:
   push:
-    branches: [ master ]
+    branches:
+      - master
   pull_request:
-    branches: [ master ]
+    branches:
+      - master
 
 jobs:
   coverage:
+    name: coverage
     runs-on: ubuntu-latest
 
     steps:
