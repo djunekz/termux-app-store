@@ -60,5 +60,5 @@ jobs:
           git add CHANGELOG.md
           if ! git diff --cached --quiet; then
             git commit -m "changelog: update packages [ci skip]"
-            git push origin master
+            git push origin master --force-with-lease
           fi
