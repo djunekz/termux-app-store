@@ -26,7 +26,7 @@ jobs:
 
           # Create changelog if missing
           if [[ ! -f "$CHANGELOG" ]]; then
-            cat <<'EOF' > "$CHANGELOG"
+            cat > "$CHANGELOG" <<'EOF'
 # Changelog
 
 ## [Unreleased]
@@ -46,21 +46,12 @@ EOF
             pkg="$(basename "$(dirname "$build")")"
             ver="$(grep '^TERMUX_PKG_VERSION=' "$build" | cut -d= -f2)"
 
-            # Check if package already exists in changelog
             if grep -q "Package \`${pkg}\`" "$CHANGELOG"; then
-              old_ver="$(grep "Package \`${pkg}\` v" "$CHANGELOG" \
-                | sed -E 's/.*v([^ ]+).*/\1/' \
-                | tail -n1)"
-
-              # Same version → skip
-              [[ "$old_ver" == "$ver" ]] && continue
-
               section="Updated"
             else
               section="Added"
             fi
 
-            # Avoid duplicates inside Unreleased
             if ! awk '/## \[Unreleased\]/,/^## \[/' "$CHANGELOG" \
               | grep -q "\`${pkg}\` v${ver}"; then
               sed -i "/### ${section}/a - Package \`${pkg}\` v${ver}" "$CHANGELOG"
