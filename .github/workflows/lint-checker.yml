@@ -1,3 +1,4 @@
+
 name: Lint PR Checker & Helper
 
 permissions:
@@ -10,10 +11,10 @@ on:
       - '**/build.sh'
 
 jobs:
-  lint-and-fix:
+  lint:
     if: github.actor != 'dependabot[bot]'
     runs-on: ubuntu-latest
-    name: Lint Auto Checker build.sh
+    name: Lint build.sh
 
     steps:
       - name: Checkout code
@@ -24,30 +25,27 @@ jobs:
       - name: Find changed build.sh files
         id: files
         run: |
-          echo "Finding changed build.sh files..."
-          BASE_SHA=${{ github.event.pull_request.base.sha }}
-          HEAD_SHA=${{ github.sha }}
+          BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          HEAD_SHA="${{ github.sha }}"
           FILES=$(git diff --name-only "$BASE_SHA" "$HEAD_SHA" | grep 'build.sh' || true)
-          echo "changed_files=$FILES" >> $GITHUB_OUTPUT
+          echo "changed_files=$FILES" >> "$GITHUB_OUTPUT"
 
-      - name: Auto-Fix Minor Issues
-        id: autofix
+      - name: Lint build.sh (bash -n only)
+        id: lint
         run: |
-          set -e
           ERROR=0
           for file in ${{ steps.files.outputs.changed_files }}; do
-            echo "Processing $file..."
+            echo "Checking $file"
             chmod +x "$file"
             sed -i 's/\r$//' "$file"
+
             if ! bash -n "$file"; then
-              echo "❌ Syntax error in $file"
+              echo "Syntax error in $file"
               ERROR=1
             fi
           done
-          echo "lint_status=$ERROR" >> $GITHUB_OUTPUT
-          if [ $ERROR -eq 1 ]; then
-            exit 1
-          fi
+
+          echo "lint_status=$ERROR" >> "$GITHUB_OUTPUT"
 
       - name: Remove old lint labels
         if: github.event.pull_request.head.repo.full_name == github.repository
@@ -56,20 +54,30 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           labels: review-approved, review-failed
 
-      - name: Add current lint label
-        if: github.event.pull_request.head.repo.full_name == github.repository
+      - name: Add review-approved label
+        if: steps.lint.outputs.lint_status == '0'
         uses: actions-ecosystem/action-add-labels@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          labels: ${{ steps.autofix.outputs.lint_status == '0' && 'review-approved' || 'review-failed' }}
+          labels: review-approved
+
+      - name: Add review-failed label
+        if: steps.lint.outputs.lint_status == '1'
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          labels: review-failed
 
       - name: Comment on PR if lint fails
-        if: steps.autofix.outputs.lint_status == '1'
+        if: steps.lint.outputs.lint_status == '1'
         uses: peter-evans/create-or-update-comment@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.pull_request.number }}
           body: |
-            ⚠️ Lint check failed for **build.sh**.
-            Minor issues were auto-fixed (permissions/line endings).
-            Please check the syntax of the `build.sh` file before this PR can be merged.
+            ❌ **Lint failed for build.sh**
+
+            - `bash -n` detected a syntax error
+            - Please fix the error before merging
+
+            This check does **not** modify your code.

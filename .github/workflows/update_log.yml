@@ -2,7 +2,8 @@ name: Auto Update Packages Changelog
 
 on:
   push:
-    branches: [ master ]
+    branches:
+      - master
 
 jobs:
   changelog:
@@ -10,34 +11,38 @@ jobs:
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
           token: ${{ secrets.TERMUXAPPSTORE }}
 
-      - name: Detect package changes
+      - name: Detect package changes and update changelog
+        shell: bash
         run: |
           set -e
 
           CHANGELOG="CHANGELOG.md"
-          [[ -f "$CHANGELOG" ]] || cat <<EOF > "$CHANGELOG"
-          # Changelog
 
-          ## [Unreleased]
-          ### Added
-          ### Updated
-          ### Fixed
-          EOF
+          if [[ ! -f "$CHANGELOG" ]]; then
+            printf "%s\n" \
+              "# Changelog" \
+              "" \
+              "## [Unreleased]" \
+              "### Added" \
+              "### Updated" \
+              "### Fixed" \
+              > "$CHANGELOG"
+          fi
 
-          git diff --name-only HEAD~1 HEAD \
+          git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" \
             | grep '^packages/.*/build.sh' > /tmp/changed || true
 
           [[ -s /tmp/changed ]] || exit 0
 
           while read -r build; do
-            pkg=$(basename "$(dirname "$build")")
-            ver=$(grep '^TERMUX_PKG_VERSION=' "$build" | cut -d= -f2 | tr -d '"')
+            pkg="$(basename "$(dirname "$build")")"
+            ver="$(grep '^TERMUX_PKG_VERSION=' "$build" | cut -d= -f2)"
 
             if grep -q "Package \`${pkg}\`" "$CHANGELOG"; then
               section="Updated"
@@ -47,12 +52,12 @@ jobs:
 
             if ! awk '/## \[Unreleased\]/,/^## \[/' "$CHANGELOG" \
               | grep -q "\`${pkg}\` v${ver}"; then
-
               sed -i "/### ${section}/a - Package \`${pkg}\` v${ver}" "$CHANGELOG"
             fi
           done < /tmp/changed
 
-      - name: Commit & push
+      - name: Commit & push changelog
+        shell: bash
         run: |
           git config user.name "Termux App Store"
           git config user.email "258516621+termux-app-store@users.noreply.github.com"
@@ -60,5 +65,5 @@ jobs:
           git add CHANGELOG.md
           if ! git diff --cached --quiet; then
             git commit -m "changelog: update packages [ci skip]"
-            git push origin master
+            git push origin master --force-with-lease
           fi

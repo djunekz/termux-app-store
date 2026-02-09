@@ -2,127 +2,123 @@ name: Renovate PR Checker
 
 on:
   pull_request:
+    types: [opened, synchronize, reopened]
     paths:
       - '**/build.sh'
       - '**/package.json'
       - '**/Cargo.toml'
       - '**/requirements.txt'
-    types: [opened, synchronize, reopened]
 
 jobs:
-  lint-and-pr-check:
-    runs-on: ubuntu-latest
+  renovate-check:
     if: github.actor == 'renovate[bot]'
+    runs-on: ubuntu-latest
+    name: Validate Renovate PR
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
 
       # -----------------------------
-      # LINT CHECKER
+      # DETECT CHANGED FILES
       # -----------------------------
-      - name: Lint build.sh
-        id: lint
+      - name: Detect changed build.sh files
+        id: files
+        shell: bash
         run: |
-          echo "🧹 Running lint-checker for Renovate PR..."
-          FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep 'build.sh' || true)
+          BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          FILES=$(git diff "$BASE_SHA"...HEAD --name-only | grep 'build.sh' || true)
+          echo "files=$FILES" >> "$GITHUB_OUTPUT"
+
+      # -----------------------------
+      # LINT CHECKER (SYNTAX ONLY)
+      # -----------------------------
+      - name: Lint build.sh (syntax)
+        if: steps.files.outputs.files != ''
+        shell: bash
+        run: |
+          set -e
           ERROR=0
-
-          if [[ -z "$FILES" ]]; then
-            echo "No build.sh files changed."
-          fi
-
-          for file in $FILES; do
-            echo "Processing $file..."
-            chmod +x "$file"
+          for file in ${{ steps.files.outputs.files }}; do
+            echo "🧹 Checking $file"
             sed -i 's/\r$//' "$file"
             if ! bash -n "$file"; then
               echo "❌ Syntax error in $file"
               ERROR=1
             else
-              echo "✅ Syntax OK for $file"
+              echo "✅ Syntax OK"
             fi
           done
-
-          echo "lint_status=$ERROR" >> $GITHUB_OUTPUT
           if [ $ERROR -eq 1 ]; then
-            echo "❌ Lint check failed for Renovate PR."
             exit 1
           fi
 
       # -----------------------------
-      # PR CHECKER
+      # METADATA CHECK (SAFE PARSE)
       # -----------------------------
-      - name: PR Checker
-        id: prcheck
+      - name: Validate package metadata
+        id: metadata
+        shell: bash
         run: |
-          echo "📦 Running PR package metadata check..."
           FAIL=0
 
-          PKGS=$(git diff origin/master...HEAD --name-only \
-            | awk -F/ '/^packages\//{print $2}' \
+          PKGS=$(git diff "${{ github.event.pull_request.base.sha }}"...HEAD --name-only \
+            | awk -F/ '/^packages\/[^/]+\/build.sh/{print $2}' \
             | sort -u)
 
-          if [[ -z "$PKGS" ]]; then
-            echo "ℹ️ No package changes detected."
-          fi
-
           for PKG in $PKGS; do
-            echo "Checking package: $PKG"
+            echo "📦 Checking $PKG"
             BUILD_SH="packages/$PKG/build.sh"
-            if [[ ! -f "$BUILD_SH" ]]; then
-              echo "❌ build.sh missing for $PKG"
-              FAIL=1
-              continue
-            fi
 
-            # Load package metadata
-            source "$BUILD_SH" || true
+            get_var() {
+              grep -E "^$1=" "$BUILD_SH" | head -n1 | cut -d= -f2-
+            }
 
-            MISSING=0
-            for var in TERMUX_PKG_VERSION TERMUX_PKG_SRCURL TERMUX_PKG_SHA256; do
-              if [[ -z "${!var}" ]]; then
-                echo "❌ Missing $var in $PKG"
-                MISSING=1
+            VERSION=$(get_var TERMUX_PKG_VERSION)
+            SRCURL=$(get_var TERMUX_PKG_SRCURL)
+            SHA256=$(get_var TERMUX_PKG_SHA256)
+
+            for v in VERSION SRCURL SHA256; do
+              if [[ -z "${!v}" ]]; then
+                echo "❌ Missing TERMUX_PKG_$v in $PKG"
+                FAIL=1
               fi
             done
 
-            if [ $MISSING -eq 1 ]; then
+            if [[ -n "$SHA256" && ! "$SHA256" =~ ^[a-f0-9]{64}$ ]]; then
+              echo "❌ Invalid SHA256 format in $PKG"
               FAIL=1
-              continue
             fi
-
-            echo "✅ Metadata check passed for $PKG"
           done
 
-          echo "prcheck_status=$FAIL" >> $GITHUB_OUTPUT
           if [ $FAIL -eq 1 ]; then
-            echo "❌ PR metadata check failed for Renovate PR."
             exit 1
           fi
 
       # -----------------------------
-      # COMMENT REMINDER
+      # COMMENT RESULT
       # -----------------------------
-      - name: Comment reminder
+      - name: Comment success
         if: success()
         uses: peter-evans/create-or-update-comment@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.pull_request.number }}
           body: |
-            ⚠️ PR from Renovate Bot detected.
-            **Reminder:** All merges must be approved by a human reviewer.  
-            ✅ Lint check passed for build.sh  
-            ✅ Package metadata check passed
+            🤖 **Renovate PR detected**
+            ✅ build.sh syntax check passed
+            ✅ Package metadata looks valid
+            🔍 Human review still required before merge
 
-      - name: Comment failure notice
+      - name: Comment failure
         if: failure()
         uses: peter-evans/create-or-update-comment@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.pull_request.number }}
           body: |
-            ⚠️ PR from Renovate Bot detected.
-            ❌ Lint or package metadata check **failed**.
-            Please review and fix before merging.
+            🤖 **Renovate PR detected**
+            ❌ Lint or metadata check failed
+            Please review the errors above before merging.

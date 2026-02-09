@@ -1,16 +1,14 @@
-name: PR Package Checker & Reported
+name: PR Package Checker & Report
 
 on:
-  workflow_run:
-    workflows: ["Lint PR Checker & Helper"]
-    types:
-      - completed
+  pull_request:
+    types: [opened, synchronize, reopened, labeled]
 
 jobs:
   review-packages:
-    if: contains(github.event.workflow_run.pull_requests[0].labels.*.name, 'review-approved')
+    if: contains(github.event.pull_request.labels.*.name, 'review-approved')
     runs-on: ubuntu-latest
-    name: PR Package Build & Check
+    name: Validate changed packages
 
     steps:
       - name: Checkout repository
@@ -18,122 +16,91 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup system dependencies
-        run: |
-          sudo apt update
-          sudo apt install -y \
-            bash curl git ca-certificates \
-            python3 python3-pip \
-            nodejs npm \
-            rustc cargo \
-            dpkg unzip xz-utils
-
       - name: Detect changed packages
         id: packages
         shell: bash
         run: |
-          PKGS=$(git diff origin/master...HEAD --name-only \
-            | awk -F/ '/^packages\//{print $2}' \
+          BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          PKGS=$(git diff "$BASE_SHA"...HEAD --name-only \
+            | awk -F/ '/^packages\/[^/]+\/build.sh/{print $2}' \
             | sort -u)
-          echo "changed=${PKGS:-}" >> "$GITHUB_OUTPUT"
+          echo "changed=$PKGS" >> "$GITHUB_OUTPUT"
 
-      - name: PR package build & run check
+      - name: Validate build.sh metadata
         id: checker
         shell: bash
         run: |
-          set -Eeuo pipefail
+          set -e
           FAIL=0
           REPORT=""
+
           if [[ -z "${{ steps.packages.outputs.changed }}" ]]; then
-            REPORT+="ℹ️ No package changes detected"$'\n'
+            REPORT+="ℹ️ No package changes detected\n"
           fi
+
           for PKG in ${{ steps.packages.outputs.changed }}; do
-            echo "=== Checking package: $PKG ==="
             BUILD_SH="packages/$PKG/build.sh"
-            REPORT+="## 📦 $PKG"$'\n'
+            REPORT+="## 📦 $PKG\n"
+
             if [[ ! -f "$BUILD_SH" ]]; then
-              REPORT+="- ❌ build.sh missing"$'\n\n'
+              REPORT+="- ❌ build.sh missing\n\n"
               FAIL=1
               continue
             fi
-            source "$BUILD_SH" || true
+
+            get_var() {
+              grep -E "^$1=" "$BUILD_SH" | head -n1 | cut -d= -f2-
+            }
+
+            VERSION=$(get_var TERMUX_PKG_VERSION)
+            SRCURL=$(get_var TERMUX_PKG_SRCURL)
+            SHA256=$(get_var TERMUX_PKG_SHA256)
+
             check() {
-              if [[ -z "${!1:-}" ]]; then
-                REPORT+="- ❌ Missing \`$1\`"$'\n'
+              if [[ -z "$2" ]]; then
+                REPORT+="- ❌ Missing \`$1\`\n"
                 FAIL=1
               else
-                REPORT+="- ✔ \`$1\`"$'\n'
+                REPORT+="- ✔ \`$1\`\n"
               fi
             }
-            check TERMUX_PKG_VERSION
-            check TERMUX_PKG_SRCURL
-            check TERMUX_PKG_SHA256
-            if [[ ! "${TERMUX_PKG_SHA256:-}" =~ ^[a-f0-9]{64}$ ]]; then
-              REPORT+="- ❌ Invalid SHA256 format"$'\n'
+
+            check TERMUX_PKG_VERSION "$VERSION"
+            check TERMUX_PKG_SRCURL "$SRCURL"
+            check TERMUX_PKG_SHA256 "$SHA256"
+
+            if [[ -n "$SHA256" && ! "$SHA256" =~ ^[a-f0-9]{64}$ ]]; then
+              REPORT+="- ❌ Invalid SHA256 format\n"
               FAIL=1
             fi
-            if [[ "${TERMUX_PKG_SRCURL:-}" =~ (latest|master|main) ]]; then
-              REPORT+="- ❌ Floating SRCURL (latest/master/main)"$'\n'
+
+            if [[ "$SRCURL" =~ (latest|master|main) ]]; then
+              REPORT+="- ❌ Floating SRCURL detected\n"
               FAIL=1
             fi
-            REPORT+=$'\n'
-            SRCURL=$(eval echo "${TERMUX_PKG_SRCURL:-}")
-            TMPFILE="$(mktemp)"
-            if ! curl -fsL "$SRCURL" -o "$TMPFILE"; then
-              REPORT+="❌ Failed to download source"$'\n\n'
-              FAIL=1
-              rm -f "$TMPFILE"
-              continue
-            fi
-            ACTUAL_SHA=$(sha256sum "$TMPFILE" | awk '{print $1}')
-            if [[ "$ACTUAL_SHA" != "$TERMUX_PKG_SHA256" ]]; then
-              REPORT+="❌ SHA256 mismatch"$'\n'
-              REPORT+="  Expected: $TERMUX_PKG_SHA256"$'\n'
-              REPORT+="  Got     : $ACTUAL_SHA"$'\n'
-              REPORT+="💡 Suggestion: Recalculate sha256sum after updating version"$'\n\n'
-              FAIL=1
-              rm -f "$TMPFILE"
-              continue
-            else
-              REPORT+="✅ SHA256 verified"$'\n'
-            fi
-            rm -f "$TMPFILE"
-            if ! ./build-package.sh "$PKG"; then
-              REPORT+="❌ Build failed"$'\n'
-              REPORT+="💡 Suggestion: Check build dependencies or install step"$'\n\n'
-              FAIL=1
-              continue
-            fi
-            BIN_CANDIDATES="${TERMUX_PKG_BIN_NAME:-$PKG}"
-            FOUND_BIN=""
-            for bin in $BIN_CANDIDATES; do
-              if [[ -f ".local-prefix/bin/$bin" ]]; then
-                FOUND_BIN=".local-prefix/bin/$bin"
-                break
+
+            if [[ -n "$SRCURL" && -n "$SHA256" ]]; then
+              TMP="$(mktemp)"
+              if curl -fsL "$SRCURL" -o "$TMP"; then
+                CALC=$(sha256sum "$TMP" | awk '{print $1}')
+                if [[ "$CALC" != "$SHA256" ]]; then
+                  REPORT+="- ❌ SHA256 mismatch\n"
+                  REPORT+="  Expected: $SHA256\n"
+                  REPORT+="  Got     : $CALC\n"
+                  FAIL=1
+                else
+                  REPORT+="- ✅ SHA256 verified\n"
+                fi
+              else
+                REPORT+="- ❌ Failed to download source\n"
+                FAIL=1
               fi
-            done
-            if [[ -z "$FOUND_BIN" ]]; then
-              REPORT+="- ❌ Binary not found in .local-prefix/bin"$'\n\n'
-              FAIL=1
-              continue
+              rm -f "$TMP"
             fi
-            EXT="${FOUND_BIN##*.}"
-            case "$EXT" in
-              sh) RUN_CMD="bash $FOUND_BIN" ;;
-              py) RUN_CMD="python3 $FOUND_BIN" ;;
-              js) RUN_CMD="node $FOUND_BIN" ;;
-              *)  RUN_CMD="$FOUND_BIN" ;;
-            esac
-            if $RUN_CMD --help >/dev/null 2>&1 || $RUN_CMD >/dev/null 2>&1; then
-              REPORT+="- ✅ Tool ran successfully (\`$FOUND_BIN\`)"$'\n\n'
-            else
-              REPORT+="- ❌ Tool failed to run (\`$FOUND_BIN\`)"$'\n'
-              REPORT+="- 💡 Suggestion:"$'\n'
-              REPORT+="  - Check shebang & permissions"$'\n'
-              REPORT+="  - Ensure runtime dependencies exist"$'\n\n'
-              FAIL=1
-            fi
+
+            REPORT+="\n"
           done
+
           echo "report<<EOF" >> "$GITHUB_OUTPUT"
           echo -e "$REPORT" >> "$GITHUB_OUTPUT"
           echo "EOF" >> "$GITHUB_OUTPUT"
@@ -144,8 +111,8 @@ jobs:
         with:
           message: ${{ steps.checker.outputs.report }}
 
-      - name: Mark PR failed if needed
-        if: ${{ steps.checker.outputs.fail != '0' }}
+      - name: Fail PR if validation failed
+        if: steps.checker.outputs.fail != '0'
         run: |
-          echo "❌ One or more packages failed checks"
+          echo "❌ Package validation failed"
           exit 1

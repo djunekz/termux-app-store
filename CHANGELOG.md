@@ -8,11 +8,6 @@ and this project adheres to semantic versioning.
 ---
 
 ## [Unreleased]
-### Planned
-- Binary distribution via GitHub Releases
-- Automatic dependency validation for unsupported Termux packages
-- UI badge for `UNSUPPORTED` packages
-- Pre-build validation for `build.sh`
 
 ---
 
@@ -43,6 +38,12 @@ and this project adheres to semantic versioning.
 - Improved package scanning logic
 - Safer subprocess handling for build output
 - More robust UI refresh behavior during installation
+
+### Planned
+- Binary distribution via GitHub Releases
+- Automatic dependency validation for unsupported Termux packages
+- UI badge for `UNSUPPORTED` packages
+- Pre-build validation for `build.sh`
 
 ---
 
