@@ -25,7 +25,7 @@ jobs:
 
     steps:
       - name: Checkout PR code (safe)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.sha }}
@@ -41,7 +41,7 @@ jobs:
 
           echo "changed=$PKGS" >> "$GITHUB_OUTPUT"
 
-      - name: Validate build.sh metadata
+      - name: Validate build.sh metadata (safe expand)
         id: checker
         shell: bash
         run: |
@@ -68,7 +68,7 @@ jobs:
             }
 
             VERSION=$(get_var TERMUX_PKG_VERSION)
-            SRCURL=$(get_var TERMUX_PKG_SRCURL)
+            SRCURL_RAW=$(get_var TERMUX_PKG_SRCURL)
             SHA256=$(get_var TERMUX_PKG_SHA256)
 
             check() {
@@ -81,8 +81,20 @@ jobs:
             }
 
             check TERMUX_PKG_VERSION "$VERSION"
-            check TERMUX_PKG_SRCURL "$SRCURL"
+            check TERMUX_PKG_SRCURL "$SRCURL_RAW"
             check TERMUX_PKG_SHA256 "$SHA256"
+
+            # --- SAFE EXPANSION (NO eval / NO source) ---
+            SRCURL="$SRCURL_RAW"
+            if [[ "$SRCURL" == *'${TERMUX_PKG_VERSION}'* ]]; then
+              if [[ -z "$VERSION" ]]; then
+                REPORT+="- ❌ TERMUX_PKG_VERSION required for SRCURL expansion\n"
+                FAIL=1
+              else
+                SRCURL="${SRCURL//\$\{TERMUX_PKG_VERSION\}/$VERSION}"
+                REPORT+="- 🔁 SRCURL expanded using TERMUX_PKG_VERSION\n"
+              fi
+            fi
 
             if [[ -n "$SHA256" && ! "$SHA256" =~ ^[a-f0-9]{64}$ ]]; then
               REPORT+="- ❌ Invalid SHA256 format\n"
