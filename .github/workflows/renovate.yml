@@ -1,7 +1,7 @@
 name: Renovate PR Checker
 
 on:
-  pull_request:
+  pull_request_target:
     types: [opened, synchronize, reopened]
     paths:
       - '**/build.sh'
@@ -9,17 +9,22 @@ on:
       - '**/Cargo.toml'
       - '**/requirements.txt'
 
+permissions:
+  contents: read
+  pull-requests: write
+
 jobs:
   renovate-check:
-    if: github.actor == 'renovate[bot]'
+    if: github.event.pull_request.user.login == 'renovate[bot]'
     runs-on: ubuntu-latest
     name: Validate Renovate PR
 
     steps:
-      - name: Checkout repository
+      - name: Checkout PR code
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
 
       # -----------------------------
       # DETECT CHANGED FILES
@@ -51,6 +56,7 @@ jobs:
               echo "✅ Syntax OK"
             fi
           done
+
           if [ $ERROR -eq 1 ]; then
             exit 1
           fi
@@ -63,10 +69,15 @@ jobs:
         shell: bash
         run: |
           FAIL=0
+          BASE_SHA="${{ github.event.pull_request.base.sha }}"
 
-          PKGS=$(git diff "${{ github.event.pull_request.base.sha }}"...HEAD --name-only \
-            | awk -F/ '/^packages\/[^/]+\/build.sh/{print $2}' \
+          PKGS=$(git diff "$BASE_SHA"...HEAD --name-only \
+            | awk -F/ '/^packages\/[^/]+\/build.sh$/ {print $2}' \
             | sort -u)
+
+          if [[ -z "$PKGS" ]]; then
+            echo "ℹ️ No package changes detected"
+          fi
 
           for PKG in $PKGS; do
             echo "📦 Checking $PKG"
