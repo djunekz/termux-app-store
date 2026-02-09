@@ -1,14 +1,13 @@
-
 name: Lint PR Checker & Helper
+
+on:
+  pull_request_target:
+    paths:
+      - '**/build.sh'
 
 permissions:
   issues: write
   pull-requests: write
-
-on:
-  pull_request:
-    paths:
-      - '**/build.sh'
 
 jobs:
   lint:
@@ -17,38 +16,44 @@ jobs:
     name: Lint build.sh
 
     steps:
-      - name: Checkout code
+      - name: Checkout base repository
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
+          ref: ${{ github.event.pull_request.base.ref }}
+
+      - name: Fetch PR changes
+        shell: bash
+        run: |
+          git fetch origin pull/${{ github.event.pull_request.number }}/head:pr
+          git checkout pr
 
       - name: Find changed build.sh files
         id: files
+        shell: bash
         run: |
           BASE_SHA="${{ github.event.pull_request.base.sha }}"
-          HEAD_SHA="${{ github.sha }}"
+          HEAD_SHA="${{ github.event.pull_request.head.sha }}"
           FILES=$(git diff --name-only "$BASE_SHA" "$HEAD_SHA" | grep 'build.sh' || true)
           echo "changed_files=$FILES" >> "$GITHUB_OUTPUT"
 
       - name: Lint build.sh (bash -n only)
         id: lint
+        shell: bash
         run: |
           ERROR=0
           for file in ${{ steps.files.outputs.changed_files }}; do
             echo "Checking $file"
             chmod +x "$file"
             sed -i 's/\r$//' "$file"
-
             if ! bash -n "$file"; then
-              echo "Syntax error in $file"
+              echo "❌ Syntax error in $file"
               ERROR=1
             fi
           done
-
           echo "lint_status=$ERROR" >> "$GITHUB_OUTPUT"
 
       - name: Remove old lint labels
-        if: github.event.pull_request.head.repo.full_name == github.repository
         uses: actions-ecosystem/action-remove-labels@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -67,17 +72,3 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           labels: review-failed
-
-      - name: Comment on PR if lint fails
-        if: steps.lint.outputs.lint_status == '1'
-        uses: peter-evans/create-or-update-comment@v5
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          issue-number: ${{ github.event.pull_request.number }}
-          body: |
-            ❌ **Lint failed for build.sh**
-
-            - `bash -n` detected a syntax error
-            - Please fix the error before merging
-
-            This check does **not** modify your code.
