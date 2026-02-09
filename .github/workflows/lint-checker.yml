@@ -44,20 +44,20 @@ jobs:
       - name: Remove old lint labels
         uses: actions-ecosystem/action-remove-labels@v1
         with:
-          github_token: ${{ secrets.PAT_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           labels: review-approved, review-failed
 
       - name: Add current lint label
         uses: actions-ecosystem/action-add-labels@v1
         with:
-          github_token: ${{ secrets.PAT_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           labels: ${{ steps.autofix.outputs.lint_status == '0' && 'review-approved' || 'review-failed' }}
 
       - name: Comment on PR if lint fails
         if: steps.autofix.outputs.lint_status == '1'
         uses: peter-evans/create-or-update-comment@v4
         with:
-          token: ${{ secrets.PAT_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.pull_request.number }}
           body: |
             ⚠️ Lint check failed for **build.sh**.
