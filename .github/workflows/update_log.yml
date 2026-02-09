@@ -24,19 +24,17 @@ jobs:
 
           CHANGELOG="CHANGELOG.md"
 
-          # Create changelog if missing
           if [[ ! -f "$CHANGELOG" ]]; then
-            cat > "$CHANGELOG" <<'EOF'
-# Changelog
-
-## [Unreleased]
-### Added
-### Updated
-### Fixed
-EOF
+            printf "%s\n" \
+              "# Changelog" \
+              "" \
+              "## [Unreleased]" \
+              "### Added" \
+              "### Updated" \
+              "### Fixed" \
+              > "$CHANGELOG"
           fi
 
-          # Detect changed build.sh files
           git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" \
             | grep '^packages/.*/build.sh' > /tmp/changed || true
 
