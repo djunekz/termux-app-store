@@ -11,6 +11,36 @@ and this project adheres to semantic versioning.
 
 ---
 
+## [v0.1.2] - 2026-02-10
+### Added
+- Package `pymaker` v1.0.0
+- Package `baxter` v1.2.4
+- termux-build for check lint, check-pr, and etc
+- Package browser with search and live preview
+- tasctl for install, uninstall, update termux-app-store
+- Auto-detection of system architecture
+- file uninstall.sh
+- Portable path resolver (works via symlink, binary, or any directory)
+- Self-healing package path detection
+- Support architecture aarch64, arm, x86_64, i686
+- Progress bar and live build log panel
+- Status badges: INSTALLED
+- Status information: maintainer
+
+### Fixed
+- List panel not updating preview on ENTER
+- ProgressBar API misuse causing runtime crash
+- Failure when running outside project root directory
+- Crash when directory is missing or relocated
+- Fast render
+
+### Changed
+- Improved package scanning logic
+- Safer subprocess handling for build output
+- More robust UI refresh behavior during installation
+
+---
+
 ## [v0.1.0] - 2026-02-02
 ### Added
 - Package `webshake` v1.0.2

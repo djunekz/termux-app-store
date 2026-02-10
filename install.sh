@@ -60,6 +60,7 @@ case "$ARCH" in
   aarch64) BIN="termux-app-store-aarch64" ;;
   armv7l|armv8l) BIN="termux-app-store-arm" ;;
   x86_64) BIN="termux-app-store-x86_64" ;;
+  i686) BIN="termux-app-store-i686" ;;
   *)
     die "Unsupported architecture: $ARCH"
     ;;
