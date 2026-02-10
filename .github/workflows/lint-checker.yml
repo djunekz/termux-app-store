@@ -17,7 +17,7 @@ jobs:
 
     steps:
       - name: Checkout base repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.base.ref }}
@@ -35,23 +35,35 @@ jobs:
           BASE_SHA="${{ github.event.pull_request.base.sha }}"
           HEAD_SHA="${{ github.event.pull_request.head.sha }}"
           FILES=$(git diff --name-only "$BASE_SHA" "$HEAD_SHA" | grep 'build.sh' || true)
-          echo "changed_files=$FILES" >> "$GITHUB_OUTPUT"
+
+          {
+            echo "changed_files<<EOF"
+            echo "$FILES"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
 
       - name: Lint build.sh (bash -n only)
         id: lint
         shell: bash
         run: |
           ERROR=0
-          for file in ${{ steps.files.outputs.changed_files }}; do
-            echo "Checking $file"
+
+          while read -r file; do
+            [ -z "$file" ] && continue
+            echo "🧹 Checking $file"
             chmod +x "$file"
             sed -i 's/\r$//' "$file"
             if ! bash -n "$file"; then
               echo "❌ Syntax error in $file"
               ERROR=1
             fi
-          done
-          echo "lint_status=$ERROR" >> "$GITHUB_OUTPUT"
+          done <<< "${{ steps.files.outputs.changed_files }}"
+
+          {
+            echo "lint_status<<EOF"
+            echo "$ERROR"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
 
       - name: Remove old lint labels
         uses: actions-ecosystem/action-remove-labels@v1
