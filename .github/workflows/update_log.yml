@@ -4,11 +4,19 @@ on:
   push:
     branches:
       - master
+  pull_request:
+    types: [closed]
+
+permissions:
+  contents: write
 
 jobs:
   changelog:
+    name: Update Changelog
     runs-on: ubuntu-latest
-    if: "!contains(github.event.head_commit.message, '[ci skip]')"
+    if: |
+      github.event_name == 'push' ||
+      (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
 
     steps:
       - name: Checkout repository
@@ -24,6 +32,7 @@ jobs:
 
           CHANGELOG="CHANGELOG.md"
 
+
           if [[ ! -f "$CHANGELOG" ]]; then
             printf "%s\n" \
               "# Changelog" \
@@ -35,7 +44,9 @@ jobs:
               > "$CHANGELOG"
           fi
 
-          git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" \
+
+          git fetch origin master --depth=1
+          git diff --name-only HEAD~1 HEAD \
             | grep '^packages/.*/build.sh' > /tmp/changed || true
 
           [[ -s /tmp/changed ]] || exit 0
@@ -65,5 +76,5 @@ jobs:
           git add CHANGELOG.md
           if ! git diff --cached --quiet; then
             git commit -m "changelog: update packages [ci skip]"
-            git push origin master --force-with-lease
+            git push origin master
           fi
