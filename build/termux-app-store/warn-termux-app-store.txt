@@ -4,6 +4,7 @@ necessarily mean these modules are required for running your program. Both
 Python's standard library and 3rd-party Python packages often conditionally
 import optional modules, some of which may be available only on certain
 platforms.
+thanks to Djunekz.
 
 Types of import:
 * top-level: imported at the top-level - look at these first
