@@ -1,4 +1,9 @@
 #!/usr/bin/env bash
+# Dont edit or delete this file
+# Termux App Store Official
+# Developer: Djunekz
+# https://github.com/djunekz/termux-app-store
+
 set -euo pipefail
 
 PACKAGE="$1"
