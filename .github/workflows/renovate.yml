@@ -3,6 +3,8 @@ name: Renovate PR Checker
 on:
   pull_request_target:
     types: [opened, synchronize, reopened, labeled]
+  pull_request:
+    types: [opened, synchronize, reopened, labeled]
 
 permissions:
   contents: read
@@ -10,14 +12,10 @@ permissions:
 
 jobs:
   renovate-check:
-    name: renovate-check
+    name: Renovate PR Checker
     runs-on: ubuntu-latest
 
-    if: |
-      contains(
-        join(github.event.pull_request.labels.*.name, ','),
-        'renovate'
-      )
+    if: github.actor == 'renovate[bot]'
 
     steps:
       - name: Checkout PR code
@@ -55,10 +53,10 @@ jobs:
           done
 
       - name: Validate package metadata
+        shell: bash
         run: |
           FAIL=0
           BASE="${{ github.event.pull_request.base.sha }}"
-
           PKGS=$(git diff "$BASE"...HEAD --name-only \
             | awk -F/ '/^packages\/[^/]+\/build.sh$/ {print $2}' \
             | sort -u)
@@ -80,5 +78,5 @@ jobs:
           issue-number: ${{ github.event.pull_request.number }}
           body: |
             🤖 **Renovate PR detected**
-            ✅ Checks passed
+            ✅ Syntax & metadata check passed
             🔒 Manual review still required
