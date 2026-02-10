@@ -1,17 +1,30 @@
 {
-  "extends": ["config:base"],
+  "extends": [
+    "config:recommended"
+  ],
   "automerge": false,
   "packageRules": [
     {
-      "updateTypes": ["patch", "minor"],
+      "matchUpdateTypes": [
+        "patch",
+        "minor"
+      ],
       "automerge": false
     },
     {
-      "updateTypes": ["major"],
+      "matchUpdateTypes": [
+        "major"
+      ],
       "automerge": false
     }
   ],
-  "reviewers": ["djunekz"],
-  "schedule": ["at any time"],
-  "prBodyNotes": ["⚠️ PR from Renovate Bot. All merges must be approved by a human."]
+  "reviewers": [
+    "djunekz"
+  ],
+  "schedule": [
+    "at any time"
+  ],
+  "prBodyNotes": [
+    "⚠️ PR from Renovate Bot. All merges must be approved by a human."
+  ]
 }
