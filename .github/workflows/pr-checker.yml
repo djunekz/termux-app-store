@@ -35,13 +35,18 @@ jobs:
         shell: bash
         run: |
           BASE_SHA="${{ github.event.pull_request.base.sha }}"
+
           PKGS=$(git diff "$BASE_SHA"...HEAD --name-only \
             | awk -F/ '/^packages\/[^/]+\/build.sh$/ {print $2}' \
             | sort -u)
 
-          echo "changed=$PKGS" >> "$GITHUB_OUTPUT"
+          {
+            echo "changed<<EOF"
+            echo "$PKGS"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
 
-      - name: Validate build.sh metadata (safe expand)
+      - name: Validate build.sh metadata (safe, no eval)
         id: checker
         shell: bash
         run: |
@@ -84,7 +89,7 @@ jobs:
             check TERMUX_PKG_SRCURL "$SRCURL_RAW"
             check TERMUX_PKG_SHA256 "$SHA256"
 
-            # --- SAFE EXPANSION (NO eval / NO source) ---
+            # --- SAFE variable expansion ---
             SRCURL="$SRCURL_RAW"
             if [[ "$SRCURL" == *'${TERMUX_PKG_VERSION}'* ]]; then
               if [[ -z "$VERSION" ]]; then
@@ -128,10 +133,12 @@ jobs:
             REPORT+="\n"
           done
 
-          echo "report<<EOF" >> "$GITHUB_OUTPUT"
-          echo -e "$REPORT" >> "$GITHUB_OUTPUT"
-          echo "EOF" >> "$GITHUB_OUTPUT"
-          echo "fail=$FAIL" >> "$GITHUB_OUTPUT"
+          {
+            echo "report<<EOF"
+            echo -e "$REPORT"
+            echo "EOF"
+            echo "fail=$FAIL"
+          } >> "$GITHUB_OUTPUT"
 
       - name: Post PR report
         uses: marocchino/sticky-pull-request-comment@v2

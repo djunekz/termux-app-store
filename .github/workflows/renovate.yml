@@ -27,7 +27,12 @@ jobs:
         run: |
           BASE="${{ github.event.pull_request.base.sha }}"
           FILES=$(git diff "$BASE"...HEAD --name-only || true)
-          echo "files=$FILES" >> "$GITHUB_OUTPUT"
+
+          {
+            echo "files<<EOF"
+            echo "$FILES"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
 
       - name: Skip if no relevant changes
         if: |
@@ -41,25 +46,31 @@ jobs:
 
       - name: Lint build.sh (syntax)
         if: contains(steps.files.outputs.files, 'build.sh')
+        shell: bash
         run: |
           set -e
-          for file in $(echo "${{ steps.files.outputs.files }}" | grep build.sh); do
+          while read -r file; do
+            [[ "$file" != *build.sh ]] && continue
             echo "🧹 Checking $file"
             sed -i 's/\r$//' "$file"
             bash -n "$file"
-          done
+          done <<< "${{ steps.files.outputs.files }}"
 
       - name: Validate package metadata
         shell: bash
         run: |
+          set -e
           FAIL=0
           BASE="${{ github.event.pull_request.base.sha }}"
+
           PKGS=$(git diff "$BASE"...HEAD --name-only \
             | awk -F/ '/^packages\/[^/]+\/build.sh$/ {print $2}' \
             | sort -u)
 
           for PKG in $PKGS; do
             BUILD="packages/$PKG/build.sh"
+            echo "🔍 Validating $BUILD"
+
             get() { grep -E "^$1=" "$BUILD" | cut -d= -f2- | head -n1; }
 
             [[ -z "$(get TERMUX_PKG_VERSION)" ]] && FAIL=1
