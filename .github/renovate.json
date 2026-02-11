@@ -1,7 +1,6 @@
 {
   "extends": ["config:recommended"],
   "automerge": false,
-  "allowMaintainerEdit": true,
   "assignees": ["@djunekz"],
   "reviewers": ["@djunekz"],
   "prBodyNotes": ["⚠️ PR from Renovate Bot. All merges must be approved by a human."],
