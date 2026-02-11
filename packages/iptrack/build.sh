@@ -4,7 +4,7 @@ TERMUX_PKG_LICENSE="MIT"
 TERMUX_PKG_MAINTAINER="@termux-app-store"
 TERMUX_PKG_VERSION=1.0.0
 TERMUX_PKG_SRCURL=https://github.com/droidv1/termool/releases/download/v${TERMUX_PKG_VERSION}/iptrack.tar.gz
-TERMUX_PKG_SHA256=43c5fe4734ef358fe17659a08b5846682d43f046e880233503f7412ebbdf1238
+TERMUX_PKG_SHA256=got:7bbaf211e73e7e9c86eee7138abfaf9ccb9b9ed3f84f3933cb3f60db0e10156b
 TERMUX_PKG_BUILD_IN_SRC=true
 
 termux_step_make_install() {
