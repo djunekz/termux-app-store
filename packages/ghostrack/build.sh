@@ -10,3 +10,4 @@ TERMUX_PKG_BUILD_IN_SRC=true
 termux_step_make_install() {
   install -Dm755 ghostrack.py $TERMUX_PREFIX/bin/ghostrack
 }
+
