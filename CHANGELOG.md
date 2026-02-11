@@ -9,6 +9,7 @@ and this project adheres to semantic versioning.
 
 ## [Unreleased]
 ### Added
+- Package `iptrack` v1.0.0
 ### Update
 ### Fixed
 ### Changed
@@ -17,6 +18,7 @@ and this project adheres to semantic versioning.
 
 ## [v0.1.2] - 2026-02-10
 ### Added
+- Package `iptrack` v1.0.0
 - Package `pymaker` v1.0.0
 - Package `baxter` v1.2.4
 - termux-build for check lint, check-pr, and etc
@@ -47,6 +49,7 @@ and this project adheres to semantic versioning.
 
 ## [v0.1.0] - 2026-02-02
 ### Added
+- Package `iptrack` v1.0.0
 - Package `webshake` v1.0.2
 - Package `termstyle` v1.0.0
 - Package `tdoc` v1.0.5
