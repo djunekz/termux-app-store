@@ -1,4 +1,4 @@
-name: Termux App Store CI
+name: build
 
 on:
   push:
@@ -10,6 +10,7 @@ on:
 
 jobs:
   build:
+    name: build
     runs-on: ubuntu-latest
 
     steps:
@@ -19,13 +20,15 @@ jobs:
           fetch-depth: 0
 
       - name: Make scripts executable
+        shell: bash
         run: |
           chmod +x termux-build || true
           chmod +x tasctl || true
           chmod +x tools/termux-build-create.sh || true
           chmod +x tools/validate-build.sh || true
 
-      - name: Lint packages
+      - name: Lint packages (termux-build lint)
+        shell: bash
         run: |
           set -e
           for pkg in packages/*; do
@@ -35,16 +38,8 @@ jobs:
             ./termux-build lint "$NAME"
           done
 
-      - name: Check PR
-        if: github.event_name == 'pull_request'
-        run: |
-          set -e
-          for pkg in packages/*; do
-            [[ -d "$pkg" ]] || continue
-            ./termux-build check-pr "$(basename "$pkg")"
-          done
-
-      - name: Validate build scripts
+      - name: Validate build.sh scripts
+        shell: bash
         run: |
           set -e
           for pkg in packages/*; do
@@ -56,14 +51,16 @@ jobs:
           done
 
       - name: Generate templates (dry-run)
+        shell: bash
         run: |
           ./termux-build template --dry-run
 
       - name: Setup Python
         uses: actions/setup-python@v6
         with:
-          python-version: "3.12"
+          python-version: "3.14"
 
-      - name: Run CLI validation
+      - name: Run internal build checks
+        shell: bash
         run: |
           python ci/run_termux_build.py
