@@ -76,6 +76,17 @@ jobs:
           echo "[✓] Detected changes in:"
           echo "$CHANGED_FILES"
 
+          # Extract the [Unreleased] section content
+          UNRELEASED_START=$(grep -n "^## \[Unreleased\]" "$CHANGELOG" | head -1 | cut -d: -f1)
+          UNRELEASED_END=$(tail -n +$((UNRELEASED_START + 1)) "$CHANGELOG" | grep -n "^## \[" | head -1 | cut -d: -f1)
+          
+          if [[ -z "$UNRELEASED_END" ]]; then
+            # No other version headers, use end of file
+            UNRELEASED_END=$(wc -l < "$CHANGELOG")
+          else
+            UNRELEASED_END=$((UNRELEASED_START + UNRELEASED_END - 1))
+          fi
+
           # Process each changed package
           while IFS= read -r build_file; do
             [[ -z "$build_file" ]] && continue
@@ -96,20 +107,27 @@ jobs:
               continue
             fi
 
-            # Determine if package is new or updated
-            if grep -q "Package \`${pkg_name}\`" "$CHANGELOG"; then
+            # Determine if package is new or updated (ONLY in [Unreleased] section)
+            if sed -n "${UNRELEASED_START},${UNRELEASED_END}p" "$CHANGELOG" | grep -q "Package \`${pkg_name}\`"; then
               section="Updated"
             else
               section="Added"
             fi
 
-            # Check if entry already exists
-            if ! awk '/## \[Unreleased\]/,/^## \[/' "$CHANGELOG" | grep -q "\`${pkg_name}\` v${pkg_version}"; then
-              # Find the section line and add entry after it
-              sed -i "/^### ${section}$/a - Package \`${pkg_name}\` v${pkg_version}" "$CHANGELOG"
-              echo "[✓] Added/Updated: \`${pkg_name}\` v${pkg_version} to ${section}"
+            # Check if entry already exists in [Unreleased] section only
+            if ! sed -n "${UNRELEASED_START},${UNRELEASED_END}p" "$CHANGELOG" | grep -q "\`${pkg_name}\` v${pkg_version}"; then
+              # Find the section line within [Unreleased] and add entry after it
+              # This is more complex - we need to find the right "### ${section}" line within [Unreleased]
+              SECTION_LINE=$(awk "NR>=${UNRELEASED_START} && NR<=${UNRELEASED_END} && /^### ${section}$/ {print NR; exit}" "$CHANGELOG")
+              
+              if [[ -n "$SECTION_LINE" ]]; then
+                sed -i "${SECTION_LINE}a - Package \`${pkg_name}\` v${pkg_version}" "$CHANGELOG"
+                echo "[✓] Added/Updated: \`${pkg_name}\` v${pkg_version} to ${section} (in [Unreleased])"
+              else
+                echo "[⚠] Could not find section '### ${section}' in [Unreleased]"
+              fi
             else
-              echo "[ℹ] Entry already exists: \`${pkg_name}\` v${pkg_version}"
+              echo "[ℹ] Entry already exists in [Unreleased]: \`${pkg_name}\` v${pkg_version}"
             fi
           done <<< "$CHANGED_FILES"
 
