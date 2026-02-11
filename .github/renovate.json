@@ -3,17 +3,25 @@
   "automerge": false,
   "allowMaintainerEdit": true,
   "assignees": ["djunekz"],
+  "reviewers": ["djunekz"],
+  "schedule": ["at any time"],
+  "prBodyNotes": ["⚠️ PR from Renovate Bot. All merges must be approved by a human."],
   "packageRules": [
     {
-      "matchUpdateTypes": ["patch", "minor"],
-      "automerge": false
+      "matchUpdateTypes": ["patch"],
+      "automerge": false,
+      "schedule": ["at any time"]
+    },
+    {
+      "matchUpdateTypes": ["minor"],
+      "automerge": false,
+      "schedule": ["at any time"]
     },
     {
       "matchUpdateTypes": ["major"],
-      "automerge": false
+      "automerge": false,
+      "schedule": ["at any time"],
+      "reviewers": ["djunekz"]
     }
-  ],
-  "reviewers": ["djunekz"],
-  "schedule": ["at any time"],
-  "prBodyNotes": ["⚠️ PR from Renovate Bot. All merges must be approved by a human."]
+  ]
 }
