@@ -4,18 +4,30 @@ on:
   push:
     branches:
       - master
+    paths:
+      - 'packages/**/build.sh'
+  pull_request:
+    branches:
+      - master
+    types: [closed]
+
+permissions:
+  contents: write
 
 jobs:
   changelog:
+    name: Update Changelog
     runs-on: ubuntu-latest
-    if: "!contains(github.event.head_commit.message, '[ci skip]')"
+    if: |
+      (github.event_name == 'push') ||
+      (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
-          token: ${{ secrets.TERMUXAPPSTORE }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Detect package changes and update changelog
         shell: bash
@@ -24,46 +36,96 @@ jobs:
 
           CHANGELOG="CHANGELOG.md"
 
+          # Initialize changelog if it doesn't exist
           if [[ ! -f "$CHANGELOG" ]]; then
             printf "%s\n" \
               "# Changelog" \
               "" \
               "## [Unreleased]" \
               "### Added" \
+              "" \
               "### Updated" \
+              "" \
               "### Fixed" \
+              "" \
               > "$CHANGELOG"
+            echo "[✓] Created new CHANGELOG.md"
           fi
 
-          git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" \
-            | grep '^packages/.*/build.sh' > /tmp/changed || true
+          # Find changed packages
+          CHANGED_FILES=""
+          
+          if [[ "${{ github.event_name }}" == "push" ]]; then
+            # For push events
+            if [[ "${{ github.event.before }}" != "0000000000000000000000000000000000000000" ]]; then
+              CHANGED_FILES=$(git diff --name-only ${{ github.event.before }}..${{ github.event.after }} | grep '^packages/.*/build\.sh' || true)
+            else
+              # First push to branch, get all build.sh files
+              CHANGED_FILES=$(find packages -name "build.sh" -type f)
+            fi
+          elif [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            # For merged pull requests
+            CHANGED_FILES=$(git diff --name-only ${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }} | grep '^packages/.*/build\.sh' || true)
+          fi
 
-          [[ -s /tmp/changed ]] || exit 0
+          if [[ -z "$CHANGED_FILES" ]]; then
+            echo "[ℹ] No package changes detected"
+            exit 0
+          fi
 
-          while read -r build; do
-            pkg="$(basename "$(dirname "$build")")"
-            ver="$(grep '^TERMUX_PKG_VERSION=' "$build" | cut -d= -f2)"
+          echo "[✓] Detected changes in:"
+          echo "$CHANGED_FILES"
 
-            if grep -q "Package \`${pkg}\`" "$CHANGELOG"; then
+          # Process each changed package
+          while IFS= read -r build_file; do
+            [[ -z "$build_file" ]] && continue
+            
+            pkg_dir=$(dirname "$build_file")
+            pkg_name=$(basename "$pkg_dir")
+            
+            # Extract version from build.sh
+            if [[ ! -f "$build_file" ]]; then
+              echo "[⚠] File not found: $build_file"
+              continue
+            fi
+            
+            pkg_version=$(grep '^TERMUX_PKG_VERSION=' "$build_file" | head -1 | cut -d= -f2 | tr -d '\n')
+            
+            if [[ -z "$pkg_version" ]]; then
+              echo "[⚠] Could not extract version from $build_file"
+              continue
+            fi
+
+            # Determine if package is new or updated
+            if grep -q "Package \`${pkg_name}\`" "$CHANGELOG"; then
               section="Updated"
             else
               section="Added"
             fi
 
-            if ! awk '/## \[Unreleased\]/,/^## \[/' "$CHANGELOG" \
-              | grep -q "\`${pkg}\` v${ver}"; then
-              sed -i "/### ${section}/a - Package \`${pkg}\` v${ver}" "$CHANGELOG"
+            # Check if entry already exists
+            if ! awk '/## \[Unreleased\]/,/^## \[/' "$CHANGELOG" | grep -q "\`${pkg_name}\` v${pkg_version}"; then
+              # Find the section line and add entry after it
+              sed -i "/^### ${section}$/a - Package \`${pkg_name}\` v${pkg_version}" "$CHANGELOG"
+              echo "[✓] Added/Updated: \`${pkg_name}\` v${pkg_version} to ${section}"
+            else
+              echo "[ℹ] Entry already exists: \`${pkg_name}\` v${pkg_version}"
             fi
-          done < /tmp/changed
+          done <<< "$CHANGED_FILES"
 
       - name: Commit & push changelog
         shell: bash
         run: |
-          git config user.name "Termux App Store"
+          git config user.name "Termux App Store Bot"
           git config user.email "258516621+termux-app-store@users.noreply.github.com"
 
-          git add CHANGELOG.md
-          if ! git diff --cached --quiet; then
-            git commit -m "changelog: update packages [ci skip]"
-            git push origin master --force-with-lease
+          if git diff --quiet CHANGELOG.md; then
+            echo "[ℹ] No changes to commit"
+            exit 0
           fi
+
+          git add CHANGELOG.md
+          git commit -m "docs: update changelog for package changes [ci skip]" \
+            -m "Auto-generated changelog update" || true
+          
+          git push origin master || echo "[⚠] Push failed (might be due to concurrent updates)"
