@@ -23,7 +23,7 @@ jobs:
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
-          token: ${{ secrets.TERMUXAPPSTORE }}
+          token: ${{ secrets.termuxappstore }}
 
       - name: Detect package changes and update changelog
         shell: bash
