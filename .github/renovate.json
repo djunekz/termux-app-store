@@ -1,9 +1,18 @@
 {
   "extends": ["config:recommended"],
+
+  "dependencyDashboard": false,
+  "dependencyDashboardAutoclose": true,
+
   "automerge": false,
+
   "assignees": ["@djunekz"],
   "reviewers": ["@djunekz"],
-  "prBodyNotes": ["⚠️ PR from Renovate Bot. All merges must be approved by a human."],
+
+  "prBodyNotes": [
+    "⚠️ PR from Renovate Bot. All merges must be approved by a human."
+  ],
+
   "packageRules": [
     {
       "matchUpdateTypes": ["patch"],
