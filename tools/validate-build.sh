@@ -1,23 +1,39 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
-FILE="$1"
+# Safe color loader (CI friendly)
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+COLORS_FILE="$SCRIPT_DIR/colors.sh"
 
-if [[ -z "${FILE:-}" ]]; then
-    echo "Usage: validate-build.sh <path/to/build.sh>"
+if [[ -f "$COLORS_FILE" ]]; then
+  # shellcheck disable=SC1090
+  source "$COLORS_FILE"
+else
+  # fallback if colors.sh not found (prevent CI failure)
+  BOLD_RED=""
+  BOLD_GREEN=""
+  BOLD_YELLOW=""
+  BOLD_CYAN=""
+  CYAN=""
+  RESET=""
+fi
+
+FILE="${1:-}"
+
+if [[ -z "$FILE" ]]; then
+    echo -e "${BOLD_YELLOW}Usage:${RESET} validate-build.sh <path/to/build.sh>"
     exit 2
 fi
 
 if [[ ! -f "$FILE" ]]; then
-    echo "❌ ERROR: File not found: $FILE"
+    echo -e "${BOLD_RED}❌ ERROR:${RESET} File not found: $FILE"
     exit 2
 fi
 
-# Ambil nama package dari path, misal: packages/tdoc/build.sh → tdoc
 PACKAGE_NAME="$(basename "$(dirname "$FILE")")"
 
-echo "🔎 Validating build.sh → 📦$PACKAGE_NAME"
-echo "================================================="
+echo -e "${BOLD_CYAN}🔎 Validating build.sh → 📦$PACKAGE_NAME${RESET}"
+echo -e "${CYAN}=================================================${RESET}"
 
 FAIL=0
 
@@ -25,10 +41,10 @@ FAIL=0
 check_var() {
     local var="$1"
     if ! grep -Eq "^${var}=" "$FILE"; then
-        echo "❌ FAIL : $var is missing"
+        echo -e "${BOLD_RED}❌ FAIL :${RESET} $var is missing"
         FAIL=1
     else
-        echo "✅ OK   : $var"
+        echo -e "${BOLD_GREEN}✅ OK   :${RESET} $var"
     fi
 }
 
@@ -43,50 +59,54 @@ check_var "TERMUX_PKG_SHA256"
 
 # ---------- BASIC SANITY ----------
 if grep -q "dpkg -i" "$FILE"; then
-    echo "⚠️  WARN : build.sh contains 'dpkg -i' (not allowed in Termux build)"
+    echo -e "${BOLD_YELLOW}⚠️  WARN :${RESET} build.sh contains 'dpkg -i' (not allowed in Termux build)"
 fi
 
 if grep -q "sudo " "$FILE"; then
-    echo "❌ FAIL : sudo usage detected"
+    echo -e "${BOLD_RED}❌ FAIL :${RESET} sudo usage detected"
     FAIL=1
 fi
 
 if grep -q "apt install" "$FILE"; then
-    echo "⚠️  WARN : apt install found (use pkg install instead)"
+    echo -e "${BOLD_YELLOW}⚠️  WARN :${RESET} apt install found (use pkg install instead)"
 fi
 
 # ---------- SOURCE SHA256 CHECK ----------
+# shellcheck disable=SC1090
 source "$FILE"
 eval "SRCURL=\"$TERMUX_PKG_SRCURL\""
 EXPECTED_SHA="${TERMUX_PKG_SHA256:-}"
 
 if [[ -n "$SRCURL" && -n "$EXPECTED_SHA" ]]; then
     echo
-    echo "🔎 Verifying SHA256 of source package 📦 $PACKAGE_NAME..."
+    echo -e "${BOLD_CYAN}🔎 Verifying SHA256 of source package 📦 $PACKAGE_NAME...${RESET}"
     TMPFILE=$(mktemp)
+
     if ! curl -sL "$SRCURL" -o "$TMPFILE"; then
-        echo "❌ Failed to download source from $SRCURL"
+        echo -e "${BOLD_RED}❌ Failed to download source from $SRCURL${RESET}"
         FAIL=1
     else
         ACTUAL_SHA=$(sha256sum "$TMPFILE" | awk '{print $1}')
         rm -f "$TMPFILE"
+
         if [[ "$ACTUAL_SHA" != "$EXPECTED_SHA" ]]; then
-            echo "❌ SHA256 mismatch!"
-            echo "   Expected: $EXPECTED_SHA"
-            echo "   Got     : $ACTUAL_SHA"
+            echo -e "${BOLD_RED}❌ SHA256 mismatch!${RESET}"
+            echo -e "   Expected: ${BOLD_YELLOW}$EXPECTED_SHA${RESET}"
+            echo -e "   Got     : ${BOLD_YELLOW}$ACTUAL_SHA${RESET}"
             FAIL=1
         else
-            echo "✅ SHA256 verified"
+            echo -e "${BOLD_GREEN}✅ SHA256 verified${RESET}"
         fi
     fi
 fi
 
 # ---------- RESULT ----------
-echo "-------------------------------------------------"
+echo -e "${CYAN}-------------------------------------------------${RESET}"
+
 if [[ "$FAIL" -eq 1 ]]; then
-    echo "❌ VALIDATION FAILED"
+    echo -e "${BOLD_RED}❌ VALIDATION FAILED${RESET}"
     exit 1
 else
-    echo "✅ VALIDATION PASSED"
+    echo -e "${BOLD_GREEN}✅ VALIDATION PASSED${RESET}"
     exit 0
 fi

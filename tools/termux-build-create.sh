@@ -1,22 +1,35 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
-PKG="${1:-}"
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+COLORS_FILE="$ROOT/tools/colors.sh"
+
+if [[ -f "$COLORS_FILE" ]]; then
+  source "$COLORS_FILE"
+else
+  BOLD_RED=""
+  BOLD_GREEN=""
+  BOLD_YELLOW=""
+  BOLD_CYAN=""
+  CYAN=""
+  RESET=""
+fi
+
+PKG="${1:-}"
 PKG_DIR="$ROOT/packages"
 TEMPLATE="$ROOT/template/build.sh"
 
 die() {
-  echo "❌ $*" >&2
+  echo -e "${BOLD_RED}❌ $*${RESET}" >&2
   exit 1
 }
 
 info() {
-  echo "ℹ $*"
+  echo -e "${CYAN}ℹ $*${RESET}"
 }
 
 ok() {
-  echo "✔ $*"
+  echo -e "${BOLD_GREEN}✔ $*${RESET}"
 }
 
 [[ -z "$PKG" ]] && die "Usage: ./termux-build create <package-name>"
@@ -37,23 +50,22 @@ cp "$TEMPLATE" "$TARGET/build.sh"
 chmod +x "$TARGET/build.sh"
 
 ok "Package created:"
-echo "  → packages/$PKG/build.sh"
+echo -e "  ${BOLD_YELLOW}→ packages/$PKG/build.sh${RESET}"
 
+# ---------- Steps ----------
 echo
-echo "============================================="
-info "Next steps:"
-echo "  - Edit file build.sh"
-info "  Recommend for new user:"
-echo "  - nano packages/$PKG/build.sh"
-info "  After completing the build.sh file:"
-echo "  Step 1)"
-echo "  Check installing your package"
-echo "     - Run: bash build-packages.sh $PKG"
-echo "     - Run: $PKG"
-echo "  Step 2)"
-ok "  If Successful, next for validation:"
-echo "     - Run: ./termux-build lint $PKG"
-die "  If error not installed, not run package:"
-echo "     - Create issue: (Support/Help Request)"
-echo "     https://github.com/djunekz/termux-app-store/issues"
-echo "=============================================="
+echo -e "${BOLD_CYAN}=============================================${RESET}"
+echo -e "${BOLD_CYAN}Next steps:${RESET}"
+echo -e "  ${BOLD_CYAN}- Edit file build.sh: ${BOLD_GREEN}nano packages/$PKG/build.sh${RESET}"
+
+echo -e "${BOLD_YELLOW}Step 1:${RESET}"
+echo -e "  ${BOLD_YELLOW}Check installing your package:${RESET}"
+echo -e "     - Run: ${BOLD_GREEN}bash build-packages.sh $PKG${RESET}"
+echo -e "     - Run: ${BOLD_GREEN}$PKG${RESET}"
+
+echo -e "${BOLD_YELLOW}Step 2:${RESET}"
+echo -e "  ${BOLD_YELLOW}Validation:${RESET}"
+echo -e "     - Run: ${BOLD_GREEN}./termux-build lint $PKG${RESET}"
+echo -e "     - Run: ${BOLD_GREEN}./termux-build doctor${RESET}"
+
+echo -e "${BOLD_CYAN}=============================================${RESET}"

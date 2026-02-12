@@ -1,23 +1,40 @@
 #!/usr/bin/env bash
+set -e
 
-cat <<'EOF'
-📦 Termux App Store – Contributor Guide
-======================================
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+COLORS_FILE="$ROOT/tools/colors.sh"
 
-1. termux-build DOES NOT modify files
-2. termux-build is NOT a build system
-3. termux-build helps you avoid PR rejection
+# Safe color loader (CI friendly)
+if [[ -f "$COLORS_FILE" ]]; then
+  # shellcheck disable=SC1090
+  source "$COLORS_FILE"
+else
+  CYAN=""
+  WHITE=""
+  BOLD_BLUE=""
+  BOLD_GREEN=""
+  BOLD_RED=""
+  RESET=""
+fi
+
+cat <<EOF
+${CYAN}📦 Termux App Store – Contributor Guide${RESET}
+${CYAN}=======================================${RESET}
+
+1. ${WHITE}termux-build DOES NOT modify files${RESET}
+2. ${WHITE}termux-build is NOT a build system${RESET}
+3. ${WHITE}termux-build helps you avoid PR rejection${RESET}
 
 Workflow:
-- write build.sh
-- run: termux-build lint
-- run: termux-build doctor
-- fix issues manually
-- submit PR
+- ${WHITE}write build.sh${RESET}
+- run: ${BOLD_BLUE}termux-build lint${RESET}
+- run: ${BOLD_BLUE}termux-build doctor${RESET}
+- ${WHITE}fix issues manually${RESET}
+- ${WHITE}submit PR${RESET}
 
 If termux-build passes:
-✔ your PR is structurally safe
-❌ maintainer may still reject (policy reasons)
+${BOLD_GREEN}✔ your PR is structurally safe${RESET}
+${BOLD_RED}❌ maintainer may still reject (policy reasons)${RESET}
 
-This is a pre-flight checklist, not CI.
+${CYAN}This is a pre-flight checklist, not CI.${RESET}
 EOF
