@@ -4,15 +4,20 @@ TERMUX_PKG_LICENSE="MIT"
 TERMUX_PKG_MAINTAINER="@termux-app-store"
 TERMUX_PKG_VERSION=1.0.0
 TERMUX_PKG_SRCURL=https://github.com/droidv1/termool/releases/download/v${TERMUX_PKG_VERSION}/impulse.tar.gz
-TERMUX_PKG_SHA256=d2f1c7310b1b0503d1e88aabb29eec686acc6db52eb6585102f4b129a919ee2f
+TERMUX_PKG_SHA256=cb78b4bfe4f4bb29aaa773f0b0939de4ea3c84796d5a6c169a728f0a4266d710
 TERMUX_PKG_BUILD_IN_SRC=true
 
 termux_step_make_install() {
+    mkdir -p $TERMUX_PREFIX/lib/impulse
     mkdir -p $TERMUX_PREFIX/bin
 
-    install -m 0755 impulse.py $TERMUX_PREFIX/bin/impulse
+    cp -r * $TERMUX_PREFIX/lib/impulse/
 
-    cp -r tools $TERMUX_PREFIX/share/impulse
+    cat > $TERMUX_PREFIX/bin/impulse <<EOF
+#!/data/data/com.termux/files/usr/bin/bash
+cd $TERMUX_PREFIX/lib/impulse
+exec python3 impulse.py "\$@"
+EOF
 
-    cp requirements.txt $TERMUX_PREFIX/share/impulse/
+    chmod +x $TERMUX_PREFIX/bin/impulse
 }
