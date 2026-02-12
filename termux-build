@@ -4,6 +4,7 @@ set -e
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 COMMAND="${1:-}"
 BASE_DIR="$ROOT/tools"
+source "$BASE_DIR/colors.sh"
 
 case "$COMMAND" in
     create|-c|-C)
@@ -43,15 +44,15 @@ case "$COMMAND" in
         ;;
 
     *)
-        echo "Usage:"
-        echo "  ./termux-build create <package>"
-        echo "  ./termux-build lint <path | package-name>"
-        echo "  ./termux-build check-pr <package>"
-        echo "  ./termux-build doctor"
-        echo "  ./termux-build suggest <package>"
-        echo "  ./termux-build explain <package>"
-        echo "  ./termux-build template"
-        echo "  ./termux-build guide"
+        echo -e "${RED}Usage:${RESET}"
+        echo -e "  ${GREEN}./termux-build create <package>${RESET}"
+        echo -e "  ${GREEN}./termux-build lint <path | package-name>${RESET}"
+        echo -e "  ${GREEN}./termux-build check-pr <package>${RESET}"
+        echo -e "  ${GREEN}./termux-build doctor${RESET}"
+        echo -e "  ${GREEN}./termux-build suggest <package>${RESET}"
+        echo -e "  ${GREEN}./termux-build explain <package>${RESET}"
+        echo -e "  ${GREEN}./termux-build template${RESET}"
+        echo -e "  ${GREEN}./termux-build guide${RESET}"
         exit 1
         ;;
 esac
