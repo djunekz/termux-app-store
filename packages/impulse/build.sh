@@ -1,4 +1,4 @@
-TERMUX_PKG_HOMEPAGE=https://github.com/username/Impulse
+TERMUX_PKG_HOMEPAGE=https://github.com/LimerBoy/Impulse
 TERMUX_PKG_DESCRIPTION="Denial-of-Service ToolKit with multiple attack methods"
 TERMUX_PKG_LICENSE="MIT"
 TERMUX_PKG_MAINTAINER="@termux-app-store"
