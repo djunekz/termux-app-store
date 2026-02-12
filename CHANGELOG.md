@@ -9,6 +9,7 @@ and this project adheres to semantic versioning.
 
 ## [Unreleased]
 ### Added
+- Package `impulse` v1.0.0
 - Package `ghostrack` v1.0.0
 - Package `iptrack` v1.0.0
 ### Update
