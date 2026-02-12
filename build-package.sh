@@ -74,8 +74,15 @@ else
 fi
 
 # ---------------- FLATTEN ----------------
-SUBDIR="$(find "$SRC_ROOT" -mindepth 1 -maxdepth 1 -type d | head -n1)"
-[[ -n "$SUBDIR" ]] && SRC_ROOT="$SUBDIR"
+# Only flatten if there is exactly ONE subdir AND no files at top level.
+# Handles tarballs like project-1.0/ (flatten ok).
+# Keeps flat tarballs like impulse (impulse.py + tools/) as-is.
+_SUBDIRS=$(find "$SRC_ROOT" -mindepth 1 -maxdepth 1 -type d | wc -l)
+_TOPFILES=$(find "$SRC_ROOT" -mindepth 1 -maxdepth 1 -type f | wc -l)
+if [[ "$_SUBDIRS" -eq 1 && "$_TOPFILES" -eq 0 ]]; then
+    SUBDIR="$(find "$SRC_ROOT" -mindepth 1 -maxdepth 1 -type d | head -n1)"
+    SRC_ROOT="$SUBDIR"
+fi
 echo "[*] Source root: $SRC_ROOT"
 
 # ---------------- ENV ----------------
@@ -87,6 +94,7 @@ export DESTDIR="$WORK_DIR/pkg"
 echo "==> Running install (DESTDIR)..."
 
 if [[ -n "$PREBUILT_DEB" ]]; then
+    # ── Prebuilt .deb ──
     echo "[*] Installing prebuilt .deb..."
     dpkg -x "$PREBUILT_DEB" "$WORK_DIR/pkg"
     BIN_FILE="$(find "$WORK_DIR/pkg" -type f -name "$PACKAGE*" -executable | head -n1 || true)"
@@ -94,7 +102,6 @@ if [[ -n "$PREBUILT_DEB" ]]; then
         mkdir -p "$PREFIX/lib/$PACKAGE"
         mv "$BIN_FILE" "$PREFIX/lib/$PACKAGE/$PACKAGE"
         chmod +x "$PREFIX/lib/$PACKAGE/$PACKAGE"
-
         cat > "$PREFIX/bin/$PACKAGE" <<EOF
 #!/usr/bin/env bash
 exec "$PREFIX/lib/$PACKAGE/$PACKAGE" "\$@"
@@ -104,6 +111,7 @@ EOF
     fi
 
 elif [[ -f "$SRC_ROOT/Cargo.toml" ]]; then
+    # ── Rust source ──
     echo "[*] Rust source detected, building..."
     case "$ARCH" in
         aarch64) RUST_TARGET="aarch64-linux-android" ;;
@@ -116,21 +124,69 @@ elif [[ -f "$SRC_ROOT/Cargo.toml" ]]; then
     [[ -f "$BIN_PATH" ]] || { echo "[FATAL] Binary not found: $BIN_PATH"; exit 1; }
     install -Dm755 "$BIN_PATH" "$WORK_DIR/pkg/$PREFIX/bin/$PACKAGE"
 
-else
-    # ---------------- AUTO LANGUAGE DETECTION ----------------
-    MAIN_FILE="$(find "$SRC_ROOT" -maxdepth 1 -type f -perm /111 | head -n1 || true)"
+elif declare -f termux_step_make_install > /dev/null 2>&1; then
+    # ── Custom install function defined in build.sh ──
+    echo "[*] Custom termux_step_make_install() found, running..."
 
-    # if no executable, check for Python
-    [[ -z "$MAIN_FILE" ]] && MAIN_FILE="$(find "$SRC_ROOT" -maxdepth 1 -type f -name '*.py' | head -n1 || true)"
+    # Keep TERMUX_PREFIX as the REAL prefix.
+    # Some functions embed it as a literal string inside generated wrapper
+    # scripts (e.g. impulse), so overriding it would produce broken paths.
+    # We install directly to real prefix, then mirror to staging for dpkg-deb.
+    export TERMUX_PREFIX="$PREFIX"
+
+    cd "$TERMUX_PKG_SRCDIR"
+    termux_step_make_install
+    cd "$ROOT_DIR"
+
+    # Mirror installed files into staging dir for dpkg-deb
+    echo "[*] Staging installed files..."
+    mkdir -p "$WORK_DIR/pkg$PREFIX/bin" "$WORK_DIR/pkg$PREFIX/lib"
+    [[ -f "$PREFIX/bin/$PACKAGE" ]] && \
+        install -Dm755 "$PREFIX/bin/$PACKAGE" "$WORK_DIR/pkg$PREFIX/bin/$PACKAGE"
+    [[ -d "$PREFIX/lib/$PACKAGE" ]] && \
+        cp -r "$PREFIX/lib/$PACKAGE" "$WORK_DIR/pkg$PREFIX/lib/"
+    [[ -d "$PREFIX/share/doc/$PACKAGE" ]] && \
+        mkdir -p "$WORK_DIR/pkg$PREFIX/share/doc" && \
+        cp -r "$PREFIX/share/doc/$PACKAGE" "$WORK_DIR/pkg$PREFIX/share/doc/"
+
+    echo "[✔] Custom install completed."
+
+else
+    # ── Auto language detection (fallback) ──
+
+    # Search order:
+    # 1. File named exactly $PACKAGE (any extension) at SRC_ROOT level
+    # 2. Executable file at SRC_ROOT level
+    # 3. .py file at SRC_ROOT level
+    # 4. .sh file at SRC_ROOT level
+    # 5. File named $PACKAGE anywhere in the full src tree (handles
+    #    flat tarballs where SRC_ROOT was NOT flattened, e.g. impulse
+    #    has impulse.py at WORK_DIR/src alongside tools/)
+
+    # The real extract root (one level above SRC_ROOT if it was flattened)
+    EXTRACT_ROOT="$WORK_DIR/src"
+
+    MAIN_FILE=""
+    # Try SRC_ROOT first
+    [[ -z "$MAIN_FILE" ]] && MAIN_FILE="$(find "$SRC_ROOT" -maxdepth 1 -type f -name "$PACKAGE.py" | head -n1 || true)"
+    [[ -z "$MAIN_FILE" ]] && MAIN_FILE="$(find "$SRC_ROOT" -maxdepth 1 -type f -name "$PACKAGE" -perm /111 | head -n1 || true)"
+    [[ -z "$MAIN_FILE" ]] && MAIN_FILE="$(find "$SRC_ROOT" -maxdepth 1 -type f -perm /111 | head -n1 || true)"
+    [[ -z "$MAIN_FILE" ]] && MAIN_FILE="$(find "$SRC_ROOT" -maxdepth 1 -type f -name "*.py" | head -n1 || true)"
+    [[ -z "$MAIN_FILE" ]] && MAIN_FILE="$(find "$SRC_ROOT" -maxdepth 1 -type f -name "*.sh" | head -n1 || true)"
+    # Widen search to full extract root (catches impulse.py sitting above tools/)
+    [[ -z "$MAIN_FILE" ]] && MAIN_FILE="$(find "$EXTRACT_ROOT" -maxdepth 2 -type f -name "$PACKAGE.py" | head -n1 || true)"
+    [[ -z "$MAIN_FILE" ]] && MAIN_FILE="$(find "$EXTRACT_ROOT" -maxdepth 2 -type f -name "$PACKAGE" | head -n1 || true)"
 
     if [[ -n "$MAIN_FILE" ]]; then
         BASENAME="$(basename "$MAIN_FILE")"
+        # Copy from the directory that contains the entry file
+        # so sibling files/dirs (e.g. tools/) are included
+        COPY_ROOT="$(dirname "$MAIN_FILE")"
+
         mkdir -p "$WORK_DIR/pkg/$PREFIX/lib/$PACKAGE"
-        cp "$SRC_ROOT"/* "$WORK_DIR/pkg/$PREFIX/lib/$PACKAGE/" 2>/dev/null || true
-        chmod +x "$WORK_DIR/pkg/$PREFIX/lib/$PACKAGE/$BASENAME"
+        cp -r "$COPY_ROOT"/. "$WORK_DIR/pkg/$PREFIX/lib/$PACKAGE/"
 
         mkdir -p "$WORK_DIR/pkg/$PREFIX/bin"
-        # detect interpreter
         FIRST_LINE="$(head -n1 "$MAIN_FILE")"
         if [[ "$FIRST_LINE" =~ ^#! ]]; then
             INTERPRETER=$(awk '{print $1}' <<<"$FIRST_LINE" | sed 's|#!||')
@@ -150,7 +206,6 @@ EOF
         echo "[!] No executable/main file found in $SRC_ROOT, skipping install."
     fi
 fi
-
 # ---------------- CONTROL ----------------
 CONTROL_DIR="$WORK_DIR/pkg/DEBIAN"
 mkdir -p "$CONTROL_DIR"

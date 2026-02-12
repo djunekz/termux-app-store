@@ -11,9 +11,36 @@ and this project adheres to semantic versioning.
 ### Added
 - Package `ghostrack` v1.0.0
 - Package `iptrack` v1.0.0
+- `termux-build create` for easy create packages and build.sh
+- `termux-build lint <package>` for check validation
+- `termux-build doctor` for check error
+
 ### Update
+- New interface (TUI and CLI)
+  - command:
+    - `termux-app-store` (Open interface)
+    - `termux-app-store help`
+    - `termuc-app-store list`
+    - `termux-app-store show <package>`
+    - `termux-app-store update`
+    - `termux-app-store upgrade` (Upgrade all outdated installed)
+    - `termux-app-store upgrade <package>`
+    - `termux-app-store version`
+  - short command
+    - `termux-app-store -h` = help
+    - `termux-app-store -v` = version
+    - `termux-app-store i or -i <package> = install package
+    - `termux-app-store -l or -L` = list package
+- Auto CLI workflows for PR (Pull Request)
+- Colors `termux-build`
+- Auto install / update / uninstall with `tasctl`
+
 ### Fixed
-### Changed
+- Fixed build-package for installing package
+- Fixed error renovate workflows
+- Fixed update log workflows
+- Fixed PR Checker workflows
+- Fixed Lint Checker workflows
 
 ---
 
