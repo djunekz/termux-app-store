@@ -8,6 +8,10 @@ and this project adheres to semantic versioning.
 ---
 
 ## [Unreleased]
+
+---
+
+## [v0.1.4] - 2026-02-13
 ### Added
 - Package `ghostrack` v1.0.0
 - Package `iptrack` v1.0.0
