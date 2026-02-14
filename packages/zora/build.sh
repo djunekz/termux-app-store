@@ -1,0 +1,9 @@
+TERMUX_PKG_HOMEPAGE=https://github/djunekz/termux-app-store
+TERMUX_PKG_DESCRIPTION="The ultimate OSINT framework"
+TERMUX_PKG_LICENSE="MIT"
+TERMUX_PKG_MAINTAINER="@termux-app-store"
+TERMUX_PKG_VERSION=1.0.0
+TERMUX_PKG_SRCURL=https://github.com/droidv1/termool/releases/download/v${TERMUX_PKG_VERSION}/zora
+TERMUX_PKG_SHA256=f37496025380db8381020e110c695adaa4211ef5c2a1603d051c24b721105d36
+TERMUX_PKG_DEPENDS="python"
+TERMUX_PKG_BUILD_IN_SRC=true
