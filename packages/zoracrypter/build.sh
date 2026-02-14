@@ -5,5 +5,5 @@ TERMUX_PKG_MAINTAINER="@termux-app-store"
 TERMUX_PKG_VERSION=1.0.0
 TERMUX_PKG_SRCURL=https://github.com/droidv1/termool/releases/download/v${TERMUX_PKG_VERSION}/zoracrypter
 TERMUX_PKG_SHA256=f2b6dae09ebcafc92174017cd6434b6d99412fb5e53413d1df02b95f6a56c8b7
-TERMUX_PKG_DEPENDS="clang, python"
+TERMUX_PKG_DEPENDS="clang"
 TERMUX_PKG_BUILD_IN_SRC=true
