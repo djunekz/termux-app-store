@@ -1,11 +1,16 @@
-name: Lint PR Checker & Helper
+name: Lint PR Checker & Auto-Label
 
 on:
   pull_request_target:
+    types:
+      - opened
+      - reopened
+      - synchronize
     paths:
       - 'packages/*/build.sh'
 
 permissions:
+  contents: read
   issues: write
   pull-requests: write
 
@@ -13,20 +18,23 @@ jobs:
   lint:
     if: github.actor != 'dependabot[bot]'
     runs-on: ubuntu-latest
-    name: Lint build.sh
+    name: Lint and validate build.sh files
 
     steps:
-      - name: Checkout base repository
-        uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
-          ref: ${{ github.event.pull_request.base.ref }}
-
-      - name: Fetch PR changes
-        shell: bash
+      - name: Debug - Show PR info
         run: |
-          git fetch origin pull/${{ github.event.pull_request.number }}/head:pr
-          git checkout pr
+          echo "Event: ${{ github.event_name }}"
+          echo "PR Number: ${{ github.event.pull_request.number }}"
+          echo "Base SHA: ${{ github.event.pull_request.base.sha }}"
+          echo "Head SHA: ${{ github.event.pull_request.head.sha }}"
+          echo "Head Ref: ${{ github.event.pull_request.head.ref }}"
+          echo "Base Ref: ${{ github.event.pull_request.base.ref }}"
+
+      - name: Checkout PR head
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
 
       - name: Find changed build.sh files
         id: files
@@ -34,7 +42,11 @@ jobs:
         run: |
           BASE_SHA="${{ github.event.pull_request.base.sha }}"
           HEAD_SHA="${{ github.event.pull_request.head.sha }}"
-          FILES=$(git diff --name-only "$BASE_SHA" "$HEAD_SHA" | grep 'packages/*/build.sh' || true)
+          
+          echo "Comparing: $BASE_SHA...$HEAD_SHA"
+          
+          # Get changed files
+          FILES=$(git diff --name-only "$BASE_SHA" "$HEAD_SHA" | grep 'packages/.*/build.sh' || true)
 
           {
             echo "changed_files<<EOF"
@@ -42,30 +54,67 @@ jobs:
             echo "EOF"
           } >> "$GITHUB_OUTPUT"
 
-      - name: Lint build.sh (bash -n only)
+          echo "Changed files:"
+          echo "$FILES"
+          echo ""
+          
+          # Verify files exist
+          if [ -n "$FILES" ]; then
+            echo "Verifying file existence:"
+            while read -r file; do
+              [ -z "$file" ] && continue
+              if [ -f "$file" ]; then
+                echo "  ✅ $file exists"
+              else
+                echo "  ❌ $file NOT FOUND"
+              fi
+            done <<< "$FILES"
+          fi
+
+      - name: Lint build.sh (bash syntax check)
         id: lint
         shell: bash
         run: |
           ERROR=0
+          LINT_DETAILS=""
 
           while read -r file; do
             [ -z "$file" ] && continue
+            
             echo "🧹 Checking syntax: $file"
-            chmod +x "$file"
+            
+            # Check if file exists
+            if [ ! -f "$file" ]; then
+              echo "❌ File not found: $file"
+              ERROR=1
+              LINT_DETAILS="${LINT_DETAILS}### ❌ File Not Found: \`$file\`\n\n"
+              LINT_DETAILS="${LINT_DETAILS}This file appears in git diff but doesn't exist in the working directory.\n"
+              LINT_DETAILS="${LINT_DETAILS}This may indicate the file was deleted or the checkout failed.\n\n"
+              continue
+            fi
+            
+            # Normalize line endings
             sed -i 's/\r$//' "$file"
-            if ! bash -n "$file"; then
+            
+            # Check bash syntax
+            if ! bash -n "$file" 2>&1 | tee /tmp/lint_error.txt; then
               echo "❌ Syntax error in $file"
               ERROR=1
+              LINT_DETAILS="${LINT_DETAILS}### ❌ Syntax Error: \`$file\`\n\n"
+              LINT_DETAILS="${LINT_DETAILS}\`\`\`\n$(cat /tmp/lint_error.txt)\n\`\`\`\n\n"
+            else
+              echo "✅ Syntax OK: $file"
             fi
           done <<< "${{ steps.files.outputs.changed_files }}"
 
           {
-            echo "lint_status<<EOF"
-            echo "$ERROR"
+            echo "lint_status=$ERROR"
+            echo "lint_details<<EOF"
+            echo -e "$LINT_DETAILS"
             echo "EOF"
           } >> "$GITHUB_OUTPUT"
 
-      - name: Validate build.sh content (TERMUX_PKG_* variables)
+      - name: Validate TERMUX_PKG_* variables
         id: validate
         shell: bash
         run: |
@@ -77,172 +126,146 @@ jobs:
             [ -z "$file" ] && continue
 
             echo "🔍 Validating content: $file"
+            
+            # Check if file exists
+            if [ ! -f "$file" ]; then
+              echo "❌ File not found: $file (skipping validation)"
+              VALIDATION_ERROR=1
+              VALIDATION_DETAILS="${VALIDATION_DETAILS}## 📦 File: \`$file\`\n\n"
+              VALIDATION_DETAILS="${VALIDATION_DETAILS}- ❌ **File not found in working directory**\n\n"
+              VALIDATION_DETAILS="${VALIDATION_DETAILS}---\n\n"
+              continue
+            fi
+            
+            PKG_NAME=$(basename $(dirname "$file"))
 
-            # Extract TERMUX_PKG_* variables from build.sh
-            SRCURL=$(grep -E '^TERMUX_PKG_SRCURL=' "$file" | head -1 | sed 's/^TERMUX_PKG_SRCURL=//' | sed "s/^['\"]//;s/['\"]$//" | tr -d "'")
-            VERSION=$(grep -E '^TERMUX_PKG_VERSION=' "$file" | head -1 | sed 's/^TERMUX_PKG_VERSION=//' | sed "s/^['\"]//;s/['\"]$//" | tr -d "'")
-            SHA256=$(grep -E '^TERMUX_PKG_SHA256=' "$file" | head -1 | sed 's/^TERMUX_PKG_SHA256=//' | sed "s/^['\"]//;s/['\"]$//" | tr -d "'")
-            HOMEPAGE=$(grep -E '^TERMUX_PKG_HOMEPAGE=' "$file" | head -1 | sed 's/^TERMUX_PKG_HOMEPAGE=//' | sed "s/^['\"]//;s/['\"]$//" | tr -d "'")
-            DESCRIPTION=$(grep -E '^TERMUX_PKG_DESCRIPTION=' "$file" | head -1 | sed 's/^TERMUX_PKG_DESCRIPTION=//' | sed "s/^['\"]//;s/['\"]$//" | tr -d "'")
-            MAINTAINER=$(grep -E '^TERMUX_PKG_MAINTAINER=' "$file" | head -1 | sed 's/^TERMUX_PKG_MAINTAINER=//' | sed "s/^['\"]//;s/['\"]$//" | tr -d "'")
-            LICENSE=$(grep -E '^TERMUX_PKG_LICENSE=' "$file" | head -1 | sed 's/^TERMUX_PKG_LICENSE=//' | sed "s/^['\"]//;s/['\"]$//" | tr -d "'")
+            # Extract variables safely
+            get_var() {
+              grep -E "^$1=" "$file" 2>/dev/null | head -1 | sed 's/^[^=]*=//' | sed "s/^['\"]//;s/['\"]$//" | tr -d "'"
+            }
 
+            SRCURL=$(get_var TERMUX_PKG_SRCURL)
+            VERSION=$(get_var TERMUX_PKG_VERSION)
+            SHA256=$(get_var TERMUX_PKG_SHA256)
+            HOMEPAGE=$(get_var TERMUX_PKG_HOMEPAGE)
+            DESCRIPTION=$(get_var TERMUX_PKG_DESCRIPTION)
+            MAINTAINER=$(get_var TERMUX_PKG_MAINTAINER)
+            LICENSE=$(get_var TERMUX_PKG_LICENSE)
+            NAME=$(get_var TERMUX_PKG_NAME)
+
+            echo "   Package: $PKG_NAME"
             echo "   SRCURL: $SRCURL"
             echo "   VERSION: $VERSION"
             echo "   SHA256: ${SHA256:0:20}..."
 
-            # ============================================================
-            # VALIDATION 1: Check if TERMUX_PKG_VERSION is defined
-            # ============================================================
+            VALIDATION_DETAILS="${VALIDATION_DETAILS}## 📦 Package: \`$PKG_NAME\`\n\n"
+
+            # Required field validations
+            MISSING_REQUIRED=false
+
             if [ -z "$VERSION" ]; then
-              echo "❌ TERMUX_PKG_VERSION is not defined in $file"
+              echo "❌ TERMUX_PKG_VERSION not defined"
               VALIDATION_ERROR=1
-              VALIDATION_DETAILS="${VALIDATION_DETAILS}❌ TERMUX_PKG_VERSION not defined\n"
-              continue
+              VALIDATION_DETAILS="${VALIDATION_DETAILS}- ❌ **TERMUX_PKG_VERSION** is required\n"
+              MISSING_REQUIRED=true
             fi
 
-            # ============================================================
-            # VALIDATION 2: Check if TERMUX_PKG_SRCURL is defined
-            # ============================================================
             if [ -z "$SRCURL" ]; then
-              echo "❌ TERMUX_PKG_SRCURL is not defined in $file"
+              echo "❌ TERMUX_PKG_SRCURL not defined"
               VALIDATION_ERROR=1
-              VALIDATION_DETAILS="${VALIDATION_DETAILS}❌ TERMUX_PKG_SRCURL not defined\n"
-              continue
+              VALIDATION_DETAILS="${VALIDATION_DETAILS}- ❌ **TERMUX_PKG_SRCURL** is required\n"
+              MISSING_REQUIRED=true
             fi
 
-            # ============================================================
-            # VALIDATION 3: Check if TERMUX_PKG_SHA256 is defined
-            # ============================================================
             if [ -z "$SHA256" ]; then
-              echo "❌ TERMUX_PKG_SHA256 is not defined in $file"
+              echo "❌ TERMUX_PKG_SHA256 not defined"
               VALIDATION_ERROR=1
-              VALIDATION_DETAILS="${VALIDATION_DETAILS}❌ TERMUX_PKG_SHA256 not defined\n"
+              VALIDATION_DETAILS="${VALIDATION_DETAILS}- ❌ **TERMUX_PKG_SHA256** is required\n"
+              MISSING_REQUIRED=true
+            fi
+
+            # Skip further checks if required fields are missing
+            if [ "$MISSING_REQUIRED" = true ]; then
+              VALIDATION_DETAILS="${VALIDATION_DETAILS}\n---\n\n"
               continue
             fi
 
-            # ============================================================
-            # VALIDATION 4: Check SHA256 format (must be 64 hex chars)
-            # ============================================================
+            # SHA256 format validation
             if ! [[ "$SHA256" =~ ^[a-fA-F0-9]{64}$ ]]; then
-              echo "❌ TERMUX_PKG_SHA256 format invalid in $file (must be 64 hex chars)"
-              echo "   Got: $SHA256"
+              echo "❌ Invalid SHA256 format"
               VALIDATION_ERROR=1
-              VALIDATION_DETAILS="${VALIDATION_DETAILS}❌ Invalid TERMUX_PKG_SHA256 format (not 64 hex chars): $SHA256\n"
-              continue
+              VALIDATION_DETAILS="${VALIDATION_DETAILS}- ❌ **TERMUX_PKG_SHA256** format invalid (must be 64 hex chars)\n"
+              VALIDATION_DETAILS="${VALIDATION_DETAILS}  Got: \`$SHA256\`\n"
             fi
 
-            # ============================================================
-            # VALIDATION 5: Check if URL is valid (basic check)
-            # ============================================================
+            # URL format validation
             if ! [[ "$SRCURL" =~ ^https?:// ]]; then
-              echo "❌ TERMUX_PKG_SRCURL is not a valid HTTP(S) URL in $file"
-              echo "   Got: $SRCURL"
+              echo "❌ Invalid SRCURL format"
               VALIDATION_ERROR=1
-              VALIDATION_DETAILS="${VALIDATION_DETAILS}❌ Invalid TERMUX_PKG_SRCURL format (not http/https): $SRCURL\n"
+              VALIDATION_DETAILS="${VALIDATION_DETAILS}- ❌ **TERMUX_PKG_SRCURL** must be a valid HTTP(S) URL\n"
+              VALIDATION_DETAILS="${VALIDATION_DETAILS}  Got: \`$SRCURL\`\n"
+              VALIDATION_DETAILS="${VALIDATION_DETAILS}\n---\n\n"
               continue
             fi
 
-            # ============================================================
-            # VALIDATION 6: Construct download URL and verify SHA256
-            # ============================================================
-            echo "📥 Attempting to download from SRCURL..."
-
-            # Replace ${TERMUX_PKG_VERSION} dengan VERSION
+            # Expand ${TERMUX_PKG_VERSION} in SRCURL
             DOWNLOAD_URL="$SRCURL"
             DOWNLOAD_URL="${DOWNLOAD_URL//\$\{TERMUX_PKG_VERSION\}/$VERSION}"
             DOWNLOAD_URL="${DOWNLOAD_URL//\$TERMUX_PKG_VERSION/$VERSION}"
 
-            # Check if URL masih ada placeholder atau syntax error (closing brace tanpa opening)
+            # Check for malformed syntax
             if [[ "$DOWNLOAD_URL" =~ \}\} ]] || [[ "$DOWNLOAD_URL" =~ \}\$ ]] || [[ "$DOWNLOAD_URL" =~ [^{]\}[^}] ]]; then
-              echo "❌ TERMUX_PKG_SRCURL contains invalid syntax (unclosed variables or extra braces)"
-              echo "   Original: $SRCURL"
-              echo "   Processed: $DOWNLOAD_URL"
+              echo "❌ Malformed SRCURL syntax"
               VALIDATION_ERROR=1
-              VALIDATION_DETAILS="${VALIDATION_DETAILS}❌ Invalid SRCURL syntax - contains unclosed variables or malformed braces: $SRCURL\n"
+              VALIDATION_DETAILS="${VALIDATION_DETAILS}- ❌ **SRCURL contains invalid syntax**\n"
+              VALIDATION_DETAILS="${VALIDATION_DETAILS}  Original: \`$SRCURL\`\n"
+              VALIDATION_DETAILS="${VALIDATION_DETAILS}  Processed: \`$DOWNLOAD_URL\`\n"
+              VALIDATION_DETAILS="${VALIDATION_DETAILS}\n---\n\n"
               continue
             fi
 
             echo "   Final URL: $DOWNLOAD_URL"
 
-            # Try to download with timeout and follow redirects
-            if timeout $CURL_TIMEOUT curl -L -f -s -o /tmp/source_file "$DOWNLOAD_URL" 2>/dev/null; then
+            # Download and verify SHA256
+            if timeout $CURL_TIMEOUT curl -fsSL -o /tmp/source_file "$DOWNLOAD_URL" 2>/dev/null; then
               COMPUTED_SHA256=$(sha256sum /tmp/source_file | awk '{print $1}')
               FILE_SIZE=$(ls -lh /tmp/source_file | awk '{print $5}')
 
-              echo "   Downloaded size: $FILE_SIZE"
+              echo "   Downloaded: $FILE_SIZE"
               echo "   Computed SHA256: $COMPUTED_SHA256"
 
-              # ============================================================
-              # VALIDATION 6a: Compare SHA256
-              # ============================================================
               if [ "$COMPUTED_SHA256" = "$SHA256" ]; then
-                echo "✅ SHA256 verified successfully for $file"
+                echo "✅ SHA256 verified"
+                VALIDATION_DETAILS="${VALIDATION_DETAILS}- ✅ **SHA256 verified** (downloaded $FILE_SIZE)\n"
               else
-                echo "❌ SHA256 MISMATCH in $file"
-                echo "   Expected: $SHA256"
-                echo "   Got:      $COMPUTED_SHA256"
+                echo "❌ SHA256 MISMATCH"
                 VALIDATION_ERROR=1
-                VALIDATION_DETAILS="${VALIDATION_DETAILS}❌ SHA256 MISMATCH\n   Expected: $SHA256\n   Got:      $COMPUTED_SHA256\n"
+                VALIDATION_DETAILS="${VALIDATION_DETAILS}- ❌ **SHA256 MISMATCH**\n"
+                VALIDATION_DETAILS="${VALIDATION_DETAILS}  - Expected: \`$SHA256\`\n"
+                VALIDATION_DETAILS="${VALIDATION_DETAILS}  - Got: \`$COMPUTED_SHA256\`\n"
               fi
               rm -f /tmp/source_file
-
             else
-              # ============================================================
-              # VALIDATION 6b: Handle download error
-              # ============================================================
-              HTTP_CODE=$(curl -L -s -o /dev/null -w "%{http_code}" "$DOWNLOAD_URL" 2>/dev/null || echo "000")
-              echo "❌ ERROR: Could not download from URL"
-              echo "   URL: $DOWNLOAD_URL"
-              echo "   HTTP Status: $HTTP_CODE"
-              echo "   The URL may be unreachable, contain errors, or require authentication"
-
-              # Treat download failure as validation error
+              HTTP_CODE=$(curl -fsSL -o /dev/null -w "%{http_code}" "$DOWNLOAD_URL" 2>/dev/null || echo "000")
+              echo "❌ Download failed (HTTP: $HTTP_CODE)"
               VALIDATION_ERROR=1
-              VALIDATION_DETAILS="${VALIDATION_DETAILS}❌ SRCURL unreachable or invalid (HTTP: $HTTP_CODE)\n   URL: $DOWNLOAD_URL\n"
+              VALIDATION_DETAILS="${VALIDATION_DETAILS}- ❌ **Failed to download source**\n"
+              VALIDATION_DETAILS="${VALIDATION_DETAILS}  - URL: \`$DOWNLOAD_URL\`\n"
+              VALIDATION_DETAILS="${VALIDATION_DETAILS}  - HTTP Status: \`$HTTP_CODE\`\n"
             fi
 
-            # ============================================================
-            # VALIDATION 7: Check TERMUX_PKG_LICENSE
-            # ============================================================
-            if [ -z "$LICENSE" ]; then
-              echo "⚠️  TERMUX_PKG_LICENSE is not defined"
-              VALIDATION_DETAILS="${VALIDATION_DETAILS}⚠️  TERMUX_PKG_LICENSE not defined\n"
-            fi
+            # Optional field warnings
+            [ -z "$LICENSE" ] && VALIDATION_DETAILS="${VALIDATION_DETAILS}- ⚠️  TERMUX_PKG_LICENSE not defined (recommended)\n"
+            [ -z "$HOMEPAGE" ] && VALIDATION_DETAILS="${VALIDATION_DETAILS}- ⚠️  TERMUX_PKG_HOMEPAGE not defined (recommended)\n"
+            [ -z "$DESCRIPTION" ] && VALIDATION_DETAILS="${VALIDATION_DETAILS}- ⚠️  TERMUX_PKG_DESCRIPTION not defined (recommended)\n"
+            [ -z "$MAINTAINER" ] && VALIDATION_DETAILS="${VALIDATION_DETAILS}- ⚠️  TERMUX_PKG_MAINTAINER not defined (recommended)\n"
 
-            # ============================================================
-            # VALIDATION 8: Check TERMUX_PKG_HOMEPAGE
-            # ============================================================
-            if [ -z "$HOMEPAGE" ]; then
-              echo "⚠️  TERMUX_PKG_HOMEPAGE is not defined"
-              VALIDATION_DETAILS="${VALIDATION_DETAILS}⚠️  TERMUX_PKG_HOMEPAGE not defined\n"
-            elif ! [[ "$HOMEPAGE" =~ ^https?:// ]]; then
-              echo "⚠️  TERMUX_PKG_HOMEPAGE is not a valid HTTP(S) URL: $HOMEPAGE"
-              VALIDATION_DETAILS="${VALIDATION_DETAILS}⚠️  Invalid TERMUX_PKG_HOMEPAGE format: $HOMEPAGE\n"
-            fi
-
-            # ============================================================
-            # VALIDATION 9: Check TERMUX_PKG_DESCRIPTION
-            # ============================================================
-            if [ -z "$DESCRIPTION" ]; then
-              echo "⚠️  TERMUX_PKG_DESCRIPTION is not defined"
-              VALIDATION_DETAILS="${VALIDATION_DETAILS}⚠️  TERMUX_PKG_DESCRIPTION not defined\n"
-            fi
-
-            # ============================================================
-            # VALIDATION 10: Check TERMUX_PKG_MAINTAINER
-            # ============================================================
-            if [ -z "$MAINTAINER" ]; then
-              echo "⚠️  TERMUX_PKG_MAINTAINER is not defined"
-              VALIDATION_DETAILS="${VALIDATION_DETAILS}⚠️  TERMUX_PKG_MAINTAINER not defined\n"
-            fi
+            VALIDATION_DETAILS="${VALIDATION_DETAILS}\n---\n\n"
 
           done <<< "${{ steps.files.outputs.changed_files }}"
 
           {
-            echo "validation_status<<EOF"
-            echo "$VALIDATION_ERROR"
-            echo "EOF"
+            echo "validation_status=$VALIDATION_ERROR"
             echo "validation_details<<EOF"
             echo -e "$VALIDATION_DETAILS"
             echo "EOF"
@@ -255,26 +278,23 @@ jobs:
           LINT_STATUS="${{ steps.lint.outputs.lint_status }}"
           VALIDATION_STATUS="${{ steps.validate.outputs.validation_status }}"
 
-          # If either lint or validation fails, overall status is failed
           if [ "$LINT_STATUS" = "1" ] || [ "$VALIDATION_STATUS" = "1" ]; then
             OVERALL_STATUS=1
           else
             OVERALL_STATUS=0
           fi
 
-          {
-            echo "overall_status<<EOF"
-            echo "$OVERALL_STATUS"
-            echo "EOF"
-          } >> "$GITHUB_OUTPUT"
+          echo "overall_status=$OVERALL_STATUS" >> "$GITHUB_OUTPUT"
+          echo "Overall status: $OVERALL_STATUS (0=pass, 1=fail)"
 
-      - name: Remove old lint labels
+      - name: Remove old labels
+        continue-on-error: true
         uses: actions-ecosystem/action-remove-labels@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           labels: review-approved, review-failed
 
-      - name: Add review-approved label
+      - name: Add review-approved label (auto-triggers pr-checker.yml)
         if: steps.status.outputs.overall_status == '0'
         uses: actions-ecosystem/action-add-labels@v1
         with:
@@ -288,65 +308,77 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           labels: review-failed
 
-      - name: Comment on PR with validation details (FAILED)
+      - name: Comment - Validation Failed
         if: steps.status.outputs.overall_status == '1'
-        uses: actions/github-script@v8
+        uses: marocchino/sticky-pull-request-comment@v2
         with:
-          script: |
-            const lintStatus = '${{ steps.lint.outputs.lint_status }}';
-            const validationStatus = '${{ steps.validate.outputs.validation_status }}';
-            const validationDetails = `${{ steps.validate.outputs.validation_details }}`;
+          header: lint-validation
+          message: |
+            # ❌ Build Script Validation Failed
 
-            let comment = '## ❌ Build Script Validation Failed\n\n';
+            Your `build.sh` file(s) failed automated validation checks.
 
-            if (lintStatus === '1') {
-              comment += '### ❌ Bash Syntax Errors\n';
-              comment += 'Your build.sh file contains bash syntax errors. Please fix them before resubmitting.\n\n';
-            }
+            ${{ steps.lint.outputs.lint_details }}
 
-            if (validationStatus === '1') {
-              comment += '### ❌ Package Validation Errors\n\n';
-              comment += 'Your build.sh file failed validation checks:\n\n';
-              comment += validationDetails || 'Please ensure:\n';
-              comment += '- `TERMUX_PKG_VERSION` is defined\n';
-              comment += '- `TERMUX_PKG_SRCURL` is a valid HTTP(S) URL without malformed braces\n';
-              comment += '- `TERMUX_PKG_SHA256` is 64 hexadecimal characters\n';
-              comment += '- SHA256 checksum matches the actual downloaded file\n';
-              comment += '- `TERMUX_PKG_LICENSE` is provided\n';
-              comment += '- `TERMUX_PKG_HOMEPAGE` is a valid URL (optional)\n';
-              comment += '- `TERMUX_PKG_DESCRIPTION` is provided (optional)\n';
-              comment += '- `TERMUX_PKG_MAINTAINER` is provided (optional)\n\n';
-            }
+            ${{ steps.validate.outputs.validation_details }}
 
-            comment += '---\n\n';
-            comment += '**How to fix:**\n';
-            comment += '1. Check SRCURL syntax - ensure all `${TERMUX_PKG_VERSION}` variables are properly closed\n';
-            comment += '2. Verify the URL doesn\'t have extra braces or incomplete substitutions\n';
-            comment += '3. Download the source file from your SRCURL manually to verify it works\n';
-            comment += '4. Generate correct SHA256: `sha256sum <filename>`\n';
-            comment += '5. Update build.sh with correct values\n';
-            comment += '6. Push new commit to your PR\n\n';
-            comment += '**Example correct SRCURL:**\n';
-            comment += '```bash\n';
-            comment += 'TERMUX_PKG_SRCURL=https://github.com/droidv1/termool/releases/download/v${TERMUX_PKG_VERSION}/iptrack.tar.gz\n';
-            comment += '```\n\n';
-            comment += '**Need help?** Check [repository guidelines](https://github.com/djunekz/termux-app-store/blob/master/README.md)\n';
+            ## 🔧 How to Fix
 
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: comment
-            });
+            1. **Check syntax errors** - Ensure all bash syntax is valid
+            2. **Verify SRCURL** - Ensure the URL is correct and accessible
+               - Check for typos in the URL
+               - Verify `${TERMUX_PKG_VERSION}` is properly closed
+               - Test the URL manually in your browser
+            3. **Update SHA256** - Download the file and compute the correct hash:
+               ```bash
+               curl -L "YOUR_SRCURL" -o file.tar.gz
+               sha256sum file.tar.gz
+               ```
+            4. **Add required fields**:
+               - `TERMUX_PKG_VERSION` (required)
+               - `TERMUX_PKG_SRCURL` (required)
+               - `TERMUX_PKG_SHA256` (required)
+               - `TERMUX_PKG_LICENSE` (recommended)
+               - `TERMUX_PKG_HOMEPAGE` (recommended)
 
-      - name: Comment on PR with success message (PASSED)
+            ## Example Valid build.sh
+
+            ```bash
+            TERMUX_PKG_NAME="mypackage"
+            TERMUX_PKG_VERSION="1.0.0"
+            TERMUX_PKG_SRCURL=https://github.com/user/repo/archive/refs/tags/v${TERMUX_PKG_VERSION}.tar.gz
+            TERMUX_PKG_SHA256="abc123...def456"  # 64 hex characters
+            TERMUX_PKG_LICENSE="MIT"
+            TERMUX_PKG_HOMEPAGE="https://github.com/user/repo"
+            TERMUX_PKG_DESCRIPTION="A useful tool"
+            TERMUX_PKG_MAINTAINER="Your Name <email@example.com>"
+            ```
+
+            Push new commits to automatically re-run validation.
+
+      - name: Comment - Validation Passed
         if: steps.status.outputs.overall_status == '0'
-        uses: actions/github-script@v8
+        uses: marocchino/sticky-pull-request-comment@v2
         with:
-          script: |
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: '## ✅ Build Script Validation Passed\n\nYour build.sh has passed all automated checks:\n\n- ✅ Bash syntax is correct\n- ✅ TERMUX_PKG_VERSION is defined\n- ✅ TERMUX_PKG_SRCURL is valid and reachable\n- ✅ TERMUX_PKG_SHA256 is valid format\n- ✅ SHA256 checksum verified\n- ✅ All required fields are present\n\nReady for review! 🎉'
-            });
+          header: lint-validation
+          message: |
+            # ✅ Build Script Validation Passed
+
+            Your `build.sh` file(s) have passed all automated checks:
+
+            - ✅ Bash syntax is correct
+            - ✅ All required TERMUX_PKG_* variables are defined
+            - ✅ SRCURL is valid and reachable
+            - ✅ SHA256 checksum verified successfully
+
+            **Label `review-approved` has been added automatically.**
+
+            This will trigger the package review workflow for detailed inspection.
+            
+            Thank you for your contribution! 🎉
+
+      - name: Fail workflow if validation failed
+        if: steps.status.outputs.overall_status == '1'
+        run: |
+          echo "❌ Validation failed - please check PR comments for details"
+          exit 1
