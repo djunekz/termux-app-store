@@ -7,25 +7,31 @@ on:
       - reopened
       - synchronize
       - labeled
+    paths:
+      - 'packages/*/build.sh'
 
 permissions:
   contents: read
   pull-requests: write
+  issues: write
 
 jobs:
   review-packages:
     name: Validate changed packages
     runs-on: ubuntu-latest
 
+    # Hanya run jika:
+    # 1. Ada label review-approved, ATAU
+    # 2. Trigger dari labeled event dengan label review-approved
     if: |
-      contains(
-        join(github.event.pull_request.labels.*.name, ','),
-        'review-approved'
+      github.event_name == 'pull_request_target' && (
+        contains(github.event.pull_request.labels.*.name, 'review-approved') ||
+        (github.event.action == 'labeled' && github.event.label.name == 'review-approved')
       )
 
     steps:
       - name: Checkout PR code (safe)
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.sha }}
@@ -37,7 +43,7 @@ jobs:
           BASE_SHA="${{ github.event.pull_request.base.sha }}"
 
           PKGS=$(git diff "$BASE_SHA"...HEAD --name-only \
-            | awk -F/ '/^packages\/[^/]+\/build.sh$/ {print $2}' \
+            | awk -F/ '/^packages\/[^/]+\/build\.sh$/ {print $2}' \
             | sort -u)
 
           {
@@ -46,92 +52,159 @@ jobs:
             echo "EOF"
           } >> "$GITHUB_OUTPUT"
 
+          echo "Changed packages: $PKGS"
+
       - name: Validate build.sh metadata (safe, no eval)
         id: checker
         shell: bash
         run: |
           set -e
           FAIL=0
-          REPORT=""
+          REPORT="# 📋 Package Review Report\n\n"
 
           if [[ -z "${{ steps.packages.outputs.changed }}" ]]; then
-            REPORT+="ℹ️ No package changes detected\n"
+            REPORT+="ℹ️ No package changes detected in this PR\n"
+            echo -e "$REPORT"
+            {
+              echo "report<<EOF"
+              echo -e "$REPORT"
+              echo "EOF"
+              echo "fail=0"
+            } >> "$GITHUB_OUTPUT"
+            exit 0
           fi
 
           for PKG in ${{ steps.packages.outputs.changed }}; do
             BUILD_SH="packages/$PKG/build.sh"
-            REPORT+="## 📦 $PKG\n"
+            REPORT+="## 📦 Package: \`$PKG\`\n\n"
 
             if [[ ! -f "$BUILD_SH" ]]; then
-              REPORT+="- ❌ build.sh missing\n\n"
+              REPORT+="❌ **build.sh missing**\n\n"
               FAIL=1
               continue
             fi
 
+            # Function to safely extract variables
             get_var() {
-              grep -E "^$1=" "$BUILD_SH" | head -n1 | cut -d= -f2-
+              grep -E "^$1=" "$BUILD_SH" 2>/dev/null | head -n1 | cut -d= -f2- | sed "s/^['\"]//;s/['\"]$//" | tr -d "'"
             }
 
             VERSION=$(get_var TERMUX_PKG_VERSION)
             SRCURL_RAW=$(get_var TERMUX_PKG_SRCURL)
             SHA256=$(get_var TERMUX_PKG_SHA256)
+            NAME=$(get_var TERMUX_PKG_NAME)
+            DESC=$(get_var TERMUX_PKG_DESCRIPTION)
+            HOMEPAGE=$(get_var TERMUX_PKG_HOMEPAGE)
+            LICENSE=$(get_var TERMUX_PKG_LICENSE)
+            MAINTAINER=$(get_var TERMUX_PKG_MAINTAINER)
 
+            # Validation function
             check() {
-              if [[ -z "$2" ]]; then
-                REPORT+="- ❌ Missing \`$1\`\n"
-                FAIL=1
+              local var_name="$1"
+              local var_value="$2"
+              local is_required="${3:-true}"
+              
+              if [[ -z "$var_value" ]]; then
+                if [[ "$is_required" == "true" ]]; then
+                  REPORT+="- ❌ **Missing \`$var_name\`**\n"
+                  FAIL=1
+                else
+                  REPORT+="- ⚠️  Missing \`$var_name\` (optional)\n"
+                fi
               else
-                REPORT+="- ✔ \`$1\`\n"
+                REPORT+="- ✅ \`$var_name\`: \`$var_value\`\n"
               fi
             }
 
-            check TERMUX_PKG_VERSION "$VERSION"
-            check TERMUX_PKG_SRCURL "$SRCURL_RAW"
-            check TERMUX_PKG_SHA256 "$SHA256"
+            # Required fields
+            check "TERMUX_PKG_NAME" "$NAME" true
+            check "TERMUX_PKG_VERSION" "$VERSION" true
+            check "TERMUX_PKG_SRCURL" "$SRCURL_RAW" true
+            check "TERMUX_PKG_SHA256" "$SHA256" true
 
-            # --- SAFE variable expansion ---
+            # Optional but recommended
+            check "TERMUX_PKG_DESCRIPTION" "$DESC" false
+            check "TERMUX_PKG_HOMEPAGE" "$HOMEPAGE" false
+            check "TERMUX_PKG_LICENSE" "$LICENSE" false
+            check "TERMUX_PKG_MAINTAINER" "$MAINTAINER" false
+
+            # --- SAFE variable expansion for SRCURL ---
             SRCURL="$SRCURL_RAW"
             if [[ "$SRCURL" == *'${TERMUX_PKG_VERSION}'* ]]; then
               if [[ -z "$VERSION" ]]; then
-                REPORT+="- ❌ TERMUX_PKG_VERSION required for SRCURL expansion\n"
+                REPORT+="- ❌ **TERMUX_PKG_VERSION required for SRCURL expansion**\n"
                 FAIL=1
               else
                 SRCURL="${SRCURL//\$\{TERMUX_PKG_VERSION\}/$VERSION}"
-                REPORT+="- 🔁 SRCURL expanded using TERMUX_PKG_VERSION\n"
+                REPORT+="- 🔁 SRCURL expanded: \`$SRCURL\`\n"
               fi
             fi
 
-            if [[ -n "$SHA256" && ! "$SHA256" =~ ^[a-f0-9]{64}$ ]]; then
-              REPORT+="- ❌ Invalid SHA256 format\n"
-              FAIL=1
-            fi
-
-            if [[ "$SRCURL" =~ (latest|master|main) ]]; then
-              REPORT+="- ❌ Floating SRCURL detected\n"
-              FAIL=1
-            fi
-
-            if [[ -n "$SRCURL" && -n "$SHA256" ]]; then
-              TMP="$(mktemp)"
-              if curl -fsL "$SRCURL" -o "$TMP"; then
-                CALC=$(sha256sum "$TMP" | awk '{print $1}')
-                if [[ "$CALC" != "$SHA256" ]]; then
-                  REPORT+="- ❌ SHA256 mismatch\n"
-                  REPORT+="  Expected: $SHA256\n"
-                  REPORT+="  Got     : $CALC\n"
-                  FAIL=1
-                else
-                  REPORT+="- ✅ SHA256 verified\n"
-                fi
-              else
-                REPORT+="- ❌ Failed to download source\n"
+            # Validate SHA256 format
+            if [[ -n "$SHA256" ]]; then
+              if [[ ! "$SHA256" =~ ^[a-fA-F0-9]{64}$ ]]; then
+                REPORT+="- ❌ **Invalid SHA256 format** (must be 64 hex chars)\n"
+                REPORT+="  Got: \`$SHA256\`\n"
                 FAIL=1
               fi
+            fi
+
+            # Check for floating URLs
+            if [[ "$SRCURL" =~ (latest|master|main|HEAD) ]]; then
+              REPORT+="- ⚠️  **Floating SRCURL detected** (latest/master/main/HEAD)\n"
+              REPORT+="  This may cause reproducibility issues\n"
+            fi
+
+            # Validate SRCURL format
+            if [[ -n "$SRCURL" ]]; then
+              if [[ ! "$SRCURL" =~ ^https?:// ]]; then
+                REPORT+="- ❌ **Invalid SRCURL format** (must start with http:// or https://)\n"
+                FAIL=1
+              fi
+            fi
+
+            # Download and verify SHA256
+            if [[ -n "$SRCURL" && -n "$SHA256" ]]; then
+              REPORT+="- 🔍 **Verifying SHA256...**\n"
+              TMP="$(mktemp)"
+              
+              if timeout 60 curl -fsSL "$SRCURL" -o "$TMP" 2>/dev/null; then
+                CALC=$(sha256sum "$TMP" | awk '{print $1}')
+                FILE_SIZE=$(ls -lh "$TMP" | awk '{print $5}')
+                
+                REPORT+="  - Downloaded: \`$FILE_SIZE\`\n"
+                
+                if [[ "$CALC" != "$SHA256" ]]; then
+                  REPORT+="  - ❌ **SHA256 mismatch!**\n"
+                  REPORT+="    - Expected: \`$SHA256\`\n"
+                  REPORT+="    - Got: \`$CALC\`\n"
+                  FAIL=1
+                else
+                  REPORT+="  - ✅ **SHA256 verified successfully**\n"
+                fi
+              else
+                HTTP_CODE=$(curl -fsSL -o /dev/null -w "%{http_code}" "$SRCURL" 2>/dev/null || echo "000")
+                REPORT+="  - ❌ **Failed to download source**\n"
+                REPORT+="    - URL: \`$SRCURL\`\n"
+                REPORT+="    - HTTP Status: \`$HTTP_CODE\`\n"
+                FAIL=1
+              fi
+              
               rm -f "$TMP"
             fi
 
-            REPORT+="\n"
+            REPORT+="\n---\n\n"
           done
+
+          # Final summary
+          if [[ "$FAIL" -eq 0 ]]; then
+            REPORT+="## ✅ All Validations Passed\n\n"
+            REPORT+="This PR is ready for manual review and testing.\n"
+          else
+            REPORT+="## ❌ Validation Failed\n\n"
+            REPORT+="Please fix the issues above and push new commits.\n"
+            REPORT+="The workflow will automatically re-run on new commits.\n"
+          fi
 
           {
             echo "report<<EOF"
@@ -143,10 +216,18 @@ jobs:
       - name: Post PR report
         uses: marocchino/sticky-pull-request-comment@v2
         with:
+          header: package-review
           message: ${{ steps.checker.outputs.report }}
 
-      - name: Fail PR if validation failed
+      - name: Update PR status check
         if: steps.checker.outputs.fail != '0'
         run: |
           echo "❌ Package validation failed"
+          echo "Please check the PR comment for details"
           exit 1
+
+      - name: Success status
+        if: steps.checker.outputs.fail == '0'
+        run: |
+          echo "✅ Package validation passed"
+          echo "PR is ready for manual review"
