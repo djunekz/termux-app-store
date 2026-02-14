@@ -147,6 +147,132 @@ else
   _skip "No dependencies required"
 fi
 
+
+# =============================================
+#  RUST VERSION CHECK (jika paket butuh rust)
+# =============================================
+_check_rust_env() {
+  # Apakah paket ini butuh rust?
+  local needs_rust=0
+  echo "${TERMUX_PKG_DEPENDS:-}" | grep -qi "rust" && needs_rust=1
+  declare -f termux_step_make > /dev/null 2>&1 && command -v cargo &>/dev/null && needs_rust=1
+
+  [[ "$needs_rust" -eq 0 ]] && return 0
+
+  # Rust terinstall?
+  if ! command -v rustc &>/dev/null || ! command -v cargo &>/dev/null; then
+    _skip "Rust/Cargo not found, skipping rust check"
+    return 0
+  fi
+
+  _section "Rust Environment Check"
+
+  local rustc_ver cargo_ver mismatch=0
+  rustc_ver=$(rustc --version 2>/dev/null | awk '{print $2}' || echo "unknown")
+  cargo_ver=$(cargo  --version 2>/dev/null | awk '{print $2}' || echo "unknown")
+
+  _detail "rustc version:" "$rustc_ver"
+  _detail "cargo version:" "$cargo_ver"
+
+  # Cek 1: rustc vs cargo harus versi sama
+  if [[ "$rustc_ver" != "$cargo_ver" ]]; then
+    _warn "rustc ($rustc_ver) dan cargo ($cargo_ver) versi berbeda"
+    mismatch=1
+  fi
+
+  # Cek 2: Compile dummy — deteksi E0514 stale cache paling akurat
+  local _tmpdir; _tmpdir=$(mktemp -d)
+  printf 'fn main() {}\n' > "$_tmpdir/check.rs"
+  if ! (rustc "$_tmpdir/check.rs" -o "$_tmpdir/check_bin" 2>/dev/null); then
+    _warn "rustc compile test gagal — kemungkinan stale cache"
+    mismatch=1
+  fi
+  rm -rf "$_tmpdir"
+
+  # Auto-upgrade jika ada masalah
+  if [[ "$mismatch" -eq 1 ]]; then
+    echo ""
+    printf "  ${BYELLOW}[  !!  ]${R}  ${BOLD}Rust mismatch terdeteksi — memulai auto-upgrade...${R}\n"
+    echo ""
+
+    # Step 1: Clean cache dulu
+    if [[ -d "$HOME/.cargo/registry/src" ]]; then
+      _progress "Menghapus registry/src cache yang stale..."
+      rm -rf "$HOME/.cargo/registry/src/"
+      _ok "registry/src dibersihkan"
+    fi
+
+    rm -f "$HOME/.cargo/.package-cache" 2>/dev/null || true
+
+    # cargo clean jika ada sisa build sebelumnya
+    if [[ -d "$ROOT_DIR/build/$PACKAGE" ]]; then
+      find "$ROOT_DIR/build/$PACKAGE" -name "Cargo.toml" -maxdepth 3 2>/dev/null | while read -r _ct; do
+        local _pd; _pd=$(dirname "$_ct")
+        if [[ -d "$_pd/target" ]]; then
+          _progress "cargo clean: $(basename "$_pd")..."
+          (cd "$_pd" && cargo clean 2>/dev/null) || true
+        fi
+      done
+    fi
+
+    # Step 2: Upgrade Rust via pkg
+    echo ""
+    _section "Upgrading Rust"
+    _progress "Running pkg upgrade rust..."
+    
+    if pkg upgrade -y rust 2>&1 | tee /tmp/rust_upgrade.log; then
+      _ok "Rust upgrade completed"
+    else
+      _warn "Upgrade command completed with warnings (check /tmp/rust_upgrade.log)"
+    fi
+
+    # Step 3: Verifikasi upgrade berhasil
+    echo ""
+    _section "Verifying Rust Installation"
+    
+    # Reload environment untuk memastikan binary terbaru
+    hash -r 2>/dev/null || true
+    
+    if ! command -v rustc &>/dev/null || ! command -v cargo &>/dev/null; then
+      _fatal "Rust/Cargo tidak ditemukan setelah upgrade!"
+      _detail "Hint:" "Coba restart Termux atau jalankan 'source \$PREFIX/etc/profile'"
+      exit 1
+    fi
+
+    rustc_ver=$(rustc --version 2>/dev/null | awk '{print $2}' || echo "unknown")
+    cargo_ver=$(cargo --version 2>/dev/null | awk '{print $2}' || echo "unknown")
+
+    _detail "rustc version:" "$rustc_ver"
+    _detail "cargo version:" "$cargo_ver"
+
+    if [[ "$rustc_ver" != "$cargo_ver" ]]; then
+      _fatal "Versi masih berbeda setelah upgrade!"
+      _detail "rustc:" "$rustc_ver"
+      _detail "cargo:" "$cargo_ver"
+      _detail "Hint:" "Coba jalankan: pkg reinstall rust"
+      exit 1
+    fi
+
+    # Test compile lagi
+    _tmpdir=$(mktemp -d)
+    printf 'fn main() {}\n' > "$_tmpdir/check.rs"
+    if ! (rustc "$_tmpdir/check.rs" -o "$_tmpdir/check_bin" 2>/dev/null); then
+      _fatal "Compile test masih gagal setelah upgrade!"
+      rm -rf "$_tmpdir"
+      exit 1
+    fi
+    rm -rf "$_tmpdir"
+
+    _ok "Rust environment verified — ready to build with rustc $rustc_ver"
+    echo ""
+    _info "Melanjutkan instalasi paket..."
+  else
+    _ok "Rust environment OK  (rustc $rustc_ver)"
+  fi
+}
+
+_check_rust_env
+
 # =============================================
 #  DIRS
 # =============================================
@@ -203,43 +329,129 @@ fi
 _section "Extracting Source"
 
 PREBUILT_DEB=""
+PREBUILT_BIN=""
 SRC_ROOT="$WORK_DIR/src"
 
-if [[ "$TERMUX_PKG_SRCURL" == *.deb ]]; then
-  _skip "Prebuilt .deb detected, skipping extraction"
-  PREBUILT_DEB="$SRC_FILE"
-elif [[ "$TERMUX_PKG_SRCURL" == *.zip ]]; then
-  _progress "Unzipping archive..."
-  unzip -q "$SRC_FILE" -d "$SRC_ROOT"
-  _ok "Unzip complete"
-else
-  _progress "Extracting tarball..."
-  tar -xf "$SRC_FILE" -C "$SRC_ROOT"
-  _ok "Extraction complete"
-fi
+# Deteksi tipe file: magic bytes DULU, lalu fallback ekstensi URL
+_detect_filetype() {
+  local f="$1"
+  local url="${TERMUX_PKG_SRCURL:-}"
 
-_SUBDIRS=$(find "$SRC_ROOT" -mindepth 1 -maxdepth 1 -type d 2>/dev/null | wc -l)
-_TOPFILES=$(find "$SRC_ROOT" -mindepth 1 -maxdepth 1 -type f 2>/dev/null | wc -l)
-if [[ "$_SUBDIRS" -eq 1 && "$_TOPFILES" -eq 0 ]]; then
-  SUBDIR="$(find "$SRC_ROOT" -mindepth 1 -maxdepth 1 -type d | head -n1)"
-  SRC_ROOT="$SUBDIR"
-  _info "Source root flattened to: $(basename "$SUBDIR")"
-fi
+  # Baca 2 byte pertama untuk gzip (lebih reliable dari 4 byte)
+  local b2
+  b2=$(od -A n -N 2 -t x1 "$f" 2>/dev/null | tr -d ' \n')
 
-_detail "Source root:" "$SRC_ROOT"
+  # Baca 4 byte untuk format lain
+  local b4
+  b4=$(od -A n -N 4 -t x1 "$f" 2>/dev/null | tr -d ' \n')
+
+  # Baca 8 byte untuk deb
+  local b8
+  b8=$(od -A n -N 8 -t x1 "$f" 2>/dev/null | tr -d ' \n')
+
+  if   [[ "$b4"  == "7f454c46" ]];            then echo "elf"    # ELF binary
+  elif [[ "$b2"  == "1f8b" ]];                then echo "tar.gz" # gzip (semua varian)
+  elif [[ "$b4"  == "fd377a58" ]];            then echo "xz"     # xz
+  elif [[ "$b4"  == "425a6839" ]];            then echo "bz2"    # bzip2
+  elif [[ "$b4"  == "504b0304" ]];            then echo "zip"    # ZIP
+  elif [[ "$b8"  == "213c617263683e0a" ]];    then echo "deb"    # .deb (ar archive)
+  elif [[ "$b4"  == "213c6172" ]];            then echo "deb"    # .deb fallback
+  else
+    # Tidak cocok magic bytes — fallback ke ekstensi URL
+    if   [[ "$url" == *.tar.gz || "$url" == *.tgz ]]; then echo "tar.gz"
+    elif [[ "$url" == *.tar.xz ]];                    then echo "xz"
+    elif [[ "$url" == *.tar.bz2 ]];                   then echo "bz2"
+    elif [[ "$url" == *.zip ]];                       then echo "zip"
+    elif [[ "$url" == *.deb ]];                       then echo "deb"
+    else echo "unknown"
+    fi
+  fi
+}
+
+FILETYPE=$(_detect_filetype "$SRC_FILE")
+_detail "File type:" "$FILETYPE"
+
+# _smart_extract: coba semua format, tidak exit jika satu gagal
+_smart_extract() {
+  local src="$1" dst="$2"
+  # Urutan: xzf → xjf → xzf(gz) → xf → unzip
+  # Masing-masing dibungkus subshell agar error tidak kena set -e
+  if   (tar -xzf "$src" -C "$dst") 2>/dev/null; then
+    echo "tar.gz"
+  elif (tar -xJf "$src" -C "$dst") 2>/dev/null; then
+    echo "xz"
+  elif (tar -xjf "$src" -C "$dst") 2>/dev/null; then
+    echo "bz2"
+  elif (tar -xf  "$src" -C "$dst") 2>/dev/null; then
+    echo "tar"
+  elif (unzip -q "$src" -d "$dst") 2>/dev/null; then
+    echo "zip"
+  else
+    echo "fail"
+  fi
+}
+
+case "$FILETYPE" in
+  elf)
+    _skip "ELF binary detected — no extraction needed"
+    PREBUILT_BIN="$SRC_FILE"
+    chmod +x "$PREBUILT_BIN"
+    _ok "Binary marked executable"
+    ;;
+  deb)
+    _skip "Prebuilt .deb detected — skipping extraction"
+    PREBUILT_DEB="$SRC_FILE"
+    ;;
+  *)
+    # Untuk semua tipe archive (tar.gz, xz, bz2, zip, unknown)
+    # Gunakan smart extract yang coba semua format
+    case "$FILETYPE" in
+      zip)    _progress "Unzipping archive..." ;;
+      xz)     _progress "Extracting xz tarball..." ;;
+      bz2)    _progress "Extracting bzip2 tarball..." ;;
+      tar.gz) _progress "Extracting gzip tarball..." ;;
+      *)      _progress "Detecting and extracting archive..." ;;
+    esac
+
+    _EXTRACT_RESULT=$(_smart_extract "$SRC_FILE" "$SRC_ROOT")
+
+    if [[ "$_EXTRACT_RESULT" == "fail" ]]; then
+      _warn "All extraction methods failed — treating as raw binary"
+      PREBUILT_BIN="$SRC_FILE"
+      chmod +x "$PREBUILT_BIN"
+      _ok "Binary marked executable"
+    else
+      _ok "Extraction complete (format: $_EXTRACT_RESULT)"
+    fi
+    ;;
+esac
+
+# Flatten single-subdir (hanya untuk archive, bukan binary)
+if [[ -z "$PREBUILT_BIN" && -z "$PREBUILT_DEB" ]]; then
+  _SUBDIRS=$(find "$SRC_ROOT" -mindepth 1 -maxdepth 1 -type d 2>/dev/null | wc -l)
+  _TOPFILES=$(find "$SRC_ROOT" -mindepth 1 -maxdepth 1 -type f 2>/dev/null | wc -l)
+  if [[ "$_SUBDIRS" -eq 1 && "$_TOPFILES" -eq 0 ]]; then
+    SUBDIR="$(find "$SRC_ROOT" -mindepth 1 -maxdepth 1 -type d | head -n1)"
+    SRC_ROOT="$SUBDIR"
+    _info "Source root flattened to: $(basename "$SUBDIR")"
+  fi
+  _detail "Source root:" "$SRC_ROOT"
+fi
 
 export TERMUX_PREFIX="$PREFIX"
 export TERMUX_PKG_SRCDIR="$SRC_ROOT"
 export DESTDIR="$WORK_DIR/pkg"
 
 # =============================================
-#  BUILD STEP (NEW!)
+#  BUILD STEP (opsional)
 # =============================================
 if declare -f termux_step_make > /dev/null 2>&1; then
   _section "Building Source"
-  _step "Mode: Custom termux_step_make()"
+  _step "Custom termux_step_make() found, running..."
   export TERMUX_PREFIX="$PREFIX"
-  cd "$TERMUX_PKG_SRCDIR"
+  if [[ "${TERMUX_PKG_BUILD_IN_SRC:-false}" == "true" ]]; then
+    cd "$TERMUX_PKG_SRCDIR"
+  fi
   termux_step_make
   cd "$ROOT_DIR"
   _ok "Build completed"
@@ -250,7 +462,15 @@ fi
 # =============================================
 _section "Installing Files (DESTDIR)"
 
-if [[ -n "$PREBUILT_DEB" ]]; then
+if [[ -n "$PREBUILT_BIN" ]]; then
+  # ── Mode: ELF / Raw Binary ──
+  _step "Mode: ELF binary"
+  mkdir -p "$WORK_DIR/pkg/$PREFIX/bin"
+  install -Dm755 "$PREBUILT_BIN" "$WORK_DIR/pkg/$PREFIX/bin/$PACKAGE"
+  _ok "Binary staged"
+  _detail "Bin:" "$PREFIX/bin/$PACKAGE"
+
+elif [[ -n "$PREBUILT_DEB" ]]; then
   _step "Mode: Prebuilt .deb"
   _progress "Extracting .deb contents..."
   dpkg -x "$PREBUILT_DEB" "$WORK_DIR/pkg"
@@ -272,7 +492,11 @@ EOF
 elif declare -f termux_step_make_install > /dev/null 2>&1; then
   _step "Mode: Custom termux_step_make_install()"
   export TERMUX_PREFIX="$PREFIX"
-  cd "$TERMUX_PKG_SRCDIR"
+  # Masuk ke direktori source yang aktual
+  _install_dir="${TERMUX_PKG_SRCDIR:-$SRC_ROOT}"
+  [[ -d "$_install_dir" ]] || _install_dir="$SRC_ROOT"
+  cd "$_install_dir"
+  _detail "Install dir:" "$_install_dir"
   termux_step_make_install
   cd "$ROOT_DIR"
 

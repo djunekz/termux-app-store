@@ -1,85 +1,339 @@
-name: Auto Update Packages Changelog
+name: Auto Update CHANGELOG
 
 on:
   push:
     branches:
+      - main
       - master
     paths:
-      - 'packages/**/build.sh'
+      - 'packages/*/build.sh'
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
+      - master
 
 permissions:
   contents: write
+  pull-requests: read
 
 jobs:
-  changelog:
-    name: Update Changelog
+  update-changelog:
+    name: Update CHANGELOG.md
     runs-on: ubuntu-latest
+    
+    # Only run if:
+    # 1. Direct push to main/master, OR
+    # 2. PR merged to main/master
+    if: |
+      github.event_name == 'push' ||
+      (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Detect package changes and update changelog
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Detect changed packages
+        id: detect
+        shell: bash
+        run: |
+          set -e
+          
+          # Get the before and after commits
+          if [ "${{ github.event_name }}" = "push" ]; then
+            BEFORE="${{ github.event.before }}"
+            AFTER="${{ github.event.after }}"
+          else
+            # For merged PR
+            BEFORE="${{ github.event.pull_request.base.sha }}"
+            AFTER="${{ github.event.pull_request.merge_commit_sha }}"
+          fi
+
+          echo "Comparing: $BEFORE...$AFTER"
+
+          # Find all changed build.sh files
+          CHANGED_FILES=$(git diff --name-only "$BEFORE" "$AFTER" | grep 'packages/.*/build.sh' || true)
+
+          if [ -z "$CHANGED_FILES" ]; then
+            echo "No build.sh changes detected"
+            echo "has_changes=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          echo "Changed build.sh files:"
+          echo "$CHANGED_FILES"
+
+          # Arrays to store different types of changes
+          ADDED_ENTRIES=""
+          UPDATED_ENTRIES=""
+          CHANGED_ENTRIES=""
+
+          # Process each changed build.sh
+          while IFS= read -r file; do
+            [ -z "$file" ] && continue
+            
+            PKG_DIR=$(dirname "$file")
+            PKG_NAME=$(basename "$PKG_DIR")
+            
+            echo "Processing: $PKG_NAME"
+
+            # Check if this is a new package (file didn't exist before)
+            if ! git cat-file -e "$BEFORE:$file" 2>/dev/null; then
+              echo "  → New package detected"
+              
+              # Extract info from new build.sh
+              VERSION=$(grep -E '^TERMUX_PKG_VERSION=' "$file" | head -1 | sed 's/^TERMUX_PKG_VERSION=//' | sed "s/^['\"]//;s/['\"]$//" | tr -d "'")
+              DESC=$(grep -E '^TERMUX_PKG_DESCRIPTION=' "$file" | head -1 | sed 's/^TERMUX_PKG_DESCRIPTION=//' | sed "s/^['\"]//;s/['\"]$//" | tr -d "'" || echo "")
+              
+              if [ -n "$DESC" ]; then
+                ADDED_ENTRIES="${ADDED_ENTRIES}- Package \`${PKG_NAME}\` v${VERSION} - ${DESC}\n"
+              else
+                ADDED_ENTRIES="${ADDED_ENTRIES}- Package \`${PKG_NAME}\` v${VERSION}\n"
+              fi
+              
+            else
+              # Existing package - check for version change
+              OLD_VERSION=$(git show "$BEFORE:$file" | grep -E '^TERMUX_PKG_VERSION=' | head -1 | sed 's/^TERMUX_PKG_VERSION=//' | sed "s/^['\"]//;s/['\"]$//" | tr -d "'")
+              NEW_VERSION=$(grep -E '^TERMUX_PKG_VERSION=' "$file" | head -1 | sed 's/^TERMUX_PKG_VERSION=//' | sed "s/^['\"]//;s/['\"]$//" | tr -d "'")
+              
+              if [ "$OLD_VERSION" != "$NEW_VERSION" ]; then
+                echo "  → Version updated: $OLD_VERSION → $NEW_VERSION"
+                UPDATED_ENTRIES="${UPDATED_ENTRIES}- Package \`${PKG_NAME}\` v${OLD_VERSION} → v${NEW_VERSION}\n"
+              else
+                echo "  → Version unchanged, checking other changes..."
+                
+                # Check if there are significant changes
+                if git diff "$BEFORE" "$AFTER" -- "$file" | grep -E '^[+-]TERMUX_PKG_(SRCURL|SHA256|DEPENDS)=' > /dev/null; then
+                  echo "  → Metadata changes detected"
+                  CHANGED_ENTRIES="${CHANGED_ENTRIES}- Package \`${PKG_NAME}\` v${NEW_VERSION} - Updated metadata\n"
+                fi
+              fi
+            fi
+          done <<< "$CHANGED_FILES"
+
+          # Check if we have any entries to add
+          if [ -z "$ADDED_ENTRIES" ] && [ -z "$UPDATED_ENTRIES" ] && [ -z "$CHANGED_ENTRIES" ]; then
+            echo "No significant changes to log"
+            echo "has_changes=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # Build the final changelog entries
+          CHANGELOG_ENTRIES=""
+          
+          if [ -n "$ADDED_ENTRIES" ]; then
+            CHANGELOG_ENTRIES="${CHANGELOG_ENTRIES}### Added\n${ADDED_ENTRIES}\n"
+          fi
+          
+          if [ -n "$UPDATED_ENTRIES" ]; then
+            CHANGELOG_ENTRIES="${CHANGELOG_ENTRIES}### Update\n${UPDATED_ENTRIES}\n"
+          fi
+          
+          if [ -n "$CHANGED_ENTRIES" ]; then
+            CHANGELOG_ENTRIES="${CHANGELOG_ENTRIES}### Changed\n${CHANGED_ENTRIES}\n"
+          fi
+
+          # Save entries to file for next step
+          {
+            echo "entries<<EOF"
+            echo -e "$CHANGELOG_ENTRIES"
+            echo "EOF"
+            echo "has_changes=true"
+          } >> "$GITHUB_OUTPUT"
+
+          echo "Generated changelog entries:"
+          echo -e "$CHANGELOG_ENTRIES"
+
+      - name: Update CHANGELOG.md
+        if: steps.detect.outputs.has_changes == 'true'
         shell: bash
         run: |
           set -e
 
-          CHANGELOG="CHANGELOG.md"
+          CHANGELOG_FILE="CHANGELOG.md"
+          ENTRIES=$(echo -e "${{ steps.detect.outputs.entries }}")
 
-          if [[ ! -f "$CHANGELOG" ]]; then
-            printf "%s\n" \
-              "# Changelog" \
-              "" \
-              "## [Unreleased]" \
-              "### Added" \
-              "" \
-              "### Updated" \
-              "" \
-              "### Fixed" \
-              "" \
-              > "$CHANGELOG"
-            echo "[✓] Created CHANGELOG.md"
+          if [ ! -f "$CHANGELOG_FILE" ]; then
+            echo "❌ CHANGELOG.md not found!"
+            exit 1
           fi
 
-          CHANGED_FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '^packages/.*/build\.sh' || true)
+          # Find the latest version section (first ## [vX.X.X] after [Unreleased])
+          # Strategy:
+          # 1. Find line number of [Unreleased]
+          # 2. Find first ## [vX.X.X] after that line
+          # 3. Insert new entries under the appropriate ### section
 
-          if [[ -z "$CHANGED_FILES" ]]; then
-            echo "[ℹ] No package changes detected"
+          echo "📝 Finding latest version in CHANGELOG.md..."
+          
+          # Find [Unreleased] line number
+          UNRELEASED_LINE=$(grep -n "^## \[Unreleased\]" "$CHANGELOG_FILE" | head -1 | cut -d: -f1)
+          
+          if [ -z "$UNRELEASED_LINE" ]; then
+            echo "❌ [Unreleased] section not found!"
+            exit 1
+          fi
+          
+          echo "Found [Unreleased] at line $UNRELEASED_LINE"
+          
+          # Find first version line after [Unreleased]
+          VERSION_LINE=$(tail -n +$((UNRELEASED_LINE + 1)) "$CHANGELOG_FILE" | grep -n "^## \[v" | head -1 | cut -d: -f1)
+          
+          if [ -z "$VERSION_LINE" ]; then
+            echo "❌ No version section found after [Unreleased]!"
+            exit 1
+          fi
+          
+          # Calculate actual line number in file
+          VERSION_LINE=$((UNRELEASED_LINE + VERSION_LINE))
+          
+          # Extract version number
+          VERSION_HEADER=$(sed -n "${VERSION_LINE}p" "$CHANGELOG_FILE")
+          echo "Found latest version: $VERSION_HEADER"
+          
+          # Now we need to intelligently insert entries under correct ### section
+          # Read the file and process it
+          
+          TEMP_FILE=$(mktemp)
+          
+          # Flag to track if we're in the target version section
+          IN_TARGET_VERSION=0
+          SECTION_INSERTED=0
+          LINE_NUM=0
+          
+          while IFS= read -r line; do
+            LINE_NUM=$((LINE_NUM + 1))
+            
+            # Check if we've reached the target version
+            if [ $LINE_NUM -eq $VERSION_LINE ]; then
+              IN_TARGET_VERSION=1
+              echo "$line" >> "$TEMP_FILE"
+              continue
+            fi
+            
+            # If we're in target version and haven't inserted yet
+            if [ $IN_TARGET_VERSION -eq 1 ] && [ $SECTION_INSERTED -eq 0 ]; then
+              
+              # Check if we hit the next version section (stop inserting)
+              if [[ "$line" =~ ^##[[:space:]]\[v ]]; then
+                IN_TARGET_VERSION=0
+              fi
+              
+              # Look for ### Added, ### Update, ### Changed sections
+              if [[ "$line" =~ ^###[[:space:]]Added ]]; then
+                echo "$line" >> "$TEMP_FILE"
+                
+                # Check if we have Added entries
+                if echo "$ENTRIES" | grep -q "^### Added"; then
+                  # Extract only Added entries
+                  ADDED_LINES=$(echo "$ENTRIES" | sed -n '/^### Added$/,/^### /p' | sed '$d' | tail -n +2)
+                  echo "$ADDED_LINES" >> "$TEMP_FILE"
+                fi
+                continue
+                
+              elif [[ "$line" =~ ^###[[:space:]]Update ]]; then
+                echo "$line" >> "$TEMP_FILE"
+                
+                # Check if we have Update entries
+                if echo "$ENTRIES" | grep -q "^### Update"; then
+                  # Extract only Update entries
+                  UPDATE_LINES=$(echo "$ENTRIES" | sed -n '/^### Update$/,/^### /p' | sed '$d' | tail -n +2)
+                  echo "$UPDATE_LINES" >> "$TEMP_FILE"
+                fi
+                continue
+                
+              elif [[ "$line" =~ ^###[[:space:]]Changed ]]; then
+                echo "$line" >> "$TEMP_FILE"
+                
+                # Check if we have Changed entries
+                if echo "$ENTRIES" | grep -q "^### Changed"; then
+                  # Extract only Changed entries
+                  CHANGED_LINES=$(echo "$ENTRIES" | sed -n '/^### Changed$/,/^### /p' | sed '$d' | tail -n +2)
+                  echo "$CHANGED_LINES" >> "$TEMP_FILE"
+                fi
+                continue
+                
+              elif [[ "$line" =~ ^###[[:space:]]Fixed ]] || [[ "$line" =~ ^---$ ]]; then
+                # We've passed all relevant sections, mark as inserted
+                SECTION_INSERTED=1
+              fi
+            fi
+            
+            echo "$line" >> "$TEMP_FILE"
+            
+          done < "$CHANGELOG_FILE"
+
+          # Replace original file
+          mv "$TEMP_FILE" "$CHANGELOG_FILE"
+
+          echo "✅ CHANGELOG.md updated successfully"
+          
+          # Show what was added
+          echo ""
+          echo "📋 Added entries:"
+          echo "$ENTRIES"
+
+      - name: Commit and push changes
+        if: steps.detect.outputs.has_changes == 'true'
+        shell: bash
+        run: |
+          set -e
+
+          git add CHANGELOG.md
+
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
             exit 0
           fi
 
-          echo "[✓] Changed packages:"
-          echo "$CHANGED_FILES"
+          # Get commit info
+          if [ "${{ github.event_name }}" = "push" ]; then
+            COMMIT_MSG="docs: auto-update CHANGELOG.md"
+          else
+            PR_NUM="${{ github.event.pull_request.number }}"
+            COMMIT_MSG="docs: auto-update CHANGELOG.md (PR #${PR_NUM})"
+          fi
 
-          for build_file in $CHANGED_FILES; do
-            pkg_dir=$(dirname "$build_file")
-            pkg_name=$(basename "$pkg_dir")
-
-            pkg_version=$(grep '^TERMUX_PKG_VERSION=' "$build_file" | cut -d= -f2)
-
-            if [[ -z "$pkg_version" ]]; then
-              continue
-            fi
-
-            if ! grep -q "\`${pkg_name}\` v${pkg_version}" "$CHANGELOG"; then
-              sed -i "/### Updated/a - Package \`${pkg_name}\` v${pkg_version}" "$CHANGELOG"
-              echo "[✓] Updated: ${pkg_name} v${pkg_version}"
+          git commit -m "$COMMIT_MSG"
+          
+          # Push with retry logic
+          MAX_RETRIES=3
+          RETRY_COUNT=0
+          
+          while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
+            if git push origin HEAD:${{ github.ref_name }}; then
+              echo "✅ Successfully pushed CHANGELOG.md update"
+              exit 0
+            else
+              RETRY_COUNT=$((RETRY_COUNT + 1))
+              echo "⚠️  Push failed, retrying ($RETRY_COUNT/$MAX_RETRIES)..."
+              
+              if [ $RETRY_COUNT -lt $MAX_RETRIES ]; then
+                git pull --rebase origin ${{ github.ref_name }}
+                sleep 2
+              fi
             fi
           done
 
-      - name: Commit & push changelog
+          echo "❌ Failed to push after $MAX_RETRIES attempts"
+          exit 1
+
+      - name: Summary
+        if: steps.detect.outputs.has_changes == 'true'
         run: |
-          git config user.name "Termux App Store Bot"
-          git config user.email "258516621+termux-app-store@users.noreply.github.com"
-
-          if git diff --quiet CHANGELOG.md; then
-            echo "[ℹ] Nothing to commit"
-            exit 0
-          fi
-
-          git add CHANGELOG.md
-          git commit -m "Update/Added packages: update changelog [ci skip]" || true
-          git push origin master
+          echo "## 📝 CHANGELOG Updated" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "The following changes were added to the latest version:" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          echo "${{ steps.detect.outputs.entries }}" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
