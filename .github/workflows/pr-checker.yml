@@ -3,12 +3,10 @@ name: PR Package Checker & Report
 on:
   pull_request_target:
     types:
-      - opened
-      - reopened
-      - synchronize
       - labeled
-    paths:
-      - 'packages/*/build.sh'
+    # REMOVED paths filter!
+    # Reason: When label is added, no file changes in the event,
+    # so path filter causes workflow to skip even with review-approved label
 
 permissions:
   contents: read
@@ -20,18 +18,12 @@ jobs:
     name: Validate changed packages
     runs-on: ubuntu-latest
 
-    # Hanya run jika:
-    # 1. Ada label review-approved, ATAU
-    # 2. Trigger dari labeled event dengan label review-approved
-    if: |
-      github.event_name == 'pull_request_target' && (
-        contains(github.event.pull_request.labels.*.name, 'review-approved') ||
-        (github.event.action == 'labeled' && github.event.label.name == 'review-approved')
-      )
+    # Only run when review-approved label is added
+    if: github.event.label.name == 'review-approved'
 
     steps:
       - name: Checkout PR code (safe)
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.sha }}
@@ -58,7 +50,7 @@ jobs:
         id: checker
         shell: bash
         run: |
-          set -e
+          set +e  # Don't exit on error - handle manually
           FAIL=0
           REPORT="# 📋 Package Review Report\n\n"
 
@@ -86,7 +78,10 @@ jobs:
 
             # Function to safely extract variables
             get_var() {
-              grep -E "^$1=" "$BUILD_SH" 2>/dev/null | head -n1 | cut -d= -f2- | sed "s/^['\"]//;s/['\"]$//" | tr -d "'"
+              local var_name="$1"
+              local result
+              result=$(grep -E "^${var_name}=" "$BUILD_SH" 2>/dev/null | head -n1 | cut -d= -f2- | sed "s/^['\"]//;s/['\"]$//" | tr -d "'" 2>/dev/null || echo "")
+              echo "$result"
             }
 
             VERSION=$(get_var TERMUX_PKG_VERSION)
@@ -112,7 +107,7 @@ jobs:
                   REPORT+="- ⚠️  Missing \`$var_name\` (optional)\n"
                 fi
               else
-                REPORT+="- ✅ \`$var_name\`: \`$var_value\`\n"
+                REPORT+="- ✅ \`$var_name\`: \`${var_value:0:50}\`\n"
               fi
             }
 
@@ -136,7 +131,7 @@ jobs:
                 FAIL=1
               else
                 SRCURL="${SRCURL//\$\{TERMUX_PKG_VERSION\}/$VERSION}"
-                REPORT+="- 🔁 SRCURL expanded: \`$SRCURL\`\n"
+                REPORT+="- 🔁 SRCURL expanded: \`${SRCURL:0:70}...\`\n"
               fi
             fi
 
@@ -169,8 +164,8 @@ jobs:
               TMP="$(mktemp)"
               
               if timeout 60 curl -fsSL "$SRCURL" -o "$TMP" 2>/dev/null; then
-                CALC=$(sha256sum "$TMP" | awk '{print $1}')
-                FILE_SIZE=$(ls -lh "$TMP" | awk '{print $5}')
+                CALC=$(sha256sum "$TMP" 2>/dev/null | awk '{print $1}')
+                FILE_SIZE=$(ls -lh "$TMP" 2>/dev/null | awk '{print $5}')
                 
                 REPORT+="  - Downloaded: \`$FILE_SIZE\`\n"
                 
@@ -190,7 +185,7 @@ jobs:
                 FAIL=1
               fi
               
-              rm -f "$TMP"
+              rm -f "$TMP" 2>/dev/null || true
             fi
 
             REPORT+="\n---\n\n"
