@@ -24,16 +24,22 @@ jobs:
       - name: Debug - Show PR info
         run: |
           echo "Event: ${{ github.event_name }}"
+          echo "Action: ${{ github.event.action }}"
           echo "PR Number: ${{ github.event.pull_request.number }}"
+          echo "PR State: ${{ github.event.pull_request.state }}"
+          echo "PR Merged: ${{ github.event.pull_request.merged }}"
           echo "Base SHA: ${{ github.event.pull_request.base.sha }}"
           echo "Head SHA: ${{ github.event.pull_request.head.sha }}"
+          echo "Merge Commit SHA: ${{ github.event.pull_request.merge_commit_sha }}"
           echo "Head Ref: ${{ github.event.pull_request.head.ref }}"
           echo "Base Ref: ${{ github.event.pull_request.base.ref }}"
 
-      - name: Checkout PR head
+      - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
+          # If PR is merged, checkout the merge commit
+          # If PR is open, checkout the head
+          ref: ${{ github.event.pull_request.merged && github.event.pull_request.merge_commit_sha || github.event.pull_request.head.sha }}
           fetch-depth: 0
 
       - name: Find changed build.sh files
