@@ -124,6 +124,7 @@ jobs:
         id: validate
         shell: bash
         run: |
+          set +e  # Don't exit on error - we'll handle errors manually
           VALIDATION_ERROR=0
           VALIDATION_DETAILS=""
           CURL_TIMEOUT=30
@@ -143,11 +144,16 @@ jobs:
               continue
             fi
             
-            PKG_NAME=$(basename $(dirname "$file"))
+            # Extract package name safely
+            PKG_DIR=$(dirname "$file" 2>/dev/null || echo "unknown")
+            PKG_NAME=$(basename "$PKG_DIR" 2>/dev/null || echo "unknown")
 
-            # Extract variables safely
+            # Extract variables safely with error handling
             get_var() {
-              grep -E "^$1=" "$file" 2>/dev/null | head -1 | sed 's/^[^=]*=//' | sed "s/^['\"]//;s/['\"]$//" | tr -d "'"
+              local var_name="$1"
+              local result
+              result=$(grep -E "^${var_name}=" "$file" 2>/dev/null | head -1 | sed 's/^[^=]*=//' | sed "s/^['\"]//;s/['\"]$//" | tr -d "'" 2>/dev/null || echo "")
+              echo "$result"
             }
 
             SRCURL=$(get_var TERMUX_PKG_SRCURL)
@@ -160,7 +166,7 @@ jobs:
             NAME=$(get_var TERMUX_PKG_NAME)
 
             echo "   Package: $PKG_NAME"
-            echo "   SRCURL: $SRCURL"
+            echo "   SRCURL: ${SRCURL:0:50}..."
             echo "   VERSION: $VERSION"
             echo "   SHA256: ${SHA256:0:20}..."
 
@@ -230,12 +236,12 @@ jobs:
               continue
             fi
 
-            echo "   Final URL: $DOWNLOAD_URL"
+            echo "   Final URL: ${DOWNLOAD_URL:0:70}..."
 
             # Download and verify SHA256
             if timeout $CURL_TIMEOUT curl -fsSL -o /tmp/source_file "$DOWNLOAD_URL" 2>/dev/null; then
-              COMPUTED_SHA256=$(sha256sum /tmp/source_file | awk '{print $1}')
-              FILE_SIZE=$(ls -lh /tmp/source_file | awk '{print $5}')
+              COMPUTED_SHA256=$(sha256sum /tmp/source_file 2>/dev/null | awk '{print $1}')
+              FILE_SIZE=$(ls -lh /tmp/source_file 2>/dev/null | awk '{print $5}')
 
               echo "   Downloaded: $FILE_SIZE"
               echo "   Computed SHA256: $COMPUTED_SHA256"
@@ -250,7 +256,7 @@ jobs:
                 VALIDATION_DETAILS="${VALIDATION_DETAILS}  - Expected: \`$SHA256\`\n"
                 VALIDATION_DETAILS="${VALIDATION_DETAILS}  - Got: \`$COMPUTED_SHA256\`\n"
               fi
-              rm -f /tmp/source_file
+              rm -f /tmp/source_file 2>/dev/null || true
             else
               HTTP_CODE=$(curl -fsSL -o /dev/null -w "%{http_code}" "$DOWNLOAD_URL" 2>/dev/null || echo "000")
               echo "❌ Download failed (HTTP: $HTTP_CODE)"
@@ -270,12 +276,16 @@ jobs:
 
           done <<< "${{ steps.files.outputs.changed_files }}"
 
+          # Final status output
           {
             echo "validation_status=$VALIDATION_ERROR"
             echo "validation_details<<EOF"
             echo -e "$VALIDATION_DETAILS"
             echo "EOF"
           } >> "$GITHUB_OUTPUT"
+          
+          echo ""
+          echo "Validation completed with status: $VALIDATION_ERROR"
 
       - name: Determine overall status
         id: status
