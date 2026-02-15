@@ -163,7 +163,6 @@ jobs:
             DESCRIPTION=$(get_var TERMUX_PKG_DESCRIPTION)
             MAINTAINER=$(get_var TERMUX_PKG_MAINTAINER)
             LICENSE=$(get_var TERMUX_PKG_LICENSE)
-            NAME=$(get_var TERMUX_PKG_NAME)
 
             echo "   Package: $PKG_NAME"
             echo "   SRCURL: ${SRCURL:0:50}..."
@@ -172,7 +171,8 @@ jobs:
 
             VALIDATION_DETAILS="${VALIDATION_DETAILS}## 📦 Package: \`$PKG_NAME\`\n\n"
 
-            # Required field validations
+            # Required field validations (ONLY VERSION, SRCURL, SHA256)
+            # Note: TERMUX_PKG_NAME is NOT required - package name from folder
             MISSING_REQUIRED=false
 
             if [ -z "$VERSION" ]; then

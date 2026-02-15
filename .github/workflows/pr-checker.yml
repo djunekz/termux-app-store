@@ -4,9 +4,6 @@ on:
   pull_request_target:
     types:
       - labeled
-    # REMOVED paths filter!
-    # Reason: When label is added, no file changes in the event,
-    # so path filter causes workflow to skip even with review-approved label
 
 permissions:
   contents: read
@@ -18,7 +15,6 @@ jobs:
     name: Validate changed packages
     runs-on: ubuntu-latest
 
-    # Only run when review-approved label is added
     if: github.event.label.name == 'review-approved'
 
     steps:
@@ -87,7 +83,6 @@ jobs:
             VERSION=$(get_var TERMUX_PKG_VERSION)
             SRCURL_RAW=$(get_var TERMUX_PKG_SRCURL)
             SHA256=$(get_var TERMUX_PKG_SHA256)
-            NAME=$(get_var TERMUX_PKG_NAME)
             DESC=$(get_var TERMUX_PKG_DESCRIPTION)
             HOMEPAGE=$(get_var TERMUX_PKG_HOMEPAGE)
             LICENSE=$(get_var TERMUX_PKG_LICENSE)
@@ -111,8 +106,7 @@ jobs:
               fi
             }
 
-            # Required fields
-            check "TERMUX_PKG_NAME" "$NAME" true
+            # Required fields (ONLY VERSION, SRCURL, SHA256)
             check "TERMUX_PKG_VERSION" "$VERSION" true
             check "TERMUX_PKG_SRCURL" "$SRCURL_RAW" true
             check "TERMUX_PKG_SHA256" "$SHA256" true
@@ -122,6 +116,8 @@ jobs:
             check "TERMUX_PKG_HOMEPAGE" "$HOMEPAGE" false
             check "TERMUX_PKG_LICENSE" "$LICENSE" false
             check "TERMUX_PKG_MAINTAINER" "$MAINTAINER" false
+
+            # Note: TERMUX_PKG_NAME is NOT required - package name is taken from folder name
 
             # --- SAFE variable expansion for SRCURL ---
             SRCURL="$SRCURL_RAW"
