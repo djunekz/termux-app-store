@@ -50,7 +50,10 @@ jobs:
           FAIL=0
           REPORT="# 📋 Package Review Report\n\n"
 
-          if [[ -z "${{ steps.packages.outputs.changed }}" ]]; then
+          # FIXED: Quote the variable to handle multiline properly
+          CHANGED_PKGS="${{ steps.packages.outputs.changed }}"
+
+          if [[ -z "$CHANGED_PKGS" ]]; then
             REPORT+="ℹ️ No package changes detected in this PR\n"
             echo -e "$REPORT"
             {
@@ -62,7 +65,8 @@ jobs:
             exit 0
           fi
 
-          for PKG in ${{ steps.packages.outputs.changed }}; do
+          # Convert multiline to space-separated for loop
+          for PKG in $CHANGED_PKGS; do
             BUILD_SH="packages/$PKG/build.sh"
             REPORT+="## 📦 Package: \`$PKG\`\n\n"
 
