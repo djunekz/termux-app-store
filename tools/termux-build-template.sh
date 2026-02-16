@@ -43,4 +43,4 @@ echo "  install -Dm755 yourtool \$TERMUX_PREFIX/bin/yourtool"
 echo "}"
 
 echo
-echo -e "${BOLD_GREEN}✔ Copy this template into packages/<name>/build.sh and edit accordingly.${RESET}"
+echo -e "${BOLD_GREEN}✔ Copy this template into ${BOLD_YELLOW}packages/<name>/build.sh ${BOLD_GREEN}and edit accordingly.${RESET}"
