@@ -1,9 +1,26 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-02-18T22:13:31.432035+00:00",
-  "total": 13,
+  "generated_at": "2026-02-18T23:25:05.252652+00:00",
+  "total": 14,
   "packages": [
+    {
+      "package": "aura",
+      "version": "0.8.2",
+      "maintainer": "@termux-app-store",
+      "description": "Adaptive Unified Runtime Assistant",
+      "homepage": "https://github.com/djunekz/aura",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/djunekz/aura/archive/refs/tags/v${TERMUX_PKG_VERSION}.zip",
+      "sha256": "918656afc31dfbda1189f4ece91e07a3d7299982c3d7951fd1808f59416e0268",
+      "platform_independent": false,
+      "depends": [
+        "nodejs"
+      ]
+    },
     {
       "package": "baxter",
       "version": "1.2.4",
