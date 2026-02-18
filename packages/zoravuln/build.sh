@@ -1,5 +1,5 @@
 TERMUX_PKG_HOMEPAGE=https://github.com/djunekz/termux-app-store
-TERMUX_PKG_DESCRIPTION="Ultimate scanner vulnerability"
+TERMUX_PKG_DESCRIPTION="Ultimate scanner vulnerability analizer"
 TERMUX_PKG_LICENSE="MIT"
 TERMUX_PKG_MAINTAINER="@termux-app-store"
 TERMUX_PKG_VERSION=1.0.0
