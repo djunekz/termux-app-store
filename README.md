@@ -1,318 +1,349 @@
 <div align="center">
-</br>
-  <img src=".assets/0.jpeg" width="400">
-</br>
-</div>
 
-<div align="center">
-  <h1>
-  Termux App Store
-  </h1>
-  
-  [![Community Ready](https://img.shields.io/badge/Community-Ready-2ea44f?style=for-the-badge&logo=github)](https://github.com/djunekz/termux-app-store)
-</div>
+<img src=".assets/0.jpeg" width="420" alt="Termux App Store — TUI Package Manager for Termux"/>
 
-This project follows community-driven standards including:
-- Public contribution workflows
-- TUI and CLI interface 
-- Automated CI/CD pipelines
-- Issue & pull request templates
-Transparent release and changelog process
+<br/>
 
-<div>
-  <p align ="center">
-    <img alt="CI" src="https://github.com/djunekz/termux-app-store/actions/workflows/build.yml/badge.svg"/></a>
-    <img alt="Codecov" src="https://codecov.io/github/djunekz/termux-app-store/branch/master/graph/badge.svg?&token=357W4EP8G0" href="https://codecov.io/github/djunekz/termux-app-store"/></a><br>
-    <img alt="Version" src="https://img.shields.io/github/v/release/djunekz/termux-app-store.svg?style=for-the-badge&logo=iterm2&color=green" href="ttps://github.com/djunekz/termux-app-store/releases"/>
-    <img alt="Download" src="https://img.shields.io/github/downloads/djunekz/termux-app-store/total?style=for-the-badge&logo=abdownloadmanager&logoColor=white&color=green" href="https://github.com/djunekz/termux-app-store"/>
-    <img alt="License" src="https://img.shields.io/github/license/djunekz/termux-app-store.svg?style=for-the-badge&logo=homepage&logoColor=white&color=green" href="https://github.com/djunekz/termux-app-store/blob/master/LICENSE"/><br>
-    <img alt="Stars" src="https://img.shields.io/github/stars/djunekz/termux-app-store?logo=starship&color=green&logoColor=black"/>
-    <img alt="Forks" src="https://img.shields.io/github/forks/djunekz/termux-app-store?logo=refinedgithub&color=green"/><br>
-    <img alt="Issues" src="https://img.shields.io/github/issues/djunekz/termux-app-store?style=for-the-badge&logo=openbugbounty&logoColor=white&color=green"/>
-    <img alt="Pull Request" src="https://img.shields.io/github/issues-pr/djunekz/termux-app-store?style=for-the-badge&logo=git&logoColor=white&color=green"/>
-    <img alt="Contributors" src="https://img.shields.io/github/contributors/djunekz/termux-app-store?style=for-the-badge&logo=github&logoColor=white&color=green"/>
+# Termux App Store
+
+**The first offline-first, source-based TUI package manager built natively for Termux.**
+
+[![CI](https://github.com/djunekz/termux-app-store/actions/workflows/build.yml/badge.svg)](https://github.com/djunekz/termux-app-store/actions)
+[![Codecov](https://codecov.io/github/djunekz/termux-app-store/branch/master/graph/badge.svg?token=357W4EP8G0)](https://codecov.io/github/djunekz/termux-app-store)
+[![Release](https://img.shields.io/github/v/release/djunekz/termux-app-store.svg?style=flat&logo=iterm2&color=3fb950)](https://github.com/djunekz/termux-app-store/releases)
+[![Downloads](https://img.shields.io/github/downloads/djunekz/termux-app-store/total?style=flat&logo=abdownloadmanager&logoColor=white&color=3fb950)](https://github.com/djunekz/termux-app-store)
+[![License](https://img.shields.io/github/license/djunekz/termux-app-store.svg?style=flat&color=3fb950)](LICENSE)
+
+[![Stars](https://img.shields.io/github/stars/djunekz/termux-app-store?logo=starship&color=3fb950&logoColor=black)](https://github.com/djunekz/termux-app-store/stargazers)
+[![Forks](https://img.shields.io/github/forks/djunekz/termux-app-store?logo=refinedgithub&color=3fb950)](https://github.com/djunekz/termux-app-store/network)
+[![Issues](https://img.shields.io/github/issues/djunekz/termux-app-store?style=flat&logo=openbugbounty&logoColor=white&color=3fb950)](https://github.com/djunekz/termux-app-store/issues)
+[![PRs](https://img.shields.io/github/issues-pr/djunekz/termux-app-store?style=flat&logo=git&logoColor=white&color=3fb950)](https://github.com/djunekz/termux-app-store/pulls)
+[![Contributors](https://img.shields.io/github/contributors/djunekz/termux-app-store?style=flat&logo=github&logoColor=white&color=3fb950)](https://github.com/djunekz/termux-app-store/graphs/contributors)
+[![Community Ready](https://img.shields.io/badge/Community-Ready-3fb950?style=flat&logo=github)](https://github.com/djunekz/termux-app-store)
+
+> 🧠 **Offline-first &nbsp;•&nbsp; Source-based &nbsp;•&nbsp; Binary-safe &nbsp;•&nbsp; Termux-native**
 
 </div>
 
-> 🧠 **Offline-first • Source-based • Binary-safe • Termux-native**
+---
 
-**Termux App Store** adalah **TUI (Terminal User Interface)** berbasis **Textual (Python)** dan CLI yang memungkinkan pengguna Termux untuk **menelusuri, membangun, dan mengelola aplikasi** dari skrip build secara lokal — tanpa akun, tanpa telemetry, dan tanpa ketergantungan cloud.
+## 📖 Apa itu Termux App Store?
 
-> ℹ️ **Catatan penting**
-> Termux App Store **bukan repository biner terpusat** dan **bukan installer otomatis tersembunyi**.  
+**Termux App Store** adalah **TUI (Terminal User Interface)** berbasis Python ([Textual](https://github.com/Textualize/textual)) dan CLI yang memungkinkan pengguna Termux untuk **menelusuri, membangun, dan mengelola tool/aplikasi** langsung dari perangkat Android — tanpa akun, tanpa telemetry, dan tanpa ketergantungan cloud.
+
+> [!IMPORTANT]
+> Termux App Store **bukan repository biner terpusat** dan **bukan installer otomatis tersembunyi**.
 > Semua build dijalankan **secara lokal, transparan, dan atas kendali penuh pengguna**.
 
 ---
 
-## 👥 Who Is This For?
+## 👥 Untuk Siapa?
 
-- Pengguna Termux yang ingin **kontrol penuh atas build**
-- Developer yang mendistribusikan tool via **source-based packaging**
-- Reviewer & auditor build script
-- Maintainer yang mengelola banyak package Termux
+| Pengguna | Kegunaan |
+|---|---|
+| 📱 Pengguna Termux | Kontrol penuh atas build & package |
+| 🛠️ Developer | Distribusikan tool via source-based packaging |
+| 🔍 Reviewer & Auditor | Review dan validasi build script |
+| 📦 Maintainer | Kelola banyak package Termux sekaligus |
 
 ---
 
-<div align="center">
-  <h1>
-📱Tools Interface / Screenshots
-  </h1>
-</div>
-
-Feature:
-> User friendly and
-> Touchscreen Support
-
-<div>
-  <p align="middle">
-    <img src=".assets/0.jpeg" width="74%" /></br>
-    <img src=".assets/0main.jpg" width=24% />
-    <img src=".assets/1install.jpg" width=24% />
-    <img src=".assets/2pallete.jpg" width=24% />
-  </p>
-</div>
+## 📱 Screenshot
 
 <div align="center">
-  
-### Menu Interface
-![Main Interface](.assets/0main.jpg)
 
-### Install Interface
-![Install Interface](.assets/1install.jpg)
+<img src=".assets/0.jpeg" width="74%" alt="Termux App Store — Tampilan Utama"/>
 
-### Menu Pallete Interface
-![Menu Pallete Interface](.assets/2pallete.jpg)
+<br/><br/>
+
+| Main Interface | Install Interface | Menu Palette |
+|:---:|:---:|:---:|
+| <img src=".assets/0main.jpg" width="220" alt="Main Interface"/> | <img src=".assets/1install.jpg" width="220" alt="Install Interface"/> | <img src=".assets/2pallete.jpg" width="220" alt="Menu Palette Interface"/> |
+| TUI menu utama | Proses install package | Command palette |
+
+> ✨ User-friendly dengan dukungan **touchscreen** penuh
 
 </div>
-  
+
 ---
 
-## 🖥️ Perintah Termux App Store
+## 🚀 Instalasi Cepat
 
-### TUI Commands:
-- `termux-app-store` # Menjalankan TUI Interface
+```bash
+curl -fsSL https://raw.githubusercontent.com/djunekz/termux-app-store/main/install.sh | bash
+```
 
-### CLI Commands:
-- `termux-app-store` _# Menjalankan TUI_
-- `termux-app-store` `list` _# Daftar semua package_
-- `termux-app-store` `show` `<package>` _# Lihat detail package_
-- `termux-app-store` `install` `<package>` _# Build/install package_
-- `termux-app-store` `update` _# Update index package_
-- `termux-app-store` `upgrade` _# Upgrade semua package_
-- `termux-app-store` `upgrade` `<package>` _# Upgrade package tertentu_
-- `termux-app-store` `version` _# Cek versi termux app store terbaru_
-- `termux-app-store` `help` _# Bantuan / daftar command_
+Setelah instalasi, jalankan:
+
+```bash
+termux-app-store        # Buka TUI interaktif
+termux-app-store -h     # Lihat bantuan CLI
+```
+
+---
+
+## 🖥️ Penggunaan
+
+### TUI — Antarmuka Interaktif
+```bash
+termux-app-store
+```
+
+### CLI — Perintah Langsung
+
+```bash
+termux-app-store list                  # Daftar semua package
+termux-app-store show <package>        # Detail package
+termux-app-store install <package>     # Build & install package
+termux-app-store update                # Update index package
+termux-app-store upgrade               # Upgrade semua package
+termux-app-store upgrade <package>     # Upgrade package tertentu
+termux-app-store version               # Cek versi terbaru
+termux-app-store help                  # Bantuan lengkap
+```
 
 ---
 
 ## ✨ Fitur Utama
 
-- 📦 **Package Browser (TUI)**  
-  Jelajahi paket berbasis folder `packages/` secara interaktif
+<table>
+<tr>
+<td width="50%">
 
-- 🧠 **Smart Build Validator**
-  - Deteksi dependency tidak didukung Termux
-  - Badge `UNSUPPORTED`, `UPDATE`, `INSTALLED`, `NEW`
+**📦 Package Browser (TUI)**
+Jelajahi paket dari folder `packages/` secara interaktif dengan navigasi keyboard & touchscreen.
 
-- 🔍 **Search & Filter**
-  Cari paket berdasarkan nama atau deskripsi secara real-time
+**🧠 Smart Build Validator**
+Deteksi dependency yang tidak didukung Termux, lengkap dengan badge status otomatis.
 
-- ⚙️ **One-Click Build**
-  Install / update paket via `build-package.sh`
+**🔍 Search & Filter Real-time**
+Cari paket berdasarkan nama atau deskripsi secara instan tanpa reload.
 
-- ⚙️ **One-Click Checker Validation**
-  Cek validasi package yang ingin di distribusikan via `./termux-build`
+**⚡ One-Click Build**
+Install atau update paket cukup satu klik via `build-package.sh`.
 
-- ⚙️ **One-Click Install / Update / Uninstall Termux App Store**
-  Install / update / Uninstall file termux-app-store via `./tasctl`
+</td>
+<td width="50%">
 
-- 🧩 **Portable Execution**
-  Dapat dijalankan dari direktori mana pun selama folder `termux-app-store/packages` tersedia
+**✅ One-Click Validator**
+Cek validasi package sebelum distribusi via `./termux-build`.
 
-- 🧬 **Binary Release Ready**
-  Source Python tersembunyi di balik binary (PyInstaller / Nuitka)
+**🛠️ One-Click Manage**
+Install / update / uninstall Termux App Store itu sendiri via `./tasctl`.
 
-- 🧠 **Self-Healing Path Resolver**
-  Auto-detect lokasi app meski folder dipindah atau di-rename
+**🧬 Self-Healing Path Resolver**
+Auto-detect lokasi app meski folder dipindah atau di-rename.
 
-- 🔐 **Privacy-First**
-  Tanpa akun, tanpa tracking, tanpa telemetry
+**🔐 Privacy-First**
+Tanpa akun, tanpa tracking, tanpa telemetry — offline sepenuhnya.
+
+</td>
+</tr>
+</table>
 
 ---
 
-## 🧱 Arsitektur
-Detail lengkap: [ARCHITECTURE.md](ARCHITECTURE.md)
+## 🔴 Badge Status Package
+
+| Badge | Keterangan |
+|---|---|
+| 🟢 **NEW** | Package baru (< 7 hari) |
+| 🟡 **UPDATE** | Versi lebih baru tersedia |
+| 🟢 **INSTALLED** | Versi terpasang sudah terkini |
+| 🔴 **UNSUPPORTED** | Dependency tidak tersedia di Termux |
 
 ---
 
-## 🚀 Instalasi (Binary Release)
+## 🧩 Cara Menambahkan Package
 
-### Install via Installer (Disarankan)
+Setiap package **wajib** memiliki file `build.sh`:
+
+```
+packages/<nama_tool>/build.sh
+```
+
+### Template Minimal `build.sh`
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/djunekz/termux-app-store/main/install.sh
-```
-Lalu jalankan:
-```
-termux-app-store
-```
-Atau:
-```
-termux-app-store -h
-```
-
----
-
-## 🧠 Cara Kerja
-1. Aplikasi mencari folder `termux-app-store/packages`
-2. Membaca metadata dari `build.sh`
-3. Menampilkan paket Termux App Store di TUI atau CLI
-4. Menjalankan build via `build-package.sh`
-5. Menampilkan log & progress real-time
-
----
-
-## 🧩 Struktur Package
-Setiap package **WAJIB** memiliki:
-```
-packages/<name_tool>/build.sh
-```
-Contoh isi minimal file `build.sh`:
-```.Text
-TERMUX_PKG_HOMEPAGE=
+TERMUX_PKG_HOMEPAGE=""
 TERMUX_PKG_DESCRIPTION=""
 TERMUX_PKG_LICENSE=""
-TERMUX_PKG_MAINTAINER="@author-repository"
-TERMUX_PKG_VERSION=
-TERMUX_PKG_SRCURL=
-TERMUX_PKG_SHA256=
+TERMUX_PKG_MAINTAINER="@username-github"
+TERMUX_PKG_VERSION=""
+TERMUX_PKG_SRCURL=""
+TERMUX_PKG_SHA256=""
 ```
-Contoh file `build.sh`:
-berada di folder `template/build.sh`
-atau bisa ketik di command `./termux-build template`
+
+> 💡 Lihat template lengkap di folder `template/build.sh`
+> atau jalankan: `./termux-build template`
 
 ---
 
-## 🛠️ termux-build (Check-only Tool)
-**termux-build** adalah tool validasi & reviewer helper, BUKAN tool upload atau publish.
-Contoh perintah:
-- `./termux-build lint <packages/nama_package>`
-atau `./termux-build lint <package>`
-- `./termux-build check-pr <package>`
-- `./termux-build doctor`
-- `./termux-build suggest <package>`
-- `./termux-build explain <package>`
-- `./termux-build template`
-- `./termux-build guide`
+## 🛠️ termux-build — Validation Tool
 
-### Prinsip utama:
-- ❌ Tidak mengubah file
-- ❌ Tidak build otomatis
-- ❌ Tidak upload ke GitHub
-- ✅ Hanya membaca & memvalidasi
-- Tool ini dirancang untuk:
-  - Contributor
-  - Reviewer
-  - Maintainer
-  - CI check
-  - User distribution package
+**termux-build** adalah tool validasi dan helper untuk reviewer — bukan tool upload atau publish otomatis.
+
+```bash
+./termux-build lint <package>        # Lint build script
+./termux-build check-pr <package>    # Cek kesiapan PR
+./termux-build doctor                # Diagnosis environment
+./termux-build suggest <package>     # Saran perbaikan
+./termux-build explain <package>     # Penjelasan detail package
+./termux-build template              # Generate template build.sh
+./termux-build guide                 # Panduan kontribusi
+```
+
+> [!NOTE]
+> termux-build **hanya membaca dan memvalidasi** — tidak mengubah file, tidak build otomatis, tidak upload ke GitHub.
 
 ---
 
-## 🔴 Badge Status
-- 🟢 NEW - Paket baru (<7 hari)
-- 🟡 UPDATE - Versi tersedia lebih baru
-- 🟢 INSTALLED - Versi sudah terpasang
-- 🔴 UNSUPPORTED - Dependency tidak tersedia di Termux
+## 🏗️ Arsitektur
+
+```
+termux-app-store/
+├── packages/              # Direktori semua package
+│   └── <nama_tool>/
+│       └── build.sh       # Metadata & build script
+├── template/
+│   └── build.sh           # Template package
+├── tasctl                 # Installer/updater/uninstaller TAS
+├── termux-build           # Validation & review tool
+└── install.sh             # Installer utama
+```
+
+> 📄 Detail lengkap: [ARCHITECTURE.md](ARCHITECTURE.md)
 
 ---
 
-## 🔐 Keamanan
+## 🔐 Keamanan & Privasi
+
+<table>
+<tr>
+<td width="50%">
+
+**🔐 Keamanan**
 - Tidak meminta permission tambahan
-- Tidak membuka port
+- Tidak membuka port jaringan
 - Tidak menjalankan service background
-- Build dijalankan atas perintah user
-Detail lengkap: [SECURITY.md](SECURITY.md)
+- Build hanya berjalan atas perintah eksplisit user
+
+</td>
+<td width="50%">
+
+**🛡️ Privasi**
+- Tanpa akun atau registrasi
+- Tanpa analytics atau pelacakan
+- Tanpa telemetry apapun
+- Offline-first by design
+
+</td>
+</tr>
+</table>
+
+> 📄 [SECURITY.md](SECURITY.md) &nbsp;|&nbsp; [PRIVACY.md](PRIVACY.md) &nbsp;|&nbsp; [DISCLAIMER.md](DISCLAIMER.md)
 
 ---
 
-## 🛡️ Privasi
-- Tanpa akun
-- Tanpa analytics
-- Tanpa telemetry
-- Offline-first
-Detail lengkap: [PRIVACY.md](PRIVACY.md)
+## 📦 Upload Tool ke Termux App Store
 
----
+Ingin mendistribusikan tool kamu ke komunitas Termux?
 
-## 🧪 Binary Disclaimer
-Binary release:
-- Dibangun dari source publik
-- Tidak dimodifikasi pasca-build
-- Dianjurkan verifikasi checksum
-Detail lengkap: [DISCLAIMER.md](DISCLAIMER.md)
+**Keuntungan upload tool:**
+- Tool bisa diunduh banyak pengguna Termux
+- Update cukup dengan mengubah `version` dan `sha256` di `build.sh`
+- Tool muncul di TUI dengan badge status otomatis
+
+**Cara upload:**
+
+```bash
+# 1. Fork repo ini
+# 2. Tambahkan folder package kamu:
+mkdir packages/nama-tool-kamu
+# 3. Buat build.sh sesuai template
+# 4. Validasi dengan termux-build:
+./termux-build lint packages/nama-tool-kamu
+# 5. Submit Pull Request
+```
+
+> 📄 Panduan lengkap: [HOW_TO_UPLOAD.md](HOW_TO_UPLOAD.md)
 
 ---
 
 ## 🤝 Kontribusi
-Kontribusi sangat diterima!
-- Tambah package
-- Perbaiki build script
-- Audit security
-- Perbaiki dokumentasi
-- Review PR (Pull Request)
-Panduan: [CONTRIBUTING.md](CONTRIBUTING.md)
+
+Semua bentuk kontribusi sangat disambut!
+
+| Cara Berkontribusi | Keterangan |
+|---|---|
+| 📦 Tambah package | Submit package tool baru |
+| 🐛 Laporkan bug | Buat issue di GitHub |
+| 🔀 Kirim PR | Perbaikan code atau dokumentasi |
+| 🔍 Review PR | Bantu validasi kontribusi orang lain |
+| 🔐 Audit security | Review keamanan build script |
+| 📝 Perbaiki docs | Perjelas atau terjemahkan dokumentasi |
+
+> 📄 Panduan lengkap: [CONTRIBUTING.md](CONTRIBUTING.md)
 
 ---
 
-## 📜 Lisensi
-Proyek ini dilisensikan di bawah:
-**MIT License**
-Lihat file [LICENSE](LICENSE)
+## ❓ Bantuan & Dokumentasi
 
----
-
-## ❓ FAQ & Bantuan
-- **FAQ**: [disini](FAQ.md)
-- **TROUBLESHOOTING**: [disini](TROUBLESHOOTING.md)
-- **HOW TO UPLOAD**: [disini](HOW_TO_UPLOAD.md)
-- **SUPPORT**: [disini](SUPPORT.md)
+| Dokumen | Keterangan |
+|---|---|
+| [FAQ.md](FAQ.md) | Pertanyaan yang sering diajukan |
+| [TROUBLESHOOTING.md](TROUBLESHOOTING.md) | Solusi masalah umum |
+| [HOW_TO_UPLOAD.md](HOW_TO_UPLOAD.md) | Cara upload tool |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | Panduan kontribusi |
+| [SUPPORT.md](SUPPORT.md) | Cara mendapatkan bantuan |
 
 ---
 
 ## 🧠 Filosofi
-> “Local first. Control over convenience. Transparency over magic.”
+
+> *"Local first. Control over convenience. Transparency over magic."*
+
 Termux App Store dibuat untuk pengguna yang ingin:
-- Memahami apa yang dijalankan
-- Mengontrol build dan source
-- Menghindari vendor lock-in
-- Mengupload tool buatannya ke termux-app-store supaya bisa dipakai oleh public
-- Mendownload tool termux yang telah didistribusikan ke termux-app-store
+- Memahami sepenuhnya apa yang dijalankan di perangkat mereka
+- Mengontrol build dan source secara langsung
+- Menghindari vendor lock-in dan ketergantungan cloud
+- Berbagi tool dengan komunitas Termux secara terbuka
 
 ---
 
-## 📦 Cara Upload Tool
-Upload tool ke Termux App Store dibuat untuk:
-- Tool diunduh banyak orang
-- Keuntungan bagi yang punya tool di Termux App Store:
-  - Update tool hanya mengubah (*version dan sha256*) di file build.sh
-- **Cara upload tool ke Termux App Store**:
-  - klik dan baca [HOW_TO_UPLOAD](HOW_TO_UPLOAD.md)
+## 📜 Lisensi
+
+Proyek ini dilisensikan di bawah **MIT License** — lihat [LICENSE](LICENSE) untuk detail.
 
 ---
 
-## 👤 Maintainer / Developer
-Independent Developer and Official Developer:
-- Djunekz
-- Github : [https://github.com/djunekz](https://github.com/djunekz)
+## 👤 Maintainer
+
+<div align="center">
+
+**Djunekz** — Independent & Official Developer
+
+[![GitHub](https://img.shields.io/badge/GitHub-djunekz-3fb950?style=for-the-badge&logo=github)](https://github.com/djunekz)
+
+</div>
 
 ---
 
-## ⭐ Dukungan
-Jika proyek ini berguna dan membantu:
-- ⭐ Star repo
-- 🧩 Bagikan ke publik
-- 🐛 Laporkan issue
-- 🔀 Kirim PR (Pull Request)
+## ⭐ Dukung Proyek Ini
 
-© Termux App Store — Built tools for everyone.
+Jika Termux App Store berguna untukmu:
+
+- ⭐ **Star** repo ini — membantu orang lain menemukannya
+- 🧩 **Bagikan** ke komunitas Termux & Android
+- 🐛 **Laporkan bug** via Issues
+- 🔀 **Kirim PR** untuk perbaikan apapun
+
+---
+
+<div align="center">
+
+**© Termux App Store — Built for everyone, by the community.**
+
+*termux · termux app store · termux package manager · termux tui · android terminal tools · termux tools · termux packages · termux cli*
+
+</div>
