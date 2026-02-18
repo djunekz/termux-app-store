@@ -13,7 +13,9 @@ and this project adheres to semantic versioning.
 
 ## [v0.1.4] - 2026-02-13
 ### Added
-
+- Package `impulse` v1.0.0
+- Package `zoracrypter` v1.0.0
+- Package `zora` v1.0.0
 - Package `ghostrack` v1.0.0
 - Package `iptrack` v1.0.0
 - `termux-build create` for easy create packages and build.sh
@@ -51,7 +53,6 @@ and this project adheres to semantic versioning.
 
 ## [v0.1.2] - 2026-02-10
 ### Added
-- Package `iptrack` v1.0.0
 - Package `pymaker` v1.0.0
 - Package `baxter` v1.2.4
 - termux-build for check lint, check-pr, and etc
