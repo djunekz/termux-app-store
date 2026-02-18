@@ -1,37 +1,40 @@
 name: Update Index
 
+permissions:
+  contents: write
+
 on:
   push:
     paths:
       - 'packages/*/build.sh'
       - 'tools/build.py'
-  
-  # Manual trigger
+
   workflow_dispatch:
-  
+
   schedule:
     - cron: '0 0 * * *'
 
 jobs:
   generate-index:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
-      
+          ref: ${{ github.ref }}
+
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
           python-version: '3.14'
-      
+
       - name: Generate index.json
         run: |
           echo "Running build.py to generate index.json..."
           python3 tools/build.py
-      
+
       - name: Check for changes
         id: check_changes
         run: |
@@ -42,22 +45,23 @@ jobs:
             echo "changed=true" >> $GITHUB_OUTPUT
             echo "Changes detected in index.json"
           fi
-      
+
       - name: Commit and push changes
         if: steps.check_changes.outputs.changed == 'true'
         run: |
           git config --local user.email "258516621+termux-app-store@users.noreply.github.com"
           git config --local user.name "Termux App Store"
+
           git add tools/index.json
           git commit -m "chore: update index.json"
-          git push
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      
+
+          git push origin ${{ github.ref_name }}
+
       - name: Summary
         run: |
           echo "## Index Generation Summary" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
+
           if [ "${{ steps.check_changes.outputs.changed }}" = "true" ]; then
             echo "✅ index.json updated successfully" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
