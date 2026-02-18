@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-02-18T02:31:28.326563+00:00",
-  "total": 12,
+  "generated_at": "2026-02-18T21:55:31.779564+00:00",
+  "total": 13,
   "packages": [
     {
       "package": "baxter",
@@ -194,6 +194,20 @@
         "clang",
         "python"
       ]
+    },
+    {
+      "package": "zoravuln",
+      "version": "1.0.0",
+      "maintainer": "@termux-app-store",
+      "description": "Ultimate scanner vulnerability",
+      "homepage": "https://github.com/djunekz/termux-app-store",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/droidv1/termool/releases/download/v${TERMUX_PKG_VERSION}/zoravuln",
+      "sha256": "e8f3bb069cdd9afbc238c5d55ca0046b35e853590af061261e2d95e4cc8ec89e",
+      "platform_independent": false
     }
   ]
 }
