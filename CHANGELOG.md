@@ -9,8 +9,8 @@ and this project adheres to semantic versioning.
 ## [Unreleased]
 ### Added
 - Package `bashxt` v2.2 - basic command, code color, shortcut keyboar, etc information
+- Package `aura` v0.8.2 - Adaptive Unified Runtime Assistant
 
----
 ### Changed
 - Package `impulse` v1.0.0 - Updated metadata
 - Package `iptrack` v1.0.0 - Updated metadata
@@ -18,13 +18,7 @@ and this project adheres to semantic versioning.
 - Package `zora` v1.0.0 - Updated metadata
 - Package `zoracrypter` v1.0.0 - Updated metadata
 - Package `zoravuln` v1.0.0 - Updated metadata
-
-### Changed
 - Package `ghostrack` v1.0.0 - Updated metadata
-
-### Added
-- Package `aura` v0.8.2 - Adaptive Unified Runtime Assistant
-
 
 ---
 
