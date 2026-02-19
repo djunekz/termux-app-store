@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-02-19T08:30:13.911022+00:00",
-  "total": 14,
+  "generated_at": "2026-02-19T09:33:30.314268+00:00",
+  "total": 15,
   "packages": [
     {
       "package": "aura",
@@ -20,6 +20,20 @@
       "depends": [
         "nodejs"
       ]
+    },
+    {
+      "package": "bashxt",
+      "version": "2.2",
+      "maintainer": "@termux-app-store",
+      "description": "basic command, code color, shortcut keyboar, etc information",
+      "homepage": "https://github.com/djunekz/bashxt",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/djunekz/bashxt/releases/download/v${TERMUX_PKG_VERSION}/bashxt.tar.gz",
+      "sha256": "b9b27f232d6a752f3243e915d98bb03ecbd982f37e45243d7b82905f745e9512",
+      "platform_independent": false
     },
     {
       "package": "baxter",
