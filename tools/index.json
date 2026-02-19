@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-02-19T09:33:30.314268+00:00",
-  "total": 15,
+  "generated_at": "2026-02-19T14:32:41.759651+00:00",
+  "total": 16,
   "packages": [
     {
       "package": "aura",
@@ -176,6 +176,24 @@
       "srcurl": "https://github.com/djunekz/termstyle/releases/download/${TERMUX_PKG_VERSION}/termstyle_${TERMUX_PKG_VERSION}_all.deb",
       "sha256": "955a9de10d5896801e44191385ec4ee24881d5e57777b2f6c60fb4f627a3e3fd",
       "platform_independent": false
+    },
+    {
+      "package": "tx",
+      "version": "1.0.0",
+      "maintainer": "@termux-app-store",
+      "description": "Advance Terminal Editor Ultimate",
+      "homepage": "https://github.com/djunekz/termux-app-store",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/djunekz/archive/releases/download/v${TERMUX_PKG_VERSION}/tx",
+      "sha256": "b1afdfb86640188aaa555c9f4b0c5a1cb4194b07c8d8d06e23ba5ca64670f418",
+      "platform_independent": false,
+      "depends": [
+        "python",
+        "ncurses"
+      ]
     },
     {
       "package": "webshake",
