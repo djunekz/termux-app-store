@@ -8,9 +8,17 @@ and this project adheres to semantic versioning.
 
 ## [Unreleased]
 ### Changed
-- Package `ghostrack` v1.0.0 - Updated metadata
+- Package `impulse` v1.0.0 - Updated metadata
+- Package `iptrack` v1.0.0 - Updated metadata
+- Package `pymaker` v1.0.0 - Updated metadata
+- Package `zora` v1.0.0 - Updated metadata
+- Package `zoracrypter` v1.0.0 - Updated metadata
+- Package `zoravuln` v1.0.0 - Updated metadata
 
 ---
+### Changed
+- Package `ghostrack` v1.0.0 - Updated metadata
+
 ### Added
 - Package `aura` v0.8.2 - Adaptive Unified Runtime Assistant
 
