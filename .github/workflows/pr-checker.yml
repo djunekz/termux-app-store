@@ -15,7 +15,7 @@ jobs:
     name: Validate changed packages
     runs-on: ubuntu-latest
 
-    if: github.event.label.name == 'review-approved'
+    if: github.event.label.name == 'review-checker'
 
     steps:
       - name: Checkout PR code (safe)
