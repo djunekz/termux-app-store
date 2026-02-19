@@ -315,7 +315,7 @@ jobs:
         uses: actions-ecosystem/action-add-labels@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          labels: checker-approved
+          labels: checker-approved, needs-review
 
       - name: Add review-failed label
         if: steps.status.outputs.overall_status == '1'
