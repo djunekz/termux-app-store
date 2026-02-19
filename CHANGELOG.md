@@ -7,10 +7,13 @@ and this project adheres to semantic versioning.
 
 
 ## [Unreleased]
+### Changed
+- Package `ghostrack` v1.0.0 - Updated metadata
+
+---
 ### Added
 - Package `aura` v0.8.2 - Adaptive Unified Runtime Assistant
 
----
 
 ---
 
