@@ -22,6 +22,9 @@ and this project adheres to semantic versioning.
 - Package `zoravuln` v1.0.0 - Updated metadata
 - Package `ghostrack` v1.0.0 - Updated metadata
 
+### Update
+- Package `zora` v1.0.0 → v1.2.0
+
 ---
 
 ## [v0.1.6] - 2026-02-18
