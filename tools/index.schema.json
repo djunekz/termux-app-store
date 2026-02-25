@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Termux App Store Index",
+  "type": "object",
+  "required": ["version", "repository", "generated_at", "total", "packages"],
+  "properties": {
+    "version": {"type": "string"},
+    "repository": {"type": "string"},
+    "generated_at": {"type": "string"},
+    "total": {"type": "integer", "minimum": 0},
+    "packages": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/package"}
+    }
+  },
+  "$defs": {
+    "package": {
+      "type": "object",
+      "required": ["package", "version", "description", "srcurl", "sha256"],
+      "properties": {
+        "package": {"type": "string"},
+        "name": {"type": "string"},
+        "version": {"type": "string"},
+        "desc": {"type": "string"},
+        "description": {"type": "string"},
+        "homepage": {"type": "string"},
+        "license": {"type": "string"},
+        "maintainer": {"type": "string"},
+        "srcurl": {"type": "string"},
+        "sha256": {"type": "string"},
+        "depends": {"type": "array", "items": {"type": "string"}},
+        "platform_independent": {"type": "boolean"},
+        "category": {"type": "string"},
+        "tags": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": true
+    }
+  }
+}
