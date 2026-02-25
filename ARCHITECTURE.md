@@ -46,6 +46,21 @@ Termux App Store is designed with the following goals:
 
 ## 🧠 Core Components
 
+### Source Edition Layout (Python)
+
+The **source edition** lives here:
+
+```
+termux_app_store.py          # TUI entrypoint
+termux_app_store_cli.py      # CLI entrypoint
+termux_app_store/            # Python package
+  ├── cli.py                 # argparse CLI + subcommands
+  ├── tui.py                 # Textual TUI
+  ├── ops.py                 # build/install/uninstall helpers
+  └── paths.py               # self-healing root resolver
+tools/package_manager.py     # package index loader (local + remote)
+```
+
 ### 1. UI Layer (Textual)
 
 - Implemented using **Textual**

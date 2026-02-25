@@ -72,6 +72,22 @@
 curl -fsSL https://raw.githubusercontent.com/djunekz/termux-app-store/master/install.sh | bash
 ```
 
+### Source Install (offline-first)
+
+If you prefer a fully auditable source install (and want to keep a local `packages/`
+directory for offline use):
+
+```bash
+pkg install -y git python
+git clone https://github.com/djunekz/termux-app-store
+cd termux-app-store
+chmod +x install.sh
+./install.sh
+```
+
+This installs the **Python TUI + CLI** (powered by Textual) and copies `packages/`
+locally so you can browse/build even without internet.
+
 Then run:
 
 ```bash
