@@ -6,8 +6,10 @@
   "packages": [
     {
       "package": "aircrack-ng",
+      "name": "aircrack-ng",
       "version": "1.7",
       "maintainer": "@termux-app-store",
+      "desc": "aircrack-ng for termux package",
       "description": "aircrack-ng for termux package",
       "homepage": "https://github.com/pitube08642/aircrack-ng-for-termux",
       "license": "UNKNOWN",
@@ -16,12 +18,16 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/pitube08642/aircrack-ng-for-termux/releases/download/Aircrack-ng_termux/aircrack-ng_3_1.7_aarch64.deb",
       "sha256": "809dcc9f0405e170bd1ef8e63d4f7411a49167cee2eb316842e0dd13e3073aa6",
-      "platform_independent": false
+      "platform_independent": false,
+      "category": "",
+      "tags": []
     },
     {
       "package": "ani-cli",
+      "name": "ani-cli",
       "version": "4.10",
       "maintainer": "@termux-app-store",
+      "desc": "A cli tool to browse and play anime",
       "description": "A cli tool to browse and play anime",
       "homepage": "https://github.com/pystardust/ani-cli",
       "license": "GPL-3.0",
@@ -31,14 +37,18 @@
       "srcurl": "https://github.com/pystardust/ani-cli/releases/download/v${TERMUX_PKG_VERSION}/ani-cli",
       "sha256": "38599dc5bb65a5b9f78e936ed42ffe16b62095dbc6621a5b578ed3e29aac4f3e",
       "platform_independent": false,
+      "category": "",
+      "tags": [],
       "depends": [
         "nodejs"
       ]
     },
     {
       "package": "aura",
+      "name": "aura",
       "version": "0.8.2",
       "maintainer": "@termux-app-store",
+      "desc": "Adaptive Unified Runtime Assistant",
       "description": "Adaptive Unified Runtime Assistant",
       "homepage": "https://github.com/djunekz/aura",
       "license": "MIT",
@@ -48,14 +58,18 @@
       "srcurl": "https://github.com/djunekz/aura/archive/refs/tags/v${TERMUX_PKG_VERSION}.zip",
       "sha256": "918656afc31dfbda1189f4ece91e07a3d7299982c3d7951fd1808f59416e0268",
       "platform_independent": false,
+      "category": "",
+      "tags": [],
       "depends": [
         "nodejs"
       ]
     },
     {
       "package": "bashxt",
+      "name": "bashxt",
       "version": "2.2",
       "maintainer": "@termux-app-store",
+      "desc": "basic command, code color, shortcut keyboar, etc information",
       "description": "basic command, code color, shortcut keyboar, etc information",
       "homepage": "https://github.com/djunekz/bashxt",
       "license": "MIT",
@@ -64,12 +78,16 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/bashxt/releases/download/v${TERMUX_PKG_VERSION}/bashxt.tar.gz",
       "sha256": "b9b27f232d6a752f3243e915d98bb03ecbd982f37e45243d7b82905f745e9512",
-      "platform_independent": false
+      "platform_independent": false,
+      "category": "",
+      "tags": []
     },
     {
       "package": "baxter",
+      "name": "baxter",
       "version": "1.2.4",
       "maintainer": "@djunekz",
+      "desc": "Encrypt and decrypt files termux",
       "description": "Encrypt and decrypt files termux",
       "homepage": "https://github.com/djunekz/baxter",
       "license": "Apache-2.0",
@@ -79,14 +97,18 @@
       "srcurl": "https://github.com/djunekz/baxter/releases/download/v${TERMUX_PKG_VERSION}/baxter-v${TERMUX_PKG_VERSION}.tar.gz",
       "sha256": "7fac8356d81197218f44e60e0212e12ad63ca55462f9a563b541a589319e3227",
       "platform_independent": false,
+      "category": "",
+      "tags": [],
       "depends": [
         "nodejs"
       ]
     },
     {
       "package": "bower",
+      "name": "bower",
       "version": "1.8.12",
       "maintainer": "@termux-app-store",
+      "desc": "A package manager for the web",
       "description": "A package manager for the web",
       "homepage": "https://github.com/bower/bower",
       "license": "MIT",
@@ -96,14 +118,18 @@
       "srcurl": "https://api.github.com/repos/bower/bower/tarball/v${TERMUX_PKG_VERSION}",
       "sha256": "d54d92c4a12c674e79ed38742bd82b797098c24e67391c963555cf4a23855e01",
       "platform_independent": false,
+      "category": "",
+      "tags": [],
       "depends": [
         "nodejs"
       ]
     },
     {
       "package": "encrypt",
+      "name": "encrypt",
       "version": "1.1",
       "maintainer": "@djunekz",
+      "desc": "ELF binary for file python/python3 with build deb package",
       "description": "ELF binary for file python/python3 with build deb package",
       "homepage": "https://github.com/djunekz/encrypt",
       "license": "MIT",
@@ -112,12 +138,16 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/encrypt/archive/refs/tags/${TERMUX_PKG_VERSION}.zip",
       "sha256": "07d954452ed93a1aec029e727da275004bdb67940743a41b357f333b7cc36d5a",
-      "platform_independent": false
+      "platform_independent": false,
+      "category": "",
+      "tags": []
     },
     {
       "package": "fd",
+      "name": "fd",
       "version": "10.3.0",
       "maintainer": "@termux-app-store",
+      "desc": "A simple, fast and user-friendly alternative to 'find'",
       "description": "A simple, fast and user-friendly alternative to 'find'",
       "homepage": "https://github.com/sharkdp/fd",
       "license": "Apache-2.0",
@@ -126,12 +156,16 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/sharkdp/fd/releases/download/v${TERMUX_PKG_VERSION}/fd-v${TERMUX_PKG_VERSION}-aarch64-unknown-linux-musl.tar.gz",
       "sha256": "996b9b1366433b211cb3bbedba91c9dbce2431842144d925428ead0adf32020b",
-      "platform_independent": false
+      "platform_independent": false,
+      "category": "",
+      "tags": []
     },
     {
       "package": "ghostrack",
+      "name": "ghostrack",
       "version": "1.0.0",
       "maintainer": "@termux-app-store",
+      "desc": "Useful tool to track location or mobile number",
       "description": "Useful tool to track location or mobile number",
       "homepage": "https://github.com/HunxByts/GhostTrack",
       "license": "MIT",
@@ -140,12 +174,16 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/archive/releases/download/v${TERMUX_PKG_VERSION}/ghostrack.tar.gz",
       "sha256": "43c5fe4734ef358fe17659a08b5846682d43f046e880233503f7412ebbdf1238",
-      "platform_independent": false
+      "platform_independent": false,
+      "category": "",
+      "tags": []
     },
     {
       "package": "impulse",
+      "name": "impulse",
       "version": "1.0.0",
       "maintainer": "@termux-app-store",
+      "desc": "Denial-of-Service ToolKit with multiple attack methods",
       "description": "Denial-of-Service ToolKit with multiple attack methods",
       "homepage": "https://github.com/LimerBoy/Impulse",
       "license": "MIT",
@@ -154,12 +192,16 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/archive/releases/download/v${TERMUX_PKG_VERSION}/impulse.tar.gz",
       "sha256": "d03e1a4c74a09b63900ffd1bc889bbc8f5720b83914b1a2fdd5453fb23a63c18",
-      "platform_independent": false
+      "platform_independent": false,
+      "category": "",
+      "tags": []
     },
     {
       "package": "infoooze",
+      "name": "infoooze",
       "version": "1.1.9",
       "maintainer": "@termux-app-store",
+      "desc": "A OSINT tool which helps you to quickly find information effectively.",
       "description": "A OSINT tool which helps you to quickly find information effectively.",
       "homepage": "https://github.com/devxprite/infoooze",
       "license": "MIT",
@@ -169,14 +211,18 @@
       "srcurl": "https://api.github.com/repos/devxprite/infoooze/tarball/v1.1.9",
       "sha256": "b856ff7dc73ac57985372d833429c89cf03f52105039e48b71aee6d628abeb36",
       "platform_independent": false,
+      "category": "",
+      "tags": [],
       "depends": [
         "nodejs"
       ]
     },
     {
       "package": "iptrack",
+      "name": "iptrack",
       "version": "1.0.0",
       "maintainer": "@termux-app-store",
+      "desc": "Track IP Location With Live Address And Accuracy",
       "description": "Track IP Location With Live Address And Accuracy",
       "homepage": "https://github.com/droidv1/termool",
       "license": "MIT",
@@ -185,12 +231,16 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/archive/releases/download/v${TERMUX_PKG_VERSION}/iptrack.tar.gz",
       "sha256": "7bbaf211e73e7e9c86eee7138abfaf9ccb9b9ed3f84f3933cb3f60db0e10156b",
-      "platform_independent": false
+      "platform_independent": false,
+      "category": "",
+      "tags": []
     },
     {
       "package": "lux",
+      "name": "lux",
       "version": "0.24.1",
       "maintainer": "@termux-app-store",
+      "desc": "Fast and simple video download library and CLI tool written in Go",
       "description": "Fast and simple video download library and CLI tool written in Go",
       "homepage": "https://github.com/iawia002/lux",
       "license": "MIT",
@@ -199,12 +249,16 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/iawia002/lux/releases/download/v${TERMUX_PKG_VERSION}/lux_${TERMUX_PKG_VERSION}_Linux_arm64.tar.gz",
       "sha256": "479b09290b8ddda43c994ec5685649eb4635f4bd24ff24e494eddaae473879d7",
-      "platform_independent": false
+      "platform_independent": false,
+      "category": "",
+      "tags": []
     },
     {
       "package": "maskphish",
+      "name": "maskphish",
       "version": "2.0",
       "maintainer": "@termux-app-store",
+      "desc": "URL Making Technology to the world for the very tool for Phishing.",
       "description": "URL Making Technology to the world for the very tool for Phishing.",
       "homepage": "https://github.com/jaykali/maskphish",
       "license": "MIT",
@@ -213,12 +267,16 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://api.github.com/repos/jaykali/maskphish/tarball/${TERMUX_PKG_VERSION}",
       "sha256": "dbace1301bcc946edfd1cc977f9dc9633e198ad035c9f23c69232388b53ae112",
-      "platform_independent": false
+      "platform_independent": false,
+      "category": "",
+      "tags": []
     },
     {
       "package": "pmcli",
+      "name": "pmcli",
       "version": "0.1.0",
       "maintainer": "Djunekz <gab288.gab288@passinbox.com>",
+      "desc": "Terminal-based project manager CLI",
       "description": "Terminal-based project manager CLI",
       "homepage": "https://github.com/djunekz/pmcli",
       "license": "MIT",
@@ -228,6 +286,8 @@
       "srcurl": "https://github.com/djunekz/pmcli/archive/refs/tags/v${TERMUX_PKG_VERSION}.tar.gz",
       "sha256": "b2e24af39111a75eacfdd195950423108c6c01b5caeed923a904b835a572dc53",
       "platform_independent": false,
+      "category": "",
+      "tags": [],
       "depends": [
         "rust",
         "openssl",
@@ -236,8 +296,10 @@
     },
     {
       "package": "pnpm",
+      "name": "pnpm",
       "version": "10.30.1",
       "maintainer": "@termux-app-store",
+      "desc": "Fast, disk space efficient package manager",
       "description": "Fast, disk space efficient package manager",
       "homepage": "https://github.com/pnpm/pnpm",
       "license": "MIT",
@@ -246,12 +308,16 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://registry.npmjs.org/pnpm/-/pnpm-${TERMUX_PKG_VERSION}.tgz",
       "sha256": "bc8bb877378eab6a8a83114eeb6a31ef88528db4ab5570299baba8fa54da2375",
-      "platform_independent": false
+      "platform_independent": false,
+      "category": "",
+      "tags": []
     },
     {
       "package": "pymaker",
+      "name": "pymaker",
       "version": "1.0.0",
       "maintainer": "@droidv1",
+      "desc": "Simple tool for create python script",
       "description": "Simple tool for create python script",
       "homepage": "https://github.com/droidv1/pymaker",
       "license": "MIT",
@@ -260,12 +326,16 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/archive/releases/download/v${TERMUX_PKG_VERSION}/pymaker-${TERMUX_PKG_VERSION}.tar.gz",
       "sha256": "2fe03f6839e7b550f888d477628b852d648ea4ed688643122d3c182d495564e4",
-      "platform_independent": false
+      "platform_independent": false,
+      "category": "",
+      "tags": []
     },
     {
       "package": "sigit",
+      "name": "sigit",
       "version": "2.0-pre",
       "maintainer": "@termux-app-store",
+      "desc": "SIGIT - Simple Information Gathering Toolkit",
       "description": "SIGIT - Simple Information Gathering Toolkit",
       "homepage": "https://github.com/termuxhackers-id/SIGIT",
       "license": "UNKNOWN",
@@ -274,12 +344,16 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://api.github.com/repos/termuxhackers-id/SIGIT/tarball/2.0-pre",
       "sha256": "2bfe129b478dc758133f6380dc5f1c27da8af2c3cfe7327e826d4f974e20c993",
-      "platform_independent": false
+      "platform_independent": false,
+      "category": "",
+      "tags": []
     },
     {
       "package": "tdoc",
+      "name": "tdoc",
       "version": "1.0.5",
       "maintainer": "@djunekz",
+      "desc": "TDOC - Diagnostic and repair utility for Termux environment",
       "description": "TDOC - Diagnostic and repair utility for Termux environment",
       "homepage": "https://github.com/djunekz/tdoc",
       "license": "MIT",
@@ -289,6 +363,8 @@
       "srcurl": "https://github.com/djunekz/tdoc/archive/refs/tags/v${TERMUX_PKG_VERSION}.tar.gz",
       "sha256": "81ebc15bfefe7ab78f31fd919b2d2432ca83208b341ca77935daf3b051091990",
       "platform_independent": true,
+      "category": "",
+      "tags": [],
       "depends": [
         "bash",
         "coreutils",
@@ -300,8 +376,10 @@
     },
     {
       "package": "termstyle",
+      "name": "termstyle",
       "version": "1.0.0",
       "maintainer": "@djunekz",
+      "desc": "Simple tool for change color, command prompt, and cursor termux",
       "description": "Simple tool for change color, command prompt, and cursor termux",
       "homepage": "https://gtihub.com/djunekz/termstyle",
       "license": "GPL-3.0",
@@ -310,12 +388,16 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/termstyle/releases/download/${TERMUX_PKG_VERSION}/termstyle_${TERMUX_PKG_VERSION}_all.deb",
       "sha256": "955a9de10d5896801e44191385ec4ee24881d5e57777b2f6c60fb4f627a3e3fd",
-      "platform_independent": false
+      "platform_independent": false,
+      "category": "",
+      "tags": []
     },
     {
       "package": "tuifimanager",
+      "name": "tuifimanager",
       "version": "5.2.6",
       "maintainer": "@termux-app-store",
+      "desc": "A terminal-based TUI file manager",
       "description": "A terminal-based TUI file manager",
       "homepage": "https://github.com/GiorgosXou/TUIFIManager",
       "license": "MIT",
@@ -325,14 +407,18 @@
       "srcurl": "https://api.github.com/repos/GiorgosXou/TUIFIManager/tarball/v.${TERMUX_PKG_VERSION}",
       "sha256": "4f323aefd84e35177411445c32ed2d48140b0fd1fec688bbcdee0992841e0f00",
       "platform_independent": false,
+      "category": "",
+      "tags": [],
       "depends": [
         "python"
       ]
     },
     {
       "package": "tx",
+      "name": "tx",
       "version": "1.0.0",
       "maintainer": "@termux-app-store",
+      "desc": "Advance Terminal Editor Ultimate",
       "description": "Advance Terminal Editor Ultimate",
       "homepage": "https://github.com/djunekz/termux-app-store",
       "license": "MIT",
@@ -342,6 +428,8 @@
       "srcurl": "https://github.com/djunekz/archive/releases/download/v${TERMUX_PKG_VERSION}/tx",
       "sha256": "b1afdfb86640188aaa555c9f4b0c5a1cb4194b07c8d8d06e23ba5ca64670f418",
       "platform_independent": false,
+      "category": "",
+      "tags": [],
       "depends": [
         "python",
         "ncurses"
@@ -349,8 +437,10 @@
     },
     {
       "package": "uv",
+      "name": "uv",
       "version": "0.10.4",
       "maintainer": "@termux-app-store",
+      "desc": "An extremely fast Python package and project manager, written in Rust.",
       "description": "An extremely fast Python package and project manager, written in Rust.",
       "homepage": "https://github.com/astral-sh/uv",
       "license": "Apache-2.0",
@@ -359,12 +449,16 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/astral-sh/uv/releases/download/0.10.4/uv-aarch64-unknown-linux-musl.tar.gz",
       "sha256": "82fc461031dafb130af761e7dbec1bcc51b826c2e664f5bf8bc4e4f8330320cd",
-      "platform_independent": false
+      "platform_independent": false,
+      "category": "",
+      "tags": []
     },
     {
       "package": "webshake",
+      "name": "webshake",
       "version": "1.0.2",
       "maintainer": "Djunekz",
+      "desc": "Scan vulnerabilities and analyze websites",
       "description": "Scan vulnerabilities and analyze websites",
       "homepage": "https://github.com/djunekz/webshake",
       "license": "Custom",
@@ -373,12 +467,16 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/webshake/releases/download/v${TERMUX_PKG_VERSION}/webshake-${TERMUX_PKG_VERSION}.tar.gz",
       "sha256": "4312838c7d201f1540923dfbeeeb21d8af4ae9896a2ce18357208805a859cbe8",
-      "platform_independent": false
+      "platform_independent": false,
+      "category": "",
+      "tags": []
     },
     {
       "package": "zora",
+      "name": "zora",
       "version": "1.2.0",
       "maintainer": "@termux-app-store",
+      "desc": "The ultimate OSINT framework",
       "description": "The ultimate OSINT framework",
       "homepage": "https://github/djunekz/termux-app-store",
       "license": "MIT",
@@ -388,14 +486,18 @@
       "srcurl": "https://github.com/djunekz/archive/releases/download/v${TERMUX_PKG_VERSION}/zora",
       "sha256": "67a14fda2deb84d22c9a9129a9707ed21bad6d25ac2de884c4ed888e6ba197cc",
       "platform_independent": false,
+      "category": "",
+      "tags": [],
       "depends": [
         "python"
       ]
     },
     {
       "package": "zoracrypter",
+      "name": "zoracrypter",
       "version": "1.0.0",
       "maintainer": "@termux-app-store",
+      "desc": "Encrypter Stealth Binary Builder",
       "description": "Encrypter Stealth Binary Builder",
       "homepage": "https://github.com/djunekz/termux-app-store",
       "license": "MIT",
@@ -405,6 +507,8 @@
       "srcurl": "https://github.com/djunekz/archive/releases/download/v${TERMUX_PKG_VERSION}/zoracrypter",
       "sha256": "25b11a1d8fd6b0ef075df5e1d31d5e061e8e6de9e2afdb0c29f11590ab203e1d",
       "platform_independent": false,
+      "category": "",
+      "tags": [],
       "depends": [
         "clang",
         "python"
@@ -412,8 +516,10 @@
     },
     {
       "package": "zoravuln",
+      "name": "zoravuln",
       "version": "1.0.0",
       "maintainer": "@termux-app-store",
+      "desc": "Ultimate scanner vulnerability analizer",
       "description": "Ultimate scanner vulnerability analizer",
       "homepage": "https://github.com/djunekz/termux-app-store",
       "license": "MIT",
@@ -422,12 +528,16 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/archive/releases/download/v${TERMUX_PKG_VERSION}/zoravuln",
       "sha256": "e8f3bb069cdd9afbc238c5d55ca0046b35e853590af061261e2d95e4cc8ec89e",
-      "platform_independent": false
+      "platform_independent": false,
+      "category": "",
+      "tags": []
     },
     {
       "package": "zx",
+      "name": "zx",
       "version": "8.8.5",
       "maintainer": "@termux-app-store",
+      "desc": "A tool for writing better scripts",
       "description": "A tool for writing better scripts",
       "homepage": "https://github.com/google/zx",
       "license": "Apache-2.0",
@@ -436,7 +546,9 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://api.github.com/repos/google/zx/tarball/${TERMUX_PKG_VERSION}",
       "sha256": "7d1594daa43df8bf2b49738db628f6d66646e494f3151750c373da012d189976",
-      "platform_independent": false
+      "platform_independent": false,
+      "category": "",
+      "tags": []
     }
   ]
 }

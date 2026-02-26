@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "termux-app-store"
+version = "0.2.0"
+description = "Offline-first, source-based TUI package manager for Termux"
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "MIT"}
+authors = [{name = "Termux App Store Contributors"}]
+dependencies = [
+  "textual>=0.55.0",
+]
+
+[project.scripts]
+termux-app-store = "termux_app_store.cli:main"
+
+[tool.setuptools]
+packages = ["termux_app_store"]

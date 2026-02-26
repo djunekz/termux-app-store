@@ -137,6 +137,16 @@ install_source() {
   cp "$SCRIPT_DIR/termux_app_store_cli.py"  "$INSTALL_DIR/"
   cp "$SCRIPT_DIR/termux_app_store.py"       "$INSTALL_DIR/"
 
+  # Copy the Python package + tools (required by the source edition).
+  # This makes the source install self-contained inside $INSTALL_DIR.
+  if [[ -d "$SCRIPT_DIR/termux_app_store" ]]; then
+    cp -r "$SCRIPT_DIR/termux_app_store" "$INSTALL_DIR/"
+  fi
+
+  if [[ -d "$SCRIPT_DIR/tools" ]]; then
+    cp -r "$SCRIPT_DIR/tools" "$INSTALL_DIR/"
+  fi
+
   if [[ -d "$SCRIPT_DIR/packages" ]]; then
     cp -r "$SCRIPT_DIR/packages" "$INSTALL_DIR/"
     ok "Packages directory copied (local build mode enabled)"

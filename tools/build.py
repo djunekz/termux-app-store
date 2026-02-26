@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
-"""
-Catatan pribadi:
-Generator index.json untuk termux-app-store fungsinya
-Scan semua packages/ dan parse build.sh untuk extract metadata
+"""tools/build.py
+
+Generate tools/index.json for Termux App Store.
+
+The index is consumed by the app in **remote mode** (offline-first with cache).
+It is intentionally simple JSON so it can be fetched via raw.githubusercontent.
 """
 
 import os
@@ -50,9 +52,17 @@ class BuildShParser:
             'srcurl': self._extract_var('TERMUX_PKG_SRCURL') or '',
             'sha256': self._extract_var('TERMUX_PKG_SHA256') or '',
             'depends': self._parse_depends(),
-            'platform_independent': self._extract_var('TERMUX_PKG_PLATFORM_INDEPENDENT') == 'true'
+            'platform_independent': (self._extract_var('TERMUX_PKG_PLATFORM_INDEPENDENT') or '').lower() == 'true',
+            # Optional metadata (safe to omit)
+            'category': self._extract_var('TERMUX_PKG_CATEGORY') or '',
+            'tags': self._parse_csv(self._extract_var('TERMUX_PKG_TAGS')),
         }
         return data
+
+    def _parse_csv(self, value: Optional[str]) -> List[str]:
+        if not value:
+            return []
+        return [x.strip() for x in value.split(',') if x.strip()]
 
     def _parse_depends(self) -> List[str]:
         depends_str = self._extract_var('TERMUX_PKG_DEPENDS')
@@ -99,8 +109,10 @@ class PackageIndexGenerator:
 
         entry = {
             "package": package_name,
+            "name": package_name,
             "version": metadata['version'],
             "maintainer": metadata['maintainer'],
+            "desc": metadata['description'],
             "description": metadata['description'],
             "homepage": metadata['homepage'],
             "license": metadata['license'],
@@ -109,7 +121,9 @@ class PackageIndexGenerator:
             "source": self.repo_source,
             "srcurl": metadata['srcurl'],
             "sha256": metadata['sha256'],
-            "platform_independent": metadata['platform_independent']
+            "platform_independent": metadata['platform_independent'],
+            "category": metadata.get('category') or "",
+            "tags": metadata.get('tags') or [],
         }
 
         if metadata['depends']:
