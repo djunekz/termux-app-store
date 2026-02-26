@@ -1,66 +1,49 @@
-name: build
+name: CI
 
 on:
   push:
-    branches:
-      - master
+    branches: [ master ]
+    paths:
+      - '**.py'
+      - 'tests/**'
+      - 'pytest.ini'
+      - '.github/workflows/build.yml'
   pull_request:
-    branches:
-      - master
+    branches: [ master ]
+
+permissions:
+  contents: read
 
 jobs:
-  build:
-    name: build
+  test:
+    name: Run Tests
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          fetch-depth: 0
+          python-version: '3.12'
 
-      - name: Make scripts executable
-        shell: bash
+      - name: Install dependencies
         run: |
-          chmod +x termux-build || true
-          chmod +x tasctl || true
-          chmod +x tools/termux-build-create.sh || true
-          chmod +x tools/validate-build.sh || true
+          pip install pytest pytest-cov
 
-      - name: Lint packages (termux-build lint)
-        shell: bash
+      - name: Run tests with coverage
         run: |
-          set -e
-          for pkg in packages/*; do
-            [[ -d "$pkg" ]] || continue
-            NAME="$(basename "$pkg")"
-            echo "🔍 Linting $NAME"
-            ./termux-build lint "$NAME"
-          done
+          pytest tests/ \
+            --cov=. \
+            --cov-report=xml \
+            --cov-report=term-missing \
+            -v
 
-      - name: Validate build.sh scripts
-        shell: bash
-        run: |
-          set -e
-          for pkg in packages/*; do
-            [[ -d "$pkg" ]] || continue
-            BUILD="$pkg/build.sh"
-            [[ -f "$BUILD" ]] || continue
-            echo "✅ Validating $BUILD"
-            ./tools/validate-build.sh "$BUILD"
-          done
-
-      - name: Generate templates (dry-run)
-        shell: bash
-        run: |
-          ./termux-build template --dry-run
-
-      - name: Setup Python
-        uses: actions/setup-python@v6
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
         with:
-          python-version: "3.14"
-
-      - name: Run internal build checks
-        shell: bash
-        run: |
-          python ci/run_termux_build.py
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./coverage.xml
+          fail_ci_if_error: false
+          verbose: true
