@@ -10,9 +10,26 @@ from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
 APP_VERSION = "0.1.6"
-GITHUB_REPO = "djunekz/termux-app-store"
+
+# Allow forks/mirrors without editing the code.
+GITHUB_REPO = os.getenv("TERMUX_APP_STORE_GITHUB_REPO", "djunekz/termux-app-store")
 GITHUB_API_LATEST = f"https://api.github.com/repos/{GITHUB_REPO}/releases/latest"
-GITHUB_INDEX_URL = f"https://raw.githubusercontent.com/{GITHUB_REPO}/main/tools/index.json"
+
+# Default to master for compatibility with this repository, but fall back to main.
+_INDEX_BRANCHES = [
+    os.getenv("TERMUX_APP_STORE_INDEX_BRANCH", "master"),
+    "main",
+]
+
+_INDEX_URL_OVERRIDE = os.getenv("TERMUX_APP_STORE_INDEX_URL")
+if _INDEX_URL_OVERRIDE:
+    GITHUB_INDEX_URLS = [_INDEX_URL_OVERRIDE]
+else:
+    GITHUB_INDEX_URLS = [
+        f"https://raw.githubusercontent.com/{GITHUB_REPO}/{branch}/tools/index.json"
+        for branch in _INDEX_BRANCHES
+        if branch
+    ]
 
 CACHE_DIR = Path(os.environ.get("XDG_CACHE_HOME", Path.home() / ".cache")) / "termux-app-store"
 CACHE_FILE = CACHE_DIR / "index.json"
@@ -57,11 +74,27 @@ def fetch_json(url: str, timeout: int = 10) -> Optional[Dict]:
 
 
 def parse_version(version: str) -> Tuple[int, ...]:
-    try:
-        version = version.lstrip('v')
-        return tuple(int(x) for x in version.split('.'))
-    except:
-        return (0, 0, 0)
+    """Best-effort version parsing.
+
+    Handles:
+      - v1.2.3
+      - 1.2
+      - 1.2.3-beta (pre-release ignored for ordering)
+      - 1.2.3+meta (build metadata ignored)
+    """
+    v = (version or "").strip().lstrip("v")
+    # Drop pre-release/build metadata
+    v = v.split("+", 1)[0].split("-", 1)[0]
+    parts = []
+    for p in v.split("."):
+        try:
+            parts.append(int(p))
+        except Exception:
+            parts.append(0)
+    # Normalize length
+    while len(parts) < 3:
+        parts.append(0)
+    return tuple(parts[:6])
 
 
 def compare_versions(current: str, latest: str) -> int:
@@ -205,18 +238,37 @@ class PackageManager:
                 return cached["packages"]
 
         print("[*] Fetching package index from GitHub...")
-        data = fetch_json(GITHUB_INDEX_URL)
+        data = None
+        for url in GITHUB_INDEX_URLS:
+            data = fetch_json(url)
+            if data and "packages" in data:
+                break
 
         if data and "packages" in data:
             self._save_cache(data)
-            return data["packages"]
+            return [self._normalize_remote_pkg(p) for p in data["packages"]]
 
         cached = self._load_cache()
         if cached and "packages" in cached:
             print("[!] Using cached data (offline mode)")
-            return cached["packages"]
+            return [self._normalize_remote_pkg(p) for p in cached["packages"]]
 
         return []
+
+    @staticmethod
+    def _normalize_remote_pkg(pkg: Dict) -> Dict:
+        """Normalize the remote index schema to match the local parser."""
+        pkg = dict(pkg)
+        pkg.setdefault("name", pkg.get("package"))
+        desc = pkg.get("description") or pkg.get("desc") or "-"
+        pkg.setdefault("desc", desc)
+        pkg.setdefault("description", desc)
+        # Keep older keys compatible
+        deps = pkg.get("depends")
+        if isinstance(deps, str):
+            pkg["depends"] = [d.strip() for d in deps.split(",") if d.strip()]
+        pkg.setdefault("deps", ", ".join(pkg.get("depends") or []))
+        return pkg
 
     def get_package(self, name: str) -> Optional[Dict]:
         packages = self.load_packages()
@@ -226,6 +278,7 @@ class PackageManager:
         return None
 
     def get_installed_version(self, name: str) -> Optional[str]:
+        # Termux's `pkg info` is best, but not always available.
         try:
             out = subprocess.check_output(
                 ["pkg", "info", name],
@@ -235,6 +288,17 @@ class PackageManager:
             for line in out.splitlines():
                 if line.startswith("Version:"):
                     return line.split(":", 1)[1].strip()
+        except Exception:
+            pass
+
+        # Fallback to dpkg-query.
+        try:
+            out = subprocess.check_output(
+                ["dpkg-query", "-W", "-f=${Version}", name],
+                stderr=subprocess.DEVNULL,
+                text=True,
+            ).strip()
+            return out or None
         except Exception:
             pass
         return None
