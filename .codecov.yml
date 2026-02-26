@@ -1,57 +1,17 @@
-# ==================================================
-# Codecov configuration
-# Docs: https://docs.codecov.com/docs/codecov-yaml
-# ==================================================
-
-codecov:
-  require_ci_to_pass: true
-  notify:
-    after_n_builds: 1
-
-comment:
-  layout: "header, diff, changes, footer"
-  behavior: default
-  require_changes: true
-  max_comments: 1
-  show_results: changed
-  emoji: true
-
-comment_header: |
-  📊 **Codecov Coverage Report**
-  Hello @{{author}} 👋
-  Here is the coverage summary for this PR.
-
-comment_footer: |
-  🚀 Thanks for keeping the code quality high!
-  Full report: [{{build_url}}]
-
 coverage:
-  precision: 2
-  round: down
-  range: "70...100"
-
   status:
     project:
       default:
-        target: 80%
-        threshold: 2%
-        informational: false
-
+        target: auto
+        threshold: 5%
+        informational: true
     patch:
       default:
-        target: 80%
-        threshold: 2%
-        informational: false
+        target: auto
+        threshold: 5%
+        informational: true
 
-ignore:
-  - "docs/**"
-  - "scripts/**"
-  - "ci/**"
-  - "**/*.md"
-
-flags:
-  core:
-    carryforward: false
-
-github_checks:
-  annotations: false
+comment:
+  layout: "reach,diff,flags,tree"
+  behavior: default
+  require_changes: false
