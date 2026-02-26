@@ -1,12 +1,6 @@
-"""
-Tests untuk version comparison logic (_ver_tuple, is_installed_newer_or_equal).
-"""
-
 import re
 import pytest
 
-
-# ── Fungsi yang ditest (copy dari termux_app_store_cli.py) ───────────────────
 
 def _ver_tuple(v: str):
     v = v.strip()
@@ -32,8 +26,6 @@ def _ver_tuple(v: str):
 def is_installed_newer_or_equal(installed: str, store: str) -> bool:
     return _ver_tuple(installed) >= _ver_tuple(store)
 
-
-# ── Tests: _ver_tuple ─────────────────────────────────────────────────────────
 
 class TestVerTuple:
 
@@ -95,18 +87,15 @@ class TestVerTuple:
         assert _ver_tuple("1.2.3") == _ver_tuple("1.2.3")
 
 
-# ── Tests: is_installed_newer_or_equal ───────────────────────────────────────
 
 class TestIsInstalledNewerOrEqual:
 
-    # --- same version ---
     def test_same_version(self):
         assert is_installed_newer_or_equal("1.2.3", "1.2.3") is True
 
     def test_same_version_two_part(self):
         assert is_installed_newer_or_equal("4.10", "4.10") is True
 
-    # --- installed is newer ---
     def test_newer_patch(self):
         assert is_installed_newer_or_equal("1.2.4", "1.2.3") is True
 
@@ -119,7 +108,6 @@ class TestIsInstalledNewerOrEqual:
     def test_newer_revision(self):
         assert is_installed_newer_or_equal("4.10-2", "4.10-1") is True
 
-    # --- installed is older ---
     def test_older_patch(self):
         assert is_installed_newer_or_equal("1.0.0", "1.0.1") is False
 
@@ -132,7 +120,6 @@ class TestIsInstalledNewerOrEqual:
     def test_older_revision(self):
         assert is_installed_newer_or_equal("4.10-1", "4.10-2") is False
 
-    # --- real world packages ---
     def test_bower_up_to_date(self):
         assert is_installed_newer_or_equal("1.8.12", "1.8.12") is True
 
