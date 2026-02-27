@@ -64,6 +64,52 @@ def make_pkg_dir(root: Path, name: str, fields: dict) -> Path:
     return pkg_dir
 
 
+class TestMakePkgDir:
+
+    def test_creates_directory(self, tmp_path):
+        result = make_pkg_dir(tmp_path, "mypkg", {})
+        assert result.exists()
+        assert result.is_dir()
+
+    def test_returns_correct_path(self, tmp_path):
+        result = make_pkg_dir(tmp_path, "mypkg", {})
+        assert result == tmp_path / "mypkg"
+
+    def test_creates_build_sh(self, tmp_path):
+        make_pkg_dir(tmp_path, "mypkg", {})
+        assert (tmp_path / "mypkg" / "build.sh").exists()
+
+    def test_fields_written_correctly(self, tmp_path):
+        make_pkg_dir(tmp_path, "bower", {
+            "TERMUX_PKG_VERSION": "1.8.12",
+            "TERMUX_PKG_DESCRIPTION": "A package manager",
+        })
+        content = (tmp_path / "bower" / "build.sh").read_text()
+        assert 'TERMUX_PKG_VERSION="1.8.12"' in content
+        assert 'TERMUX_PKG_DESCRIPTION="A package manager"' in content
+
+    def test_empty_fields_writes_newline(self, tmp_path):
+        make_pkg_dir(tmp_path, "mypkg", {})
+        content = (tmp_path / "mypkg" / "build.sh").read_text()
+        assert content == "\n"
+
+    def test_idempotent(self, tmp_path):
+        make_pkg_dir(tmp_path, "mypkg", {"TERMUX_PKG_VERSION": "1.0.0"})
+        make_pkg_dir(tmp_path, "mypkg", {"TERMUX_PKG_VERSION": "2.0.0"})
+        content = (tmp_path / "mypkg" / "build.sh").read_text()
+        assert 'TERMUX_PKG_VERSION="2.0.0"' in content
+
+    def test_creates_nested_dir(self, tmp_path):
+        result = make_pkg_dir(tmp_path, "nested/pkg", {})
+        assert result.exists()
+
+    def test_multiple_packages(self, tmp_path):
+        make_pkg_dir(tmp_path, "bower", {"TERMUX_PKG_VERSION": "1.8.12"})
+        make_pkg_dir(tmp_path, "pnpm", {"TERMUX_PKG_VERSION": "10.30.1"})
+        assert (tmp_path / "bower").exists()
+        assert (tmp_path / "pnpm").exists()
+
+
 class TestParseVersion:
 
     def test_simple(self):
@@ -384,7 +430,6 @@ class TestCacheLogic:
         except Exception:
             result = None
         assert result is None
-
 
 
 class TestGetStatusLogic:
