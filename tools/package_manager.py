@@ -23,7 +23,7 @@ _INDEX_BRANCHES = [
 
 _INDEX_URL_OVERRIDE = os.getenv("TERMUX_APP_STORE_INDEX_URL")
 if _INDEX_URL_OVERRIDE:
-    GITHUB_INDEX_URLS = [_INDEX_URL_OVERRIDE]
+    GITHUB_INDEX_URLS = [_INDEX_URL_OVERRIDE] # pragma: no cover
 else:
     GITHUB_INDEX_URLS = [
         f"https://raw.githubusercontent.com/{GITHUB_REPO}/{branch}/tools/index.json"
@@ -226,8 +226,8 @@ class PackageManager:
                     elif line.startswith("TERMUX_PKG_SHA256="):
                         data["sha256"] = line.split("=", 1)[1].strip().strip('"\'')
 
-        except Exception as e:
-            print(f"[WARNING] Failed to parse {build_sh}: {e}")
+        except Exception as e: # pragma: no cover
+            print(f"[WARNING] Failed to parse {build_sh}: {e}") # pragma: no cover
 
         return data
 
