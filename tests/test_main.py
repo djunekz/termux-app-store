@@ -1,11 +1,10 @@
 import sys
+import types
 import pytest
 from pathlib import Path
 from unittest.mock import patch, MagicMock
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
-
-import types
 
 _mock_run_tui = MagicMock()
 _mock_run_cli = MagicMock()
@@ -51,5 +50,5 @@ class TestMain:
     def test_main_if_name_main(self):
         with patch("sys.argv", ["termux-app-store", "help"]):
             with patch.object(main_module, "main") as mock_main:
-                exec('main()', {"main": mock_main})
-            mock_main.assert_called_once()b
+                exec("main()", {"main": mock_main})
+            mock_main.assert_called_once()
