@@ -32,7 +32,6 @@ from termux_app_store.termux_app_store_cli import (
     FINGERPRINT_STRING,
 )
 
-
 class TestVerTuple:
 
     def test_simple(self):
@@ -332,12 +331,16 @@ class TestCmdInstall:
             result = cmd_install(tmp_path, tmp_path, "bower")
         assert result is True
 
+    def _make_stdout_mock(self, lines):
+        stdout = MagicMock()
+        stdout.readline.side_effect = list(lines) + [b""]
+        return stdout
+
     def test_install_success(self, tmp_path):
         self._make_pkg(tmp_path, "bower")
         mock_proc = MagicMock()
-        mock_proc.stdout = iter([b"Installing...\n"])
+        mock_proc.stdout = self._make_stdout_mock([b"Installing...\n"])
         mock_proc.returncode = 0
-        mock_proc.wait = MagicMock()
         with patch("termux_app_store.termux_app_store_cli.get_status", return_value=("NOT INSTALLED", "")), \
              patch("subprocess.Popen", return_value=mock_proc), \
              patch("termux_app_store.termux_app_store_cli.hold_package"):
@@ -347,9 +350,8 @@ class TestCmdInstall:
     def test_install_fail(self, tmp_path):
         self._make_pkg(tmp_path, "bower")
         mock_proc = MagicMock()
-        mock_proc.stdout = iter([])
+        mock_proc.stdout = self._make_stdout_mock([])
         mock_proc.returncode = 1
-        mock_proc.wait = MagicMock()
         with patch("termux_app_store.termux_app_store_cli.get_status", return_value=("NOT INSTALLED", "")), \
              patch("subprocess.Popen", return_value=mock_proc):
             result = cmd_install(tmp_path, tmp_path, "bower")
