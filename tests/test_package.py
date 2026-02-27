@@ -1,113 +1,133 @@
 import json
+import sys
 import time
 import pytest
 from pathlib import Path
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch, MagicMock, mock_open
+
+sys.path.insert(0, str(Path(__file__).parent.parent / "tools"))
+from package_manager import (
+    get_architecture,
+    download_file,
+    fetch_json,
+    parse_version,
+    compare_versions,
+    PackageSource,
+    PackageManager,
+    AppUpdateChecker,
+    APP_VERSION,
+)
 
 
-def parse_version(version: str):
-    v = (version or "").strip().lstrip("v")
-    v = v.split("+", 1)[0].split("-", 1)[0]
-    parts = []
-    for p in v.split("."):
-        try:
-            parts.append(int(p))
-        except Exception:
-            parts.append(0)
-    while len(parts) < 3:
-        parts.append(0)
-    return tuple(parts[:6])
+class TestGetArchitecture:
+
+    def test_aarch64(self):
+        with patch("platform.machine", return_value="aarch64"):
+            assert get_architecture() == "aarch64"
+
+    def test_armv7l(self):
+        with patch("platform.machine", return_value="armv7l"):
+            assert get_architecture() == "arm"
+
+    def test_armv8l(self):
+        with patch("platform.machine", return_value="armv8l"):
+            assert get_architecture() == "arm"
+
+    def test_x86_64(self):
+        with patch("platform.machine", return_value="x86_64"):
+            assert get_architecture() == "x86_64"
+
+    def test_i686(self):
+        with patch("platform.machine", return_value="i686"):
+            assert get_architecture() == "i686"
+
+    def test_i386(self):
+        with patch("platform.machine", return_value="i386"):
+            assert get_architecture() == "i686"
+
+    def test_unknown(self):
+        with patch("platform.machine", return_value="mips64"):
+            assert get_architecture() == "unknown"
+
+    def test_uppercase_normalized(self):
+        with patch("platform.machine", return_value="AARCH64"):
+            assert get_architecture() == "aarch64"
 
 
-def compare_versions(current: str, latest: str) -> int:
-    c = parse_version(current)
-    l = parse_version(latest)
-    if c < l:
-        return -1
-    elif c > l:
-        return 1
-    return 0
+class TestDownloadFile:
+
+    def test_success(self, tmp_path):
+        dest = tmp_path / "file.bin"
+        mock_response = MagicMock()
+        mock_response.read.return_value = b"binary data"
+        mock_response.__enter__ = lambda s: s
+        mock_response.__exit__ = MagicMock(return_value=False)
+
+        with patch("urllib.request.urlopen", return_value=mock_response):
+            result = download_file("https://example.com/file", dest)
+
+        assert result is True
+        assert dest.read_bytes() == b"binary data"
+
+    def test_creates_parent_dirs(self, tmp_path):
+        dest = tmp_path / "deep" / "nested" / "file.bin"
+        mock_response = MagicMock()
+        mock_response.read.return_value = b"data"
+        mock_response.__enter__ = lambda s: s
+        mock_response.__exit__ = MagicMock(return_value=False)
+
+        with patch("urllib.request.urlopen", return_value=mock_response):
+            result = download_file("https://example.com/file", dest)
+
+        assert result is True
+        assert dest.exists()
+
+    def test_failure_returns_false(self, tmp_path):
+        dest = tmp_path / "file.bin"
+        with patch("urllib.request.urlopen", side_effect=Exception("timeout")):
+            result = download_file("https://example.com/file", dest)
+
+        assert result is False
+
+    def test_network_error_returns_false(self, tmp_path):
+        import urllib.error
+        dest = tmp_path / "file.bin"
+        with patch("urllib.request.urlopen", side_effect=urllib.error.URLError("no network")):
+            result = download_file("https://example.com/file", dest)
+
+        assert result is False
 
 
-def get_architecture_logic(machine: str) -> str:
-    arch_map = {
-        'aarch64': 'aarch64',
-        'armv7l': 'arm',
-        'armv8l': 'arm',
-        'x86_64': 'x86_64',
-        'i686': 'i686',
-        'i386': 'i686',
-    }
-    return arch_map.get(machine.lower(), 'unknown')
+class TestFetchJson:
 
+    def test_success(self):
+        payload = {"packages": [{"package": "bower", "version": "1.8.12"}]}
+        mock_response = MagicMock()
+        mock_response.read.return_value = json.dumps(payload).encode()
+        mock_response.__enter__ = lambda s: s
+        mock_response.__exit__ = MagicMock(return_value=False)
 
-def normalize_remote_pkg(pkg: dict) -> dict:
-    pkg = dict(pkg)
-    pkg.setdefault("name", pkg.get("package"))
-    desc = pkg.get("description") or pkg.get("desc") or "-"
-    pkg.setdefault("desc", desc)
-    pkg.setdefault("description", desc)
-    deps = pkg.get("depends")
-    if isinstance(deps, str):
-        pkg["depends"] = [d.strip() for d in deps.split(",") if d.strip()]
-    pkg.setdefault("deps", ", ".join(pkg.get("depends") or []))
-    return pkg
+        with patch("urllib.request.urlopen", return_value=mock_response):
+            result = fetch_json("https://example.com/index.json")
 
+        assert result == payload
 
-def make_pkg_dir(root: Path, name: str, fields: dict) -> Path:
-    pkg_dir = root / name
-    pkg_dir.mkdir(parents=True, exist_ok=True)
-    lines = []
-    for k, v in fields.items():
-        lines.append(f'{k}="{v}"')
-    (pkg_dir / "build.sh").write_text("\n".join(lines) + "\n")
-    return pkg_dir
+    def test_failure_returns_none(self):
+        with patch("urllib.request.urlopen", side_effect=Exception("timeout")):
+            result = fetch_json("https://example.com/index.json")
 
+        assert result is None
 
-class TestMakePkgDir:
+    def test_invalid_json_returns_none(self):
+        mock_response = MagicMock()
+        mock_response.read.return_value = b"not json {{{"
+        mock_response.__enter__ = lambda s: s
+        mock_response.__exit__ = MagicMock(return_value=False)
 
-    def test_creates_directory(self, tmp_path):
-        result = make_pkg_dir(tmp_path, "mypkg", {})
-        assert result.exists()
-        assert result.is_dir()
+        with patch("urllib.request.urlopen", return_value=mock_response):
+            result = fetch_json("https://example.com/index.json")
 
-    def test_returns_correct_path(self, tmp_path):
-        result = make_pkg_dir(tmp_path, "mypkg", {})
-        assert result == tmp_path / "mypkg"
-
-    def test_creates_build_sh(self, tmp_path):
-        make_pkg_dir(tmp_path, "mypkg", {})
-        assert (tmp_path / "mypkg" / "build.sh").exists()
-
-    def test_fields_written_correctly(self, tmp_path):
-        make_pkg_dir(tmp_path, "bower", {
-            "TERMUX_PKG_VERSION": "1.8.12",
-            "TERMUX_PKG_DESCRIPTION": "A package manager",
-        })
-        content = (tmp_path / "bower" / "build.sh").read_text()
-        assert 'TERMUX_PKG_VERSION="1.8.12"' in content
-        assert 'TERMUX_PKG_DESCRIPTION="A package manager"' in content
-
-    def test_empty_fields_writes_newline(self, tmp_path):
-        make_pkg_dir(tmp_path, "mypkg", {})
-        content = (tmp_path / "mypkg" / "build.sh").read_text()
-        assert content == "\n"
-
-    def test_idempotent(self, tmp_path):
-        make_pkg_dir(tmp_path, "mypkg", {"TERMUX_PKG_VERSION": "1.0.0"})
-        make_pkg_dir(tmp_path, "mypkg", {"TERMUX_PKG_VERSION": "2.0.0"})
-        content = (tmp_path / "mypkg" / "build.sh").read_text()
-        assert 'TERMUX_PKG_VERSION="2.0.0"' in content
-
-    def test_creates_nested_dir(self, tmp_path):
-        result = make_pkg_dir(tmp_path, "nested/pkg", {})
-        assert result.exists()
-
-    def test_multiple_packages(self, tmp_path):
-        make_pkg_dir(tmp_path, "bower", {"TERMUX_PKG_VERSION": "1.8.12"})
-        make_pkg_dir(tmp_path, "pnpm", {"TERMUX_PKG_VERSION": "10.30.1"})
-        assert (tmp_path / "bower").exists()
-        assert (tmp_path / "pnpm").exists()
+        assert result is None
 
 
 class TestParseVersion:
@@ -115,230 +135,167 @@ class TestParseVersion:
     def test_simple(self):
         assert parse_version("1.2.3") == (1, 2, 3)
 
-    def test_with_v_prefix(self):
-        assert parse_version("v1.2.3") == (1, 2, 3)
+    def test_v_prefix(self):
+        assert parse_version("v2.0.0") == (2, 0, 0)
 
-    def test_two_parts_padded(self):
+    def test_two_parts(self):
         assert parse_version("1.2") == (1, 2, 0)
-
-    def test_one_part_padded(self):
-        assert parse_version("1") == (1, 0, 0)
 
     def test_pre_release_stripped(self):
         assert parse_version("1.2.3-beta") == (1, 2, 3)
-        assert parse_version("1.2.3-rc1")  == (1, 2, 3)
 
     def test_build_meta_stripped(self):
-        assert parse_version("1.2.3+build.1") == (1, 2, 3)
+        assert parse_version("1.2.3+build") == (1, 2, 3)
 
-    def test_pre_release_and_meta_stripped(self):
-        assert parse_version("1.2.3-beta+meta") == (1, 2, 3)
-
-    def test_empty_string(self):
+    def test_empty(self):
         assert parse_version("") == (0, 0, 0)
 
-    def test_none_like_empty(self):
-        assert parse_version("") == (0, 0, 0)
-
-    def test_non_numeric_part(self):
+    def test_non_numeric(self):
         assert parse_version("1.abc.3") == (1, 0, 3)
 
     def test_max_6_parts(self):
-        result = parse_version("1.2.3.4.5.6.7.8")
-        assert len(result) == 6
-        assert result == (1, 2, 3, 4, 5, 6)
-
-    def test_zero_version(self):
-        assert parse_version("0.0.0") == (0, 0, 0)
-
-    def test_real_app_version(self):
-        assert parse_version("0.1.6") == (0, 1, 6)
-
-    def test_real_package_bower(self):
-        assert parse_version("1.8.12") == (1, 8, 12)
-
-    def test_real_package_pnpm(self):
-        assert parse_version("10.30.1") == (10, 30, 1)
-
-    def test_ordering(self):
-        assert parse_version("1.9.0") < parse_version("1.10.0")
-        assert parse_version("2.0.0") > parse_version("1.9.9")
+        assert parse_version("1.2.3.4.5.6.7.8") == (1, 2, 3, 4, 5, 6)
 
 
 class TestCompareVersions:
 
     def test_equal(self):
-        assert compare_versions("1.2.3", "1.2.3") == 0
+        assert compare_versions("1.0.0", "1.0.0") == 0
 
-    def test_current_older(self):
+    def test_older(self):
         assert compare_versions("1.0.0", "1.0.1") == -1
 
-    def test_current_newer(self):
+    def test_newer(self):
         assert compare_versions("1.0.1", "1.0.0") == 1
 
-    def test_minor_older(self):
-        assert compare_versions("1.9.0", "1.10.0") == -1
-
-    def test_minor_newer(self):
-        assert compare_versions("1.10.0", "1.9.0") == 1
-
-    def test_major_older(self):
-        assert compare_versions("1.9.9", "2.0.0") == -1
-
-    def test_major_newer(self):
-        assert compare_versions("2.0.0", "1.9.9") == 1
-
-    def test_with_v_prefix(self):
+    def test_v_prefix(self):
         assert compare_versions("v1.2.3", "1.2.3") == 0
 
-    def test_with_prerelease(self):
-        assert compare_versions("1.2.3-beta", "1.2.3") == 0
 
-    def test_app_version_up_to_date(self):
-        assert compare_versions("0.1.6", "0.1.6") == 0
+class TestPackageSource:
 
-    def test_app_version_outdated(self):
-        assert compare_versions("0.1.5", "0.1.6") == -1
+    def test_env_override(self):
+        with patch.dict("os.environ", {"TERMUX_APP_STORE_MODE": "LOCAL"}):
+            assert PackageSource.detect_mode() == "local"
 
-    def test_app_version_ahead(self):
-        assert compare_versions("0.1.7", "0.1.6") == 1
+    def test_local_when_build_sh_exists(self, tmp_path):
+        pkg = tmp_path / "bower"
+        pkg.mkdir()
+        (pkg / "build.sh").write_text('TERMUX_PKG_VERSION="1.0"\n')
+        assert PackageSource.detect_mode(tmp_path) == "local"
 
-    def test_real_bower(self):
-        assert compare_versions("1.8.11", "1.8.12") == -1
-        assert compare_versions("1.8.12", "1.8.12") == 0
+    def test_remote_when_no_build_sh(self, tmp_path):
+        pkg = tmp_path / "empty"
+        pkg.mkdir()
+        assert PackageSource.detect_mode(tmp_path) == "remote"
 
-    def test_real_pnpm(self):
-        assert compare_versions("10.29.0", "10.30.1") == -1
-        assert compare_versions("10.30.1", "10.30.1") == 0
+    def test_remote_when_no_dir(self):
+        assert PackageSource.detect_mode(None) == "remote"
 
-
-class TestGetArchitecture:
-
-    def test_aarch64(self):
-        assert get_architecture_logic("aarch64") == "aarch64"
-
-    def test_armv7l(self):
-        assert get_architecture_logic("armv7l") == "arm"
-
-    def test_armv8l(self):
-        assert get_architecture_logic("armv8l") == "arm"
-
-    def test_x86_64(self):
-        assert get_architecture_logic("x86_64") == "x86_64"
-
-    def test_i686(self):
-        assert get_architecture_logic("i686") == "i686"
-
-    def test_i386(self):
-        assert get_architecture_logic("i386") == "i686"
-
-    def test_unknown(self):
-        assert get_architecture_logic("mips") == "unknown"
-        assert get_architecture_logic("riscv64") == "unknown"
-
-    def test_case_insensitive(self):
-        assert get_architecture_logic("AARCH64") == "aarch64"
-        assert get_architecture_logic("X86_64")  == "x86_64"
+    def test_remote_when_dir_not_exist(self, tmp_path):
+        assert PackageSource.detect_mode(tmp_path / "nonexistent") == "remote"
 
 
-class TestNormalizeRemotePkg:
+class TestPackageManagerCache:
 
-    def test_name_from_package(self):
-        pkg = normalize_remote_pkg({"package": "bower"})
-        assert pkg["name"] == "bower"
+    def test_cache_invalid_when_missing(self, tmp_path):
+        pm = PackageManager()
+        pm.cache_file = tmp_path / "index.json"
+        assert pm._is_cache_valid() is False
 
-    def test_name_preserved_if_present(self):
-        pkg = normalize_remote_pkg({"package": "bower", "name": "bower-tool"})
-        assert pkg["name"] == "bower-tool"
+    def test_cache_valid_fresh(self, tmp_path):
+        cache = tmp_path / "index.json"
+        cache.write_text(json.dumps({"packages": []}))
+        pm = PackageManager()
+        pm.cache_file = cache
+        pm.cache_ttl = 3600
+        assert pm._is_cache_valid() is True
 
-    def test_desc_from_description(self):
-        pkg = normalize_remote_pkg({"description": "A package manager"})
-        assert pkg["desc"] == "A package manager"
+    def test_cache_invalid_expired(self, tmp_path):
+        cache = tmp_path / "index.json"
+        cache.write_text(json.dumps({"packages": []}))
+        pm = PackageManager()
+        pm.cache_file = cache
+        pm.cache_ttl = 0
+        assert pm._is_cache_valid() is False
 
-    def test_desc_from_desc(self):
-        pkg = normalize_remote_pkg({"desc": "A tool"})
-        assert pkg["desc"] == "A tool"
+    def test_save_and_load_cache(self, tmp_path):
+        pm = PackageManager()
+        pm.cache_file = tmp_path / "cache" / "index.json"
+        data = {"packages": [{"package": "bower"}]}
+        pm._save_cache(data)
+        loaded = pm._load_cache()
+        assert loaded == data
 
-    def test_desc_fallback(self):
-        pkg = normalize_remote_pkg({})
-        assert pkg["desc"] == "-"
+    def test_load_cache_missing(self, tmp_path):
+        pm = PackageManager()
+        pm.cache_file = tmp_path / "nonexistent.json"
+        assert pm._load_cache() is None
 
-    def test_depends_string_split(self):
-        pkg = normalize_remote_pkg({"depends": "nodejs, python, git"})
-        assert pkg["depends"] == ["nodejs", "python", "git"]
+    def test_load_cache_corrupt(self, tmp_path):
+        cache = tmp_path / "index.json"
+        cache.write_text("{ broken {{")
+        pm = PackageManager()
+        pm.cache_file = cache
+        assert pm._load_cache() is None
 
-    def test_depends_list_preserved(self):
-        pkg = normalize_remote_pkg({"depends": ["nodejs", "python"]})
-        assert pkg["depends"] == ["nodejs", "python"]
+    def test_clear_cache(self, tmp_path):
+        cache = tmp_path / "index.json"
+        cache.write_text("{}")
+        pm = PackageManager()
+        pm.cache_file = cache
+        pm.clear_cache()
+        assert not cache.exists()
 
-    def test_deps_from_depends_list(self):
-        pkg = normalize_remote_pkg({"depends": ["nodejs", "python"]})
-        assert "nodejs" in pkg["deps"]
-        assert "python" in pkg["deps"]
-
-    def test_deps_empty_when_no_depends(self):
-        pkg = normalize_remote_pkg({"package": "tool"})
-        assert pkg["deps"] == ""
-
-    def test_original_not_mutated(self):
-        original = {"package": "bower", "version": "1.8.12"}
-        normalize_remote_pkg(original)
-        assert "name" not in original
-
-    def test_full_package(self):
-        raw = {
-            "package":     "bower",
-            "description": "A package manager for the web",
-            "version":     "1.8.12",
-            "depends":     "nodejs",
-            "license":     "MIT",
-            "homepage":    "https://bower.io",
-        }
-        pkg = normalize_remote_pkg(raw)
-        assert pkg["name"]        == "bower"
-        assert pkg["desc"]        == "A package manager for the web"
-        assert pkg["description"] == "A package manager for the web"
-        assert pkg["depends"]     == ["nodejs"]
+    def test_clear_cache_noop_when_missing(self, tmp_path):
+        pm = PackageManager()
+        pm.cache_file = tmp_path / "nonexistent.json"
+        pm.clear_cache()
 
 
-class TestParseBuildSh:
+class TestPackageManagerLocal:
 
-    def _parse(self, tmp_path, name, content):
-        pkg_dir = tmp_path / name
-        pkg_dir.mkdir()
-        (pkg_dir / "build.sh").write_text(content)
+    def _make_pkg(self, root, name, content):
+        pkg = root / name
+        pkg.mkdir()
+        (pkg / "build.sh").write_text(content)
+        return pkg
 
-        data = {
-            "package": pkg_dir.name,
-            "name": pkg_dir.name,
-            "desc": "-", "description": "-",
-            "version": "?", "deps": "-",
-            "depends": [], "maintainer": "-",
-            "homepage": "-", "license": "-",
-            "srcurl": "", "sha256": "",
-        }
-        with (pkg_dir / "build.sh").open(errors="ignore") as f:
-            for line in f:
-                line = line.strip()
-                for key, field in [
-                    ("TERMUX_PKG_DESCRIPTION=", ("desc", "description")),
-                    ("TERMUX_PKG_VERSION=",      ("version",)),
-                    ("TERMUX_PKG_DEPENDS=",      ("deps",)),
-                    ("TERMUX_PKG_MAINTAINER=",   ("maintainer",)),
-                    ("TERMUX_PKG_HOMEPAGE=",     ("homepage",)),
-                    ("TERMUX_PKG_LICENSE=",      ("license",)),
-                    ("TERMUX_PKG_SRCURL=",       ("srcurl",)),
-                    ("TERMUX_PKG_SHA256=",       ("sha256",)),
-                ]:
-                    if line.startswith(key):
-                        val = line.split("=", 1)[1].strip().strip('"\'')
-                        for f_ in field:
-                            data[f_] = val
-                        if key == "TERMUX_PKG_DEPENDS=":
-                            data["depends"] = [d.strip() for d in val.split(",") if d.strip()]
-        return data
+    def test_load_local_basic(self, tmp_path):
+        self._make_pkg(tmp_path, "bower", 'TERMUX_PKG_VERSION="1.8.12"\n')
+        pm = PackageManager(tmp_path)
+        pm.mode = "local"
+        pkgs = pm.load_packages()
+        assert len(pkgs) == 1
+        assert pkgs[0]["name"] == "bower"
+        assert pkgs[0]["version"] == "1.8.12"
 
-    def test_all_fields(self, tmp_path):
+    def test_load_local_skips_files(self, tmp_path):
+        (tmp_path / "not_a_dir.txt").write_text("x")
+        self._make_pkg(tmp_path, "bower", 'TERMUX_PKG_VERSION="1.0"\n')
+        pm = PackageManager(tmp_path)
+        pm.mode = "local"
+        pkgs = pm.load_packages()
+        assert len(pkgs) == 1
+
+    def test_load_local_skips_dir_without_build_sh(self, tmp_path):
+        (tmp_path / "emptypkg").mkdir()
+        pm = PackageManager(tmp_path)
+        pm.mode = "local"
+        pkgs = pm.load_packages()
+        assert pkgs == []
+
+    def test_load_local_empty_dir(self, tmp_path):
+        pm = PackageManager(tmp_path)
+        pm.mode = "local"
+        assert pm.load_packages() == []
+
+    def test_load_local_none_dir(self):
+        pm = PackageManager(None)
+        pm.mode = "local"
+        assert pm.load_packages() == []
+
+    def test_parse_build_sh_all_fields(self, tmp_path):
         content = (
             'TERMUX_PKG_DESCRIPTION="A cool tool"\n'
             'TERMUX_PKG_VERSION="2.0.1"\n'
@@ -349,127 +306,240 @@ class TestParseBuildSh:
             'TERMUX_PKG_SRCURL="https://example.com/src.tar.gz"\n'
             'TERMUX_PKG_SHA256="abc123"\n'
         )
-        p = self._parse(tmp_path, "mytool", content)
-        assert p["desc"]        == "A cool tool"
-        assert p["description"] == "A cool tool"
-        assert p["version"]     == "2.0.1"
-        assert p["deps"]        == "nodejs,python"
-        assert p["depends"]     == ["nodejs", "python"]
-        assert p["maintainer"]  == "@djunekz"
-        assert p["homepage"]    == "https://example.com"
-        assert p["license"]     == "MIT"
-        assert p["srcurl"]      == "https://example.com/src.tar.gz"
-        assert p["sha256"]      == "abc123"
+        pkg_dir = tmp_path / "mytool"
+        pkg_dir.mkdir()
+        (pkg_dir / "build.sh").write_text(content)
+        pm = PackageManager(tmp_path)
+        data = pm._parse_build_sh(pkg_dir)
+        assert data["desc"] == "A cool tool"
+        assert data["version"] == "2.0.1"
+        assert data["depends"] == ["nodejs", "python"]
+        assert data["maintainer"] == "@djunekz"
+        assert data["homepage"] == "https://example.com"
+        assert data["license"] == "MIT"
+        assert data["srcurl"] == "https://example.com/src.tar.gz"
+        assert data["sha256"] == "abc123"
 
-    def test_defaults_when_empty(self, tmp_path):
-        p = self._parse(tmp_path, "empty", "")
-        assert p["version"]  == "?"
-        assert p["desc"]     == "-"
-        assert p["deps"]     == "-"
-        assert p["depends"]  == []
+    def test_parse_build_sh_defaults(self, tmp_path):
+        pkg_dir = tmp_path / "empty"
+        pkg_dir.mkdir()
+        (pkg_dir / "build.sh").write_text("")
+        pm = PackageManager(tmp_path)
+        data = pm._parse_build_sh(pkg_dir)
+        assert data["version"] == "?"
+        assert data["desc"] == "-"
+        assert data["depends"] == []
 
-    def test_single_quotes_stripped(self, tmp_path):
-        p = self._parse(tmp_path, "sq", "TERMUX_PKG_VERSION='3.1.4'\n")
-        assert p["version"] == "3.1.4"
-
-    def test_real_bower(self, tmp_path):
-        content = (
-            'TERMUX_PKG_DESCRIPTION="A package manager for the web"\n'
-            'TERMUX_PKG_VERSION="1.8.12"\n'
-            'TERMUX_PKG_DEPENDS="nodejs"\n'
-            'TERMUX_PKG_LICENSE="MIT"\n'
-        )
-        p = self._parse(tmp_path, "bower", content)
-        assert p["name"]    == "bower"
-        assert p["version"] == "1.8.12"
-        assert p["depends"] == ["nodejs"]
+    def test_multiple_packages_sorted(self, tmp_path):
+        self._make_pkg(tmp_path, "zzz", 'TERMUX_PKG_VERSION="1.0"\n')
+        self._make_pkg(tmp_path, "aaa", 'TERMUX_PKG_VERSION="2.0"\n')
+        pm = PackageManager(tmp_path)
+        pm.mode = "local"
+        pkgs = pm.load_packages()
+        assert pkgs[0]["name"] == "aaa"
+        assert pkgs[1]["name"] == "zzz"
 
 
-class TestCacheLogic:
+class TestPackageManagerRemote:
 
-    def test_cache_valid_within_ttl(self, tmp_path):
-        cache_file = tmp_path / "index.json"
-        cache_file.write_text(json.dumps({"packages": []}))
-        ttl = 6 * 3600
-        age = time.time() - cache_file.stat().st_mtime
-        assert age < ttl
+    def test_load_remote_from_network(self, tmp_path):
+        payload = {"packages": [{"package": "bower", "version": "1.8.12"}]}
+        pm = PackageManager()
+        pm.cache_file = tmp_path / "index.json"
+        pm.cache_ttl = 0
 
-    def test_cache_expired(self, tmp_path):
-        cache_file = tmp_path / "index.json"
-        cache_file.write_text(json.dumps({"packages": []}))
-        ttl = 1
-        time.sleep(0.01)
-        age = time.time() - cache_file.stat().st_mtime
-        assert age > ttl * 0 or age >= 0
+        with patch("package_manager.fetch_json", return_value=payload):
+            pkgs = pm._load_remote()
 
-    def test_cache_missing(self, tmp_path):
-        cache_file = tmp_path / "index.json"
-        assert not cache_file.exists()
+        assert len(pkgs) == 1
+        assert pkgs[0]["name"] == "bower"
 
-    def test_save_and_load_cache(self, tmp_path):
-        cache_file = tmp_path / "index.json"
-        data = {"packages": [{"package": "bower", "version": "1.8.12"}]}
-        cache_file.parent.mkdir(parents=True, exist_ok=True)
-        cache_file.write_text(json.dumps(data, indent=2))
-        loaded = json.loads(cache_file.read_text())
-        assert loaded["packages"][0]["package"] == "bower"
+    def test_load_remote_from_cache(self, tmp_path):
+        payload = {"packages": [{"package": "pnpm", "version": "10.30.1"}]}
+        cache = tmp_path / "index.json"
+        cache.write_text(json.dumps(payload))
 
-    def test_clear_cache(self, tmp_path):
-        cache_file = tmp_path / "index.json"
-        cache_file.write_text("{}")
-        assert cache_file.exists()
-        cache_file.unlink()
-        assert not cache_file.exists()
+        pm = PackageManager()
+        pm.cache_file = cache
+        pm.cache_ttl = 9999
 
-    def test_corrupted_cache_returns_none(self, tmp_path):
-        cache_file = tmp_path / "index.json"
-        cache_file.write_text("{ broken json {{{")
-        result = None
-        try:
-            result = json.loads(cache_file.read_text())
-        except Exception:
-            result = None
-        assert result is None
+        pkgs = pm._load_remote()
+        assert pkgs[0]["name"] == "pnpm"
+
+    def test_load_remote_fallback_to_cache_on_failure(self, tmp_path):
+        payload = {"packages": [{"package": "git", "version": "2.0"}]}
+        cache = tmp_path / "index.json"
+        cache.write_text(json.dumps(payload))
+
+        pm = PackageManager()
+        pm.cache_file = cache
+        pm.cache_ttl = 0
+
+        with patch("package_manager.fetch_json", return_value=None):
+            pkgs = pm._load_remote()
+
+        assert pkgs[0]["name"] == "git"
+
+    def test_load_remote_empty_when_all_fail(self, tmp_path):
+        pm = PackageManager()
+        pm.cache_file = tmp_path / "nonexistent.json"
+        pm.cache_ttl = 0
+
+        with patch("package_manager.fetch_json", return_value=None):
+            pkgs = pm._load_remote()
+
+        assert pkgs == []
+
+    def test_normalize_remote_pkg_name_from_package(self):
+        pkg = PackageManager._normalize_remote_pkg({"package": "bower"})
+        assert pkg["name"] == "bower"
+
+    def test_normalize_remote_pkg_desc_fallback(self):
+        pkg = PackageManager._normalize_remote_pkg({})
+        assert pkg["desc"] == "-"
+
+    def test_normalize_remote_pkg_depends_string(self):
+        pkg = PackageManager._normalize_remote_pkg({"depends": "nodejs, python"})
+        assert pkg["depends"] == ["nodejs", "python"]
+
+    def test_load_packages_remote_mode(self, tmp_path):
+        payload = {"packages": [{"package": "bower", "version": "1.8.12"}]}
+        pm = PackageManager()
+        pm.mode = "remote"
+        pm.cache_file = tmp_path / "index.json"
+        pm.cache_ttl = 0
+
+        with patch("package_manager.fetch_json", return_value=payload):
+            pkgs = pm.load_packages()
+
+        assert len(pkgs) == 1
 
 
-class TestGetStatusLogic:
+class TestGetPackage:
 
-    def _get_status(self, installed, store_version):
-        if installed is None:
-            return "NOT_INSTALLED", "not installed"
-        if compare_versions(installed, store_version) < 0:
-            return "UPDATE", f"update available ({installed} → {store_version})"
-        return "INSTALLED", f"up-to-date ({store_version})"
+    def test_found_by_package_key(self, tmp_path):
+        (tmp_path / "bower").mkdir()
+        (tmp_path / "bower" / "build.sh").write_text('TERMUX_PKG_VERSION="1.8.12"\n')
+        pm = PackageManager(tmp_path)
+        pm.mode = "local"
+        pkg = pm.get_package("bower")
+        assert pkg is not None
+        assert pkg["version"] == "1.8.12"
+
+    def test_not_found(self, tmp_path):
+        pm = PackageManager(tmp_path)
+        pm.mode = "local"
+        assert pm.get_package("nonexistent") is None
+
+
+class TestGetInstalledVersion:
+
+    def test_pkg_info_success(self):
+        pm = PackageManager()
+        with patch("subprocess.check_output", return_value="Name: bower\nVersion: 1.8.12\n"):
+            assert pm.get_installed_version("bower") == "1.8.12"
+
+    def test_pkg_info_fails_dpkg_success(self):
+        pm = PackageManager()
+        def side_effect(cmd, **kwargs):
+            if cmd[0] == "pkg":
+                raise Exception("not found")
+            return "1.8.12"
+        with patch("subprocess.check_output", side_effect=side_effect):
+            assert pm.get_installed_version("bower") == "1.8.12"
+
+    def test_both_fail_returns_none(self):
+        pm = PackageManager()
+        with patch("subprocess.check_output", side_effect=Exception("not found")):
+            assert pm.get_installed_version("bower") is None
+
+    def test_dpkg_empty_returns_none(self):
+        pm = PackageManager()
+        def side_effect(cmd, **kwargs):
+            if cmd[0] == "pkg":
+                raise Exception("not found")
+            return ""
+        with patch("subprocess.check_output", side_effect=side_effect):
+            assert pm.get_installed_version("bower") is None
+
+
+class TestGetStatus:
 
     def test_not_installed(self):
-        status, msg = self._get_status(None, "1.0.0")
+        pm = PackageManager()
+        with patch.object(pm, "get_installed_version", return_value=None):
+            status, msg = pm.get_status("bower", "1.8.12")
         assert status == "NOT_INSTALLED"
-        assert "not installed" in msg
 
     def test_installed_up_to_date(self):
-        status, msg = self._get_status("1.0.0", "1.0.0")
-        assert status == "INSTALLED"
-        assert "up-to-date" in msg
-
-    def test_installed_newer(self):
-        status, _ = self._get_status("2.0.0", "1.9.9")
+        pm = PackageManager()
+        with patch.object(pm, "get_installed_version", return_value="1.8.12"):
+            status, msg = pm.get_status("bower", "1.8.12")
         assert status == "INSTALLED"
 
     def test_update_available(self):
-        status, msg = self._get_status("1.0.0", "1.0.1")
+        pm = PackageManager()
+        with patch.object(pm, "get_installed_version", return_value="1.8.11"):
+            status, msg = pm.get_status("bower", "1.8.12")
         assert status == "UPDATE"
-        assert "update available" in msg
-        assert "1.0.0" in msg
-        assert "1.0.1" in msg
+        assert "1.8.11" in msg
+        assert "1.8.12" in msg
 
-    def test_real_bower_update(self):
-        status, _ = self._get_status("1.8.11", "1.8.12")
-        assert status == "UPDATE"
 
-    def test_real_bower_installed(self):
-        status, _ = self._get_status("1.8.12", "1.8.12")
-        assert status == "INSTALLED"
+class TestAppUpdateChecker:
 
-    def test_real_pnpm_update(self):
-        status, _ = self._get_status("10.29.0", "10.30.1")
-        assert status == "UPDATE"
+    def test_get_latest_version_success(self):
+        with patch("package_manager.fetch_json", return_value={"tag_name": "v0.2.0"}):
+            assert AppUpdateChecker.get_latest_version() == "0.2.0"
+
+    def test_get_latest_version_failure(self):
+        with patch("package_manager.fetch_json", return_value=None):
+            assert AppUpdateChecker.get_latest_version() is None
+
+    def test_get_latest_version_no_tag(self):
+        with patch("package_manager.fetch_json", return_value={"other": "data"}):
+            assert AppUpdateChecker.get_latest_version() is None
+
+    def test_check_update_available(self):
+        with patch.object(AppUpdateChecker, "get_latest_version", return_value="9.9.9"):
+            has_update, latest = AppUpdateChecker.check_update()
+        assert has_update is True
+        assert latest == "9.9.9"
+
+    def test_check_update_up_to_date(self):
+        with patch.object(AppUpdateChecker, "get_latest_version", return_value=APP_VERSION):
+            has_update, latest = AppUpdateChecker.check_update()
+        assert has_update is False
+
+    def test_check_update_no_latest(self):
+        with patch.object(AppUpdateChecker, "get_latest_version", return_value=None):
+            has_update, latest = AppUpdateChecker.check_update()
+        assert has_update is False
+        assert latest is None
+
+    def test_get_download_url(self):
+        with patch("package_manager.get_architecture", return_value="aarch64"):
+            url = AppUpdateChecker.get_download_url("0.2.0")
+        assert "0.2.0" in url
+        assert "aarch64" in url
+
+    def test_upgrade_app_success(self, tmp_path):
+        with patch("package_manager.download_file", return_value=True), \
+             patch("package_manager.get_architecture", return_value="aarch64"), \
+             patch("shutil.move") as mock_move, \
+             patch("package_manager.PREFIX", str(tmp_path)):
+            (tmp_path / "bin").mkdir(parents=True, exist_ok=True)
+            result = AppUpdateChecker.upgrade_app("0.2.0")
+        assert result is True
+
+    def test_upgrade_app_download_fails(self, tmp_path):
+        with patch("package_manager.download_file", return_value=False):
+            result = AppUpdateChecker.upgrade_app("0.2.0")
+        assert result is False
+
+    def test_upgrade_app_install_fails(self, tmp_path):
+        with patch("package_manager.download_file", return_value=True), \
+             patch("package_manager.get_architecture", return_value="aarch64"), \
+             patch("shutil.move", side_effect=Exception("permission denied")):
+            result = AppUpdateChecker.upgrade_app("0.2.0")
+        assert result is False
