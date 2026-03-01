@@ -19,7 +19,8 @@ from textual.widgets import (
     Button,
     ProgressBar,
 )
-from textual.containers import Horizontal, Vertical, VerticalScroll
+from textual.screen import ModalScreen
+from textual.containers import Horizontal, Vertical, VerticalScroll, Center
 
 CACHE_FILE = (
     Path(os.environ.get("XDG_CACHE_HOME", Path.home() / ".cache"))
@@ -35,13 +36,6 @@ def strip_ansi(text: str) -> str:
     return ANSI_ESCAPE.sub('', text)
 
 def _ver_tuple(v: str):
-    """
-    Convert version string to comparable tuple of ints.
-    Handles: 1.2.3 / 1.2.3-1 / 4.10-1 / 2.0-pre
-      4.10-1  → (4, 10, 1)
-      4.10    → (4, 10, 0)  ← no suffix = revision 0
-      2.0-pre → (2, 0, 0)   ← non-numeric suffix = 0
-    """
     v = v.strip()
     parts = v.split("-", 1)
     base = parts[0]
@@ -62,12 +56,6 @@ def _ver_tuple(v: str):
     return tuple(base_parts) + (rev,)
 
 def get_installed_version(name: str):
-    """
-    Get installed version via dpkg-query.
-    Only returns version if package is actually installed via dpkg/store.
-    Packages from official Termux repo (apt) but NOT installed via store
-    will NOT appear — dpkg-query only sees packages managed by dpkg.
-    """
     try:
         out = subprocess.check_output(
             ["dpkg-query", "-W", "-f=${Status}\t${Version}\n", name],
@@ -165,6 +153,70 @@ class PackageItem(ListItem):
     def compose(self) -> ComposeResult:
         yield Label(self.pkg["name"])
 
+
+class ConfirmUninstall(ModalScreen[bool]):
+
+    DEFAULT_CSS = """
+    ConfirmUninstall {
+        align: center middle;
+    }
+    #dialog {
+        width: 60;
+        height: auto;
+        border: heavy #ff5555;
+        background: #282a36;
+        padding: 2 4;
+    }
+    #dialog-title {
+        text-align: center;
+        color: #ff5555;
+        text-style: bold;
+        margin-bottom: 1;
+    }
+    #dialog-msg {
+        text-align: center;
+        color: #f8f8f2;
+        margin-bottom: 2;
+    }
+    #dialog-btns {
+        align: center middle;
+        height: auto;
+    }
+    #btn-cancel {
+        margin-right: 2;
+        background: #44475a;
+        color: #f8f8f2;
+    }
+    #btn-cancel:hover { background: #6272a4; }
+    #btn-confirm-uninstall {
+        background: #ff5555;
+        color: #f8f8f2;
+    }
+    #btn-confirm-uninstall:hover { background: #ff6e6e; }
+    """
+
+    def __init__(self, package_name: str):
+        super().__init__()
+        self.package_name = package_name
+
+    def compose(self) -> ComposeResult: # pragma: no cover
+        with Vertical(id="dialog"):
+            yield Static("⚠  Confirm Uninstall", id="dialog-title")
+            yield Static(
+                f"Are you sure you want to uninstall\n[b]{self.package_name}[/b]?",
+                id="dialog-msg",
+            )
+            with Horizontal(id="dialog-btns"):
+                yield Button("Cancel", id="btn-cancel")
+                yield Button("Uninstall", id="btn-confirm-uninstall")
+
+    def on_button_pressed(self, event: Button.Pressed) -> None: # pragma: no cover
+        if event.button.id == "btn-cancel":
+            self.dismiss(False)
+        elif event.button.id == "btn-confirm-uninstall":
+            self.dismiss(True)
+
+
 class TermuxAppStore(App):
 
     CSS = """
@@ -176,6 +228,11 @@ class TermuxAppStore(App):
     ProgressBar { height: 1; }
     #footer { height: 1; content-align: center middle; color: #6272a4; }
     #log-scroll { height: 1fr; border: solid #6272a4; }
+    #btn-row { height: auto; margin-top: 1; }
+    #install { margin-right: 1; }
+    #uninstall { background: #ff5555; color: #f8f8f2; display: none; }
+    #uninstall:hover { background: #ff6e6e; }
+    #uninstall:disabled { background: #44475a; color: #6272a4; }
     """
 
     def on_mount(self): # pragma: no cover
@@ -212,8 +269,13 @@ class TermuxAppStore(App):
                 self.progress = ProgressBar(total=100)
                 yield self.progress
 
-                self.install_btn = Button("Install / Update", id="install")
-                yield self.install_btn
+                with Horizontal(id="btn-row"):
+                    self.install_btn = Button("Install / Update", id="install")
+                    yield self.install_btn
+
+                    self.uninstall_btn = Button("Uninstall", id="uninstall")
+                    self.uninstall_btn.display = False
+                    yield self.uninstall_btn
 
         yield Static("Official Developer @djunekz | Termux App Store", id="footer")
 
@@ -267,13 +329,6 @@ class TermuxAppStore(App):
             self.show_preview(event.item)
 
     def get_status(self, name: str, store_version: str) -> str:
-        """
-        Returns: 'NOT INSTALLED' | 'INSTALLED' | 'UPDATE'
-
-        Uses dpkg-query (not pkg info) so only packages actually installed
-        via store/dpkg are counted — not packages from official Termux repo.
-        Uses proper version comparison so 4.10-1 >= 4.10 = INSTALLED.
-        """
         if name in self.status_cache:
             return self.status_cache[name]
 
@@ -324,19 +379,38 @@ class TermuxAppStore(App):
         self.log_view.update("")
         self.progress.progress = 0
 
+        is_installed = status in ("INSTALLED", "UPDATE")
+        self.uninstall_btn.display = is_installed
+
     async def on_button_pressed(self, event: Button.Pressed):
-        if event.button.id == "install" and self.current_item and not self.installing:
-            await self.worker_queue.put(self.current_item.pkg["name"])
+        if self.installing:
+            return
+
+        if event.button.id == "install" and self.current_item:
+            await self.worker_queue.put(("install", self.current_item.pkg["name"]))
+
+        elif event.button.id == "uninstall" and self.current_item:
+            name = self.current_item.pkg["name"]
+            def handle_confirm(confirmed: bool) -> None: # pragma: no cover
+                if confirmed:
+                    asyncio.get_event_loop().call_soon_threadsafe(
+                        lambda: self.worker_queue.put_nowait(("uninstall", name))
+                    )
+            self.push_screen(ConfirmUninstall(name), handle_confirm)
 
     async def consume_worker_queue(self):
         if self.installing or self.worker_queue.empty():
             return
-        name = await self.worker_queue.get()
-        await asyncio.to_thread(self.run_build_sync, name)
+        action, name = await self.worker_queue.get()
+        if action == "install":
+            await asyncio.to_thread(self.run_build_sync, name)
+        elif action == "uninstall":
+            await asyncio.to_thread(self.run_uninstall_sync, name)
 
     def run_build_sync(self, name: str):
         self.installing = True
         self.call_from_thread(lambda: setattr(self.install_btn, "disabled", True))
+        self.call_from_thread(lambda: setattr(self.uninstall_btn, "disabled", True))
         self.log_buffer.clear()
         self.call_from_thread(lambda: setattr(self.progress, "progress", 0))
         self.call_from_thread(lambda: self.update_log(f"Installing {name}...\n"))
@@ -364,11 +438,59 @@ class TermuxAppStore(App):
             self.call_from_thread(lambda: self.update_log(f"\n✗ Installation failed (exit code {proc.returncode})"))
 
         self.installing = False
-        self.call_from_thread(lambda: setattr(self.install_btn, "disabled", False))
-
         self.status_cache.clear()
         self.load_packages()
-        self.call_from_thread(self.refresh_list)
+
+        def _finalize_install():
+            self.install_btn.disabled = False
+            self.uninstall_btn.disabled = False
+            self.refresh_list()
+
+        self.call_from_thread(_finalize_install)
+
+    def run_uninstall_sync(self, name: str):
+        self.installing = True
+        self.call_from_thread(lambda: setattr(self.install_btn, "disabled", True))
+        self.call_from_thread(lambda: setattr(self.uninstall_btn, "disabled", True))
+        self.log_buffer.clear()
+        self.call_from_thread(lambda: self.update_log(f"Uninstalling {name}...\n"))
+
+        try:
+            subprocess.call(["apt-mark", "unhold", name],
+                            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        except Exception:
+            pass
+
+        proc = subprocess.Popen(
+            ["apt-get", "remove", "-y", name],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+        )
+
+        for line in iter(proc.stdout.readline, b""):
+            clean_line = strip_ansi(line.decode(errors="ignore").rstrip())
+            if clean_line:
+                self.call_from_thread(
+                    lambda t=clean_line: self.update_log(t)
+                )
+
+        proc.wait()
+
+        if proc.returncode == 0:
+            self.call_from_thread(lambda: self.update_log(f"\n✔ {name} uninstalled successfully!"))
+        else:
+            self.call_from_thread(lambda: self.update_log(f"\n✗ Uninstall failed (exit code {proc.returncode})"))
+
+        self.installing = False
+        self.status_cache.clear()
+        self.load_packages()
+
+        def _finalize_uninstall():
+            self.install_btn.disabled = False
+            self.uninstall_btn.disabled = False
+            self.refresh_list()
+
+        self.call_from_thread(_finalize_uninstall)
 
     def update_log(self, line=None):
         if line:
