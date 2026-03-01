@@ -8,7 +8,11 @@ and this project adheres to semantic versioning.
 
 ## [Unreleased]
 
+---
+
+## [v0.1.7] - 2026-03-02
 ### Added
+- Added an `uninstall button` to the text-based user interface (TUI)
 - Package `bashxt` v2.2 - basic command, code color, shortcut keyboar, etc information
 - Package `aura` v0.8.2 - Adaptive Unified Runtime Assistant
 - Package `tx` v1.0.0 - Advance Terminal Editor Ultimate
