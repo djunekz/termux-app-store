@@ -8,19 +8,24 @@ import json
 import re
 from pathlib import Path
 
-from textual.app import App, ComposeResult
-from textual.widgets import (
-    Header,
-    Input,
-    ListView,
-    ListItem,
-    Label,
-    Static,
-    Button,
-    ProgressBar,
-)
-from textual.screen import ModalScreen
-from textual.containers import Horizontal, Vertical, VerticalScroll, Center
+try:
+    from textual.app import App, ComposeResult
+    from textual.widgets import (
+        Header,
+        Input,
+        ListView,
+        ListItem,
+        Label,
+        Static,
+        Button,
+        ProgressBar,
+    )
+    from textual.containers import Horizontal, Vertical, VerticalScroll, Center
+    _TEXTUAL_AVAILABLE = True
+except ImportError:
+    App = object  # type: ignore
+    ComposeResult = None  # type: ignore
+    _TEXTUAL_AVAILABLE = False
 
 CACHE_FILE = (
     Path(os.environ.get("XDG_CACHE_HOME", Path.home() / ".cache"))
@@ -154,7 +159,12 @@ class PackageItem(ListItem):
         yield Label(self.pkg["name"])
 
 
-class ConfirmUninstall(ModalScreen[bool]):
+try:
+    from textual.screen import ModalScreen as _ModalScreen
+except ImportError:
+    _ModalScreen = object  # type: ignore
+
+class ConfirmUninstall(_ModalScreen):
 
     DEFAULT_CSS = """
     ConfirmUninstall {
