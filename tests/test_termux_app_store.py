@@ -412,8 +412,7 @@ class TestTermuxAppStoreUnit:
              patch("termux_app_store.termux_app_store.get_installed_version", return_value=None):
             app.show_preview(item)
         app.info.update.assert_called_once()
-        app.uninstall_btn.display.__set__ if hasattr(app.uninstall_btn, "display") else None
-        assert app.uninstall_btn.display == False or app.uninstall_btn.display is not None
+        assert app.uninstall_btn.display == False
 
     def test_show_preview_installed(self, tmp_path):
         app = _make_app(tmp_path)
@@ -425,7 +424,7 @@ class TestTermuxAppStoreUnit:
              patch("termux_app_store.termux_app_store.get_installed_version", return_value="1.8.12"):
             app.show_preview(item)
         app.info.update.assert_called_once()
-        assert app.uninstall_btn.display == True or app.uninstall_btn.display is not None
+        assert app.uninstall_btn.display == True
 
     def test_show_preview_update(self, tmp_path):
         app = _make_app(tmp_path)
