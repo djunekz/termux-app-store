@@ -481,16 +481,62 @@ def cmd_upgrade(app_root: Path, packages_dir: Path, target=None):
 
 
 def cmd_version():
-    print(f"\n{B}[*] Fetching latest version from system...{R}")
-    tag = fetch_latest_tag()
-    if tag:
-        print(f"\n  {B}Termux App Store{R}")
-        print(f"  {B}Version  :{R} {GREEN}{B}{tag}{R}")
-        print(f"  {B}Official :{R} {CYAN}https://github.com/{GITHUB_REPO}{R}")
-        print(f"  {B}Update   :{R} {GREEN}Go to termux-app-store directory{R}")
-        print(f"            {R} {GREEN}Run {DIM}{YELLOW}./tasctl update{R}")
+    INSTALL_DIR = Path(os.environ.get("PREFIX", "/data/data/com.termux/files/usr")) / "lib" / ".tas"
+    SENTINEL = INSTALL_DIR / ".installed"
+
+    # 1. Baca versi lokal dari sentinel
+    local_ver = None
+    if SENTINEL.exists():
+        try:
+            for line in SENTINEL.read_text().splitlines():
+                if line.startswith("version="):
+                    local_ver = line.split("=", 1)[1].strip()
+                    break
+        except Exception:
+            pass
+
+    # 2. Fallback: baca APP_VERSION dari file Python
+    if not local_ver:
+        for f in [
+            INSTALL_DIR / "termux_app_store" / "main.py",
+            INSTALL_DIR / "termux_app_store" / "termux_app_store_cli.py",
+            Path(__file__).resolve().parent / "main.py",
+        ]:
+            if f.exists():
+                try:
+                    m = re.search(r'APP_VERSION\s*=\s*"([0-9.]+)"', f.read_text())
+                    if m:
+                        local_ver = m.group(1)
+                        break
+                except Exception:
+                    pass
+
+    # 3. Fetch versi terbaru dari GitHub
+    print(f"\n{B}[*] Fetching latest version from GitHub...{R}")
+    remote_tag = fetch_latest_tag()
+    remote_ver = remote_tag.lstrip("v") if remote_tag else None
+
+    print(f"\n  {B}Termux App Store{R}")
+    print(f"  {B}Official :{R} {CYAN}https://github.com/{GITHUB_REPO}{R}")
+
+    if local_ver:
+        print(f"  {B}Installed:{R} {GREEN}{B}v{local_ver}{R}")
     else:
-        print(f"{YELLOW}[!] Could not fetch version. Check your internet connection.{R}\n")
+        print(f"  {B}Installed:{R} {YELLOW}unknown{R}")
+
+    if remote_ver:
+        print(f"  {B}Latest   :{R} {GREEN}{B}v{remote_ver}{R}")
+        if local_ver and _ver_tuple(remote_ver) > _ver_tuple(local_ver):
+            print(f"\n  {YELLOW}{B}⬆  New version available: v{remote_ver}{R}")
+            print(f"  {DIM}Run: {CYAN}termux-app-store upgrade{R}{DIM} to update{R}")
+        else:
+            print(f"\n  {GREEN}{B}✔  This is the latest version{R}")
+    else:
+        print(f"  {B}Latest   :{R} {YELLOW}(could not fetch — check internet){R}")
+        if local_ver:
+            print(f"\n  {DIM}Cannot determine if update is available{R}")
+
+    print()
 
 
 def cmd_help():
@@ -512,7 +558,7 @@ def cmd_help():
   {CYAN}upgrade{R} {B}<package>{R}           Upgrade a specific package
 
 {B}INFO:{R}
-  {CYAN}version{R} {DIM}| -v{R}                Show app version (Latest version)
+  {CYAN}version{R} {DIM}| -v{R}                Show app version
   {CYAN}help{R}    {DIM}| -h | --help{R}       Show this help message
 
 {B}EXAMPLES:{R}
@@ -603,3 +649,7 @@ def run_cli():
     elif cmd == "upgrade":
         target = args[1] if len(args) >= 2 else None
         cmd_upgrade(APP_ROOT, PACKAGES_DIR, target)
+
+
+if __name__ == "__main__":
+    run_cli()
