@@ -10,13 +10,13 @@
 
 [![CI](https://github.com/djunekz/termux-app-store/actions/workflows/build.yml/badge.svg)](https://github.com/djunekz/termux-app-store/actions)
 [![Codecov](https://codecov.io/github/djunekz/termux-app-store/branch/master/graph/badge.svg?token=357W4EP8G0)](https://codecov.io/github/djunekz/termux-app-store)<br>
-[![Release](https://img.shields.io/github/v/release/djunekz/termux-app-store?style=flat&logo=github&color=3fb950&include_prerelease)](https://github.com/djunekz/termux-app-store/releases)
-[![Downloads](https://img.shields.io/github/downloads/djunekz/termux-app-store/total?style=flat&logo=github&color=3fb950&logoColor=ffffff)](https://github.com/djunekz/termux-app-store)
+![Version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.github.com%2Frepos%2Fdjunekz%2Ftermux-app-store%2Ftags&query=%24%5B0%5D.name&style=flat&logo=github&color=3fb950&label=release)
 [![License](https://img.shields.io/badge/License-MIT-3fb950?style=flat&logo=opensourceinitiative&logoColor=white)](LICENSE)
 <br>
 <br>
-[![Stars](https://img.shields.io/github/stars/djunekz/termux-app-store?logo=github&color=3fb950&label=stars)](https://github.com/djunekz/termux-app-store/stargazers)
-[![Forks](https://img.shields.io/github/forks/djunekz/termux-app-store?logo=github&color=3fb950)](https://github.com/djunekz/termux-app-store/network)
+[![Stars](https://img.shields.io/github/stars/djunekz/termux-app-store?style=flat&logo=github&color=3fb950&label=stars&cacheSeconds=3600)](https://github.com/djunekz/termux-app-store/stargazers)
+[![Forks](https://img.shields.io/github/forks/djunekz/termux-app-store?style=flat&logo=github&color=3fb950&cacheSeconds=3600)](https://github.com/djunekz/termux-app-store/network)
+[![Commits](https://img.shields.io/github/commit-activity/m/djunekz/termux-app-store?style=flat&logo=github&color=3fb950&label=commits)](https://github.com/djunekz/termux-app-store/commits)
 <br>
 <br>
 [![Issues](https://img.shields.io/github/issues/djunekz/termux-app-store?style=flat&logo=github&logoColor=white&color=3fb950)](https://github.com/djunekz/termux-app-store/issues)
