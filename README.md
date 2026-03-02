@@ -19,7 +19,7 @@
 [![Commits](https://img.shields.io/github/commit-activity/m/djunekz/termux-app-store?style=flat&logo=github&color=3fb950&label=commits)](https://github.com/djunekz/termux-app-store/commits)
 <br>
 <br>
-[![Issues](https://img.shields.io/github/issues/djunekz/termux-app-store?style=flat&logo=github&logoColor=white&color=3fb950)](https://github.com/djunekz/termux-app-store/issues)
+[![Issues](https://img.shields.io/badge/issues-open-3fb950?style=flat&logo=github&logoColor=white)](https://github.com/djunekz/termux-app-store/issues)
 [![PRs](https://img.shields.io/github/issues-pr/djunekz/termux-app-store?style=flat&logo=git&logoColor=white&color=3fb950)](https://github.com/djunekz/termux-app-store/pulls)
 [![Community Ready](https://img.shields.io/badge/Community-Ready-3fb950?style=flat&logo=github)](https://github.com/djunekz/termux-app-store)
 
