@@ -82,8 +82,8 @@ def has_store_fingerprint(path: Path) -> bool:
                     break
                 if FINGERPRINT_STRING in line:
                     return True
-    except Exception: # pragma: no cover
-        pass # pragma: no cover
+    except Exception:
+        pass
     return False
 
 
@@ -532,7 +532,7 @@ def cmd_version():
         else:
             print(f"\n  {GREEN}{B}✔  This is the latest version{R}")
     else:
-        print(f"  {B}Latest   :{R} {YELLOW}(could not fetch — check internet){R}")
+        print(f"  {B}Latest   :{R} {YELLOW}(Could not fetch — check internet){R}")
         if local_ver:
             print(f"\n  {DIM}Cannot determine if update is available{R}")
 
