@@ -244,6 +244,33 @@ def load_all_packages(packages_dir: Path) -> list:
     return pkgs
 
 
+def package_exists(packages_dir: Path, name: str) -> bool:
+    """Cek apakah package ada di remote index atau di lokal packages dir."""
+    entries = fetch_index()
+    if any(p.get("package") == name for p in entries):
+        return True
+    return (packages_dir / name / "build.sh").exists()
+
+
+def ensure_package_files(packages_dir: Path, name: str) -> bool:
+    """Pastikan build.sh ada lokal. Kalau tidak ada, download dari GitHub."""
+    build_sh = packages_dir / name / "build.sh"
+    if build_sh.exists():
+        return True
+
+    url = f"https://raw.githubusercontent.com/{GITHUB_REPO}/master/packages/{name}/build.sh"
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "termux-app-store-cli"})
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            content = resp.read()
+        build_sh.parent.mkdir(parents=True, exist_ok=True)
+        build_sh.write_bytes(content)
+        return True
+    except Exception as e:
+        print(f"{RED}[!] Failed to download build.sh for '{name}': {e}{R}")
+        return False
+
+
 def get_installed_version(name: str):
     try:
         out = subprocess.check_output(
@@ -346,12 +373,12 @@ def cmd_list(packages_dir: Path):
 
 
 def cmd_show(packages_dir: Path, name: str):
-    pkg_dir = packages_dir / name
-    if not (pkg_dir / "build.sh").exists():
+    if not package_exists(packages_dir, name):
         print(f"{RED}[!] Package '{name}' not found.{R}")
         print(f"    Run {CYAN}termux-app-store list{R} to see available packages.")
         sys.exit(1)
 
+    pkg_dir = packages_dir / name
     p = load_package(pkg_dir)
     _, label = get_status(p["name"], p["version"])
 
@@ -372,12 +399,12 @@ def cmd_show(packages_dir: Path, name: str):
 
 
 def cmd_install(app_root: Path, packages_dir: Path, name: str, silent: bool = False) -> bool:
-    pkg_dir = packages_dir / name
-    if not (pkg_dir / "build.sh").exists():
+    if not package_exists(packages_dir, name):
         print(f"{RED}[!] Package '{name}' not found.{R}")
         print(f"    Run {CYAN}termux-app-store list{R} to see available packages.")
         sys.exit(1)
 
+    pkg_dir = packages_dir / name
     p = load_package(pkg_dir)
     status, _ = get_status(name, p["version"])
 
@@ -386,6 +413,10 @@ def cmd_install(app_root: Path, packages_dir: Path, name: str, silent: bool = Fa
         return True
 
     print(f"\n{B}[*] Installing {CYAN}{name}{R}{B} v{p['version']}...{R}\n")
+
+    if not ensure_package_files(packages_dir, name):
+        print(f"{RED}[!] Cannot prepare package files for '{name}'.{R}")
+        return False
 
     proc = subprocess.Popen(
         ["bash", "build-package.sh", name],
@@ -498,10 +529,10 @@ def cmd_upgrade(app_root: Path, packages_dir: Path, target=None):
     pkgs = load_all_packages(packages_dir)
 
     if target:
-        pkg_dir = packages_dir / target
-        if not (pkg_dir / "build.sh").exists():
+        if not package_exists(packages_dir, target):
             print(f"{RED}[!] Package '{target}' not found.{R}")
             sys.exit(1)
+        pkg_dir = packages_dir / target
         p = load_package(pkg_dir)
         status, _ = get_status(target, p["version"])
         if status == "NOT INSTALLED":
@@ -600,7 +631,6 @@ def cmd_version():
         print(f"  {B}Latest   :{R} {YELLOW}(Could not fetch — check internet){R}")
         if local_ver:
             print(f"\n  {DIM}Cannot determine if update is available{R}")
-
     print()
 
 
