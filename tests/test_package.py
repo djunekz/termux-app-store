@@ -526,7 +526,6 @@ class TestAppUpdateChecker:
 
 
     def test_upgrade_app_success(self, tmp_path):
-        temp_file = tmp_path / "termux-app-store-new"
         with patch("package_manager.download_file", side_effect=lambda url, dest, **kw: [dest.parent.mkdir(parents=True, exist_ok=True), dest.write_bytes(b"binary"), True][-1]), \
              patch("package_manager.get_architecture", return_value="aarch64"), \
              patch("shutil.move"), \
