@@ -12,6 +12,8 @@ SYMLINK="$BIN_DIR/$APP_NAME"
 TASCTL_SYMLINK="$BIN_DIR/$CTL_NAME"
 GITHUB_API="https://api.github.com/repos/$REPO/releases/latest"
 TASCTL_RAW="https://raw.githubusercontent.com/$REPO/master/tasctl"
+PACKAGES_RAW_BASE="https://raw.githubusercontent.com/$REPO/master"
+PACKAGES_API_BASE="https://api.github.com/repos/$REPO/contents/packages"
 
 R=$'\033[0m'
 B=$'\033[1m'
@@ -117,6 +119,101 @@ installed_at=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 EOF
 }
 
+
+sync_packages() {
+  # Sync packages/ dir dan tools/index.json dari GitHub ke INSTALL_DIR
+  # Agar TUI & CLI selalu baca package terbaru tanpa perlu reinstall binary
+  local silent="${1:-}"
+
+  [[ "$silent" != "silent" ]] && step "Syncing packages from GitHub..."
+
+  if ! command -v curl >/dev/null 2>&1; then
+    warn "curl not found, cannot sync packages."
+    return 1
+  fi
+
+  local tmp_list
+  tmp_list=$(mktemp)
+
+  # Fetch daftar package dari GitHub API
+  if ! curl -fsSL \
+    -H "Accept: application/vnd.github+json" \
+    "$PACKAGES_API_BASE" -o "$tmp_list" 2>/dev/null; then
+    warn "Cannot reach GitHub API. Skipping package sync."
+    rm -f "$tmp_list"
+    return 1
+  fi
+
+  # Cek apakah response valid JSON array
+  if ! python3 -c "import json,sys; data=json.load(open(sys.argv[1])); assert isinstance(data, list)" "$tmp_list" 2>/dev/null; then
+    warn "Invalid response from GitHub API (rate limit?). Skipping package sync."
+    rm -f "$tmp_list"
+    return 1
+  fi
+
+  local pkg_names
+  pkg_names=$(python3 -c "
+import json, sys
+data = json.load(open(sys.argv[1]))
+names = [item['name'] for item in data if item.get('type') == 'dir']
+print(chr(10).join(names))
+" "$tmp_list" 2>/dev/null)
+  rm -f "$tmp_list"
+
+  if [[ -z "$pkg_names" ]]; then
+    warn "No packages found from GitHub API."
+    return 1
+  fi
+
+  local pkg_dir="$INSTALL_DIR/packages"
+  mkdir -p "$pkg_dir"
+
+  local synced=0 failed=0 skipped=0
+
+  while IFS= read -r pkg_name; do
+    [[ -z "$pkg_name" ]] && continue
+    local target_dir="$pkg_dir/$pkg_name"
+    local build_url="$PACKAGES_RAW_BASE/packages/$pkg_name/build.sh"
+    local tmp_build
+    tmp_build=$(mktemp)
+
+    if curl -fsSL "$build_url" -o "$tmp_build" 2>/dev/null; then
+      mkdir -p "$target_dir"
+      if ! diff -q "$tmp_build" "$target_dir/build.sh" >/dev/null 2>&1; then
+        mv "$tmp_build" "$target_dir/build.sh"
+        [[ "$silent" != "silent" ]] && info "Updated: $pkg_name"
+        synced=$((synced + 1))
+      else
+        rm -f "$tmp_build"
+        skipped=$((skipped + 1))
+      fi
+    else
+      rm -f "$tmp_build"
+      warn "Failed to fetch: $pkg_name/build.sh"
+      failed=$((failed + 1))
+    fi
+  done <<< "$pkg_names"
+
+  # Sync tools/index.json agar CLI/TUI baca metadata terbaru
+  local index_url="$PACKAGES_RAW_BASE/tools/index.json"
+  mkdir -p "$INSTALL_DIR/tools"
+  if curl -fsSL "$index_url" -o "$INSTALL_DIR/tools/index.json.tmp" 2>/dev/null; then
+    mv "$INSTALL_DIR/tools/index.json.tmp" "$INSTALL_DIR/tools/index.json"
+    [[ "$silent" != "silent" ]] && info "Updated: tools/index.json"
+  else
+    rm -f "$INSTALL_DIR/tools/index.json.tmp"
+    warn "Failed to fetch tools/index.json"
+  fi
+
+  if [[ "$silent" != "silent" ]]; then
+    printf "\n"
+    ok "Sync done: ${synced} updated, ${skipped} unchanged"
+    [[ "$failed" -gt 0 ]] && warn "$failed package(s) failed to sync."
+    printf "\n"
+  else
+    [[ "$synced" -gt 0 ]] && ok "Packages synced: $synced updated, $skipped unchanged"
+  fi
+}
 install_app() {
   local mode="${1:-install}"
   local tag bin_name url
@@ -149,6 +246,10 @@ install_app() {
 
   local ver="${tag#v}"
   write_sentinel "$ver" "binary"
+
+  # Selalu sync packages setelah install/update agar TUI/CLI baca tools terbaru
+  step "Syncing packages directory..."
+  sync_packages "silent"
 
   printf "\n%s  ✔ %s %s %sed successfully!%s\n" "$GREEN$B" "$APP_NAME" "$tag" "$mode" "$R"
   info "Run with: ${CYAN}$APP_NAME${R}"
@@ -319,7 +420,8 @@ usage() {
   printf "  %s%s%s %s<command>%s\n\n" "$CYAN" "$CTL_NAME" "$R" "$B" "$R"
 
   printf "%sCOMMANDS%s\n" "$CYAN$B" "$R"
-  printf "  %sinstall%s      Install Termux App Store (latest)\n" "$GREEN$B" "$R"
+  printf "  %sinstall%s        Install Termux App Store (latest)\n" "$GREEN$B" "$R"
+  printf "  %ssync-packages%s  Sync packages from GitHub (new tools/updates)\n" "$GREEN$B" "$R"
   printf "  %supdate%s       Update to latest version\n" "$GREEN$B" "$R"
   printf "  %suninstall%s    Remove Termux App Store\n" "$GREEN$B" "$R"
   printf "  %sdoctor%s       Diagnose environment\n" "$GREEN$B" "$R"
@@ -352,6 +454,16 @@ case "$cmd" in
     ;;
   doctor)
     cmd_doctor
+    ;;
+  sync-packages|sync_packages|sync)
+    banner
+    header "Sync Packages"
+    sync_packages
+    ;;
+  sync-packages|sync_packages|sync)
+    banner
+    header "Sync Packages"
+    sync_packages
     ;;
   self-update|selfupdate)
     cmd_self_update

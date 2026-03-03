@@ -3,61 +3,30 @@ set -Eeuo pipefail
 
 APP_NAME="termux-app-store"
 REPO="djunekz/termux-app-store"
+VERSION="latest"
 INSTALL_DIR="$PREFIX/lib/.tas"
 BIN_DIR="$PREFIX/bin"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-GITHUB_API="https://api.github.com/repos/$REPO/releases/latest"
 
-R=$'\033[0m'
-B=$'\033[1m'
-DIM=$'\033[2m'
-RED=$'\033[31m'
-GREEN=$'\033[32m'
-YELLOW=$'\033[33m'
-CYAN=$'\033[36m'
+R='\033[0m'
+B='\033[1m'
+RED='\033[31m'
+GREEN='\033[32m'
+YELLOW='\033[33m'
+CYAN='\033[36m'
+DIM='\033[2m'
 
-die()  { printf "\n %s[✗]%s %s\n" "$RED$B" "$R" "$*" >&2; exit 1; }
-info() { printf " %s[*]%s %s\n" "$CYAN$B" "$R" "$*"; }
-ok()   { printf " %s[✓]%s %s\n" "$GREEN$B" "$R" "$*"; }
-warn() { printf " %s[!]%s %s\n" "$YELLOW$B" "$R" "$*"; }
+die()  { echo -e "${RED}[✗] $*${R}" >&2; exit 1; }
+info() { echo -e "${CYAN}[*] $*${R}"; }
+ok()   { echo -e "${GREEN}[✓] $*${R}"; }
+warn() { echo -e "${YELLOW}[!] $*${R}"; }
 
-fetch_latest_version() {
-  curl -fsSL \
-    -H "Accept: application/vnd.github+json" \
-    "$GITHUB_API" 2>/dev/null \
-    | grep '"tag_name"' \
-    | head -1 \
-    | sed 's/.*"tag_name": *"\([^"]*\)".*/\1/' \
-    | sed 's/^v//'
+strip_ansi() {
+  echo "$1" | sed 's/\x1b\[[0-9;]*[mGKHf]//g'
 }
 
-detect_version() {
-  local ver=""
-
-  if [[ -f "$INSTALL_DIR/.installed" ]]; then
-    ver=$(grep '^version=' "$INSTALL_DIR/.installed" 2>/dev/null | cut -d= -f2 || true)
-  fi
-
-  if [[ -z "$ver" ]]; then
-    for f in \
-      "$INSTALL_DIR/termux_app_store/main.py" \
-      "$INSTALL_DIR/termux_app_store/termux_app_store_cli.py" \
-      "$SCRIPT_DIR/termux_app_store/main.py" \
-      "$SCRIPT_DIR/termux_app_store/termux_app_store_cli.py"; do
-      if [[ -f "$f" ]]; then
-        ver=$(grep -oP 'APP_VERSION\s*=\s*"\K[0-9.]+' "$f" 2>/dev/null | head -1 || true)
-        [[ -n "$ver" ]] && break
-      fi
-    done
-  fi
-
-  if [[ -z "$ver" ]]; then
-    ver=$(fetch_latest_version 2>/dev/null || true)
-  fi
-
-  echo "${ver:-unknown}"
-}
-
+export TERMUX_APP_STORE_MODE=local
+export TERMUX_APP_STORE_HOME=$(pwd)
 check_termux() {
   command -v pkg >/dev/null 2>&1 || die "This installer must be run inside Termux"
   ok "Running in Termux environment"
@@ -87,8 +56,8 @@ detect_arch() {
 }
 
 detect_mode() {
-  if [[ -f "$SCRIPT_DIR/termux_app_store/termux_app_store_cli.py" ]] && \
-     [[ -f "$SCRIPT_DIR/termux_app_store/main.py" ]] && \
+  if [[ -f "$SCRIPT_DIR/termux_app_store_cli.py" ]] && \
+     [[ -f "$SCRIPT_DIR/termux_app_store.py" ]]    && \
      [[ -f "$SCRIPT_DIR/tools/package_manager.py" ]]; then
     INSTALL_MODE="source"
     ok "Installation mode: ${B}Source${R}"
@@ -98,14 +67,46 @@ detect_mode() {
   fi
 }
 
+detect_version() {
+  local ver=""
+
+  for f in "$INSTALL_DIR/termux_app_store_cli.py" "$INSTALL_DIR/termux_app_store.py" \
+           "$SCRIPT_DIR/termux_app_store_cli.py" "$SCRIPT_DIR/termux_app_store.py"; do
+    if [[ -f "$f" ]]; then
+      ver=$(grep -oP 'APP_VERSION\s*=\s*"\K[0-9.]+' "$f" 2>/dev/null | head -1 || echo "")
+
+      if [[ -z "$ver" ]]; then
+        ver=$(awk -F'"' '/APP_VERSION.*=/{print $2; exit}' "$f" 2>/dev/null || echo "")
+      fi
+
+      if [[ -z "$ver" ]]; then
+        ver=$(sed -n 's/.*APP_VERSION.*=.*"\([0-9.]*\)".*/\1/p' "$f" 2>/dev/null | head -1 || echo "")
+      fi
+
+      if [[ -n "$ver" ]] && [[ "$ver" != "unknown" ]]; then
+        break
+      fi
+    fi
+  done
+
+  if [[ -z "$ver" ]] || [[ "$ver" == "unknown" ]]; then
+    ver="0.1.4"
+  fi
+
+  echo "$ver"
+}
+
 check_existing() {
-  [[ -f "$BIN_DIR/$APP_NAME" ]] || [[ -d "$INSTALL_DIR" ]] || return 0
+  [[ -f "$BIN_DIR/$APP_NAME" ]] || return 0
 
   warn "Existing installation found"
+
   local current
   current=$(detect_version)
-  printf "  Current version : %sv%s%s\n" "$B" "$current" "$R"
-  printf "  Overwrite? [Y/n]: "
+
+  echo -e "  Current version : ${B}v$current${R}"
+
+  echo -n "  Overwrite? [Y/n]: "
   read -r resp
   case "$resp" in
     [nN]|[nN][oO]) die "Installation cancelled" ;;
@@ -114,8 +115,8 @@ check_existing() {
 
 cleanup() {
   info "Cleaning up old installation..."
-  rm -rf "$INSTALL_DIR"
-  rm -f  "$BIN_DIR/$APP_NAME"
+  rm -rf  "$INSTALL_DIR"
+  rm -f   "$BIN_DIR/$APP_NAME"
 }
 
 install_source() {
@@ -132,16 +133,13 @@ install_source() {
   ok "Textual: v$(python3 -c "import textual; print(textual.__version__)" 2>/dev/null)"
 
   info "Copying files to $INSTALL_DIR ..."
-  mkdir -p "$INSTALL_DIR/termux_app_store"
-  cp -r "$SCRIPT_DIR/termux_app_store/"* "$INSTALL_DIR/termux_app_store/"
-
-  if [[ -d "$SCRIPT_DIR/tools" ]]; then
-    cp -r "$SCRIPT_DIR/tools" "$INSTALL_DIR/"
-  fi
+  mkdir -p "$INSTALL_DIR"
+  cp "$SCRIPT_DIR/termux_app_store_cli.py"  "$INSTALL_DIR/"
+  cp "$SCRIPT_DIR/termux_app_store.py"       "$INSTALL_DIR/"
 
   if [[ -d "$SCRIPT_DIR/packages" ]]; then
     cp -r "$SCRIPT_DIR/packages" "$INSTALL_DIR/"
-    ok "Packages directory copied"
+    ok "Packages directory copied (local build mode enabled)"
   fi
 
   if [[ -f "$SCRIPT_DIR/build-package.sh" ]]; then
@@ -151,87 +149,68 @@ install_source() {
   ok "Files copied"
 }
 
-_fallback_source() {
-  if [[ ! -f "$SCRIPT_DIR/termux_app_store/termux_app_store_cli.py" ]]; then
-    install_dep "git"
-    local tmp_repo
-    tmp_repo=$(mktemp -d)
-    info "Cloning repository for source install..."
-    git clone --depth=1 "https://github.com/$REPO.git" "$tmp_repo" || \
-      die "Failed to clone repository"
-    SCRIPT_DIR="$tmp_repo"
-  fi
-  install_source
-}
-
 install_binary() {
   install_dep "curl"
   install_dep "file"
 
-  local bin_name="termux-app-store-${BIN_ARCH}"
-  local tag
-  info "Fetching latest release info..."
-  tag=$(fetch_latest_version)
-  [[ -n "$tag" ]] || die "Cannot fetch release info. Check your internet connection."
-
-  local url="https://github.com/$REPO/releases/download/v${tag}/$bin_name"
-  local target="$INSTALL_DIR/$bin_name.bin"
-
   mkdir -p "$INSTALL_DIR"
-  info "Downloading ${B}$bin_name v${tag}${R}..."
 
-  curl -fL --progress-bar --retry 3 --retry-delay 2 "$url" -o "$target" 2>&1
-  local curl_exit=$?
+  local bin_name="termux-app-store-${BIN_ARCH}"
+  local url="https://github.com/$REPO/releases/$VERSION/download/$bin_name"
+  local target="$INSTALL_DIR/$APP_NAME.bin"
 
-  if [[ $curl_exit -ne 0 ]]; then
+  info "Downloading ${B}$bin_name${R}..."
+
+  curl -fL --progress-bar --retry 3 --retry-delay 2 "$url" -o "$target" 2>&1 || {
     warn "Binary download failed, falling back to source install"
-    rm -f "$target"
     INSTALL_MODE="source"
-    _fallback_source
+    install_source
     return
-  fi
+  }
 
-  if ! file "$target" 2>/dev/null | grep -q ELF; then
-    warn "Downloaded file is not a valid ELF binary, falling back to source install"
-    rm -f "$target"
-    INSTALL_MODE="source"
-    _fallback_source
-    return
-  fi
+  file "$target" | grep -q ELF || die "Downloaded file is not a valid ELF binary"
 
   chmod +x "$target"
-  ln -sf "$target" "$INSTALL_DIR/$APP_NAME"
   ok "Binary downloaded and validated"
 }
 
-write_sentinel() {
-  cat > "$INSTALL_DIR/.installed" << EOF
-version=$1
-mode=$INSTALL_MODE
-installed_at=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-EOF
-  ok "Saved install info: $INSTALL_DIR/.installed"
-}
 
 create_wrapper() {
   info "Creating wrapper script..."
 
+  if [[ "$INSTALL_MODE" == "source" ]]; then
+    CLI_SCRIPT="$INSTALL_DIR/termux_app_store_cli.py"
+    TUI_SCRIPT="$INSTALL_DIR/termux_app_store.py"
+  else
+    CLI_SCRIPT="$INSTALL_DIR/$APP_NAME.bin"
+    TUI_SCRIPT="$INSTALL_DIR/$APP_NAME.bin"
+  fi
+
   local ver
   ver=$(detect_version)
 
-  {
-    printf '#!/data/data/com.termux/files/usr/bin/bash\n'
-    printf '# termux-app-store — auto-generated wrapper\n'
-    printf '# DO NOT EDIT — regenerated by install.sh\n'
-    printf 'export TERMUX_APP_STORE_VERSION="%s"\n' "$ver"
-    printf 'export TERMUX_APP_STORE_HOME="%s"\n' "$INSTALL_DIR"
-    printf '\n'
-    if [[ "$INSTALL_MODE" == "source" ]]; then
-      printf 'exec python3 "%s/termux_app_store/main.py" "$@"\n' "$INSTALL_DIR"
-    else
-      printf 'exec "%s/%s" "$@"\n' "$INSTALL_DIR" "$APP_NAME"
-    fi
-  } > "$BIN_DIR/$APP_NAME"
+  cat > "$BIN_DIR/$APP_NAME" << 'EOF'
+#!/data/data/com.termux/files/usr/bin/bash
+# termux-app-store — auto-generated wrapper
+# DO NOT EDIT — regenerated by install.sh
+
+EOF
+
+  echo "export TERMUX_APP_STORE_VERSION=\"$ver\"" >> "$BIN_DIR/$APP_NAME"
+  echo "export TERMUX_APP_STORE_HOME=\"$INSTALL_DIR\"" >> "$BIN_DIR/$APP_NAME"
+  echo "" >> "$BIN_DIR/$APP_NAME"
+
+  if [[ "$INSTALL_MODE" == "source" ]]; then
+    cat >> "$BIN_DIR/$APP_NAME" << EOF
+if [ \$# -eq 0 ]; then
+    exec python3 "$TUI_SCRIPT"
+else
+    exec python3 "$CLI_SCRIPT" "\$@"
+fi
+EOF
+  else
+    echo "exec \"$CLI_SCRIPT\" \"\$@\"" >> "$BIN_DIR/$APP_NAME"
+  fi
 
   chmod +x "$BIN_DIR/$APP_NAME"
   ok "Wrapper created: $BIN_DIR/$APP_NAME"
@@ -241,31 +220,40 @@ show_done() {
   local ver
   ver=$(detect_version)
 
-  printf "\n%s╔══════════════════════════════════════════╗%s\n" "$GREEN$B" "$R"
-  printf   "%s║   Installation Completed Successfully!   ║%s\n" "$GREEN$B" "$R"
-  printf   "%s╚══════════════════════════════════════════╝%s\n" "$GREEN$B" "$R"
-  printf "\n%sDetails:%s\n" "$CYAN$B" "$R"
-  printf "  Version   : %sv%s%s\n" "$B" "$ver" "$R"
-  printf "  Mode      : %s%s%s\n" "$B" "$INSTALL_MODE" "$R"
-  printf "  Installed : %s%s/%s%s\n" "$DIM" "$BIN_DIR" "$APP_NAME" "$R"
-  printf "\n%sManage with tasctl:%s\n" "$CYAN$B" "$R"
-  printf "  ./tasctl update    %s→ Update to latest%s\n" "$DIM" "$R"
-  printf "  ./tasctl uninstall %s→ Remove%s\n" "$DIM" "$R"
-  printf "  ./tasctl doctor    %s→ Diagnose environment%s\n\n" "$DIM" "$R"
+  echo ""
+  echo -e "${GREEN}${B}╔══════════════════════════════════════════╗${R}"
+  echo -e "${GREEN}${B}║   Installation Completed Successfully!   ║${R}"
+  echo -e "${GREEN}${B}╚══════════════════════════════════════════╝${R}"
+  echo ""
+  echo -e "${CYAN}Details:${R}"
+  echo -e "  Version   : ${B}v${ver}${R}"
+  echo -e "  Mode      : ${B}${INSTALL_MODE}${R}"
+  echo -e "  Installed : ${DIM}$BIN_DIR/$APP_NAME${R}"
+  echo ""
+  echo -e "${CYAN}Commands:${R}"
+  echo -e "  ${B}$APP_NAME${R}                ${DIM}→ Open TUI${R}"
+  echo -e "  ${B}$APP_NAME list${R}            ${DIM}→ List packages${R}"
+  echo -e "  ${B}$APP_NAME install <pkg>${R}   ${DIM}→ Install a package${R}"
+  echo -e "  ${B}$APP_NAME update${R}          ${DIM}→ Check for updates${R}"
+  echo -e "  ${B}$APP_NAME upgrade${R}         ${DIM}→ Upgrade all${R}"
+  echo -e "  ${B}$APP_NAME version${R}         ${DIM}→ Show version${R}"
+  echo ""
 }
 
 main() {
-  printf "\n%s╔═════════════════════════════════════════════╗%s\n" "$CYAN$B" "$R"
-  printf   "%s║         Termux App Store Installer          ║%s\n" "$CYAN$B" "$R"
-  printf   "%s║ https://github.com/djunekz/termux-app-store ║%s\n" "$CYAN$B" "$R"
-  printf   "%s║               by @djunekz                   ║%s\n" "$CYAN$B" "$R"
-  printf   "%s╚═════════════════════════════════════════════╝%s\n\n" "$CYAN$B" "$R"
+  echo ""
+  echo -e "${CYAN}${B}╔═════════════════════════════════════════════╗${R}"
+  echo -e "${CYAN}${B}║         Termux App Store Installer          ║${R}"
+  echo -e "${CYAN}${B}║ https://github.com/djunekz/termux-app-store ║${R}"
+  echo -e "${CYAN}${B}║               by @djunekz                   ║${R}"
+  echo -e "${CYAN}${B}╚═════════════════════════════════════════════╝${R}"
+  echo ""
 
   check_termux
   detect_arch
   detect_mode
   check_existing
-  printf "\n"
+  echo ""
   cleanup
 
   if [[ "$INSTALL_MODE" == "source" ]]; then
@@ -274,13 +262,10 @@ main() {
     install_binary
   fi
 
-  local ver
-  ver=$(detect_version)
-  write_sentinel "$ver"
   create_wrapper
   show_done
 }
 
-trap 'printf "\n"; die "Installation failed at line $LINENO"' ERR
+trap 'echo ""; die "Installation failed at line $LINENO"' ERR
 
 main "$@"
