@@ -101,6 +101,8 @@ from termux_app_store.termux_app_store import (
     load_cached_root,
     save_cached_root,
     FINGERPRINT_STRING,
+    _fetch_index,
+    ensure_package_files,
 )
 
 
@@ -694,3 +696,139 @@ class TestMethodsExist:
 
     def test_compose_exists(self):
         assert hasattr(tui_module.TermuxAppStore, "compose")
+
+
+class TestFetchIndex:
+
+    def _mock_urlopen(self, payload: dict):
+        raw = json.dumps(payload).encode()
+        resp = MagicMock()
+        resp.read.return_value = raw
+        resp.__enter__ = lambda s: s
+        resp.__exit__ = MagicMock(return_value=False)
+        return resp
+
+    def test_network_success_returns_packages(self, tmp_path):
+        payload = {"packages": [{"package": "bower", "version": "1.8.12"}]}
+        resp = self._mock_urlopen(payload)
+        cache = tmp_path / "index.json"
+        with patch("urllib.request.urlopen", return_value=resp), \
+             patch.object(tui_module, "INDEX_CACHE", cache):
+            result = _fetch_index()
+        assert len(result) == 1
+        assert result[0]["package"] == "bower"
+        assert cache.exists()
+
+    def test_network_success_missing_packages_key(self, tmp_path):
+        resp = self._mock_urlopen({"other": "data"})
+        cache = tmp_path / "index.json"
+        with patch("urllib.request.urlopen", return_value=resp), \
+             patch.object(tui_module, "INDEX_CACHE", cache):
+            result = _fetch_index()
+        assert result == []
+
+    def test_network_fails_falls_back_to_cache(self, tmp_path):
+        cache = tmp_path / "index.json"
+        cache_data = {"packages": [{"package": "pnpm", "version": "10.0"}]}
+        cache.write_text(json.dumps(cache_data))
+        with patch("urllib.request.urlopen", side_effect=Exception("no net")), \
+             patch.object(tui_module, "INDEX_CACHE", cache):
+            result = _fetch_index()
+        assert result[0]["package"] == "pnpm"
+
+    def test_network_fails_no_cache_returns_empty(self, tmp_path):
+        cache = tmp_path / "missing.json"   # does not exist
+        with patch("urllib.request.urlopen", side_effect=Exception("no net")), \
+             patch.object(tui_module, "INDEX_CACHE", cache):
+            result = _fetch_index()
+        assert result == []
+
+    def test_network_fails_corrupt_cache_returns_empty(self, tmp_path):
+        cache = tmp_path / "index.json"
+        cache.write_text("{ broken {{")
+        with patch("urllib.request.urlopen", side_effect=Exception("no net")), \
+             patch.object(tui_module, "INDEX_CACHE", cache):
+            result = _fetch_index()
+        assert result == []
+
+
+class TestEnsurePackageFiles:
+
+    def test_build_sh_already_exists_returns_true(self, tmp_path):
+        pkg_dir = tmp_path / "bower"
+        pkg_dir.mkdir()
+        (pkg_dir / "build.sh").write_text("# existing")
+        with patch("urllib.request.urlopen") as mock_urlopen, \
+             patch.object(tui_module, "PACKAGES_DIR", tmp_path):
+            result = ensure_package_files("bower")
+        assert result is True
+        mock_urlopen.assert_not_called()
+
+    def test_download_success_creates_file(self, tmp_path):
+        raw = b"TERMUX_PKG_VERSION=1.0\n"
+        resp = MagicMock()
+        resp.read.return_value = raw
+        resp.__enter__ = lambda s: s
+        resp.__exit__ = MagicMock(return_value=False)
+        with patch("urllib.request.urlopen", return_value=resp), \
+             patch.object(tui_module, "PACKAGES_DIR", tmp_path):
+            result = ensure_package_files("bower")
+        assert result is True
+        assert (tmp_path / "bower" / "build.sh").read_bytes() == raw
+
+    def test_download_exception_returns_false(self, tmp_path):
+        with patch("urllib.request.urlopen", side_effect=Exception("timeout")), \
+             patch.object(tui_module, "PACKAGES_DIR", tmp_path):
+            result = ensure_package_files("bower")
+        assert result is False
+
+
+class TestRunBuildSyncEnsureFailure:
+
+    def test_popen_not_called_on_ensure_failure(self, tmp_path):
+        app = _make_app(tmp_path)
+        app.call_from_thread = lambda fn, *a, **kw: fn() if callable(fn) else None
+        with patch.object(tui_module, "ensure_package_files", return_value=False), \
+             patch("subprocess.Popen") as mock_popen, \
+             patch.object(tui_module, "ROOT_DIR", tmp_path):
+            app.run_build_sync("bower")
+        mock_popen.assert_not_called()
+        assert app.installing is False
+
+    def test_buttons_re_enabled_on_ensure_failure(self, tmp_path):
+        app = _make_app(tmp_path)
+        app.call_from_thread = lambda fn, *a, **kw: fn() if callable(fn) else None
+        with patch.object(tui_module, "ensure_package_files", return_value=False), \
+             patch("subprocess.Popen"), \
+             patch.object(tui_module, "ROOT_DIR", tmp_path):
+            app.run_build_sync("bower")
+        assert app.install_btn.disabled is False
+        assert app.uninstall_btn.disabled is False
+
+    def test_failure_message_logged(self, tmp_path):
+        app = _make_app(tmp_path)
+        app.call_from_thread = lambda fn, *a, **kw: fn() if callable(fn) else None
+        with patch.object(tui_module, "ensure_package_files", return_value=False), \
+             patch("subprocess.Popen"), \
+             patch.object(tui_module, "ROOT_DIR", tmp_path):
+            app.run_build_sync("bower")
+        assert any("Failed to download" in line for line in app.log_buffer)
+
+
+class TestTextualAvailableFlag:
+
+    def test_textual_available_is_bool(self):
+        assert isinstance(tui_module._TEXTUAL_AVAILABLE, bool)
+
+    def test_confirm_uninstall_instantiable(self):
+        obj = tui_module.ConfirmUninstall.__new__(tui_module.ConfirmUninstall)
+        obj.package_name = "test-pkg"
+        assert obj.package_name == "test-pkg"
+
+    def test_modal_screen_attribute_exists(self):
+        assert hasattr(tui_module, "_ModalScreen")
+
+    def test_textual_stubs_assigned_when_unavailable(self):
+        if tui_module._TEXTUAL_AVAILABLE:
+            pytest.skip("textual is installed; stub branch not active")
+        assert tui_module.App is object
