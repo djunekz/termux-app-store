@@ -22,34 +22,73 @@ jobs:
 
     steps:
       - name: Debug - Show PR info
+        env:
+          # FIX (Critical): semua github context dioper lewat env var,
+          # bukan langsung di-interpolasi ke dalam shell run: block.
+          # Ini mencegah code injection via branch name atau field lain
+          # yang bisa dikontrol attacker.
+          PR_EVENT_NAME: ${{ github.event_name }}
+          PR_ACTION: ${{ github.event.action }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_STATE: ${{ github.event.pull_request.state }}
+          PR_MERGED: ${{ github.event.pull_request.merged }}
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_MERGE_COMMIT_SHA: ${{ github.event.pull_request.merge_commit_sha }}
+          PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
+          PR_BASE_REF: ${{ github.event.pull_request.base.ref }}
         run: |
-          echo "Event: ${{ github.event_name }}"
-          echo "Action: ${{ github.event.action }}"
-          echo "PR Number: ${{ github.event.pull_request.number }}"
-          echo "PR State: ${{ github.event.pull_request.state }}"
-          echo "PR Merged: ${{ github.event.pull_request.merged }}"
-          echo "Base SHA: ${{ github.event.pull_request.base.sha }}"
-          echo "Head SHA: ${{ github.event.pull_request.head.sha }}"
-          echo "Merge Commit SHA: ${{ github.event.pull_request.merge_commit_sha }}"
-          echo "Head Ref: ${{ github.event.pull_request.head.ref }}"
-          echo "Base Ref: ${{ github.event.pull_request.base.ref }}"
+          echo "Event: $PR_EVENT_NAME"
+          echo "Action: $PR_ACTION"
+          echo "PR Number: $PR_NUMBER"
+          echo "PR State: $PR_STATE"
+          echo "PR Merged: $PR_MERGED"
+          echo "Base SHA: $PR_BASE_SHA"
+          echo "Head SHA: $PR_HEAD_SHA"
+          echo "Merge Commit SHA: $PR_MERGE_COMMIT_SHA"
+          echo "Head Ref: $PR_HEAD_REF"
+          echo "Base Ref: $PR_BASE_REF"
 
-      - name: Checkout repository
-        uses: actions/checkout@v6
+      # FIX (High): gunakan base ref (trusted) bukan head.sha dari fork.
+      # Kode PR yang tidak dipercaya TIDAK di-checkout di sini.
+      # File packages/*/build.sh dari PR di-fetch secara eksplisit
+      # menggunakan git fetch dengan ref yang aman di langkah berikutnya.
+      - name: Checkout base repository (trusted)
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
-          ref: ${{ github.event.pull_request.merged && github.event.pull_request.merge_commit_sha || github.event.pull_request.head.sha }}
+          ref: ${{ github.event.pull_request.base.sha }}
           fetch-depth: 0
+
+      # FIX (High): fetch perubahan dari PR secara terbatas —
+      # hanya ambil diff file build.sh tanpa menjalankan kode dari fork.
+      - name: Fetch PR head for diff only
+        env:
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          git fetch origin "$PR_HEAD_SHA" --depth=1
+          # Hanya tampilkan nama file yang berubah, tidak checkout kode PR
+          git diff --name-only "$PR_BASE_SHA" "$PR_HEAD_SHA" \
+            | grep 'packages/.*/build.sh' > /tmp/changed_files.txt || true
+          echo "Changed files:"
+          cat /tmp/changed_files.txt
+
+          # Checkout hanya file build.sh yang berubah dari PR head
+          while IFS= read -r file; do
+            [ -z "$file" ] && continue
+            mkdir -p "$(dirname "$file")"
+            git show "$PR_HEAD_SHA:$file" > "$file" 2>/dev/null && \
+              echo "  fetched: $file" || \
+              echo "  not found in PR head: $file"
+          done < /tmp/changed_files.txt
 
       - name: Find changed build.sh files
         id: files
-        shell: bash
+        env:
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: |
-          BASE_SHA="${{ github.event.pull_request.base.sha }}"
-          HEAD_SHA="${{ github.event.pull_request.head.sha }}"
-
-          echo "Comparing: $BASE_SHA...$HEAD_SHA"
-
-          FILES=$(git diff --name-only "$BASE_SHA" "$HEAD_SHA" | grep 'packages/.*/build.sh' || true)
+          FILES=$(cat /tmp/changed_files.txt)
 
           {
             echo "changed_files<<EOF"
@@ -63,7 +102,7 @@ jobs:
 
           if [ -n "$FILES" ]; then
             echo "Verifying file existence:"
-            while read -r file; do
+            while IFS= read -r file; do
               [ -z "$file" ] && continue
               if [ -f "$file" ]; then
                 echo "  ✅ $file exists"
@@ -75,12 +114,11 @@ jobs:
 
       - name: Lint build.sh (bash syntax check)
         id: lint
-        shell: bash
         run: |
           ERROR=0
           LINT_DETAILS=""
 
-          while read -r file; do
+          while IFS= read -r file; do
             [ -z "$file" ] && continue
 
             echo "🧹 Checking syntax: $file"
@@ -104,7 +142,7 @@ jobs:
             else
               echo "✅ Syntax OK: $file"
             fi
-          done <<< "${{ steps.files.outputs.changed_files }}"
+          done < /tmp/changed_files.txt
 
           {
             echo "lint_status=$ERROR"
@@ -115,14 +153,13 @@ jobs:
 
       - name: Validate TERMUX_PKG_* variables
         id: validate
-        shell: bash
         run: |
           set +e
           VALIDATION_ERROR=0
           VALIDATION_DETAILS=""
           CURL_TIMEOUT=30
 
-          while read -r file; do
+          while IFS= read -r file; do
             [ -z "$file" ] && continue
 
             echo "🔍 Validating content: $file"
@@ -248,14 +285,14 @@ jobs:
               VALIDATION_DETAILS="${VALIDATION_DETAILS}  - HTTP Status: \`$HTTP_CODE\`\n"
             fi
 
-            [ -z "$LICENSE" ] && VALIDATION_DETAILS="${VALIDATION_DETAILS}- ⚠️  TERMUX_PKG_LICENSE not defined (recommended)\n"
-            [ -z "$HOMEPAGE" ] && VALIDATION_DETAILS="${VALIDATION_DETAILS}- ⚠️  TERMUX_PKG_HOMEPAGE not defined (recommended)\n"
+            [ -z "$LICENSE" ]     && VALIDATION_DETAILS="${VALIDATION_DETAILS}- ⚠️  TERMUX_PKG_LICENSE not defined (recommended)\n"
+            [ -z "$HOMEPAGE" ]    && VALIDATION_DETAILS="${VALIDATION_DETAILS}- ⚠️  TERMUX_PKG_HOMEPAGE not defined (recommended)\n"
             [ -z "$DESCRIPTION" ] && VALIDATION_DETAILS="${VALIDATION_DETAILS}- ⚠️  TERMUX_PKG_DESCRIPTION not defined (recommended)\n"
-            [ -z "$MAINTAINER" ] && VALIDATION_DETAILS="${VALIDATION_DETAILS}- ⚠️  TERMUX_PKG_MAINTAINER not defined (recommended)\n"
+            [ -z "$MAINTAINER" ]  && VALIDATION_DETAILS="${VALIDATION_DETAILS}- ⚠️  TERMUX_PKG_MAINTAINER not defined (recommended)\n"
 
             VALIDATION_DETAILS="${VALIDATION_DETAILS}\n---\n\n"
 
-          done <<< "${{ steps.files.outputs.changed_files }}"
+          done < /tmp/changed_files.txt
 
           {
             echo "validation_status=$VALIDATION_ERROR"
@@ -269,7 +306,6 @@ jobs:
 
       - name: Determine overall status
         id: status
-        shell: bash
         run: |
           LINT_STATUS="${{ steps.lint.outputs.lint_status }}"
           VALIDATION_STATUS="${{ steps.validate.outputs.validation_status }}"
@@ -285,28 +321,28 @@ jobs:
 
       - name: Remove old labels
         continue-on-error: true
-        uses: actions-ecosystem/action-remove-labels@v1
+        uses: actions-ecosystem/action-remove-labels@2ce5d41b4b6aa8503e285553f75ed56e0a40bae0 # v1.3.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           labels: checker-approved, checker-failed
 
-      - name: Add review-approved label (auto-triggers pr-checker.yml)
+      - name: Add review-approved label
         if: steps.status.outputs.overall_status == '0'
-        uses: actions-ecosystem/action-add-labels@v1
+        uses: actions-ecosystem/action-add-labels@18f1af5e3544586314bbe15c0273249c770b2daf # v1.1.3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           labels: checker-approved, needs-review
 
       - name: Add review-failed label
         if: steps.status.outputs.overall_status == '1'
-        uses: actions-ecosystem/action-add-labels@v1
+        uses: actions-ecosystem/action-add-labels@18f1af5e3544586314bbe15c0273249c770b2daf # v1.1.3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           labels: checker-failed
 
       - name: Comment - Validation Failed
         if: steps.status.outputs.overall_status == '1'
-        uses: marocchino/sticky-pull-request-comment@v2
+        uses: marocchino/sticky-pull-request-comment@331f8f5b4215f0445d3c07b4967662a32a2d3e31 # v2.9.0
         with:
           header: lint-validation
           message: |
@@ -319,12 +355,8 @@ jobs:
             ${{ steps.validate.outputs.validation_details }}
 
             ## 🔧 How to Fix
-
             1. **Check syntax errors** - Ensure all bash syntax is valid
             2. **Verify SRCURL** - Ensure the URL is correct and accessible
-               - Check for typos in the URL
-               - Verify `${TERMUX_PKG_VERSION}` is properly closed
-               - Test the URL manually in your browser
             3. **Update SHA256** - Download the file and compute the correct hash:
                ```bash
                curl -L "YOUR_SRCURL" -o file.tar.gz
@@ -337,24 +369,11 @@ jobs:
                - `TERMUX_PKG_LICENSE` (recommended)
                - `TERMUX_PKG_HOMEPAGE` (recommended)
 
-            ## Example Valid build.sh
-
-            ```bash
-            TERMUX_PKG_NAME="mypackage"
-            TERMUX_PKG_VERSION="1.0.0"
-            TERMUX_PKG_SRCURL=https://github.com/user/repo/archive/refs/tags/v${TERMUX_PKG_VERSION}.tar.gz
-            TERMUX_PKG_SHA256="abc123...def456"  # 64 hex characters
-            TERMUX_PKG_LICENSE="MIT"
-            TERMUX_PKG_HOMEPAGE="https://github.com/user/repo"
-            TERMUX_PKG_DESCRIPTION="A useful tool"
-            TERMUX_PKG_MAINTAINER="Your Name <email@example.com>"
-            ```
-
             Push new commits to automatically re-run validation.
 
       - name: Comment - Validation Passed
         if: steps.status.outputs.overall_status == '0'
-        uses: marocchino/sticky-pull-request-comment@v2
+        uses: marocchino/sticky-pull-request-comment@331f8f5b4215f0445d3c07b4967662a32a2d3e31 # v2.9.0
         with:
           header: lint-validation
           message: |
@@ -368,8 +387,6 @@ jobs:
             - ✅ SHA256 checksum verified successfully
 
             **Label `checker-approved` has been added automatically.**
-
-            This will trigger the package review workflow for detailed inspection.
 
             Thank you for your contribution! 🎉
 
