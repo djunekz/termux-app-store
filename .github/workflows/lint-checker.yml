@@ -54,7 +54,7 @@ jobs:
       # File packages/*/build.sh dari PR di-fetch secara eksplisit
       # menggunakan git fetch dengan ref yang aman di langkah berikutnya.
       - name: Checkout base repository (trusted)
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
         with:
           ref: ${{ github.event.pull_request.base.sha }}
           fetch-depth: 0
