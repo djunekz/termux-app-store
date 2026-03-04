@@ -37,6 +37,8 @@ INDEX_CACHE_FILE = (
     / "index.json"
 )
 
+INDEX_CACHE = INDEX_CACHE_FILE
+
 FINGERPRINT_STRING = "Termux App Store Official"
 GITHUB_REPO        = "djunekz/termux-app-store"
 GITHUB_API_TAG     = f"https://api.github.com/repos/{GITHUB_REPO}/releases/latest"
@@ -159,7 +161,6 @@ def fetch_index() -> list:
         with urllib.request.urlopen(req, timeout=8) as resp:
             data = json.loads(resp.read().decode())
             pkgs = data.get("packages", [])
-
             try:
                 INDEX_CACHE_FILE.parent.mkdir(parents=True, exist_ok=True)
                 INDEX_CACHE_FILE.write_text(json.dumps(data, indent=2))
@@ -167,18 +168,10 @@ def fetch_index() -> list:
                 pass
             return pkgs
     except Exception:
-        try:
-            if INDEX_CACHE_FILE.exists():
-                data = json.loads(INDEX_CACHE_FILE.read_text())
-                return data.get("packages", [])
-        except Exception:
-            pass
         return []
 
 
 fetch_index_from_github = fetch_index
-
-INDEX_CACHE = INDEX_CACHE_FILE
 
 
 def load_index_cache() -> list:
@@ -200,10 +193,10 @@ def load_packages_from_local(packages_dir: Path) -> list:
         if not build.exists():
             continue
         data = {
-            "package": pkg_dir.name,
-            "description": "-",
+            "name": pkg_dir.name,
+            "desc": "-",
             "version": "?",
-            "depends": [],
+            "deps": "-",
             "maintainer": "-",
             "homepage": "-",
             "license": "-",
@@ -211,7 +204,7 @@ def load_packages_from_local(packages_dir: Path) -> list:
         with build.open(errors="ignore") as f:
             for line in f:
                 for key, field in [
-                    ("TERMUX_PKG_DESCRIPTION=", "description"),
+                    ("TERMUX_PKG_DESCRIPTION=", "desc"),
                     ("TERMUX_PKG_VERSION=",     "version"),
                     ("TERMUX_PKG_MAINTAINER=",  "maintainer"),
                     ("TERMUX_PKG_HOMEPAGE=",    "homepage"),
@@ -220,39 +213,92 @@ def load_packages_from_local(packages_dir: Path) -> list:
                     if line.startswith(key):
                         data[field] = line.split("=", 1)[1].strip().strip('"')
                 if line.startswith("TERMUX_PKG_DEPENDS="):
-                    deps_str = line.split("=", 1)[1].strip().strip('"')
-                    data["depends"] = [d.strip() for d in deps_str.split(",") if d.strip()]
+                    data["deps"] = line.split("=", 1)[1].strip().strip('"')
         pkgs.append(data)
     return pkgs
 
 
-def normalize_pkg(raw: dict) -> dict:
-    deps = raw.get("depends", [])
-    if isinstance(deps, str):
-        deps = [d.strip() for d in deps.split(",") if d.strip()]
+def normalize_pkg_from_index(raw: dict) -> dict:
+    deps = raw.get("depends", raw.get("deps", []))
+    if isinstance(deps, list):
+        deps_str = ", ".join(deps) if deps else "-"
+    else:
+        deps_str = deps if deps else "-"
     return {
         "name":       raw.get("package", raw.get("name", "?")),
         "desc":       raw.get("description", raw.get("desc", "-")),
         "version":    raw.get("version", "?"),
-        "deps":       deps,
+        "deps":       deps_str,
         "maintainer": raw.get("maintainer", "-"),
         "homepage":   raw.get("homepage", "-"),
         "license":    raw.get("license", "-"),
     }
 
 
-def get_packages(packages_dir: Path, online: bool = True) -> list:
-    if online:
-        raw = fetch_index_from_github()
-        if raw:
-            return [normalize_pkg(p) for p in raw]
+def load_package(pkg_dir: Path) -> dict:
+    import termux_app_store.termux_app_store_cli as _self
+    index_pkgs = _self.fetch_index()
+    if index_pkgs:
+        match = next(
+            (p for p in index_pkgs if p.get("package", p.get("name", "")) == pkg_dir.name),
+            None,
+        )
+        if match:
+            return normalize_pkg_from_index(match)
 
-    cached = load_index_cache()
-    if cached:
-        return [normalize_pkg(p) for p in cached]
+    build = pkg_dir / "build.sh"
+    if not build.exists():
+        return {
+            "name": pkg_dir.name,
+            "desc": "-",
+            "version": "?",
+            "deps": "-",
+            "maintainer": "-",
+            "homepage": "-",
+            "license": "-",
+        }
+    data = {
+        "name": pkg_dir.name,
+        "desc": "-",
+        "version": "?",
+        "deps": "-",
+        "maintainer": "-",
+        "homepage": "-",
+        "license": "-",
+    }
+    with build.open(errors="ignore") as f:
+        for line in f:
+            for key, field in [
+                ("TERMUX_PKG_DESCRIPTION=", "desc"),
+                ("TERMUX_PKG_VERSION=",     "version"),
+                ("TERMUX_PKG_MAINTAINER=",  "maintainer"),
+                ("TERMUX_PKG_HOMEPAGE=",    "homepage"),
+                ("TERMUX_PKG_LICENSE=",     "license"),
+            ]:
+                if line.startswith(key):
+                    data[field] = line.split("=", 1)[1].strip().strip('"')
+            if line.startswith("TERMUX_PKG_DEPENDS="):
+                data["deps"] = line.split("=", 1)[1].strip().strip('"')
+    return data
 
-    raw = load_packages_from_local(packages_dir)
-    return [normalize_pkg(p) for p in raw]
+
+def load_all_packages(packages_dir: Path) -> list:
+    import termux_app_store.termux_app_store_cli as _self
+    index_pkgs = _self.fetch_index()
+    if index_pkgs:
+        return [normalize_pkg_from_index(p) for p in index_pkgs]
+
+    pkgs = []
+    if not packages_dir.exists():
+        return pkgs
+    for pkg_dir in sorted(packages_dir.iterdir()):
+        if not pkg_dir.is_dir():
+            continue
+        build = pkg_dir / "build.sh"
+        if not build.exists():
+            continue
+        pkgs.append(load_package(pkg_dir))
+    return pkgs
 
 
 def get_installed_version(name: str):
@@ -339,106 +385,9 @@ def cleanup_package_files(name: str) -> int:
     return removed_count
 
 
-def load_package(pkg_dir: Path) -> dict:
-    raw_index = fetch_index()
-    if raw_index:
-        for entry in raw_index:
-            pkg_name = entry.get("package", entry.get("name", ""))
-            if pkg_name == pkg_dir.name:
-                deps = entry.get("depends", [])
-                if isinstance(deps, list):
-                    deps_val = deps[0] if len(deps) == 1 else (", ".join(deps) if deps else "-")
-                else:
-                    deps_val = deps if deps else "-"
-                return {
-                    "name":       pkg_dir.name,
-                    "desc":       entry.get("description", entry.get("desc", "-")),
-                    "version":    entry.get("version", "?"),
-                    "deps":       deps_val,
-                    "maintainer": entry.get("maintainer", "-"),
-                    "homepage":   entry.get("homepage", "-"),
-                    "license":    entry.get("license", "-"),
-                }
-
-    build = pkg_dir / "build.sh"
-    if not build.exists():
-        return {
-            "name":       pkg_dir.name,
-            "desc":       "-",
-            "version":    "?",
-            "deps":       "-",
-            "maintainer": "-",
-            "homepage":   "-",
-            "license":    "-",
-        }
-    data = {
-        "name":       pkg_dir.name,
-        "desc":       "-",
-        "version":    "?",
-        "deps":       "-",
-        "maintainer": "-",
-        "homepage":   "-",
-        "license":    "-",
-    }
-    with build.open(errors="ignore") as f:
-        for line in f:
-            for key, field in [
-                ("TERMUX_PKG_DESCRIPTION=", "desc"),
-                ("TERMUX_PKG_VERSION=",     "version"),
-                ("TERMUX_PKG_MAINTAINER=",  "maintainer"),
-                ("TERMUX_PKG_HOMEPAGE=",    "homepage"),
-                ("TERMUX_PKG_LICENSE=",     "license"),
-            ]:
-                if line.startswith(key):
-                    data[field] = line.split("=", 1)[1].strip().strip('"')
-            if line.startswith("TERMUX_PKG_DEPENDS="):
-                data["deps"] = line.split("=", 1)[1].strip().strip('"')
-    return data
-
-
-def load_all_packages(packages_dir: Path) -> list:
-    raw_index = fetch_index()
-    if raw_index:
-        pkgs = []
-        for entry in raw_index:
-            deps = entry.get("depends", [])
-            if isinstance(deps, list):
-                deps_val = deps[0] if len(deps) == 1 else (", ".join(deps) if deps else "-")
-            else:
-                deps_val = deps if deps else "-"
-            pkgs.append({
-                "name":       entry.get("package", entry.get("name", "?")),
-                "desc":       entry.get("description", entry.get("desc", "-")),
-                "version":    entry.get("version", "?"),
-                "deps":       deps_val,
-                "maintainer": entry.get("maintainer", "-"),
-                "homepage":   entry.get("homepage", "-"),
-                "license":    entry.get("license", "-"),
-            })
-        return pkgs
-
-    pkgs = []
-    if not packages_dir.exists():
-        return pkgs
-    for pkg_dir in sorted(packages_dir.iterdir()):
-        if not pkg_dir.is_dir():
-            continue
-        build = pkg_dir / "build.sh"
-        if not build.exists():
-            continue
-        pkgs.append(load_package(pkg_dir))
-    return pkgs
-
-
 def cmd_list(packages_dir: Path):
     print(f"\n{DIM}[*] Loading package list...{R}")
-    raw = fetch_index()
-    if raw:
-        pkgs = [normalize_pkg(p) for p in raw]
-    else:
-        pkgs = load_packages_from_local(packages_dir)
-        pkgs = [normalize_pkg(p) for p in pkgs]
-
+    pkgs = load_all_packages(packages_dir)
     if not pkgs:
         print(f"{YELLOW}[!] No packages found.{R}")
         return
@@ -454,12 +403,7 @@ def cmd_list(packages_dir: Path):
 
 
 def cmd_show(packages_dir: Path, name: str):
-    raw = fetch_index()
-    if raw:
-        pkgs = [normalize_pkg(p) for p in raw]
-    else:
-        pkgs = [normalize_pkg(p) for p in load_packages_from_local(packages_dir)]
-
+    pkgs = load_all_packages(packages_dir)
     p = next((x for x in pkgs if x["name"] == name), None)
 
     if not p:
@@ -468,8 +412,7 @@ def cmd_show(packages_dir: Path, name: str):
         sys.exit(1)
 
     _, label = get_status(p["name"], p["version"])
-    deps = p.get("deps", [])
-    deps_str = ", ".join(deps) if deps else "-"
+    deps_str = p.get("deps", "-") or "-"
 
     print(f"""
 {B}{CYAN}{'━'*42}{R}
@@ -488,12 +431,7 @@ def cmd_show(packages_dir: Path, name: str):
 
 
 def cmd_install(app_root: Path, packages_dir: Path, name: str, silent: bool = False) -> bool:
-    raw = fetch_index()
-    if raw:
-        pkgs = [normalize_pkg(p) for p in raw]
-    else:
-        pkgs = [normalize_pkg(p) for p in load_packages_from_local(packages_dir)]
-
+    pkgs = load_all_packages(packages_dir)
     p = next((x for x in pkgs if x["name"] == name), None)
 
     if not p:
@@ -586,10 +524,10 @@ def cmd_update(packages_dir: Path):
     raw = fetch_index()
     if raw:
         print(f"{GREEN}[✔] Index updated — {len(raw)} packages found.{R}\n")
-        pkgs = [normalize_pkg(p) for p in raw]
+        pkgs = [normalize_pkg_from_index(p) for p in raw]
     else:
         print(f"{YELLOW}[!] Could not reach GitHub. Using cached index.{R}\n")
-        pkgs = [normalize_pkg(p) for p in load_packages_from_local(packages_dir)]
+        pkgs = load_all_packages(packages_dir)
 
     if not pkgs:
         print(f"{YELLOW}[!] No packages found.{R}")
@@ -628,11 +566,7 @@ def cmd_update(packages_dir: Path):
 
 
 def cmd_upgrade(app_root: Path, packages_dir: Path, target=None):
-    raw = fetch_index()
-    if raw:
-        pkgs = [normalize_pkg(p) for p in raw]
-    else:
-        pkgs = [normalize_pkg(p) for p in load_packages_from_local(packages_dir)]
+    pkgs = load_all_packages(packages_dir)
 
     if target:
         p = next((x for x in pkgs if x["name"] == target), None)
