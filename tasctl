@@ -187,7 +187,6 @@ install_app() {
     chmod +x "$INSTALL_DIR/build-package.sh"
     ok "build-package.sh copied"
   fi
-  # Copy any root-level files needed for fingerprint check
   for _f in "$tmp_repo"/.tas-store "$tmp_repo"/.fingerprint "$tmp_repo"/termux-app-store.json; do
     [[ -f "$_f" ]] && cp "$_f" "$INSTALL_DIR/" && ok "$(basename $_f) copied"
   done
