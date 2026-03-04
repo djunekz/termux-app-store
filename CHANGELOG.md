@@ -13,6 +13,7 @@ and this project adheres to semantic versioning.
 
 ### Added
 - Package `basic` v1.0.0 - Simulator Terminal learning basic command for beginner
+- Package `userfinder` v1.0 - OSINT tool for finding profiles by username
 
 ---
 
