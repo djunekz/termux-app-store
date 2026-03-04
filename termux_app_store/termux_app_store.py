@@ -221,6 +221,29 @@ def load_packages_from_local(packages_dir: Path) -> list:
         pkgs.append(data)
     return pkgs
 
+def ensure_package_files(name: str) -> bool:
+    pkg_dir = PACKAGES_DIR / name
+    build_sh = pkg_dir / "build.sh"
+
+    if build_sh.exists():
+        return True
+
+    url = (
+        f"https://raw.githubusercontent.com/{GITHUB_REPO}/master/packages/{name}/build.sh"
+    )
+    try:
+        pkg_dir.mkdir(parents=True, exist_ok=True)
+        req = urllib.request.Request(url, headers={"User-Agent": "termux-app-store"})
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            raw = resp.read()
+            if resp.status == 200 and raw:
+                build_sh.write_bytes(raw)
+                return True
+    except Exception:
+        pass
+    return False
+
+
 def normalize_pkg(raw: dict) -> dict:
     deps = raw.get("depends", [])
     if isinstance(deps, str):
@@ -513,6 +536,13 @@ class TermuxAppStore(App):
         self.log_buffer.clear()
         self.call_from_thread(lambda: setattr(self.progress, "progress", 0))
         self.call_from_thread(lambda: self.update_log(f"Installing {name}...\n"))
+
+        if not ensure_package_files(name):
+            self.call_from_thread(lambda: self.update_log(f"\n✗ Could not fetch build files for {name}."))
+            self.installing = False
+            self.call_from_thread(lambda: setattr(self.install_btn, "disabled", False))
+            self.call_from_thread(lambda: setattr(self.uninstall_btn, "disabled", False))
+            return
 
         proc = subprocess.Popen(
             ["bash", "build-package.sh", name],
