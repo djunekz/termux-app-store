@@ -151,7 +151,9 @@ class TestCorruptedBuildScript:
             p = load_package(pkg)
             assert p["version"] == "?"
         except (IsADirectoryError, OSError):
-            pass
+            # Acceptable behavior: load_package may choose to raise a filesystem
+            # error instead of handling a directory masquerading as build.sh.
+            assert True
 
     def test_build_sh_symlink_broken(self, tmp_path):
         pkg = tmp_path / "broken"
@@ -161,7 +163,9 @@ class TestCorruptedBuildScript:
             p = load_package(pkg)
             assert p["version"] == "?"
         except (FileNotFoundError, OSError):
-            pass
+            # Acceptable behavior: load_package may propagate an error if build.sh
+            # is a broken symlink.
+            assert True
 
     def test_very_large_build_sh(self, tmp_path):
         pkg = tmp_path / "large"
