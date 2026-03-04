@@ -14,10 +14,6 @@ _fake_root = Path(_tmp)
 (_fake_root / "build-package.sh").write_text("# Termux App Store Official\n")
 os.environ["TERMUX_APP_STORE_HOME"] = str(_fake_root)
 
-import termux_app_store as _pkg
-if not hasattr(_pkg, "run_tui"):
-    _pkg.run_tui = MagicMock()
-
 if "termux_app_store_cli" not in sys.modules:
     _fake_cli = types.ModuleType("termux_app_store_cli")
     _fake_cli.run_cli = MagicMock()
