@@ -1,0 +1,9 @@
+TERMUX_PKG_HOMEPAGE=https://github.com/mishakorzik/UserFinder
+TERMUX_PKG_DESCRIPTION="OSINT tool for finding profiles by username"
+TERMUX_PKG_LICENSE="GPL-3.0"
+TERMUX_PKG_MAINTAINER="@termux-app-store"
+TERMUX_PKG_VERSION=1.0
+TERMUX_PKG_SRCURL=https://github.com/djunekz/archive/releases/download/v1.0.0/userfinder-v${TERMUX_PKG_VERSION}.tar.gz
+TERMUX_PKG_SHA256=3341b4fd3c298268522ae34673a1de28e88cf23d8f98ea88e1e59d41e58f3ba7
+TERMUX_PKG_DEPENDS="git, curl, jq"
+TERMUX_PKG_BUILD_IN_SRC=true
