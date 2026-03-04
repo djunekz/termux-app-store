@@ -85,25 +85,24 @@ _fake_root = Path(_tmp_dir)
 os.environ["TERMUX_APP_STORE_HOME"] = str(_fake_root)
 
 try:
-    import termux_app_store.termux_app_store as tui_module
+    from termux_app_store.termux_app_store import (
+        APP_ROOT,
+        strip_ansi,
+        _ver_tuple,
+        get_installed_version,
+        has_store_fingerprint,
+        is_valid_root,
+        load_cached_root,
+        save_cached_root,
+        FINGERPRINT_STRING,
+        _fetch_index,
+        ensure_package_files,
+    )
 finally:
     os.environ.clear()
     os.environ.update(_orig_environ)
 
-FAKE_ROOT = tui_module.APP_ROOT
-
-from termux_app_store.termux_app_store import (
-    strip_ansi,
-    _ver_tuple,
-    get_installed_version,
-    has_store_fingerprint,
-    is_valid_root,
-    load_cached_root,
-    save_cached_root,
-    FINGERPRINT_STRING,
-    _fetch_index,
-    ensure_package_files,
-)
+FAKE_ROOT = APP_ROOT
 
 
 def _make_app(tmp_path=None):
