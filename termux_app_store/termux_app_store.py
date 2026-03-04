@@ -165,8 +165,10 @@ def resolve_app_root() -> Path:
         "export TERMUX_APP_STORE_HOME=/path/to/termux-app-store"
     )
 
-def fetch_index() -> list:
-    """Fetch index.json dari GitHub, return list packages atau [] jika gagal."""
+def _fetch_index() -> list:
+    """Fetch index.json dari GitHub. Return list packages atau [] jika gagal.
+    Jika network gagal, fallback ke INDEX_CACHE lokal.
+    """
     try:
         req = urllib.request.Request(
             INDEX_URL,
@@ -176,15 +178,23 @@ def fetch_index() -> list:
             data = json.loads(resp.read().decode())
             pkgs = data.get("packages", [])
             try:
-                INDEX_CACHE_FILE.parent.mkdir(parents=True, exist_ok=True)
-                INDEX_CACHE_FILE.write_text(json.dumps(data, indent=2))
-            except Exception:
-                pass
+                INDEX_CACHE.parent.mkdir(parents=True, exist_ok=True)
+                INDEX_CACHE.write_text(json.dumps(data, indent=2))
+            except Exception: # pragma: no cover
+                pass # pragma: no cover
             return pkgs
     except Exception:
+        if INDEX_CACHE.exists():
+            try:
+                data = json.loads(INDEX_CACHE.read_text())
+                return data.get("packages", [])
+            except Exception:
+                pass
         return []
 
-fetch_index_from_github = fetch_index
+
+fetch_index = _fetch_index
+fetch_index_from_github = _fetch_index
 
 
 def load_index_cache() -> list:
@@ -423,21 +433,14 @@ class TermuxAppStore(App):
         yield self.status_bar
         yield Static("Official Developer @djunekz | Termux App Store", id="footer")
 
-    def load_packages(self, online: bool = True):
-        """
-        Load packages via fetch_index() — testable karena bisa di-mock.
-        Prioritas: fetch_index() → load_index_cache() → PACKAGES_DIR lokal.
-        """
-        raw = fetch_index() if online else []
+    def load_packages(self):
+        """Load packages via _fetch_index() — testable karena bisa di-mock."""
+        raw = _fetch_index()
         if raw:
             self.packages = [normalize_pkg(p) for p in raw]
         else:
-            cached = load_index_cache()
-            if cached:
-                self.packages = [normalize_pkg(p) for p in cached]
-            else:
-                local = load_packages_from_local(PACKAGES_DIR)
-                self.packages = [normalize_pkg(p) for p in local]
+            local = load_packages_from_local(PACKAGES_DIR)
+            self.packages = [normalize_pkg(p) for p in local]
         self.status_cache.clear()
 
 
@@ -551,7 +554,7 @@ class TermuxAppStore(App):
         self.call_from_thread(lambda: self.update_log(f"Installing {name}...\n"))
 
         if not ensure_package_files(name):
-            self.update_log(f"\n✗ Could not fetch build files for {name}.")
+            self.update_log(f"\nFailed to download build files for {name}.")
             self.installing = False
             self.call_from_thread(lambda: setattr(self.install_btn, "disabled", False))
             self.call_from_thread(lambda: setattr(self.uninstall_btn, "disabled", False))
