@@ -19,18 +19,18 @@ jobs:
 
     steps:
       - name: Checkout PR code (safe)
-        uses: actions/checkout@v6
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Detect changed packages
         id: packages
+        env:
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
         shell: bash
         run: |
-          BASE_SHA="${{ github.event.pull_request.base.sha }}"
-
-          PKGS=$(git diff "$BASE_SHA"...HEAD --name-only \
+          PKGS=$(git diff "$PR_BASE_SHA"...HEAD --name-only \
             | awk -F/ '/^packages\/[^/]+\/build\.sh$/ {print $2}' \
             | sort -u)
 
@@ -44,13 +44,13 @@ jobs:
 
       - name: Validate build.sh metadata (safe, no eval)
         id: checker
+        env:
+          CHANGED_PKGS: ${{ steps.packages.outputs.changed }}
         shell: bash
         run: |
-          set +e =
+          set +e
           FAIL=0
           REPORT="# 📋 Package Review Report\n\n"
-
-          CHANGED_PKGS="${{ steps.packages.outputs.changed }}"
 
           if [[ -z "$CHANGED_PKGS" ]]; then
             REPORT+="ℹ️ No package changes detected in this PR\n"
@@ -64,7 +64,8 @@ jobs:
             exit 0
           fi
 
-          for PKG in $CHANGED_PKGS; do
+          while IFS= read -r PKG; do
+            [[ -z "$PKG" ]] && continue
             BUILD_SH="packages/$PKG/build.sh"
             REPORT+="## 📦 Package: \`$PKG\`\n\n"
 
@@ -106,14 +107,13 @@ jobs:
               fi
             }
 
-            check "TERMUX_PKG_VERSION" "$VERSION" true
-            check "TERMUX_PKG_SRCURL" "$SRCURL_RAW" true
-            check "TERMUX_PKG_SHA256" "$SHA256" true
-
-            check "TERMUX_PKG_DESCRIPTION" "$DESC" false
-            check "TERMUX_PKG_HOMEPAGE" "$HOMEPAGE" false
-            check "TERMUX_PKG_LICENSE" "$LICENSE" false
-            check "TERMUX_PKG_MAINTAINER" "$MAINTAINER" false
+            check "TERMUX_PKG_VERSION"     "$VERSION"     true
+            check "TERMUX_PKG_SRCURL"      "$SRCURL_RAW"  true
+            check "TERMUX_PKG_SHA256"      "$SHA256"      true
+            check "TERMUX_PKG_DESCRIPTION" "$DESC"        false
+            check "TERMUX_PKG_HOMEPAGE"    "$HOMEPAGE"    false
+            check "TERMUX_PKG_LICENSE"     "$LICENSE"     false
+            check "TERMUX_PKG_MAINTAINER"  "$MAINTAINER"  false
 
             SRCURL="$SRCURL_RAW"
             if [[ "$SRCURL" == *'${TERMUX_PKG_VERSION}'* ]]; then
@@ -176,7 +176,7 @@ jobs:
             fi
 
             REPORT+="\n---\n\n"
-          done
+          done <<< "$CHANGED_PKGS"
 
           if [[ "$FAIL" -eq 0 ]]; then
             REPORT+="## ✅ All Validations Passed\n\n"
@@ -195,7 +195,7 @@ jobs:
           } >> "$GITHUB_OUTPUT"
 
       - name: Post PR report
-        uses: marocchino/sticky-pull-request-comment@v2
+        uses: marocchino/sticky-pull-request-comment@331f8f5b4215f0445d3c07b4967662a32a2d3e31 # v2.9.0
         with:
           header: package-review
           message: ${{ steps.checker.outputs.report }}
