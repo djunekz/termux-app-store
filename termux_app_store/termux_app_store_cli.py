@@ -150,8 +150,7 @@ def resolve_app_root() -> Path:
     sys.exit(1)
 
 
-def fetch_index_from_github() -> list:
-    """Fetch index.json dari GitHub raw. Return list packages atau []."""
+def fetch_index() -> list:
     try:
         req = urllib.request.Request(
             INDEX_URL,
@@ -169,6 +168,9 @@ def fetch_index_from_github() -> list:
             return pkgs
     except Exception:
         return []
+
+
+fetch_index_from_github = fetch_index
 
 
 def load_index_cache() -> list:
@@ -468,7 +470,6 @@ def cmd_uninstall(name: str):
 
 
 def cmd_update(packages_dir: Path):
-    """Sync index.json terbaru dari GitHub, lalu tampilkan package yang ada update."""
     print(f"\n{B}[*] Syncing package index from GitHub...{R}")
 
     raw = fetch_index_from_github()
@@ -736,7 +737,7 @@ def run_cli():
 if __name__ == "__main__":
     run_cli()
 
-
+INDEX_CACHE  = INDEX_CACHE_FILE
 
 def load_package(pkg_dir: Path) -> dict:
     raw_list = load_packages_from_local(pkg_dir.parent)
