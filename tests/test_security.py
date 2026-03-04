@@ -157,11 +157,11 @@ class TestCorruptedBuildScript:
         pkg = tmp_path / "broken"
         pkg.mkdir()
         (pkg / "build.sh").symlink_to("/nonexistent/target")
-        try:
-            p = load_package(pkg)
-            assert p["version"] == "?"
-        except (FileNotFoundError, OSError):
-            pass
+        # A broken symlink should result in a file-related error when loading the package.
+        with pytest.raises(FileNotFoundError):
+            load_package(pkg)
+
+
 
     def test_very_large_build_sh(self, tmp_path):
         pkg = tmp_path / "large"
