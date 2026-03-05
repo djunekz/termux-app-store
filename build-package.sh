@@ -152,6 +152,9 @@ fi
 
 _ok "Syntax OK"
 
+# Pastikan PATH selalu include PREFIX/bin supaya tools seperti npm, pip, cargo tersedia
+export PATH="$PREFIX/bin:$PATH"
+
 source "$BUILD_SH"
 
 _FIELD_ERRORS=()
@@ -638,6 +641,7 @@ if declare -f termux_step_make > /dev/null 2>&1; then
   _step "Custom termux_step_make() found, running..."
   export TERMUX_PREFIX="$PREFIX"
   export TERMUX_PKG_SRCDIR="$SRC_ROOT"
+  export PATH="$PREFIX/bin:$PATH"
   if [[ "${TERMUX_PKG_BUILD_IN_SRC:-false}" == "true" ]]; then
     cd "$TERMUX_PKG_SRCDIR"
   fi
@@ -648,7 +652,7 @@ if declare -f termux_step_make > /dev/null 2>&1; then
   # Spinner saat build
   _spin_chars='⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏'
   _spin_i=0
-  termux_step_make > "$_MAKE_LOG" 2>&1 &
+  ( export PATH="$PREFIX/bin:$PATH"; termux_step_make ) > "$_MAKE_LOG" 2>&1 &
   _MAKE_PID=$!
   while kill -0 "$_MAKE_PID" 2>/dev/null; do
     _sc="${_spin_chars:$(( _spin_i % ${#_spin_chars} )):1}"
@@ -818,6 +822,7 @@ elif declare -f termux_step_make_install > /dev/null 2>&1; then
   _step "Mode: Custom termux_step_make_install()"
   export TERMUX_PREFIX="$PREFIX"
   export TERMUX_PKG_SRCDIR="$SRC_ROOT"
+  export PATH="$PREFIX/bin:$PATH"
   _install_dir="$SRC_ROOT"
   [[ -d "$_install_dir" ]] || _install_dir="$SRC_ROOT"
   cd "$_install_dir"
@@ -828,7 +833,7 @@ elif declare -f termux_step_make_install > /dev/null 2>&1; then
 
   _spin_chars='⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏'
   _spin_i=0
-  termux_step_make_install > "$_INSTALL_LOG" 2>&1 &
+  ( export PATH="$PREFIX/bin:$PATH"; termux_step_make_install ) > "$_INSTALL_LOG" 2>&1 &
   _INSTALL_PID=$!
   while kill -0 "$_INSTALL_PID" 2>/dev/null; do
     _sc="${_spin_chars:$(( _spin_i % ${#_spin_chars} )):1}"
