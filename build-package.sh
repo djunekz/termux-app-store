@@ -694,11 +694,64 @@ elif [[ -n "$PREBUILT_DEB" ]]; then
   _progress "Extracting .deb contents..."
   dpkg -x "$PREBUILT_DEB" "$WORK_DIR/pkg"
 
+  # Cari binary/script di dalam .deb — cek bin/ dulu, lalu fallback ke file apapun
   BIN_FILE="$(find "$WORK_DIR/pkg" -type f -name "$PACKAGE*" -executable | head -n1 || true)"
+
+  # Fallback 1: ada file di bin/ walaupun tidak executable
+  [[ -z "$BIN_FILE" ]] &&     BIN_FILE="$(find "$WORK_DIR/pkg" -type f -path "*/bin/$PACKAGE" | head -n1 || true)"
+
+  # Fallback 2: ada wrapper script di bin/ dengan nama apapun
+  [[ -z "$BIN_FILE" ]] &&     BIN_FILE="$(find "$WORK_DIR/pkg" -type f -path "*/bin/*" | head -n1 || true)"
+
+  # Fallback 3: ada .py atau .sh di lib/
+  [[ -z "$BIN_FILE" ]] &&     BIN_FILE="$(find "$WORK_DIR/pkg" -type f \( -name "*.py" -o -name "*.sh" \) | head -n1 || true)"
+
+  # Fallback 4: file apapun yang ada
+  [[ -z "$BIN_FILE" ]] &&     BIN_FILE="$(find "$WORK_DIR/pkg" -type f -not -path "*/DEBIAN/*" | head -n1 || true)"
+
   if [[ -n "$BIN_FILE" ]]; then
     mkdir -p "$PREFIX/lib/$PACKAGE"
-    mv "$BIN_FILE" "$PREFIX/lib/$PACKAGE/$PACKAGE"
-    chmod +x "$PREFIX/lib/$PACKAGE/$PACKAGE"
+
+    # Deteksi tipe file untuk tentukan cara install
+    _BIN_EXT="${BIN_FILE##*.}"
+    _IS_SCRIPT=0
+    _SCRIPT_INTERPRETER=""
+
+    if [[ "$_BIN_EXT" == "py" ]]; then
+      _IS_SCRIPT=1
+      _SCRIPT_INTERPRETER="python3"
+    elif [[ "$_BIN_EXT" == "sh" ]]; then
+      _IS_SCRIPT=1
+      _SCRIPT_INTERPRETER="bash"
+    else
+      # Cek shebang
+      _SHEBANG=$(head -c 512 "$BIN_FILE" 2>/dev/null | head -n1 || true)
+      if echo "$_SHEBANG" | grep -q "python"; then
+        _IS_SCRIPT=1
+        _SCRIPT_INTERPRETER="python3"
+      elif echo "$_SHEBANG" | grep -q "bash\|sh"; then
+        _IS_SCRIPT=1
+        _SCRIPT_INTERPRETER="bash"
+      fi
+    fi
+
+    if [[ "$_IS_SCRIPT" -eq 1 ]]; then
+      # Script — copy ke lib/ dan buat wrapper langsung tanpa perlu cek libpython
+      cp "$BIN_FILE" "$PREFIX/lib/$PACKAGE/$(basename $BIN_FILE)"
+      chmod 644 "$PREFIX/lib/$PACKAGE/$(basename $BIN_FILE)"
+      mkdir -p "$PREFIX/bin"
+      cat > "$PREFIX/bin/$PACKAGE" <<EOF
+#!/data/data/com.termux/files/usr/bin/bash
+exec $_SCRIPT_INTERPRETER "$PREFIX/lib/$PACKAGE/$(basename $BIN_FILE)" "\$@"
+EOF
+      chmod +x "$PREFIX/bin/$PACKAGE"
+      _ok "Script installed"
+      _detail "Script:" "$PREFIX/lib/$PACKAGE/$(basename $BIN_FILE)"
+      _detail "Interpreter:" "$_SCRIPT_INTERPRETER"
+      _detail "Bin:" "$PREFIX/bin/$PACKAGE"
+    else
+      mv "$BIN_FILE" "$PREFIX/lib/$PACKAGE/$PACKAGE"
+      chmod +x "$PREFIX/lib/$PACKAGE/$PACKAGE"
 
     # Cek apakah binary ini linked ke libpython versi spesifik
     # Kalau iya, jangan exec langsung — buat wrapper python3 supaya
@@ -758,6 +811,7 @@ EOF
     chmod +x "$PREFIX/bin/$PACKAGE"
     _ok "Binary installed"
     _detail "Bin:" "$PREFIX/bin/$PACKAGE"
+    fi  # end if _IS_SCRIPT
   fi
 
 elif declare -f termux_step_make_install > /dev/null 2>&1; then
