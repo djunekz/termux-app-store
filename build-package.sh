@@ -711,44 +711,41 @@ elif [[ -n "$PREBUILT_DEB" ]]; then
     fi
 
     if [[ -n "$_LINKED_PYTHON" ]]; then
-      # Binary hardlink ke libpython versi spesifik
-      # Cek apakah ini sebenarnya Python script yang dibungkus (zipapp / frozen)
-      _MAGIC=$(od -A n -N 4 -t x1 "$PREFIX/lib/$PACKAGE/$PACKAGE" 2>/dev/null | tr -d ' 
-')
+      # Binary linked ke libpython versi spesifik.
+      # Solusi: buat symlink dari libpython yang terinstall saat ini
+      # ke nama yang dibutuhkan binary. Ini cara paling reliable dan permanen
+      # karena Python di Termux selalu ada satu versi aktif.
 
-      if [[ "$_MAGIC" == "504b0304" ]]; then
-        # zipapp — bisa langsung dijalankan oleh python3
-        _warn "Binary is a Python zipapp linked to $_LINKED_PYTHON"
-        _info "Creating python3 wrapper (version-independent)"
-        cat > "$PREFIX/bin/$PACKAGE" <<EOF
-#!/data/data/com.termux/files/usr/bin/bash
-exec python3 "$PREFIX/lib/$PACKAGE/$PACKAGE" "\$@"
-EOF
-      else
-        # Frozen binary — coba jalankan langsung dulu,
-        # kalau libpython tidak ada maka fallback ke source tarball via pip/python3
-        _warn "Binary linked to $_LINKED_PYTHON (may fail if that version is not installed)"
-        _info "Attempting to install matching Python version..."
+      _PY_VER=$(echo "$_LINKED_PYTHON" | grep -oP "[0-9]+\.[0-9]+" | head -n1 || true)
 
-        # Ekstrak versi dari nama library, misal libpython3.12 → python3.12
-        _PY_VER=$(echo "$_LINKED_PYTHON" | grep -oP "[0-9]+\.[0-9]+" | head -n1 || true)
-        _PY_PKG="python${_PY_VER}"
+      # Cek apakah libpython yang dibutuhkan sudah ada
+      _LIB_NEEDED="$PREFIX/lib/libpython${_PY_VER}.so.1.0"
+      _LIB_EXISTS=0
+      find "$PREFIX/lib" -name "libpython${_PY_VER}*.so*" 2>/dev/null | grep -q . && _LIB_EXISTS=1
 
-        if [[ -n "$_PY_VER" ]]; then
-          if ! ldconfig -p 2>/dev/null | grep -q "libpython${_PY_VER}" &&              ! find "$PREFIX/lib" -name "libpython${_PY_VER}*.so*" 2>/dev/null | grep -q .; then
-            _progress "Installing $_PY_PKG to satisfy $_LINKED_PYTHON..."
-            pkg install -y "$_PY_PKG" > /dev/null 2>&1 ||               _warn "Could not install $_PY_PKG — binary may fail to run"
-          else
-            _ok "$_LINKED_PYTHON already satisfied"
-          fi
+      if [[ "$_LIB_EXISTS" -eq 0 && -n "$_PY_VER" ]]; then
+        # Cari libpython versi lain yang terinstall (misal libpython3.13.so.1.0)
+        _INSTALLED_LIBPY=$(find "$PREFIX/lib" -maxdepth 1 -name "libpython*.so.1.0" \
+          2>/dev/null | head -n1 || true)
+
+        if [[ -n "$_INSTALLED_LIBPY" ]]; then
+          # Buat symlink: libpython3.12.so.1.0 → libpython3.13.so.1.0 (atau versi apapun)
+          ln -sf "$_INSTALLED_LIBPY" "$_LIB_NEEDED" 2>/dev/null && {
+            _ok "Symlinked: libpython${_PY_VER}.so.1.0 → $(basename $_INSTALLED_LIBPY)"
+          } || {
+            _warn "Could not create libpython symlink"
+          }
+        else
+          _warn "No installed libpython found to symlink from"
         fi
+      else
+        [[ "$_LIB_EXISTS" -eq 1 ]] && _ok "libpython${_PY_VER} already present"
+      fi
 
-        cat > "$PREFIX/bin/$PACKAGE" <<EOF
+      cat > "$PREFIX/bin/$PACKAGE" <<EOF
 #!/data/data/com.termux/files/usr/bin/bash
 exec "$PREFIX/lib/$PACKAGE/$PACKAGE" "\$@"
 EOF
-      fi
-
       _detail "Linked Python:" "$_LINKED_PYTHON"
     else
       # Binary normal, tidak ada dependency libpython
