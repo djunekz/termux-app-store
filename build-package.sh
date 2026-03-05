@@ -479,7 +479,10 @@ if [[ -n "${TERMUX_PKG_SRCURL:-}" ]]; then
     exit 1
   fi
 
-  if [[ -n "${TERMUX_PKG_SHA256:-}" ]]; then
+  if [[ "${TERMUX_PKG_SHA256:-}" == "SKIP" ]]; then
+    _section "Integrity Check (SHA256)"
+    _skip "SHA256=SKIP — checksum verification bypassed (trusted source)"
+  elif [[ -n "${TERMUX_PKG_SHA256:-}" ]]; then
     _section "Integrity Check (SHA256)"
     _progress "Computing checksum..."
     CALC_SHA256="$(sha256sum "$SRC_FILE" | awk '{print $1}')"
@@ -696,10 +699,65 @@ elif [[ -n "$PREBUILT_DEB" ]]; then
     mkdir -p "$PREFIX/lib/$PACKAGE"
     mv "$BIN_FILE" "$PREFIX/lib/$PACKAGE/$PACKAGE"
     chmod +x "$PREFIX/lib/$PACKAGE/$PACKAGE"
-    cat > "$PREFIX/bin/$PACKAGE" <<EOF
+
+    # Cek apakah binary ini linked ke libpython versi spesifik
+    # Kalau iya, jangan exec langsung — buat wrapper python3 supaya
+    # tidak terikat ke versi Python tertentu (misal libpython3.12.so)
+    _LINKED_PYTHON=""
+    if command -v readelf &>/dev/null; then
+      _LINKED_PYTHON=$(readelf -d "$PREFIX/lib/$PACKAGE/$PACKAGE" 2>/dev/null         | grep -oP "libpython[0-9]+\.[0-9]+[^]]*" | head -n1 || true)
+    elif command -v objdump &>/dev/null; then
+      _LINKED_PYTHON=$(objdump -p "$PREFIX/lib/$PACKAGE/$PACKAGE" 2>/dev/null         | grep -oP "libpython[0-9]+\.[0-9]+[^[:space:]]*" | head -n1 || true)
+    fi
+
+    if [[ -n "$_LINKED_PYTHON" ]]; then
+      # Binary hardlink ke libpython versi spesifik
+      # Cek apakah ini sebenarnya Python script yang dibungkus (zipapp / frozen)
+      _MAGIC=$(od -A n -N 4 -t x1 "$PREFIX/lib/$PACKAGE/$PACKAGE" 2>/dev/null | tr -d ' 
+')
+
+      if [[ "$_MAGIC" == "504b0304" ]]; then
+        # zipapp — bisa langsung dijalankan oleh python3
+        _warn "Binary is a Python zipapp linked to $_LINKED_PYTHON"
+        _info "Creating python3 wrapper (version-independent)"
+        cat > "$PREFIX/bin/$PACKAGE" <<EOF
+#!/data/data/com.termux/files/usr/bin/bash
+exec python3 "$PREFIX/lib/$PACKAGE/$PACKAGE" "\$@"
+EOF
+      else
+        # Frozen binary — coba jalankan langsung dulu,
+        # kalau libpython tidak ada maka fallback ke source tarball via pip/python3
+        _warn "Binary linked to $_LINKED_PYTHON (may fail if that version is not installed)"
+        _info "Attempting to install matching Python version..."
+
+        # Ekstrak versi dari nama library, misal libpython3.12 → python3.12
+        _PY_VER=$(echo "$_LINKED_PYTHON" | grep -oP "[0-9]+\.[0-9]+" | head -n1 || true)
+        _PY_PKG="python${_PY_VER}"
+
+        if [[ -n "$_PY_VER" ]]; then
+          if ! ldconfig -p 2>/dev/null | grep -q "libpython${_PY_VER}" &&              ! find "$PREFIX/lib" -name "libpython${_PY_VER}*.so*" 2>/dev/null | grep -q .; then
+            _progress "Installing $_PY_PKG to satisfy $_LINKED_PYTHON..."
+            pkg install -y "$_PY_PKG" > /dev/null 2>&1 ||               _warn "Could not install $_PY_PKG — binary may fail to run"
+          else
+            _ok "$_LINKED_PYTHON already satisfied"
+          fi
+        fi
+
+        cat > "$PREFIX/bin/$PACKAGE" <<EOF
 #!/data/data/com.termux/files/usr/bin/bash
 exec "$PREFIX/lib/$PACKAGE/$PACKAGE" "\$@"
 EOF
+      fi
+
+      _detail "Linked Python:" "$_LINKED_PYTHON"
+    else
+      # Binary normal, tidak ada dependency libpython
+      cat > "$PREFIX/bin/$PACKAGE" <<EOF
+#!/data/data/com.termux/files/usr/bin/bash
+exec "$PREFIX/lib/$PACKAGE/$PACKAGE" "\$@"
+EOF
+    fi
+
     chmod +x "$PREFIX/bin/$PACKAGE"
     _ok "Binary installed"
     _detail "Bin:" "$PREFIX/bin/$PACKAGE"
