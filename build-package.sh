@@ -801,11 +801,12 @@ EOF
 
       cat > "$PREFIX/bin/$PACKAGE" <<EOF
 #!/data/data/com.termux/files/usr/bin/bash
+export LD_LIBRARY_PATH="$PREFIX/lib\${LD_LIBRARY_PATH:+:\$LD_LIBRARY_PATH}"
 exec "$PREFIX/lib/$PACKAGE/$PACKAGE" "\$@"
 EOF
       _detail "Linked Python:" "$_LINKED_PYTHON"
+      _detail "LD_LIB path:"   "$PREFIX/lib"
     else
-      # Binary normal, tidak ada dependency libpython
       cat > "$PREFIX/bin/$PACKAGE" <<EOF
 #!/data/data/com.termux/files/usr/bin/bash
 exec "$PREFIX/lib/$PACKAGE/$PACKAGE" "\$@"
