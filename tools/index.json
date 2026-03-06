@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-03-06T02:24:13.397758+00:00",
+  "generated_at": "2026-03-06T11:28:16.831810+00:00",
   "total": 31,
   "packages": [
     {
@@ -77,7 +77,7 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/basic/releases/download/${TERMUX_PKG_VERSION}/basic_${TERMUX_PKG_VERSION}_all.deb",
-      "sha256": "2e15a6632cc1a94e19a8f7cf9a8b67630d519e68ac0b64583e5ac50cc0215e47",
+      "sha256": "440657aa7347b38f6dd380630f293e496954279829b0cdbd4508fbe5bfdd167d",
       "platform_independent": false,
       "depends": [
         "python"
