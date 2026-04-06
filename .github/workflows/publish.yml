@@ -53,7 +53,7 @@ jobs:
           name: dist
           path: dist/
       - name: Publish to TestPyPI
-        uses: pypa/gh-action-pypi-publish@76f52bc884736a988837a06fd7e75490e06ad25b
+        uses: pypa/gh-action-pypi-publish@cef221092ed1bacb1cc03d23a2d87d1d172e277b
         with:
           repository-url: https://test.pypi.org/legacy/
 
@@ -74,4 +74,4 @@ jobs:
           name: dist
           path: dist/
       - name: Publish to PyPI
-        uses: pypa/gh-action-pypi-publish@76f52bc884736a988837a06fd7e75490e06ad25b
+        uses: pypa/gh-action-pypi-publish@cef221092ed1bacb1cc03d23a2d87d1d172e277b
