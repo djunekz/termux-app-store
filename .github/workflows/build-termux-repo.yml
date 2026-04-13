@@ -235,7 +235,7 @@ CTRL
           echo "Total .deb built for $ARCH: $(ls output/*.deb 2>/dev/null | wc -l)"
 
       - name: Upload artifact for ${{ matrix.arch }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: debs-${{ matrix.arch }}
           path: output/*.deb
@@ -278,7 +278,7 @@ CTRL
           mkdir -p gh-pages/pool/main
 
       - name: Download all arch artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           pattern: debs-*
           path: all-debs/
