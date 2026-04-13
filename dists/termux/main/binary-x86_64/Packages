@@ -4,10 +4,10 @@ Architecture: x86_64
 Maintainer: @termux-app-store
 Installed-Size: 40
 Filename: pool/main/impulse_1.0.0_x86_64.deb
-Size: 836
-MD5sum: 53f767150aec598abff426ce39ad3262
-SHA1: 7e5cb7ed945ef9f4e4f5aca82334fdbb4319dd53
-SHA256: da5bd440838d9209ba4cd50d825d3a3594af296170bfb7c63cec5f286eb77295
+Size: 838
+MD5sum: 586f7b9273463e272847c107e5040671
+SHA1: 40d62ac18725c961372426de7429e027153590de
+SHA256: fb6a325e95ff142d8140d737837a79b05171875379cd8199d11408dd02650d31
 Homepage: https://github.com/LimerBoy/Impulse
 Description: Denial-of-Service ToolKit with multiple attack methods
 
@@ -17,10 +17,10 @@ Architecture: x86_64
 Maintainer: @djunekz
 Installed-Size: 40
 Filename: pool/main/termstyle_1.0.0_x86_64.deb
-Size: 842
-MD5sum: 88e3dec8cd7cb33101301c1071bcf84f
-SHA1: aef2984362f520d8cf9fec339f1673c87e9cd5d3
-SHA256: a5bcace05d7b7f9e0fbf0586732cc302e6c927f73d3d7465d8056de274e38475
+Size: 840
+MD5sum: 1c9b80fdee316476f68eaee4d59d9dab
+SHA1: 1278af3081e3649c39372f160b3f4423d800760d
+SHA256: 92d56892be14f89f4fe79f7f2fec293ef94e764982b7fd0052d7720496e57089
 Homepage: https://gtihub.com/djunekz/termstyle
 Description: Simple tool for change color, command prompt, and cursor termux
 
@@ -32,9 +32,9 @@ Installed-Size: 40
 Depends: python
 Filename: pool/main/zora_1.2.2_x86_64.deb
 Size: 810
-MD5sum: 1b52c78acef9e316422f5cb6feb58b7e
-SHA1: d06292eddbcd4e2579ea26ca79876f11020aa87a
-SHA256: 612f99b2fab44d28c1dd65bf9030fb481f861f065a44e394ae1a89f7dff91e73
+MD5sum: e89301414d26d92c4059ee039d8dc09d
+SHA1: fde362cb02eea9cf195b534fa133973263f5ad33
+SHA256: 0b39c833705bbfa64ba6321096b537b76b17176073849a1c84bead36b7f3588a
 Homepage: https://github/djunekz/termux-app-store
 Description: The ultimate OSINT framework
 
@@ -45,10 +45,10 @@ Maintainer: @termux-app-store
 Installed-Size: 40
 Depends: clang, python
 Filename: pool/main/zoracrypter_1.0.0_x86_64.deb
-Size: 834
-MD5sum: 664fd65e2a311a23a559c391ac36c193
-SHA1: c8cd52e308be3b7a4c5a8064b1d060f60dfbf740
-SHA256: 26c9ed73e8561d4ab87e378eaedf8c7f5543531746e81ccb7dc2168f80ae2825
+Size: 832
+MD5sum: 990c00d2b7e3ed9ce65b7a1c38da69ff
+SHA1: 9f47d5df7c94ae86eee213158581d44366a122a5
+SHA256: 9560bafec5167964da3aa0eb54a8e8be47682b7a76317159961a16029c204e0f
 Homepage: https://github.com/djunekz/termux-app-store
 Description: Encrypter Stealth Binary Builder
 
