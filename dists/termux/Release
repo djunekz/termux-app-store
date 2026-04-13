@@ -1,0 +1,26 @@
+Origin: Termux App Store
+Label: Termux App Store
+Suite: termux
+Codename: termux
+Components: main
+Architectures: aarch64 arm x86_64 i686
+Description: Custom Termux repository by @djunekz
+Date: Mon, 13 Apr 2026 22:09:38 UTC
+MD5Sum:
+ c1fc8d9d7a847adbe7ebed1994dbcf43 10931 main/binary-aarch64/Packages
+ acf9ca5e8c734ff205305fa92cb3d805 4061 main/binary-aarch64/Packages.gz
+ a356e3a8e94c399ed0a20852ab7fbee9 10731 main/binary-arm/Packages
+ 487ddbf105f1a1dcf99315bb6a6dcb18 4050 main/binary-arm/Packages.gz
+ b5624d438b360612a28377028837d66c 10881 main/binary-x86_64/Packages
+ 55bba098917949845a2d893c9da1d306 4057 main/binary-x86_64/Packages.gz
+ 36df7a5090a4001b219f1aa707e93643 10781 main/binary-i686/Packages
+ 7b870c973bbdaf13d65846cf762dd19f 4041 main/binary-i686/Packages.gz
+SHA256:
+ 05624bf96a35b99ff3394a4f6d56b3169afc9988eefa2538741880c8e06c69e7 10931 main/binary-aarch64/Packages
+ c68773b369719d9166ef208b3e38c5f22f015337218e0ea59a74a7f6a720c5d1 4061 main/binary-aarch64/Packages.gz
+ 2159d5708412257eecfb7184b3da22cc81219626797fbfeab0f4be9880974127 10731 main/binary-arm/Packages
+ cdeb1bd51a4c5085a30575a9228ad9d55f7c060dd0e1401724e48dfae74dd730 4050 main/binary-arm/Packages.gz
+ e5aff0a50fbc3901b19e6285af972cfd2f6e841034d0bc39ca6dfa9dfd51ab7f 10881 main/binary-x86_64/Packages
+ 471b7db51f8934db42c1a6628c4c38aed1c885b9dbc27517e6a29a547edd246e 4057 main/binary-x86_64/Packages.gz
+ 327c932bf5f41c59ddb3697ae5d9f8d749d0ff5030c850612acc5a1571593b4d 10781 main/binary-i686/Packages
+ 5117b8d15d2c41ad766b635ff4bc2f420f8404450aed5901ebb46bd21f571fcf 4041 main/binary-i686/Packages.gz
