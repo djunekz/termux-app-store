@@ -2,13 +2,13 @@ Package: baxter
 Version: 1.2.4
 Architecture: arm
 Maintainer: @djunekz
-Installed-Size: 48
+Installed-Size: 44
 Depends: nodejs
 Filename: pool/main/baxter_1.2.4_arm.deb
-Size: 2442
-MD5sum: fb7fadfffbd2d54b1b1093f0c16e3084
-SHA1: 75869c6af7ecf99a4a019aaf67291656849c2736
-SHA256: 4b2e659aab4f3cecf98e2a058bf3e2c733edf97569f0f637e7cb7aad1e5d8e23
+Size: 2498
+MD5sum: ecc3ec6d5dbd398061bdcaece6e51f33
+SHA1: f14fb869025c819a6b35772749abbbd04b82b42e
+SHA256: 6d9f2611c7fd0d22701ab2dd79b4b59e7f0b47c6ccf409fcbffa79b6fee68746
 Homepage: https://github.com/djunekz/baxter
 Description: Encrypt and decrypt files termux
 
@@ -16,66 +16,40 @@ Package: bower
 Version: 1.8.12
 Architecture: arm
 Maintainer: @termux-app-store
-Installed-Size: 284
+Installed-Size: 28
 Depends: nodejs
 Filename: pool/main/bower_1.8.12_arm.deb
-Size: 264450
-MD5sum: 8af7999a883120c34b326d804a961e6f
-SHA1: ec1d17d5c1e79272170b9290b78f2490e7075191
-SHA256: d2efed6c43af2771adfa0a851184d4633224bc90a59a8947acc50ee2bb9a3b7d
+Size: 668
+MD5sum: a92a82b95eb1dcdb8495e32aa2e747a9
+SHA1: 4914c5012a90f8623d04bda617f597d5ef5ecb47
+SHA256: 1ad9102ab8b9fe9038d228bce139fff1d5ff9814a171dde34f92ea57d3026e02
 Homepage: https://github.com/bower/bower
 Description: A package manager for the web
-
-Package: fd
-Version: 10.3.0
-Architecture: arm
-Maintainer: @termux-app-store
-Installed-Size: 3532
-Filename: pool/main/fd_10.3.0_arm.deb
-Size: 1310342
-MD5sum: 7c5b525e74eb6cfff9512d686c3670b1
-SHA1: b770f9b736718822d7838038557cce625a71c490
-SHA256: a7edabb9f2efa998cca9e33e657da5b49ff2c20eae7e95ba5e2eb24c343faa7f
-Homepage: https://github.com/sharkdp/fd
-Description: A simple, fast and user-friendly alternative to 'find'
 
 Package: infoooze
 Version: 1.1.9
 Architecture: arm
 Maintainer: @termux-app-store
-Installed-Size: 288
+Installed-Size: 28
 Depends: nodejs
 Filename: pool/main/infoooze_1.1.9_arm.deb
-Size: 267162
-MD5sum: 58c0f6beac625f4a9b32ced2f3e5de4f
-SHA1: c0f235406c33ee653c37c09fde865e21012a5fd5
-SHA256: 019311466c65d19ecc474fef2358851417b6d39821cf1491a47fb271e8604aa0
+Size: 720
+MD5sum: ce166e5fb6bd824ea88aff493e2a3d2d
+SHA1: 1d2599b947207721e3604f1dd75a1bf530953ddc
+SHA256: 3d4cd5f3091192ce8925b3df63acdb744b288bd3782d45765f57b29b47aec0ef
 Homepage: https://github.com/devxprite/infoooze
 Description: A OSINT tool which helps you to quickly find information effectively.
-
-Package: lux
-Version: 0.24.1
-Architecture: arm
-Maintainer: @termux-app-store
-Installed-Size: 21288
-Filename: pool/main/lux_0.24.1_arm.deb
-Size: 5964962
-MD5sum: 7236a2aa54f44ab4a5021d7b7fe5e03b
-SHA1: 40b693eeaed1420d73a09d736fbdb7937f99d58c
-SHA256: 73c31c9dd4d23519e4c833e46e9aa30fc65afb1389eea54cd046e788347ad624
-Homepage: https://github.com/iawia002/lux
-Description: Fast and simple video download library and CLI tool written in Go
 
 Package: pymaker
 Version: 1.0.0
 Architecture: arm
 Maintainer: @droidv1
-Installed-Size: 48
+Installed-Size: 44
 Filename: pool/main/pymaker_1.0.0_arm.deb
-Size: 2318
-MD5sum: 9f5287076b8b88d769ede3857900ab6f
-SHA1: 9ee6232c631c6abbdf33d5ea2679295aa28619ca
-SHA256: b0c817981374a25b2f027208307d02a760e9817c7c6338722bf9a4e759d9ace7
+Size: 2414
+MD5sum: 76158e87bb9bdb6445595f9b18a3ce27
+SHA1: 493c99977333ff784a3b7e1dc6361cb2ddac7ea9
+SHA256: 4b8f745631346c70789890a8337347ac83681a04ca57ea9b2a479bf0bee336b0
 Homepage: https://github.com/droidv1/pymaker
 Description: Simple tool for create python script
 
@@ -83,13 +57,13 @@ Package: tdoc
 Version: 1.0.6
 Architecture: arm
 Maintainer: @djunekz
-Installed-Size: 228
+Installed-Size: 212
 Depends: bash, coreutils, curl, git, gnupg, termux-tools
 Filename: pool/main/tdoc_1.0.6_arm.deb
-Size: 19490
-MD5sum: bf2447928cfebc7243dbcdfa24481dd3
-SHA1: a5f4ab748f0e44b1d0e28b5d900e2472d174e71a
-SHA256: 365e4fd3798b1f7aabc496f4783e449a93e11a5b273e185fe6972aaf8ebb3e33
+Size: 14666
+MD5sum: 21f03b30714ceffaf08d2484b2099463
+SHA1: e0a25855c97fc9e5cdad782573bd30356e861608
+SHA256: 51e0bedaad1324d2d9a0b64297a33cb6c7c5e68fc9c49b9479185f4c43d1b652
 Homepage: https://github.com/djunekz/tdoc
 Description: TDOC - Diagnostic and repair utility for Termux environment
 
@@ -97,13 +71,13 @@ Package: tuifimanager
 Version: 5.2.6
 Architecture: arm
 Maintainer: @termux-app-store
-Installed-Size: 1896
+Installed-Size: 28
 Depends: python
 Filename: pool/main/tuifimanager_5.2.6_arm.deb
-Size: 1914672
-MD5sum: 69f76a155f96c4ba9251c73143998d27
-SHA1: cc1b530f7c0d4bd183af3dacda6cae49ebb7b4d0
-SHA256: 6e1853ea8c151959580819239da8ce2514f70b92018b32b5d14ca8659c6f8177
+Size: 690
+MD5sum: 5af42b14b353d8db7deb1e354c67a878
+SHA1: 68517f5239a6f5c5f3d8160a7622e1cb2bb4da99
+SHA256: e28166a581b3118bd0854af50750c4b59febe2ba17c02de8c81a5ce7b8d366ea
 Homepage: https://github.com/GiorgosXou/TUIFIManager
 Description: A terminal-based TUI file manager
 
