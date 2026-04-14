@@ -2,13 +2,13 @@ Package: ani-cli
 Version: 4.10
 Architecture: i686
 Maintainer: @termux-app-store
-Installed-Size: 40
+Installed-Size: 52
 Depends: nodejs
 Filename: pool/main/ani-cli_4.10_i686.deb
-Size: 816
-MD5sum: 0fa7d4db78985036dc84816f5b04dfc6
-SHA1: eec89b300f65827267bcfdefaf7326058c5d4f86
-SHA256: 8ece04227499b345be4ae6a1b76c7a242f57133cd1d6935237adebbe47c1c71e
+Size: 8768
+MD5sum: eb712ec3d0dc96afdf0012d0c79b7fd3
+SHA1: 646a76f8fe6994469bbd736f20617ebd9eac8453
+SHA256: 70c20217cb55f5dd3ee41c11da70c0eed49bba9c0c4ec0000ecbcb384efc98c6
 Homepage: https://github.com/pystardust/ani-cli
 Description: A cli tool to browse and play anime
 
@@ -16,13 +16,13 @@ Package: cybertuz
 Version: 1.0.1
 Architecture: i686
 Maintainer: @termux-app-store
-Installed-Size: 40
+Installed-Size: 572
 Depends: nmap, python, whois, curl, dnsutils
 Filename: pool/main/cybertuz_1.0.1_i686.deb
-Size: 870
-MD5sum: 67dda467884268198072ab5e3e701d80
-SHA1: b158757cd17e2e95904a6bd2bc946a734734d925
-SHA256: 487ffaa7994014a07f5455fd0503021257c5aa806fd2d28bae3cb81dbd14867c
+Size: 105590
+MD5sum: 78a2642a6e2be5ee97b51062f454e5e4
+SHA1: e7317ab609a4a43dd3901c726964e07c08b2f14d
+SHA256: 4caf9cec01a5ec28421a8ec2966b50afd745db0af0ba5c3b79a36312118566e1
 Homepage: https://github.com/djunekz/cybertuz
 Description: Comprehensive Educational Learning Platform for Termux
 
@@ -30,12 +30,12 @@ Package: encrypt
 Version: 1.1
 Architecture: i686
 Maintainer: @djunekz
-Installed-Size: 40
+Installed-Size: 120
 Filename: pool/main/encrypt_1.1_i686.deb
-Size: 818
-MD5sum: c5b5faaa707eab7821911f328beb8fc9
-SHA1: 7e09efd180985179958261fdeb2b394613f7407b
-SHA256: adc1b31a45c39c1f5c0628b9af662db47eebeb304a68712f3ae28eb29aec45fa
+Size: 26468
+MD5sum: db1dc682c3c99911d9c8e76985af6dec
+SHA1: 99402df65968dd566371544c0313cb004b6428d1
+SHA256: bd31faaaaea0c236270f55704a37ecb59f3d881372d4e7e12929872340a03dd9
 Homepage: https://github.com/djunekz/encrypt
 Description: ELF binary for file python/python3 with build deb package
 
@@ -43,13 +43,13 @@ Package: pmcli
 Version: 0.1.0
 Architecture: i686
 Maintainer: Djunekz <gab288.gab288@passinbox.com>
-Installed-Size: 40
+Installed-Size: 148
 Depends: rust, openssl, zlib
 Filename: pool/main/pmcli_0.1.0_i686.deb
-Size: 842
-MD5sum: e66e6867f5939cd4a077399c91e97b59
-SHA1: 6e38422e63509db6b9667a2ad0b335cb4305315c
-SHA256: 8dc4fe8c522f05b5204f96d2a107fc6b645a5fbf0baa79810fb7ec4d2fea5c6c
+Size: 10110
+MD5sum: 9ee011b16b7074960dedf964b370d647
+SHA1: 4be8d91092427a2da03cbb8667f26775cae54b27
+SHA256: 0aac110b1d2c5b7e9105828709891a499a5db6c5e17a740cd0a615cdd3cd5780
 Homepage: https://github.com/djunekz/pmcli
 Description: Terminal-based project manager CLI
 
@@ -57,13 +57,13 @@ Package: tx
 Version: 1.0.0
 Architecture: i686
 Maintainer: @termux-app-store
-Installed-Size: 40
+Installed-Size: 44
 Depends: python, ncurses
 Filename: pool/main/tx_1.0.0_i686.deb
-Size: 816
-MD5sum: 5ecd4aa77debebca4466bbfa4a5d80da
-SHA1: 5d7b34c74cd0d788debf11841c0a749c3574ad9a
-SHA256: 6ac36a4a0acfbb5a873e51cbe50ece87174d209f9680a0c859813b33744455b1
+Size: 840
+MD5sum: 96ddf8bc8ea35a5601f4bab862aa25ec
+SHA1: 8f6f28a61a272bbc1b8f101c320313d845790468
+SHA256: 8b3af43b82f1d3bc88cb211ff978f5027a3414996762e3db2c52c96d848a2a81
 Homepage: https://github.com/djunekz/termux-app-store
 Description: Advance Terminal Editor Ultimate
 
@@ -71,13 +71,13 @@ Package: zorabuilder
 Version: 1.0.0
 Architecture: i686
 Maintainer: @termux-app-store
-Installed-Size: 40
+Installed-Size: 44
 Depends: python, binutils-is-llvm
 Filename: pool/main/zorabuilder_1.0.0_i686.deb
-Size: 838
-MD5sum: a26a2b05c0a7fe31feff6959b8c8ae84
-SHA1: 405e03e45428e3f209470af3f48abb0fb210f5f4
-SHA256: 922e3d86cdc144fbe78c1253c4b6c02d3969585e2e7076370d49f403f65c6e23
+Size: 850
+MD5sum: 4e955a3c53d289cd464f2f97fd31c148
+SHA1: 1a9dcf56913361a9d3444c56269575a01c0b4d9d
+SHA256: 7485a78204479e1ea37bcebb8a2e6cbe5db13c21b3c11663ab3d21ce772df337
 Homepage: https://github.com/djunekz/termux-app-store
 Description: Builder python standalone ELF
 

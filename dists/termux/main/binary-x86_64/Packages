@@ -2,12 +2,12 @@ Package: impulse
 Version: 1.0.0
 Architecture: x86_64
 Maintainer: @termux-app-store
-Installed-Size: 40
+Installed-Size: 1196
 Filename: pool/main/impulse_1.0.0_x86_64.deb
-Size: 838
-MD5sum: 586f7b9273463e272847c107e5040671
-SHA1: 40d62ac18725c961372426de7429e027153590de
-SHA256: fb6a325e95ff142d8140d737837a79b05171875379cd8199d11408dd02650d31
+Size: 298496
+MD5sum: ab6a7f536bb0fddcbac148a72b97c9a0
+SHA1: dd8dde3ff0c9165dcd12ebc896c1c613a1cccb97
+SHA256: e9f58734d99fc93689715995d7b2cac99937f239103cef0471f09ad06ef04653
 Homepage: https://github.com/LimerBoy/Impulse
 Description: Denial-of-Service ToolKit with multiple attack methods
 
@@ -15,12 +15,12 @@ Package: termstyle
 Version: 1.0.0
 Architecture: x86_64
 Maintainer: @djunekz
-Installed-Size: 40
+Installed-Size: 216
 Filename: pool/main/termstyle_1.0.0_x86_64.deb
-Size: 840
-MD5sum: 1c9b80fdee316476f68eaee4d59d9dab
-SHA1: 1278af3081e3649c39372f160b3f4423d800760d
-SHA256: 92d56892be14f89f4fe79f7f2fec293ef94e764982b7fd0052d7720496e57089
+Size: 49214
+MD5sum: b91138b18bc57006a7ae015c379e840f
+SHA1: 32d3cb568e3903cc831c17c4bfc151c274dd09be
+SHA256: 6723796d1d120298cedaee798b2d2dba29cc93a469dfc67e9a985199b8766070
 Homepage: https://gtihub.com/djunekz/termstyle
 Description: Simple tool for change color, command prompt, and cursor termux
 
@@ -28,13 +28,13 @@ Package: zora
 Version: 1.2.2
 Architecture: x86_64
 Maintainer: @termux-app-store
-Installed-Size: 40
+Installed-Size: 44
 Depends: python
 Filename: pool/main/zora_1.2.2_x86_64.deb
-Size: 810
-MD5sum: e89301414d26d92c4059ee039d8dc09d
-SHA1: fde362cb02eea9cf195b534fa133973263f5ad33
-SHA256: 0b39c833705bbfa64ba6321096b537b76b17176073849a1c84bead36b7f3588a
+Size: 830
+MD5sum: 9347b90c5a6e618d1800e7d7fd43d279
+SHA1: a3ffe66cddb21429b0ffccd8cdc39280f441fef4
+SHA256: 2fd054d7a56def558719833ad16382fda8613d798e1712c93352acf822e5e21c
 Homepage: https://github/djunekz/termux-app-store
 Description: The ultimate OSINT framework
 
@@ -42,13 +42,13 @@ Package: zoracrypter
 Version: 1.0.0
 Architecture: x86_64
 Maintainer: @termux-app-store
-Installed-Size: 40
+Installed-Size: 44
 Depends: clang, python
 Filename: pool/main/zoracrypter_1.0.0_x86_64.deb
-Size: 832
-MD5sum: 990c00d2b7e3ed9ce65b7a1c38da69ff
-SHA1: 9f47d5df7c94ae86eee213158581d44366a122a5
-SHA256: 9560bafec5167964da3aa0eb54a8e8be47682b7a76317159961a16029c204e0f
+Size: 846
+MD5sum: a231ce9a30195d266f25d3d55d3a52d1
+SHA1: cb118a64ebd542145a6a81bb07d9d22f7596aea2
+SHA256: 9c1146528b47503936d48a3056eff96ad35a88909d084cb982c3e548ac5ec598
 Homepage: https://github.com/djunekz/termux-app-store
 Description: Encrypter Stealth Binary Builder
 

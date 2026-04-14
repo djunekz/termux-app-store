@@ -2,13 +2,13 @@ Package: aura
 Version: 0.8.2
 Architecture: aarch64
 Maintainer: @termux-app-store
-Installed-Size: 40
+Installed-Size: 168
 Depends: nodejs
 Filename: pool/main/aura_0.8.2_aarch64.deb
-Size: 808
-MD5sum: de1567db0cf39a65748a6eb4b8d31e49
-SHA1: dcaa094e683fd9013319a3c345b666df29808016
-SHA256: 805cd1feaea11918c11d378ced644a6dbd1f104d5d912a08bd9f2c11045e5047
+Size: 13536
+MD5sum: b674bedc74e80c171a69855c7cbfba45
+SHA1: 07a8740e3da6edd61db2920b7e04a89b110f26e2
+SHA256: 7914ccc411e6c7cb4365dc8b3884f60463dc2b517633be06c1629708945b4d90
 Homepage: https://github.com/djunekz/aura
 Description: Adaptive Unified Runtime Assistant
 
@@ -18,10 +18,10 @@ Architecture: aarch64
 Maintainer: @termux-app-store
 Installed-Size: 40
 Filename: pool/main/bashxt_2.2_aarch64.deb
-Size: 834
-MD5sum: 3270e756a66c2d5ad347b5b48fa526bd
-SHA1: 4e834a5969b3dfa8395325daa18869c5e5281571
-SHA256: 3b579eacc1a710508ce211ad91e32e1d7b3467857b560986f4c35b994ed4da4b
+Size: 832
+MD5sum: e3b4b60e88a3b361a48753aba471f642
+SHA1: b53f950c78a1602097f7d5b6c1cc40e8b0dd320a
+SHA256: 39b89d8d613b50d44f167cf4208390aed28473835b0cb58c58080c9602e2bae1
 Homepage: https://github.com/djunekz/bashxt
 Description: basic command, code color, shortcut keyboar, etc information
 
@@ -29,13 +29,13 @@ Package: basic
 Version: 1.2.0
 Architecture: aarch64
 Maintainer: @termux-app-store
-Installed-Size: 40
+Installed-Size: 212
 Depends: python
 Filename: pool/main/basic_1.2.0_aarch64.deb
-Size: 836
-MD5sum: 067b07d56bc3c73754f81646be63249d
-SHA1: 6499b1a0e913e6e26e7cdaedbbba947b0639cbbf
-SHA256: 6a7e70328a4357217b7c7b04f356a860dba630cde98a1ecf5308e8a2c3e37b53
+Size: 32068
+MD5sum: b41fa15670b7d2cc60b68b1511e43f8b
+SHA1: e8478054844635997cd69eeed836e8d1f84743f7
+SHA256: 7cbb419a5119ada9d1671a523c6b5d41816e58a9f3f5aeceb2087a30e49b8852
 Homepage: https://github.com/djunekz/basic
 Description: Simulator Terminal learning basic command for beginner
 
@@ -43,12 +43,12 @@ Package: pnpm
 Version: 10.30.1
 Architecture: aarch64
 Maintainer: @termux-app-store
-Installed-Size: 40
+Installed-Size: 13008
 Filename: pool/main/pnpm_10.30.1_aarch64.deb
-Size: 798
-MD5sum: 863dc2585d98e522093b513fa650db3d
-SHA1: ab94b1e7d1eed182f56c3a2a08fef41d4dcd6771
-SHA256: 9a76a83611be6ee8cf3a058dbe66827c464dd1c2c279ded2962d691a7ec93dae
+Size: 2119122
+MD5sum: e7f225a00703ce1a248d1860dfbd7cce
+SHA1: 44a47bd16e2a6b8d1b6657e9570a76a1316b544a
+SHA256: 44229b10695ea1b7e4b351f19a3e951e14d7b565f027dfdc016696db5313d94c
 Homepage: https://github.com/pnpm/pnpm
 Description: Fast, disk space efficient package manager
 
@@ -58,10 +58,10 @@ Architecture: aarch64
 Maintainer: @termux-app-store
 Installed-Size: 40
 Filename: pool/main/sigit_2.0-pre_aarch64.deb
-Size: 830
-MD5sum: 0d898ce5aa9a2069bdd1d70c6981fa50
-SHA1: ef6865d52b5faf7b92cd902419234a90852f403c
-SHA256: aa40922c19094490e831157e5e3c0416c9e7d64699ed803d23390538a21576ee
+Size: 14480
+MD5sum: 3f435777dcde7dce052e6c62cea0bda4
+SHA1: 50da652b7ad1f4216636aea09e0ecc5476689079
+SHA256: a2e7981d35e34c06adba2ae99aaa4a2fb2e4b17eff8aa8acbf041ff152369532
 Homepage: https://github.com/termuxhackers-id/SIGIT
 Description: SIGIT - Simple Information Gathering Toolkit
 
@@ -69,12 +69,12 @@ Package: uv
 Version: 0.10.4
 Architecture: aarch64
 Maintainer: @termux-app-store
-Installed-Size: 40
+Installed-Size: 91796
 Filename: pool/main/uv_0.10.4_aarch64.deb
-Size: 856
-MD5sum: c645dbc1a8357394ffaef7218ced8d25
-SHA1: 4c93a59698a879105c120920d5b9b81210aa84dc
-SHA256: 07b64d5c02ea700fd67a89c8f68e8b68d41ecc7a915579008ffb01e9c1749242
+Size: 30107432
+MD5sum: 5cc723e1217513bc0ea3cfd02c7cb625
+SHA1: 5d4f4aad33ff737d39ced042c576aede08198f28
+SHA256: 07b411a0d13f87ceda270f70b015f1d7e3e8c0e38f3605f7b6b8f149ae7b595e
 Homepage: https://github.com/astral-sh/uv
 Description: An extremely fast Python package and project manager, written in Rust.
 
@@ -82,12 +82,12 @@ Package: webshake
 Version: 1.0.2
 Architecture: aarch64
 Maintainer: Djunekz
-Installed-Size: 40
+Installed-Size: 52
 Filename: pool/main/webshake_1.0.2_aarch64.deb
-Size: 804
-MD5sum: 88943cf69883bc4fb804207fb6e1589f
-SHA1: 0f0797626b6913f3232e71a7b735a6ee6d6c92f3
-SHA256: 7a64e8004027791fcdb16d183ef018996333dc14405e91597704cfe2b106f026
+Size: 3704
+MD5sum: 3fedb5a5505aec9b696d4f89f9bb7006
+SHA1: c5bef15b94b947f4ffbde1171c6a4b679de9678a
+SHA256: 6b7a3dfcef3878fab15e28ff4fc53b2a0b879fb84aafe7a9b5d86365f4756bc0
 Homepage: https://github.com/djunekz/webshake
 Description: Scan vulnerabilities and analyze websites
 
