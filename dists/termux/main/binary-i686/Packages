@@ -6,9 +6,9 @@ Installed-Size: 56
 Depends: nodejs
 Filename: pool/main/ani-cli_4.10_i686.deb
 Size: 8796
-MD5sum: 65437dab24f473761e64e745934def40
-SHA1: bae6338d6a6be4a33f69d7e5cf6a6228c8ecef8d
-SHA256: 546f484da128dcdec69232c44c17790291be5cf67dc75f4f2c24571c1d5b116d
+MD5sum: d807abcf8a625a73f14fc38d859a2da8
+SHA1: 8010d45b5e4cb5430de8b8c5b4f4130bc8c4048a
+SHA256: a1f52148318cebb9c9970d0d5058b2c19ef1ff801b3b683c380fe54097b0d78c
 Homepage: https://github.com/pystardust/ani-cli
 Description: A cli tool to browse and play anime
 
@@ -19,10 +19,10 @@ Maintainer: @termux-app-store
 Installed-Size: 568
 Depends: nmap, python, whois, curl, dnsutils
 Filename: pool/main/cybertuz_1.0.1_i686.deb
-Size: 105534
-MD5sum: 342f78468e6f9ad7bc3efa18452d1b5c
-SHA1: 63b4e1045605832958d62f9a41c89eb7ad6cc042
-SHA256: b4d3e80735369cf0c3547f5ccf2f5461ac008bed8cfbec862905f11d1892f0e3
+Size: 105542
+MD5sum: c87ddc7a69989ab1426573b178c4491c
+SHA1: f8adacb800e706a091911b20a7efe73c077b7541
+SHA256: 25653fe1426dcc77ce1715e3f2d20663f4ef383b1211dd4907bd2b6a5a9e9bed
 Homepage: https://github.com/djunekz/cybertuz
 Description: Comprehensive Educational Learning Platform for Termux
 
@@ -32,10 +32,10 @@ Architecture: i686
 Maintainer: @djunekz
 Installed-Size: 96
 Filename: pool/main/encrypt_1.1_i686.deb
-Size: 25212
-MD5sum: 37f17e0209aa9a9d624ba54527ce1b3f
-SHA1: cd52f51f67737a1c743d81a0287425b69f12edb9
-SHA256: 082ce955586a02dd6c7878a8d8c0debbf28dad277823c03c6d596b81f399c446
+Size: 25242
+MD5sum: 95cd3697341dba8c1df4ea75c8f59fa1
+SHA1: 3808f7bae99c886df361f1df7f887000bc79edf0
+SHA256: 9885d1103bf93c69fe2d6fb4f399e785bba0db8349d609ebaee8ff92198ced2e
 Homepage: https://github.com/djunekz/encrypt
 Description: ELF binary for file python/python3 with build deb package
 
