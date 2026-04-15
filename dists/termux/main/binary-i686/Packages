@@ -2,13 +2,13 @@ Package: ani-cli
 Version: 4.10
 Architecture: i686
 Maintainer: @termux-app-store
-Installed-Size: 56
+Installed-Size: 52
 Depends: nodejs
 Filename: pool/main/ani-cli_4.10_i686.deb
-Size: 8792
-MD5sum: a8c662bd0c9970cb2c2cbcb8328081bd
-SHA1: 1bd7516a19af504aacab308a64f54ea80f65bd26
-SHA256: 7e8780c6e5514046c2a49934812501415426357e3dfc47acfeee2f0e6253256c
+Size: 8766
+MD5sum: a1cc735b64f781394f92ead7f4ef20bd
+SHA1: de94e38b34fcd2f11e898a1b75838ef8a877eebc
+SHA256: bce03e88ab49dfdb7f7b07160594537e169b146b45b678077e9fa50245fa0dd4
 Homepage: https://github.com/pystardust/ani-cli
 Description: A cli tool to browse and play anime
 
@@ -16,13 +16,13 @@ Package: aura
 Version: 0.10.0
 Architecture: i686
 Maintainer: @termux-app-store
-Installed-Size: 25992
+Installed-Size: 260
 Depends: nodejs
 Filename: pool/main/aura_0.10.0_i686.deb
-Size: 2227554
-MD5sum: dd103443b1ab930a57e962d6c067607b
-SHA1: 2fc5509c07c3a9afff29507f818008d05347fdc7
-SHA256: 38bc2879cde29df61e9a6d367348a24f7bb5f3824c5b91f44c81dd70bd1f2d67
+Size: 30288
+MD5sum: f9b9ef8d17878e18e69a139be2d36c9a
+SHA1: eec6cfbe2ef508318c6b1d208d17be2ee69d7a6f
+SHA256: b3c17fc4804e7d6fb5c0e20139b099bc532f9b4cb573c5d6dc131bc5364408a1
 Homepage: https://github.com/djunekz/aura
 Description: Adaptive Unified Runtime Assistant
 
@@ -33,10 +33,10 @@ Maintainer: @termux-app-store
 Installed-Size: 568
 Depends: nmap, python, whois, curl, dnsutils
 Filename: pool/main/cybertuz_1.0.1_i686.deb
-Size: 105504
-MD5sum: 419de357c36409be1dc7682feb18f84d
-SHA1: 08553f310fbb67a6de20abc21a5f7b5b3da64345
-SHA256: e95f0661207411e9723ad2ea6b32824cf2a739459dccf9edec371b7a44d9c92f
+Size: 105524
+MD5sum: d052f789f18193893047aef8d7db2c4c
+SHA1: acf226c033f7272c065c4c7adebf00e44047b402
+SHA256: 6b3b0a4d7a06ea2c0adfe41656b6cad92cf368667fd76f140d4c4a648a430ff1
 Homepage: https://github.com/djunekz/cybertuz
 Description: Comprehensive Educational Learning Platform for Termux
 
@@ -47,9 +47,9 @@ Maintainer: @djunekz
 Installed-Size: 96
 Filename: pool/main/encrypt_1.1_i686.deb
 Size: 25240
-MD5sum: 880a0ffeda0ac79a14424f0d8cd98ffc
-SHA1: c5ca5f2fe59975f271ab2bf926748b9d49c97440
-SHA256: 4e10656ac00baf3c18179ad7937015c47d16da68c5edea3b9cccd937bca59ded
+MD5sum: a8c30835537f590d8a109527b0bb14a1
+SHA1: c7de9014aeb061fc0786a567b5af3fc38b203a4c
+SHA256: 15b15f0d8e28ac859f378aa59fb6b37b281dd202312d844f0742a9a52e325b61
 Homepage: https://github.com/djunekz/encrypt
 Description: ELF binary for file python/python3 with build deb package
 
