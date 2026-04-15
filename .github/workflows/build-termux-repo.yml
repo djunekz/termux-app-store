@@ -242,7 +242,7 @@ RUNNER_EOF
 
                 if [ -f "$TERMUX_PREFIX/bin/$pkg" ]; then
                   HAS_BINARY=true
-                  echo "  termux_step_make_install: OK (bin/$pkg terbuat)"
+                  echo "  termux_step_make_install OK (bin/$pkg terbuat)"
                 else
                   FILE_COUNT=$(find "$PKG_BUILD/data" -type f 2>/dev/null | wc -l)
                   if [ "$FILE_COUNT" -gt 0 ]; then
