@@ -2,12 +2,13 @@ Package: impulse
 Version: 1.0.0
 Architecture: x86_64
 Maintainer: @termux-app-store
-Installed-Size: 1144
+Installed-Size: 28
+Depends: python
 Filename: pool/main/impulse_1.0.0_x86_64.deb
-Size: 284762
-MD5sum: 15bd03988e5c8c2e191c7bf6c89f5192
-SHA1: 8184954d008363b4c17f502e3e4fb413de4d5520
-SHA256: e31d4cd3fa5bb6006472a624c9e38fc569166b76d5898b23938c69e568525d8c
+Size: 708
+MD5sum: 8071dde269baecea344017b500dd1eaf
+SHA1: 3fae0f86b85402d3a93e1400ff45aabff352e69d
+SHA256: 1a0410cbdc30495685f5300ff4ce72e4dea0d85920f73fcad2a61c161832c7ea
 Homepage: https://github.com/LimerBoy/Impulse
 Description: Denial-of-Service ToolKit with multiple attack methods
 
@@ -18,9 +19,9 @@ Maintainer: @djunekz
 Installed-Size: 188
 Filename: pool/main/termstyle_1.0.0_x86_64.deb
 Size: 49154
-MD5sum: fa892d69e5c3dc6f3f0ae7e949a77324
-SHA1: 0163e870d2e37dfa5dc0c2cccbaaa10257f0263c
-SHA256: 89558553afbb38e8df7057edce20905ca141d068243e4accd88f07881292a074
+MD5sum: 7a681a719406049c469b36124ae750a4
+SHA1: cbc607487ffdacb9034486d815ecfbc8dc5fe4f7
+SHA256: 3af1f306fba7c6a751ebdb1dd7073cdda11b9b47628b7dec24026da53b7b3215
 Homepage: https://gtihub.com/djunekz/termstyle
 Description: Simple tool for change color, command prompt, and cursor termux
 
