@@ -221,27 +221,9 @@ jobs:
 
                 cat > /tmp/_tas_runner.sh << 'RUNNER_EOF'
 set +e
-npm () {
-  if [ "$1" = "install" ] || [ "$1" = "ci" ]; then
-    echo "    [CI] npm $@ skipped (will run on-device)"
-    return 0
-  fi
-  command npm "$@"
-}
-export -f npm
-
-pip() {
-  if [ "$1" = "install" ]; then
-    shift
-    command pip install "$@" \
-      --target="${TERMUX_PREFIX}/lib/python3/dist-packages" \
-      --no-deps --quiet 2>/dev/null || \
-    command pip install "$@" --quiet 2>/dev/null || true
-    return 0
-  fi
-  command pip "$@"
-}
-export -f pip
+shopt -s expand_aliases
+alias npm='bash -lc '\''if [ "$1" = "install" ] || [ "$1" = "ci" ]; then echo "    [CI] npm $* skipped (will run on-device)"; exit 0; fi; command npm "$@"'\'' _'
+alias pip='bash -lc '\''if [ "$1" = "install" ]; then shift; command pip install "$@" --target="${TERMUX_PREFIX}/lib/python3/dist-packages" --no-deps --quiet 2>/dev/null || command pip install "$@" --quiet 2>/dev/null || true; exit 0; fi; command pip "$@"'\'' _'
 
 source "$BUILD_SH" 2>/dev/null || true
 
