@@ -30,7 +30,7 @@ jobs:
             deb_arch: i686
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Install build tools
         run: |
@@ -391,13 +391,13 @@ jobs:
         run: sudo apt-get install -y dpkg-dev
 
       - name: Checkout source (to read packages/ metadata)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: master
           path: source
 
       - name: Checkout gh-pages branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: gh-pages
           path: gh-pages
