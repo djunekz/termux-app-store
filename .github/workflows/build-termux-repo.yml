@@ -61,7 +61,7 @@ jobs:
             SRCURL="${TERMUX_PKG_SRCURL:-}"
             if [ -z "$SRCURL" ] || echo "$SRCURL" | grep -qE '\{|\$\{'; then
               RAW=$(grep 'TERMUX_PKG_SRCURL' "$BUILD_SH" | head -1 \
-                | sed "s/.*TERMUX_PKG_SRCURL[[:space:]]*=[[:space:]]*//") \
+                | sed "s/.*TERMUX_PKG_SRCURL[[:space:]]*=[[:space:]]*//" \
                 | tr -d '"' | tr -d "'")
               SRCURL=$(echo "$RAW" \
                 | sed "s|\\\${TERMUX_PKG_VERSION}|$VERSION|g" \
@@ -219,36 +219,8 @@ jobs:
               else
                 echo "  Running termux_step_make_install()..."
 
-                cat > /tmp/_tas_runner.sh << 'RUNNER_EOF'
-set +e
-npm () {
-  if [ "$1" = "install" ] || [ "$1" = "ci" ]; then
-    echo "    [CI] npm $@ skipped (will run on-device)"
-    return 0
-  fi
-  command npm "$@"
-}
-export -f npm
-
-pip() {
-  if [ "$1" = "install" ]; then
-    shift
-    command pip install "$@" \
-      --target="${TERMUX_PREFIX}/lib/python3/dist-packages" \
-      --no-deps --quiet 2>/dev/null || \
-    command pip install "$@" --quiet 2>/dev/null || true
-    return 0
-  fi
-  command pip "$@"
-}
-export -f pip
-
-source "$BUILD_SH" 2>/dev/null || true
-
-if declare -f termux_step_make_install > /dev/null 2>&1; then
-  termux_step_make_install 2>&1 | sed 's/^/    /'
-fi
-RUNNER_EOF
+                echo "c2V0ICtlCnNob3B0IC1zIGV4cGFuZF9hbGlhc2VzCgpfbnBtX3dyYXBwZXIoKSB7CiAgaWYgWyAiJDEiID0gImluc3RhbGwiIF0gfHwgWyAiJDEiID0gImNpIiBdOyB0aGVuCiAgICBlY2hvICIgICAgW0NJXSBucG0gJCogc2tpcHBlZCAod2lsbCBydW4gb24tZGV2aWNlKSIKICAgIHJldHVybiAwCiAgZmkKICBjb21tYW5kIG5wbSAiJEAiCn0KYWxpYXMgbnBtPSdfbnBtX3dyYXBwZXInCgpfcGlwX3dyYXBwZXIoKSB7CiAgaWYgWyAiJDEiID0gImluc3RhbGwiIF07IHRoZW4KICAgIHNoaWZ0CiAgICBjb21tYW5kIHBpcCBpbnN0YWxsICIkQCIgLS10YXJnZXQ9IiR7VEVSTVVYX1BSRUZJWH0vbGliL3B5dGhvbjMvZGlzdC1wYWNrYWdlcyIgLS1uby1kZXBzIC0tcXVpZXQgMj4vZGV2L251bGwgXAogICAgICB8fCBjb21tYW5kIHBpcCBpbnN0YWxsICIkQCIgLS10YXJnZXQ9IiR7VEVSTVVYX1BSRUZJWH0vbGliL3B5dGhvbjMvZGlzdC1wYWNrYWdlcyIgLS1uby1kZXBzIC0tcXVpZXQKICAgIHJldHVybiAwCiAgZmkKICBjb21tYW5kIHBpcCAiJEAiCn0KYWxpYXMgcGlwPSdfcGlwX3dyYXBwZXInCgpzb3VyY2UgIiRCVUlMRF9TSCIgMj4vZGV2L251bGwgfHwgdHJ1ZQoKaWYgZGVjbGFyZSAtZiB0ZXJtdXhfc3RlcF9tYWtlX2luc3RhbGwgPiAvZGV2L251bGwgMj4mMTsgdGhlbgogIHRlcm11eF9zdGVwX21ha2VfaW5zdGFsbCAyPiYxIHwgc2VkICdzL14vICAgIC8nCmZpCg==" \
+                  | base64 -d > /tmp/_tas_runner.sh
 
                 STEP_RESULT=0
                 TERMUX_PREFIX="$TERMUX_PREFIX" \
@@ -260,7 +232,7 @@ RUNNER_EOF
 
                 if [ -f "$TERMUX_PREFIX/bin/$pkg" ]; then
                   HAS_BINARY=true
-                  echo "  termux_step_make_install: OK (bin/$pkg terbuat)"
+                  echo "  termux_step_make_install OK (bin/$pkg terbuat)"
                 else
                   FILE_COUNT=$(find "$PKG_BUILD/data" -type f 2>/dev/null | wc -l)
                   if [ "$FILE_COUNT" -gt 0 ]; then
