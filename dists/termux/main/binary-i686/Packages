@@ -2,13 +2,13 @@ Package: ani-cli
 Version: 4.10
 Architecture: i686
 Maintainer: @termux-app-store
-Installed-Size: 52
+Installed-Size: 24
 Depends: nodejs
 Filename: pool/main/ani-cli_4.10_i686.deb
-Size: 8768
-MD5sum: d937423cdab9fe50940f30f98806e314
-SHA1: 2dd3ad82a730dcb9f0a4ff0ce1eb827f5847baac
-SHA256: 13d4b709280cbabc5e2a3390dc3701bb98234e28bc576101729713be2f21f296
+Size: 612
+MD5sum: fbe43019d74f9ad5bce3717627a57904
+SHA1: 960a70fd8fec8da5816efc5c3dc93e88ac3e0f72
+SHA256: af06d8a8044b85236bda9de2f379e004b72d3b458e338d38d82a9ca64b7d1790
 Homepage: https://github.com/pystardust/ani-cli
 Description: A cli tool to browse and play anime
 
@@ -16,13 +16,13 @@ Package: aura
 Version: 0.10.0
 Architecture: i686
 Maintainer: @termux-app-store
-Installed-Size: 260
+Installed-Size: 40
 Depends: nodejs
 Filename: pool/main/aura_0.10.0_i686.deb
-Size: 30292
-MD5sum: fe03a9c199f29098af329e8201ae7673
-SHA1: 4c645f0bb3308eb10640b2e8224703c7ca6eb0bf
-SHA256: 42d1afce1239dade04b3455e20d77f50811c4e7bbccd508164ad19a420ebc1e3
+Size: 794
+MD5sum: ba14cfbe1f2f222b9b94ee4a554354d2
+SHA1: 7a3708aa99d7dd980963af3eb85261c47feac513
+SHA256: fd2f2d74752c6de7b824fbb16b50bd5eb25d95b165d5bab04968bb3b7a433381
 Homepage: https://github.com/djunekz/aura
 Description: Adaptive Unified Runtime Assistant
 
@@ -34,9 +34,9 @@ Installed-Size: 28
 Depends: nmap, python, whois, curl, dnsutils
 Filename: pool/main/cybertuz_1.0.1_i686.deb
 Size: 724
-MD5sum: d81347146f1aed61d2f05e2b2c59c995
-SHA1: 7e7b71ead504c6be6727584abf6e44ef17b5ccf5
-SHA256: db626e3ef5a34357406d64fa1f36f2af5e9b1864be4ad1b77cbcbefd40758fa4
+MD5sum: 588993ea951817bbea4ccb7dd7eb7f30
+SHA1: 0cbcdf8fdc2ff9ed945666e129afd4bf25cea2f0
+SHA256: 4bdd4780476e1e4e96fb7c5ae35f34db86244862336382b8dfc87f67b21a202a
 Homepage: https://github.com/djunekz/cybertuz
 Description: Comprehensive Educational Learning Platform for Termux
 
