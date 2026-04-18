@@ -1,3 +1,17 @@
+Package: ani-cli
+Version: 4.11
+Architecture: x86_64
+Maintainer: @termux-app-store
+Installed-Size: 24
+Depends: nodejs
+Filename: pool/main/ani-cli_4.11_x86_64.deb
+Size: 614
+MD5sum: 70f916a082d7a7edcd4002e86287ce16
+SHA1: 13f840b3993920cb1467324f520c170f84d641b9
+SHA256: daf65166569ab335aa5cec89ac1c89bd9731abab3ae1f71ab9af2afb0ad3a457
+Homepage: https://github.com/pystardust/ani-cli
+Description: A cli tool to browse and play anime
+
 Package: impulse
 Version: 1.0.0
 Architecture: x86_64
@@ -5,10 +19,10 @@ Maintainer: @termux-app-store
 Installed-Size: 28
 Depends: python
 Filename: pool/main/impulse_1.0.0_x86_64.deb
-Size: 706
-MD5sum: 701087a8488364c2959bb0136a896367
-SHA1: 3c19a3289cb2891c0baf6b5e678da4d5484620dd
-SHA256: 1158a63466820ebae3890ed33a9829c22848956cbd87777cb5e1a3a5389930c9
+Size: 708
+MD5sum: db3c5b79e3579991e19027ef3608381b
+SHA1: 5fdc06fc3f1483f721f7ca500aeb8cb95db275ea
+SHA256: c6a5132ccbe3f73f81cbd763121eaac48bcd3aa319f93fd7af37ce43d6e79a46
 Homepage: https://github.com/LimerBoy/Impulse
 Description: Denial-of-Service ToolKit with multiple attack methods
 
@@ -19,9 +33,9 @@ Maintainer: @djunekz
 Installed-Size: 188
 Filename: pool/main/termstyle_1.0.0_x86_64.deb
 Size: 49154
-MD5sum: 336cd660d7b4481ef806d91a49408078
-SHA1: 9e5944c3ff424be9498eecd0b2638fde6b7fce2f
-SHA256: 8ac53c9b53ed58903df1fc25b6376ca96d99c806a92a46c1f7fcc81aa3ed132a
+MD5sum: a9197dabf811b8d97776b86a3e0ab49f
+SHA1: 11749d45b717c2b84a428326c6ac4ac17bc94b1d
+SHA256: e782d6d28d8d2f22098404b0ea6999693c8d126057a5a420add5aa7fd096ed4c
 Homepage: https://gtihub.com/djunekz/termstyle
 Description: Simple tool for change color, command prompt, and cursor termux
 
