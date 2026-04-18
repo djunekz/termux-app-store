@@ -77,6 +77,20 @@ SHA256: 903b36a8fcd8e0f3c106488d5499b1af8062c19a90d6b40db03b75fbdc7348c0
 Homepage: https://github.com/termuxhackers-id/SIGIT
 Description: SIGIT - Simple Information Gathering Toolkit
 
+Package: termux-app-store
+Version: 0.2.4
+Architecture: aarch64
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 132
+Depends: python, python-pip
+Filename: pool/main/termux-app-store_0.2.4_aarch64.deb
+Size: 14330
+MD5sum: c6e8361d0939292661aed15ff20f4bb9
+SHA1: d1d5840180957f8c18d83eedf8e129f436858cc2
+SHA256: 3c92fc8528810341e862377ec23745de49525fbc3999a81b287a6cfb0aae4ed9
+Homepage: https://github.com/djunekz/termux-app-store
+Description: The first offline-first, source-based TUI package manager for Termux
+
 Package: tx
 Version: 1.0.0
 Architecture: aarch64

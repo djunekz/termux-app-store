@@ -7,48 +7,121 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Courier New',monospace;background:#0d1117;color:#c9d1d9;padding:24px 16px;line-height:1.6}
-.wrap{max-width:760px;margin:0 auto}
-h1{color:#58a6ff;font-size:22px;margin-bottom:4px}
-.sub{color:#8b949e;font-size:13px;margin-bottom:24px}
-h2{color:#79c0ff;font-size:12px;font-weight:bold;margin:28px 0 8px;text-transform:uppercase;letter-spacing:.08em}
-pre{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:16px;overflow-x:auto;font-size:13px}
+.wrap{max-width:880px;margin:0 auto}
+h1{color:#58a6ff;font-size:24px;margin-bottom:4px}
+.sub{color:#8b949e;font-size:13px;margin-bottom:20px}
+h2{color:#79c0ff;font-size:11px;font-weight:bold;margin:28px 0 8px;text-transform:uppercase;letter-spacing:.1em}
+pre{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:14px;overflow-x:auto;font-size:13px}
 code{color:#7ee787}
 a{color:#58a6ff;text-decoration:none}
 a:hover{text-decoration:underline}
-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:4px}
-th{text-align:left;padding:6px 12px;color:#8b949e;border-bottom:1px solid #21262d;font-weight:normal}
-td{padding:5px 12px;border-bottom:1px solid #161b22}
-td:first-child{color:#7ee787}
-td:nth-child(2){color:#e3b341;min-width:80px}
-td:nth-child(3){color:#8b949e}
+table{width:100%;border-collapse:collapse;font-size:12px;margin-top:4px}
+th{text-align:left;padding:6px 10px;color:#8b949e;border-bottom:1px solid #21262d;font-weight:normal;font-size:11px;text-transform:uppercase}
+td{padding:5px 10px;border-bottom:1px solid #161b22;vertical-align:top}
+td:first-child{color:#7ee787;white-space:nowrap}
+td:nth-child(2){color:#e3b341;white-space:nowrap}
+td:nth-child(4){color:#6e7681;font-size:11px}
 tr:hover td{background:#161b22}
-.badges{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:24px}
-.badge{background:#1f6feb22;color:#58a6ff;border:1px solid #1f6feb55;font-size:11px;padding:2px 10px;border-radius:12px}
+.badges{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
+.badge{background:#1f6feb22;color:#58a6ff;border:1px solid #1f6feb55;font-size:11px;padding:3px 10px;border-radius:12px}
 .badge.green{background:#23863622;color:#3fb950;border-color:#23863655}
+.version-card{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:14px 18px;margin-bottom:20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.version-label{color:#8b949e;font-size:12px;margin-bottom:2px}
+.version-num{color:#3fb950;font-size:26px;font-weight:bold}
+.version-cmd{color:#484f58;font-size:12px;margin-left:auto}
 footer{margin-top:48px;color:#484f58;font-size:12px;border-top:1px solid #21262d;padding-top:16px}
 </style>
 </head>
 <body>
 <div class="wrap">
+
 <h1>Termux App Store</h1>
 <p class="sub">by <a href="https://github.com/djunekz">@djunekz</a> &nbsp;&middot;&nbsp;
   <a href="https://github.com/djunekz/termux-app-store">GitHub</a></p>
-<div class="badges">
-  <span class="badge green">12 packages</span>
-  <span class="badge">aarch64</span><span class="badge">arm</span>
-  <span class="badge">x86_64</span><span class="badge">i686</span>
+
+<div class="version-card">
+  <div>
+    <div class="version-label">termux-app-store</div>
+    <div class="version-num">v0.2.4</div>
+  </div>
+  <div class="version-cmd">pkg install termux-app-store</div>
 </div>
+
+<div class="badges">
+  <span class="badge green">42 packages in index</span>
+  <span class="badge">aarch64</span>
+  <span class="badge">arm</span>
+  <span class="badge">x86_64</span>
+  <span class="badge">i686</span>
+</div>
+
 <h2>Quick Setup</h2>
 <pre><code>curl -fsSL https://djunekz.github.io/termux-app-store/install-repo.py | python</code></pre>
-<h2>Available packages (12)</h2>
+
+<h2>Usage</h2>
+<pre><code>pkg install termux-app-store     # install
+pkg upgrade termux-app-store     # update to v0.2.4
+pkg uninstall termux-app-store   # remove
+termux-app-store                 # launch TUI
+termux-app-store list            # show all 42 packages
+termux-app-store install &lt;pkg&gt;   # install a package</code></pre>
+
+<h2>All packages (42)</h2>
 <table>
-<thead><tr><th>Package</th><th>Version</th><th>Description</th></tr></thead>
-<tbody><tr><td>ani-cli</td><td>4.11</td><td>A cli tool to browse and play anime</td></tr><tr><td>aura</td><td>0.10.0</td><td>Adaptive Unified Runtime Assistant</td></tr><tr><td>bashxt</td><td>2.2</td><td>basic command, code color, shortcut keyboar, etc information</td></tr><tr><td>basic</td><td>1.2.0</td><td>Simulator Terminal learning basic command for beginner</td></tr><tr><td>baxter</td><td>1.2.4</td><td>Encrypt and decrypt files termux</td></tr><tr><td>bower</td><td>1.8.12</td><td>A package manager for the web</td></tr><tr><td>cybertuz</td><td>1.0.1</td><td>Comprehensive Educational Learning Platform for Termux</td></tr><tr><td>encrypt</td><td>1.1</td><td>ELF binary for file python/python3 with build deb package</td></tr><tr><td>fd</td><td>10.4.2</td><td>A simple, fast and user-friendly alternative to 'find'</td></tr><tr><td>impulse</td><td>1.0.0</td><td>Denial-of-Service ToolKit with multiple attack methods</td></tr><tr><td>infoooze</td><td>1.1.9</td><td>A OSINT tool which helps you to quickly find information effectively.</td></tr><tr><td>lux</td><td>0.24.1</td><td>Fast and simple video download library and CLI tool written in Go</td></tr><tr><td>pmcli</td><td>0.1.0</td><td>Terminal-based project manager CLI</td></tr><tr><td>pnpm</td><td>10.30.1</td><td>Fast, disk space efficient package manager</td></tr><tr><td>pymaker</td><td>1.0.0</td><td>Simple tool for create python script</td></tr><tr><td>sigit</td><td>2.0</td><td>SIGIT - Simple Information Gathering Toolkit</td></tr><tr><td>tdoc</td><td>1.0.6</td><td>TDOC - Diagnostic and repair utility for Termux environment</td></tr><tr><td>termstyle</td><td>1.0.0</td><td>Simple tool for change color, command prompt, and cursor termux</td></tr><tr><td>tuifimanager</td><td>5.2.6</td><td>A terminal-based TUI file manager</td></tr><tr><td>tx</td><td>1.0.0</td><td>Advance Terminal Editor Ultimate</td></tr><tr><td>uv</td><td>0.11.7</td><td>An extremely fast Python package and project manager, written in Rust.</td></tr><tr><td>webshake</td><td>1.0.2</td><td>Scan vulnerabilities and analyze websites</td></tr><tr><td>zora</td><td>1.2.2</td><td>The ultimate OSINT framework</td></tr><tr><td>zorabuilder</td><td>1.0.0</td><td>Builder python standalone ELF</td></tr><tr><td>zoracrypter</td><td>1.0.0</td><td>Encrypter Stealth Binary Builder</td></tr></tbody>
+<thead><tr><th>Package</th><th>Version</th><th>Description</th><th>Depends</th></tr></thead>
+<tbody>
+<tr><td>ani-cli</td><td>4.11</td><td>A cli tool to browse and play anime</td><td>nodejs</td></tr>
+<tr><td>aura</td><td>0.10.0</td><td>Adaptive Unified Runtime Assistant</td><td>nodejs</td></tr>
+<tr><td>auxscan</td><td>1.0.0</td><td>Vulnerability Scanner to automate certain tasks</td><td>python, python-pip, python-setuptools</td></tr>
+<tr><td>bashxt</td><td>2.2</td><td>basic command, code color, shortcut keyboar, etc information</td><td>&mdash;</td></tr>
+<tr><td>basic</td><td>1.2.0</td><td>Simulator Terminal learning basic command for beginner</td><td>python</td></tr>
+<tr><td>baxter</td><td>1.2.4</td><td>Encrypt and decrypt files termux</td><td>nodejs</td></tr>
+<tr><td>bower</td><td>1.8.12</td><td>A package manager for the web</td><td>nodejs</td></tr>
+<tr><td>clickjacking-tester</td><td>1.0.0</td><td>A python script designed to check if the website if vulnerable of clickjacking and create a poc</td><td>python, python-pip, python-setuptools</td></tr>
+<tr><td>cmseek</td><td>1.1.3</td><td>CMS Detection and Exploitation suite - Scan WordPress, Joomla, Drupal and over 180 other CMSs</td><td>python, python-pip, python-setuptools</td></tr>
+<tr><td>cmsmap</td><td>1.0.0</td><td>CMSmap is a python open source CMS scanner that automates the process of detecting security flaws of the most popular CMSs.</td><td>python, python-pip, python-setuptools</td></tr>
+<tr><td>cybertuz</td><td>1.0.1</td><td>Comprehensive Educational Learning Platform for Termux</td><td>nmap, python, whois, curl, dnsutils</td></tr>
+<tr><td>encrypt</td><td>1.1</td><td>ELF binary for file python/python3 with build deb package</td><td>&mdash;</td></tr>
+<tr><td>fd</td><td>10.4.2</td><td>A simple, fast and user-friendly alternative to 'find'</td><td>&mdash;</td></tr>
+<tr><td>gemail-hack</td><td>1.0.0</td><td>python script for Hack gmail account brute force</td><td>python, python-pip, python-setuptools</td></tr>
+<tr><td>ghosttrack</td><td>1.0.0</td><td>Useful tool to track location or mobile number</td><td>python, python-pip, python-setuptools</td></tr>
+<tr><td>goblinwordgenerator</td><td>1.0.0</td><td>Python wordlist generator</td><td>python, python-pip, python-setuptools</td></tr>
+<tr><td>hammer</td><td>1.0.0</td><td>Ddos attack tool for termux</td><td>python, python-pip, python-setuptools</td></tr>
+<tr><td>hash-buster</td><td>1.0.0</td><td>hash-buster — auto-packaged by termux-build-init</td><td>&mdash;</td></tr>
+<tr><td>ht-wps-breaker</td><td>1.0.0</td><td>HT-WPS Breaker (High Touch WPS Breaker)</td><td>&mdash;</td></tr>
+<tr><td>hunner</td><td>1.0.0</td><td>Hacking framework</td><td>python, python-pip, python-setuptools</td></tr>
+<tr><td>impulse</td><td>1.0.0</td><td>Denial-of-Service ToolKit with multiple attack methods</td><td>python</td></tr>
+<tr><td>infoooze</td><td>1.1.9</td><td>A OSINT tool which helps you to quickly find information effectively.</td><td>nodejs</td></tr>
+<tr><td>instareporter</td><td>1.0.0</td><td>Instagram Mass Reporting Tool</td><td>python, python-pip, python-setuptools</td></tr>
+<tr><td>ip-tracker</td><td>1.0.0</td><td>Track anyone's IP just opening a link!</td><td>&mdash;</td></tr>
+<tr><td>ipgeolocation</td><td>2.0.4</td><td>Retrieve IP Geolocation information</td><td>python, python-pip, python-setuptools</td></tr>
+<tr><td>lazymux</td><td>1.0.0</td><td>termux tool installer</td><td>python, python-core, python-pip, python-setuptools</td></tr>
+<tr><td>lux</td><td>0.24.1</td><td>Fast and simple video download library and CLI tool written in Go</td><td>&mdash;</td></tr>
+<tr><td>pmcli</td><td>0.1.0</td><td>Terminal-based project manager CLI</td><td>rust, openssl, zlib</td></tr>
+<tr><td>pnpm</td><td>10.30.1</td><td>Fast, disk space efficient package manager</td><td>&mdash;</td></tr>
+<tr><td>pymaker</td><td>1.0.0</td><td>Simple tool for create python script</td><td>python</td></tr>
+<tr><td>sigit</td><td>2.0</td><td>SIGIT - Simple Information Gathering Toolkit</td><td>&mdash;</td></tr>
+<tr><td>tdoc</td><td>1.0.6</td><td>TDOC - Diagnostic and repair utility for Termux environment</td><td>bash, coreutils, curl, git, gnupg, termux-tools</td></tr>
+<tr><td>termstyle</td><td>1.0.0</td><td>Simple tool for change color, command prompt, and cursor termux</td><td>&mdash;</td></tr>
+<tr><td>termux-ai</td><td>1.0.0</td><td>Interactive AI tool for Termux with 10+ providers and 50+ image models ✨</td><td>&mdash;</td></tr>
+<tr><td>tuifimanager</td><td>5.2.6</td><td>A terminal-based TUI file manager</td><td>python</td></tr>
+<tr><td>tx</td><td>1.0.0</td><td>Advance Terminal Editor Ultimate</td><td>python, ncurses</td></tr>
+<tr><td>userfinder</td><td>1.0.0</td><td>userfinder — auto-packaged by termux-build-init</td><td>&mdash;</td></tr>
+<tr><td>uv</td><td>0.11.7</td><td>An extremely fast Python package and project manager, written in Rust.</td><td>&mdash;</td></tr>
+<tr><td>webshake</td><td>1.0.2</td><td>Scan vulnerabilities and analyze websites</td><td>&mdash;</td></tr>
+<tr><td>zora</td><td>1.2.2</td><td>The ultimate OSINT framework</td><td>python</td></tr>
+<tr><td>zorabuilder</td><td>1.0.0</td><td>Builder python standalone ELF</td><td>python, binutils-is-llvm</td></tr>
+<tr><td>zoracrypter</td><td>1.0.0</td><td>Encrypter Stealth Binary Builder</td><td>clang, python</td></tr>
+</tbody>
 </table>
-<h2>Repository links</h2>
+
+<h2>Repository endpoints</h2>
 <pre><code>dists/termux/main/binary-aarch64/Packages
 dists/termux/main/binary-arm/Packages
 dists/termux/main/binary-x86_64/Packages
 dists/termux/main/binary-i686/Packages</code></pre>
-<footer>Last updated: 2026-04-18 04:40 UTC</footer>
-</div></body></html>
+
+<footer>Last updated: 2026-04-18 11:36 UTC</footer>
+</div>
+</body>
+</html>
