@@ -4,10 +4,10 @@ Architecture: aarch64
 Maintainer: @termux-app-store
 Installed-Size: 44
 Filename: pool/main/bashxt_2.2_aarch64.deb
-Size: 4926
-MD5sum: 78a36b6cbebe42d308349018af1ed5eb
-SHA1: 5b285fa0fb1ac413e9695eb85b025fe8e90ad992
-SHA256: b6af8bf133cba447f010e5977be5be568aa989bc575b617ad8c0594c55709424
+Size: 4924
+MD5sum: eaf0a24d88a7a354c8ab1146dce544a6
+SHA1: fc9247bbd9fc3c569632c58f3ef68b85ffb1f528
+SHA256: ef8a1218d2ef5a4405cf5eaa24fa76c9557b310d9ddb3cc2da41c5b2548fb9c1
 Homepage: https://github.com/djunekz/bashxt
 Description: basic command, code color, shortcut keyboar, etc information
 
@@ -19,9 +19,9 @@ Installed-Size: 184
 Depends: python
 Filename: pool/main/basic_1.2.0_aarch64.deb
 Size: 31962
-MD5sum: 5857d6f6ca84af7c5fc219d48f174bae
-SHA1: cac0a101e41c877414151b2976a69f9c8267c646
-SHA256: 3c215c79107ab1749e472499e46392e533f97f5245f57926e7f7a0c3c9198b87
+MD5sum: 977bcac90775ba86acdcc0a701264fb0
+SHA1: 1df6f82cc9cb1ebab882c4f079ffbe5a4ebe4d28
+SHA256: 2091c874ecd7a40709d492710c276c0d342e1a2e9ef58a30d64c72e07df43f6c
 Homepage: https://github.com/djunekz/basic
 Description: Simulator Terminal learning basic command for beginner
 
@@ -44,10 +44,10 @@ Architecture: aarch64
 Maintainer: @termux-app-store
 Installed-Size: 21276
 Filename: pool/main/lux_0.24.1_aarch64.deb
-Size: 5965596
-MD5sum: aade74623533fd68ea3816ad9884f158
-SHA1: c2df63f6874e23b71e4efb7a6bfaa4372c05b468
-SHA256: 0eb93f8b58179a477c87662b845c5d249e43fcb836a8c1568ce3d827b99d6e86
+Size: 5965510
+MD5sum: 2e70cbd9d3265de814bd5381f57c641b
+SHA1: 66b9d1af4fd7b9f64e588d5877692c67d1af9d18
+SHA256: f7bb11c0cc4be42d613862beada436090dd24b6dc1accfc968abd62a53e40df2
 Homepage: https://github.com/iawia002/lux
 Description: Fast and simple video download library and CLI tool written in Go
 
@@ -57,10 +57,10 @@ Architecture: aarch64
 Maintainer: @termux-app-store
 Installed-Size: 28
 Filename: pool/main/pnpm_10.30.1_aarch64.deb
-Size: 670
-MD5sum: a206fbce0b09eacb97e3cc3bb5600ede
-SHA1: b7bdf36640262deff58e8054f7455627c4142f3b
-SHA256: 9b489d4f77892f20629f8533cbd7ed34bedecef7d215097a25fa3eb52ce56fdf
+Size: 666
+MD5sum: 73661207c4116bd92f912049c4ac8c88
+SHA1: 5bd42d866c792a6a59a0b409c313cad6cfdb2050
+SHA256: 9005a21f362314ce58967905d8a77a92dd25abfcdc200303f665d2b9c6008505
 Homepage: https://github.com/pnpm/pnpm
 Description: Fast, disk space efficient package manager
 
@@ -84,10 +84,10 @@ Maintainer: @termux-app-store
 Installed-Size: 4956
 Depends: python, ncurses
 Filename: pool/main/tx_1.0.0_aarch64.deb
-Size: 4955830
-MD5sum: fd98ad360a3e06d462d2af7d17aecc3b
-SHA1: a68ba51502331878449e4569683faf2f53b431d4
-SHA256: 0c6096a2884e4d0fda3f0b6c30ba32a72756c56aa69636dab345eb40d49f0d3a
+Size: 4955834
+MD5sum: df3518be6883cde2e29d0a241c3b8908
+SHA1: 8c1f2d68d9177e9e7ff0ce7e2b1753dbcb88754a
+SHA256: 81c6c5d7692937e943a3e76372538791123c88229c7d93b645fb3ceda268d581
 Homepage: https://github.com/djunekz/termux-app-store
 Description: Advance Terminal Editor Ultimate
 
@@ -97,10 +97,10 @@ Architecture: aarch64
 Maintainer: @termux-app-store
 Installed-Size: 45712
 Filename: pool/main/uv_0.10.4_aarch64.deb
-Size: 14930214
-MD5sum: 02cb1dc63fc3622b8557f6ddc4426832
-SHA1: ee3b1e79d776960b98be5421b9748d946403a93d
-SHA256: 35b2818bea3bd989154f9395dabd7dc3b63a26821d9eb3e8a919cd2932b31aff
+Size: 14930216
+MD5sum: c9cc579e0d4c2c226bc8cab67282bddf
+SHA1: e5fbf3a0bca244c7a16b68b677d1555423dba3cb
+SHA256: 0bff9ea22340fe1ae4d01c8859017bc474ea2829dbfd505207c5275b7e229234
 Homepage: https://github.com/astral-sh/uv
 Description: An extremely fast Python package and project manager, written in Rust.
 
@@ -110,10 +110,10 @@ Architecture: aarch64
 Maintainer: Djunekz
 Installed-Size: 48
 Filename: pool/main/webshake_1.0.2_aarch64.deb
-Size: 3728
-MD5sum: ec60b6e2b7f5039aed53d1b150a0ce7c
-SHA1: 5a3774f12d7e169c65f9e73d180b4cba97ca019a
-SHA256: 5090212080fc88422e3feb016fdec0726bd025863e88ed135d93da9e07a7c3d8
+Size: 3734
+MD5sum: 54d6ab9ea648d91beaf4321fe983aa51
+SHA1: d27c321182a50e03a7715d22659527f32607150d
+SHA256: 169eec96382b971ab5d817b5ff15adc749a5a5416fd8f27d8e129947335d1271
 Homepage: https://github.com/djunekz/webshake
 Description: Scan vulnerabilities and analyze websites
 
@@ -124,10 +124,10 @@ Maintainer: @termux-app-store
 Installed-Size: 5332
 Depends: python
 Filename: pool/main/zora_1.2.2_aarch64.deb
-Size: 5337618
-MD5sum: dce34fceddbc8daf57214003eef2b5e8
-SHA1: 1722d54b9d51d37b1da4cf69a98c954c77083dfe
-SHA256: c43348c1dc928046b4cfb81d0ac225087c04588f7fb505d251d5e9adb6258f64
+Size: 5337616
+MD5sum: d781452c4a918874e60c692929f7d813
+SHA1: 48cd5bb637d04ff2593ff826bd7a848d7c66d702
+SHA256: 7f5b07c7a2fc076694d9bb376a658a46822f41145e446096bcf5ce68baa0e64a
 Homepage: https://github/djunekz/termux-app-store
 Description: The ultimate OSINT framework
 
@@ -138,10 +138,10 @@ Maintainer: @termux-app-store
 Installed-Size: 4832
 Depends: python
 Filename: pool/main/zorabuilder_1.0.0_aarch64.deb
-Size: 4833394
-MD5sum: c249c89b6442d4fa39ede79a75f97d49
-SHA1: b45261ef688fb53af371031544a5f2209c236247
-SHA256: 291e68810eee2145794c22fc842cfe60bd881485a429e0d7815b203e6ab8d84a
+Size: 4833398
+MD5sum: 789740438d7f6ee37a0e60ddd9deca6e
+SHA1: a7a21b1aaa004c2844eb66339635d49601476f29
+SHA256: 1ab4717cf7c4c6ca1613a7aaea849ba8a2b2b57265fecaeaefe222eeeaac1f27
 Homepage: https://github.com/djunekz/termux-app-store
 Description: Builder python standalone ELF
 
@@ -152,10 +152,10 @@ Maintainer: @termux-app-store
 Installed-Size: 44
 Depends: clang, python
 Filename: pool/main/zoracrypter_1.0.0_aarch64.deb
-Size: 11296
-MD5sum: 502c2a168b0c2ba1a14ccc59b4c0b0ef
-SHA1: 40487a6333fcfa5c3891b4cdc6a8cca4912fe2df
-SHA256: 43bae8ecc33eba7be92dadf84a6562e6ca14adc0042116ffc298f33f741aee24
+Size: 11300
+MD5sum: ed0e8c340eb4479b91d8b16f4679d618
+SHA1: 405f5eda5e9d70207ad9185f61f6129d403b3218
+SHA256: 96135db374a9c9287f7fb6b85a778bebccaa4b6ca4d9e475acb2b1fc2b6d2050
 Homepage: https://github.com/djunekz/termux-app-store
 Description: Encrypter Stealth Binary Builder
 
