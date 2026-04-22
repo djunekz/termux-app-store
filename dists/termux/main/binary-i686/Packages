@@ -1,55 +1,41 @@
-Package: aura
-Version: 0.10.0
+Package: ani-cli
+Version: 4.11
 Architecture: i686
 Maintainer: @termux-app-store
-Installed-Size: 40
+Installed-Size: 24
 Depends: nodejs
-Filename: pool/main/aura_0.10.0_i686.deb
-Size: 792
-MD5sum: e49be594103749e48203fad13ce2abfd
-SHA1: f241befcd7f923243710050c32fd03f4d8d247c2
-SHA256: 705ff9a1f94bf76f9c764e6b68989940fc573809625552a27ffb156c0699a01b
-Homepage: https://github.com/djunekz/aura
-Description: Adaptive Unified Runtime Assistant
+Filename: pool/main/ani-cli_4.11_i686.deb
+Size: 612
+MD5sum: d6ca12e0f6fe516d906355bd1df0eadc
+SHA1: 6f17d049bdeaaaa8d2c4d275f989865b8d9baff8
+SHA256: 8bb447e9d4e5f1be7660b356b99d35bf25a018c268a6add5535795c0d56f630a
+Homepage: https://github.com/pystardust/ani-cli
+Description: A cli tool to browse and play anime
 
-Package: cybertuz
-Version: 1.0.1
+Package: infoooze
+Version: 1.1.9
 Architecture: i686
 Maintainer: @termux-app-store
 Installed-Size: 28
-Depends: nmap, python, whois, curl, dnsutils
-Filename: pool/main/cybertuz_1.0.1_i686.deb
-Size: 720
-MD5sum: d15441021d3facabb9d08a2807b14ec5
-SHA1: 79a8a6dee04068dcb7908daaa6ca7fd8482fe313
-SHA256: 19a42f40124f8e00fbfc0e3aaf7d683df244a0693ec75f2c7651847dab1dca93
-Homepage: https://github.com/djunekz/cybertuz
-Description: Comprehensive Educational Learning Platform for Termux
+Depends: nodejs
+Filename: pool/main/infoooze_1.1.9_i686.deb
+Size: 718
+MD5sum: 7c9961e7578bb47ec3295e4a2f49c22d
+SHA1: 7084c031673d1df981feb763d8a1323482385757
+SHA256: 73c4c80eaa9a672ff7317a3bf3609c4bd86ad5436469f515978dc636f5752af4
+Homepage: https://github.com/devxprite/infoooze
+Description: A OSINT tool which helps you to quickly find information effectively.
 
-Package: encrypt
-Version: 1.1
+Package: pnpm
+Version: 10.30.1
 Architecture: i686
-Maintainer: @djunekz
-Installed-Size: 96
-Filename: pool/main/encrypt_1.1_i686.deb
-Size: 25240
-MD5sum: 90f020530f9878c4b33ab89c66519596
-SHA1: d597286301561b6dba3347f0b29368f107b73571
-SHA256: 5290b4a8a18357a546922eee05c4e0a526a3a98f1e089549c58679fed83c0c3c
-Homepage: https://github.com/djunekz/encrypt
-Description: ELF binary for file python/python3 with build deb package
-
-Package: pmcli
-Version: 0.1.0
-Architecture: i686
-Maintainer: Djunekz <gab288.gab288@passinbox.com>
-Installed-Size: 148
-Depends: rust, openssl, zlib
-Filename: pool/main/pmcli_0.1.0_i686.deb
-Size: 10110
-MD5sum: 9ee011b16b7074960dedf964b370d647
-SHA1: 4be8d91092427a2da03cbb8667f26775cae54b27
-SHA256: 0aac110b1d2c5b7e9105828709891a499a5db6c5e17a740cd0a615cdd3cd5780
-Homepage: https://github.com/djunekz/pmcli
-Description: Terminal-based project manager CLI
+Maintainer: @termux-app-store
+Installed-Size: 28
+Filename: pool/main/pnpm_10.30.1_i686.deb
+Size: 664
+MD5sum: fb2eea0ada3f16558559aab3fbb09143
+SHA1: fddab991fef915642d362f8e6b3d37d67596d796
+SHA256: 0d442122c09fff5e9bced7552bd53ab08f8cafe8577209d402e45699f1c7f3bb
+Homepage: https://github.com/pnpm/pnpm
+Description: Fast, disk space efficient package manager
 
