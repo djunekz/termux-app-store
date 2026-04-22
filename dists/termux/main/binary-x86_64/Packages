@@ -1,3 +1,31 @@
+Package: ani-cli
+Version: 4.11
+Architecture: x86_64
+Maintainer: @termux-app-store
+Installed-Size: 24
+Depends: nodejs
+Filename: pool/main/ani-cli_4.11_x86_64.deb
+Size: 614
+MD5sum: 7e17b0e797efc1eeb9df76fb847551eb
+SHA1: b99ab169392181b79986868cb4d9ae252b6e2daf
+SHA256: 73a7bf35d77364ef3528defde09f8ffd1fdea1e70e80108c253ac89c50536040
+Homepage: https://github.com/pystardust/ani-cli
+Description: A cli tool to browse and play anime
+
+Package: impulse
+Version: 1.0.0
+Architecture: x86_64
+Maintainer: @termux-app-store
+Installed-Size: 28
+Depends: python
+Filename: pool/main/impulse_1.0.0_x86_64.deb
+Size: 706
+MD5sum: 3ee4023be36718cb899bbb85aa4f44f0
+SHA1: 6515714f41f16145ee9336c3f6569df48962c684
+SHA256: 02f508eba9b01472dd22713722e9e1bc60c691e174997478c39d641d658133a5
+Homepage: https://github.com/LimerBoy/Impulse
+Description: Denial-of-Service ToolKit with multiple attack methods
+
 Package: termstyle
 Version: 1.0.0
 Architecture: x86_64
