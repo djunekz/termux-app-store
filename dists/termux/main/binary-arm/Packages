@@ -1,15 +1,70 @@
+Package: ani-cli
+Version: 4.11
+Architecture: arm
+Maintainer: @termux-app-store
+Installed-Size: 24
+Depends: nodejs
+Homepage: https://github.com/pystardust/ani-cli
+Filename: pool/main/ani-cli_4.11_arm.deb
+Size: 610
+MD5sum: a8b73405a09003dd687f99001906f4da
+SHA1: 74eaae5e67f81b8a5bd336fd07ddf2f451f4ad0a
+SHA256: 7f31b038e7ad4cef57668784d830c0fa7b2405b2911be844abb681a136d81faa
+Description: A cli tool to browse and play anime
+
+Package: aura
+Version: 0.10.0
+Architecture: arm
+Maintainer: @termux-app-store
+Installed-Size: 40
+Depends: nodejs
+Homepage: https://github.com/djunekz/aura
+Filename: pool/main/aura_0.10.0_arm.deb
+Size: 788
+MD5sum: 50c875f45ca57b39454e3f6d75a4eb98
+SHA1: 31443271d2af4f04acccb14420608f0afa9918d4
+SHA256: 2ded6279c23a4afa2cd0a2fb2e69877c84b06f9900a7aec660d947c522164b29
+Description: Adaptive Unified Runtime Assistant
+
+Package: bashxt
+Version: 2.2
+Architecture: arm
+Maintainer: @termux-app-store
+Installed-Size: 44
+Homepage: https://github.com/djunekz/bashxt
+Filename: pool/main/bashxt_2.2_arm.deb
+Size: 4922
+MD5sum: ac25b5bad5defe71589e810cc0021c5d
+SHA1: 85b3c36f11aa7ac81d9aaa7c6a0ea513c56d3f83
+SHA256: a6408bc2322eed9ca65945c99c17d974326d4fe6190c32d2249b16480e0374d6
+Description: basic command, code color, shortcut keyboar, etc information
+
+Package: basic
+Version: 1.2.0
+Architecture: arm
+Maintainer: @termux-app-store
+Installed-Size: 184
+Depends: python
+Homepage: https://github.com/djunekz/basic
+Filename: pool/main/basic_1.2.0_arm.deb
+Size: 31958
+MD5sum: bc51f92640ae3a26ca482325edaf872a
+SHA1: 05a53c54596b366b7f7756331da83ff382aa7c0b
+SHA256: 61791580984ace63b8b2b59bb2c5856f3dbaeb0122f0d1c24ce110c452ad1f6d
+Description: Simulator Terminal learning basic command for beginner
+
 Package: baxter
 Version: 1.2.4
 Architecture: arm
 Maintainer: @djunekz
 Installed-Size: 28
 Depends: nodejs
+Homepage: https://github.com/djunekz/baxter
 Filename: pool/main/baxter_1.2.4_arm.deb
 Size: 662
 MD5sum: 2f0bd87a06199aaa1b0851d225a86a44
 SHA1: a32aca4a208d087909d1a9bfa08884a980b8474d
 SHA256: d53916462f2c2b22232c483a8c5e73ae0e1390cc340bb96e1ab6db28a1ed1022
-Homepage: https://github.com/djunekz/baxter
 Description: Encrypt and decrypt files termux
 
 Package: bower
@@ -18,13 +73,54 @@ Architecture: arm
 Maintainer: @termux-app-store
 Installed-Size: 28
 Depends: nodejs
+Homepage: https://github.com/bower/bower
 Filename: pool/main/bower_1.8.12_arm.deb
 Size: 664
 MD5sum: c509623e5f13bc767c774a17e25bb77b
 SHA1: 62f468918724502b6ff157706aa4ad4db013c926
 SHA256: 8d8aef49b9865d78a6ca99f8fe676780c5ce0d546a1c0ed80c796e1523258681
-Homepage: https://github.com/bower/bower
 Description: A package manager for the web
+
+Package: cybertuz
+Version: 1.0.1
+Architecture: arm
+Maintainer: @termux-app-store
+Installed-Size: 28
+Depends: nmap, python, whois, curl, dnsutils
+Homepage: https://github.com/djunekz/cybertuz
+Filename: pool/main/cybertuz_1.0.1_arm.deb
+Size: 722
+MD5sum: 309a80971712e33da7490da81e8e6bd5
+SHA1: 93820f8af28cf3119478080387ef9735756629fb
+SHA256: cd043bd8f9ed49e39f70cb137f5360e8defbe41af7ec34ac9a36cc7f2273eb5e
+Description: Comprehensive Educational Learning Platform for Termux
+
+Package: encrypt
+Version: 1.1
+Architecture: arm
+Maintainer: @djunekz
+Installed-Size: 96
+Homepage: https://github.com/djunekz/encrypt
+Filename: pool/main/encrypt_1.1_arm.deb
+Size: 25214
+MD5sum: 7eae4fddc00e6339daf1280c7faf45ed
+SHA1: f9aef44e2e79353bd41fe671c7f0f1b2c96294eb
+SHA256: 94be17b14c590676769380e54fad02fbc3aeb6e40649c424ca6b355843a8873b
+Description: ELF binary for file python/python3 with build deb package
+
+Package: impulse
+Version: 1.0.0
+Architecture: arm
+Maintainer: @termux-app-store
+Installed-Size: 28
+Depends: python
+Homepage: https://github.com/LimerBoy/Impulse
+Filename: pool/main/impulse_1.0.0_arm.deb
+Size: 706
+MD5sum: 46767069cf4a83c20119142d1ed0c409
+SHA1: 0d7cd9922948fa296016a8a79abf10cac181f7df
+SHA256: 0532d018707b979d59ca334f08bd544cf3df94293ad55fc807ac1ae711493950
+Description: Denial-of-Service ToolKit with multiple attack methods
 
 Package: infoooze
 Version: 1.1.9
@@ -32,13 +128,40 @@ Architecture: arm
 Maintainer: @termux-app-store
 Installed-Size: 28
 Depends: nodejs
+Homepage: https://github.com/devxprite/infoooze
 Filename: pool/main/infoooze_1.1.9_arm.deb
 Size: 718
 MD5sum: 8118c4e302e2655efedad65b2a34502c
 SHA1: e1b71503953be9ece3a2b0aadd86a83c2d6bcd49
 SHA256: bcaf29094f3c63060d7e7cf34b181dc757b633d73454fe114db3818375e4958a
-Homepage: https://github.com/devxprite/infoooze
 Description: A OSINT tool which helps you to quickly find information effectively.
+
+Package: pmcli
+Version: 0.1.0
+Architecture: arm
+Maintainer: Djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 148
+Depends: rust, openssl, zlib
+Homepage: https://github.com/djunekz/pmcli
+Filename: pool/main/pmcli_0.1.0_arm.deb
+Size: 10116
+MD5sum: 846e6f74ef530508d20e1375abd959c1
+SHA1: b1eecb48394e55224c6a057af13422ffcc55124e
+SHA256: 055cd061f0992e6df45baa601a254ac62b59bd5c358479dde9f997fd953e5aa2
+Description: Terminal-based project manager CLI
+
+Package: pnpm
+Version: 10.30.1
+Architecture: arm
+Maintainer: @termux-app-store
+Installed-Size: 28
+Homepage: https://github.com/pnpm/pnpm
+Filename: pool/main/pnpm_10.30.1_arm.deb
+Size: 668
+MD5sum: ac6e3648ed9469de15cbf44805a02deb
+SHA1: 2ccb16feeb32e6ace18c70f4b26b1698d08aa875
+SHA256: adad795bc796dd1ee72b512459352472f8f665209caf927eaf45785930cc671c
+Description: Fast, disk space efficient package manager
 
 Package: pymaker
 Version: 1.0.0
@@ -46,13 +169,26 @@ Architecture: arm
 Maintainer: @termux-app-store
 Installed-Size: 28
 Depends: python
+Homepage: https://github.com/droidv1/pymaker
 Filename: pool/main/pymaker_1.0.0_arm.deb
 Size: 670
 MD5sum: 27148d7bb87f9e346a29457f9485e3bb
 SHA1: 2f7b7a3a761c5619d58a5db864ca67c1f3cd3b4c
 SHA256: e892a64cad086464b0dfa2c8660e901330405c96befbcdb04ef7f8ec49daf196
-Homepage: https://github.com/droidv1/pymaker
 Description: Simple tool for create python script
+
+Package: sigit
+Version: 2.0-pre
+Architecture: arm
+Maintainer: @termux-app-store
+Installed-Size: 40
+Homepage: https://github.com/termuxhackers-id/SIGIT
+Filename: pool/main/sigit_2.0-pre_arm.deb
+Size: 14480
+MD5sum: 2bc734946db2d91092e05b10fd8aee6c
+SHA1: 08f514b0329d1a23d0ea90a221181142643c8188
+SHA256: b1b6c5e1c5c258166556b68334482ace9de6cb3cf250db0e84c186aff1bc0ced
+Description: SIGIT - Simple Information Gathering Toolkit
 
 Package: tdoc
 Version: 1.0.6
@@ -60,13 +196,40 @@ Architecture: arm
 Maintainer: @djunekz
 Installed-Size: 212
 Depends: bash, coreutils, curl, git, gnupg, termux-tools
+Homepage: https://github.com/djunekz/tdoc
 Filename: pool/main/tdoc_1.0.6_arm.deb
 Size: 14658
 MD5sum: 81485c030b1abf0120124c2175ccb946
 SHA1: 554d5d035695f0ebffb0ff98c115b4f9cb3dcea0
 SHA256: 4646bdf796b1906aa9e71719f10ae326274e9b08226a00592767646c91520c6b
-Homepage: https://github.com/djunekz/tdoc
 Description: TDOC - Diagnostic and repair utility for Termux environment
+
+Package: termstyle
+Version: 1.0.0
+Architecture: arm
+Maintainer: @djunekz
+Installed-Size: 188
+Homepage: https://gtihub.com/djunekz/termstyle
+Filename: pool/main/termstyle_1.0.0_arm.deb
+Size: 49148
+MD5sum: 2b2abd04c2c4278b52f317478c194942
+SHA1: 64f450bd7c879f5c288938379bd48cc1fe8ed16c
+SHA256: 176842cd38c410426e4a59b8a4a71e398a027bfe9791428f1fe6b8d78c0d4006
+Description: Simple tool for change color, command prompt, and cursor termux
+
+Package: termux-app-store
+Version: 0.2.6
+Architecture: arm
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 152
+Depends: python, python-pip
+Homepage: https://github.com/djunekz/termux-app-store
+Filename: pool/main/termux-app-store_0.2.6_arm.deb
+Size: 17480
+MD5sum: 030d0303767e95c8fd17c24fe085b6f6
+SHA1: 6c59a508fa68addfafb9c017ed7eb46b6d8ec674
+SHA256: f9f0d797ef2c573181e477e537ad1802676b8c588daabe011de74086e6b4d9ea
+Description: The first offline-first, source-based TUI package manager for Termux
 
 Package: tuifimanager
 Version: 5.2.6
@@ -74,11 +237,24 @@ Architecture: arm
 Maintainer: @termux-app-store
 Installed-Size: 28
 Depends: python
+Homepage: https://github.com/GiorgosXou/TUIFIManager
 Filename: pool/main/tuifimanager_5.2.6_arm.deb
 Size: 692
 MD5sum: 6fd6518a7d7b9f84353c6592b2985420
 SHA1: a4ce6aa382732f5c0cff181abc6e5611770bb1e1
 SHA256: 3032c637b51f23dca50682d27ca6d11aaf5ac96efea1bdcd7e5ce7014a784ef9
-Homepage: https://github.com/GiorgosXou/TUIFIManager
 Description: A terminal-based TUI file manager
+
+Package: webshake
+Version: 1.0.2
+Architecture: arm
+Maintainer: Djunekz
+Installed-Size: 48
+Homepage: https://github.com/djunekz/webshake
+Filename: pool/main/webshake_1.0.2_arm.deb
+Size: 3732
+MD5sum: b375575eb01d46804be917d53bfc10b8
+SHA1: b00201629bde577193db284342a975e3e612170e
+SHA256: b4c7070df612220f2f5da6818b0094684e7ffdbf6149ceb45573f2c467aea09f
+Description: Scan vulnerabilities and analyze websites
 
