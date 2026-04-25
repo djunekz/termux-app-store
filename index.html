@@ -200,6 +200,28 @@ a:hover{text-decoration:underline}
   padding:8px 12px;text-align:center;color:var(--text-dim);font-size:12px;
 }
 
+
+/* REQUIREMENTS */
+.req-section{margin:0 0 32px}
+.req-title{color:var(--blue-light);font-size:11px;font-weight:bold;text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px}
+.req-card{
+  background:var(--bg2);border:1px solid var(--border);border-radius:10px;
+  padding:20px 24px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;
+}
+.req-left{flex:1;min-width:200px}
+.req-app-name{color:var(--green);font-size:16px;font-weight:bold;margin-bottom:4px}
+.req-app-desc{color:var(--text-dim);font-size:12px;line-height:1.6;margin-bottom:6px}
+.req-meta{color:var(--text-dimmer);font-size:11px}
+.btn-download{
+  flex-shrink:0;
+  font-family:'Courier New',monospace;font-size:13px;font-weight:bold;
+  background:var(--green);color:#0d1117;
+  border:none;border-radius:8px;padding:10px 22px;
+  text-decoration:none;display:inline-block;
+  transition:background .15s;white-space:nowrap;
+}
+.btn-download:hover{background:#2ea043;text-decoration:none}
+
 footer{
   border-top:1px solid var(--border2);padding:20px 0 0;
   color:var(--text-dimmer);font-size:12px;
@@ -236,8 +258,8 @@ footer{
 <!-- ═══════════════ HOME ═══════════════ -->
 <div id="tab-home" class="section active">
   <div class="hero">
-    <div class="hero-logo">◈ Termux Package Repository</div>
-    <h1>Termux <span>App Store</span></h1>
+    <div class="hero-logo">◈  Termux Package Repository</div>
+    <h1><span>Termux App Store</span></h1>
     <p class="hero-sub">The offline-first, source-based TUI package manager for Termux<br>by <a href="https://github.com/djunekz">@djunekz</a></p>
     <div class="hero-badges">
       <span class="badge green">v0.2.6</span>
@@ -253,24 +275,39 @@ footer{
     </div>
   </div>
 
+
+  <div class="req-section">
+    <div class="req-title">Requirements</div>
+    <div class="req-card">
+      <div class="req-left">
+        <div class="req-app-name">Termux</div>
+        <div class="req-app-desc">Android terminal emulator and Linux environment app. Required to run Termux App Store.</div>
+        <div class="req-meta">v0.118.3 &nbsp;&middot;&nbsp; Universal APK &nbsp;&middot;&nbsp; ~100MB</div>
+      </div>
+      <a class="btn-download" href="https://github.com/termux/termux-app/releases/download/v0.118.3/termux-app_v0.118.3+github-debug_universal.apk">
+        Download
+      </a>
+    </div>
+  </div>
+
   <div class="cards">
     <div class="card">
-      <div class="card-icon">⚡</div>
+      <div class="card-icon">▸</div>
       <div class="card-title">Fast &amp; Lightweight</div>
       <div class="card-desc">Built for Termux. Minimal dependencies, fast package resolution, and a clean TUI interface.</div>
     </div>
     <div class="card">
-      <div class="card-icon">📦</div>
+      <div class="card-icon">▸</div>
       <div class="card-title">51 Packages</div>
       <div class="card-desc">A growing collection of tools, utilities, and apps — all packaged and ready to install via pkg.</div>
     </div>
     <div class="card">
-      <div class="card-icon">🌐</div>
+      <div class="card-icon">▸</div>
       <div class="card-title">Multi-Architecture</div>
       <div class="card-desc">Full support for aarch64, arm, x86_64, and i686. Works on any Android device running Termux.</div>
     </div>
     <div class="card">
-      <div class="card-icon">🔓</div>
+      <div class="card-icon">▸</div>
       <div class="card-title">Open &amp; Community</div>
       <div class="card-desc">Anyone can submit a package. Fork the repo, build your tool, open a PR — it's that simple.</div>
     </div>
@@ -305,7 +342,7 @@ termux-app-store install &lt;pkg&gt;    # install a package</code></pre>
 
     <div class="install-option">
       <div class="install-option-header">
-        <div class="install-option-icon">📦</div>
+        <div class="install-option-icon">◈</div>
         <div class="install-option-title">Method 1 — pkg (Recommended)</div>
         <div class="install-option-badge">Recommended</div>
       </div>
@@ -324,7 +361,7 @@ termux-app-store install &lt;pkg&gt;    # install a package</code></pre>
 
     <div class="install-option">
       <div class="install-option-header">
-        <div class="install-option-icon">🐍</div>
+        <div class="install-option-icon">◈</div>
         <div class="install-option-title">Method 2 — pip</div>
       </div>
       <div class="install-option-desc">Install directly from PyPI. Useful if you prefer pip-based package management.</div>
@@ -336,7 +373,7 @@ termux-app-store install &lt;pkg&gt;    # install a package</code></pre>
 
     <div class="install-option">
       <div class="install-option-header">
-        <div class="install-option-icon">⚙️</div>
+        <div class="install-option-icon">◈</div>
         <div class="install-option-title">Method 3 — tasctl (bootstrap script)</div>
       </div>
       <div class="install-option-desc">One-line bootstrap using the tasctl installer. Downloads and sets up everything automatically.</div>
@@ -348,7 +385,7 @@ termux-app-store install &lt;pkg&gt;    # install a package</code></pre>
 
     <div class="install-option">
       <div class="install-option-header">
-        <div class="install-option-icon">🔧</div>
+        <div class="install-option-icon">◈</div>
         <div class="install-option-title">Method 4 — Manual (from source)</div>
       </div>
       <div class="install-option-desc">Clone the repository and run the install script manually. Useful for development or offline setups.</div>
@@ -481,8 +518,8 @@ cd termux-app-store')">copy</button>
         <div class="step-title">Initialize your package with termux-build</div>
         <div class="step-desc">Use <code>termux-build init</code> to scaffold a new package directory with the correct structure.</div>
         <div class="code-block">
-          <pre><code>termux-build init &lt;your-tool-name&gt;</code></pre>
-          <button class="copy-btn" onclick="copyCode(this,'termux-build init &lt;your-tool-name&gt;')">copy</button>
+          <pre><code>termux-build init &lt;url-your-repository&gt;</code></pre>
+          <button class="copy-btn" onclick="copyCode(this,'termux-build init &lt;url-your-repository&gt;')">copy</button>
         </div>
         <div class="step-desc mt-4">This creates a directory under <code>packages/&lt;your-tool-name&gt;/</code> with a starter <code>build.sh</code>.</div>
       </div>
@@ -613,7 +650,7 @@ pkg update')">copy</button>
   <div class="info-box">
     <p><strong style="color:var(--text)">Current version:</strong> <span style="color:var(--green)">v0.2.6</span></p>
     <p><strong style="color:var(--text)">Packages in index:</strong> <span style="color:var(--blue)">51</span></p>
-    <p><strong style="color:var(--text)">Last updated:</strong> <span style="color:var(--text-dim)">2026-04-25 01:27 UTC</span></p>
+    <p><strong style="color:var(--text)">Last updated:</strong> <span style="color:var(--text-dim)">2026-04-25 01:58 UTC</span></p>
     <p><strong style="color:var(--text)">Source:</strong> <a href="https://github.com/djunekz/termux-app-store">github.com/djunekz/termux-app-store</a></p>
   </div>
 </div>
@@ -621,7 +658,7 @@ pkg update')">copy</button>
 
 <footer>
   <span>Termux App Store &copy; <a href="https://github.com/djunekz">@djunekz</a></span>
-  <span>Last updated: 2026-04-25 01:27 UTC</span>
+  <span>Last updated: 2026-04-25 01:58 UTC</span>
 </footer>
 
 </div><!-- /wrap -->
