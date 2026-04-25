@@ -100,15 +100,16 @@ nav{
 .code-block{position:relative;margin-bottom:16px}
 .code-block pre{
   background:var(--bg2);border:1px solid var(--border);border-radius:8px;
-  padding:16px;padding-right:80px;overflow-x:auto;font-size:13px;
+  padding:14px 72px 14px 14px;overflow-x:auto;font-size:12px;
+  word-break:break-all;white-space:pre-wrap;word-wrap:break-word;
 }
 code{color:#7ee787}
 .copy-btn{
-  position:absolute;top:10px;right:10px;
+  position:absolute;top:8px;right:8px;
   background:var(--bg3);color:var(--text-dim);
   border:1px solid var(--border);border-radius:6px;
-  padding:4px 10px;font-size:11px;font-family:'Courier New',monospace;
-  cursor:pointer;transition:all .15s;
+  padding:3px 9px;font-size:10px;font-family:'Courier New',monospace;
+  cursor:pointer;transition:all .15s;white-space:nowrap;
 }
 .copy-btn:hover{background:var(--border);color:var(--text)}
 .copy-btn.copied{color:var(--green);border-color:#2ea043}
@@ -229,41 +230,49 @@ footer{
   margin-top:48px;
 }
 
-@media(max-width:600px){
+@media(max-width:680px){
   nav{padding:0 12px}
   .nav-brand{font-size:13px;margin-right:10px}
   .nav-tab{font-size:12px;padding:12px 10px}
   .wrap{padding:16px 14px 48px}
-  .hero{padding:32px 0 28px}
+  .hero{padding:28px 0 24px}
   .hero h1{font-size:22px}
   .hero-sub{font-size:13px}
-  .hero-badges{gap:6px;margin-bottom:24px}
+  .hero-badges{gap:6px;margin-bottom:20px}
   .badge{font-size:10px;padding:3px 9px}
   .hero-cta{gap:8px}
   .btn{font-size:12px;padding:9px 16px}
   .hero-version{flex-direction:column;gap:8px;padding:12px 16px}
   .arch-grid{grid-template-columns:repeat(2,1fr)}
   .cards{grid-template-columns:1fr;gap:12px}
-  .card{padding:16px}
-  .section-title{font-size:10px;margin:24px 0 10px}
-  .code-block pre{font-size:11px;padding:12px;padding-right:70px}
-  .copy-btn{font-size:10px;padding:3px 8px}
+  .card{padding:14px}
+  .section-title{font-size:10px;margin:20px 0 10px}
+  .code-block{margin-bottom:12px}
+  .code-block pre{font-size:11px;padding:11px 64px 11px 11px;white-space:pre-wrap;word-break:break-all}
+  .copy-btn{font-size:9px;padding:3px 7px;top:7px;right:7px}
   .code-label{font-size:9px}
-  .install-option{padding:16px}
+  .install-options{gap:12px}
+  .install-option{padding:14px}
   .install-option-title{font-size:13px}
-  .step-num{width:24px;height:24px;font-size:11px}
-  .step-title{font-size:12px}
-  .step-desc{font-size:11px}
+  .install-option-badge{font-size:9px}
+  .step{gap:12px;margin-bottom:16px}
+  .step-num{width:24px;height:24px;font-size:11px;flex-shrink:0}
+  .step-title{font-size:13px}
+  .step-desc{font-size:12px}
+  .step-note,.step-note-green{font-size:11px;padding:7px 10px}
+  .info-box{padding:14px 16px}
   .info-box p{font-size:12px}
-  .req-card{padding:16px;gap:12px}
+  .req-card{padding:14px;gap:12px;flex-direction:column;align-items:flex-start}
   .req-app-name{font-size:14px}
   .req-app-desc{font-size:11px}
-  .btn-download{font-size:12px;padding:9px 16px}
+  .btn-download{font-size:12px;padding:9px 20px;align-self:stretch;text-align:center}
   table{font-size:11px}
   th{font-size:10px;padding:6px 8px}
-  td{padding:6px 8px}
-  .search-box{font-size:12px;padding:9px 12px 9px 34px}
-  footer{font-size:11px}
+  td{padding:5px 8px;word-break:break-word}
+  td:first-child{white-space:normal}
+  td:nth-child(2){white-space:normal}
+  .search-box{font-size:12px;padding:9px 12px 9px 32px}
+  footer{font-size:11px;flex-direction:column;gap:4px}
 }
 </style>
 </head>
@@ -679,7 +688,7 @@ pkg update')">copy</button>
   <div class="info-box">
     <p><strong style="color:var(--text)">Current version:</strong> <span style="color:var(--green)">v0.2.6</span></p>
     <p><strong style="color:var(--text)">Packages in index:</strong> <span style="color:var(--blue)">51</span></p>
-    <p><strong style="color:var(--text)">Last updated:</strong> <span style="color:var(--text-dim)">2026-04-25 02:10 UTC</span></p>
+    <p><strong style="color:var(--text)">Last updated:</strong> <span style="color:var(--text-dim)">2026-04-25 02:16 UTC</span></p>
     <p><strong style="color:var(--text)">Source:</strong> <a href="https://github.com/djunekz/termux-app-store">github.com/djunekz/termux-app-store</a></p>
   </div>
 </div>
@@ -687,7 +696,7 @@ pkg update')">copy</button>
 
 <footer>
   <span>Termux App Store &copy; <a href="https://github.com/djunekz">@djunekz</a></span>
-  <span>Last updated: 2026-04-25 02:10 UTC</span>
+  <span>Last updated: 2026-04-25 02:16 UTC</span>
 </footer>
 
 </div><!-- /wrap -->
