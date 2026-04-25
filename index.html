@@ -97,11 +97,10 @@ nav{
 /* CODE BLOCKS */
 .section-title{color:var(--blue-light);font-size:11px;font-weight:bold;text-transform:uppercase;letter-spacing:.1em;margin:32px 0 12px}
 .section-title:first-child{margin-top:0}
-.code-block{position:relative;margin-bottom:16px}
+.code-block{position:relative;margin-bottom:16px;width:100%}
 .code-block pre{
   background:var(--bg2);border:1px solid var(--border);border-radius:8px;
   padding:14px 72px 14px 14px;overflow-x:auto;font-size:12px;
-  word-break:break-all;white-space:pre-wrap;word-wrap:break-word;
 }
 code{color:#7ee787}
 .copy-btn{
@@ -247,14 +246,15 @@ footer{
   .cards{grid-template-columns:1fr;gap:12px}
   .card{padding:14px}
   .section-title{font-size:10px;margin:20px 0 10px}
-  .code-block{margin-bottom:12px}
-  .code-block pre{font-size:11px;padding:11px 64px 11px 11px;white-space:pre-wrap;word-break:break-all}
+  .code-block{margin-bottom:12px;width:100%}
+  .code-block pre{font-size:11px;padding:11px 60px 11px 11px;overflow-x:auto}
   .copy-btn{font-size:9px;padding:3px 7px;top:7px;right:7px}
   .code-label{font-size:9px}
-  .install-options{gap:12px}
-  .install-option{padding:14px}
+  .install-options{gap:12px;width:100%}
+  .install-option{padding:14px;width:100%;box-sizing:border-box}
+  .install-option-header{flex-wrap:nowrap}
   .install-option-title{font-size:13px}
-  .install-option-badge{font-size:9px}
+  .install-option-badge{font-size:9px;white-space:nowrap}
   .step{gap:12px;margin-bottom:16px}
   .step-num{width:24px;height:24px;font-size:11px;flex-shrink:0}
   .step-title{font-size:13px}
@@ -273,6 +273,7 @@ footer{
   td:nth-child(2){white-space:normal}
   .search-box{font-size:12px;padding:9px 12px 9px 32px}
   footer{font-size:11px;flex-direction:column;gap:4px}
+  #tab-install .section-title ~ .code-block{width:100%}
 }
 </style>
 </head>
@@ -360,12 +361,12 @@ footer{
 
   <div class="section-title">Usage</div>
   <div class="code-block">
-    <pre><code id="usage-code">pkg install termux-app-store       # install
-pkg upgrade termux-app-store       # update to v0.2.6
-pkg uninstall termux-app-store     # remove
-termux-app-store                   # launch TUI
-termux-app-store list              # show all 51 packages
-termux-app-store install &lt;pkg&gt;    # install a package</code></pre>
+    <pre><code id="usage-code">pkg install termux-app-store     # install
+pkg upgrade termux-app-store     # update to v0.2.6
+pkg uninstall termux-app-store   # remove
+termux-app-store                 # launch TUI
+termux-app-store list            # show all 51 packages
+termux-app-store install &lt;pkg&gt;  # install a package</code></pre>
     <button class="copy-btn" onclick="copyCode(this,document.getElementById('usage-code').innerText)">copy</button>
   </div>
 </div>
@@ -441,6 +442,7 @@ bash install.sh')">copy</button>
 
   <hr class="divider">
   <div class="section-title">Update &amp; Remove</div>
+  <div style="display:block;width:100%">
   <div class="code-block">
     <div class="code-label">update</div>
     <pre><code>pkg upgrade termux-app-store
@@ -454,6 +456,7 @@ tasctl update</code></pre>
 # or via tasctl:
 tasctl uninstall</code></pre>
     <button class="copy-btn" onclick="copyCode(this,'pkg uninstall termux-app-store')">copy</button>
+  </div>
   </div>
 </div>
 
@@ -688,7 +691,7 @@ pkg update')">copy</button>
   <div class="info-box">
     <p><strong style="color:var(--text)">Current version:</strong> <span style="color:var(--green)">v0.2.6</span></p>
     <p><strong style="color:var(--text)">Packages in index:</strong> <span style="color:var(--blue)">51</span></p>
-    <p><strong style="color:var(--text)">Last updated:</strong> <span style="color:var(--text-dim)">2026-04-25 02:16 UTC</span></p>
+    <p><strong style="color:var(--text)">Last updated:</strong> <span style="color:var(--text-dim)">2026-04-25 02:22 UTC</span></p>
     <p><strong style="color:var(--text)">Source:</strong> <a href="https://github.com/djunekz/termux-app-store">github.com/djunekz/termux-app-store</a></p>
   </div>
 </div>
@@ -696,7 +699,7 @@ pkg update')">copy</button>
 
 <footer>
   <span>Termux App Store &copy; <a href="https://github.com/djunekz">@djunekz</a></span>
-  <span>Last updated: 2026-04-25 02:16 UTC</span>
+  <span>Last updated: 2026-04-25 02:22 UTC</span>
 </footer>
 
 </div><!-- /wrap -->
