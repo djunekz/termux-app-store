@@ -251,10 +251,10 @@ Installed-Size: 152
 Depends: python, python-pip
 Homepage: https://github.com/djunekz/termux-app-store
 Filename: pool/main/termux-app-store_0.2.6_aarch64.deb
-Size: 17482
-MD5sum: 8cafe9d2e782eefd78ca34e22d15a36f
-SHA1: 5a32c25ec13657368762d97d4eb104d1e88ee18c
-SHA256: 1e2c363fdbf56ed7f00db857b6ded15dcff11d5daacb9646c0b95e5bc0e20d9f
+Size: 17480
+MD5sum: 33afa30ad36160827fd79377e6f13876
+SHA1: b97a1f4d380f2abe9a6740cb61aed5cc65147007
+SHA256: b17ad0b02c6a734a5e2eafecb5d5ca2858c2c100fcd766b1420c30f5f312c269
 Description: The first offline-first, source-based TUI package manager for Termux
 
 Package: tuifimanager
