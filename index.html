@@ -34,13 +34,13 @@ nav{
   padding:0 20px;
 }
 .nav-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;gap:0;min-width:0;width:100%}
-.nav-brand{color:var(--blue);font-weight:bold;font-size:14px;padding:12px 0;margin-right:16px;white-space:nowrap;flex-shrink:0}
+.nav-brand{color:var(--blue);font-weight:bold;font-size:13px;padding:12px 0;margin-right:8px;white-space:nowrap;flex-shrink:0}
 .nav-brand span{color:var(--green)}
 .nav-tabs{display:flex;gap:0;overflow-x:auto;scrollbar-width:none;flex:1;min-width:0;-webkit-overflow-scrolling:touch}
 .nav-tabs::-webkit-scrollbar{display:none}
 .nav-tab{
-  color:var(--text-dim);font-size:13px;
-  padding:12px 12px;
+  color:var(--text-dim);font-size:12px;
+  padding:12px 9px;
   border-bottom:2px solid transparent;
   cursor:pointer;white-space:nowrap;
   transition:color .15s,border-color .15s,background .15s;
@@ -50,7 +50,7 @@ nav{
 .nav-tab.active{color:var(--blue);border-bottom-color:var(--blue);background:rgba(88,166,255,.15);border-radius:4px 4px 0 0}
 
 /* LAYOUT */
-.wrap{max-width:960px;margin:0 auto;padding:28px 20px 64px}
+.wrap{max-width:960px;margin:0 auto;padding:28px 20px 64px;overflow-x:hidden}
 
 /* SECTIONS */
 .section{display:none}
@@ -97,7 +97,7 @@ nav{
 /* CODE BLOCKS */
 .section-title{color:var(--blue-light);font-size:11px;font-weight:bold;text-transform:uppercase;letter-spacing:.1em;margin:32px 0 12px}
 .section-title:first-child{margin-top:0}
-.code-block{position:relative;margin-bottom:16px;width:100%}
+.code-block{position:relative;margin-bottom:16px;width:100%;max-width:100%;box-sizing:border-box}
 .code-block pre{
   background:var(--bg2);border:1px solid var(--border);border-radius:8px;
   padding:14px 72px 14px 14px;overflow-x:auto;font-size:12px;
@@ -129,7 +129,7 @@ code{color:#7ee787}
   color:var(--blue);font-size:12px;font-weight:bold;
   margin-top:2px;
 }
-.step-body{flex:1}
+.step-body{flex:1;min-width:0;overflow:hidden}
 .step-title{color:var(--text);font-size:13px;font-weight:bold;margin-bottom:6px}
 .step-desc{color:var(--text-dim);font-size:12px;margin-bottom:8px;line-height:1.6}
 .step-note{
@@ -146,7 +146,7 @@ code{color:#7ee787}
 .install-option{
   background:var(--bg2);border:1px solid var(--border);border-radius:10px;
   padding:20px;cursor:pointer;transition:border-color .2s,background .2s;
-}
+;max-width:100%;box-sizing:border-box}
 .install-option.open{border-color:var(--blue);background:rgba(88,166,255,.04)}
 .install-option-header{display:flex;align-items:center;gap:10px;margin-bottom:12px}
 .install-option-icon{font-size:20px}
@@ -705,7 +705,7 @@ pkg update')">copy</button>
   <div class="info-box">
     <p><strong style="color:var(--text)">Current version:</strong> <span style="color:var(--green)">v0.2.6</span></p>
     <p><strong style="color:var(--text)">Packages in index:</strong> <span style="color:var(--blue)">63</span></p>
-    <p><strong style="color:var(--text)">Last updated:</strong> <span style="color:var(--text-dim)">2026-05-02 23:43 UTC</span></p>
+    <p><strong style="color:var(--text)">Last updated:</strong> <span style="color:var(--text-dim)">2026-05-02 23:50 UTC</span></p>
     <p><strong style="color:var(--text)">Source:</strong> <a href="https://github.com/djunekz/termux-app-store">github.com/djunekz/termux-app-store</a></p>
   </div>
 </div>
@@ -713,7 +713,7 @@ pkg update')">copy</button>
 
 <footer>
   <span>Termux App Store &copy; <a href="https://github.com/djunekz">@djunekz</a></span>
-  <span>Last updated: 2026-05-02 23:43 UTC</span>
+  <span>Last updated: 2026-05-02 23:50 UTC</span>
 </footer>
 
 </div><!-- /wrap -->
