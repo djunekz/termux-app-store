@@ -33,10 +33,10 @@ nav{
   backdrop-filter:blur(8px);
   padding:0 20px;
 }
-.nav-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;gap:0}
-.nav-brand{color:var(--blue);font-weight:bold;font-size:14px;padding:12px 0;margin-right:16px;white-space:nowrap}
+.nav-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;gap:0;min-width:0;width:100%}
+.nav-brand{color:var(--blue);font-weight:bold;font-size:14px;padding:12px 0;margin-right:8px;white-space:nowrap;flex-shrink:0}
 .nav-brand span{color:var(--green)}
-.nav-tabs{display:flex;gap:0;overflow-x:auto;scrollbar-width:none}
+.nav-tabs{display:flex;gap:0;overflow-x:auto;scrollbar-width:none;flex:1;min-width:0}
 .nav-tabs::-webkit-scrollbar{display:none}
 .nav-tab{
   color:var(--text-dim);font-size:13px;
@@ -230,9 +230,11 @@ footer{
 }
 
 @media(max-width:680px){
-  nav{padding:0 12px}
-  .nav-brand{font-size:13px;margin-right:10px}
-  .nav-tab{font-size:12px;padding:12px 10px}
+  nav{padding:0 8px}
+  .nav-inner{gap:0;width:100%;overflow:hidden}
+  .nav-brand{font-size:12px;margin-right:6px;flex-shrink:0}
+  .nav-tabs{flex:1;min-width:0;overflow-x:auto}
+  .nav-tab{font-size:11px;padding:12px 8px}
   .wrap{padding:16px 14px 48px}
   .hero{padding:28px 0 24px}
   .hero h1{font-size:22px}
@@ -703,7 +705,7 @@ pkg update')">copy</button>
   <div class="info-box">
     <p><strong style="color:var(--text)">Current version:</strong> <span style="color:var(--green)">v0.2.6</span></p>
     <p><strong style="color:var(--text)">Packages in index:</strong> <span style="color:var(--blue)">63</span></p>
-    <p><strong style="color:var(--text)">Last updated:</strong> <span style="color:var(--text-dim)">2026-05-02 09:36 UTC</span></p>
+    <p><strong style="color:var(--text)">Last updated:</strong> <span style="color:var(--text-dim)">2026-05-02 23:34 UTC</span></p>
     <p><strong style="color:var(--text)">Source:</strong> <a href="https://github.com/djunekz/termux-app-store">github.com/djunekz/termux-app-store</a></p>
   </div>
 </div>
@@ -711,7 +713,7 @@ pkg update')">copy</button>
 
 <footer>
   <span>Termux App Store &copy; <a href="https://github.com/djunekz">@djunekz</a></span>
-  <span>Last updated: 2026-05-02 09:36 UTC</span>
+  <span>Last updated: 2026-05-02 23:34 UTC</span>
 </footer>
 
 </div><!-- /wrap -->
