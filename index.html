@@ -31,16 +31,17 @@ nav{
   background:rgba(13,17,23,.95);
   border-bottom:1px solid var(--border);
   backdrop-filter:blur(8px);
-  padding:0 20px;
+  padding:0;
+  width:100%;box-sizing:border-box;overflow:hidden;
 }
-.nav-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;gap:0;min-width:0;width:100%}
-.nav-brand{color:var(--blue);font-weight:bold;font-size:11px;padding:10px 0;margin-right:4px;white-space:nowrap;flex-shrink:0}
+.nav-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;gap:0;min-width:0;width:100%;box-sizing:border-box;padding:0 6px;overflow:hidden}
+.nav-brand{color:var(--blue);font-weight:bold;font-size:11px;padding:10px 0;margin-right:2px;white-space:nowrap;flex-shrink:0}
 .nav-brand span{color:var(--green)}
 .nav-tabs{display:flex;gap:0;overflow-x:auto;scrollbar-width:none;flex:1;min-width:0;-webkit-overflow-scrolling:touch}
 .nav-tabs::-webkit-scrollbar{display:none}
 .nav-tab{
-  color:var(--text-dim);font-size:11px;
-  padding:10px 6px;
+  color:var(--text-dim);font-size:10.5px;
+  padding:10px 5px;
   border-bottom:2px solid transparent;
   cursor:pointer;white-space:nowrap;
   transition:color .15s,border-color .15s,background .15s;
@@ -234,10 +235,7 @@ footer{
 }
 
 @media(max-width:680px){
-  nav{padding:0 12px}
-  .nav-brand{font-size:14px;margin-right:8px}
   .nav-tabs{flex:1;min-width:0;overflow-x:auto;-webkit-overflow-scrolling:touch}
-  .nav-tab{font-size:13px;padding:12px 10px}
   .wrap{padding:16px 14px 48px}
   .hero{padding:28px 0 24px}
   .hero h1{font-size:22px}
@@ -552,23 +550,17 @@ tasctl uninstall</code></pre>
     <p>All packages are reviewed via Pull Request before being added to the index.</p>
   </div>
 
-  <div class="contrib-mode-title">⚡ Automatic</div>
   <div class="steps">
-
     <div class="step">
       <div class="step-num">1</div>
       <div class="step-body">
-        <div class="step-title">Fork &amp; Clone, then Init with termux-build</div>
-        <div class="step-desc">Fork the repo on GitHub, clone it, then run <code>./termux-build init</code> with your tool's repository URL.</div>
+        <div class="step-title">Fork &amp; Clone the repository</div>
+        <div class="step-desc">Fork the official repo on GitHub, then clone it to your Termux environment.</div>
         <div class="code-block">
           <pre><code>git clone https://github.com/YOUR_USERNAME/termux-app-store
-cd termux-app-store
-git checkout -b &lt;your-branch&gt;
-./termux-build init &lt;url-your-repository&gt;</code></pre>
+cd termux-app-store</code></pre>
           <button class="copy-btn" onclick="copyCode(this,'git clone https://github.com/YOUR_USERNAME/termux-app-store
-cd termux-app-store
-git checkout -b <your-branch>
-./termux-build init <url-your-repository>')">copy</button>
+cd termux-app-store')">copy</button>
         </div>
         <div class="step-note">Replace <code>YOUR_USERNAME</code> with your GitHub username.</div>
       </div>
@@ -577,25 +569,50 @@ git checkout -b <your-branch>
     <div class="step">
       <div class="step-num">2</div>
       <div class="step-body">
-        <div class="step-title">Run and test your tool</div>
-        <div class="step-desc">After <code>./termux-build init</code> completes, try running your tool directly. If it doesn't run correctly, open an issue before proceeding.</div>
-        <div class="step-note-green">If your tool runs correctly — skip to <strong>Commit &amp; Pull Request</strong> below.</div>
+        <div class="step-title">Create a new branch</div>
+        <div class="step-desc">Always work on a separate branch before submitting a Pull Request.</div>
+        <div class="code-block">
+          <pre><code>git checkout -b &lt;your-branch&gt;</code></pre>
+          <button class="copy-btn" onclick="copyCode(this,'git checkout -b &lt;your-branch&gt;')">copy</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="contrib-mode-title">Automatic</div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Init with termux-build</div>
+        <div class="step-desc">Run <code>./termux-build init</code> with your tool's repository URL to automatically scaffold the package.</div>
+        <div class="code-block">
+          <pre><code>./termux-build init &lt;url-your-repository&gt;</code></pre>
+          <button class="copy-btn" onclick="copyCode(this,'./termux-build init &lt;url-your-repository&gt;')">copy</button>
+        </div>
       </div>
     </div>
 
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Run and test your tool</div>
+        <div class="step-desc">After init completes, try running your tool directly. If it does not run correctly, open an issue before proceeding.</div>
+        <div class="step-note-green">If your tool runs correctly — skip to <strong>Commit &amp; Pull Request</strong> below.</div>
+      </div>
+    </div>
   </div>
 
-  <div class="contrib-mode-title">🔧 Manual</div>
+  <div class="contrib-mode-title">Manual</div>
   <div class="steps">
-
     <div class="step">
       <div class="step-num">1</div>
       <div class="step-body">
         <div class="step-title">Generate a build.sh template</div>
         <div class="step-desc">Use the template generator to scaffold your <code>build.sh</code> file.</div>
         <div class="code-block">
-          <pre><code>./termux-build template &lt;your-tool-name&gt;</code></pre>
-          <button class="copy-btn" onclick="copyCode(this,'./termux-build template <your-tool-name>')">copy</button>
+          <pre><code>./termux-build template</code></pre>
+          <button class="copy-btn" onclick="copyCode(this,'./termux-build template')">copy</button>
         </div>
       </div>
     </div>
@@ -607,7 +624,7 @@ git checkout -b <your-branch>
         <div class="step-desc">Create a directory under <code>packages/</code> for your tool, then write your <code>build.sh</code> inside it.</div>
         <div class="code-block">
           <pre><code>mkdir packages/&lt;your-tool-name&gt;</code></pre>
-          <button class="copy-btn" onclick="copyCode(this,'mkdir packages/<your-tool-name>')">copy</button>
+          <button class="copy-btn" onclick="copyCode(this,'mkdir packages/&lt;your-tool-name&gt;')">copy</button>
         </div>
         <div class="code-block">
           <div class="code-label">example build.sh</div>
@@ -631,7 +648,7 @@ termux_step_make_install() {
         <div class="step-desc">Run the linter to check your package definition for common errors before building.</div>
         <div class="code-block">
           <pre><code>./termux-build lint &lt;your-tool-name&gt;</code></pre>
-          <button class="copy-btn" onclick="copyCode(this,'./termux-build lint <your-tool-name>')">copy</button>
+          <button class="copy-btn" onclick="copyCode(this,'./termux-build lint &lt;your-tool-name&gt;')">copy</button>
         </div>
         <div class="step-note">Fix any warnings or errors reported before proceeding.</div>
       </div>
@@ -644,19 +661,18 @@ termux_step_make_install() {
         <div class="step-desc">Build the <code>.deb</code> package and verify it installs and runs correctly in Termux.</div>
         <div class="code-block">
           <pre><code>bash build-package.sh &lt;your-tool-name&gt;</code></pre>
-          <button class="copy-btn" onclick="copyCode(this,'bash build-package.sh <your-tool-name>')">copy</button>
+          <button class="copy-btn" onclick="copyCode(this,'bash build-package.sh &lt;your-tool-name&gt;')">copy</button>
         </div>
         <div class="step-note-green">If the tool runs correctly after building, you're ready to submit!</div>
       </div>
     </div>
-
   </div>
 
   <hr class="divider">
   <div class="section-title">Commit &amp; Open a Pull Request</div>
   <div class="steps">
     <div class="step">
-      <div class="step-num">→</div>
+      <div class="step-num">&#8594;</div>
       <div class="step-body">
         <div class="step-desc">Push your changes and open a PR targeting the <code>master</code> branch.</div>
         <div class="code-block">
@@ -665,7 +681,7 @@ git commit -m "feat: add &lt;your-tool-name&gt; package"
 git push origin &lt;your-branch&gt;</code></pre>
           <button class="copy-btn" onclick="copyCode(this,'git add packages/
 git commit -m "feat: add package"
-git push origin <your-branch>')">copy</button>
+git push origin &lt;your-branch&gt;')">copy</button>
         </div>
         <div class="step-desc mt-4">Then open a Pull Request at:</div>
         <div class="code-block">
@@ -728,7 +744,7 @@ pkg update')">copy</button>
   <div class="info-box">
     <p><strong style="color:var(--text)">Current version:</strong> <span style="color:var(--green)">v0.2.6</span></p>
     <p><strong style="color:var(--text)">Packages in index:</strong> <span style="color:var(--blue)">63</span></p>
-    <p><strong style="color:var(--text)">Last updated:</strong> <span style="color:var(--text-dim)">2026-05-03 00:23 UTC</span></p>
+    <p><strong style="color:var(--text)">Last updated:</strong> <span style="color:var(--text-dim)">2026-05-03 00:54 UTC</span></p>
     <p><strong style="color:var(--text)">Source:</strong> <a href="https://github.com/djunekz/termux-app-store">github.com/djunekz/termux-app-store</a></p>
   </div>
 </div>
@@ -736,7 +752,7 @@ pkg update')">copy</button>
 
 <footer>
   <span>Termux App Store &copy; <a href="https://github.com/djunekz">@djunekz</a></span>
-  <span>Last updated: 2026-05-03 00:23 UTC</span>
+  <span>Last updated: 2026-05-03 00:54 UTC</span>
 </footer>
 
 </div><!-- /wrap -->
