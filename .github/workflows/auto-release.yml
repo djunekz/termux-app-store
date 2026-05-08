@@ -149,7 +149,7 @@ jobs:
           echo "$NOTES" > release_notes.txt
 
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@da05d552573ad5aba039eaac05058a918a7bf631  # v2.2.2
+        uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65  # v2.6.2
         with:
           name: "Termux-App-Store ${{ steps.version.outputs.version }}"
           body_path: release_notes.txt
