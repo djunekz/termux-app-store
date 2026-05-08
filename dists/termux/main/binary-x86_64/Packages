@@ -218,17 +218,17 @@ SHA256: ef834fcb98c14ab5b5e99e410199020bd2253bf29bab83b04039577dc4e883f1
 Description: Simple tool for change color, command prompt, and cursor termux
 
 Package: termux-app-store
-Version: 0.2.6
+Version: 0.3.0
 Architecture: x86_64
 Maintainer: djunekz <gab288.gab288@passinbox.com>
 Installed-Size: 164
 Depends: python, python-pip
 Homepage: https://github.com/djunekz/termux-app-store
-Filename: pool/main/termux-app-store_0.2.6_x86_64.deb
-Size: 19634
-MD5sum: b83fe9b03c6c4863be811bb46ff24261
-SHA1: 97b4a8df731c6c0fd8dcb2f33c14ac2046407b4c
-SHA256: ce3e71a02723a541fe51a08cd9af1f9675aed58cf4a1b171f20db96cf5e2152c
+Filename: pool/main/termux-app-store_0.3.0_x86_64.deb
+Size: 19644
+MD5sum: 76f1760ee7f4a67db61da96fe56d67f4
+SHA1: ce9da0484b8ad258634ca291e3bdc5e16e75a17d
+SHA256: 95870709b192fc3df09961eadda23bd5af5d38acb7fba2ec78731924b9ae4c85
 Description: The first offline-first, source-based TUI package manager for Termux
 
 Package: tuifimanager
