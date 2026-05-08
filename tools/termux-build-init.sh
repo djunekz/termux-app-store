@@ -110,7 +110,7 @@ map_python_dep() {
         wave|weakref|webbrowser|wsgiref|xdrlib|zipapp|zipimport|\
         urllib2|httplib|httplib2|urlparse|cookielib|Cookie|\
         ConfigParser|HTMLParser|Queue|StringIO|BytesIO|\
-        BaseHTTPServer|SimpleHTTPServer|SocketServer|\
+        BaseHTTPServer|SimpleHTTPServer|SocketServer|socketserver|\
         xmlrpclib|repr|sets|UserDict|UserList|UserString|\
         commands|exceptions|__future__|__builtin__|xmllib) return ;;
     esac
@@ -136,6 +136,7 @@ map_python_dep() {
         autoconf)       echo "pkg:autoconf" ;;
         python-setuptools) echo "pkg:python-setuptools" ;;
         python-wheel)   echo "pkg:python-wheel" ;;
+        python-psutil)  echo "pkg:python-psutil" ;;
         python-pip)     echo "pkg:python-pip" ;;
         openssl)        echo "pkg:openssl" ;;
         openssl-dev)    echo "pkg:openssl-dev" ;;
@@ -169,7 +170,8 @@ map_python_dep() {
         termux-tools)   echo "pkg:termux-tools" ;;
 
         requests)       echo "pip:requests" ;;
-        bs4|beautifulsoup4) echo "pip:beautifulsoup4" ;;
+        rich)           echo "pip:rich" ;;
+        textual)        echo "pip:textual" ;;
         lxml)           echo "pip:lxml" ;;
         PIL|Pillow)     echo "pip:pillow" ;;
         numpy)          echo "pip:numpy" ;;
@@ -206,6 +208,8 @@ map_python_dep() {
         humanize)                 echo "pip:humanize" ;;
         textual)                  echo "pip:textual" ;;
 
+        dnspython)      echo "pip:dnspyhton" ;;
+        dnslib)         echo "pip:dnslib" ;;
         six)            echo "pip:six" ;;
         certifi)        echo "pip:certifi" ;;
         idna)           echo "pip:idna" ;;
@@ -242,6 +246,8 @@ map_python_dep() {
         fire)           echo "pip:fire" ;;
         docopt)         echo "pip:docopt" ;;
         cachetools)     echo "pip:cachetools" ;;
+        transformer)    echo "pip:transformer" ;;
+        jinja2)         echo "pip:jinja2" ;;
         pytz)           echo "pip:pytz" ;;
         httpx)          echo "pip:httpx" ;;
         websockets)     echo "pip:websockets" ;;
@@ -266,8 +272,10 @@ scan_python_declared_deps() {
 
     if [[ -f "$src/requirements.txt" ]]; then
         while IFS= read -r line; do
-            line=$(echo "$line" | sed 's/[>=<!~^].*//' | tr -d ' ' | cut -d'[' -f1)
             [[ -z "$line" || "$line" == \#* ]] && continue
+            [[ "$line" =~ ^[[:space:]]*- ]] && continue
+            line=$(echo "$line" | sed 's/[>=<!~^].*//' | tr -d ' ' | cut -d'[' -f1)
+            [[ -z "$line" ]] && continue
             local mapped; mapped=$(map_python_dep "$line")
             [[ -n "$mapped" ]] && deps+=("$mapped")
         done < "$src/requirements.txt"
@@ -621,54 +629,40 @@ detect_entrypoint() {
     fi
 
     if [[ "$method" == "make" || "$method" == "autotools" || "$method" == "cmake" ]]; then
-        if [[ -f "$src/Makefile" || -f "$src/makefile" ]]; then
-            local _mk="${src}/Makefile"
-            [[ -f "$src/makefile" ]] && _mk="$src/makefile"
 
-            if grep -qE "^${pkg}[[:space:]]*:[^:=]" "$_mk" 2>/dev/null || \
-               grep -qE "^${pkg}[[:space:]]*:[[:space:]]*$" "$_mk" 2>/dev/null; then
-                echo "$pkg"; return
-            fi
-
-            local _first_target
-            _first_target=$(grep -E '^[a-zA-Z0-9_][a-zA-Z0-9_-]*[[:space:]]*:[^:=]' "$_mk" 2>/dev/null \
-                | grep -viE '^(all|clean|install|uninstall|test|check|dist|distclean|maintainer|PHONY|\.PHONY|docs|doc)' \
-                | grep -v '^%' \
-                | grep -vE '^[A-Z_][A-Z0-9_]*[[:space:]]*:' \
-                | grep -vE '^(CC|CXX|LD|AR|AS|NM|STRIP|RANLIB|CFLAGS|CXXFLAGS|LDFLAGS|LIBS|PREFIX|DESTDIR|INSTALL|MAKE|SHELL|PATH|PKG_CONFIG|INCLUDE|SOURCES|OBJECTS|OBJS|OBJ|SRC|BIN|LIB)[[:space:]]*:' \
-                | head -n1 | sed 's/[[:space:]]*:.*//' || true)
-
-            if [[ -z "$_first_target" ]]; then
-                _first_target=$(grep -E '^[a-zA-Z0-9_][a-zA-Z0-9_-]*[[:space:]]*:[[:space:]]*$' "$_mk" 2>/dev/null \
-                    | grep -viE '^(all|clean|install|uninstall|test|check|dist|distclean|PHONY)' \
-                    | head -n1 | sed 's/[[:space:]]*:.*//' || true)
-            fi
-
-            [[ -n "$_first_target" ]] && { echo "$_first_target"; return; }
+        if [[ -f "$src/$pkg.c" || -f "$src/$pkg.cpp" ]]; then
+            echo "$pkg"; return
         fi
 
         if [[ -f "$src/CMakeLists.txt" ]]; then
             local _cmake_bin
             _cmake_bin=$(grep -m1 'add_executable' "$src/CMakeLists.txt" 2>/dev/null \
                 | sed 's/.*add_executable[[:space:]]*([[:space:]]*\([^ )]*\).*/\1/' || true)
-            [[ -n "$_cmake_bin" ]] && { echo "$_cmake_bin"; return; }
+            [[ -n "$_cmake_bin" && "$_cmake_bin" != "\${" ]] && { echo "$_cmake_bin"; return; }
         fi
 
         if [[ -f "$src/configure.ac" || -f "$src/configure.in" ]]; then
             local _ac_name
             _ac_name=$(grep -m1 'AC_INIT' "${src}/configure.ac" "${src}/configure.in" 2>/dev/null \
-                | sed 's/.*AC_INIT[[:space:]]*(\[\?\([^],)]*\).*/\1/' | tr -d ' \t' || true)
-            [[ -n "$_ac_name" ]] && { sanitize_pkgname "$_ac_name"; return; }
-        fi
-
-        if [[ -f "$src/$pkg.c" ]]; then
-            echo "$pkg"; return
+                | sed 's/.*AC_INIT[[:space:]]*(\[*\([^]],)]*\).*/\1/' \
+                | tr -d '[] \t' || true)
+            if echo "$_ac_name" | grep -qE 'm4_|defn|\$|\(|\)|@'; then
+                _ac_name=""
+            fi
+            [[ -n "$_ac_name" && "$_ac_name" != "AC_INIT" ]] && { sanitize_pkgname "$_ac_name"; return; }
         fi
 
         local _main_c
-        _main_c=$(grep -rl 'int main\s*(' "$src"/*.c 2>/dev/null \
-            | grep -viE 'test|helper|util|example|sample|bench' | head -n1 || true)
-        [[ -n "$_main_c" ]] && { basename "${_main_c%.c}"; return; }
+        _main_c=$(grep -rl 'int main\s*(' "$src"/*.c "$src"/*.cpp 2>/dev/null \
+            | grep -viE 'test|helper|util|example|sample|bench|compat' \
+            | head -n1 || true)
+        if [[ -n "$_main_c" ]]; then
+            local _bin_name
+            _bin_name=$(basename "${_main_c%.*}")
+            if [[ "$_bin_name" != "main" && "$_bin_name" != "src" ]]; then
+                echo "$_bin_name"; return
+            fi
+        fi
 
         echo "$pkg"; return
     fi
@@ -846,8 +840,14 @@ cat <<BLOCK
 termux_step_pre_configure() {
     [[ -f configure.ac ]] && autoreconf -fi
 }
+
+termux_step_make_install() {
+    make install PREFIX="\$TERMUX_PREFIX" DESTDIR="" \
+        || make install prefix="\$TERMUX_PREFIX" DESTDIR=""
+}
 BLOCK
     ;;
+
 
     make)
 cat <<BLOCK
@@ -857,24 +857,81 @@ termux_step_make() {
         echo "[ WARN ] No Makefile found in \$(pwd) — skipping make step"
         return 0
     fi
-    make -j"\$(nproc)" PREFIX="\$TERMUX_PREFIX"
+
+    local _mk_target=""
+    local _mk_file="Makefile"
+    [[ -f makefile ]] && _mk_file="makefile"
+
+    if grep -qE "^${pkg}[[:space:]]*:" "\$_mk_file" 2>/dev/null; then
+        _mk_target="${pkg}"
+    elif grep -qE "^(unix|linux|android)[[:space:]]*:" "\$_mk_file" 2>/dev/null; then
+        _mk_target=\$(grep -E "^(unix|linux|android)[[:space:]]*:" "\$_mk_file" \
+            | head -n1 | sed 's/[[:space:]]*:.*//')
+    fi
+
+    if [[ -n "\$_mk_target" ]]; then
+        make -j"\$(nproc)" PREFIX="\$TERMUX_PREFIX" "\$_mk_target" 2>/dev/null \
+            || make PREFIX="\$TERMUX_PREFIX" "\$_mk_target"
+    else
+        make -j"\$(nproc)" PREFIX="\$TERMUX_PREFIX" 2>/dev/null \
+            || make PREFIX="\$TERMUX_PREFIX"
+    fi
 }
 
 termux_step_make_install() {
     if [[ ! -f Makefile && ! -f makefile ]]; then
-        echo "[ WARN ] No Makefile found — trying pip fallback..."
-        if [[ -f pyproject.toml || -f setup.py ]]; then
-            pip install --quiet setuptools wheel --break-system-packages 2>/dev/null || true
-            pip install . --prefix="\$TERMUX_PREFIX" --no-deps --break-system-packages 2>/dev/null \
-                || pip install . --prefix="\$TERMUX_PREFIX" --no-deps --no-build-isolation --break-system-packages \
-                || { echo "pip install also failed"; return 1; }
-        else
-            echo "[ FAIL ] No Makefile and no pyproject.toml/setup.py found"
-            return 1
+        echo "[ WARN ] No Makefile found — skipping install step"
+        return 1
+    fi
+
+    local _mk_file="Makefile"
+    [[ -f makefile ]] && _mk_file="makefile"
+
+    local _install_ok=false
+    if grep -qE "^install[[:space:]]*:" "\$_mk_file" 2>/dev/null; then
+        if grep -A5 "^install:" "\$_mk_file" 2>/dev/null \
+                | grep -qE '\$\(PREFIX\)|\$\(DESTDIR\)|\$\(prefix\)'; then
+            make install PREFIX="\$TERMUX_PREFIX" DESTDIR="" 2>/dev/null \
+                && _install_ok=true
         fi
+    fi
+
+    if [[ "\$_install_ok" == true ]]; then
         return 0
     fi
-    make install PREFIX="\$TERMUX_PREFIX"
+
+    echo "[ INFO ] make install tidak support PREFIX — mencari binary hasil build..."
+    local _bin=""
+
+    local _mk_binary
+    _mk_binary=\$(grep -oE '\-o[[:space:]]+[a-zA-Z0-9_-]+' "\$_mk_file" 2>/dev/null \
+        | grep -viE '\-o[[:space:]]+(\.o|\.exe|.*\.o)' \
+        | head -n1 | awk '{print \$2}' || true)
+
+    for _candidate in "\$_mk_binary" "${pkg}" "${pkg}.out" "${pkg}-bin"; do
+        [[ -z "\$_candidate" ]] && continue
+        if [[ -f "\$_candidate" && -x "\$_candidate" ]]; then
+            _bin="\$_candidate"; break
+        fi
+    done
+
+    if [[ -z "\$_bin" ]]; then
+        _bin=\$(find . -maxdepth 1 -type f -perm /111 \
+            ! -name "*.sh" ! -name "*.py" ! -name "*.pl" \
+            ! -name "Makefile" ! -name "makefile" ! -name "configure" \
+            ! -name "*.c" ! -name "*.h" ! -name "*.o" \
+            2>/dev/null | head -n1 || true)
+    fi
+
+    if [[ -n "\$_bin" ]]; then
+        echo "[ INFO ] Binary ditemukan: \$_bin"
+        install -Dm755 "\$_bin" "\$TERMUX_PREFIX/bin/${pkg}"
+        echo "[ OK ] Installed: \$TERMUX_PREFIX/bin/${pkg}"
+    else
+        echo "[ WARN ] Binary tidak ditemukan — install manual diperlukan"
+        echo "[ WARN ] Edit termux_step_make_install() di build.sh"
+        return 1
+    fi
 }
 BLOCK
     ;;

@@ -33,7 +33,7 @@ and this project adheres to semantic versioning.
 - TUI Contact Support menu — displays GitHub Issues, GitHub Discussions, Email, Official Repository, and disclaimer, with buttons to open browser directly
 - TUI keyboard shortcuts: `Ctrl+R` refresh packages, `Ctrl+I` install selected, `Ctrl+Q` quit
 - Package `bit` v1.1.2 - Bit is a modern Git CLI
-- Package `broot` v1.56.2 - A new way to see and navigate directory trees : https://dystroy.org/broot
+- Package `broot` v1.56.2 - A new way to see and navigate directory trees
 - Package `dust` v1.2.4 - A more intuitive version of du in rust
 - Package `cloudflair` v1.0.0 - 🔎 Find origin servers of websites behind CloudFlare by using Internet-wide scan data from Censys.
 - Package `holehe` v1.0.0 - holehe allows you to check if the mail is used on different sites like twitter, instagram and will retrieve information on sites with the forgotten password function.
@@ -41,8 +41,25 @@ and this project adheres to semantic versioning.
 - Package `xeuledoc` v1.0.0 - Fetch information about a public Google document.
 - Package `viu` v1.6.1 - Terminal image viewer with native support for iTerm and Kitty
 - Package `ytfzf` v2.6.2 - A posix script to find and watch youtube videos from the terminal. (Without API)
+- Package `binwalk` v3.1.0 - Firmware Analysis Tool
+- Package `dbd` v1.0.0 - Durandals Backdoor
+- Package `dnsmap` v1.0.0 - fork of http://code.google.com/p/dnsmap/source/checkout
+- Package `elpscrk` v1.0.0 - An Intelligent wordlist generator based on user profiling, permutations, and statistics. (Named after the same tool in Mr.Robot series S01E01)
+- Package `eternal-scanner` v2.2 - An internet scanner for exploit CVE-2017-0144 (Eternal Blue) & CVE-2017-0145 (Eternal Romance)
+- Package `evilginx2` v3.3.0 - Standalone man-in-the-middle attack framework used for phishing login credentials along with session cookies, allowing for the bypass of 2-factor authentication
+- Package `fbvid` v1.0.0 - Facebook Video Downloader (CLI) For Linux Systems Coded in PHP
 
 ### Fixed
+- `termux-build-init.sh` — `detect_entrypoint()` step 3: regex in `sed` for parsing `AC_INIT(...)` from `configure.ac` was malformed (`\[\?\([^],)]*\)\]`), causing m4 macro internals like `m4_defn([package_name])` to leak into the entrypoint result (e.g. detected as `m4-defn-package` instead of the actual binary name); regex corrected to `\[*\([^]],)]*\)` and an output validation guard added to reject strings containing `m4_`, `defn`, `$`, `(`, `)`, or `@`
+- `termux-build-init.sh` — `scan_python_declared_deps()`: lines starting with `-` in `requirements.txt` (e.g. `-i https://pypi.org/simple`, `--index-url`, `-r`, `-f`) were not filtered and leaked into pip dependency list; added `[[ "$line" =~ ^[[:space:]]*- ]] && continue` guard before processing
+- `termux-build-init.sh` — `map_python_dep()`: `socketserver` (lowercase, Python 3 stdlib module) was not in the stdlib filter list, causing it to be included as a pip install target; added to stdlib whitelist alongside `SocketServer`
+- `termux-build-init.sh` — `make_install_block()` autotools case: no `termux_step_make_install()` was generated in the output `build.sh`, so `build-package.sh` fell back to auto-detect mode which incorrectly picked the `compile` helper file (an automake utility) instead of the actual built binary; a proper `termux_step_make_install()` using `make install PREFIX=` is now always emitted for autotools packages
+- `build-package.sh` — `bash -n "$BUILD_SH"` exit code was silently lost: the result was captured into `_SYNTAX_ERR=$(...)` which always sets `$?` to 0, so syntax errors in `build.sh` were never caught; fixed by capturing exit code separately into `_SYNTAX_EXIT=$?`
+- `build-package.sh` — `TERMUX_PKG_DEPENDS` was split via `tr` into a plain string `_DEPS_NORMALIZED` then used unquoted in `for` loop and `pkg install`, causing incorrect word splitting when package names contained spaces or special characters; replaced with `mapfile -t _DEPS_ARRAY` and `"${_DEPS_ARRAY[@]}"` throughout
+- `build-package.sh` — `local _pd` used inside a `| while read` subshell within `_check_rust_env()`; semantically wrong outside a direct function body; removed `local`, variable now declared plainly as `_pd=$(dirname "$_ct")`
+- `build-package.sh` — staging paths were inconsistent: ELF, npm, and auto-detect modes used `$WORK_DIR/pkg/$PREFIX` (double slash since `PREFIX` starts with `/`), while custom install mode used `$WORK_DIR/pkg$PREFIX` (correct); standardized all paths to `$WORK_DIR/pkg$PREFIX` to ensure all staged files land in the same directory tree that `dpkg-deb` packages
+- `build-package.sh` — `dpkg-deb --build ... | tee "$DPKG_LOG"` caused `DPKG_EXIT` to always be 0 because the `if` condition evaluated the exit code of `tee` (always succeeds), not `dpkg-deb`; even with `set -o pipefail` active this pattern is unreliable; replaced with direct redirect `> "$DPKG_LOG"` and explicit `DPKG_EXIT=$?` capture
+- `build-package.sh` — `termux_step_pre_configure()` defined in `build.sh` (e.g. running `autoreconf -fi` for autotools packages) was never called by `build-package.sh`, causing autotools builds to fail at `./configure` with missing generated files; added an explicit call block before `termux_step_make()` that `cd`s into `$SRC_ROOT` and invokes the function when declared
 - `termux-build-init.sh` — all color variables now use `$'\033[...'` syntax so escape sequences are correctly interpreted by `printf` and `echo`; previously colors appeared as raw text like `\033[97m`
 - `termux-build-init.sh` — Unicode characters in banner (`·`) and status tags (`✓`, `─`) now render correctly instead of showing as `\u00b7`, `\u2713`, `\u2500`
 - `termux-build-init.sh` — output style unified with `build-package.sh`: same colors, same tag format `[✓]` `[INFO]` `[!]` `[FAIL]`, same `— Section —` style, same `─` line separator

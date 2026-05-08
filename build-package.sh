@@ -128,8 +128,9 @@ if [[ ! -s "$BUILD_SH" ]] || ! grep -qE '[^[:space:]]' "$BUILD_SH"; then
   exit 1
 fi
 
-_SYNTAX_ERR=$(bash -n "$BUILD_SH" 2>&1)
-if [[ $? -ne 0 ]] || [[ -n "$_SYNTAX_ERR" ]]; then
+_SYNTAX_ERR=$(bash -n "$BUILD_SH" 2>&1) || true
+_SYNTAX_EXIT=$?
+if [[ $_SYNTAX_EXIT -ne 0 ]] || [[ -n "$_SYNTAX_ERR" ]]; then
   _fatal "Syntax error in build.sh"
   echo ""
   _ERR_LINE=$(echo "$_SYNTAX_ERR" | grep -oP '(?<=line )\d+' | head -1)
@@ -325,19 +326,19 @@ _section "Dependencies"
 
 if [[ -n "${TERMUX_PKG_DEPENDS:-}" ]]; then
   _progress "Installing dependencies..."
-  _DEPS_NORMALIZED=$(echo "$TERMUX_PKG_DEPENDS" | tr ',' '\n' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | grep -v '^$' | tr '\n' ' ')
-  for dep in $_DEPS_NORMALIZED; do
+  mapfile -t _DEPS_ARRAY < <(echo "$TERMUX_PKG_DEPENDS" | tr ',' '\n' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | grep -v '^$')
+  for dep in "${_DEPS_ARRAY[@]}"; do
     printf "      ${GRAY}+${R} ${WHITE}%s${R}\n" "$dep"
   done
 
   _spin_chars='⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏'
   _spin_i=0
   _PKG_LOG=$(mktemp)
-  pkg install -y $_DEPS_NORMALIZED > "$_PKG_LOG" 2>&1 &
+  pkg install -y "${_DEPS_ARRAY[@]}" > "$_PKG_LOG" 2>&1 &
   _PKG_PID=$!
   while kill -0 "$_PKG_PID" 2>/dev/null; do
     _sc="${_spin_chars:$(( _spin_i % ${#_spin_chars} )):1}"
-    printf "\r  ${BCYAN}[  %s  ]${R}  Installing dependencies..." "$_sc"
+    printf "\r ${BGREEN}[${BCYAN} %s ${BGREEN}]${R} Installing dependencies..." "$_sc"
     sleep 0.1
     (( _spin_i++ )) || true
   done
@@ -408,7 +409,7 @@ _check_rust_env() {
     if [[ -d "$ROOT_DIR/build/$PACKAGE" ]]; then
       find "$ROOT_DIR/build/$PACKAGE" -name "Cargo.toml" -maxdepth 3 2>/dev/null \
         | while read -r _ct; do
-        local _pd; _pd=$(dirname "$_ct")
+        _pd=$(dirname "$_ct")
         if [[ -d "$_pd/target" ]]; then
           _progress "cargo clean: $(basename "$_pd")..."
           (cd "$_pd" && cargo clean 2>/dev/null) || true
@@ -502,7 +503,7 @@ if [[ -n "${TERMUX_PKG_SRCURL:-}" ]]; then
     _progress "Computing checksum..."
     CALC_SHA256="$(sha256sum "$SRC_FILE" | awk '{print $1}')"
     _detail "Expected:" "${TERMUX_PKG_SHA256}"
-    _detail "Got:"      "${CALC_SHA256}"
+    _detail "Got     :" "${CALC_SHA256}"
     if [[ "$CALC_SHA256" != "$TERMUX_PKG_SHA256" ]]; then
       _fatal "SHA256 mismatch! File may be corrupted or tampered."
       exit 1
@@ -647,6 +648,17 @@ if [[ -n "$PREBUILT_DEB" ]]; then
   fi
 fi
 
+if declare -f termux_step_pre_configure > /dev/null 2>&1; then
+  _section "Pre-Configure"
+  _step "Running termux_step_pre_configure()..."
+  export TERMUX_PREFIX="$PREFIX"
+  export TERMUX_PKG_SRCDIR="$SRC_ROOT"
+  [[ -d "$SRC_ROOT" ]] && cd "$SRC_ROOT"
+  termux_step_pre_configure
+  cd "$ROOT_DIR"
+  _ok "Pre-configure done"
+fi
+
 if declare -f termux_step_make > /dev/null 2>&1; then
   _section "Building Source"
   _step "Custom termux_step_make() found, running..."
@@ -672,10 +684,10 @@ if declare -f termux_step_make > /dev/null 2>&1; then
     _last_line=$(tail -n1 "$_MAKE_LOG" 2>/dev/null | tr -d '\r\n' \
       | sed 's/\x1b\[[0-9;]*m//g' | cut -c1-45)
     if [[ -n "$_last_line" ]]; then
-      printf "\r  ${BCYAN}[  %s  ]${R}  ${GRAY}[%s]${R}  %s%-10s" \
+      printf "\r ${BGREEN}[${BCYAN} %s ${BGREEN}]${R} ${GRAY}[%s]${R}  %s%-10s" \
         "$_sc" "$_elapsed_fmt" "$_last_line" " "
     else
-      printf "\r  ${BCYAN}[  %s  ]${R}  ${GRAY}[%s]${R}  Building...%-10s" \
+      printf "\r ${BGREEN}[${BCYAN} %s ${BGREEN}]${R} ${GRAY}[%s]${R}  Building...%-10s" \
         "$_sc" "$_elapsed_fmt" " "
     fi
     sleep 0.2
@@ -710,8 +722,8 @@ _section "Installing Files (DESTDIR)"
 
 if [[ -n "$PREBUILT_BIN" ]]; then
   _step "Mode: ELF binary"
-  mkdir -p "$WORK_DIR/pkg/$PREFIX/bin"
-  install -Dm755 "$PREBUILT_BIN" "$WORK_DIR/pkg/$PREFIX/bin/$PACKAGE"
+  mkdir -p "$WORK_DIR/pkg$PREFIX/bin"
+  install -Dm755 "$PREBUILT_BIN" "$WORK_DIR/pkg$PREFIX/bin/$PACKAGE"
   _ok "Binary staged"
   _detail "Bin:" "$PREFIX/bin/$PACKAGE"
 
@@ -809,7 +821,7 @@ export LD_LIBRARY_PATH="$PREFIX/lib\${LD_LIBRARY_PATH:+:\$LD_LIBRARY_PATH}"
 exec "$PREFIX/lib/$PACKAGE/$PACKAGE" "\$@"
 EOF
       _detail "Linked Python:" "$_LINKED_PYTHON"
-      _detail "LD_LIB path:"   "$PREFIX/lib"
+      _detail "LD_LIB path  :" "$PREFIX/lib"
     else
       cat > "$PREFIX/bin/$PACKAGE" <<EOF
 #!/data/data/com.termux/files/usr/bin/bash
@@ -844,9 +856,9 @@ elif declare -f termux_step_make_install > /dev/null 2>&1; then
     _sc="${_spin_chars:$(( _spin_i % ${#_spin_chars} )):1}"
     _last_line=$(tail -n1 "$_INSTALL_LOG" 2>/dev/null | tr -d '\r\n' | sed 's/\x1b\[[0-9;]*m//g' | cut -c1-40)
     if [[ -n "$_last_line" ]]; then
-      printf "\r  ${BCYAN}[  %s  ]${R}  ${GRAY}%s${R}%-20s" "$_sc" "$_last_line" " "
+      printf "\r ${BGREEN}[${BCYAN} %s ${BGREEN}]${R} ${GRAY}%s${R}%-20s" "$_sc" "$_last_line" " "
     else
-      printf "\r  ${BCYAN}[  %s  ]${R}  Running install...%-20s" "$_sc" " "
+      printf "\r ${BGREEN}[${BCYAN} %s ${BGREEN}]${R} Running install...%-20s" "$_sc" " "
     fi
     sleep 0.15
     (( _spin_i++ )) || true
@@ -1092,7 +1104,7 @@ else
     _NPM_PID=$!
     while kill -0 "$_NPM_PID" 2>/dev/null; do
       _sc="${_spin_chars:$(( _spin_i % ${#_spin_chars} )):1}"
-      printf "\r  ${BCYAN}[  %s  ]${R}  Installing packages..." "$_sc"
+      printf "\r ${BGREEN}[${BCYAN} %s ${BGREEN}]${R} Installing packages..." "$_sc"
       sleep 0.1
       (( _spin_i++ )) || true
     done
@@ -1119,15 +1131,15 @@ else
 
     _NPM_BIN=$(find "$PREFIX/bin" -name "$PACKAGE" -o -name "${PACKAGE}.js" 2>/dev/null | head -n1 || true)
     if [[ -n "$_NPM_BIN" ]]; then
-      mkdir -p "$WORK_DIR/pkg/$PREFIX/bin"
-      install -Dm755 "$_NPM_BIN" "$WORK_DIR/pkg/$PREFIX/bin/$(basename "$_NPM_BIN")"
+      mkdir -p "$WORK_DIR/pkg$PREFIX/bin"
+      install -Dm755 "$_NPM_BIN" "$WORK_DIR/pkg$PREFIX/bin/$(basename "$_NPM_BIN")"
       _detail "Binary:" "$_NPM_BIN"
     fi
 
     _NPM_LIB="$PREFIX/lib/node_modules/$PACKAGE"
     if [[ -d "$_NPM_LIB" ]]; then
-      mkdir -p "$WORK_DIR/pkg/$PREFIX/lib/node_modules"
-      cp -r "$_NPM_LIB" "$WORK_DIR/pkg/$PREFIX/lib/node_modules/"
+      mkdir -p "$WORK_DIR/pkg$PREFIX/lib/node_modules"
+      cp -r "$_NPM_LIB" "$WORK_DIR/pkg$PREFIX/lib/node_modules/"
       _detail "Lib:" "$_NPM_LIB"
     fi
 
@@ -1155,26 +1167,26 @@ else
     fi
 
     if [[ $_is_elf -eq 1 ]]; then
-      mkdir -p "$WORK_DIR/pkg/$PREFIX/bin"
-      install -m755 "$MAIN_FILE" "$WORK_DIR/pkg/$PREFIX/bin/$PACKAGE"
+      mkdir -p "$WORK_DIR/pkg$PREFIX/bin"
+      install -m755 "$MAIN_FILE" "$WORK_DIR/pkg$PREFIX/bin/$PACKAGE"
 
       _ok "Main file detected"
-      _detail "File:"    "$MAIN_FILE"
-      _detail "Type:"    "ELF binary"
+      _detail "File   :" "$MAIN_FILE"
+      _detail "Type   :" "ELF binary"
       _detail "Install:" "$PREFIX/bin/$PACKAGE"
     else
-      mkdir -p "$WORK_DIR/pkg/$PREFIX/lib/$PACKAGE"
-      cp -r "$SRC_ROOT"/. "$WORK_DIR/pkg/$PREFIX/lib/$PACKAGE/" 2>/dev/null || {
+      mkdir -p "$WORK_DIR/pkg$PREFIX/lib/$PACKAGE"
+      cp -r "$SRC_ROOT"/. "$WORK_DIR/pkg$PREFIX/lib/$PACKAGE/" 2>/dev/null || {
         find "$SRC_ROOT" -maxdepth 3 -type f | while read -r _f; do
           _rel="${_f#$SRC_ROOT/}"
-          _dst="$WORK_DIR/pkg/$PREFIX/lib/$PACKAGE/$_rel"
+          _dst="$WORK_DIR/pkg$PREFIX/lib/$PACKAGE/$_rel"
           mkdir -p "$(dirname "$_dst")"
           cp "$_f" "$_dst" 2>/dev/null || true
         done
       }
       _detail "Staged:" "$PREFIX/lib/$PACKAGE/ (full repo)"
       MAIN_REL="${MAIN_FILE#$SRC_ROOT/}"
-      chmod +x "$WORK_DIR/pkg/$PREFIX/lib/$PACKAGE/$MAIN_REL" 2>/dev/null || true
+      chmod +x "$WORK_DIR/pkg$PREFIX/lib/$PACKAGE/$MAIN_REL" 2>/dev/null || true
 
       FIRST_LINE="$(head -n1 "$MAIN_FILE" 2>/dev/null || true)"
       if [[ "$FIRST_LINE" =~ ^#! ]]; then
@@ -1190,12 +1202,12 @@ else
         INTERPRETER="bash"
       fi
 
-      mkdir -p "$WORK_DIR/pkg/$PREFIX/bin"
-      cat > "$WORK_DIR/pkg/$PREFIX/bin/$PACKAGE" <<EOF
+      mkdir -p "$WORK_DIR/pkg$PREFIX/bin"
+      cat > "$WORK_DIR/pkg$PREFIX/bin/$PACKAGE" <<EOF
 #!/data/data/com.termux/files/usr/bin/bash
 exec $INTERPRETER "$PREFIX/lib/$PACKAGE/$MAIN_REL" "\$@"
 EOF
-      chmod +x "$WORK_DIR/pkg/$PREFIX/bin/$PACKAGE"
+      chmod +x "$WORK_DIR/pkg$PREFIX/bin/$PACKAGE"
 
       _ok "Main file detected"
       _detail "File:"        "$MAIN_FILE"
@@ -1237,11 +1249,9 @@ _progress "Running dpkg-deb..."
 _detail "Output:" "$(basename "$DEB_FILE")"
 
 DPKG_LOG=$(mktemp)
-if dpkg-deb --build "$WORK_DIR/pkg" "$DEB_FILE" 2>&1 | tee "$DPKG_LOG"; then
-  DPKG_EXIT=0
-else
-  DPKG_EXIT=$?
-fi
+dpkg-deb --build "$WORK_DIR/pkg" "$DEB_FILE" > "$DPKG_LOG" 2>&1
+DPKG_EXIT=$?
+cat "$DPKG_LOG"
 DPKG_OUTPUT=$(cat "$DPKG_LOG")
 rm -f "$DPKG_LOG"
 
