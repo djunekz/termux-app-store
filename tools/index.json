@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-05-08T03:25:19.908717+00:00",
-  "total": 78,
+  "generated_at": "2026-05-08T08:05:14.820214+00:00",
+  "total": 85,
   "packages": [
     {
       "package": "aichat",
@@ -141,6 +141,23 @@
       "srcurl": "https://github.com/urbanadventurer/bing-ip2hosts/archive/refs/tags/v1.0.5.tar.gz",
       "sha256": "0a198af8d7876d7adb9c0517025bd6443d13399a188615a078cf3e45e120f19e",
       "platform_independent": false
+    },
+    {
+      "package": "binwalk",
+      "version": "3.1.0",
+      "maintainer": "@termux-app-store",
+      "description": "Firmware Analysis Tool",
+      "homepage": "https://github.com/ReFirmLabs/binwalk",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/ReFirmLabs/binwalk/archive/refs/tags/v3.1.0.tar.gz",
+      "sha256": "06f595719417b70a592580258ed980237892eadc198e02363201abe6ca59e49a",
+      "platform_independent": false,
+      "depends": [
+        "rust"
+      ]
     },
     {
       "package": "bit",
@@ -382,6 +399,20 @@
       ]
     },
     {
+      "package": "dbd",
+      "version": "1.0.0",
+      "maintainer": "@termux-app-store",
+      "description": "Durandal's Backdoor",
+      "homepage": "https://gitbrew.org/dbd",
+      "license": "GPL-2.0",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/gitdurandal/dbd/archive/refs/heads/master.tar.gz",
+      "sha256": "f633a0a65360db98aaa6a85cdfd63fdec36a7a60798420ba16f1cf0088eec18b",
+      "platform_independent": false
+    },
+    {
       "package": "djangohunter",
       "version": "1.0.0",
       "maintainer": "@termux-app-store",
@@ -399,6 +430,20 @@
         "python-pip",
         "python-setuptools"
       ]
+    },
+    {
+      "package": "dnsmap",
+      "version": "1.0.0",
+      "maintainer": "@termux-app-store",
+      "description": "fork of http://code.google.com/p/dnsmap/source/checkout",
+      "homepage": "https://github.com/makefu/dnsmap",
+      "license": "UNKNOWN",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/makefu/dnsmap/archive/refs/heads/master.tar.gz",
+      "sha256": "89358fece5f8734db6475b814d527ce7ae54b368e419a5ea0799f7c0ff38c922",
+      "platform_independent": false
     },
     {
       "package": "dnsrecon",
@@ -473,6 +518,26 @@
       ]
     },
     {
+      "package": "elpscrk",
+      "version": "1.0.0",
+      "maintainer": "@termux-app-store",
+      "description": "An Intelligent wordlist generator based on user profiling, permutations, and statistics. (Named after the same tool in Mr.Robot series S01E01)",
+      "homepage": "https://github.com/D4Vinci/elpscrk",
+      "license": "GPL-3.0",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/D4Vinci/elpscrk/archive/refs/heads/master.tar.gz",
+      "sha256": "14077506c401e1c899103273c1691e743cb9d15731949841c977b6c1ac2003ac",
+      "platform_independent": false,
+      "depends": [
+        "python",
+        "python-pip",
+        "python-setuptools",
+        "python-psutil"
+      ]
+    },
+    {
       "package": "encrypt",
       "version": "1.1",
       "maintainer": "@djunekz",
@@ -485,6 +550,59 @@
       "srcurl": "https://github.com/djunekz/encrypt/archive/refs/tags/${TERMUX_PKG_VERSION}.zip",
       "sha256": "07d954452ed93a1aec029e727da275004bdb67940743a41b357f333b7cc36d5a",
       "platform_independent": false
+    },
+    {
+      "package": "eternal-scanner",
+      "version": "2.2",
+      "maintainer": "@termux-app-store",
+      "description": "An internet scanner for exploit CVE-2017-0144 (Eternal Blue) & CVE-2017-0145 (Eternal Romance)",
+      "homepage": "https://github.com/peterpt/eternal_scanner",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/peterpt/eternal_scanner/archive/refs/tags/2.2.tar.gz",
+      "sha256": "104bf52263192824556afbe5aa061b888310dd8de2afc0ee520d456595db884b",
+      "platform_independent": false,
+      "depends": [
+        "python",
+        "python-pip",
+        "python-setuptools"
+      ]
+    },
+    {
+      "package": "evilginx2",
+      "version": "3.3.0",
+      "maintainer": "@termux-app-store",
+      "description": "Standalone man-in-the-middle attack framework used for phishing login credentials along with session cookies, allowing for the bypass of 2-factor authentication",
+      "homepage": "https://github.com/kgretzky/evilginx2",
+      "license": "BSD-3-Clause",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/kgretzky/evilginx2/archive/refs/tags/v3.3.0.tar.gz",
+      "sha256": "6d33f0d0b4b569af5207102512945502ed37090879dcf6987322d670912a4133",
+      "platform_independent": false,
+      "depends": [
+        "golang"
+      ]
+    },
+    {
+      "package": "fbvid",
+      "version": "1.0.0",
+      "maintainer": "@termux-app-store",
+      "description": "Facebook Video Downloader (CLI) For Linux Systems Coded in PHP",
+      "homepage": "https://github.com/Tuhinshubhra/fbvid",
+      "license": "UNKNOWN",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/Tuhinshubhra/fbvid/archive/refs/heads/master.tar.gz",
+      "sha256": "43ca23d947d52f32b330161c7700d5f5ce52c16018ec98e2aac37b0f2ded6edb",
+      "platform_independent": false,
+      "depends": [
+        "php"
+      ]
     },
     {
       "package": "fd",
