@@ -8,6 +8,10 @@ and this project adheres to semantic versioning.
 
 ## [Unreleased]
 
+---
+
+## [v0.3.0] - 2026-05-08 
+
 ### Added
 - Package `merlin` v1.0.0 - Analyst website vulnerabillity scanner
 - Package `bing-ip2hosts` v1.0.5 - bingip2hosts is a Bing.com web scraper that discovers websites by IP address

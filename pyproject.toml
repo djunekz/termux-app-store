@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "termux-app-store"
-version = "0.2.6"
+version = "0.3.0"
 description = "The first offline-first, source-based TUI package manager built natively for Termux"
 readme = "README.md"
 license = "MIT"
