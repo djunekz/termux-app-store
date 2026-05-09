@@ -5,22 +5,22 @@ Codename: termux
 Components: main
 Architectures: aarch64 arm x86_64 i686
 Description: Official Termux repository by @djunekz
-Date: Sat, 09 May 2026 18:39:52 UTC
+Date: Sat, 09 May 2026 18:49:33 UTC
 MD5Sum:
  ee43ef48481a422e09d3d185313cb61a 11541 main/binary-aarch64/Packages
- 9b449a3e63b95c27e051d91319405853 4290 main/binary-aarch64/Packages.gz
+ d95f285087bb93e06a42d038d9620aad 4290 main/binary-aarch64/Packages.gz
  1c4eeda1ac9b9e7c3f7f95bfaf0b13f3 8299 main/binary-arm/Packages
- 8085ea055336718bb78eddb262765d33 3241 main/binary-arm/Packages.gz
+ be0e1c06e4000739493758c7c2c736c0 3241 main/binary-arm/Packages.gz
  ad98081d5740b3966c605f7c3e71cf7e 8413 main/binary-x86_64/Packages
- 78dad9a5a1a3ce325a148837e57e38ab 3236 main/binary-x86_64/Packages.gz
+ fff94b183e1f409a45398689aa9500eb 3236 main/binary-x86_64/Packages.gz
  22bf04fa172b09c64447c55cecce0711 8337 main/binary-i686/Packages
- 203d369fc5e6740d0aa75cfe959d1fc3 3239 main/binary-i686/Packages.gz
+ 9fcbc2364635d9f71a93f561219fb54a 3239 main/binary-i686/Packages.gz
 SHA256:
  9333feafe2cccb9105251585e502011dee7486ab40cbcf39d233bacba9e49ca1 11541 main/binary-aarch64/Packages
- ac3557e7b653843319d7387dffdb38e40d5323a38c3fa08bc08dec7c757e3df9 4290 main/binary-aarch64/Packages.gz
+ 4d38dd7e075e06e7dd996fa1e9877d730d5ef7db1dcfc1aa6f5bc6bc73d29edf 4290 main/binary-aarch64/Packages.gz
  1a74e9e620e1f9015ca13b8717b37cc7275168610a12760e61b22d2b7151e375 8299 main/binary-arm/Packages
- 706555a89cebd941010837d8bd41ab0225bec10ff8417af7a00d2f63f5f58ad6 3241 main/binary-arm/Packages.gz
+ a1c03e32900300ad999040e039966d6c412c26dee32391061a3eba8ebb3887f0 3241 main/binary-arm/Packages.gz
  04bb51dc829c543a3a0490319fce53780cf82bf2eebab02f05d1e66466ad6fd0 8413 main/binary-x86_64/Packages
- 3aa2f74815e7d7c1dc264f4940965a7a74ffb17b550d359c5b150d1c9b821ac3 3236 main/binary-x86_64/Packages.gz
+ 4687af8f9f6d5732839810a09abf5222ae18de9fd7395673d66b6dcc35616539 3236 main/binary-x86_64/Packages.gz
  16c7084612a191dbb051175e17e628bc62f27ff3e49b0f151cb15c5a20b97b95 8337 main/binary-i686/Packages
- f3c30a9145f88654939c9306f5622a6ff4920bec412756782eda17570ff449a6 3239 main/binary-i686/Packages.gz
+ 23b9bae02bdcfa9d5bce0915c8cab872ab0514f74a1b17f2b0362eb4cd0a69e1 3239 main/binary-i686/Packages.gz
