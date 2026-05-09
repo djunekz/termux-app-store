@@ -221,14 +221,14 @@ Package: termux-app-store
 Version: 0.3.0
 Architecture: x86_64
 Maintainer: djunekz <gab288.gab288@passinbox.com>
-Installed-Size: 164
+Installed-Size: 184
 Depends: python, python-pip
 Homepage: https://github.com/djunekz/termux-app-store
 Filename: pool/main/termux-app-store_0.3.0_x86_64.deb
-Size: 19640
-MD5sum: adcc14cc578ee187a8babc42c7ad6de2
-SHA1: f62e888a974d833cc7d2c32ad678759231df3559
-SHA256: 2ee80235eef1ae0073b3dcc0a07be78a8a71d3d0cca24ac5b70deb8d1a5a6e7f
+Size: 23614
+MD5sum: f4d490c08e159413292375b6b48cd9df
+SHA1: 125a2649290edc3bb25800d9b847ee33de3491bd
+SHA256: 64b305848a4e6faac95f422a832f6f3dfcb173b6d1d7ea678a88f3e14dd051a9
 Description: The first offline-first, source-based TUI package manager for Termux
 
 Package: tuifimanager
