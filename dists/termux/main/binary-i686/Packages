@@ -1,13 +1,15 @@
 Package: aichat
 Version: 0.30.0
 Architecture: i686
-Maintainer: @termux-app-store
-Installed-Size: 
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 1012
+Depends: rust
+Homepage: https://github.com/sigoden/aichat
 Filename: pool/main/aichat_0.30.0_i686.deb
-Size: 4656000
-MD5sum: 112c37136889a0db1b11f6120884c37e
-SHA1: 0af8f6073b4f1e7156b87d7ad808f48ac21d7233
-SHA256: c24a13fad54c29761a21450423fb9aaa77ec766624c296f8d8b3d9be956df49d
+Size: 1000244
+MD5sum: 0f90a448069fb5d9b6cd88ffe9ae6faf
+SHA1: f877ce1a2fe99572169293dfb32c3bbe13cef2c5
+SHA256: a34f943937fc12cd5b406440350425662fabf6582311c580e926ad535a39e2a0
 Description: All-in-one LLM CLI tool featuring Shell Assistant, Chat-REPL, RAG, AI Tools & Agents, with access to OpenAI, Claude, Gemini, Ollama, Groq, and more.
 
 Package: ani-cli
@@ -25,337 +27,1033 @@ Description: A cli tool to browse and play anime
 Package: aura
 Version: 0.10.0
 Architecture: i686
-Maintainer: @termux-app-store
-Installed-Size: 
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 0
+Depends: nodejs
+Homepage: https://github.com/djunekz/aura
 Filename: pool/main/aura_0.10.0_i686.deb
-Size: 2242328
-MD5sum: 6fba02083071ac20cc085d527f1d379d
-SHA1: b18bb1ee1bfbda3b4304a985062b1d8457a88138
-SHA256: 6f0cdbc4abde83429fd8c693201b684b2444a8b253df158a8c1ce27bfc0b93c0
+Size: 652
+MD5sum: 9d84d34f8dbee0501330a9de3a29d9e3
+SHA1: cf33b3af0f401653e5632549d86bd735f7add183
+SHA256: d227e4a47ea876489f2651e818a49e7d80cdfeb202d10fc04bdc51e06ed81f79
 Description: Adaptive Unified Runtime Assistant
+
+Package: auxscan
+Version: 1.0.0
+Architecture: i686
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 40
+Depends: python, python-pip, python-setuptools
+Homepage: https://github.com/Gameye98/Auxscan
+Filename: pool/main/auxscan_1.0.0_i686.deb
+Size: 4612
+MD5sum: 70ca60486e56aa2f06d85ac5e8d1a598
+SHA1: 0037a1eb11199e34b3e79fa5afc67adfc6f6f2ad
+SHA256: bb6c3afa78d159803b2dbe81bd198caa32f2e354382bffce0432e4d100633c5f
+Description: Vulnerability Scanner to automate certain tasks
 
 Package: bashxt
 Version: 2.2
 Architecture: i686
-Maintainer: @termux-app-store
-Installed-Size: 
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 0
+Homepage: https://github.com/djunekz/bashxt
 Filename: pool/main/bashxt_2.2_i686.deb
-Size: 4884
-MD5sum: 90bb0ee024ee8c238dd6c54ce85dfc20
-SHA1: e066efb97d3d3ccfd2bbe7774b2b31e2094de5c2
-SHA256: f9f53982c65d17017054117ac4d970f2b464a4083aa10208c0780478a1073dcc
+Size: 656
+MD5sum: a9e3166cc6d0364af01d8d39334e2899
+SHA1: b3bd5fc338eebe032f0cf9f01386456286583405
+SHA256: df97d030a3f13defac43b2d325d9637d5c531625ce6190ead387987978a980d3
 Description: basic command, code color, shortcut keyboar, etc information
 
 Package: basic
 Version: 1.2.0
 Architecture: i686
-Maintainer: @termux-app-store
-Installed-Size: 
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 0
+Depends: python
+Homepage: https://github.com/djunekz/basic
 Filename: pool/main/basic_1.2.0_i686.deb
-Size: 31920
-MD5sum: cf4d9f403fb220df5ca9deeddd6f1b3b
-SHA1: 0dfff79944e76c3be9243bf28c47c851a7447992
-SHA256: 00801ece01695ec690344ff55dfa4780fa123ceef740e822c94e3b00942fc4a6
+Size: 674
+MD5sum: d57fc05ea6dac8a0e0eedf2af1548fd3
+SHA1: 223325e405d9e3114a3c0ef5d0a70eb9e533b114
+SHA256: b70272c1205c8f2c6b02e3a2a2844c448824c48af4480ae4a85b16d641af10fe
 Description: Simulator Terminal learning basic command for beginner
+
+Package: baxter
+Version: 1.2.4
+Architecture: i686
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 0
+Depends: nodejs
+Homepage: https://github.com/djunekz/baxter
+Filename: pool/main/baxter_1.2.4_i686.deb
+Size: 658
+MD5sum: 1d539b5a6e96c8c1630226100367522c
+SHA1: ffaf1d8b92edb191a2b81b066834d1fe992e013b
+SHA256: 6897a75eed319d61b12a24ba9cc94014b0ca0a125aeba7f79e365dd3b8a87373
+Description: Encrypt and decrypt files termux
 
 Package: bing-ip2hosts
 Version: 1.0.5
 Architecture: i686
-Maintainer: @termux-app-store
-Installed-Size: 
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 60
+Homepage: https://github.com/urbanadventurer/bing-ip2hosts
 Filename: pool/main/bing-ip2hosts_1.0.5_i686.deb
-Size: 5274
-MD5sum: 2a63431067c071be9bbbbbfd8ca8345c
-SHA1: 9967189926837977f68355255929b5f0900922c7
-SHA256: 754736f08b5695f538ee980239b9fa17b8ce8d84108816b98c67a26c254e7df7
+Size: 21552
+MD5sum: 56910d95f20a51b0ff3d256e84e32a3f
+SHA1: a75c3d8985fdefcf57fe533a55fa467ad12f3e75
+SHA256: ca63b9c9a95804ca4699a8f166dfb298edbd558a966cfab50bcdb4ebcb3105e6
 Description: bingip2hosts is a Bing.com web scraper that discovers websites by IP address
+
+Package: binwalk
+Version: 3.1.0
+Architecture: i686
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 608
+Depends: rust
+Homepage: https://github.com/ReFirmLabs/binwalk
+Filename: pool/main/binwalk_3.1.0_i686.deb
+Size: 566808
+MD5sum: 3d2e80326908806561f47b9e545ffc1f
+SHA1: 433085e3a820bb976a5726b6743cbccc69565f24
+SHA256: 42b0f40c8c2e566ee6433742cd6721abf34df9575f1de4cdc5f36a7354e286df
+Description: Firmware Analysis Tool
 
 Package: bit
 Version: 1.1.2
 Architecture: i686
-Maintainer: @termux-app-store
-Installed-Size: 
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 192
+Depends: golang
+Homepage: https://github.com/chriswalz/bit
 Filename: pool/main/bit_1.1.2_i686.deb
-Size: 6740882
-MD5sum: 41692bd32ffbebe0f9152d96f616cfd1
-SHA1: 30964884797aa6122dc446d31d2aa32effb0fb3e
-SHA256: bcb4320234a1307ec8b56779898d22fc9915eb44c0d19382ec86f63763226865
+Size: 158044
+MD5sum: eb83f45d2437845a5fcaceb10b960441
+SHA1: bc3c5ddfbb42525c887c75b3d7b0b1a707374ac7
+SHA256: fb3e215da8499b3a76f2a0faa523f2515740c9a6d9b80c9238a081ae94310606
 Description: Bit is a modern Git CLI
+
+Package: bower
+Version: 1.8.12
+Architecture: i686
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 0
+Depends: nodejs
+Homepage: https://github.com/bower/bower
+Filename: pool/main/bower_1.8.12_i686.deb
+Size: 646
+MD5sum: 89aad4156fe7d87221fe79702c3a9716
+SHA1: a964af7391e5b283e64c32d8fb06b9ef1a3f17ca
+SHA256: c847eb373df55840a221c9e9bd08e0a0e730a31ee586fb149190cfd1e90bf621
+Description: A package manager for the web
 
 Package: broot
 Version: 1.56.2
 Architecture: i686
-Maintainer: @termux-app-store
-Installed-Size: 
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 14296
+Depends: rust
+Homepage: https://github.com/Canop/broot
 Filename: pool/main/broot_1.56.2_i686.deb
-Size: 4907874
-MD5sum: 664a73b1a80dfd32e2776348feee1240
-SHA1: 237263de919ac2b46d5e87da8de3d8731e6782a3
-SHA256: 9787333054e8bc39cb60020c182806661b5245a5f24123dda8886e49d879c559
+Size: 14600694
+MD5sum: 7cec4cba978bee52f937dad8ac1ead67
+SHA1: d35b44a8da0daf84885c6879e6bcf01a67a68d70
+SHA256: 8bd013d74d8607e1ada0a13e60d1b8f8a159776b9a05dc6b1498ca82b6820454
 Description: A new way to see and navigate directory trees : https://dystroy.org/broot
+
+Package: brutespray
+Version: 2.6.0
+Architecture: i686
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 2740
+Depends: golang
+Homepage: https://pkg.go.dev/github.com/x90skysn3k/brutespray/v2
+Filename: pool/main/brutespray_2.6.0_i686.deb
+Size: 2766320
+MD5sum: 0e16577eac57a4cb516f717926bfb292
+SHA1: b21bebcaf74c5dc7233bf7aa67c20473045033c6
+SHA256: a808c42b58199c694f38aacd6b61ccf0b2cd30ac377b2c70a10b66e9a9deee81
+Description: Fast, multi-protocol credential brute-forcer. Parses Nmap, Nessus, and Nexpose output to automatically test default and custom credentials across 30+ protocols.
+
+Package: clickjacking-tester
+Version: 1.0.0
+Architecture: i686
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 56
+Depends: python, python-pip, python-setuptools
+Homepage: https://github.com/D4Vinci/Clickjacking-Tester
+Filename: pool/main/clickjacking-tester_1.0.0_i686.deb
+Size: 20216
+MD5sum: 29b43e027b67f7af0340fba7e90593d1
+SHA1: 36b22e0aa307d95a334f4745000fd2a81f126a31
+SHA256: 07e9945ab2552eac33255d1438bdc9e60ad641a90f20b4d1d3d5c5df5f0a9329
+Description: A python script designed to check if the website if vulnerable of clickjacking and create a poc
+
+Package: cloudflair
+Version: 1.0.0
+Architecture: i686
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 44
+Depends: python, python-pip, python-setuptools
+Homepage: https://blog.christophetd.fr/bypassing-cloudflare-using-internet-wide-scan-data/
+Filename: pool/main/cloudflair_1.0.0_i686.deb
+Size: 8580
+MD5sum: ae67ec308ca4ab0622cd996db6133315
+SHA1: 7973178f286c35cd08475143b93eabb08b4ca3c2
+SHA256: 9e4a9f6ddecff735b7546f6363e6057f082f57ba2d78bd32fefdd8bb1ac35a88
+Description: 🔎 Find origin servers of websites behind CloudFlare by using Internet-wide scan data from Censys.
+
+Package: cmseek
+Version: 1.1.3
+Architecture: i686
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 148
+Depends: python, python-pip, python-setuptools
+Homepage: https://github.com/Tuhinshubhra/CMSeeK
+Filename: pool/main/cmseek_1.1.3_i686.deb
+Size: 112296
+MD5sum: 8e625e3b0c50d24543fb2e9a1368c8bd
+SHA1: 5714cc6473865a8317f11b219ea9711c5fe7b2ab
+SHA256: 57a815bf5c7041887871685496dd6bcebcfe06cb7ba970831d93472312b8c10a
+Description: CMS Detection and Exploitation suite - Scan WordPress, Joomla, Drupal and over 180 other CMSs
+
+Package: cmsmap
+Version: 1.0.0
+Architecture: i686
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 476
+Depends: python, python-pip, python-setuptools
+Homepage: https://github.com/Dionach/CMSmap
+Filename: pool/main/cmsmap_1.0.0_i686.deb
+Size: 449170
+MD5sum: c1713d8e28b15422563af5760332e7be
+SHA1: 901c18d57ee5504f771cfbef8caef10b92a6084a
+SHA256: 0ddbbf779b08b4cf1ddffdc767c3f16dfcc245f08e2ccc7804d1ef97d0a50c4e
+Description: CMSmap is a python open source CMS scanner that automates the process of detecting security flaws of the most popular CMSs.
+
+Package: commix
+Version: 4.1
+Architecture: i686
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 260
+Depends: python, python-pip, python-setuptools
+Homepage: https://commixproject.com
+Filename: pool/main/commix_4.1_i686.deb
+Size: 227362
+MD5sum: 7ec807ebc84f4af60a12ef28081f8e96
+SHA1: bd02595e0d36f7ce005532c5c366681ac8542ea9
+SHA256: b5a275fa818877d5d63b52f2947a2d104e661f20a52187276f1694178cf8d558
+Description: Automated All-in-One OS Command Injection Exploitation Tool
+
+Package: crowbar
+Version: 4.2
+Architecture: i686
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 376
+Depends: python, python-pip, python-setuptools
+Homepage: https://github.com/galkan/crowbar
+Filename: pool/main/crowbar_4.2_i686.deb
+Size: 346184
+MD5sum: d3d5c1b162f7918e07cde4173b8a9ead
+SHA1: ac754401b91daeddbca2ca21c3141a248af88668
+SHA256: 0c36e91c288ceb04b9bcdbeca0e6370be3d1a4ebda50aa3433bb804bb86ba241
+Description: Crowbar is brute forcing tool that can be used during penetration tests. It is developed to support protocols that are not currently supported by thc-hydra and other popular brute forcing tools.
+
+Package: cupp
+Version: 1.0.0
+Architecture: i686
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 2128
+Depends: python, python-pip, python-setuptools
+Homepage: https://github.com/Mebus/cupp
+Filename: pool/main/cupp_1.0.0_i686.deb
+Size: 2142052
+MD5sum: d13452cd723853b2ee2524e73c8bc89d
+SHA1: 6aecb30f083c2226a9a201d2c4a74403fa5fce1b
+SHA256: 5bd78e1c10631ed17dfe5b64ce734fcda02a7c1cb01fd9eca6cb0863afcc46b9
+Description: cupp — auto-packaged by termux-build-init
+
+Package: cybertuz
+Version: 1.0.2-1
+Architecture: i686
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 0
+Depends: nmap, python, whois, curl, dnsutils
+Homepage: https://github.com/djunekz/cybertuz
+Filename: pool/main/cybertuz_1.0.2-1_i686.deb
+Size: 704
+MD5sum: 3b65eea110503a1531370230947266b3
+SHA1: d513cb6bc2cf246f3f04d9bbc537c6658a3ed5df
+SHA256: 1af3065c18fd0b1bf92afebdc642ce0e676c0454814f36b103b2683019e8afaf
+Description: Comprehensive Educational Learning Platform for Termux
 
 Package: dalfox
 Version: 2.12.0
 Architecture: i686
-Maintainer: @termux-app-store
-Installed-Size: 
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 4336
+Depends: golang
+Homepage: https://dalfox.hahwul.com
 Filename: pool/main/dalfox_2.12.0_i686.deb
-Size: 12672140
-MD5sum: 1e22e450c039d920e7711f3e19adaed6
-SHA1: fff43eb37aade14a16c3a8302f1bc99ffeafdad8
-SHA256: 9740148eebac932cf71995377b8e965cd47fad3903021a6a0b6fcf1bbed5bb5a
+Size: 4403246
+MD5sum: c89839769a9b523a0d37328328dc5177
+SHA1: c2affdd41b5990d3ed4af7321153118f5d831a63
+SHA256: b5033fc9bcf1dc18c55d32822b976c5fb1e3e8f34821d03c1be382569e8b981b
 Description: 🌙🦊 Dalfox is a powerful open-source XSS scanner and utility focused on automation.
 
 Package: dbd
 Version: 1.0.0
 Architecture: i686
-Maintainer: @termux-app-store
-Installed-Size: 
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 1500
+Homepage: https://gitbrew.org/dbd
 Filename: pool/main/dbd_1.0.0_i686.deb
-Size: 20154
-MD5sum: 7ccd6dfcef78e808bd862318318c5c64
-SHA1: 066ec698c980c62ea7267301b1acad7a1adf1ff7
-SHA256: 48f5d4f4ceb185eef96d9ea91861a4e7a9e7160cd19af38acc5f30da624b030a
-Description: Durandal's Backdoor
+Size: 1489428
+MD5sum: 65a8b83bf31b85a1cc4faff9a7c1a32f
+SHA1: da82c3979d3ea0b943ba09a0f49036e12c6a43ae
+SHA256: b4df7e370ec170de37a3bbca85e899be9b1f36c4f14dc13a31c248f72d865c06
+Description: Durandals Backdoor
+
+Package: djangohunter
+Version: 1.0.0
+Architecture: i686
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 44
+Depends: python, python-pip, python-setuptools
+Homepage: https://github.com/6IX7ine/djangohunter
+Filename: pool/main/djangohunter_1.0.0_i686.deb
+Size: 5506
+MD5sum: 2625b78f3a34dfa4d7dd2694a8330b4d
+SHA1: 0035f99658b053d66070e5b380bb0f1f950c16fb
+SHA256: 385610a0a80114aad633ae2f771650234a93a5802217bd10a319313b48d68510
+Description: djangohunter — auto-packaged by termux-build-init
 
 Package: dnsmap
 Version: 1.0.0
 Architecture: i686
-Maintainer: @termux-app-store
-Installed-Size: 
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 96
+Homepage: https://github.com/makefu/dnsmap
 Filename: pool/main/dnsmap_1.0.0_i686.deb
-Size: 11104
-MD5sum: 433cf86c396bbe8aa9a64cfe7dbe71ee
-SHA1: 8effee3948a5e44e19288b1193e8d9735eb12a15
-SHA256: addb81f12a268927e2a03b12c721588ef1c78798f77ecde42cf82aad35eeab0d
+Size: 24078
+MD5sum: 866e3b79b762561d08a831218ed0f3ac
+SHA1: 48ed7f3961252f6985daf5aadd842418cb7dad93
+SHA256: 7eddd3bd3486c5401e809fc9f54d86b6b97986e6082fe56a04f87feb7ba75a5d
 Description: fork of http://code.google.com/p/dnsmap/source/checkout
+
+Package: dnsrecon
+Version: 1.6.0
+Architecture: i686
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 736
+Depends: python, python-pip, python-setuptools
+Homepage: https://github.com/darkoperator/dnsrecon
+Filename: pool/main/dnsrecon_1.6.0_i686.deb
+Size: 715388
+MD5sum: 9a9c2fab5be0d0f1b8e50ef47fc73d59
+SHA1: 7682d16140dea9b604a2dddab222f8b2dca7ff3f
+SHA256: 65e24529a3e0521969918481f1b49b47c2ba7acb164cbfef492258b352f018ff
+Description: DNS Enumeration Script
 
 Package: doona
 Version: 1.0.0
 Architecture: i686
-Maintainer: @termux-app-store
-Installed-Size: 
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 64
+Depends: perl
+Homepage: https://github.com/wireghoul/doona
 Filename: pool/main/doona_1.0.0_i686.deb
-Size: 24474
-MD5sum: 67fdf39568a66379e490fc5780a94154
-SHA1: e5d5099d3e61a51dfcb212bf5213aca585ac9126
-SHA256: 6e6e8389cc1088ff3756e38c7a3d38fe3c50066314b4334e1999680dfb4f1251
+Size: 28176
+MD5sum: 94d6a6cd8d992a85adae219fd31fc625
+SHA1: 6b8b52eb690c4e87c4e826023208a7885a3264ca
+SHA256: d1c89e6cc1834168ec5f7bacba6fccf9e0ce08680268133bc5adf76b91eafb0f
 Description: Network based protocol fuzzer
+
+Package: dumpzilla
+Version: 1.0.0
+Architecture: i686
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 64
+Depends: python, python-pip, python-setuptools
+Homepage: https://gitlab.com/groups/kalilinux/packages
+Filename: pool/main/dumpzilla_1.0.0_i686.deb
+Size: 27718
+MD5sum: 6872e17c67fa58b45cbcb97e8c0bb180
+SHA1: 6a8f67172ccfa9828a591f61c8e4b9c53126c55c
+SHA256: 3126bc9240830c6c9cf5c2fb363b76b0b36b38f480741013043f0525c9aa77d1
+Description: dumpzilla packaging for Kali Linux
 
 Package: dust
 Version: 1.2.4
 Architecture: i686
-Maintainer: @termux-app-store
-Installed-Size: 
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 200
+Depends: rust
+Homepage: https://github.com/bootandy/dust
 Filename: pool/main/dust_1.2.4_i686.deb
-Size: 1014968
-MD5sum: 63eeb6eaafe7da13f3bee1b7619cb9f3
-SHA1: 58c6902f49ba0835f9baf3fb940313a5807c5384
-SHA256: 1e89b59157d549cd75f92e594a06694f8cc832dadfd5e7b126911dab139636cc
+Size: 165216
+MD5sum: 1d9f978b2d0d7f1997b8cfab5dd68e09
+SHA1: a978b6beaaa9f3edf50b6391acce7c89d46b158b
+SHA256: 5eec310017e707fde46c3e9e395139dd9764f4a3f2e198e8032650aa3592599d
 Description: A more intuitive version of du in rust
+
+Package: elpscrk
+Version: 1.0.0
+Architecture: i686
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 188
+Depends: python, python-pip, python-setuptools, python-psutil
+Homepage: https://github.com/D4Vinci/elpscrk
+Filename: pool/main/elpscrk_1.0.0_i686.deb
+Size: 153200
+MD5sum: fd495a91dc87e80718d6167d7e900ab3
+SHA1: bbd34105a0fad2a10184c476d24bd5735cff7fb4
+SHA256: e977819f8c8cce8674a9cf9e05cb0e508741c3a0f9b79ca5da75ac05c9dd5ad9
+Description: An Intelligent wordlist generator based on user profiling, permutations, and statistics. (Named after the same tool in Mr.Robot series S01E01)
 
 Package: encrypt
 Version: 1.1
 Architecture: i686
-Maintainer: @djunekz
-Installed-Size: 
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 0
+Homepage: https://github.com/djunekz/encrypt
 Filename: pool/main/encrypt_1.1_i686.deb
-Size: 25252
-MD5sum: 8d6c5ceba5a7ebfad7fa4aa1912ba55b
-SHA1: a1e01febc005380fb8b0182ffd857df464ec1d93
-SHA256: ff7a433c7e0e77ac5a4b776a37c1b83862e93383df2c296a6f95f156dd6905ce
+Size: 666
+MD5sum: 42e25211435342c4c35a156fe75d0258
+SHA1: 130015f89f1a6a668204669678354d0619f7bf62
+SHA256: c8e3491d0dfe05a2549843d1de5aa864c2745787e81e17f3223d7d873e128354
 Description: ELF binary for file python/python3 with build deb package
+
+Package: eternal-scanner
+Version: 2.2
+Architecture: i686
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 60
+Depends: python, python-pip, python-setuptools
+Homepage: https://github.com/peterpt/eternal_scanner
+Filename: pool/main/eternal-scanner_2.2_i686.deb
+Size: 23570
+MD5sum: 15af8523d3da83c640eb0e7d56ef9b34
+SHA1: 6e6391b3dd6f22e349a5b169e0fc7ddf437941f8
+SHA256: 926a27f4182d6aca02affbffa9f59924a5fca5c3ee62f669ed2d20a17320f6ab
+Description: An internet scanner for exploit CVE-2017-0144 (Eternal Blue) & CVE-2017-0145 (Eternal Romance)
 
 Package: evilginx2
 Version: 3.3.0
 Architecture: i686
-Maintainer: @termux-app-store
-Installed-Size: 
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 4004
+Depends: golang
+Homepage: https://github.com/kgretzky/evilginx2
 Filename: pool/main/evilginx2_3.3.0_i686.deb
-Size: 7731424
-MD5sum: d06fe9b1e3f293e0074e2ac4e18bb395
-SHA1: 2b5cf4b676f44e4465ff0cfb5829fc7c2b8d8843
-SHA256: 4daf7857dcd366697668d5c2efdc89bea641feed83ae40c049a7bd9365777a35
+Size: 3908074
+MD5sum: e3d114027f4d3ab1db7696767210e0cf
+SHA1: b6e35ac598a79cb231e833a682fc9f9fd907d452
+SHA256: fa717e7d1071bd76b61e0eea722558287baac5fde61171d88f672634052c5b30
 Description: Standalone man-in-the-middle attack framework used for phishing login credentials along with session cookies, allowing for the bypass of 2-factor authentication
+
+Package: fbvid
+Version: 1.0.0
+Architecture: i686
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 40
+Depends: php
+Homepage: https://github.com/Tuhinshubhra/fbvid
+Filename: pool/main/fbvid_1.0.0_i686.deb
+Size: 2072
+MD5sum: 235b1e36c6b9f740dcab1c52f5b2efbd
+SHA1: 2bc720494250f2a25c42500eb37d3a4751ceff6a
+SHA256: 88c4b6f647a4ea5272388ccc6dfe0260f450798ca79fde1067c2d337c877c2cb
+Description: Facebook Video Downloader (CLI) For Linux Systems Coded in PHP
 
 Package: fd
 Version: 10.4.2
 Architecture: i686
-Maintainer: @termux-app-store
-Installed-Size: 
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 0
+Homepage: https://github.com/sharkdp/fd
 Filename: pool/main/fd_10.4.2_i686.deb
-Size: 1284542
-MD5sum: f2c0e4d4cebbe7c63d3bce5f56f5dd48
-SHA1: ca1522004d3d4a4f78d2a9f13edaac807124de83
-SHA256: 0855c2a8644e71e4c2ec83ba55c61c038e275ffb48994ebfb37ec60ec9be0a24
-Description: A simple, fast and user-friendly alternative to 'find'
+Size: 662
+MD5sum: f2dea98704d6673e27991f8a5525c842
+SHA1: 1a86c457939000e3fdbf2756440b2d0d64cd0f75
+SHA256: 15cc791c33360cf4b9ed165d1bad2511de4c70b45cac5eaace2e25e0a926f48e
+Description: A simple, fast and user-friendly alternative to find
+
+Package: fuckshitup
+Version: 1.0.0
+Architecture: i686
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 48
+Depends: php
+Homepage: https://github.com/Smaash/fuckshitup
+Filename: pool/main/fuckshitup_1.0.0_i686.deb
+Size: 9868
+MD5sum: 3db098017cb8fcaa2b968532e1b534fb
+SHA1: b87fd2541ab9859dc57f39a311940aa6c1043caf
+SHA256: 84bdf5cc38abda9758f5b0d16c418d77fe00447e57cd450b0be7a07d2dc5f155
+Description: php-cli vulnerability scanner
+
+Package: gemail-hack
+Version: 1.0.0
+Architecture: i686
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 40
+Depends: python, python-pip, python-setuptools
+Homepage: https://github.com/Ha3MrX/Gemail-Hack
+Filename: pool/main/gemail-hack_1.0.0_i686.deb
+Size: 2518
+MD5sum: e6ff5454fbd7204d52c9e2b0a55c724f
+SHA1: 00ce3d40db8c24bc7055b97f720cc40ff4bc9ebf
+SHA256: e21f19a6f9d66a3d1ea020047154b85d4a684f56dfd09710f629930100ae35f2
+Description: python script for Hack gmail account brute force
 
 Package: get
 Version: 1.0.0
 Architecture: i686
-Maintainer: @termux-app-store
-Installed-Size: 
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 40
+Homepage: https://github.com/peterpt/get
 Filename: pool/main/get_1.0.0_i686.deb
-Size: 1484
-MD5sum: 610b45dbd65ec1faa922300146237a58
-SHA1: b581bc4665576395143482253544fde155c21e27
-SHA256: 6f1c2a5691162974e2e7e0c130ce23acb15351fd86404ef340daf7174edc4c11
+Size: 2212
+MD5sum: 0bc4e79b431d45d54c4cf1c40715e5a3
+SHA1: 9c60d91c6f958b1d9e13971fe820af8200e7b410
+SHA256: c9486c0e1a85d083d79b5a16a9a510ddd628916288088e4d012746d39307c727
 Description: Get is a simple script to retrieve an ip from hostname or vice-versa .
+
+Package: ghosttrack
+Version: 1.0.0
+Architecture: i686
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 268
+Depends: python, python-pip, python-setuptools
+Homepage: https://github.com/HunxByts/GhostTrack
+Filename: pool/main/ghosttrack_1.0.0_i686.deb
+Size: 236554
+MD5sum: fbb81eafb3e37b01e6b64199dabcf3b2
+SHA1: fd32248ce11b46986a5d9246de55e81adbce9285
+SHA256: 9a4a8f0e3bb6264ef292e0ddbd63184d33acff5830095da08ee1d8cefd2c2867
+Description: Useful tool to track location or mobile number
+
+Package: goblinwordgenerator
+Version: 1.0.0
+Architecture: i686
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 2228
+Depends: python, python-pip, python-setuptools
+Homepage: https://github.com/UndeadSec/GoblinWordGenerator
+Filename: pool/main/goblinwordgenerator_1.0.0_i686.deb
+Size: 2187614
+MD5sum: 699e3ded8be0b78324bc21efb18b51f6
+SHA1: 0ab36f70e85ce7a04cb9384beea1f912e743ddbe
+SHA256: 9f668bc62ff70964a2e4a45754fa2c07e5d6ab1c714cb672abc87d049d834608
+Description: Python wordlist generator
+
+Package: gobuster
+Version: 3.8.2
+Architecture: i686
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 368
+Depends: golang
+Homepage: https://github.com/OJ/gobuster
+Filename: pool/main/gobuster_3.8.2_i686.deb
+Size: 338312
+MD5sum: 6a9e18de1dd89f2c53a8d105a5ef405d
+SHA1: 05967cd7728666b37742a02c667954d650dc87ab
+SHA256: 108aa2d702cf010b8150b53b8c20716ea1d0862da365cc6972abaa247252dfd5
+Description: Directory/File, DNS and VHost busting tool written in Go
+
+Package: hammer
+Version: 1.0.0
+Architecture: i686
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 140
+Depends: python, python-pip, python-setuptools
+Homepage: https://github.com/TermuxHackz/Hammer
+Filename: pool/main/hammer_1.0.0_i686.deb
+Size: 104554
+MD5sum: 106ce6e28c31f091aa9463a1a801e8d6
+SHA1: 3719c6a19ea60c6021bdaaa1cc8fd219a772b05e
+SHA256: ad9d71916bd068ed142ebb8fa144d9e0c6100d711cea6158af49fd008cd3d8fb
+Description: Ddos attack tool for termux
+
+Package: hash-buster
+Version: 1.0.0
+Architecture: i686
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 44
+Homepage: https://github.com/UltimateHackers/Hash-Buster
+Filename: pool/main/hash-buster_1.0.0_i686.deb
+Size: 5642
+MD5sum: a05a316d43e3f7595aec450a3b258a3e
+SHA1: 12d1da46a56093a02127f8af096da1a76fd80b22
+SHA256: a63ad11f48398b686b0958eeab849fc4397b04f122c029b9a820814b073c0e01
+Description: hash-buster — auto-packaged by termux-build-init
+
+Package: holehe
+Version: 1.0.0
+Architecture: i686
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 96
+Depends: python, python-pip, python-setuptools
+Homepage: https://github.com/megadose/holehe
+Filename: pool/main/holehe_1.0.0_i686.deb
+Size: 61486
+MD5sum: 98c51c49970057753443205948208e9e
+SHA1: c8f832e05114221aa1b53b4666738482d1d58eb3
+SHA256: f12dab756503b315ba1d1bc0341e8bd85d770b2a43e612976928dcb35c48bba6
+Description: holehe allows you to check if the mail is used on different sites like twitter, instagram and will retrieve information on sites with the forgotten password function.
 
 Package: ht-wps-breaker
 Version: 1.0.0
 Architecture: i686
-Maintainer: @termux-app-store
-Installed-Size: 
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 9316
+Homepage: https://github.com/SilentGhostX/HT-WPS-Breaker
 Filename: pool/main/ht-wps-breaker_1.0.0_i686.deb
-Size: 18886
-MD5sum: 258e71d1c9bea3c7f791501146e5378f
-SHA1: 692bc08afbade3457d3d2ce596f23582da18560f
-SHA256: c201748849894a9bc12bb179842f693ee22e9538e53aab67aa71efe16ee53969
+Size: 9423418
+MD5sum: cde6f61ecd3f07307a0d5dc74e16f493
+SHA1: b2f56a76899bb1ebff63794c08351efcdf631fe4
+SHA256: 9682fcf69e5de31b7cc7669ceaf0fff1e7afb0e387a94701d452131543f8a25a
 Description: HT-WPS Breaker (High Touch WPS Breaker)
+
+Package: hunner
+Version: 1.0.0
+Architecture: i686
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 44
+Depends: python, python-pip, python-setuptools
+Homepage: https://github.com/b3-v3r/Hunner
+Filename: pool/main/hunner_1.0.0_i686.deb
+Size: 8336
+MD5sum: e6c23f833eee6cda328961fb1b311efc
+SHA1: 71d25006161faa4f6a04a2e8f4f6a23661864157
+SHA256: 5162b7a7920a9bf529506d18d55552d9eb7d546507f737e7dbb565147f6087f2
+Description: Hacking framework
+
+Package: impulse
+Version: 1.0.0
+Architecture: i686
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 0
+Depends: python
+Homepage: https://github.com/LimerBoy/Impulse
+Filename: pool/main/impulse_1.0.0_i686.deb
+Size: 686
+MD5sum: 271fe3be754a6f24b915b12d6925dcf3
+SHA1: 07bfd5fa802ec587c85464273272cc2d47897952
+SHA256: 11881d8e747860dcd2b5a5ff1ce9428c0eff11d95bd4f633e4782161a75c8f42
+Description: Denial-of-Service ToolKit with multiple attack methods
+
+Package: infoooze
+Version: 1.1.9
+Architecture: i686
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 300
+Depends: nodejs
+Homepage: https://github.com/devxprite/infoooze
+Filename: pool/main/infoooze_1.1.9_i686.deb
+Size: 267284
+MD5sum: e3ca53a9241ddafed6d871a23d049551
+SHA1: af253aa95922df0557746c803490a3759b0f389e
+SHA256: b698a1a6d8fd47ca19cb902de2645ca4863e2e8d8d0ee5826d2903b38484aadc
+Description: A OSINT tool which helps you to quickly find information effectively.
+
+Package: instareporter
+Version: 1.0.0
+Architecture: i686
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 68
+Depends: python, python-pip, python-setuptools
+Homepage: https://github.com/muneebwanee/InstaReporter
+Filename: pool/main/instareporter_1.0.0_i686.deb
+Size: 32222
+MD5sum: cb36f7ad0c2ef3b026f1925c81c01808
+SHA1: cec68ad36951399e5e67cb6947612d9b6b50c51a
+SHA256: 310783f69bd3c34b0f3ce431d28196cbdbb1d115c1ba92a42b99328452442712
+Description: Instagram Mass Reporting Tool
 
 Package: ip-tracker
 Version: 1.0.0
 Architecture: i686
-Maintainer: @termux-app-store
-Installed-Size: 
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 608
+Homepage: https://kasroudra.github.io/IP-Tracker
 Filename: pool/main/ip-tracker_1.0.0_i686.deb
-Size: 10576
-MD5sum: d4e88f521a1d9e9ba2af8800d5ce9b7f
-SHA1: 9835cc6323251ab331f46f58a57685bbd8f0d42b
-SHA256: e23c986e552c417742587dced3d3eca0dd0cf8c290657186e2b15457b98cd143
-Description: Track anyone's IP just opening a link!
+Size: 585978
+MD5sum: 7f6a302c1419a24fdd03329f44c46b96
+SHA1: 96e2fca2b7bc3bcf9ae23afaaa2e712783a8dcf8
+SHA256: 175343d9f80380ffaacc8cafd197f8a157ef764209b959d34f85e9424e6f0994
+Description: Track anyones IP just opening a link!
+
+Package: ipgeolocation
+Version: 2.0.4
+Architecture: i686
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 60
+Depends: python, python-pip, python-setuptools
+Homepage: https://github.com/maldevel/IPGeoLocation
+Filename: pool/main/ipgeolocation_2.0.4_i686.deb
+Size: 22106
+MD5sum: ee81f965d2ae69bbe20f9644b849310e
+SHA1: 5c5b04094f53bab1367bd9d3a7df49bc608fe97e
+SHA256: 10ddf4a1a1efc591874951c2fad7b37792169f11dc63cdc5c8a6dba55902ea69
+Description: Retrieve IP Geolocation information
+
+Package: killchain
+Version: 1.0.0
+Architecture: i686
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 40
+Depends: python, python-pip, python-setuptools
+Homepage: https://github.com/ruped24/killchain
+Filename: pool/main/killchain_1.0.0_i686.deb
+Size: 4612
+MD5sum: cc6bee001fc5b7a7e96fbc341c1caa90
+SHA1: cfb483be938be51d00290258fa142fd2fb4c7d8e
+SHA256: 6d0e1cc3edb570d1a7f709919c0980c7deef3bacb187941544eb60cdc1defcce
+Description: killchain — auto-packaged by termux-build-init
 
 Package: lalin
 Version: 1.0.0
 Architecture: i686
-Maintainer: @termux-app-store
-Installed-Size: 
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 4080
+Homepage: https://github.com/Screetsec/LALIN
 Filename: pool/main/lalin_1.0.0_i686.deb
-Size: 18214
-MD5sum: acbbcc81d462bf71a72c7ec9c1fa8ab3
-SHA1: 5eb98074c28d1888e6756def78d74c41722e8f96
-SHA256: 079036e4d5ca929e5351e528b39c6f20f5a5a7799217a6a42da28ceb3c7e3930
-Description: this script automatically install any package for pentest with uptodate tools , and lazy command for run the tools like lazynmap , install another and update to new #actually for lazy people hahaha #and Lalin is remake the lazykali with fixed bugs , added new features and uptodate tools . It's compatible with the latest release of Kali (Rolling)
+Size: 4138248
+MD5sum: 97f6f3f87479f28b53139653970bc2a1
+SHA1: 988077798053005bb9c1a349ce5f7be7919ad426
+SHA256: fdbb64d2fa9f2f5e4a807f2da9724fb785dbd87581d34c3cb48724ad21673804
+Description: this script automatically install any package for pentest with uptodate tools , and lazy command for run the tools like lazynmap , install another and update to new #actually for lazy people hahaha #and Lalin is remake the lazykali with fixed bugs , added new features and uptodate tools . Its compatible with the latest release of Kali (Rolling)
+
+Package: lazymux
+Version: 1.0.0
+Architecture: i686
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 248
+Depends: python, python-core, python-pip, python-setuptools
+Homepage: https://github.com/Gameye98/Lazymux
+Filename: pool/main/lazymux_1.0.0_i686.deb
+Size: 213854
+MD5sum: e54f4298f2d4d0f33135bd661e9db534
+SHA1: 71e1c1c7ef2fc9e76c31f86d15fe1727c825832b
+SHA256: 162a353b4eb777100d60e97ce2997220f8e6c7a6da21b1834579d35fc1cc4a33
+Description: termux tool installer
 
 Package: lux
 Version: 0.24.1
 Architecture: i686
-Maintainer: @termux-app-store
-Installed-Size: 
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 0
+Homepage: https://github.com/iawia002/lux
 Filename: pool/main/lux_0.24.1_i686.deb
-Size: 5965372
-MD5sum: b64bc3b8cdbc146f5aaba502f16aff1e
-SHA1: 703d65e5a502a91dc4dee83e741d55fb0f1048e6
-SHA256: 10d1baea70e965d0a0413aa3ddd4e3f7bb85be4a867ad44e156e4408e293afbb
+Size: 670
+MD5sum: 84616c5761d3ad0f4dcd07b7230a8ce2
+SHA1: cdac69aac7764bba6eda84563d5514a88b69118e
+SHA256: f3d803e2c6a60d8f1b22a33cbd79c93cfc22d867e056391ef9939ce7d9d9f075
 Description: Fast and simple video download library and CLI tool written in Go
 
 Package: merlin
 Version: 1.0.0
 Architecture: i686
-Maintainer: @termux-app-store
-Installed-Size: 
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 0
+Homepage: https://github.com/djunekz/merlin
 Filename: pool/main/merlin_1.0.0_i686.deb
-Size: 26722
-MD5sum: 874bccae67c3ee5421ff797305ebde30
-SHA1: 092f7801118b409d8d6c9e44e2b77f73fb849616
-SHA256: 2338115d87860f3110d4d2df7355ec39b0e8f7ef43f21b86156098acece95d82
+Size: 642
+MD5sum: 8c0785fa7e7b5bd3b15eeb016a108918
+SHA1: 9fda8c16098e20e1a4275c10be0ff4871df42ec8
+SHA256: c4f758eb4d85a98555cd575f3a75e07cc535efba44987814297571e189cdea0a
 Description: Analyst website vulnerabillity scanner
+
+Package: myserver
+Version: 1.0.0
+Architecture: i686
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 144
+Depends: php, python, python-pip, python-setuptools
+Homepage: https://github.com/Rajkumrdusad/MyServer
+Filename: pool/main/myserver_1.0.0_i686.deb
+Size: 107636
+MD5sum: 4992d63388963a5828351c8f609b5d8f
+SHA1: 504da2db6c1435376533e73bc56db720fa97a65d
+SHA256: b29d2d080062ac7baa273b33d511c9d719c9c284046f72f3cd606803038efdb2
+Description: myserver — auto-packaged by termux-build-init
+
+Package: orchat
+Version: 1.4.6
+Architecture: i686
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 1596
+Depends: python, python-pip, python-setuptools
+Homepage: https://github.com/oop7/OrChat
+Filename: pool/main/orchat_1.4.6_i686.deb
+Size: 1596632
+MD5sum: 5d4010865a043aaa9d87a5434d902cf7
+SHA1: 6c4efca536a5f864de2bf93ae588e544a679779d
+SHA256: 781d18061e1358c6516ca2cf4bc5c7b9856fefde3f2aa22b64de1785ddf9933c
+Description: A powerful, feature-rich command-line interface for interacting with AI models through OpenRouter.
+
+Package: parsero
+Version: 1.0.0
+Architecture: i686
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 48
+Depends: python, python-pip, python-setuptools
+Homepage: http://www.behindthefirewalls.com/
+Filename: pool/main/parsero_1.0.0_i686.deb
+Size: 12564
+MD5sum: ea9f5926b925b85bf404ef2e806a9016
+SHA1: e46b61c80a6d0f804ea87aa74c6c0b01a5a1b80a
+SHA256: fae43a7fc360f700557673cb4e8df3cc08697ebe1e71ec21311717c8fab88bcb
+Description: Parsero | Robots.txt audit tool
+
+Package: photon
+Version: 1.3.0
+Architecture: i686
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 64
+Depends: python, python-pip, python-setuptools
+Homepage: https://github.com/s0md3v/Photon
+Filename: pool/main/photon_1.3.0_i686.deb
+Size: 27408
+MD5sum: 28b7beca2cf1ef87fe345b17ce14e320
+SHA1: 43abc2e37b836d7fbc3f108c9bdd67d719c1f1dd
+SHA256: 48b3835d7183189c503327174b5f7ef64236722c0459367c0bd368237b496d7b
+Description: Incredibly fast crawler designed for OSINT.
+
+Package: pmcli
+Version: 0.1.0
+Architecture: i686
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 0
+Depends: rust, openssl, zlib
+Homepage: https://github.com/djunekz/pmcli
+Filename: pool/main/pmcli_0.1.0_i686.deb
+Size: 670
+MD5sum: 5d5df798563651a1c1c747c8ce850ef0
+SHA1: e2993c3df7dbb0923bb3198af128f304e00fd807
+SHA256: 5e6e106c078f69b638d85d0092b9a671bb4ec24eaef7e7840a896f79e300edbe
+Description: Terminal-based project manager CLI
+
+Package: pnpm
+Version: 10.30.1
+Architecture: i686
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 0
+Homepage: https://github.com/pnpm/pnpm
+Filename: pool/main/pnpm_10.30.1_i686.deb
+Size: 642
+MD5sum: c828a8654a9ca66286f9fe91ce6d6b2e
+SHA1: f8b46cc960a8cd504db7776be53c5b214734eee8
+SHA256: c093f47c8c60f07b3d77ca3b89db98a0e3650222799029f1f93487ef508efb53
+Description: Fast, disk space efficient package manager
+
+Package: pymaker
+Version: 1.0.0
+Architecture: i686
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 0
+Depends: python
+Homepage: https://github.com/droidv1/pymaker
+Filename: pool/main/pymaker_1.0.0_i686.deb
+Size: 660
+MD5sum: 9a14767dd5be9e74a387cfcf50e6c29b
+SHA1: 15711a440c12c95668d3ef57127a077332467a48
+SHA256: 4eff98efdbdc38fa51a6611ebd141cb0686049058fc7cbf3ae72da587bdc08d5
+Description: Simple tool for create python script
+
+Package: red-hawk
+Version: 1.0.0
+Architecture: i686
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 60
+Depends: php
+Homepage: https://github.com/Tuhinshubhra/RED_HAWK
+Filename: pool/main/red-hawk_1.0.0_i686.deb
+Size: 25302
+MD5sum: c9371d25be6cd7a8de091d46e47e51b2
+SHA1: 7f120129fe32c7bbbdb1471727616091b614ced4
+SHA256: 607c7c0883305b2c29811ef69fda52e6f3d3bb65720de2cfc6a6483bc621b78d
+Description: All in one tool for Information Gathering, Vulnerability Scanning and Crawling. A must have tool for all penetration testers
 
 Package: sigit
 Version: 2.0
 Architecture: i686
-Maintainer: @termux-app-store
-Installed-Size: 
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 0
+Homepage: https://github.com/termuxhackers-id/SIGIT
 Filename: pool/main/sigit_2.0_i686.deb
-Size: 13846
-MD5sum: d18b1552431c135564ca0a06b33657ed
-SHA1: ddfd3e5c1840a04b14aa320c5fbbeb8d58f14b46
-SHA256: 387a495861de1c2997b61c07b3ff64d7df99a4e8934170a6813a2a994e98bb0d
+Size: 670
+MD5sum: 400068e7045f6d4336436e99b37127ea
+SHA1: dfac6ffa79f992a1d6fed68adf5dacbc84192924
+SHA256: 8c9bab99257e1ecc36fb9d58ab18335f58356752d7b61eae874ca2bde6f006b7
 Description: SIGIT - Simple Information Gathering Toolkit
+
+Package: ssrfmap
+Version: 1.0.0
+Architecture: i686
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 4440
+Depends: python, python-pip, python-setuptools
+Homepage: https://github.com/swisskyrepo/SSRFmap
+Filename: pool/main/ssrfmap_1.0.0_i686.deb
+Size: 4509278
+MD5sum: 1a4c1459c155146b87c6ce7737797348
+SHA1: 995b3ff5973055bde37361d27fcc98b1ccffaae9
+SHA256: 5f61ead07a4f8f992b9c94a14fe5f686a5b00a7be2c092e97baf890b3d86ec14
+Description: Automatic SSRF fuzzer and exploitation tool
+
+Package: sublist3r
+Version: 1.1
+Architecture: i686
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 764
+Depends: python, python-pip, python-setuptools
+Homepage: https://github.com/aboul3la/Sublist3r
+Filename: pool/main/sublist3r_1.1_i686.deb
+Size: 742524
+MD5sum: 5438fe1cb77e745630b1a7d6c21b95a3
+SHA1: 7bf04dbc42a8b0c3bb86b50419482ec2e4d44ca8
+SHA256: 096bc3d1067a370f2bede23f114b6ec3d57df7f1f221c962d60926ace456d1b0
+Description: Fast subdomains enumeration tool for penetration testers
 
 Package: tdoc
 Version: 2.1.1
 Architecture: i686
-Maintainer: @djunekz
-Installed-Size: 
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 0
+Depends: bash, coreutils, curl, git, gnupg, termux-tools
+Homepage: https://github.com/djunekz/tdoc
 Filename: pool/main/tdoc_2.1.1_i686.deb
-Size: 30810
-MD5sum: 98fc0b8643ab93d578e94f3a7c9272ce
-SHA1: 3ea92b005cdc5129e916fd85c37ad2a9f731530f
-SHA256: 49f135a9f5926765a17dbcecbd90a5c7e603bf7f8903d3c338d96761d30286a2
+Size: 702
+MD5sum: 6f34faa0f839bb13b2b3e31c7f6fdd25
+SHA1: 7b6958f4345f6182d35957284164cd3fb4e06d3f
+SHA256: d8bfbb9da637b90c9f030e7306094339a300d7bf461712545cfbf0ea2f717ed0
 Description: TDOC - Diagnostic and repair utility for Termux environment
 
 Package: tere
 Version: 1.6.0
 Architecture: i686
-Maintainer: @termux-app-store
-Installed-Size: 
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 324
+Depends: rust
+Homepage: https://github.com/mgunyho/tere
 Filename: pool/main/tere_1.6.0_i686.deb
-Size: 983672
-MD5sum: 7bbbe970bab9b10ab96817a4434bad0c
-SHA1: a8783ed7a922c047a49f751885eeaa7750258cfa
-SHA256: 39e13fcfc69dca295cad7e6803cde24d5cbebf34132895b1cd0fbf5df314bc96
+Size: 295674
+MD5sum: db99ab8de296b9ff40bae62d04e2886a
+SHA1: 9f500db2ee14c01115709a0bc94304ca46a7cbba
+SHA256: 64bcb2e630657151992b3d8239cb0eb65b9f2fe8669b7fb4fca24b122da4958d
 Description: Terminal file explorer
+
+Package: termstyle
+Version: 1.0.0
+Architecture: i686
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 0
+Homepage: https://gtihub.com/djunekz/termstyle
+Filename: pool/main/termstyle_1.0.0_i686.deb
+Size: 674
+MD5sum: 9f8a1107158e07b16378200ceea79147
+SHA1: c76fa12d9b6afad7797f2dcf15799944d0ad68b0
+SHA256: b57b203bfccef20bf9587432046a4839e4d5a527f0a6d464de3999cf01a10f9c
+Description: Simple tool for change color, command prompt, and cursor termux
 
 Package: termux-ai
 Version: 1.0.0
 Architecture: i686
-Maintainer: @termux-app-store
-Installed-Size: 
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 664
+Homepage: https://github.com/Anon4You/Termux-Ai
 Filename: pool/main/termux-ai_1.0.0_i686.deb
-Size: 5818
-MD5sum: c8030025ccbbc410b4074af1e830568a
-SHA1: a0311207b614e95cd0717794d1b39330d1c89ecd
-SHA256: 27e63b966a5360e8002289495729f143d8d816a325497d647cac287cdd531635
+Size: 643426
+MD5sum: 5c76ddfe294424f67e653238aa669f74
+SHA1: ee3461289a5c2dcb20a4c182c1ac2f20db5d4fe8
+SHA256: 54364c51a68c4806a689086bb33e4289c612411cdcae55284aad2b9732fc4f17
 Description: Interactive AI tool for Termux with 10+ providers and 50+ image models ✨
+
+Package: termux-sync
+Version: 1.1.1
+Architecture: i686
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 0
+Depends: git, python, python-pip, python-setuptools
+Homepage: https://github.com/djunekz/termux-sync
+Filename: pool/main/termux-sync_1.1.1_i686.deb
+Size: 712
+MD5sum: 93adc898b3b0346b0a557f59678808db
+SHA1: b6437b7a84455e6b8a5c24740d161f26f2e6885a
+SHA256: 5c4684de4046bd1917808c259f4847feb50b1c742f6f3edfd8aeb85fc7c7dab8
+Description: OpenSource Backup and restore your entire Termux environment across devices.
+
+Package: termux-tui
+Version: 1.0.2
+Architecture: i686
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 256
+Depends: python, python-pip, python-setuptools
+Homepage: https://github.com/opsonusdh/Termux-TUI
+Filename: pool/main/termux-tui_1.0.2_i686.deb
+Size: 225352
+MD5sum: dc4ec563932264e36cd3676e7ab8eb8f
+SHA1: 811ef108cf4fbc95805a36e1bd3cff2ae8878796
+SHA256: 74c4d02f3cd9c791f563841f0ccbcf814fa48355665e75b46bc51244848c1975
+Description: A futuristic Jarvis-style terminal dashboard for Termux
 
 Package: termuxalpine
 Version: 1.0.0
 Architecture: i686
-Maintainer: @termux-app-store
-Installed-Size: 
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 148
+Homepage: https://github.com/Hax4us/TermuxAlpine
 Filename: pool/main/termuxalpine_1.0.0_i686.deb
-Size: 3060
-MD5sum: 7395d413df443275c065397849c1376e
-SHA1: 9479cfbb7c72ddcca59b946e13ccb704df87cffc
-SHA256: efed753c42b97185746f2024d09ba7ea8269db9967966de256939d1a6be0bba9
+Size: 113086
+MD5sum: 72d362814ca8bc9f2614773c8bcbedd2
+SHA1: 0d4c5e87f5e356be332a573d62c9b29d3527e6a6
+SHA256: d2e5b1fa1bf51394cac6604ba05df08e929cb3e83c088d5a405349767f71b022
 Description: Use TermuxAlpine.sh calling to install Alpine Linux in Termux on Android. This setup script will attempt to set Alpine Linux up in your Termux environment.
 
 Package: the-eye
 Version: 1.0.0
 Architecture: i686
-Maintainer: @termux-app-store
-Installed-Size: 
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 644
+Depends: golang
+Homepage: https://github.com/EgeBalci/The-Eye
 Filename: pool/main/the-eye_1.0.0_i686.deb
-Size: 1621058
-MD5sum: ec0df71307177d5b52ca838ff0ddf3bd
-SHA1: 1da0a915bcf18cd81ef13b597d4f3c7a17ebe9c3
-SHA256: e7a56011fe4aa9466b795c4653ac6382b0555f004c3c126031eace57f6ce928d
+Size: 618672
+MD5sum: 28a201d608611707c43e810bb8ef99b6
+SHA1: 53abb51298a469a6dd341d1dee0251975aecd061
+SHA256: 3fa71385a52a62df7609fa6620ca9d17fb4e99db76087c614feaecfaa38fd856
 Description: Simple security surveillance script for linux distributions.
 
 Package: ttyper
 Version: 1.6.0
 Architecture: i686
-Maintainer: @termux-app-store
-Installed-Size: 
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 1036
+Depends: rust
+Homepage: https://github.com/max-niederman/ttyper
 Filename: pool/main/ttyper_1.6.0_i686.deb
-Size: 793538
-MD5sum: d305101581ab174ad79c1a91b62b9d21
-SHA1: db17bb2010e005fab037d8a483f21d0368c61220
-SHA256: 096cb2a501fc7cb42b5d2a97fda5686d01a8fb957098deb7ce0394fbc2071228
+Size: 1023638
+MD5sum: 0feaf1cc768ebf03966d3ac0857e7e6b
+SHA1: 3bb85208c8cd647a410346bc6fb42361653bde37
+SHA256: a84aecc357ff9b223b22cb3dd1bdab88fe54c9e1346e71b793786b445a4a38f6
 Description: Terminal-based typing test.
 
 Package: tuifimanager
 Version: 5.2.6
 Architecture: i686
-Maintainer: @termux-app-store
-Installed-Size: 
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 0
+Depends: python
+Homepage: https://github.com/GiorgosXou/TUIFIManager
 Filename: pool/main/tuifimanager_5.2.6_i686.deb
 Size: 676
-MD5sum: ebd3c7dee158820896927a8270a0548e
-SHA1: d263836c1bd180a6a4313114aaf739626fa5bc49
-SHA256: 9f7a9c0a261a087d66863c356dd8331c49884fd0f69897fba0ea9aea906a6f88
+MD5sum: f04d5170bcb63b25c4ac47595f5e38cd
+SHA1: 8de3564f72021d37edd4f64a09b9442224731630
+SHA256: b9988139eec55bbd4eff5542509bb46aa815ab007d441d05ad45fdee2dd00024
 Description: A terminal-based TUI file manager
 
 Package: tx
@@ -373,62 +1071,111 @@ Description: Advance Terminal Editor Ultimate
 Package: userfinder
 Version: 1.0.0
 Architecture: i686
-Maintainer: @termux-app-store
-Installed-Size: 
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 520
+Homepage: https://github.com/mishakorzik/UserFinder
 Filename: pool/main/userfinder_1.0.0_i686.deb
-Size: 4118
-MD5sum: 22d4ae24380c852aeea0171a76df7625
-SHA1: 983973be3c8858efa9dc261d53d7e8c18d55b3b1
-SHA256: 11461e3bd770453c8e3bf2e40971e012dd8d5cfc2e8f987d36a074d4dd1024dc
+Size: 493084
+MD5sum: 8c8401cab63a95c901d3294071c2cbd7
+SHA1: 161c006e0811859ac21f1a071bdcc7734fe12fc5
+SHA256: 3169388bd17fdfafdecb8430129b8cffa884d5bc17e6b8397897f4d918efa23e
 Description: userfinder — auto-packaged by termux-build-init
 
 Package: uv
 Version: 0.11.7
 Architecture: i686
-Maintainer: @termux-app-store
-Installed-Size: 
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 0
+Homepage: https://github.com/astral-sh/uv
 Filename: pool/main/uv_0.11.7_i686.deb
-Size: 15872634
-MD5sum: febbb7ebefe374802b937344a7cb51aa
-SHA1: 877902918d780c1215dc898393ecc56a57cb34c6
-SHA256: 13f587ca02b8e002aade280c83968e5fe56f4c7d3a30db4620238d6d8d8f8bd8
+Size: 678
+MD5sum: fecbc7ebc5d2f00a89f00a7f20c77b61
+SHA1: 16e638ff98d94453c32d1df929ed674e3eac5ce8
+SHA256: 6fee66b8a5ec88ae2202a91444de3be1b526ec4bbfcbe86746d1b2aacfbeb0d7
 Description: An extremely fast Python package and project manager, written in Rust.
 
 Package: viu
 Version: 1.6.1
 Architecture: i686
-Maintainer: @termux-app-store
-Installed-Size: 
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 34384
+Depends: rust
+Homepage: https://github.com/atanunq/viu
 Filename: pool/main/viu_1.6.1_i686.deb
-Size: 1399814
-MD5sum: 124cb3ba4297adc0979c4ab08777d0f2
-SHA1: b452d754132fd1f6399cd6ccdffceda5b0812402
-SHA256: e1fa543e8ddb19c239c3cf6c603043c7b023bf6557f3da1e565a74846af5203e
+Size: 35029636
+MD5sum: 35faa8fa52b1e4e299ef394006be29ba
+SHA1: e9a62a192896540449c035b4b90189acb39dd3f8
+SHA256: 08126e7a96dda5fd195efe728708f4fdabad180070c11121819302f47aa80be5
 Description: Terminal image viewer with native support for iTerm and Kitty
 
 Package: webshake
 Version: 1.0.2
 Architecture: i686
-Maintainer: Djunekz
-Installed-Size: 
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 0
+Homepage: https://github.com/djunekz/webshake
 Filename: pool/main/webshake_1.0.2_i686.deb
-Size: 3712
-MD5sum: 7c3d2051ad974cea49d08253575e5566
-SHA1: 8c863bc796c940971cc4e4b292b176b9ae76f137
-SHA256: 970f1e69fad8a634b3eee3567855b5cf24b5b1d8d1c065338f34d19bf7e4c0d6
+Size: 660
+MD5sum: f47b9e13db168e88f41df4ac338e9856
+SHA1: 791bb73171c5954d6322927f3ed5038ad079a6bd
+SHA256: 1727510ad2a0f9301a4948bebee408517a94382d9e98d049be178601a96da79f
 Description: Scan vulnerabilities and analyze websites
+
+Package: xeuledoc
+Version: 1.0.0
+Architecture: i686
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 52
+Depends: python, python-pip, python-setuptools
+Homepage: https://malfrats.industries/
+Filename: pool/main/xeuledoc_1.0.0_i686.deb
+Size: 15692
+MD5sum: de8861e6c168c3812d4935db95a3e764
+SHA1: 4fe8984e389682ae58943715b2457f385a1f057b
+SHA256: 40a7df585259dff9e78fa9c0ef6d545343e4b97324cccfab7389e26f8cf18815
+Description: Fetch information about a public Google document.
+
+Package: xsstrike
+Version: 3.1.6
+Architecture: i686
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 88
+Depends: python, python-pip, python-setuptools
+Homepage: https://github.com/s0md3v/XSStrike
+Filename: pool/main/xsstrike_3.1.6_i686.deb
+Size: 52374
+MD5sum: 8dec475fc5cf53c83544221e406b5a3f
+SHA1: dc17e5c2cdaaaf066b0d120f2e5df5ed4588d9e6
+SHA256: ab3a451476782972e28c96565bdce9a44b6542649c450a7a7aa049dc294aecae
+Description: Most advanced XSS scanner.
 
 Package: ytfzf
 Version: 2.6.2
 Architecture: i686
-Maintainer: @termux-app-store
-Installed-Size: 
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 3240
+Depends: imlib2, jack, jack2, libcaca, libid3tag, libsixel, libuchardet, luajit, mpv, openal-soft
+Homepage: https://github.com/pystardust/ytfzf
 Filename: pool/main/ytfzf_2.6.2_i686.deb
-Size: 32112
-MD5sum: cece0927968825259fe7f8e49109850b
-SHA1: d804ccad7efc00614e3ac65ce42c6a2eacd54cb4
-SHA256: e706940fe27abe287f4f909a62a50bef8fbd4c59d531f19ffb021fe89fe31676
+Size: 3280090
+MD5sum: ef5cc2ceadebc257a65b9062a1f442f7
+SHA1: ba3c4f7d679c2519c3a96068a0d8e4c81d840eec
+SHA256: d8bdbf7076e478541d2f0be1bbcdf1cc6e8bc44690752a8d37a67d0cb81b6e5b
 Description: A posix script to find and watch youtube videos from the terminal. (Without API)
+
+Package: zerodoor
+Version: 1.0.0
+Architecture: i686
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 44
+Depends: python, python-pip, python-setuptools
+Homepage: https://github.com/Souhardya/Zerodoor
+Filename: pool/main/zerodoor_1.0.0_i686.deb
+Size: 6762
+MD5sum: 5684a608882544570b9602596ce3cdf8
+SHA1: 2f6a2269eb0695d401f1fa3693e4085b1457832d
+SHA256: b9e789f5ba45d2aa1beebf8ce22dae75822336071fd4cf868858d6b9898fe300
+Description: A script written lazily for generating cross-platform  backdoors on the go :)
 
 Package: zora
 Version: 2.0.0
