@@ -4,12 +4,10 @@ Architecture: all
 Maintainer: @termux-app-store
 Installed-Size: 52
 Homepage: https://github.com/djunekz/bashxt
+Description: basic command, code color, shortcut keyboar, etc information
 Filename: pool/main/bashxt_2.2_all.deb
 Size: 4900
-MD5sum: e20f4fe3112a0b09f03f67e3ac73d301
-SHA1: e3c30e3e43799acadb8fecea5b310cfe92c9b585
 SHA256: bad4ab1f0682a14cf7e2a00db1f02be883de1cb5b19d4139381bfe1291f4592d
-Description: basic command, code color, shortcut keyboar, etc information
 
 Package: basic
 Version: 1.2.0
@@ -18,12 +16,10 @@ Maintainer: @termux-app-store
 Installed-Size: 192
 Depends: python
 Homepage: https://github.com/djunekz/basic
+Description: Simulator Terminal learning basic command for beginner
 Filename: pool/main/basic_1.2.0_all.deb
 Size: 31942
-MD5sum: fbaaa599138eae6693c4637883b1041a
-SHA1: c9ae480087ad0d0f508ad424aceee884cd544ff2
 SHA256: 5d1f92e0dc28f1b7820d37b7fe37db6f83171c9b50ea3137b3a67d3b98a9eca3
-Description: Simulator Terminal learning basic command for beginner
 
 Package: cybertuz
 Version: 1.0.2-1
@@ -32,12 +28,10 @@ Maintainer: @termux-app-store
 Installed-Size: 1228
 Depends: nmap, python, whois, curl, dnsutils
 Homepage: https://github.com/djunekz/cybertuz
+Description: Comprehensive Educational Learning Platform for Termux
 Filename: pool/main/cybertuz_1.0.2-1_all.deb
 Size: 117850
-MD5sum: 966530111838aeba2769708ed165c110
-SHA1: f4112eae4958e71228fa16d0c1380a676c310667
 SHA256: c48e5294ad23736356e9766c69c5ac638dcbe2380cf26fed450754988f061661
-Description: Comprehensive Educational Learning Platform for Termux
 
 Package: impulse
 Version: 1.0.0
@@ -46,12 +40,10 @@ Maintainer: @termux-app-store
 Installed-Size: 1276
 Depends: python
 Homepage: https://github.com/LimerBoy/Impulse
+Description: Denial-of-Service ToolKit with multiple attack methods
 Filename: pool/main/impulse_1.0.0_all.deb
 Size: 301398
-MD5sum: 5d5f708373b95364349fbfb45500e105
-SHA1: f83320128ef4553e18ffe2923b4e8bae65327df4
 SHA256: 918b25718334a74420bd12aa74f0ba0cba14fb9c83863c174b4c185b169dd27d
-Description: Denial-of-Service ToolKit with multiple attack methods
 
 Package: pymaker
 Version: 1.0.0
@@ -60,12 +52,10 @@ Maintainer: @termux-app-store
 Installed-Size: 104
 Depends: python
 Homepage: https://github.com/droidv1/pymaker
+Description: Simple tool for create python script
 Filename: pool/main/pymaker_1.0.0_all.deb
 Size: 2750
-MD5sum: 967aa434ca86ead7d572d02be37d7171
-SHA1: 2011b64c4af424255f9914ee0bcc0cf8a460b032
 SHA256: 8b55cb28e11b08e0294248ddd9802b643e67b974f4685466c4fab52119176115
-Description: Simple tool for create python script
 
 Package: tdoc
 Version: 2.1.1
@@ -74,12 +64,10 @@ Maintainer: @djunekz
 Installed-Size: 372
 Depends: bash, coreutils, curl, git, gnupg, termux-tools
 Homepage: https://github.com/djunekz/tdoc
+Description: TDOC - Diagnostic and repair utility for Termux environment
 Filename: pool/main/tdoc_2.1.1_all.deb
 Size: 32658
-MD5sum: 7a191b1ad84041449c6cf04f54f9a696
-SHA1: 14248c6e106789d7488cf2197eb9e0b5ec4b7d3c
 SHA256: 97e9a54eddb9daca928ebd4bbde2e76d5d8f94284fd0701c89d2e5bddd51ef73
-Description: TDOC - Diagnostic and repair utility for Termux environment
 
 Package: termstyle
 Version: 1.0.0
@@ -87,9 +75,7 @@ Architecture: all
 Maintainer: @djunekz
 Installed-Size: 196
 Homepage: https://gtihub.com/djunekz/termstyle
+Description: Simple tool for change color, command prompt, and cursor termux
 Filename: pool/main/termstyle_1.0.0_all.deb
 Size: 49914
-MD5sum: 04629b66e674d10f27aaeeaedc4a35e8
-SHA1: 68655b8852e86ab4e4001fbd75484fe84b297360
 SHA256: 707384e0e57758b704bfdc4b1625cb2ec7a656373b756f0dc0e3ccc82408f808
-Description: Simple tool for change color, command prompt, and cursor termux
