@@ -100,7 +100,7 @@ jobs:
 
       - name: Set up QEMU for aarch64 emulation
         if: github.event.inputs.force == 'true' || steps.cache.outputs.cache-hit != 'true'
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v4
         with:
           platforms: arm64
 
