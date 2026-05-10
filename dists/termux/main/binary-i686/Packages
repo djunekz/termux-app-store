@@ -12,20 +12,6 @@ SHA1: f877ce1a2fe99572169293dfb32c3bbe13cef2c5
 SHA256: a34f943937fc12cd5b406440350425662fabf6582311c580e926ad535a39e2a0
 Description: All-in-one LLM CLI tool featuring Shell Assistant, Chat-REPL, RAG, AI Tools & Agents, with access to OpenAI, Claude, Gemini, Ollama, Groq, and more.
 
-Package: ani-cli
-Version: 4.11
-Architecture: i686
-Maintainer: @termux-app-store
-Installed-Size: 24
-Depends: nodejs
-Homepage: https://github.com/pystardust/ani-cli
-Filename: pool/main/ani-cli_4.11_i686.deb
-Size: 612
-MD5sum: d6ca12e0f6fe516d906355bd1df0eadc
-SHA1: 6f17d049bdeaaaa8d2c4d275f989865b8d9baff8
-SHA256: 8bb447e9d4e5f1be7660b356b99d35bf25a018c268a6add5535795c0d56f630a
-Description: A cli tool to browse and play anime
-
 Package: aura
 Version: 0.10.0
 Architecture: i686
@@ -974,20 +960,6 @@ MD5sum: 5c76ddfe294424f67e653238aa669f74
 SHA1: ee3461289a5c2dcb20a4c182c1ac2f20db5d4fe8
 SHA256: 54364c51a68c4806a689086bb33e4289c612411cdcae55284aad2b9732fc4f17
 Description: Interactive AI tool for Termux with 10+ providers and 50+ image models ✨
-
-Package: termux-app-store
-Version: 0.3.0
-Architecture: i686
-Maintainer: djunekz <gab288.gab288@passinbox.com>
-Installed-Size: 184
-Depends: python, python-pip
-Homepage: https://github.com/djunekz/termux-app-store
-Filename: pool/main/termux-app-store_0.3.0_i686.deb
-Size: 23612
-MD5sum: de85e5fa2575d9e77abd27a6b2785ed5
-SHA1: a9293af0bac9d67c51c9993091c25db648860da6
-SHA256: d4d41205ba501b15f99fd1e8c493916863be55f67ab3cf3cd6b3a872299f231c
-Description: The first offline-first, source-based TUI package manager for Termux
 
 Package: termux-sync
 Version: 1.1.1

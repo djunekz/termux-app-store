@@ -1812,14 +1812,13 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/archive/releases/download/v${TERMUX_PKG_VERSION}/tx",
-      "sha256": "13c2bafcf75065313b4c0dd3dd6baedcc98c91a88415ea6ffc8770d92ab733c5",
+      "sha256": "8a73f76dc4ce46e2e6c366fca883570d65657cba752ce55c1a0316a9aac3a8f9",
       "platform_independent": false,
       "depends": [
         "python",
         "ncurses"
       ],
       "sha256_by_arch": {
-        "aarch64": "13c2bafcf75065313b4c0dd3dd6baedcc98c91a88415ea6ffc8770d92ab733c5",
         "64": "8a73f76dc4ce46e2e6c366fca883570d65657cba752ce55c1a0316a9aac3a8f9"
       }
     },
@@ -2044,14 +2043,13 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/archive/releases/download/v${TERMUX_PKG_VERSION}/zorabuilder",
-      "sha256": "eea87e4b4ab2598b3bb7a6b12b88e2504869dbd88900deb04d0eae4698a82595",
+      "sha256": "2db5c66b14bb60285c5f5d9a468839f26fcb8b01f6574d835debe0a67146e612",
       "platform_independent": false,
       "depends": [
         "python",
         "binutils-is-llvm"
       ],
       "sha256_by_arch": {
-        "aarch64": "eea87e4b4ab2598b3bb7a6b12b88e2504869dbd88900deb04d0eae4698a82595",
         "64": "2db5c66b14bb60285c5f5d9a468839f26fcb8b01f6574d835debe0a67146e612"
       }
     },
@@ -2066,14 +2064,13 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/archive/releases/download/v${TERMUX_PKG_VERSION}/zoracrypter",
-      "sha256": "d24532a0cb1d05a309d16143e7211dc5ba29f31222f4c58f4633929c852960f5",
+      "sha256": "07486f451d52809d87eb7f5c0ef1f0b82d7f7a7a174dcd53e88525a3d590dde9",
       "platform_independent": false,
       "depends": [
         "clang",
         "python"
       ],
       "sha256_by_arch": {
-        "aarch64": "d24532a0cb1d05a309d16143e7211dc5ba29f31222f4c58f4633929c852960f5",
         "64": "07486f451d52809d87eb7f5c0ef1f0b82d7f7a7a174dcd53e88525a3d590dde9"
       }
     }

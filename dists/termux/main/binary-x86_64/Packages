@@ -13,20 +13,6 @@ SHA256: 33826da10c4f11b47bc4f0a5de0c24a1db07eb97e6e51ac215b6d512db6b8da8
 Description: All-in-one LLM CLI tool featuring Shell Assistant, Chat-REPL, RAG, AI Tools & Agents, with access to OpenAI, Claude, Gemini, Ollama, Groq, and more.
 
 Package: ani-cli
-Version: 4.11
-Architecture: x86_64
-Maintainer: @termux-app-store
-Installed-Size: 24
-Depends: nodejs
-Homepage: https://github.com/pystardust/ani-cli
-Filename: pool/main/ani-cli_4.11_x86_64.deb
-Size: 614
-MD5sum: 7e17b0e797efc1eeb9df76fb847551eb
-SHA1: b99ab169392181b79986868cb4d9ae252b6e2daf
-SHA256: 73a7bf35d77364ef3528defde09f8ffd1fdea1e70e80108c253ac89c50536040
-Description: A cli tool to browse and play anime
-
-Package: ani-cli
 Version: 4.13
 Architecture: x86_64
 Maintainer: @termux-app-store
@@ -287,20 +273,6 @@ MD5sum: 1ddb02cbab2276789cea505975924c96
 SHA1: 9d2ffdfcd8e5741c25738e74f6751151503ece56
 SHA256: cef176f525640a1813e6e56ba5d5e013156cf7ac9ec33b3da151599b31d3df15
 Description: cupp — auto-packaged by termux-build-init
-
-Package: cybertuz
-Version: 1.0.1
-Architecture: x86_64
-Maintainer: @termux-app-store
-Installed-Size: 28
-Depends: nmap, python, whois, curl, dnsutils
-Homepage: https://github.com/djunekz/cybertuz
-Filename: pool/main/cybertuz_1.0.1_x86_64.deb
-Size: 726
-MD5sum: 799a5bb72057e50a898b607d2ac690a7
-SHA1: a8737ae85446bda45f8490c01afe6f873d828f87
-SHA256: aa0dfecc075ac1c06550561312afa92bc31b6b3f281545f29be566f73833a442
-Description: Comprehensive Educational Learning Platform for Termux
 
 Package: cybertuz
 Version: 1.0.2-1
@@ -907,19 +879,6 @@ SHA256: 1d25f0dedcfd3748dee50b87cb05cf16f5022f6d215bd71b80439addc022a80b
 Description: All in one tool for Information Gathering, Vulnerability Scanning and Crawling. A must have tool for all penetration testers
 
 Package: sigit
-Version: 2.0-pre
-Architecture: x86_64
-Maintainer: @termux-app-store
-Installed-Size: 40
-Homepage: https://github.com/termuxhackers-id/SIGIT
-Filename: pool/main/sigit_2.0-pre_x86_64.deb
-Size: 14484
-MD5sum: 8300978cf8bd722dee579062a0f6569a
-SHA1: 27e38c5f622b11f073633558dcc520b073438d55
-SHA256: 289e2b267756c41946a19a125f426a95639d2652a00fe8e1c17b7e6133463a6f
-Description: SIGIT - Simple Information Gathering Toolkit
-
-Package: sigit
 Version: 2.0
 Architecture: x86_64
 Maintainer: djunekz <gab288.gab288@passinbox.com>
@@ -959,20 +918,6 @@ MD5sum: 234d5c9b8b9f1dfb8cedbef9886c4784
 SHA1: a5ed0c6625958e4bfa883e93e3a19a6a843ed459
 SHA256: 94aee9ed68a5c327ee1871d8445dba876f3bf951146c2e2e6bbaec2b114d7e2a
 Description: Fast subdomains enumeration tool for penetration testers
-
-Package: tdoc
-Version: 1.0.6
-Architecture: x86_64
-Maintainer: @djunekz
-Installed-Size: 212
-Depends: bash, coreutils, curl, git, gnupg, termux-tools
-Homepage: https://github.com/djunekz/tdoc
-Filename: pool/main/tdoc_1.0.6_x86_64.deb
-Size: 14666
-MD5sum: e52def3409b4f95b0b68aeafa742af73
-SHA1: 35b56af98a3b3836947a6dd6147b6cbd64a41a63
-SHA256: cfcec14234fd982763fcd3010f856dec7274d7876cc999258acbd343019ca35e
-Description: TDOC - Diagnostic and repair utility for Termux environment
 
 Package: tdoc
 Version: 2.1.1
@@ -1027,20 +972,6 @@ MD5sum: c30884413c4c6b024654c3442048e8cb
 SHA1: 4cfc961aa79ba961bbfb0400d92dc5059a7424d5
 SHA256: 990c110fd46e87deb861e09841197189fa9d1e58b033db966973bd709fa47737
 Description: Interactive AI tool for Termux with 10+ providers and 50+ image models ✨
-
-Package: termux-app-store
-Version: 0.3.0
-Architecture: x86_64
-Maintainer: djunekz <gab288.gab288@passinbox.com>
-Installed-Size: 184
-Depends: python, python-pip
-Homepage: https://github.com/djunekz/termux-app-store
-Filename: pool/main/termux-app-store_0.3.0_x86_64.deb
-Size: 23614
-MD5sum: f4d490c08e159413292375b6b48cd9df
-SHA1: 125a2649290edc3bb25800d9b847ee33de3491bd
-SHA256: 64b305848a4e6faac95f422a832f6f3dfcb173b6d1d7ea678a88f3e14dd051a9
-Description: The first offline-first, source-based TUI package manager for Termux
 
 Package: termux-sync
 Version: 1.1.1

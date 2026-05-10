@@ -12,20 +12,6 @@ SHA1: dcf55fde9c95696228b6c3cca1275737b1fc3d4f
 SHA256: 29ad460c9c58867ce189d38e1aca2744741891916d6b7479a4c25618fc8d292d
 Description: All-in-one LLM CLI tool featuring Shell Assistant, Chat-REPL, RAG, AI Tools & Agents, with access to OpenAI, Claude, Gemini, Ollama, Groq, and more.
 
-Package: ani-cli
-Version: 4.11
-Architecture: aarch64
-Maintainer: @termux-app-store
-Installed-Size: 24
-Depends: nodejs
-Homepage: https://github.com/pystardust/ani-cli
-Filename: pool/main/ani-cli_4.11_aarch64.deb
-Size: 614
-MD5sum: d9cd78c816f46dcfcdce127eb2becc9c
-SHA1: 6605fbfb0c31269ec694aa084bc28dbe57ba72b9
-SHA256: 13b96e1e43d5782788e9d7219e82b020560bdd56cc88be6d83e7e503226ecbc6
-Description: A cli tool to browse and play anime
-
 Package: aura
 Version: 0.10.0
 Architecture: aarch64
@@ -975,20 +961,6 @@ SHA1: 35e7e567a1c11e2d3959d9f63ffd7344970c32a6
 SHA256: bbef66fa17646628ab8cafe05f38e22f345b9bd6c4efa2f2a4255666a8ea6877
 Description: Interactive AI tool for Termux with 10+ providers and 50+ image models ✨
 
-Package: termux-app-store
-Version: 0.3.0
-Architecture: aarch64
-Maintainer: djunekz <gab288.gab288@passinbox.com>
-Installed-Size: 184
-Depends: python, python-pip
-Homepage: https://github.com/djunekz/termux-app-store
-Filename: pool/main/termux-app-store_0.3.0_aarch64.deb
-Size: 23614
-MD5sum: fb7f53e10684a62e047a03ac107b50f5
-SHA1: 2c69b5bec247d310aa9436d367af6a52f3ce3a5d
-SHA256: 2dfbfd6aeba06273c2355e80ef57ead4180257092b9bebbfc4a870bdba8eac4f
-Description: The first offline-first, source-based TUI package manager for Termux
-
 Package: termux-sync
 Version: 1.1.1
 Architecture: aarch64
@@ -1071,20 +1043,6 @@ MD5sum: 82286d2b56459766052caed6b5932db6
 SHA1: 5333cf23fd7fe13009a90f2b4ffe4f3300e285dc
 SHA256: 55f03c98dda3ce1e29f9474fc6e4acc0f475273d79a92c892a58e62acfcc571e
 Description: A terminal-based TUI file manager
-
-Package: tx
-Version: 1.0.0
-Architecture: aarch64
-Maintainer: @termux-app-store
-Installed-Size: 4956
-Depends: python, ncurses
-Homepage: https://github.com/djunekz/termux-app-store
-Filename: pool/main/tx_1.0.0_aarch64.deb
-Size: 4955922
-MD5sum: d9543560770170461683b82e52979f23
-SHA1: 6475a081d8af735fefb55c541af415633fc91cba
-SHA256: 13c2bafcf75065313b4c0dd3dd6baedcc98c91a88415ea6ffc8770d92ab733c5
-Description: Advance Terminal Editor Ultimate
 
 Package: userfinder
 Version: 1.0.0
@@ -1194,45 +1152,3 @@ MD5sum: 704944bdea6f62332223fbf005b5aa0f
 SHA1: 952e192e387662df797c67efd5089ae2b700074c
 SHA256: 79d0cb0466f530954f8998b7a635dc4da7918172ecbd8730b4ff6b644d69711f
 Description: A script written lazily for generating cross-platform  backdoors on the go :)
-
-Package: zora
-Version: 1.2.2
-Architecture: aarch64
-Maintainer: @termux-app-store
-Installed-Size: 5332
-Depends: python
-Homepage: https://github/djunekz/termux-app-store
-Filename: pool/main/zora_1.2.2_aarch64.deb
-Size: 5337648
-MD5sum: 0978f7fd6c27f05c0c5fd93925cbfd8c
-SHA1: 2ce40661ae7693da92f06d8f7bcbaec1460f5074
-SHA256: 894f0d4ff6804c3e77d279324cfa71f06f06acadb88131014e0c8b8b20ebfe76
-Description: The ultimate OSINT framework
-
-Package: zorabuilder
-Version: 1.0.0
-Architecture: aarch64
-Maintainer: @termux-app-store
-Installed-Size: 4832
-Depends: python
-Homepage: https://github.com/djunekz/termux-app-store
-Filename: pool/main/zorabuilder_1.0.0_aarch64.deb
-Size: 4833392
-MD5sum: f34a34faa535ce40351b9ea50188ad95
-SHA1: 08e2d0a17ebcd76b1f3682fa779e28611d4ae17e
-SHA256: eea87e4b4ab2598b3bb7a6b12b88e2504869dbd88900deb04d0eae4698a82595
-Description: Builder python standalone ELF
-
-Package: zoracrypter
-Version: 1.0.0
-Architecture: aarch64
-Maintainer: @termux-app-store
-Installed-Size: 44
-Depends: clang, python
-Homepage: https://github.com/djunekz/termux-app-store
-Filename: pool/main/zoracrypter_1.0.0_aarch64.deb
-Size: 11300
-MD5sum: 1c5f7567bc0ddcfa5b60464bb2e609d9
-SHA1: f919a55df2c9e84602d8299783e15c49d1815e8a
-SHA256: d24532a0cb1d05a309d16143e7211dc5ba29f31222f4c58f4633929c852960f5
-Description: Encrypter Stealth Binary Builder
