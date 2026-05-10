@@ -32,7 +32,7 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/pystardust/ani-cli/releases/download/v${TERMUX_PKG_VERSION}/ani-cli",
-      "sha256": "17c8a97b034d3e48ba4663d538a5705adfbbffb951fa67650a57f7e4414959e2",
+      "sha256": "26a1e2b3b562dd64caf1ea456fa77fe8ea399534e2a293aa1f39862285d2c19e",
       "platform_independent": false,
       "depends": [
         "nodejs",
@@ -42,7 +42,10 @@
         "grep",
         "sed",
         "wget"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "26a1e2b3b562dd64caf1ea456fa77fe8ea399534e2a293aa1f39862285d2c19e"
+      }
     },
     {
       "package": "aura",
@@ -55,11 +58,14 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/aura/archive/refs/tags/v${TERMUX_PKG_VERSION}.zip",
-      "sha256": "f9cfa5f137ad035f35faace06f00eb61d368e39c24a12521da1ff1bac235d630",
+      "sha256": "f43c26b8e66e41e22d333cff8469c5fb84874e2edb63d6cb832b93e59ae983a5",
       "platform_independent": false,
       "depends": [
         "nodejs"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "f43c26b8e66e41e22d333cff8469c5fb84874e2edb63d6cb832b93e59ae983a5"
+      }
     },
     {
       "package": "auxscan",
@@ -72,13 +78,16 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/Gameye98/Auxscan/archive/refs/heads/master.tar.gz",
-      "sha256": "fc66c68f438df226328b6a78347c9862e33b9e30e60c3e0e73b57033c60a9631",
+      "sha256": "bd9338c9476329f77386e73dd03d41f97846df73d76e3e1377d73235719f7a75",
       "platform_independent": false,
       "depends": [
         "python",
         "python-pip",
         "python-setuptools"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "bd9338c9476329f77386e73dd03d41f97846df73d76e3e1377d73235719f7a75"
+      }
     },
     {
       "package": "bashxt",
@@ -91,8 +100,11 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/bashxt/releases/download/v${TERMUX_PKG_VERSION}/bashxt_${TERMUX_PKG_VERSION}_all.deb",
-      "sha256": "d4ed7c6021bc1c22b5441d1ba1ba94187504fffc2a7bb73bc2ebe8ff6adf7f7d",
-      "platform_independent": false
+      "sha256": "403bdfe86cf3559a9a4b23a58b9ae987338d16b37e979b9f9383539587c06e38",
+      "platform_independent": false,
+      "sha256_by_arch": {
+        "aarch64": "403bdfe86cf3559a9a4b23a58b9ae987338d16b37e979b9f9383539587c06e38"
+      }
     },
     {
       "package": "basic",
@@ -105,11 +117,14 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/basic/releases/download/${TERMUX_PKG_VERSION}/basic_${TERMUX_PKG_VERSION}_all.deb",
-      "sha256": "440657aa7347b38f6dd380630f293e496954279829b0cdbd4508fbe5bfdd167d",
+      "sha256": "fd1b2bfc3d17cde3f058e4828f50e07e408f2ceef544e624682180a6bcc79dbe",
       "platform_independent": false,
       "depends": [
         "python"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "fd1b2bfc3d17cde3f058e4828f50e07e408f2ceef544e624682180a6bcc79dbe"
+      }
     },
     {
       "package": "baxter",
@@ -238,13 +253,16 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/D4Vinci/Clickjacking-Tester/archive/refs/heads/master.tar.gz",
-      "sha256": "21c128c44d965ee337c8f946c07144de3a2a8d14320364015312870abe2267d3",
+      "sha256": "60b63988810c2c93c8a066abe423f35a8cb4a24621729380f64b8f848935847c",
       "platform_independent": false,
       "depends": [
         "python",
         "python-pip",
         "python-setuptools"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "60b63988810c2c93c8a066abe423f35a8cb4a24621729380f64b8f848935847c"
+      }
     },
     {
       "package": "cloudflair",
@@ -257,13 +275,16 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/christophetd/CloudFlair/archive/refs/heads/master.tar.gz",
-      "sha256": "7d25c983530e7d91fd78504966625aa021083c75d81362893961fc76abf46893",
+      "sha256": "6036c08e909fd61174992a82036661402968683d99d161f24b1201e5fcbfc91a",
       "platform_independent": false,
       "depends": [
         "python",
         "python-pip",
         "python-setuptools"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "6036c08e909fd61174992a82036661402968683d99d161f24b1201e5fcbfc91a"
+      }
     },
     {
       "package": "cmseek",
@@ -423,13 +444,16 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/6IX7ine/djangohunter/archive/refs/heads/master.tar.gz",
-      "sha256": "6642cfc85c4e1820c768f85c3f94501d619dc96373b065771a6ef62c3cdeca14",
+      "sha256": "8dcd6997fb41581fc807bac914d5323a088f037c4a64d6995b395ace22418ac9",
       "platform_independent": false,
       "depends": [
         "python",
         "python-pip",
         "python-setuptools"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "8dcd6997fb41581fc807bac914d5323a088f037c4a64d6995b395ace22418ac9"
+      }
     },
     {
       "package": "dnsmap",
@@ -475,11 +499,14 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/wireghoul/doona/archive/refs/heads/master.tar.gz",
-      "sha256": "7802a60981a80a53a1598e61943b564ecc937c4550a713fc354d02e8cec924e8",
+      "sha256": "84723ff952aea6243fb321b1102975e966f68a1418251100fdf51108a93ec5c9",
       "platform_independent": false,
       "depends": [
         "perl"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "84723ff952aea6243fb321b1102975e966f68a1418251100fdf51108a93ec5c9"
+      }
     },
     {
       "package": "dumpzilla",
@@ -492,13 +519,16 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://gitlab.com/kalilinux/packages/dumpzilla/-/archive/kali/master/dumpzilla-kali/master.tar.gz",
-      "sha256": "53df946af387842561db5ca2bea7816a8e0870f7399fcaef4299411a04931b99",
+      "sha256": "833290465e8e3e4dc740eec81f5ceeb174a3b85fa8cdb4ceaa851db37befc060",
       "platform_independent": false,
       "depends": [
         "python",
         "python-pip",
         "python-setuptools"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "833290465e8e3e4dc740eec81f5ceeb174a3b85fa8cdb4ceaa851db37befc060"
+      }
     },
     {
       "package": "dust",
@@ -629,11 +659,14 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/Smaash/fuckshitup/archive/refs/heads/master.tar.gz",
-      "sha256": "d9ea301d0a1c823b793a5d5d141991d04c825f5030069946dfbd29be3e050054",
+      "sha256": "a4fb4580b0addbcc75286d775b7edb3eb54e3c314fb4b5e5bbc8280babd6f218",
       "platform_independent": false,
       "depends": [
         "php"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "a4fb4580b0addbcc75286d775b7edb3eb54e3c314fb4b5e5bbc8280babd6f218"
+      }
     },
     {
       "package": "gemail-hack",
@@ -646,13 +679,16 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/Ha3MrX/Gemail-Hack/archive/refs/heads/master.tar.gz",
-      "sha256": "36dfa4b305e8b7660ae92e817254545e4aa6b5daf23446a2a4c475e3aef6cde9",
+      "sha256": "7965c64ce02bb5f6620918e14b9f2f899d97472892324b9faed19167e44f7cef",
       "platform_independent": false,
       "depends": [
         "python",
         "python-pip",
         "python-setuptools"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "7965c64ce02bb5f6620918e14b9f2f899d97472892324b9faed19167e44f7cef"
+      }
     },
     {
       "package": "get",
@@ -786,8 +822,11 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/SilentGhostX/HT-WPS-Breaker/archive/refs/heads/master.tar.gz",
-      "sha256": "556101fa55aeb073d0a2908f1d667e34eeefbcbdb38c8723b7f862352d40f848",
-      "platform_independent": false
+      "sha256": "9e190df0898ee5216b6eb67b6c0ce6dba17404becfca7d518274d83ce2156bdb",
+      "platform_independent": false,
+      "sha256_by_arch": {
+        "aarch64": "9e190df0898ee5216b6eb67b6c0ce6dba17404becfca7d518274d83ce2156bdb"
+      }
     },
     {
       "package": "hunner",
@@ -1371,8 +1410,11 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/mishakorzik/UserFinder/archive/refs/heads/master.tar.gz",
-      "sha256": "fa6bffdffae84402230f19a2d4a740ebd9b731711fb5198c78dfe6c23120526b",
-      "platform_independent": false
+      "sha256": "f33a5818f2d8e14ce56a3714a8fcb0e8d7a4c7278112f38e1f138e88ba4417c2",
+      "platform_independent": false,
+      "sha256_by_arch": {
+        "aarch64": "f33a5818f2d8e14ce56a3714a8fcb0e8d7a4c7278112f38e1f138e88ba4417c2"
+      }
     },
     {
       "package": "uv",
@@ -1513,11 +1555,14 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/archive/releases/download/v${TERMUX_PKG_VERSION}/zora",
-      "sha256": "73290a0820c195cc73b4e2467d26c25942ec4a67694d1a13592bb85d8adad945",
+      "sha256": "fb58098ebc9eef74a8ef2100b68b429a72685264e019840e6d7b531d26822322",
       "platform_independent": false,
       "depends": [
         "python"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "fb58098ebc9eef74a8ef2100b68b429a72685264e019840e6d7b531d26822322"
+      }
     },
     {
       "package": "zorabuilder",
