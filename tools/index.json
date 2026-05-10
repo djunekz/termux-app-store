@@ -32,7 +32,7 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/pystardust/ani-cli/releases/download/v${TERMUX_PKG_VERSION}/ani-cli",
-      "sha256": "260a381a05e24e88bc22e76e77ebc14f7ce49644b91bca1656f76568abb13400",
+      "sha256": "fb41484050cc975caf08a1a5639ca0790f0ff58ab15552047591c58664bc0415",
       "platform_independent": false,
       "depends": [
         "nodejs",
@@ -44,7 +44,7 @@
         "wget"
       ],
       "sha256_by_arch": {
-        "64": "260a381a05e24e88bc22e76e77ebc14f7ce49644b91bca1656f76568abb13400"
+        "64": "fb41484050cc975caf08a1a5639ca0790f0ff58ab15552047591c58664bc0415"
       }
     },
     {
@@ -58,16 +58,16 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/aura/archive/refs/tags/v${TERMUX_PKG_VERSION}.zip",
-      "sha256": "3b7074711b7ef9ca707fad5945c6ed751aef89e39e632b428b5c7f2649bc0e58",
+      "sha256": "7eb977ef56a27880cf840a07acbc57a3b3b5668d6040f081144e519ea56c7529",
       "platform_independent": false,
       "depends": [
         "nodejs"
       ],
       "sha256_by_arch": {
-        "aarch64": "3b7074711b7ef9ca707fad5945c6ed751aef89e39e632b428b5c7f2649bc0e58",
-        "arm": "efa08b949e29fb80e6920b299c4a1d074267dfbd0de8509f9997dbfbe3dfebe3",
-        "i686": "d6ea952dfb49253049ddc24dd878aba13b68f481c3c7504ef82ef9b3d900dd9c",
-        "64": "ce8b9d38beaafb5b43cec65356aa63bc667bf8921f08a22aa2d21b3e98f58f32"
+        "aarch64": "7eb977ef56a27880cf840a07acbc57a3b3b5668d6040f081144e519ea56c7529",
+        "arm": "b69430f905a599c4421aab4e2115a5ad9146b0b9542ba8d3930e743d288caaea",
+        "i686": "263f3cef565d93ebc2104b9963074e88cee642954f7de98821a3bc80f4c51784",
+        "64": "642468ed872c41413c365b9d0becfa3cff891a930dc2cfd708d1d44e2b72bc84"
       }
     },
     {
@@ -81,7 +81,7 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/Gameye98/Auxscan/archive/refs/heads/master.tar.gz",
-      "sha256": "69dca2fce6b11219e25b2a29f84c612d00021398d607cddc8cbdc9183a511b99",
+      "sha256": "97649a92145c9cfbbfe4052df3e2a79d1d54afe2a62075be4d2d2170fefbc44b",
       "platform_independent": false,
       "depends": [
         "python",
@@ -89,10 +89,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "69dca2fce6b11219e25b2a29f84c612d00021398d607cddc8cbdc9183a511b99",
-        "arm": "1ed8ed0a51093e02af2812a7775250ab760913f9bb572e2f57cb9d86396df99f",
-        "i686": "be1564f326dde69752ec573daafe0e091414bbffa099fa903528e98d41fae876",
-        "64": "b05d808293bd4ee7e6808dc7389bd0ed8574bc6abf6f595359918146abba3c0b"
+        "aarch64": "97649a92145c9cfbbfe4052df3e2a79d1d54afe2a62075be4d2d2170fefbc44b",
+        "arm": "ccc07203cc4619f8609f32c1222d2464bb9e8eb8ad83d6b83d1c846af7746959",
+        "i686": "2f25a7241f6a57f35ff912c95bc2c86b8c79634c52616d6ffc8cab13946e870b",
+        "64": "03723d2fa6c1570d3e86b6833779241a87edf960a50964f762106e17b05b0233"
       }
     },
     {
@@ -106,13 +106,13 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/bashxt/releases/download/v${TERMUX_PKG_VERSION}/bashxt_${TERMUX_PKG_VERSION}_all.deb",
-      "sha256": "fa5b17149bd74b4b9174004b93a52b56b36f8f95f8749d99df4a62c41cbdc8cb",
+      "sha256": "be24513bb3a68b3da6137a2629e627bc7d07e67616436e929db02ee5c1537d1d",
       "platform_independent": false,
       "sha256_by_arch": {
-        "aarch64": "fa5b17149bd74b4b9174004b93a52b56b36f8f95f8749d99df4a62c41cbdc8cb",
-        "arm": "95b8abd2f3c00fa8a4a376c2a808470ed10ae34d0c0d21a704420f8cf80ce701",
-        "i686": "0a9ec8c5414ac9c2713244d46cadca443bc91232f5d14bef7e49cca555924fe6",
-        "64": "4ddfe0b338fd4f13a530fe46fd82f5dbbc1cd8d2465618e49845f6ca60516079"
+        "aarch64": "be24513bb3a68b3da6137a2629e627bc7d07e67616436e929db02ee5c1537d1d",
+        "arm": "8bb69d3b0d4acbb8001386960184603835852ac909f5bf4d3ee8b84f22f6a351",
+        "i686": "76681178caea7cd613252206549e231681b2a15c7e40a8609746fdd881aae4e7",
+        "64": "5d4562c278bc6c45ae6a317e8b5b8a6b56c27bf9687fc3b8c93abadf77915998"
       }
     },
     {
@@ -126,16 +126,16 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/basic/releases/download/${TERMUX_PKG_VERSION}/basic_${TERMUX_PKG_VERSION}_all.deb",
-      "sha256": "728502753c4c6c69bb060ea744d570561a2dacb44d7b1137573a28238c066226",
+      "sha256": "f884658df9880d20c71b01fafa75815b2385d170f2ad8eff3b0854efc17a686f",
       "platform_independent": false,
       "depends": [
         "python"
       ],
       "sha256_by_arch": {
-        "aarch64": "728502753c4c6c69bb060ea744d570561a2dacb44d7b1137573a28238c066226",
-        "arm": "0a55e20c8d13437eb3553e49735fa8fcd79c65ae015a1d844614c46ab85cad11",
-        "i686": "acc4ccd6747bcd1868d74de8dccdd858f38a159eda4a5ebcf41fa8b54cbc7e52",
-        "64": "427aa520003c3b51b7012bd61f038c80c563eaa5bcb1b6de2dee4db8d06f2af9"
+        "aarch64": "f884658df9880d20c71b01fafa75815b2385d170f2ad8eff3b0854efc17a686f",
+        "arm": "bd799daed2698faebb21a792d371448a4ab436ea137fcd18a4b397c58a2c4af0",
+        "i686": "f3d316552931e9fb05fe7f3d7680837c79bc43f514537f7912b9df3532a8664a",
+        "64": "4b51b7b85475832c93f23d0f9381673ddb9ec1f48ec92d23c4ac3fe30eb4e9ab"
       }
     },
     {
@@ -149,16 +149,16 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/baxter/releases/download/v${TERMUX_PKG_VERSION}/baxter-v${TERMUX_PKG_VERSION}.tar.gz",
-      "sha256": "f4390ca5edfdd80a2169cce82675bfd46cba03d571400c2fd3c30420fe0631b3",
+      "sha256": "211fcb0c04294b2fe00e9113306d056b5ca41ee3a7491400954f9eb1400ca29d",
       "platform_independent": false,
       "depends": [
         "nodejs"
       ],
       "sha256_by_arch": {
-        "aarch64": "f4390ca5edfdd80a2169cce82675bfd46cba03d571400c2fd3c30420fe0631b3",
-        "arm": "ef25502cfed2d050e7292904b926878fda7349e9ecb3cbad76e7f5a140769319",
-        "i686": "f803948d87c5686e335b41024b41fe930cd75e00fd43adb26f734ac3434251f9",
-        "64": "67db8d3c6bd5479a3aa92d15e3e5feb6ebcec672eb6486ff134f8fd3b655bd19"
+        "aarch64": "211fcb0c04294b2fe00e9113306d056b5ca41ee3a7491400954f9eb1400ca29d",
+        "arm": "a8cb08792c65949efed0ca4435a3584620af705f92a84f03522a9e5d2eacb320",
+        "i686": "a6ff5a884826a0148da7fded1054ae155ef1f7e73b99eb05176283af23ed8880",
+        "64": "ff353c93561f4ba324688f2f15e5966d6c4b21ad1824577ba2000a76bf92b97c"
       }
     },
     {
@@ -172,13 +172,13 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/urbanadventurer/bing-ip2hosts/archive/refs/tags/v1.0.5.tar.gz",
-      "sha256": "7ffed7ff769bb265582b684be1796916b201494600d69c9804dafc6450ec99cd",
+      "sha256": "b5a4471a93e923aa2ea7be775d8f438f2b5409db37091ab4bb88deec3bb42e90",
       "platform_independent": false,
       "sha256_by_arch": {
-        "aarch64": "7ffed7ff769bb265582b684be1796916b201494600d69c9804dafc6450ec99cd",
-        "arm": "6614fc70871f1e7b6cc36a1da23f21e5f69a5511c1ee7fb04396635ca719f1c5",
-        "i686": "2aeaae71f09d1fb57721baf86fbb24a5e709a76734f8d5c3021af8fa321c972d",
-        "64": "d111e1bb120823e38f3c390c5925b3fff5c171e30629240803c1c8fbbda54c77"
+        "aarch64": "b5a4471a93e923aa2ea7be775d8f438f2b5409db37091ab4bb88deec3bb42e90",
+        "arm": "1c0f7b7062061e5a7086ac59c4a456cfee2115548f553bb5816ace2b12954a27",
+        "i686": "05baa1974f9ebf5eee7658cc5cb5317521eac663f75da3a8e8519ae546d778b1",
+        "64": "114dd2f1e4e95f428a07067317674015354626fdee5f8b1f7c3c42f20fee20a4"
       }
     },
     {
@@ -226,16 +226,16 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://api.github.com/repos/bower/bower/tarball/v${TERMUX_PKG_VERSION}",
-      "sha256": "83b366ba76b4432d4fa8747d4e4a5f6762746536488e87edf8a66c9c7cc6add9",
+      "sha256": "fa8637f37e90dbac9838591c15158c76c0dc9c4b93b7a31333434fb99361b321",
       "platform_independent": false,
       "depends": [
         "nodejs"
       ],
       "sha256_by_arch": {
-        "aarch64": "83b366ba76b4432d4fa8747d4e4a5f6762746536488e87edf8a66c9c7cc6add9",
-        "arm": "45c79ca110199ddf406d6353235fc2f5878949c39754852f9b9eaa8bd95a25c3",
-        "i686": "eeb36f98f21a46ae7214470927ba894a5559c7cee20fb097dd2384e3e863caf0",
-        "64": "3d9bc54bf0b8a0951bc2405cc970509e0fbe730a21fa976c73675fcd819f5312"
+        "aarch64": "fa8637f37e90dbac9838591c15158c76c0dc9c4b93b7a31333434fb99361b321",
+        "arm": "7b7c8a19235d2d693bc274aed2cfacce81ef44f383ae378218ac79b0c306720e",
+        "i686": "aab1636c610e1f9eb8b1499835085688d3421f74efe60d4a2b8c4c48358eec44",
+        "64": "2be1fac88ad53ed081e02a7161523729ce00dd34df1e4918a546c39d9a246b36"
       }
     },
     {
@@ -283,7 +283,7 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/D4Vinci/Clickjacking-Tester/archive/refs/heads/master.tar.gz",
-      "sha256": "077387bbe7e337e9d904fd222cb7483c8d439ac0e7155d256936725c5878b0e0",
+      "sha256": "53f54c455cbbd85419572b50bef793fd76f86c07eb70c4f0d0a31168e4043f97",
       "platform_independent": false,
       "depends": [
         "python",
@@ -291,10 +291,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "077387bbe7e337e9d904fd222cb7483c8d439ac0e7155d256936725c5878b0e0",
-        "arm": "816a66744bbc2c8cf59657bcd9bffc5960f11c1092324bb5c9c825c52682c93e",
-        "i686": "bfac96b3a05bb0177b9b7506bb58efdfba744db9c9a92c3b29fc8207580979e9",
-        "64": "29b3947343f47c352a9ab7b6339d2854ff68b9183f7b9f90bc007d28bbf3f2ec"
+        "aarch64": "53f54c455cbbd85419572b50bef793fd76f86c07eb70c4f0d0a31168e4043f97",
+        "arm": "469815dc75d50a9ff770c3ee82d3e3c219469e790e626e167781dd83079e2ea1",
+        "i686": "17ca506d5069308c80cf5d40f05af7d4c31b6b0dfbc3b3a53b90a14defed0d70",
+        "64": "21ccae68e71b11ea7993e377eed8a87afb1701a4bdef145b88b78007e77e8914"
       }
     },
     {
@@ -308,7 +308,7 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/christophetd/CloudFlair/archive/refs/heads/master.tar.gz",
-      "sha256": "136d7d720d07c2b779f35a91fe2b9f6e0719d23089ffe910497765f447355e85",
+      "sha256": "739cdb67d2ca6696255627e0007b7a83a7c5b402aa0d5143061b1dca5ae78297",
       "platform_independent": false,
       "depends": [
         "python",
@@ -316,10 +316,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "136d7d720d07c2b779f35a91fe2b9f6e0719d23089ffe910497765f447355e85",
-        "arm": "0c902b7b3abd3205d07e7949961de640256194605b64f77f1e104c0521ae833d",
-        "i686": "13d6242347678e8756fcfce9e9d73a770fd2032d408f34cbdcfc58db373fdd75",
-        "64": "181d87c2aa7117fdc8c092f840f289f6979bff76f9116214e130b82809a9cc98"
+        "aarch64": "739cdb67d2ca6696255627e0007b7a83a7c5b402aa0d5143061b1dca5ae78297",
+        "arm": "3db0f8c8818b14f5be438124e51c46a3b115759de28fc10ce907cac2d25ff839",
+        "i686": "6387eed41b38df4f847233e40ee30ecd6f8926e7935cfae009f00dea37aae6ee",
+        "64": "e78712a0d0c72de90f168dfd8c966cbea482523bd0b1cbfe9a09843bfa8f743d"
       }
     },
     {
@@ -333,7 +333,7 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/Tuhinshubhra/CMSeeK/archive/refs/tags/v.1.1.3.tar.gz",
-      "sha256": "af8dcafa82bc61bd8e02805a3b6fe4c67bcfd0707e37d14f28831f8741987d2a",
+      "sha256": "14bebdc08dfd2347c901f58c60a2042199d1e10f05e4578d3a4ce1922c274a10",
       "platform_independent": false,
       "depends": [
         "python",
@@ -341,10 +341,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "af8dcafa82bc61bd8e02805a3b6fe4c67bcfd0707e37d14f28831f8741987d2a",
-        "arm": "1e44b3b9a709239d219fa1bd6648183738fefe923bf7a8addf2b05697aeda1eb",
-        "i686": "5c5261f70b281b8ed191f310322a09676fd8d57cfed15840c2b9572ab0c999db",
-        "64": "330f01ec4c44961fa57cffdbbd077712e7a0a7a72d5d479ed86df24111aa2c2f"
+        "aarch64": "14bebdc08dfd2347c901f58c60a2042199d1e10f05e4578d3a4ce1922c274a10",
+        "arm": "fc967f35dce952d976e3c9bbe066e4044b990882a938810da9af61eb971583ab",
+        "i686": "2eee994f40dbbdc1dd99b0c6965b922db61b6044aef34d245f0e3c5c3d9e8ee6",
+        "64": "9e356d0ce75683a3939bdb00f7f5ceb8478b6d530a1ec51e0243d7bb6ac551db"
       }
     },
     {
@@ -358,7 +358,7 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/Dionach/CMSmap/archive/refs/heads/master.tar.gz",
-      "sha256": "bc3e5fb87d2598af048ea565dc72b4be3488b2b767ac902e35e9aada90d85a3c",
+      "sha256": "2c6c7489f07af3f789e3f4b2689ccc75760cf157a3f0db9fd513ee53d23cb7a0",
       "platform_independent": false,
       "depends": [
         "python",
@@ -366,10 +366,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "bc3e5fb87d2598af048ea565dc72b4be3488b2b767ac902e35e9aada90d85a3c",
-        "arm": "d9a8be693210707e241c1e1e8f6ac380062301e3f540a04cab015bc48a5a1e4a",
-        "i686": "4477d3d23a702c12ccdaf638213b95354da5b28e315aa3d922b7713227c2dd50",
-        "64": "1dde4b69568047512a98b0b802bc6f533a106a7416dc58d5dcbd0b2d69930d52"
+        "aarch64": "2c6c7489f07af3f789e3f4b2689ccc75760cf157a3f0db9fd513ee53d23cb7a0",
+        "arm": "be434b5e623a335b145aaa7f9db85b50e8cb06f5da0808b2a86ab49ef7b87e8b",
+        "i686": "c4a0c8e4572dda314e10596c10e19e54873a027f6611e7287c540692d3a30a7e",
+        "64": "dbce405d40e8a785397be2f7b05b01a0d9df124b77f6256febcbeb07bcc844d5"
       }
     },
     {
@@ -383,7 +383,7 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/commixproject/commix/archive/refs/tags/v4.1.tar.gz",
-      "sha256": "181d1f90330680cee6d17ec0186adbbf18b58bf83615d60095022c3b73ca01f2",
+      "sha256": "15eba4552f27c8887fb550c8e6ece81a51f6637a1dad3122f940aeaf93e807df",
       "platform_independent": false,
       "depends": [
         "python",
@@ -391,10 +391,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "181d1f90330680cee6d17ec0186adbbf18b58bf83615d60095022c3b73ca01f2",
-        "arm": "12c29aba1fa38009a6dd5a738f5732516e396023793a72686062efda285def12",
-        "i686": "bec348c79ec1c3c3459a41e694cb87eb070e1871b64a06333d8b5955a20edaa6",
-        "64": "ae1f725481f3143ffe2b13cb9e52413c0ea6fead5a7c95d8ebceae8d270a7126"
+        "aarch64": "15eba4552f27c8887fb550c8e6ece81a51f6637a1dad3122f940aeaf93e807df",
+        "arm": "4b066420f86b86d7cc86b3e9f786cbda81e696e920ff386dbf78bb67cef0e5ba",
+        "i686": "d8876fba336ebc9554f36b906300f90835be6461c30896044d5ac8eb6a84e51c",
+        "64": "1fc263fe48c3a13ed1df5ded96c62c2f6b8ad776d0729bfb44a8387fc2bc4d3e"
       }
     },
     {
@@ -408,7 +408,7 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/galkan/crowbar/archive/refs/tags/v4.2.tar.gz",
-      "sha256": "898c97171d527f44a255e6c41293fda8082679d57450873a3d8c1296c62c9cb5",
+      "sha256": "1fb2350737701eecba94e1312312d5d1307679e431be630fd9111a0bb03be275",
       "platform_independent": false,
       "depends": [
         "python",
@@ -416,10 +416,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "898c97171d527f44a255e6c41293fda8082679d57450873a3d8c1296c62c9cb5",
-        "arm": "c11dc6aebd3f7658426c19f5972fd6581d3d3d888c3d063b2e8071ed066d71b9",
-        "i686": "f85a6044475912066eabe2035bce9b5a26ead70be9c9f164c7b0503eca361998",
-        "64": "7773ac0c6d072df5bb5d485a720d56dc47f024e086b85dea0dc45a937ea7550c"
+        "aarch64": "1fb2350737701eecba94e1312312d5d1307679e431be630fd9111a0bb03be275",
+        "arm": "5f0b047e3f743418ae88264900a5210ca6947716da154ca3a1a4f7a25f420168",
+        "i686": "f400e874828ada141e39be085f5c188019ed3d5755f01d627c7bd1c835d3d0c2",
+        "64": "f379f0f857f0cb51c9bfdbf328eacd108c06aa947232f8909afb3a347c070b35"
       }
     },
     {
@@ -433,7 +433,7 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/Mebus/cupp/archive/refs/heads/master.tar.gz",
-      "sha256": "dfe980891a120a3f417602299c91890a08ae968de3e988546a009f56329eb695",
+      "sha256": "5af71ce838623bf847610d9490f5d9d56fd9a8064b9795796e0084448eea50c8",
       "platform_independent": false,
       "depends": [
         "python",
@@ -441,10 +441,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "dfe980891a120a3f417602299c91890a08ae968de3e988546a009f56329eb695",
-        "arm": "6babb0ba068235be90a1ee6058134759f880b51ebab895d3db53387cedc68a97",
-        "i686": "cc8b7a5acf5489ddef0818f729c64c68148cccf5b646ffcc6f5c817ea35d986d",
-        "64": "2715c0f20f3806965f8b76cafa8d5c787883ea099036b8d2e55d16c03c0b5e97"
+        "aarch64": "5af71ce838623bf847610d9490f5d9d56fd9a8064b9795796e0084448eea50c8",
+        "arm": "6f5c0701bb2888a21f1ef56c31f3dbcbc5c90bbf57f69374e55dd92d507e40f3",
+        "i686": "e14e3cccb5517492206ad044f05f8dbb3184754e47c158b09e649a697630140e",
+        "64": "b8ee42b06807973ebae62b7eff9f3464e8c37af533d629f30f38dd343db4dc1e"
       }
     },
     {
@@ -458,7 +458,7 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/cybertuz/archive/refs/tags/v${TERMUX_PKG_VERSION}.tar.gz",
-      "sha256": "2eba6b2fb8e282298763fc11b8c7b57854fafffaa62a5ff86b445082abf102a1",
+      "sha256": "31bda5bd566fda89640260239e1f036971f38c2c3e86181094e8ab4e889d975c",
       "platform_independent": true,
       "depends": [
         "nmap",
@@ -468,10 +468,10 @@
         "dnsutils"
       ],
       "sha256_by_arch": {
-        "aarch64": "2eba6b2fb8e282298763fc11b8c7b57854fafffaa62a5ff86b445082abf102a1",
-        "arm": "16be73b6c71b17ec669eca10ca84acb373f8bdeaec9179e3144978a7d81e8ecd",
-        "i686": "274625a4bb81fd906dcbf22dcc1aaa68ce1e43ea7585ca1fe0218f61dc454656",
-        "64": "cf4753a53e4747920d430d893dad0579c5e7340cc758325764f119b60e7f7186"
+        "aarch64": "31bda5bd566fda89640260239e1f036971f38c2c3e86181094e8ab4e889d975c",
+        "arm": "b9f11401f3a0654a3a604014a2f2b76a46f2a074488927ed3d946691bf08ed70",
+        "i686": "e538b61013b1ce0ef3841697776efbfb1194889e54ff2a42327985cbae0264ec",
+        "64": "d4b059d5d7bece32909ec9dbc861ddf4ebd1bb331e55226dd12f9db97493b175"
       }
     },
     {
@@ -516,7 +516,7 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/6IX7ine/djangohunter/archive/refs/heads/master.tar.gz",
-      "sha256": "8e29ed429f3cb3f32946852e117694c86438cd99c020014083a74bb69287626a",
+      "sha256": "43d8cda779208013b7086d0cfae7c960e3765f3f3e1f2c23f986cbdd161b0235",
       "platform_independent": false,
       "depends": [
         "python",
@@ -524,10 +524,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "8e29ed429f3cb3f32946852e117694c86438cd99c020014083a74bb69287626a",
-        "arm": "c1775fe25aff3508697c2cb41037aab703a546aed7d09da747682f43c264980d",
-        "i686": "1902e8bcb3eafbe4f10286323c2fa1f44c433e33141aa1e3abd6872f2f751e32",
-        "64": "292685eb7c103a56883e5d81f09b93a9455ba09d26571018b22fc6c668ffaf9a"
+        "aarch64": "43d8cda779208013b7086d0cfae7c960e3765f3f3e1f2c23f986cbdd161b0235",
+        "arm": "0baf09de5cc0e28cc5b6fcd2b1398269a67a3c27d3558d99423b014d630561ac",
+        "i686": "e67292d7b15fd4d28151739399403c56f2b1d16f7e4f896ea31868ef08a28ee8",
+        "64": "5a36bc6fa8001d7f1a6b19e8fc1fb59acfee2cfed4cb6be6e7a29d39b67079e1"
       }
     },
     {
@@ -555,7 +555,7 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/darkoperator/dnsrecon/archive/refs/tags/1.6.0.tar.gz",
-      "sha256": "3b66d20e3f75b0fecd0053238cf10a3fe0e24d8f23be7fa65433c4d0e04caf7d",
+      "sha256": "e35efafc8b319bce90427cee935f4674f2158eef572fa963a84ce657200ca9a3",
       "platform_independent": false,
       "depends": [
         "python",
@@ -563,10 +563,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "3b66d20e3f75b0fecd0053238cf10a3fe0e24d8f23be7fa65433c4d0e04caf7d",
-        "arm": "aa79029d149be1e0d174e962f5dde245a47ff64170165e2f9352a8e0c7f8678d",
-        "i686": "c73da20f1e8fe981deb3098c6435235c12b6924fb0b6a2dea0a459f6d6a776fa",
-        "64": "3fab8506f658b35e9563f22f4939ce40112d6a452a98a1dac7d8883e1494169c"
+        "aarch64": "e35efafc8b319bce90427cee935f4674f2158eef572fa963a84ce657200ca9a3",
+        "arm": "85349d8325a4a54252dea5b4c44d20a349e635b4b7ce3b492f717c2574ea54ee",
+        "i686": "95bee83d5d7ae375ce5811a3b24d8501e87aad948a44d8d980b1484ed1b37904",
+        "64": "25725185fcdccb9ef6f09d37a14b583d26070ffd93ed57035c3c3a0f2a910bef"
       }
     },
     {
@@ -597,7 +597,7 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://gitlab.com/kalilinux/packages/dumpzilla/-/archive/kali/master/dumpzilla-kali/master.tar.gz",
-      "sha256": "9d2fa06b9c2967bb190446e824a1b25655fdc1a3e56c9d9ddd3b7ad148ff20fd",
+      "sha256": "042e3026b77f021c9ffbc9b2cdc3c6d0fcbd005b98c24686fde24bd91bf17006",
       "platform_independent": false,
       "depends": [
         "python",
@@ -605,10 +605,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "9d2fa06b9c2967bb190446e824a1b25655fdc1a3e56c9d9ddd3b7ad148ff20fd",
-        "arm": "e78e413290e91c6c5edaf4d7ab06ddb6669ba2a692dcb02cfa5b02a7fb261928",
-        "i686": "542a4344fb746dc921c417a785ddb2d62cc0fe8e46b06973ca66e4c18ab3fd64",
-        "64": "846bae581f48efb9916b900b0aabf96aad1a578dedc3f3efc0985720f34792a7"
+        "aarch64": "042e3026b77f021c9ffbc9b2cdc3c6d0fcbd005b98c24686fde24bd91bf17006",
+        "arm": "ce7585f675d24138afa69439406fd556f04c06c81eed042b667ddbc6931b8112",
+        "i686": "1d933c308438a46b9fe54868b3c8b31f8f6e92c6d0ec13cdb157d92a45b55e9b",
+        "64": "39b7ec6b9c366cbcc50a8c64e1dc833551381b3be9abd10bab843c1e7dfdbfa7"
       }
     },
     {
@@ -639,7 +639,7 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/D4Vinci/elpscrk/archive/refs/heads/master.tar.gz",
-      "sha256": "1e91adcede12a4b015871a3a57c73a7ae250b6b927b1c80466273aa941cf2ac6",
+      "sha256": "855f1e3915f7fdb2decc2f3361c01b260ece7721e3d7a30530a6204ebd266cb1",
       "platform_independent": false,
       "depends": [
         "python",
@@ -648,10 +648,10 @@
         "python-psutil"
       ],
       "sha256_by_arch": {
-        "aarch64": "1e91adcede12a4b015871a3a57c73a7ae250b6b927b1c80466273aa941cf2ac6",
-        "arm": "1f828c8a265affb0719cc0bfcc1cf0ade3c0eb922ca9e57407e96e21a7461aa4",
-        "i686": "e3e6b659668e79182c4722288efc6a07536306d7fac5472430b345c75379e292",
-        "64": "18efcd0644465a9d89d956bf65d45bfe3f0ff2d510a3263e80d529672ec66c7b"
+        "aarch64": "855f1e3915f7fdb2decc2f3361c01b260ece7721e3d7a30530a6204ebd266cb1",
+        "arm": "153157bae3999714f2f45957967577517758d53eb9ddc19bc756bbcc5a665bc4",
+        "i686": "eadb21a85b1a728e11991513d00013a5386922b1d74794c3fafc559686178cec",
+        "64": "5dadb6d3e01ca0135771e326a439c2c5dde1f4fee39a705ecd28284aeb759cb7"
       }
     },
     {
@@ -679,7 +679,7 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/peterpt/eternal_scanner/archive/refs/tags/2.2.tar.gz",
-      "sha256": "c303a2f39a8942a72e21e7516b5b68f1583daf550aecd8f9252318b9eb289c68",
+      "sha256": "390eefe4a1bc97aff59e9836d4ee892078ccaa74a03a25c1ceec8ebc74b8843e",
       "platform_independent": false,
       "depends": [
         "python",
@@ -687,10 +687,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "c303a2f39a8942a72e21e7516b5b68f1583daf550aecd8f9252318b9eb289c68",
-        "arm": "dcd737347175209d07d6332396171278594df5f0c686ad32969b0f3e947a12ce",
-        "i686": "f1efddf9fc4eb3d59c63368af6e3aa810a88536157c3b02ee26392c5bc5c4e35",
-        "64": "17121b15cf5ae3fb2d34a564b97f38bcd2449c7c7b700e26261e673adb5f7424"
+        "aarch64": "390eefe4a1bc97aff59e9836d4ee892078ccaa74a03a25c1ceec8ebc74b8843e",
+        "arm": "fdf1f645a0b4f6b28203fcf926c7aabe22307e130d23f2222f19d88a6c2094b4",
+        "i686": "f748229b624b78dd934546fa7fac6a19559e50beaf2f8cb674b29cc666d82e96",
+        "64": "8653893c700788fba18c64164f4c37d6693f4aa00f6269e208510a617e86ba7e"
       }
     },
     {
@@ -721,16 +721,16 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/Tuhinshubhra/fbvid/archive/refs/heads/master.tar.gz",
-      "sha256": "1afe7a105b3049b2e4ba7ef1d23bb69380a5c0d7cd8ce7bcf6820edf7d9ba10d",
+      "sha256": "d91fc5793d214ab6773ece727ab1f7eaa807dd3cff389f6c99d844f7cc081902",
       "platform_independent": false,
       "depends": [
         "php"
       ],
       "sha256_by_arch": {
-        "aarch64": "1afe7a105b3049b2e4ba7ef1d23bb69380a5c0d7cd8ce7bcf6820edf7d9ba10d",
-        "arm": "cb7ce1f25f85d0b5e22f976ee5811a249f9f26a5dd35b97595e1b665b0b3dd00",
-        "i686": "e95599deb723e2ee87cc42c0998ea4024d0286a64bc0c858254e876e7d623b6b",
-        "64": "9b85d0f788d7fb7d4e11e827fcb28a158b278357dc9846ccfe87137701944972"
+        "aarch64": "d91fc5793d214ab6773ece727ab1f7eaa807dd3cff389f6c99d844f7cc081902",
+        "arm": "017072db6cb156af6e02dcc8b0efb1d10a891a8dc67fe48edf753621efd035ae",
+        "i686": "e7e8ee9d477f5851438d3c3fbeb2a77864d22ec4f00c9adaf9eec3ac9837b89a",
+        "64": "4e9f7aa2bbece8b94462723fb80bc67bf7b9898c94875e75b6ae75a59513c48d"
       }
     },
     {
@@ -744,10 +744,10 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/sharkdp/fd/releases/download/v${TERMUX_PKG_VERSION}/fd-v${TERMUX_PKG_VERSION}-aarch64-unknown-linux-musl.tar.gz",
-      "sha256": "9d30f89103c1dac0c7e58c0657764a70a37e0217011484661d328079c54e8f9d",
+      "sha256": "ee3758ece5eca9771c6653aa3ffd3fcc06970497bf1b3c197037ce25cb214013",
       "platform_independent": false,
       "sha256_by_arch": {
-        "64": "9d30f89103c1dac0c7e58c0657764a70a37e0217011484661d328079c54e8f9d"
+        "64": "ee3758ece5eca9771c6653aa3ffd3fcc06970497bf1b3c197037ce25cb214013"
       }
     },
     {
@@ -761,16 +761,16 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/Smaash/fuckshitup/archive/refs/heads/master.tar.gz",
-      "sha256": "8f704aa238803da6143023bdee30e3c340095a5e293c0a48689f65a5f75dd851",
+      "sha256": "c28ec4196c80cd1be565129f7e365469f0fc5d9ae3ca5080e9ebd10b594c1e68",
       "platform_independent": false,
       "depends": [
         "php"
       ],
       "sha256_by_arch": {
-        "aarch64": "8f704aa238803da6143023bdee30e3c340095a5e293c0a48689f65a5f75dd851",
-        "arm": "542e9d4f0a4938ef8b70d6806b7e508f300b80398b8aec4aa2a5e047f891558d",
-        "i686": "6fca1184fb4a5b6c1e9094bd3edb07dc6b865a126b68071600d4b4ddcbbd139e",
-        "64": "f3adbf5a786dcd9572e13932c0286f2577d2d29c24e98505533861f630d0f263"
+        "aarch64": "c28ec4196c80cd1be565129f7e365469f0fc5d9ae3ca5080e9ebd10b594c1e68",
+        "arm": "d781df1cbafbac46ff47d0dc1b95e18763158751b94a37ac2c9109112bafef23",
+        "i686": "20ef21d907adb9b649a836127d7078c1eb3da4bf91520452d2497b4ffcc7a531",
+        "64": "eefbb994e60dbfccdca046a4507c3cfa718f23712450f36fb8f7b07c28324162"
       }
     },
     {
@@ -784,7 +784,7 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/Ha3MrX/Gemail-Hack/archive/refs/heads/master.tar.gz",
-      "sha256": "a7ee202d46aa9766e50558cc904ecfeb7b8348d9dc1d1ac1966e0878257c127b",
+      "sha256": "06a6e81a80dca92e77638f2e994a7408d4206de344dc8e13366c4e2c9c1435a7",
       "platform_independent": false,
       "depends": [
         "python",
@@ -792,10 +792,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "a7ee202d46aa9766e50558cc904ecfeb7b8348d9dc1d1ac1966e0878257c127b",
-        "arm": "1faf4f4981c65e730f659920ae1a425b8fecc61e669e2bad474bc8399b61b987",
-        "i686": "5dc4ea82c9421dc77cbb4f18fce84ae139eab01904ffb796881e9186dfc14198",
-        "64": "60cc117fdf8d583efbf61881e405353e2af18daa151e5dc528d084d01b6beda6"
+        "aarch64": "06a6e81a80dca92e77638f2e994a7408d4206de344dc8e13366c4e2c9c1435a7",
+        "arm": "d539e02b0ce0eb5fa11e9fbb752b92286ccad9afbd28d9603d13e4034122e98b",
+        "i686": "e0dd3f1584474780d368d437a13b0df4a6fd2546043c8fc1bdd989bd589e9f65",
+        "64": "85cce5ef80c5f8e10091ccad8b3d2eb58ae68f90746829f253a2d2d2d7557081"
       }
     },
     {
@@ -809,13 +809,13 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/peterpt/get/archive/refs/heads/master.tar.gz",
-      "sha256": "edecab376bd7ae0ec1a1fffbaac7c5517decf2f2d69d6f7133f2ba229290d12e",
+      "sha256": "1bd9a782104d549bf61d7fcf7fe70607892d7dcedf5735e156bff170f1e65068",
       "platform_independent": false,
       "sha256_by_arch": {
-        "aarch64": "edecab376bd7ae0ec1a1fffbaac7c5517decf2f2d69d6f7133f2ba229290d12e",
-        "arm": "b27f483f539df6a4984d033610fd4fa508287455301e6bbd71aa3c1d65128bcc",
-        "i686": "ee3474eff2bbcbc0a318d6105f2621659b7d431d1e353bd5fdee2147d1d50682",
-        "64": "358ce0f49c1200c3169be4c2e05bb3497088d99f06a9ab148944b66a19c57ee8"
+        "aarch64": "1bd9a782104d549bf61d7fcf7fe70607892d7dcedf5735e156bff170f1e65068",
+        "arm": "6edde9e5cbaf08c0d781f2914b583f2651fc630227134e5c26fe09dbbbe97cd0",
+        "i686": "bd3d3bc25c362c5765d65023fbe084d2425f909ed0bd51203885aa56a7c4aec3",
+        "64": "31073b55e7f6ff4672e462d95405c37bcb7798ca7471f0b1b563d6ce18985586"
       }
     },
     {
@@ -829,7 +829,7 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/HunxByts/GhostTrack/archive/refs/heads/main.tar.gz",
-      "sha256": "01daaf0addff41a57a3d4df41807ea9f1ea0072e4bb17764f11cbdecac41922b",
+      "sha256": "93ca5b1702f753843f3ecc1c87109285ce77bfd55cfed50d14c7af7713f07d49",
       "platform_independent": false,
       "depends": [
         "python",
@@ -837,10 +837,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "01daaf0addff41a57a3d4df41807ea9f1ea0072e4bb17764f11cbdecac41922b",
-        "arm": "9881f7f91dc3412481ab04aeaa707e20d15c8ed910921e1acf6ccc91fa2b3b9f",
-        "i686": "c6d610876030f859142ca189abf275bbb0f973b498adccd5046e8a2472aa662a",
-        "64": "769cbb12e67eee1be9150b79a22ebd94dcce0b41e24cb7cc1f8d4105ddaa78fb"
+        "aarch64": "93ca5b1702f753843f3ecc1c87109285ce77bfd55cfed50d14c7af7713f07d49",
+        "arm": "f0ec24851ee07713928248dd53ca3808d9a168e7307c8bcd28a0d1b35bfd894b",
+        "i686": "4941823a7ba45557fcd9d2d794b710e262ccf5b54d0bf8ec6cabf03cde736b68",
+        "64": "b26b2885244bd09912191f9d44ae5dab6398086602e7cf5f28969d8644d18db9"
       }
     },
     {
@@ -854,7 +854,7 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/UndeadSec/GoblinWordGenerator/archive/refs/heads/master.tar.gz",
-      "sha256": "a7cd96b8402760aa3b440a6901446dce16cb8eb0d5660e994c8946b8f03a6dbb",
+      "sha256": "5a2e5069761c74ae3b7f739ffba84b71ac6890ca868991cba43573a8f5e56d69",
       "platform_independent": false,
       "depends": [
         "python",
@@ -862,10 +862,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "a7cd96b8402760aa3b440a6901446dce16cb8eb0d5660e994c8946b8f03a6dbb",
-        "arm": "b5a2281b6a5e9e311d42641a75ac85a3e3231d83a6ca4be63b5dcb7bcffaf8f1",
-        "i686": "1c540f50b9c95256023c4614ce46ecfd7943b8dbd2b7440a820bdb525a3f1bbf",
-        "64": "379bc7ca6f4d1786b79ca896206fc658fd46eb993ca87964f47b08f7a35c8a8b"
+        "aarch64": "5a2e5069761c74ae3b7f739ffba84b71ac6890ca868991cba43573a8f5e56d69",
+        "arm": "3325e199de78153433f304f3afde24a3ca1488d8a2834479184fc2ec7237c350",
+        "i686": "dbb24c9b8f8c347dc4772acfc47fb14074cd8df3d73877e6543f7918c5743ff4",
+        "64": "8615bd604bb3ea8c7ec6a26e3beaf278afe9a3c7576d5caafdc81b6a7680972e"
       }
     },
     {
@@ -896,7 +896,7 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/TermuxHackz/Hammer/archive/refs/heads/master.tar.gz",
-      "sha256": "4f369fb7924a562686a4d28dadd30e6f52efdf0b8084d2e956962d5159c75577",
+      "sha256": "739abf0e0a53c8a3a5d221831abcbae591f29824cb6e451ea78123d28d938a47",
       "platform_independent": false,
       "depends": [
         "python",
@@ -904,10 +904,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "4f369fb7924a562686a4d28dadd30e6f52efdf0b8084d2e956962d5159c75577",
-        "arm": "3c9ae31641479949992e33b1898e586b20078a6aa7068388b5b7214d55fae763",
-        "i686": "fa92e61a69b511def0b06ba35c40328c6f12b20ae8bcd5ac0eaffc330a9a64f8",
-        "64": "52db1b69e00543578549e4daa69976d0922fa6d1d8d68c7366e0ec7b7af04290"
+        "aarch64": "739abf0e0a53c8a3a5d221831abcbae591f29824cb6e451ea78123d28d938a47",
+        "arm": "8c1721798f2cb882f20ed6d74f38af8beeedf033f2ce45048db91e1a8284cb3c",
+        "i686": "bb3286d9504d33e9b2a94cd9e2758cdcf3c4c00b9f14a088e84854533b7607ba",
+        "64": "5784f8fc8f3b93b1f0cca875c6ab63ec8cb278dcb4e1841e43059e648ae00c98"
       }
     },
     {
@@ -935,7 +935,7 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/megadose/holehe/archive/refs/heads/master.tar.gz",
-      "sha256": "dfe93c92e37ff3ee75840f76dc14d4a105f95ee20254a8ea3916c8854fb37c77",
+      "sha256": "7f2a345f9d86e7cd7aacd95551569b9f0a10945207dd2bff8359f97be78d4320",
       "platform_independent": false,
       "depends": [
         "python",
@@ -943,10 +943,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "dfe93c92e37ff3ee75840f76dc14d4a105f95ee20254a8ea3916c8854fb37c77",
-        "arm": "464a1e2ba77af7f060bea5f14af032a73ae677ddb6820693aa90a7cca4c8eae4",
-        "i686": "845e6cf80646e71521826c6792bbc359090e5ed2b8d053f02ca5f67a2b92a54d",
-        "64": "6de3171fefad2d7a28b22c15ae4f0584532b7da8cad57d1c03761802b24a9894"
+        "aarch64": "7f2a345f9d86e7cd7aacd95551569b9f0a10945207dd2bff8359f97be78d4320",
+        "arm": "9b94fff868047e47f80eb2e71e832b1cd530c897f5923f6d55c3071d6160f080",
+        "i686": "c157e07bb59fc31906a496bb87bea9be3384ac8aa956cc20a149deb3c7160bd7",
+        "64": "d6b1d601ed5f65126d8fa65a4d034ca742c295af32d6e9cac0d3bfb3a5ed1b29"
       }
     },
     {
@@ -960,13 +960,13 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/SilentGhostX/HT-WPS-Breaker/archive/refs/heads/master.tar.gz",
-      "sha256": "66f8f7709374f593e6f0222b92a2e035b051546739048529d6e2c298e145c7d9",
+      "sha256": "91704ec2b7d3af6b8d48b62a23527c5aa667ae5df9c5b550d50eef02bf2e6f6e",
       "platform_independent": false,
       "sha256_by_arch": {
-        "aarch64": "66f8f7709374f593e6f0222b92a2e035b051546739048529d6e2c298e145c7d9",
-        "arm": "f73422609dcaf734ee88d586a3fbf762f3aebd543256442e38eb437237a59195",
-        "i686": "4728febf37fac24759b5e21d42411f51674a99267eeca7cec1a96da42a1a0007",
-        "64": "33902c19e7969385a3d82e8c4421e544ac90f6171b4535fd467479fefb68f0a2"
+        "aarch64": "91704ec2b7d3af6b8d48b62a23527c5aa667ae5df9c5b550d50eef02bf2e6f6e",
+        "arm": "3a77ff1af85c6633d3e8ab5f8bd0ce264a323faec5d949957694475bd4424392",
+        "i686": "3150bd134bf01898635c3dc3ee155cd135c6cfb48e30e8fd26796de5ed4cf837",
+        "64": "569f7615b8790e0979bea53446bcad4717ec3147de3f770e988c2f1b55acaa71"
       }
     },
     {
@@ -980,7 +980,7 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/b3-v3r/Hunner/archive/refs/heads/master.tar.gz",
-      "sha256": "29ef73de9915cab410de090388aac1c0c88ba590fff0068bd1686eac7686a291",
+      "sha256": "c7ec6cdfcb193f7a6ff917d087f694e9ac7bcc75e4fde05bc2e511b2ec441f4f",
       "platform_independent": false,
       "depends": [
         "python",
@@ -988,10 +988,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "29ef73de9915cab410de090388aac1c0c88ba590fff0068bd1686eac7686a291",
-        "arm": "13899cf17958814e351493bf7bb4433e48ceb1ab2e255cbf8cbedf4e9be11d25",
-        "i686": "5f26c64a76478f18d351fd136a83bdccb1de169fd8131090cc25985680f621a1",
-        "64": "7b62fb95fa21d17f738712a57dca9e06520132fbab7942477e45ee663886e632"
+        "aarch64": "c7ec6cdfcb193f7a6ff917d087f694e9ac7bcc75e4fde05bc2e511b2ec441f4f",
+        "arm": "1f23c5366ed2c895c91871c6236aaf3a56a00182972e3a698dd9714706d8cb62",
+        "i686": "612924a1942476c82d78940ff28f1cdf95417b3844b373e767f6191d3701e7bd",
+        "64": "69fd544d41ed3d69bc4bc7ed401ff3f57283b09965a7a6b51ad44fe27e5bbf16"
       }
     },
     {
@@ -1005,16 +1005,16 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/archive/releases/download/v${TERMUX_PKG_VERSION}/impulse.tar.gz",
-      "sha256": "bceb848ce59d0131434b582c7755967ce5b9f0377fd24c0b087a60db9bed9405",
+      "sha256": "a730efd995e747966e0fc8aa10950365deca03df136ba70da9ffeee05bdaa263",
       "platform_independent": true,
       "depends": [
         "python"
       ],
       "sha256_by_arch": {
-        "aarch64": "bceb848ce59d0131434b582c7755967ce5b9f0377fd24c0b087a60db9bed9405",
-        "arm": "0249bbfa59562b7e89972eb5f6d4b09619a046caa0dbff900355053237e257a5",
-        "i686": "58836fd164650f71f1a277a1e945479e00f2ee68ff2327e6479e1f6e5968baf8",
-        "64": "8f11d11a9b54e1cc43aab6f713149c377b0d0c58c5df92e084070a3bf1e6019a"
+        "aarch64": "a730efd995e747966e0fc8aa10950365deca03df136ba70da9ffeee05bdaa263",
+        "arm": "2d6fdb58a21cef6fc7e6187c44ce17c9b4bfca0acfb9d96beb9506cb26d3a8bf",
+        "i686": "fcaa1a2f173c2b1bfd6898af0314a761e21d096e0163e7307bfcbc07f5b01963",
+        "64": "78c8fd598538242162f34dd4b24d580fb25277b27669630fde96fb9124de27a2"
       }
     },
     {
@@ -1028,16 +1028,16 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://api.github.com/repos/devxprite/infoooze/tarball/v1.1.9",
-      "sha256": "9f9a39e45474c973845fadc9a0d7bf36c99503cfcca7cf0c56033757c4968206",
+      "sha256": "4e2bd856b75d6cc632466bf9a784993dfdf5a3b93e30481a88d5fa7a1f025fea",
       "platform_independent": false,
       "depends": [
         "nodejs"
       ],
       "sha256_by_arch": {
-        "aarch64": "9f9a39e45474c973845fadc9a0d7bf36c99503cfcca7cf0c56033757c4968206",
-        "arm": "e858308567e59740d23f1e1fd4302c28f7901bb886a7d1414b172fa180cf5d0b",
-        "i686": "c9b03ec22df5845ec9f48eff47309c357cc788c2081aeecee779924e27a8723e",
-        "64": "c582819139baed01964fbb457a5f85b59c786a08b0ae76fe776baa8cd255e8bc"
+        "aarch64": "4e2bd856b75d6cc632466bf9a784993dfdf5a3b93e30481a88d5fa7a1f025fea",
+        "arm": "9f42dd1785107eeab1a0fcf5de5ea19de129bc6c22523ea572f71f97334a94f0",
+        "i686": "b23ac89f582e6682a92f481164d025d406f7a5a25385af792553fb630c073120",
+        "64": "c739218c906a00ff188e1241e07accba8f00c42cc2e9a9cfced70429cd121928"
       }
     },
     {
@@ -1051,7 +1051,7 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/muneebwanee/InstaReporter/archive/refs/heads/main.tar.gz",
-      "sha256": "0f11f7b1e7e6bcba7c7360625cd64f5db5bf3a87bc1eb800b796aac365f3bc74",
+      "sha256": "72f2943f127f5993b9e5134b02baabe229548bcc40bd6622e0c6f1e7f9cfe549",
       "platform_independent": false,
       "depends": [
         "python",
@@ -1059,10 +1059,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "0f11f7b1e7e6bcba7c7360625cd64f5db5bf3a87bc1eb800b796aac365f3bc74",
-        "arm": "7fba8686df5ac15d13fbdcda0e7ff54b92bbda60e8c4c1029caf3b7030d89812",
-        "i686": "c1a7e1afa784a0b28f657dc06b2f26b2ba195e2fff1d624701c59b4658bcd266",
-        "64": "3e62dfd789a83d5e0d26e34ec0f21db3452f5380cfd01c35d48479057efa01ec"
+        "aarch64": "72f2943f127f5993b9e5134b02baabe229548bcc40bd6622e0c6f1e7f9cfe549",
+        "arm": "63b233be4cade4044abe3a16b1ed4dc9ec4f63a04e11fe48ecafd67d863eb669",
+        "i686": "3d376b94a139ec091ad3dde997967bd76149c118035aa3ee360850815b00800e",
+        "64": "eb2c6d2db52577ac8689df65cf4a955160f71e2438d4962af4d16fe6d14df5fe"
       }
     },
     {
@@ -1076,13 +1076,13 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/KasRoudra/IP-Tracker/archive/refs/heads/main.tar.gz",
-      "sha256": "41f3198b9cccec404d331294724d572b72df7b589275d1185ad77d5c27b58603",
+      "sha256": "f21276bb00e81ccd0babe1c1b6f89f45548c4f012ca2738382629df7e4a83181",
       "platform_independent": false,
       "sha256_by_arch": {
-        "aarch64": "41f3198b9cccec404d331294724d572b72df7b589275d1185ad77d5c27b58603",
-        "arm": "133d879365e3755e32542a566cc290bdb7db091c62014f0fb0737c91dcb7ec7d",
-        "i686": "ee560d51c598446d740c5cb8f20f866b3e648ff555942c386b2fddbea2fdeffe",
-        "64": "b6f675769d9c4314106d137d8f19460f5646f276c404f4e8050a23253638aa90"
+        "aarch64": "f21276bb00e81ccd0babe1c1b6f89f45548c4f012ca2738382629df7e4a83181",
+        "arm": "af5aa6b34f7eb3ca1bcba6ea24e4a0c88e3df77898b548fbb8558f69227a2b2b",
+        "i686": "9f5355a1977a29bbc2d9c677f8cdf9c6ab00e0c0426f36489891b78d4ea2c97c",
+        "64": "8e09f9e01062dfdae8bbca15fc8e43dcdfa78468d3d24e20ba5d3c62deb58d61"
       }
     },
     {
@@ -1096,7 +1096,7 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/maldevel/IPGeoLocation/archive/refs/tags/2.0.4.tar.gz",
-      "sha256": "81dcca94971b13f0d46fef2eb73a1dd8d8609e96458ea1894a976196c3cee13f",
+      "sha256": "f7c5155d30f4c76eb03428e2db16d9a3f4c3efa3a3d56f6c78e6136f9168ef73",
       "platform_independent": false,
       "depends": [
         "python",
@@ -1104,10 +1104,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "81dcca94971b13f0d46fef2eb73a1dd8d8609e96458ea1894a976196c3cee13f",
-        "arm": "c7c17fce863cf44e66721c5823eceefa9d27b34bc04a75f0dd268ab9e7237057",
-        "i686": "d9aa535668f551bb52ef4a3958c29dee8adec2af3ca0b17e7aae5bfca2d446cf",
-        "64": "5002d2c6e48876b7294b3f9470f4b95b1fe9707407c365acb8eb8c6610a0d65a"
+        "aarch64": "f7c5155d30f4c76eb03428e2db16d9a3f4c3efa3a3d56f6c78e6136f9168ef73",
+        "arm": "522726ebcc70e9d0ca6535bb25b01c665588e30b460382f5b024072b611716af",
+        "i686": "211da1ff6c19b04a0ab235bdc581aff4c5886109a71175c074a2c915f973edd2",
+        "64": "64acca78689a89e11828800eb6ebe176773bb47058888d1d1c4289e87ea69c58"
       }
     },
     {
@@ -1121,7 +1121,7 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/ruped24/killchain/archive/refs/heads/master.tar.gz",
-      "sha256": "d604991ff29c720b160c1f21dd213fa26a3d20f23266880189dd5ffc70ac6475",
+      "sha256": "91eed67560ca76ac546951f8d15eb159cd2717e300a65c34f55e49577727674e",
       "platform_independent": false,
       "depends": [
         "python",
@@ -1129,10 +1129,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "d604991ff29c720b160c1f21dd213fa26a3d20f23266880189dd5ffc70ac6475",
-        "arm": "c6f6c4b072a2286a1cb1ddbb2d12bcd1a7d736cb1da16f08cdebf4520500a1e7",
-        "i686": "afafb7c82a557e6a6a595c557bec34f9059bb3a5537d31242c544f6b4f7ceaeb",
-        "64": "824a0ce4aadbfcb5b19d84b3cafe6b2ab284f791293f42460d365125576deac4"
+        "aarch64": "91eed67560ca76ac546951f8d15eb159cd2717e300a65c34f55e49577727674e",
+        "arm": "5f8b69946264695d2604920b99e2144a97dbd24763996553e5e8ce06f580c429",
+        "i686": "c2fccd1fa6997158eb20a8c55faa7843c1e4670ec327f8213c1996adcfac465d",
+        "64": "28554a3a14f667acfed771c2f536ad67183e7411556b2a1192a9193b7f64c4c0"
       }
     },
     {
@@ -1160,7 +1160,7 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/Gameye98/Lazymux/archive/refs/heads/master.tar.gz",
-      "sha256": "21c0e4ae4bcbc003329b64346d4f9b4ff710da8040ab05a08478b5a063e7b744",
+      "sha256": "0ca4f4052fdc85d9082b6e3db6d56469a3552a35d9cef03597719c6a8ccf4959",
       "platform_independent": false,
       "depends": [
         "python",
@@ -1169,10 +1169,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "21c0e4ae4bcbc003329b64346d4f9b4ff710da8040ab05a08478b5a063e7b744",
-        "arm": "ca91495274dfa45a54b82462df534454f9991f57b83c99ca7ceea527d2e8c2bb",
-        "i686": "01b24a1ca0d803e90ee3c8b198e60caf33e92bd0355d7eb205424ca1c00feedf",
-        "64": "675b1767304f8e9c189cc9a35bfd5b4ba195443a677a2af9a52a51c51c1bf229"
+        "aarch64": "0ca4f4052fdc85d9082b6e3db6d56469a3552a35d9cef03597719c6a8ccf4959",
+        "arm": "72b875398d762e84faeea445d258a7fd1e6edec26163c0544b6e817d7cdfa3ca",
+        "i686": "c843ac819954e358785f739f23a768b85ccf8c7cb0f078486511d1f1f4483d75",
+        "64": "adc677887a0e8458adb2f555ba1004bfc328421df206f7d67e5155e8710322be"
       }
     },
     {
@@ -1186,10 +1186,10 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/iawia002/lux/releases/download/v${TERMUX_PKG_VERSION}/lux_${TERMUX_PKG_VERSION}_Linux_arm64.tar.gz",
-      "sha256": "8a400f24b7b08ec2be225efa901e58b6539e23fa8b0571d693566c65213d554a",
+      "sha256": "3d4d5a3119477e53133fc3af51d59835c50e9ed3c21c21d497fb01448002c9b7",
       "platform_independent": false,
       "sha256_by_arch": {
-        "64": "8a400f24b7b08ec2be225efa901e58b6539e23fa8b0571d693566c65213d554a"
+        "64": "3d4d5a3119477e53133fc3af51d59835c50e9ed3c21c21d497fb01448002c9b7"
       }
     },
     {
@@ -1203,13 +1203,13 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/merlin/archive/refs/tags/${TERMUX_PKG_VERSION}.tar.gz",
-      "sha256": "632cddacbc2248e111884d18a770a3f9f25c7ae01dfc23df6c28bd8ff5eec939",
+      "sha256": "de174c66ef37fb7d6114d358888b4d9ff54a1da002ded00f3d5cb33a7d959146",
       "platform_independent": false,
       "sha256_by_arch": {
-        "aarch64": "632cddacbc2248e111884d18a770a3f9f25c7ae01dfc23df6c28bd8ff5eec939",
-        "arm": "35752804fb8fd1aaa55672c79d96157af98186cbfee3ef2e8e71dbcb8aff419e",
-        "i686": "f0455de40ad124a9e8913143da755c1cd367d0d407196947772977a23e101b6c",
-        "64": "e4501c5b6c56565d8f2f81480c5a07f49313678db177b8cad112e0d040fedde2"
+        "aarch64": "de174c66ef37fb7d6114d358888b4d9ff54a1da002ded00f3d5cb33a7d959146",
+        "arm": "04bea9f1e737b46e46694609f8aec513ed3dca9c479c2c8e914f18d4036aaf0e",
+        "i686": "b9be895a580de159510bb215b1cb6c579b544b15e0f82d4434a0b75bd77c3331",
+        "64": "d92088750fb0e3b088a4441a5def8e322813716e9806205f9c25371b78d0a7dc"
       }
     },
     {
@@ -1223,7 +1223,7 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/Rajkumrdusad/MyServer/archive/refs/heads/master.tar.gz",
-      "sha256": "4c0945adf83b837a7bf7ec049feeff453265f96264bd988c970d41a87d4bdce2",
+      "sha256": "e1aa9802588d81f968255d052ee888d80d499daeb8cf4b71c9e0da1ae81e06d3",
       "platform_independent": false,
       "depends": [
         "php",
@@ -1232,10 +1232,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "4c0945adf83b837a7bf7ec049feeff453265f96264bd988c970d41a87d4bdce2",
-        "arm": "b9a324eca8f50642e564a65adab2d89392805fff2038e04ccfacfb39df93d77d",
-        "i686": "0e4bfb3fe40b97154466431c1955823a3d2f0a53b00184c1a0ac8d9df328a748",
-        "64": "136a835b63992d282471cdb9de411496e50fdb0bc356daae60b6378b70fac62a"
+        "aarch64": "e1aa9802588d81f968255d052ee888d80d499daeb8cf4b71c9e0da1ae81e06d3",
+        "arm": "8d1cc346e09650dde33d5ecdc8144dcd643c12fa62853641ae05c3568b57016d",
+        "i686": "36f507fe3cbd699ec061d66d3048fc7177ba94d0671593eaf19e543dd5784750",
+        "64": "48adb3acbbe9d5083966345afd23a9e1e02ef0b5e6c13c8880307c72fade2da3"
       }
     },
     {
@@ -1249,7 +1249,7 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/oop7/OrChat/archive/refs/tags/v1.4.6.tar.gz",
-      "sha256": "791696735e0a433e8e67555f80e1f3be005e8efdeb69e38ee800dda69a8269b0",
+      "sha256": "ef3dcbb86c4b1c224b62a8bf51da9c2c2cd8ddd52e11a49fdcdd008cfbf5d568",
       "platform_independent": false,
       "depends": [
         "python",
@@ -1257,10 +1257,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "791696735e0a433e8e67555f80e1f3be005e8efdeb69e38ee800dda69a8269b0",
-        "arm": "da9d5f9b0952c602c82077fee6e5342fdb2e0d5fcb4c9ca086e07d4e08f42410",
-        "i686": "d374930b14da21f04eb0f39d325a2e301c1e612760edc48e9eefcf0133b74c4d",
-        "64": "68628db61330b83a5d08295790e9452f2b404876bb8aeeff788c399dadf9f6a6"
+        "aarch64": "ef3dcbb86c4b1c224b62a8bf51da9c2c2cd8ddd52e11a49fdcdd008cfbf5d568",
+        "arm": "64596cbefc60d5540d37889a72904b993c2cb6979ce84fa7d1081d5285ced745",
+        "i686": "7a4bedf8d6793c13b4160756b3809b8040d54f577a7c20540acb8204099eef6a",
+        "64": "27dc4dcea22051ae01b35a2ee812da5f96ee39a72d5ea552dc98fac24c1377ab"
       }
     },
     {
@@ -1274,7 +1274,7 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/behindthefirewalls/Parsero/archive/refs/heads/master.tar.gz",
-      "sha256": "02c277cbc76907fd650cd3b297737e03fe880f4abc10c1a36332ced2c334ec25",
+      "sha256": "a13a418d54d033a2daad14a2eb92c42b92a5cf4a8a1b2a6e8042d1feb3422b9f",
       "platform_independent": false,
       "depends": [
         "python",
@@ -1282,10 +1282,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "02c277cbc76907fd650cd3b297737e03fe880f4abc10c1a36332ced2c334ec25",
-        "arm": "9b9eecf58a7b90c21d321fb76800d1dbbcb73c8af5504ae838231a6ef5d746dd",
-        "i686": "f4e85c11d6a6105966e874ece448d9bba65617c3f3ee987e1d424b9224385b5a",
-        "64": "d43b54e8d849530ef8ce6a61b2708601de1fecfd0fe1f448060e83a4f54eb759"
+        "aarch64": "a13a418d54d033a2daad14a2eb92c42b92a5cf4a8a1b2a6e8042d1feb3422b9f",
+        "arm": "5c3b7cbafccb34aee088842eaf299158f1a2efc153fcb36b3440c97ecbb31688",
+        "i686": "59322e217c74403e953d9aa5fedf12be02fe37d9148f03eb99030e390ac0148f",
+        "64": "45dcce4e98418a6082aba55344ff8d6a977ef791f6b0a5115a0452d3e3609a96"
       }
     },
     {
@@ -1299,7 +1299,7 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/s0md3v/Photon/archive/refs/tags/v1.3.0.tar.gz",
-      "sha256": "18f2d086cc964d7b3313d982ae2915277787cf01798dbd268e6200ee4c8ee483",
+      "sha256": "851d0743386eb5e72b161d9ac5143ac1c4580149c642a99bd3a1accd5484149e",
       "platform_independent": false,
       "depends": [
         "python",
@@ -1307,10 +1307,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "18f2d086cc964d7b3313d982ae2915277787cf01798dbd268e6200ee4c8ee483",
-        "arm": "3c9e681e59d8ab609a1d857c31e2f9331375cde53882f7a0eca454b42f436071",
-        "i686": "e97faae0f7f6ed3ba1a0d805e569f03fc6819c7765d7b212abcc5d7938639e3e",
-        "64": "7fe37f94d5485700cd8ff23a6c3081f454664b67485fdfc790813252f0b8e145"
+        "aarch64": "851d0743386eb5e72b161d9ac5143ac1c4580149c642a99bd3a1accd5484149e",
+        "arm": "af345001e50f7aae94906ef0576ccc3718a4f80f506353da8c0d141aae1e33b8",
+        "i686": "51049abc607e7f035913a0c78cf7c266af9da960af8e2e7fa024a69a2e8dea27",
+        "64": "a0bc1cbcc434bf673497bcc8e89931b9047e4d3185c3dc591ff4a46a57374cdc"
       }
     },
     {
@@ -1343,13 +1343,13 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://registry.npmjs.org/pnpm/-/pnpm-${TERMUX_PKG_VERSION}.tgz",
-      "sha256": "68d184997025dbc9df9f0faf251b45713e454d926d028261133ffd79528dba72",
+      "sha256": "f7cfca0727ffcddc995453894d9c7e5b01410b32000964a58dc0469762f6f652",
       "platform_independent": false,
       "sha256_by_arch": {
-        "aarch64": "68d184997025dbc9df9f0faf251b45713e454d926d028261133ffd79528dba72",
-        "arm": "5eae808482bca9110cc06d038b4790ff640afcbd4ccac92ae122cfca7b0dbe54",
-        "i686": "74fa156e1f0246e72df5873f9544b079cdd01a9ca6286ab3ea594672878f6293",
-        "64": "bbb7426e5bbfb6ceec7e7cb9f5bdf80b5e1048b651035e0fc11a3e6086d75b3f"
+        "aarch64": "f7cfca0727ffcddc995453894d9c7e5b01410b32000964a58dc0469762f6f652",
+        "arm": "1c2ba8d15653cb3350a2e8689e2c75b8d2994598b48e85134858fe154229785c",
+        "i686": "b9c0eef0488e852157cc66aea2484039291c8426594e8ae79cfe1792acc43256",
+        "64": "a36834d87d4e90a63775ae8a9bfe3feaaacfffcbd3dbb553e8599c9eed61a384"
       }
     },
     {
@@ -1363,16 +1363,16 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/archive/releases/download/v${TERMUX_PKG_VERSION}/pymaker-${TERMUX_PKG_VERSION}.tar.gz",
-      "sha256": "1aa2d932113c4069bda1078d6de0cebe601ab976aa3afb29d44b0247b3997320",
+      "sha256": "d6edf269f42421842d17192fbb1804f45f7618d594bf163dbfa5ca0b5fd6345a",
       "platform_independent": true,
       "depends": [
         "python"
       ],
       "sha256_by_arch": {
-        "aarch64": "1aa2d932113c4069bda1078d6de0cebe601ab976aa3afb29d44b0247b3997320",
-        "arm": "473baf26eaaeee5a639ca28982002875a9d06d6036a9e1409b83da490e4ddc28",
-        "i686": "847a322776b56eb1c075dbdfee783c5fdea8eaf59e38162f10a09d624b8604be",
-        "64": "2ff29e9ee0966d9f1ca4fc15a536a7c06fb4222a198bc8b36cf1a27059b18c48"
+        "aarch64": "d6edf269f42421842d17192fbb1804f45f7618d594bf163dbfa5ca0b5fd6345a",
+        "arm": "c4850495c6d5b1df081e375019e773c138ec97dcdd2c12b15b267aeee475d3ba",
+        "i686": "349f7dbe399f8eb71b9e94057bace61d46ea6bb888df05bdcc1ead3d759e9f01",
+        "64": "3df8a2b19ef097141c8ef33341e444a6dfdce055183e7523bb898b0b76b3f7c5"
       }
     },
     {
@@ -1386,16 +1386,16 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/Tuhinshubhra/RED_HAWK/archive/refs/heads/master.tar.gz",
-      "sha256": "9fa1112351390395ad48b7abc71d0728cb279cf962e121b39b98b077a307e6e1",
+      "sha256": "66e9937e2a5f5805b09fca8ae1bb7495fa84e44999d3ddc69c23057e137283a2",
       "platform_independent": false,
       "depends": [
         "php"
       ],
       "sha256_by_arch": {
-        "aarch64": "9fa1112351390395ad48b7abc71d0728cb279cf962e121b39b98b077a307e6e1",
-        "arm": "38eb678782c8dcafd47de1ea95e479e621cbae38e8857437a677ef86099d9162",
-        "i686": "1f49792e1cd1fcbc51654f96adcdcfc87e893ff8ff4e4588423818249f89d7e1",
-        "64": "f60085afa8509bc8c1608490fb208fef86e9181bb5ed843bff47716c972dfa26"
+        "aarch64": "66e9937e2a5f5805b09fca8ae1bb7495fa84e44999d3ddc69c23057e137283a2",
+        "arm": "1c41640293179ffe92f4a8a2939a0ea7e1044f9992769227c78918292705601b",
+        "i686": "03a70c8b88b94f13912879c68a5100866d268e95342156fb1a7afa85c88c5745",
+        "64": "9ea38a24a6de5ec5795f213f4f9c1ab4ecf06e725af1d87df1d226af1e47a4e2"
       }
     },
     {
@@ -1409,10 +1409,10 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://api.github.com/repos/termuxhackers-id/SIGIT/tarball/${TERMUX_PKG_VERSION}-pre",
-      "sha256": "7b358df03db66b37285f6e908f5602e296c01fac00822153f2318c584e9639b7",
+      "sha256": "a6446254de70b1ff6bde63d377dd7df2ac5a7eea6594eaa50b685256d01b895d",
       "platform_independent": false,
       "sha256_by_arch": {
-        "64": "7b358df03db66b37285f6e908f5602e296c01fac00822153f2318c584e9639b7"
+        "64": "a6446254de70b1ff6bde63d377dd7df2ac5a7eea6594eaa50b685256d01b895d"
       }
     },
     {
@@ -1426,7 +1426,7 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/swisskyrepo/SSRFmap/archive/refs/heads/master.tar.gz",
-      "sha256": "91d7cb4cb96e7c4fff9cddc99aac2c17d0c52eb8eadabc89b1e09115a6fdb52b",
+      "sha256": "fd9c86ae6aa7ffc5c9b8ceebabe8c5d45a73d3417867444e89bad34f9545870a",
       "platform_independent": false,
       "depends": [
         "python",
@@ -1434,10 +1434,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "91d7cb4cb96e7c4fff9cddc99aac2c17d0c52eb8eadabc89b1e09115a6fdb52b",
-        "arm": "df48e2326751afd5e15657133901113d607da284cbe30077f826698c8272e8ca",
-        "i686": "f05027b0dda7e33261a09cbe748044c8bf8793ab2c25643829783f6cc8318362",
-        "64": "dfbc335ce7ab63c2f67992e64ad5352391d1afc95845b3c14695594309a5bb35"
+        "aarch64": "fd9c86ae6aa7ffc5c9b8ceebabe8c5d45a73d3417867444e89bad34f9545870a",
+        "arm": "e6ddbff64855a24a1525d483145700fceb66fa025244d5b121965ac3f1b4023a",
+        "i686": "db64448619949bac88c9705e2595347aded0b2af2937e7d828c6ce2358cc59ae",
+        "64": "cb98d409f36503a1353fc9b17cad84b48c1bd24d5230b9b71687ffe888549201"
       }
     },
     {
@@ -1451,7 +1451,7 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/aboul3la/Sublist3r/archive/refs/tags/1.1.tar.gz",
-      "sha256": "66fb9ba4c91af08625bde3bea67d34c5ebbf3b4e42c97a8df89455bc9a3e25a4",
+      "sha256": "5cba582a0dc7abd38f97ddfa2aa28e04db73030ad4f377739625962e5e0b9760",
       "platform_independent": false,
       "depends": [
         "python",
@@ -1459,10 +1459,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "66fb9ba4c91af08625bde3bea67d34c5ebbf3b4e42c97a8df89455bc9a3e25a4",
-        "arm": "961d6ae86de13546133d19e129cbc3221d2caa1300ddc40f635a25708b59298b",
-        "i686": "e684f09cb2d9e658c1626d0da6acbed17a097923f1097f4512015d0337023bf5",
-        "64": "c2558659f49a0122a6c6045dfd929f757561739cc4bee1f78b8d2ee933551e0f"
+        "aarch64": "5cba582a0dc7abd38f97ddfa2aa28e04db73030ad4f377739625962e5e0b9760",
+        "arm": "aadf165bd1adf1df53053564084ab0983ad63af330085e59a3d4dec5a8aa5731",
+        "i686": "885fce98c1919510a422b24b0a009a6d350bbd37c7878a0cea68f7407e8c4671",
+        "64": "29f003e568e4ee13a58f726f8341bfcf925c0a76a1865cc49a552039ef594443"
       }
     },
     {
@@ -1476,7 +1476,7 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/tdoc/archive/refs/tags/v${TERMUX_PKG_VERSION}.tar.gz",
-      "sha256": "d33d33b2b91497bfb41f04151ac0c49e8b9f53ec82f243cafdd6305dde9d741a",
+      "sha256": "6c54d4f6d118bd474f2cb3021b437fdade77e891401512c83dcd5bbccde97998",
       "platform_independent": true,
       "depends": [
         "bash",
@@ -1487,10 +1487,10 @@
         "termux-tools"
       ],
       "sha256_by_arch": {
-        "aarch64": "d33d33b2b91497bfb41f04151ac0c49e8b9f53ec82f243cafdd6305dde9d741a",
-        "arm": "4ab23f2f8d2757d99af766029061d10d309023963d594adcca4d90e6f2c9ad20",
-        "i686": "be84ed367f2e875d5195ebd8028e565fd7d853c015f982e2a5a2146e51343434",
-        "64": "3393a6fc91ede90f701ec2932ad01a834d50d9dc6036e92e2e979d17b523dd1f"
+        "aarch64": "6c54d4f6d118bd474f2cb3021b437fdade77e891401512c83dcd5bbccde97998",
+        "arm": "9d440b0b510eb8ba2cd219515eb4db10316175b80a02ff0717dd34678ec6caa5",
+        "i686": "3d2eb7a0959b191217a32f46a641e78c2387c27db578889606f5e2a57dfbfbd9",
+        "64": "400d686d0e78b28271062ced64a745b503eb1bb8a11f49bb0b48e917c319322f"
       }
     },
     {
@@ -1521,13 +1521,13 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/termstyle/releases/download/${TERMUX_PKG_VERSION}/termstyle_${TERMUX_PKG_VERSION}_all.deb",
-      "sha256": "c9f1ef01d8a712935841c285bb4a4965ebebcd7baad277f8056e40f3ed3f3d6b",
+      "sha256": "cb3bddb420f59735dab42b993dfb760671c20c010f3dbd2cc13410ba0208201b",
       "platform_independent": false,
       "sha256_by_arch": {
-        "aarch64": "c9f1ef01d8a712935841c285bb4a4965ebebcd7baad277f8056e40f3ed3f3d6b",
-        "arm": "ea6493812f3bafdcb6631562cd4e1ebe2d5f59a1c976a91943623e894b8fc427",
-        "i686": "1d4f1e1987f4b164dfbdf494c2c55adc69f940cdd023369271b45951106ed8a3",
-        "64": "e421ae2ab44ca95b81c44c55af496daf26d70e6541a5a9fbef6f42e2a60087ad"
+        "aarch64": "cb3bddb420f59735dab42b993dfb760671c20c010f3dbd2cc13410ba0208201b",
+        "arm": "e458ad880b1f5f4ef322fad02094d3ff653811f50ba22423d51726bebd2994e6",
+        "i686": "4d238b6a5a50226e91b75a605033752fba6474b8a9f45f08922d101cfcc32bca",
+        "64": "00e0867ff61e5d5071e1735cf471cca1fdaa38e81ec50cd1fda993fe3161e8e1"
       }
     },
     {
@@ -1541,13 +1541,13 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/Anon4You/Termux-Ai/archive/refs/heads/main.tar.gz",
-      "sha256": "f7731e358d330fa1e4d79fc1518051e892003e8bf8edc7e52770c386d855c0bf",
+      "sha256": "ab67d2956fbc52dea63a63599f6856363f34651d9efdcd0b569198f880067d21",
       "platform_independent": false,
       "sha256_by_arch": {
-        "aarch64": "f7731e358d330fa1e4d79fc1518051e892003e8bf8edc7e52770c386d855c0bf",
-        "arm": "65c9a87a6b5896f9b9543cc74c3ff15af866e94c5c9924a16e0619f73310bbea",
-        "i686": "98ffb5e0daa490c6160a9024d52b0dcb7bc563ff9f4abb652f8f6adb7736477b",
-        "64": "77495f0feaf53b6077528dce8223fd5edc20b364cd1a87d7007b6e7cdb119803"
+        "aarch64": "ab67d2956fbc52dea63a63599f6856363f34651d9efdcd0b569198f880067d21",
+        "arm": "3f90661996194ac086a2b3c6c047a4d5393f90884d1d7d15d832ec9b98c06b34",
+        "i686": "55c3068eb07d9d3e027de608bbb6472558c3c9feee7874a733c37117f642071a",
+        "64": "1804a38a3332d1e81e7d1f3c333184ace31b29d2011fb277b34e48ac376f9e9a"
       }
     },
     {
@@ -1561,7 +1561,7 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/termux-sync/archive/refs/tags/v${TERMUX_PKG_VERSION}.tar.gz",
-      "sha256": "f9e5428f1e8813ceba28f52a36b871ce5269d1bf98161bf5a6e78d94a0a9943e",
+      "sha256": "5bc7b8d9a43c30b58cedf854390705edf93cdeb53b7b0649ac97eebe9e5fde4b",
       "platform_independent": false,
       "depends": [
         "git",
@@ -1570,10 +1570,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "f9e5428f1e8813ceba28f52a36b871ce5269d1bf98161bf5a6e78d94a0a9943e",
-        "arm": "8f8ff1d285d71c1f9a0ce5bf8c1f0faa9706fc1c0c2c33fd16804fee21dac1ba",
-        "i686": "aa335807a6f5b292e13f335ffe23e727e31ffa371fd3bc7ffaf0d48ffe11a6b1",
-        "64": "e2b8320b2c2659629278a13ca9995a6406146d8bf987aedba73d3f7856d2c7fb"
+        "aarch64": "5bc7b8d9a43c30b58cedf854390705edf93cdeb53b7b0649ac97eebe9e5fde4b",
+        "arm": "92f54501cc3ff368aa20371c6a2111e95258d89cff925fd8b10272cf82140c88",
+        "i686": "54db6dff2ab98f643dce44443605ab00ebe48a7d4cb5692441fe6520fa85307b",
+        "64": "04300d88f8ed768978ca3dc53c9f8884ba5bb722cf41432f282bd69d86d6c683"
       }
     },
     {
@@ -1587,7 +1587,7 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/termux-tui/archive/refs/heads/main.tar.gz",
-      "sha256": "3cacb79c60cdc020c4415681fe0607fb6d32fc5511273b95a03e04187d2d64ea",
+      "sha256": "f4a13b3572f73ab94d582f6cdbf61bf8ea9a6a6cd0f182682c264c7fd07ef069",
       "platform_independent": false,
       "depends": [
         "python",
@@ -1595,10 +1595,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "3cacb79c60cdc020c4415681fe0607fb6d32fc5511273b95a03e04187d2d64ea",
-        "arm": "5673bed661aadd6fb7aa4eb9047a836b28fa81dee36cf7b2250a503d5caf4251",
-        "i686": "3efb91cde88b5c286b820586e20c279056e8762de2498e898bf581a778f150ab",
-        "64": "9d0a714b23c07b6664a3df622146aededef9e31d8589a95053769c966617d438"
+        "aarch64": "f4a13b3572f73ab94d582f6cdbf61bf8ea9a6a6cd0f182682c264c7fd07ef069",
+        "arm": "6046965924d3f17b4c04e5766ebaf2c1c30b0b9fd70246ee3229d78a54f430a2",
+        "i686": "06efb31828793f4bf94ad08fbfa2336e4bd8cd6efbbb1f2ceec9b2e84f2a0f4a",
+        "64": "05a7c0165beaa7aed789a7e1529c53f64ea745745289dd3fb0bf3608c0401cf0"
       }
     },
     {
@@ -1612,13 +1612,13 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/Hax4us/TermuxAlpine/archive/refs/heads/master.tar.gz",
-      "sha256": "f2ba4ef01afc94bbb4a48f012267b5b8981c9032a3f997efd444a44c4316f931",
+      "sha256": "688e2317791ace5b3a6a662bf7ae760c64c32131f50b05571b9f65cd653b6331",
       "platform_independent": false,
       "sha256_by_arch": {
-        "aarch64": "f2ba4ef01afc94bbb4a48f012267b5b8981c9032a3f997efd444a44c4316f931",
-        "arm": "29bf8cbd7fd3f5306ee2ec75fdac8e3bd79320d268d544a598d0a36a9bb8ff42",
-        "i686": "b5a2d98fb2ed1060d7f52100f0711ae13573ebb9691763170568f97c89aaa341",
-        "64": "32371458ee44a7632e83e3a84fa8574fe3dfb7329c97eb06633e2f924cdb8c63"
+        "aarch64": "688e2317791ace5b3a6a662bf7ae760c64c32131f50b05571b9f65cd653b6331",
+        "arm": "3c1ac00327bd84bab85d47a09646aadf9b5fb40ceb85f1bcaa9273143e99dbdd",
+        "i686": "e3a10b85da996c86ee8009e607e9dde5c5ad76cd14d3beb144793ff5e87a6cba",
+        "64": "56a4bd26f5862212bcff1834c0024c86669519cda8a4fe6febddb6a782e7cecd"
       }
     },
     {
@@ -1666,16 +1666,16 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://api.github.com/repos/GiorgosXou/TUIFIManager/tarball/v.${TERMUX_PKG_VERSION}",
-      "sha256": "e5c1b5523cbefd86b15eeac1ee21ab3b05ba94397736c10387f73303766a3496",
+      "sha256": "0b5791c84754ac239bb5584ef9bd0d4beb60565951cd9686aaeb6d6365099dca",
       "platform_independent": false,
       "depends": [
         "python"
       ],
       "sha256_by_arch": {
-        "aarch64": "e5c1b5523cbefd86b15eeac1ee21ab3b05ba94397736c10387f73303766a3496",
-        "arm": "5780d7ade1175c9ad3d8390a7ea7b6bb91f11ac5ff6e04aa3ec584beb73284d4",
-        "i686": "8102418c093049a7f8d49961697f683c6628d6221678c03fca2fa09385f30263",
-        "64": "a9647349cd9aa3454ce154b77b2c4de1e13c7be184e6a7e688b03b13a2c3bc6d"
+        "aarch64": "0b5791c84754ac239bb5584ef9bd0d4beb60565951cd9686aaeb6d6365099dca",
+        "arm": "20fd5331431470d2430bae6c433cbeeda9a1ae7cfc31068bc18bccc7aa34fa7f",
+        "i686": "f6d7ed4f564c52c866b8bf88358025d7449bc1ab574e89b9441b1cc8c9f29dd1",
+        "64": "7b74dc1a25f351b3ab30154eae90136fd7e009e512ca482309c51807b2744d93"
       }
     },
     {
@@ -1689,14 +1689,14 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/archive/releases/download/v${TERMUX_PKG_VERSION}/tx",
-      "sha256": "4d296ad254622b6f3361f97994c66d04f3b40537c4dd707a0e9e7f2cc57efae5",
+      "sha256": "5b687c15d5585dd8c61a9f070b29b84ae111ebcc953109d2300ac7a87b994063",
       "platform_independent": false,
       "depends": [
         "python",
         "ncurses"
       ],
       "sha256_by_arch": {
-        "64": "4d296ad254622b6f3361f97994c66d04f3b40537c4dd707a0e9e7f2cc57efae5"
+        "64": "5b687c15d5585dd8c61a9f070b29b84ae111ebcc953109d2300ac7a87b994063"
       }
     },
     {
@@ -1710,13 +1710,13 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/mishakorzik/UserFinder/archive/refs/heads/master.tar.gz",
-      "sha256": "c7b93a90b5723e8494b11c16cdad3392a30bf258ded820ee53ca690b9688ce7d",
+      "sha256": "5fc494f95c91d57fd00275c3439c0c90e25b5e0a44ad08a53792e0409bc4738b",
       "platform_independent": false,
       "sha256_by_arch": {
-        "aarch64": "c7b93a90b5723e8494b11c16cdad3392a30bf258ded820ee53ca690b9688ce7d",
-        "arm": "ff147d63d699177977b4d5324695b3e0743981a950058678a3411e298a90c60f",
-        "i686": "80bc59cc5dbce27443bf4c760e65d9c2815098c937bd3111630185e2670be7de",
-        "64": "4e883d3367a4c7ba9dfa28208f184de7b99d6bdad71cc20abdb782e89dd2754b"
+        "aarch64": "5fc494f95c91d57fd00275c3439c0c90e25b5e0a44ad08a53792e0409bc4738b",
+        "arm": "8b88cece962ab72f0c03e059d3a7fa3dacd48192f9d5c5548602b3a19ecd13d8",
+        "i686": "37577afd8c5aa05b224bea5bd70b929ab60932efe7765b9b650b05f695db88ac",
+        "64": "8bdde507e6d0a9c4ae0a2604cdb470ee9cc84ee141d02061933d6d7891c95aa3"
       }
     },
     {
@@ -1730,10 +1730,10 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/astral-sh/uv/releases/download/${TERMUX_PKG_VERSION}/uv-aarch64-unknown-linux-musl.tar.gz",
-      "sha256": "8113ed98d854ac4bf3601829017f6d39d296691fe64bc641c2462d04a19918a1",
+      "sha256": "92e1f616e012447cc03bae9602bfd83b32252d38efe50f71b01c01d0583214d1",
       "platform_independent": false,
       "sha256_by_arch": {
-        "64": "8113ed98d854ac4bf3601829017f6d39d296691fe64bc641c2462d04a19918a1"
+        "64": "92e1f616e012447cc03bae9602bfd83b32252d38efe50f71b01c01d0583214d1"
       }
     },
     {
@@ -1764,10 +1764,10 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/webshake/releases/download/v${TERMUX_PKG_VERSION}/webshake-${TERMUX_PKG_VERSION}.tar.gz",
-      "sha256": "38df16171866d260c67a4a5a70d86bd61ffbc92a4fd9695b24eebe85c595f48d",
+      "sha256": "dfd0037e8ffc95052f1721ed117f60955c45c085f9b15388529c71a9416c42ee",
       "platform_independent": false,
       "sha256_by_arch": {
-        "64": "38df16171866d260c67a4a5a70d86bd61ffbc92a4fd9695b24eebe85c595f48d"
+        "64": "dfd0037e8ffc95052f1721ed117f60955c45c085f9b15388529c71a9416c42ee"
       }
     },
     {
@@ -1781,7 +1781,7 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/Malfrats/xeuledoc/archive/refs/heads/master.tar.gz",
-      "sha256": "35f57b9fa18af65eb8609a029a83fa893d0155a130c18a8521db099f313ad70f",
+      "sha256": "a73ace8182f2a7daf7e6c6cf00b77b6fea97327050ca385d799a4423150c6a37",
       "platform_independent": false,
       "depends": [
         "python",
@@ -1789,10 +1789,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "35f57b9fa18af65eb8609a029a83fa893d0155a130c18a8521db099f313ad70f",
-        "arm": "7429566cbca5bc706ddce3431378fff4a46e282c3d2e527e38864744eed69188",
-        "i686": "a6c051bb01dc9b4f99a15dd26fa3068389419fc6cc7fce3e89dd7ff1f37b0731",
-        "64": "296b3619028b7eaafe31f0da646d95559aa4f10251da37d3cbf2e571084e6f8c"
+        "aarch64": "a73ace8182f2a7daf7e6c6cf00b77b6fea97327050ca385d799a4423150c6a37",
+        "arm": "a1c734715fbb21eefdad451dfd166c3ac12a7cb4c0c5af0aedbb03cccd49f097",
+        "i686": "b8db2dbb0d3437ebdf76421826a58c31df88627e4c27d71cfaef50851be81292",
+        "64": "441f01a9ded618aef0be60eccfb7543d9c8f39ffdf3cdff0b27feefbd2d82c03"
       }
     },
     {
@@ -1806,7 +1806,7 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/s0md3v/XSStrike/archive/refs/tags/3.1.6.tar.gz",
-      "sha256": "1945f3614ab0b037f776326b04b3d1cd91e57a1dc6f68435d31e7e011020f556",
+      "sha256": "918ee9cf9bf8f08566259634048cc7c041a490cd76c034b2d4f246f5972e5896",
       "platform_independent": false,
       "depends": [
         "python",
@@ -1814,10 +1814,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "1945f3614ab0b037f776326b04b3d1cd91e57a1dc6f68435d31e7e011020f556",
-        "arm": "bb7ed99ea80703a66646d7eed4b9a82749e7b71655d2cb25ad562e0161ac0023",
-        "i686": "1f68c42d9fa1a393c60bd636530c9baa82ecbe82e251a47ed79ebe150dfa4db3",
-        "64": "c329de2648b0b73cfad20529abbdaf54656e1dc8930abf7b5c6ead1da0b52bdb"
+        "aarch64": "918ee9cf9bf8f08566259634048cc7c041a490cd76c034b2d4f246f5972e5896",
+        "arm": "af3676ea3842dfffc4e7851a52aff816ec97fd67085f86f8941c937d37265f0c",
+        "i686": "cef743278a22d15751b9fc337b12dfb7a9f725199376faf0e8797d245aea74c6",
+        "64": "fc40a02395a2cb6a918ba322cdfe3d7c600d36d4482501331552e4fc396c7dc0"
       }
     },
     {
@@ -1857,7 +1857,7 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/Souhardya/Zerodoor/archive/refs/heads/master.tar.gz",
-      "sha256": "f25dd33be7d9fe59934a04d2a2db7c4bf967fd0f896ef28ab49a47ec4f719a51",
+      "sha256": "b4be1c1c6cce993241439e757c4d96b6185ac44b283ad601aa2f1c560131d8e5",
       "platform_independent": false,
       "depends": [
         "python",
@@ -1865,10 +1865,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "f25dd33be7d9fe59934a04d2a2db7c4bf967fd0f896ef28ab49a47ec4f719a51",
-        "arm": "48b9cf402cff5f8d1556bdc8437f8a16cfb66a4ae1a84f63578193deb4db98ab",
-        "i686": "624400cfa6a800ecef962f419ef13901e6210ffbe7d240f41bcd150f38021079",
-        "64": "c5f6f774fd731d0baed83ee4e60184728b25dab12663d294db8c12c330a4a492"
+        "aarch64": "b4be1c1c6cce993241439e757c4d96b6185ac44b283ad601aa2f1c560131d8e5",
+        "arm": "c6f7a7e95c16998faea489cc16cc776b7578698c1cb3e9f2a9a157cd129cb44f",
+        "i686": "08707d35626db257b9e2204fb5c69125d445d0e173808b95445fbec4ef1f0f48",
+        "64": "335b5e74c7949184d56bdf3046ad7891e852e08a246a672d3c1981682d52384e"
       }
     },
     {
@@ -1882,13 +1882,13 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/archive/releases/download/v${TERMUX_PKG_VERSION}/zora",
-      "sha256": "aa3f350ad5b75be79564f0b3dcdb051991535e2e5c84029682711d9f787d2241",
+      "sha256": "27041b8a17ec0ed525b56faa2313ed381ad90cb4edb431e19083f692985af3d0",
       "platform_independent": false,
       "depends": [
         "python"
       ],
       "sha256_by_arch": {
-        "64": "aa3f350ad5b75be79564f0b3dcdb051991535e2e5c84029682711d9f787d2241"
+        "64": "27041b8a17ec0ed525b56faa2313ed381ad90cb4edb431e19083f692985af3d0"
       }
     },
     {
@@ -1902,14 +1902,14 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/archive/releases/download/v${TERMUX_PKG_VERSION}/zorabuilder",
-      "sha256": "806873a014230705d57f637e2fc5227e3bcbc46f5554b7e5718286422a7f0c96",
+      "sha256": "cbe74fc90ca4c33b390d866c72e3144abe77d4cf057afcda7cf548171b79e7a1",
       "platform_independent": false,
       "depends": [
         "python",
         "binutils-is-llvm"
       ],
       "sha256_by_arch": {
-        "64": "806873a014230705d57f637e2fc5227e3bcbc46f5554b7e5718286422a7f0c96"
+        "64": "cbe74fc90ca4c33b390d866c72e3144abe77d4cf057afcda7cf548171b79e7a1"
       }
     },
     {
@@ -1923,14 +1923,14 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/archive/releases/download/v${TERMUX_PKG_VERSION}/zoracrypter",
-      "sha256": "cfc6079cacdf9a7584e706363219258271c717f9b36f0b6b50102011d9837d4b",
+      "sha256": "81b88350776b034bdc1e9b2b444fece8723e3619cd7b23086947ab000ab827d6",
       "platform_independent": false,
       "depends": [
         "clang",
         "python"
       ],
       "sha256_by_arch": {
-        "64": "cfc6079cacdf9a7584e706363219258271c717f9b36f0b6b50102011d9837d4b"
+        "64": "81b88350776b034bdc1e9b2b444fece8723e3619cd7b23086947ab000ab827d6"
       }
     }
   ]

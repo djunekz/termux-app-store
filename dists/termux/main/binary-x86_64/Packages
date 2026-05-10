@@ -5,9 +5,9 @@ Maintainer: @termux-app-store
 Installed-Size: 
 Filename: pool/main/ani-cli_4.13_x86_64.deb
 Size: 9286
-MD5sum: 3ac9f4d63d98b7cf1ed562118b841ce9
-SHA1: 8c9b3c0defdb48c55cc677db654a5f52292479c8
-SHA256: 260a381a05e24e88bc22e76e77ebc14f7ce49644b91bca1656f76568abb13400
+MD5sum: 6bbe1686ad9ac9b19f88ba88ab6bb4d8
+SHA1: d9cf4052608109e3b640e99c1cae268c42db1050
+SHA256: fb41484050cc975caf08a1a5639ca0790f0ff58ab15552047591c58664bc0415
 Description: A cli tool to browse and play anime
 
 Package: aura
@@ -19,9 +19,9 @@ Depends: nodejs
 Homepage: https://github.com/djunekz/aura
 Filename: pool/main/aura_0.10.0_x86_64.deb
 Size: 640
-MD5sum: e2c5a589599d9cdbd54ae59a94297b77
-SHA1: 17ce9fa5fe89183aa8a1816343fc038d4a370608
-SHA256: ce8b9d38beaafb5b43cec65356aa63bc667bf8921f08a22aa2d21b3e98f58f32
+MD5sum: 40082c72c383c1f3582c9d676cdf8183
+SHA1: e86de975a5a6614bb2fdc31889a2380853f2fffc
+SHA256: 642468ed872c41413c365b9d0becfa3cff891a930dc2cfd708d1d44e2b72bc84
 Description: Adaptive Unified Runtime Assistant
 
 Package: auxscan
@@ -32,10 +32,10 @@ Installed-Size: 32
 Depends: python, python-pip, python-setuptools
 Homepage: https://github.com/Gameye98/Auxscan
 Filename: pool/main/auxscan_1.0.0_x86_64.deb
-Size: 678
-MD5sum: 9485d10b13c5e63368de49af3b082153
-SHA1: 404dd0e390146264b0e3c4e55a39b202f75cd7f1
-SHA256: b05d808293bd4ee7e6808dc7389bd0ed8574bc6abf6f595359918146abba3c0b
+Size: 682
+MD5sum: e90fbeda39bcbca407b30b9251fee3f0
+SHA1: 548e1a4d366c9918fdf49d62a446e38a4f7712e7
+SHA256: 03723d2fa6c1570d3e86b6833779241a87edf960a50964f762106e17b05b0233
 Description: Vulnerability Scanner to automate certain tasks
 
 Package: bashxt
@@ -46,9 +46,9 @@ Installed-Size: 231 kB
 Homepage: https://github.com/djunekz/bashxt
 Filename: pool/main/bashxt_2.2_x86_64.deb
 Size: 4946
-MD5sum: 89b76def5658981a9a934c49d386f981
-SHA1: 3a350df4adeb02e224a6c25c05cb877646f2b908
-SHA256: 4ddfe0b338fd4f13a530fe46fd82f5dbbc1cd8d2465618e49845f6ca60516079
+MD5sum: 9f095aa72cf9f45760adfaf71d84649a
+SHA1: 214780741d50b3b0498207a6c74576964c8c271d
+SHA256: 5d4562c278bc6c45ae6a317e8b5b8a6b56c27bf9687fc3b8c93abadf77915998
 Description: basic command, code color, shortcut keyboar, etc information
 
 Package: basic
@@ -59,10 +59,10 @@ Installed-Size: 0
 Depends: python
 Homepage: https://github.com/djunekz/basic
 Filename: pool/main/basic_1.2.0_x86_64.deb
-Size: 31992
-MD5sum: cc4eab4bbdd2d75ed0be5c9070633aad
-SHA1: a3f99f7a0a2b053e4c90b0965115d7bc730d7e2d
-SHA256: 427aa520003c3b51b7012bd61f038c80c563eaa5bcb1b6de2dee4db8d06f2af9
+Size: 31998
+MD5sum: 70ea65b6a88c3d486680bab0edc87d70
+SHA1: 9d62c5efc32ba7329d9b249d5545cf912ad16121
+SHA256: 4b51b7b85475832c93f23d0f9381673ddb9ec1f48ec92d23c4ac3fe30eb4e9ab
 Description: Simulator Terminal learning basic command for beginner
 
 Package: baxter
@@ -74,9 +74,9 @@ Depends: nodejs
 Homepage: https://github.com/djunekz/baxter
 Filename: pool/main/baxter_1.2.4_x86_64.deb
 Size: 642
-MD5sum: b4d7917c661c94b9a79f229eb492edef
-SHA1: ff62ad3e8e5bf36f0438a82c7b777911cb71b123
-SHA256: 67db8d3c6bd5479a3aa92d15e3e5feb6ebcec672eb6486ff134f8fd3b655bd19
+MD5sum: 0194a5f2e0ac3cc909649803ec1c90b4
+SHA1: 2c921b92c4178fdf9035b195212bc6753c9d7478
+SHA256: ff353c93561f4ba324688f2f15e5966d6c4b21ad1824577ba2000a76bf92b97c
 Description: Encrypt and decrypt files termux
 
 Package: bing-ip2hosts
@@ -87,9 +87,9 @@ Installed-Size: 32
 Homepage: https://github.com/urbanadventurer/bing-ip2hosts
 Filename: pool/main/bing-ip2hosts_1.0.5_x86_64.deb
 Size: 684
-MD5sum: 3f5bd2aebbea5b778828fc54fded32b6
-SHA1: 5cfc6b2073b11656ce362f13e6e5c64395bb0d8c
-SHA256: d111e1bb120823e38f3c390c5925b3fff5c171e30629240803c1c8fbbda54c77
+MD5sum: 4a0b9c3c5ecd5a7b3dce52404ddab6fc
+SHA1: f5a5f8bfa40d085bcab97bf25abd58a141a354ad
+SHA256: 114dd2f1e4e95f428a07067317674015354626fdee5f8b1f7c3c42f20fee20a4
 Description: bingip2hosts is a Bing.com web scraper that discovers websites by IP address
 
 Package: bower
@@ -100,10 +100,10 @@ Installed-Size: 32
 Depends: nodejs
 Homepage: https://github.com/bower/bower
 Filename: pool/main/bower_1.8.12_x86_64.deb
-Size: 642
-MD5sum: b396680d4363ed1cf6061fb58d4856d7
-SHA1: 00bb2dfee5e76396d4387c82dc987b8ea618416f
-SHA256: 3d9bc54bf0b8a0951bc2405cc970509e0fbe730a21fa976c73675fcd819f5312
+Size: 640
+MD5sum: 8398dcafbb6c595a0c8be110e3cca81d
+SHA1: 3a27e20efff50a5ae823f7f6400b1ad17af21c8f
+SHA256: 2be1fac88ad53ed081e02a7161523729ce00dd34df1e4918a546c39d9a246b36
 Description: A package manager for the web
 
 Package: clickjacking-tester
@@ -114,10 +114,10 @@ Installed-Size: 32
 Depends: python, python-pip, python-setuptools
 Homepage: https://github.com/D4Vinci/Clickjacking-Tester
 Filename: pool/main/clickjacking-tester_1.0.0_x86_64.deb
-Size: 722
-MD5sum: 76231fd3d30978bbdc828cca83f3cfae
-SHA1: 9eb9fd80b288e5de05c83479b8bdf3b5c5bc48e1
-SHA256: 29b3947343f47c352a9ab7b6339d2854ff68b9183f7b9f90bc007d28bbf3f2ec
+Size: 724
+MD5sum: d014e4c0d22efd693b3c0940656b36c7
+SHA1: ae42874cfd726aee58fec230968396ad5025215a
+SHA256: 21ccae68e71b11ea7993e377eed8a87afb1701a4bdef145b88b78007e77e8914
 Description: A python script designed to check if the website if vulnerable of clickjacking and create a poc
 
 Package: cloudflair
@@ -128,10 +128,10 @@ Installed-Size: 32
 Depends: python, python-pip, python-setuptools
 Homepage: https://blog.christophetd.fr/bypassing-cloudflare-using-internet-wide-scan-data/
 Filename: pool/main/cloudflair_1.0.0_x86_64.deb
-Size: 752
-MD5sum: 51adf8e51128bda8e967349ac373f3b3
-SHA1: d2b85e759b43492692353069a6c9966d840cfb30
-SHA256: 181d87c2aa7117fdc8c092f840f289f6979bff76f9116214e130b82809a9cc98
+Size: 750
+MD5sum: 3588be5805c99464c3bcc17162ba593b
+SHA1: 25d866d6d6e568dae4a1400c3639e6bc3d0f7a6d
+SHA256: e78712a0d0c72de90f168dfd8c966cbea482523bd0b1cbfe9a09843bfa8f743d
 Description: 🔎 Find origin servers of websites behind CloudFlare by using Internet-wide scan data from Censys.
 
 Package: cmseek
@@ -142,10 +142,10 @@ Installed-Size: 32
 Depends: python, python-pip, python-setuptools
 Homepage: https://github.com/Tuhinshubhra/CMSeeK
 Filename: pool/main/cmseek_1.1.3_x86_64.deb
-Size: 716
-MD5sum: 0995e1506358dbe1f6d785e306d644cb
-SHA1: 7649e74cdf6716c9728821f50df317327455c63e
-SHA256: 330f01ec4c44961fa57cffdbbd077712e7a0a7a72d5d479ed86df24111aa2c2f
+Size: 714
+MD5sum: bba243392a684ce7ae13e3515149a424
+SHA1: 64be7ab49b521a5c713dcb14c8565aafad12e204
+SHA256: 9e356d0ce75683a3939bdb00f7f5ceb8478b6d530a1ec51e0243d7bb6ac551db
 Description: CMS Detection and Exploitation suite - Scan WordPress, Joomla, Drupal and over 180 other CMSs
 
 Package: cmsmap
@@ -156,10 +156,10 @@ Installed-Size: 32
 Depends: python, python-pip, python-setuptools
 Homepage: https://github.com/Dionach/CMSmap
 Filename: pool/main/cmsmap_1.0.0_x86_64.deb
-Size: 720
-MD5sum: 87b14fc33fab077aed7e0ba23736e568
-SHA1: c67d57dfbcc633d5ee810ce18317d3e0f217c3d9
-SHA256: 1dde4b69568047512a98b0b802bc6f533a106a7416dc58d5dcbd0b2d69930d52
+Size: 718
+MD5sum: fc496dbcff03064ce41d5d385d39f5bb
+SHA1: b888360ffe29ca4ba8ae08cc602036a1e6eefe24
+SHA256: dbce405d40e8a785397be2f7b05b01a0d9df124b77f6256febcbeb07bcc844d5
 Description: CMSmap is a python open source CMS scanner that automates the process of detecting security flaws of the most popular CMSs.
 
 Package: commix
@@ -170,10 +170,10 @@ Installed-Size: 32
 Depends: python, python-pip, python-setuptools
 Homepage: https://commixproject.com
 Filename: pool/main/commix_4.1_x86_64.deb
-Size: 684
-MD5sum: f13b0f9d0390cf60812bbd6a083392f2
-SHA1: 22df91176fb5146a22be03b15792c71987b99fc7
-SHA256: ae1f725481f3143ffe2b13cb9e52413c0ea6fead5a7c95d8ebceae8d270a7126
+Size: 682
+MD5sum: de334c1101c44e8f61bd30fa372b31a8
+SHA1: 48aa5668361cbaa00015bfff850688d4bf0c7633
+SHA256: 1fc263fe48c3a13ed1df5ded96c62c2f6b8ad776d0729bfb44a8387fc2bc4d3e
 Description: Automated All-in-One OS Command Injection Exploitation Tool
 
 Package: crowbar
@@ -184,10 +184,10 @@ Installed-Size: 32
 Depends: python, python-pip, python-setuptools
 Homepage: https://github.com/galkan/crowbar
 Filename: pool/main/crowbar_4.2_x86_64.deb
-Size: 756
-MD5sum: 4478b39b15c8fa57d0a6a5b0f1461db2
-SHA1: a81bcda8250ca5100bc3fe91f70a23b0042758a7
-SHA256: 7773ac0c6d072df5bb5d485a720d56dc47f024e086b85dea0dc45a937ea7550c
+Size: 752
+MD5sum: 2509978ab5793ea9f4a68cd9afffb452
+SHA1: 7355925687a88567df6fc790b0c95c5b7af13e90
+SHA256: f379f0f857f0cb51c9bfdbf328eacd108c06aa947232f8909afb3a347c070b35
 Description: Crowbar is brute forcing tool that can be used during penetration tests. It is developed to support protocols that are not currently supported by thc-hydra and other popular brute forcing tools.
 
 Package: cupp
@@ -199,9 +199,9 @@ Depends: python, python-pip, python-setuptools
 Homepage: https://github.com/Mebus/cupp
 Filename: pool/main/cupp_1.0.0_x86_64.deb
 Size: 676
-MD5sum: 2756b03dd6edf9ea218f4632aa9d420e
-SHA1: 1aece117ac8a08220c36a912f529e0ea73dfaf9e
-SHA256: 2715c0f20f3806965f8b76cafa8d5c787883ea099036b8d2e55d16c03c0b5e97
+MD5sum: 6a5b49bbd2b5dea85a868d4e4f9bcad1
+SHA1: f2fb42ee9695a5ee4e85d297d1b7d1033724e444
+SHA256: b8ee42b06807973ebae62b7eff9f3464e8c37af533d629f30f38dd343db4dc1e
 Description: cupp — auto-packaged by termux-build-init
 
 Package: cybertuz
@@ -213,9 +213,9 @@ Depends: nmap, python, whois, curl, dnsutils
 Homepage: https://github.com/djunekz/cybertuz
 Filename: pool/main/cybertuz_1.0.2-1_x86_64.deb
 Size: 700
-MD5sum: 1d001fb79858ce78c337877edbc5d8b4
-SHA1: 5b43e5d195d9822f082d6362960bfae226ddf2b6
-SHA256: cf4753a53e4747920d430d893dad0579c5e7340cc758325764f119b60e7f7186
+MD5sum: 9ac447d95d8586643203dd13c6942d3b
+SHA1: 67a8c89e629044f965f13e4eb732ba31ea0390b7
+SHA256: d4b059d5d7bece32909ec9dbc861ddf4ebd1bb331e55226dd12f9db97493b175
 Description: Comprehensive Educational Learning Platform for Termux
 
 Package: djangohunter
@@ -226,10 +226,10 @@ Installed-Size: 32
 Depends: python, python-pip, python-setuptools
 Homepage: https://github.com/6IX7ine/djangohunter
 Filename: pool/main/djangohunter_1.0.0_x86_64.deb
-Size: 690
-MD5sum: a70536679006910e6dd6a358685cc4eb
-SHA1: b54a9391dbdbf3a9fda4795191e9449b96497144
-SHA256: 292685eb7c103a56883e5d81f09b93a9455ba09d26571018b22fc6c668ffaf9a
+Size: 692
+MD5sum: f358bbac984fabfb943425edec539dc0
+SHA1: 01dc0e8b1e1d11bbfccef3faa22407948a34ca97
+SHA256: 5a36bc6fa8001d7f1a6b19e8fc1fb59acfee2cfed4cb6be6e7a29d39b67079e1
 Description: djangohunter — auto-packaged by termux-build-init
 
 Package: dnsrecon
@@ -241,9 +241,9 @@ Depends: python, python-pip, python-setuptools
 Homepage: https://github.com/darkoperator/dnsrecon
 Filename: pool/main/dnsrecon_1.6.0_x86_64.deb
 Size: 662
-MD5sum: ba5b0c30ec522a0b5dc3792a0e27ed39
-SHA1: 92e906c0ffa1f426e84d057cbb9ab613113e1bb5
-SHA256: 3fab8506f658b35e9563f22f4939ce40112d6a452a98a1dac7d8883e1494169c
+MD5sum: 1b2741d25c2660529a3a5bca0f314505
+SHA1: 138f20f845978e6bffecbb91124c490af0511dab
+SHA256: 25725185fcdccb9ef6f09d37a14b583d26070ffd93ed57035c3c3a0f2a910bef
 Description: DNS Enumeration Script
 
 Package: dumpzilla
@@ -255,9 +255,9 @@ Depends: python, python-pip, python-setuptools
 Homepage: https://gitlab.com/groups/kalilinux/packages
 Filename: pool/main/dumpzilla_1.0.0_x86_64.deb
 Size: 680
-MD5sum: 0462eb68aa18289e5171537106f5db9c
-SHA1: ffac749453032cd66975fe2223698bf8e2601c45
-SHA256: 846bae581f48efb9916b900b0aabf96aad1a578dedc3f3efc0985720f34792a7
+MD5sum: e4511d6bd9ec1477d6d762bf7d3cdec0
+SHA1: 7697a948c1a4379efe48a187ee05016c76bf8857
+SHA256: 39b7ec6b9c366cbcc50a8c64e1dc833551381b3be9abd10bab843c1e7dfdbfa7
 Description: dumpzilla packaging for Kali Linux
 
 Package: elpscrk
@@ -269,9 +269,9 @@ Depends: python, python-pip, python-setuptools, python-psutil
 Homepage: https://github.com/D4Vinci/elpscrk
 Filename: pool/main/elpscrk_1.0.0_x86_64.deb
 Size: 744
-MD5sum: 4b66868c20e2679d18f0d6bb059dc41e
-SHA1: b5a891b79431d401f90496a85d04dd314c0ce0dd
-SHA256: 18efcd0644465a9d89d956bf65d45bfe3f0ff2d510a3263e80d529672ec66c7b
+MD5sum: dee02e571e0b067b1275e8f8be437d69
+SHA1: b01f6eb81c4099443640ab35b845daa354500add
+SHA256: 5dadb6d3e01ca0135771e326a439c2c5dde1f4fee39a705ecd28284aeb759cb7
 Description: An Intelligent wordlist generator based on user profiling, permutations, and statistics. (Named after the same tool in Mr.Robot series S01E01)
 
 Package: eternal-scanner
@@ -283,9 +283,9 @@ Depends: python, python-pip, python-setuptools
 Homepage: https://github.com/peterpt/eternal_scanner
 Filename: pool/main/eternal-scanner_2.2_x86_64.deb
 Size: 710
-MD5sum: 551c85e39ae60585713779c6fcb890db
-SHA1: 7316fdb83cf25ceda6478b223049a22cc1cc1bac
-SHA256: 17121b15cf5ae3fb2d34a564b97f38bcd2449c7c7b700e26261e673adb5f7424
+MD5sum: 2c9aa6beb034d8ebe72ddaa9bb571bad
+SHA1: a2863ae1141010c218e8b5516a7b7c692c574c89
+SHA256: 8653893c700788fba18c64164f4c37d6693f4aa00f6269e208510a617e86ba7e
 Description: An internet scanner for exploit CVE-2017-0144 (Eternal Blue) & CVE-2017-0145 (Eternal Romance)
 
 Package: fbvid
@@ -297,9 +297,9 @@ Depends: php
 Homepage: https://github.com/Tuhinshubhra/fbvid
 Filename: pool/main/fbvid_1.0.0_x86_64.deb
 Size: 682
-MD5sum: a5f9b45b99e02b062b2c7dd84bf2257a
-SHA1: ec42e17b72fb0ded396ef20706399d1a9e946291
-SHA256: 9b85d0f788d7fb7d4e11e827fcb28a158b278357dc9846ccfe87137701944972
+MD5sum: b107bce3b475134bf14397efa5ca19ea
+SHA1: 68b832c1c052891258e4f38224ebd594a787fe3b
+SHA256: 4e9f7aa2bbece8b94462723fb80bc67bf7b9898c94875e75b6ae75a59513c48d
 Description: Facebook Video Downloader (CLI) For Linux Systems Coded in PHP
 
 Package: fd
@@ -308,10 +308,10 @@ Architecture: x86_64
 Maintainer: @termux-app-store
 Installed-Size: 
 Filename: pool/main/fd_10.4.2_x86_64.deb
-Size: 1284554
-MD5sum: 3ae646143b2074f1d1800d99efdae806
-SHA1: 4516126845f543d7c8ccad6e3d60a33b5aa42b0a
-SHA256: 9d30f89103c1dac0c7e58c0657764a70a37e0217011484661d328079c54e8f9d
+Size: 1284552
+MD5sum: c703b89b07d6378e31f4f4778ea57d4f
+SHA1: 1316edb014c5494e4acd3032c44d2ad9df931915
+SHA256: ee3758ece5eca9771c6653aa3ffd3fcc06970497bf1b3c197037ce25cb214013
 Description: A simple, fast and user-friendly alternative to 'find'
 
 Package: fuckshitup
@@ -322,10 +322,10 @@ Installed-Size: 32
 Depends: php
 Homepage: https://github.com/Smaash/fuckshitup
 Filename: pool/main/fuckshitup_1.0.0_x86_64.deb
-Size: 650
-MD5sum: 3740e12ee23222be70f45c73a77832b1
-SHA1: d55eb201bd433e52acbb0cbcdca7d1d271c48d81
-SHA256: f3adbf5a786dcd9572e13932c0286f2577d2d29c24e98505533861f630d0f263
+Size: 648
+MD5sum: d9b3dfd3e5a24c6f1a88c871abd77b03
+SHA1: 1dcae8980628aaeb901f6ea8f2328e2d94afd0b9
+SHA256: eefbb994e60dbfccdca046a4507c3cfa718f23712450f36fb8f7b07c28324162
 Description: php-cli vulnerability scanner
 
 Package: gemail-hack
@@ -336,10 +336,10 @@ Installed-Size: 32
 Depends: python, python-pip, python-setuptools
 Homepage: https://github.com/Ha3MrX/Gemail-Hack
 Filename: pool/main/gemail-hack_1.0.0_x86_64.deb
-Size: 688
-MD5sum: fe2309d2bd55d51fa39ca0b7ed1f1acc
-SHA1: 4645d6929cd84aeb8ab8bbb18f36a8f3ac728285
-SHA256: 60cc117fdf8d583efbf61881e405353e2af18daa151e5dc528d084d01b6beda6
+Size: 692
+MD5sum: a4dbca6fe141a5e03658d197e49339b6
+SHA1: 93f3b0a658b1c46ef872a0e5a9e3183df0fa0f35
+SHA256: 85cce5ef80c5f8e10091ccad8b3d2eb58ae68f90746829f253a2d2d2d7557081
 Description: python script for Hack gmail account brute force
 
 Package: get
@@ -350,9 +350,9 @@ Installed-Size: 32
 Homepage: https://github.com/peterpt/get
 Filename: pool/main/get_1.0.0_x86_64.deb
 Size: 662
-MD5sum: 3d1a9f2f84af7703d3b87b85e913bd26
-SHA1: aa86f10b1d0aaef8173db02482f67c4408d40e50
-SHA256: 358ce0f49c1200c3169be4c2e05bb3497088d99f06a9ab148944b66a19c57ee8
+MD5sum: 6cec49628dc68973cda31e646018af20
+SHA1: 9798fba6682108084b1415c62c60c0c347ce2017
+SHA256: 31073b55e7f6ff4672e462d95405c37bcb7798ca7471f0b1b563d6ce18985586
 Description: Get is a simple script to retrieve an ip from hostname or vice-versa .
 
 Package: ghosttrack
@@ -363,10 +363,10 @@ Installed-Size: 32
 Depends: python, python-pip, python-setuptools
 Homepage: https://github.com/HunxByts/GhostTrack
 Filename: pool/main/ghosttrack_1.0.0_x86_64.deb
-Size: 690
-MD5sum: 4dafb04a86f0870b32626dca8225cee1
-SHA1: 1b9ec4a12818b8f2b20eed3e3acef0e55f60c424
-SHA256: 769cbb12e67eee1be9150b79a22ebd94dcce0b41e24cb7cc1f8d4105ddaa78fb
+Size: 692
+MD5sum: 581c5161e07fd9035d413763f2edaafe
+SHA1: ad38c625362b4a439def270cae8175b5a37f712d
+SHA256: b26b2885244bd09912191f9d44ae5dab6398086602e7cf5f28969d8644d18db9
 Description: Useful tool to track location or mobile number
 
 Package: goblinwordgenerator
@@ -377,10 +377,10 @@ Installed-Size: 32
 Depends: python, python-pip, python-setuptools
 Homepage: https://github.com/UndeadSec/GoblinWordGenerator
 Filename: pool/main/goblinwordgenerator_1.0.0_x86_64.deb
-Size: 682
-MD5sum: a207474120dfd94e13cb6b9735bdaba5
-SHA1: f9f4cb8caabb324680b5ffd5e630fbfb4a08999e
-SHA256: 379bc7ca6f4d1786b79ca896206fc658fd46eb993ca87964f47b08f7a35c8a8b
+Size: 684
+MD5sum: 84cfbff937ffd34066699f8cdd020ef4
+SHA1: 349333d30a881ee6decdbbb20b911118197f057b
+SHA256: 8615bd604bb3ea8c7ec6a26e3beaf278afe9a3c7576d5caafdc81b6a7680972e
 Description: Python wordlist generator
 
 Package: hammer
@@ -392,9 +392,9 @@ Depends: python, python-pip, python-setuptools
 Homepage: https://github.com/TermuxHackz/Hammer
 Filename: pool/main/hammer_1.0.0_x86_64.deb
 Size: 672
-MD5sum: ec23f946f5df2825a1e08b91e1fa40ef
-SHA1: 57ac991ecdd3f9487e91aa4383903f8cc085e071
-SHA256: 52db1b69e00543578549e4daa69976d0922fa6d1d8d68c7366e0ec7b7af04290
+MD5sum: 491ce80af336bbac6e964e8f5f96ff3e
+SHA1: 5fbb69b9f0b773f6d3785c13c270bfa9e46ec6f5
+SHA256: 5784f8fc8f3b93b1f0cca875c6ab63ec8cb278dcb4e1841e43059e648ae00c98
 Description: Ddos attack tool for termux
 
 Package: holehe
@@ -405,10 +405,10 @@ Installed-Size: 32
 Depends: python, python-pip, python-setuptools
 Homepage: https://github.com/megadose/holehe
 Filename: pool/main/holehe_1.0.0_x86_64.deb
-Size: 750
-MD5sum: ffe717b83e224a76b3112f3710ddce63
-SHA1: 2b30ce0e5097b2385a3d5cbaddf18fd2b358e988
-SHA256: 6de3171fefad2d7a28b22c15ae4f0584532b7da8cad57d1c03761802b24a9894
+Size: 748
+MD5sum: cdddeb3fe9d13668be8eea70b6ed3f41
+SHA1: e90e43d99c6793319a179fdd39cfce40a4c984e7
+SHA256: d6b1d601ed5f65126d8fa65a4d034ca742c295af32d6e9cac0d3bfb3a5ed1b29
 Description: holehe allows you to check if the mail is used on different sites like twitter, instagram and will retrieve information on sites with the forgotten password function.
 
 Package: ht-wps-breaker
@@ -418,10 +418,10 @@ Maintainer: djunekz <gab288.gab288@passinbox.com>
 Installed-Size: 32
 Homepage: https://github.com/SilentGhostX/HT-WPS-Breaker
 Filename: pool/main/ht-wps-breaker_1.0.0_x86_64.deb
-Size: 656
-MD5sum: 2e53f2a5504c043425ed93be778abce6
-SHA1: 54871a92c06f43e3101671e7b719ebfb607bd879
-SHA256: 33902c19e7969385a3d82e8c4421e544ac90f6171b4535fd467479fefb68f0a2
+Size: 654
+MD5sum: 24a4e5f5041f4af5c59a58123cc8ce46
+SHA1: 49781cbc4aa6a83f18539062779c2fa8ab0fbe5e
+SHA256: 569f7615b8790e0979bea53446bcad4717ec3147de3f770e988c2f1b55acaa71
 Description: HT-WPS Breaker (High Touch WPS Breaker)
 
 Package: hunner
@@ -432,10 +432,10 @@ Installed-Size: 32
 Depends: python, python-pip, python-setuptools
 Homepage: https://github.com/b3-v3r/Hunner
 Filename: pool/main/hunner_1.0.0_x86_64.deb
-Size: 662
-MD5sum: 1c7908cb61059e93a439ebed84a18b25
-SHA1: 7668e8a7f847d80569d4db4ab071e7372f7592c0
-SHA256: 7b62fb95fa21d17f738712a57dca9e06520132fbab7942477e45ee663886e632
+Size: 660
+MD5sum: 535c61f02eba79bbff6bdae0888a3554
+SHA1: 7862e7f261892590b7b4fb07371498fb542dccd1
+SHA256: 69fd544d41ed3d69bc4bc7ed401ff3f57283b09965a7a6b51ad44fe27e5bbf16
 Description: Hacking framework
 
 Package: impulse
@@ -447,9 +447,9 @@ Depends: python
 Homepage: https://github.com/LimerBoy/Impulse
 Filename: pool/main/impulse_1.0.0_x86_64.deb
 Size: 678
-MD5sum: cebdbc316893b576b0253640c61fffe0
-SHA1: f6f7635726b8b8c4d04a1d354ac0730be88dd6d3
-SHA256: 8f11d11a9b54e1cc43aab6f713149c377b0d0c58c5df92e084070a3bf1e6019a
+MD5sum: 862946ea6ad4fa738af47f35eb56e3b9
+SHA1: aeff27d44d57b8d7353ea6d9d6bff20c009c9203
+SHA256: 78c8fd598538242162f34dd4b24d580fb25277b27669630fde96fb9124de27a2
 Description: Denial-of-Service ToolKit with multiple attack methods
 
 Package: infoooze
@@ -460,10 +460,10 @@ Installed-Size: 32
 Depends: nodejs
 Homepage: https://github.com/devxprite/infoooze
 Filename: pool/main/infoooze_1.1.9_x86_64.deb
-Size: 684
-MD5sum: 7771d07252970278dc7ec6acdd81ddbd
-SHA1: 5f79e18c0b83f32baf861ebd4cdcc9a35c1f3915
-SHA256: c582819139baed01964fbb457a5f85b59c786a08b0ae76fe776baa8cd255e8bc
+Size: 682
+MD5sum: ce53b02a5f3803929c83a5c6dc198da4
+SHA1: ea0d4f6324e930fa9bec903afe89908755d74595
+SHA256: c739218c906a00ff188e1241e07accba8f00c42cc2e9a9cfced70429cd121928
 Description: A OSINT tool which helps you to quickly find information effectively.
 
 Package: instareporter
@@ -474,10 +474,10 @@ Installed-Size: 32
 Depends: python, python-pip, python-setuptools
 Homepage: https://github.com/muneebwanee/InstaReporter
 Filename: pool/main/instareporter_1.0.0_x86_64.deb
-Size: 674
-MD5sum: 77494bbec1179cd88f4e3c8a228301e2
-SHA1: f96958e41cbf914c5268d808727e52bbf5dcd411
-SHA256: 3e62dfd789a83d5e0d26e34ec0f21db3452f5380cfd01c35d48479057efa01ec
+Size: 676
+MD5sum: a03057bad4db450700d3328a8f2cd8f5
+SHA1: 08a3a5f1e9726419fa049e187847db9044eddf6f
+SHA256: eb2c6d2db52577ac8689df65cf4a955160f71e2438d4962af4d16fe6d14df5fe
 Description: Instagram Mass Reporting Tool
 
 Package: ip-tracker
@@ -487,10 +487,10 @@ Maintainer: djunekz <gab288.gab288@passinbox.com>
 Installed-Size: 32
 Homepage: https://kasroudra.github.io/IP-Tracker
 Filename: pool/main/ip-tracker_1.0.0_x86_64.deb
-Size: 652
-MD5sum: ee828d953bbb924aea96f70f45f148ea
-SHA1: 4a69152b7d2bc56da97350219bafed5b741545ab
-SHA256: b6f675769d9c4314106d137d8f19460f5646f276c404f4e8050a23253638aa90
+Size: 654
+MD5sum: 2617351ac584808bc627af46ea307132
+SHA1: cb67422debb797121b2b4915cb25a267b6f5e472
+SHA256: 8e09f9e01062dfdae8bbca15fc8e43dcdfa78468d3d24e20ba5d3c62deb58d61
 Description: Track anyones IP just opening a link!
 
 Package: ipgeolocation
@@ -502,9 +502,9 @@ Depends: python, python-pip, python-setuptools
 Homepage: https://github.com/maldevel/IPGeoLocation
 Filename: pool/main/ipgeolocation_2.0.4_x86_64.deb
 Size: 684
-MD5sum: 8b1c7784b13d983d578de7e6f8c8974e
-SHA1: 8023335aba5e463a7de04878ec6c634a56bacd11
-SHA256: 5002d2c6e48876b7294b3f9470f4b95b1fe9707407c365acb8eb8c6610a0d65a
+MD5sum: 46060732d26f702d0dacdcaccbf760ed
+SHA1: d8a5fbc777eb7505bcfb6a4cdad64d3e9eec83ec
+SHA256: 64acca78689a89e11828800eb6ebe176773bb47058888d1d1c4289e87ea69c58
 Description: Retrieve IP Geolocation information
 
 Package: killchain
@@ -516,9 +516,9 @@ Depends: python, python-pip, python-setuptools
 Homepage: https://github.com/ruped24/killchain
 Filename: pool/main/killchain_1.0.0_x86_64.deb
 Size: 686
-MD5sum: 24ee25a7845a85a41309570941533a75
-SHA1: 3924b8bd8edc9be5d567888eed7daf62b45f15c5
-SHA256: 824a0ce4aadbfcb5b19d84b3cafe6b2ab284f791293f42460d365125576deac4
+MD5sum: 51a8ae1453bee3dab81c5cc6616eb6e4
+SHA1: 91d1b20f551d7e5a9d80967143b9958c365f84e3
+SHA256: 28554a3a14f667acfed771c2f536ad67183e7411556b2a1192a9193b7f64c4c0
 Description: killchain — auto-packaged by termux-build-init
 
 Package: lazymux
@@ -530,9 +530,9 @@ Depends: python, python-core, python-pip, python-setuptools
 Homepage: https://github.com/Gameye98/Lazymux
 Filename: pool/main/lazymux_1.0.0_x86_64.deb
 Size: 666
-MD5sum: 2161fa2acb5da516eb82c5e30e112fe4
-SHA1: 30f780b94ce3cfc3d46c4297d769b3a82939ec9e
-SHA256: 675b1767304f8e9c189cc9a35bfd5b4ba195443a677a2af9a52a51c51c1bf229
+MD5sum: 67eb6311107e5d48fd0192d540600beb
+SHA1: c51742dd1914feb449e295e9530a82698b06f6b5
+SHA256: adc677887a0e8458adb2f555ba1004bfc328421df206f7d67e5155e8710322be
 Description: termux tool installer
 
 Package: lux
@@ -541,10 +541,10 @@ Architecture: x86_64
 Maintainer: @termux-app-store
 Installed-Size: 
 Filename: pool/main/lux_0.24.1_x86_64.deb
-Size: 5965506
-MD5sum: 4b0e54296742c0203fc9f1b021dd261d
-SHA1: 1297b1c6de405a6d19c996f8513b4bf6beda3417
-SHA256: 8a400f24b7b08ec2be225efa901e58b6539e23fa8b0571d693566c65213d554a
+Size: 5965504
+MD5sum: ac4cc29d57efb52476db3f6e881b2a26
+SHA1: 649b1fbaed9495feb5fe5bb839b03ba0816c5204
+SHA256: 3d4d5a3119477e53133fc3af51d59835c50e9ed3c21c21d497fb01448002c9b7
 Description: Fast and simple video download library and CLI tool written in Go
 
 Package: merlin
@@ -554,10 +554,10 @@ Maintainer: djunekz <gab288.gab288@passinbox.com>
 Installed-Size: 32
 Homepage: https://github.com/djunekz/merlin
 Filename: pool/main/merlin_1.0.0_x86_64.deb
-Size: 632
-MD5sum: abb3ba3859fdf0ad3cad4fe760813481
-SHA1: 8ac8f6bf7ce5104ccec51e9dc017fb8987a383ca
-SHA256: e4501c5b6c56565d8f2f81480c5a07f49313678db177b8cad112e0d040fedde2
+Size: 634
+MD5sum: 8e448b16be1f67c042a8b6405b4d4395
+SHA1: 38cd13f54fe16e939ceecc380cbe1081528eb9d7
+SHA256: d92088750fb0e3b088a4441a5def8e322813716e9806205f9c25371b78d0a7dc
 Description: Analyst website vulnerabillity scanner
 
 Package: myserver
@@ -569,9 +569,9 @@ Depends: php, python, python-pip, python-setuptools
 Homepage: https://github.com/Rajkumrdusad/MyServer
 Filename: pool/main/myserver_1.0.0_x86_64.deb
 Size: 698
-MD5sum: 0f0579820e8c4699668f8a12e98146f9
-SHA1: 09fedca58680cdce93e73680b817814015412063
-SHA256: 136a835b63992d282471cdb9de411496e50fdb0bc356daae60b6378b70fac62a
+MD5sum: ed6a2f3b7c5f2130a3d151793e55d4f6
+SHA1: d1a3aa527e24bf031dc7700def72f8a21a65af8d
+SHA256: 48adb3acbbe9d5083966345afd23a9e1e02ef0b5e6c13c8880307c72fade2da3
 Description: myserver — auto-packaged by termux-build-init
 
 Package: orchat
@@ -582,10 +582,10 @@ Installed-Size: 32
 Depends: python, python-pip, python-setuptools
 Homepage: https://github.com/oop7/OrChat
 Filename: pool/main/orchat_1.4.6_x86_64.deb
-Size: 712
-MD5sum: ed9ed4e9a88469deab777bcecde71bba
-SHA1: 68d61db726b4f4d68872b58bd88a3ff4b8285100
-SHA256: 68628db61330b83a5d08295790e9452f2b404876bb8aeeff788c399dadf9f6a6
+Size: 708
+MD5sum: 4bf3fc6f5f6002a85eb1c50e630ef9f0
+SHA1: 4c0c6df0a72a401d62e47adad0d4ecdcf641e36b
+SHA256: 27dc4dcea22051ae01b35a2ee812da5f96ee39a72d5ea552dc98fac24c1377ab
 Description: A powerful, feature-rich command-line interface for interacting with AI models through OpenRouter.
 
 Package: parsero
@@ -597,9 +597,9 @@ Depends: python, python-pip, python-setuptools
 Homepage: http://www.behindthefirewalls.com/
 Filename: pool/main/parsero_1.0.0_x86_64.deb
 Size: 670
-MD5sum: dd09c8f3ffed0a0000c36664a675207e
-SHA1: 8742f41b234f1e6dd8d1e1d2d22cfa7f4f3d7a37
-SHA256: d43b54e8d849530ef8ce6a61b2708601de1fecfd0fe1f448060e83a4f54eb759
+MD5sum: 27755bf7ee17b89942ce24c2b2aaf31c
+SHA1: 5ce671b8ebdbab9a68c7e7b7b24843dde72b3c64
+SHA256: 45dcce4e98418a6082aba55344ff8d6a977ef791f6b0a5115a0452d3e3609a96
 Description: Parsero | Robots.txt audit tool
 
 Package: photon
@@ -610,10 +610,10 @@ Installed-Size: 32
 Depends: python, python-pip, python-setuptools
 Homepage: https://github.com/s0md3v/Photon
 Filename: pool/main/photon_1.3.0_x86_64.deb
-Size: 682
-MD5sum: 92dafb873019c3dbbe76e59483101817
-SHA1: 658f0c7919cfabb2dda77f5e256e79fdca7426b6
-SHA256: 7fe37f94d5485700cd8ff23a6c3081f454664b67485fdfc790813252f0b8e145
+Size: 680
+MD5sum: 06a6ff32ad859f0036033205165bd5f3
+SHA1: cf230c7da89ecaa8479ca0f908b1c8df4420f47a
+SHA256: a0bc1cbcc434bf673497bcc8e89931b9047e4d3185c3dc591ff4a46a57374cdc
 Description: Incredibly fast crawler designed for OSINT.
 
 Package: pnpm
@@ -624,9 +624,9 @@ Installed-Size: 32
 Homepage: https://github.com/pnpm/pnpm
 Filename: pool/main/pnpm_10.30.1_x86_64.deb
 Size: 634
-MD5sum: 12f2951a393417331cffde1aecf119a7
-SHA1: 8fdf839d16e54fdb94b40a903887bd4e55ccf50e
-SHA256: bbb7426e5bbfb6ceec7e7cb9f5bdf80b5e1048b651035e0fc11a3e6086d75b3f
+MD5sum: f2f30fa5c814bdd418215fc207c242a7
+SHA1: 0082d118a57585097222dc0716e3a50af66af563
+SHA256: a36834d87d4e90a63775ae8a9bfe3feaaacfffcbd3dbb553e8599c9eed61a384
 Description: Fast, disk space efficient package manager
 
 Package: pymaker
@@ -637,10 +637,10 @@ Installed-Size: 32
 Depends: python
 Homepage: https://github.com/droidv1/pymaker
 Filename: pool/main/pymaker_1.0.0_x86_64.deb
-Size: 648
-MD5sum: af8b7101c093c7a649edd26735d057a9
-SHA1: d8115cdebc432a204c6b5db26c22e51bc2ccee91
-SHA256: 2ff29e9ee0966d9f1ca4fc15a536a7c06fb4222a198bc8b36cf1a27059b18c48
+Size: 644
+MD5sum: 44e3fda2cd30d6007c32c3ed7c53d163
+SHA1: 2a53e9607639d5fec915a07ffdc2b6841e1f98c1
+SHA256: 3df8a2b19ef097141c8ef33341e444a6dfdce055183e7523bb898b0b76b3f7c5
 Description: Simple tool for create python script
 
 Package: red-hawk
@@ -652,9 +652,9 @@ Depends: php
 Homepage: https://github.com/Tuhinshubhra/RED_HAWK
 Filename: pool/main/red-hawk_1.0.0_x86_64.deb
 Size: 730
-MD5sum: 52d1e8197c16e323e1d764d18c4bdf30
-SHA1: 3184872bc0c3d9fbdaf70eebccf793ab106b6fde
-SHA256: f60085afa8509bc8c1608490fb208fef86e9181bb5ed843bff47716c972dfa26
+MD5sum: 460f8ce601024d39a10e66251ecdb3cb
+SHA1: 1e05e5be0f14f6e39b73231da2c499551b6e164b
+SHA256: 9ea38a24a6de5ec5795f213f4f9c1ab4ecf06e725af1d87df1d226af1e47a4e2
 Description: All in one tool for Information Gathering, Vulnerability Scanning and Crawling. A must have tool for all penetration testers
 
 Package: sigit
@@ -663,10 +663,10 @@ Architecture: x86_64
 Maintainer: @termux-app-store
 Installed-Size: 
 Filename: pool/main/sigit_2.0_x86_64.deb
-Size: 13580
-MD5sum: 54ac9b2a5eaebc65a16e0e98e21fa779
-SHA1: e1c6ea6a046cd7a09ad167382d615532e42df25f
-SHA256: 7b358df03db66b37285f6e908f5602e296c01fac00822153f2318c584e9639b7
+Size: 13576
+MD5sum: b7e8334fd86081f55cc59fb3fe48f9d0
+SHA1: cc1f2461c6d173ced8a77962d99d73fb25979f78
+SHA256: a6446254de70b1ff6bde63d377dd7df2ac5a7eea6594eaa50b685256d01b895d
 Description: SIGIT - Simple Information Gathering Toolkit
 
 Package: ssrfmap
@@ -677,10 +677,10 @@ Installed-Size: 32
 Depends: python, python-pip, python-setuptools
 Homepage: https://github.com/swisskyrepo/SSRFmap
 Filename: pool/main/ssrfmap_1.0.0_x86_64.deb
-Size: 678
-MD5sum: 557251ca0c06d4484320666c212b3ee3
-SHA1: 66529d7d4e173f83f9caf93459154206bd69488b
-SHA256: dfbc335ce7ab63c2f67992e64ad5352391d1afc95845b3c14695594309a5bb35
+Size: 680
+MD5sum: 4bdaef13ab71d6072fc0429a9aa62b6d
+SHA1: 0b08c70901977f244ec9670f05ce43e7173ba2e9
+SHA256: cb98d409f36503a1353fc9b17cad84b48c1bd24d5230b9b71687ffe888549201
 Description: Automatic SSRF fuzzer and exploitation tool
 
 Package: sublist3r
@@ -692,9 +692,9 @@ Depends: python, python-pip, python-setuptools
 Homepage: https://github.com/aboul3la/Sublist3r
 Filename: pool/main/sublist3r_1.1_x86_64.deb
 Size: 684
-MD5sum: 75bae8472299938424af28cd7c30200a
-SHA1: a3f4ae1c090d5eb1b94106d3cbae605e4ed1b7ed
-SHA256: c2558659f49a0122a6c6045dfd929f757561739cc4bee1f78b8d2ee933551e0f
+MD5sum: 72199e1341eb4c69ab930188b1cfd1ed
+SHA1: c2f9a1c29caabc79be02c0303d7ee309db93cc90
+SHA256: 29f003e568e4ee13a58f726f8341bfcf925c0a76a1865cc49a552039ef594443
 Description: Fast subdomains enumeration tool for penetration testers
 
 Package: tdoc
@@ -706,9 +706,9 @@ Depends: bash, coreutils, curl, git, gnupg, termux-tools
 Homepage: https://github.com/djunekz/tdoc
 Filename: pool/main/tdoc_2.1.1_x86_64.deb
 Size: 696
-MD5sum: f8366ebe977d8613105fd0cdebc1cc7f
-SHA1: 37f2b256b60f57d10294029f141dc772b33f9864
-SHA256: 3393a6fc91ede90f701ec2932ad01a834d50d9dc6036e92e2e979d17b523dd1f
+MD5sum: f65448eac467ef09e5c916a578e5a33e
+SHA1: 4f36641bed56d7e4e2ca09aab2f2e6fa6123a35f
+SHA256: 400d686d0e78b28271062ced64a745b503eb1bb8a11f49bb0b48e917c319322f
 Description: TDOC - Diagnostic and repair utility for Termux environment
 
 Package: termstyle
@@ -718,10 +718,10 @@ Maintainer: djunekz <gab288.gab288@passinbox.com>
 Installed-Size: 0
 Homepage: https://gtihub.com/djunekz/termstyle
 Filename: pool/main/termstyle_1.0.0_x86_64.deb
-Size: 49176
-MD5sum: 567b14543d65e18cfe29553a8d2ba487
-SHA1: baf3a9b3e482ff162b815e33d1dd94ca72ea22c1
-SHA256: e421ae2ab44ca95b81c44c55af496daf26d70e6541a5a9fbef6f42e2a60087ad
+Size: 49186
+MD5sum: ec19cf326ca1b17ad6c71cb7fa5c40e4
+SHA1: def6058834efde61fe55f8d4e217b71988de3b48
+SHA256: 00e0867ff61e5d5071e1735cf471cca1fdaa38e81ec50cd1fda993fe3161e8e1
 Description: Simple tool for change color, command prompt, and cursor termux
 
 Package: termux-ai
@@ -732,9 +732,9 @@ Installed-Size: 32
 Homepage: https://github.com/Anon4You/Termux-Ai
 Filename: pool/main/termux-ai_1.0.0_x86_64.deb
 Size: 688
-MD5sum: efb67c15571c455f14c309f4d6a5c405
-SHA1: 504639da94f47415a9e366d9d4b76fce33a1cd1d
-SHA256: 77495f0feaf53b6077528dce8223fd5edc20b364cd1a87d7007b6e7cdb119803
+MD5sum: 4ce70c80811eafd8139e0861d7a938b2
+SHA1: c757d4fcdab3effa3da6899d5b2fb61e7959d6e5
+SHA256: 1804a38a3332d1e81e7d1f3c333184ace31b29d2011fb277b34e48ac376f9e9a
 Description: Interactive AI tool for Termux with 10+ providers and 50+ image models ✨
 
 Package: termux-sync
@@ -746,9 +746,9 @@ Depends: git, python, python-pip, python-setuptools
 Homepage: https://github.com/djunekz/termux-sync
 Filename: pool/main/termux-sync_1.1.1_x86_64.deb
 Size: 706
-MD5sum: bbfc9e7bec9c7ba17f9c319e760aa2f7
-SHA1: e0a593e4ac461c21e5a0bbe2004d907137ee6834
-SHA256: e2b8320b2c2659629278a13ca9995a6406146d8bf987aedba73d3f7856d2c7fb
+MD5sum: 7e71319720cd3b4d289b29dae66ba021
+SHA1: 22c013c24172e5f64cebc92a6b62672218d4636f
+SHA256: 04300d88f8ed768978ca3dc53c9f8884ba5bb722cf41432f282bd69d86d6c683
 Description: OpenSource Backup and restore your entire Termux environment across devices.
 
 Package: termux-tui
@@ -760,9 +760,9 @@ Depends: python, python-pip, python-setuptools
 Homepage: https://github.com/opsonusdh/Termux-TUI
 Filename: pool/main/termux-tui_1.0.2_x86_64.deb
 Size: 692
-MD5sum: a07d8d549a271379db26c77d0b390268
-SHA1: 2eb212cddabe15cb1ff57548f22b8d98ac3337b6
-SHA256: 9d0a714b23c07b6664a3df622146aededef9e31d8589a95053769c966617d438
+MD5sum: 537bad88ff1831ef1abbc571ca2ba02f
+SHA1: 565c98ee36b257f87276e38e693de3dfeb14d127
+SHA256: 05a7c0165beaa7aed789a7e1529c53f64ea745745289dd3fb0bf3608c0401cf0
 Description: A futuristic Jarvis-style terminal dashboard for Termux
 
 Package: termuxalpine
@@ -772,10 +772,10 @@ Maintainer: djunekz <gab288.gab288@passinbox.com>
 Installed-Size: 32
 Homepage: https://github.com/Hax4us/TermuxAlpine
 Filename: pool/main/termuxalpine_1.0.0_x86_64.deb
-Size: 712
-MD5sum: 8edce70b1917b69bd4c5844f3b30fcbd
-SHA1: 6e15c715a78c6ccb39709737cf51daa75a345598
-SHA256: 32371458ee44a7632e83e3a84fa8574fe3dfb7329c97eb06633e2f924cdb8c63
+Size: 714
+MD5sum: fa4d7fcbcee5a077d3ebbbabcf90f559
+SHA1: bd9dda36226ea439be995d9d6205c9f912d3cd7a
+SHA256: 56a4bd26f5862212bcff1834c0024c86669519cda8a4fe6febddb6a782e7cecd
 Description: Use TermuxAlpine.sh calling to install Alpine Linux in Termux on Android. This setup script will attempt to set Alpine Linux up in your Termux environment.
 
 Package: tuifimanager
@@ -787,9 +787,9 @@ Depends: python
 Homepage: https://github.com/GiorgosXou/TUIFIManager
 Filename: pool/main/tuifimanager_5.2.6_x86_64.deb
 Size: 670
-MD5sum: f5d810306d3b4c764e6b8bc8ca1e7c05
-SHA1: 8a31d678a7ab79c6fb301534fad9cbfc92f96f65
-SHA256: a9647349cd9aa3454ce154b77b2c4de1e13c7be184e6a7e688b03b13a2c3bc6d
+MD5sum: 37e705f23b46c3cd08352ea84fb1f460
+SHA1: dea48aae07182310e5ffd9dca730c09ea50bb45c
+SHA256: 7b74dc1a25f351b3ab30154eae90136fd7e009e512ca482309c51807b2744d93
 Description: A terminal-based TUI file manager
 
 Package: tx
@@ -798,10 +798,10 @@ Architecture: x86_64
 Maintainer: @termux-app-store
 Installed-Size: 
 Filename: pool/main/tx_1.0.0_x86_64.deb
-Size: 4955766
-MD5sum: 5983111090818643f8ef0478412e8a5a
-SHA1: 7ec3f2c08e43a6cf736120e611b7069b36e6347b
-SHA256: 4d296ad254622b6f3361f97994c66d04f3b40537c4dd707a0e9e7f2cc57efae5
+Size: 4955760
+MD5sum: 6282438b07209664d3b2fcd8e8f76e9d
+SHA1: 0e5e5690e2b7b6235d6a0c8ed7cc394e66e20f55
+SHA256: 5b687c15d5585dd8c61a9f070b29b84ae111ebcc953109d2300ac7a87b994063
 Description: Advance Terminal Editor Ultimate
 
 Package: userfinder
@@ -811,10 +811,10 @@ Maintainer: djunekz <gab288.gab288@passinbox.com>
 Installed-Size: 32
 Homepage: https://github.com/mishakorzik/UserFinder
 Filename: pool/main/userfinder_1.0.0_x86_64.deb
-Size: 670
-MD5sum: bc37bb1d721a8f04f6943287de1c8b78
-SHA1: 90e6d3d18b510e800d5b1e19b8448921a4ab6c6e
-SHA256: 4e883d3367a4c7ba9dfa28208f184de7b99d6bdad71cc20abdb782e89dd2754b
+Size: 668
+MD5sum: 4f30ca98c9e408c73c5c09c97f067717
+SHA1: 7333dc1129b6ce0acf189e5f530cd62fe0699c2d
+SHA256: 8bdde507e6d0a9c4ae0a2604cdb470ee9cc84ee141d02061933d6d7891c95aa3
 Description: userfinder — auto-packaged by termux-build-init
 
 Package: uv
@@ -823,10 +823,10 @@ Architecture: x86_64
 Maintainer: @termux-app-store
 Installed-Size: 
 Filename: pool/main/uv_0.11.7_x86_64.deb
-Size: 15872852
-MD5sum: b29fcd41c880d88ac49f4bba15b46369
-SHA1: b08c5e94aa1acef09206678014fd6cbe0416c551
-SHA256: 8113ed98d854ac4bf3601829017f6d39d296691fe64bc641c2462d04a19918a1
+Size: 15872838
+MD5sum: d23e0f3b4c3c51a3a0266d6eb67b9971
+SHA1: 47d6d3a7322b1f64379953d7aefca7a9bab0dbd9
+SHA256: 92e1f616e012447cc03bae9602bfd83b32252d38efe50f71b01c01d0583214d1
 Description: An extremely fast Python package and project manager, written in Rust.
 
 Package: webshake
@@ -835,10 +835,10 @@ Architecture: x86_64
 Maintainer: Djunekz
 Installed-Size: 
 Filename: pool/main/webshake_1.0.2_x86_64.deb
-Size: 3690
-MD5sum: 118cafaf5906e71f9b04abf8498bd5e6
-SHA1: 0207c01581fb3d470a856b8785af939d8cd0ce02
-SHA256: 38df16171866d260c67a4a5a70d86bd61ffbc92a4fd9695b24eebe85c595f48d
+Size: 3688
+MD5sum: 27807c484806a4dd7d5d435417f26a37
+SHA1: ded9379f207b6a261b8cb53c5782f0c954e29e91
+SHA256: dfd0037e8ffc95052f1721ed117f60955c45c085f9b15388529c71a9416c42ee
 Description: Scan vulnerabilities and analyze websites
 
 Package: xeuledoc
@@ -850,9 +850,9 @@ Depends: python, python-pip, python-setuptools
 Homepage: https://malfrats.industries/
 Filename: pool/main/xeuledoc_1.0.0_x86_64.deb
 Size: 676
-MD5sum: 54e0329ababf31e3478522c5db09a8bb
-SHA1: 63aed28d67e64c80083a593d8f642edd22145cc8
-SHA256: 296b3619028b7eaafe31f0da646d95559aa4f10251da37d3cbf2e571084e6f8c
+MD5sum: 79a4e7c8801ac9ad1844d063d8030e96
+SHA1: bb570e849b79be1534975d464e1ea392dac2c468
+SHA256: 441f01a9ded618aef0be60eccfb7543d9c8f39ffdf3cdff0b27feefbd2d82c03
 Description: Fetch information about a public Google document.
 
 Package: xsstrike
@@ -863,10 +863,10 @@ Installed-Size: 32
 Depends: python, python-pip, python-setuptools
 Homepage: https://github.com/s0md3v/XSStrike
 Filename: pool/main/xsstrike_3.1.6_x86_64.deb
-Size: 668
-MD5sum: 14c85029f86b8acdb9d3872ecffd7524
-SHA1: 8752c8e173b9cf73c49545ee882338b74f087af1
-SHA256: c329de2648b0b73cfad20529abbdaf54656e1dc8930abf7b5c6ead1da0b52bdb
+Size: 670
+MD5sum: deefdf5c4e51f0455a3eaad395be72c6
+SHA1: ca99845e59efdf875b6b7e8201049e85545f1769
+SHA256: fc40a02395a2cb6a918ba322cdfe3d7c600d36d4482501331552e4fc396c7dc0
 Description: Most advanced XSS scanner.
 
 Package: zerodoor
@@ -878,9 +878,9 @@ Depends: python, python-pip, python-setuptools
 Homepage: https://github.com/Souhardya/Zerodoor
 Filename: pool/main/zerodoor_1.0.0_x86_64.deb
 Size: 700
-MD5sum: c0fa9d37b10d04a58a3ef2545e53e51b
-SHA1: f0c761683248b47d3a9e0a193c99413363bfcd11
-SHA256: c5f6f774fd731d0baed83ee4e60184728b25dab12663d294db8c12c330a4a492
+MD5sum: bcd949326343b8daea623865cfc0bb52
+SHA1: c35b3ef1f2773092473e6625396e38267a58f7ba
+SHA256: 335b5e74c7949184d56bdf3046ad7891e852e08a246a672d3c1981682d52384e
 Description: A script written lazily for generating cross-platform  backdoors on the go :)
 
 Package: zora
@@ -889,10 +889,10 @@ Architecture: x86_64
 Maintainer: @termux-app-store
 Installed-Size: 
 Filename: pool/main/zora_2.0.0_x86_64.deb
-Size: 5106454
-MD5sum: 7e887df9f49c576631956fac912549a7
-SHA1: d64796053d72a7cb184707e2074947cb585dcf90
-SHA256: aa3f350ad5b75be79564f0b3dcdb051991535e2e5c84029682711d9f787d2241
+Size: 5106642
+MD5sum: 86e190196328ed8813d5780677b7e279
+SHA1: 7726372cb8259a290138e1e8b9e06490e515d879
+SHA256: 27041b8a17ec0ed525b56faa2313ed381ad90cb4edb431e19083f692985af3d0
 Description: The ultimate OSINT framework
 
 Package: zorabuilder
@@ -901,10 +901,10 @@ Architecture: x86_64
 Maintainer: @termux-app-store
 Installed-Size: 
 Filename: pool/main/zorabuilder_1.0.0_x86_64.deb
-Size: 4833348
-MD5sum: 18f1b05334f6e2ba43b05f2f950d4495
-SHA1: a87fa2095ed6a358b4cdcc0d8502616048b5e860
-SHA256: 806873a014230705d57f637e2fc5227e3bcbc46f5554b7e5718286422a7f0c96
+Size: 4833338
+MD5sum: 3cdbb9011ff572988de1e42227f3588f
+SHA1: 2adc729e9d599b1064ecdcee08bf746c25ecbf79
+SHA256: cbe74fc90ca4c33b390d866c72e3144abe77d4cf057afcda7cf548171b79e7a1
 Description: Builder python standalone ELF
 
 Package: zoracrypter
@@ -914,7 +914,7 @@ Maintainer: @termux-app-store
 Installed-Size: 
 Filename: pool/main/zoracrypter_1.0.0_x86_64.deb
 Size: 11236
-MD5sum: 55adc282d37d648060bb0e67a6c0800f
-SHA1: 8fcfeeb01b41d02325dfd84eb2df99b95d488909
-SHA256: cfc6079cacdf9a7584e706363219258271c717f9b36f0b6b50102011d9837d4b
+MD5sum: 5e51ce67f4a8bfdbeca0ea8648bcafb8
+SHA1: b377de6ab0d98ba458bfcf217c14a81ece236b03
+SHA256: 81b88350776b034bdc1e9b2b444fece8723e3619cd7b23086947ab000ab827d6
 Description: Encrypter Stealth Binary Builder
