@@ -102,7 +102,7 @@ jobs:
 
       - name: Build with build-package.sh
         if: github.event.inputs.force == 'true' || steps.cache.outputs.cache-hit != 'true'
-        uses: uraimo/run-on-arch-action@v2
+        uses: uraimo/run-on-arch-action@v3
         with:
           arch: aarch64
           distro: ubuntu22.04
