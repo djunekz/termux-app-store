@@ -961,6 +961,20 @@ SHA1: ee3461289a5c2dcb20a4c182c1ac2f20db5d4fe8
 SHA256: 54364c51a68c4806a689086bb33e4289c612411cdcae55284aad2b9732fc4f17
 Description: Interactive AI tool for Termux with 10+ providers and 50+ image models ✨
 
+Package: termux-app-store
+Version: 0.3.0
+Architecture: i686
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 180
+Depends: python, python-pip
+Homepage: https://github.com/djunekz/termux-app-store
+Filename: pool/main/termux-app-store_0.3.0_i686.deb
+Size: 22800
+MD5sum: afa3b1031689e7b33d6e59a770bd2cf9
+SHA1: fb4c3887c266f874d8c21200e532added92d83e2
+SHA256: 679e87f9bdda1ff10023729187bb89be62d719949f8f97778ae5dea2a684428a
+Description: The first offline-first, source-based TUI package manager for Termux
+
 Package: termux-sync
 Version: 1.1.1
 Architecture: i686
@@ -1152,3 +1166,4 @@ MD5sum: 5684a608882544570b9602596ce3cdf8
 SHA1: 2f6a2269eb0695d401f1fa3693e4085b1457832d
 SHA256: b9e789f5ba45d2aa1beebf8ce22dae75822336071fd4cf868858d6b9898fe300
 Description: A script written lazily for generating cross-platform  backdoors on the go :)
+
