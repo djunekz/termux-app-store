@@ -601,13 +601,14 @@ Description: TDOC - Diagnostic and repair utility for Termux environment
 Package: termstyle
 Version: 1.0.0
 Architecture: x86_64
-Maintainer: @djunekz
-Installed-Size: 
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 0
+Homepage: https://gtihub.com/djunekz/termstyle
 Filename: pool/main/termstyle_1.0.0_x86_64.deb
-Size: 13260
-MD5sum: eeddff85ba0f7ca09609324839581b93
-SHA1: d82b9afd91a2a5c686fb3fdc366918ef3d8d2915
-SHA256: 7424608c92ecfdb4ed960ff05c2b78ee883b320436398da18e35964cc5369cb6
+Size: 676
+MD5sum: af7a74544077ea5ca654116a26b4e7bd
+SHA1: 5a11233688521f1fcb2fc8fa395fadaefcde9d93
+SHA256: a6ecb6d5e88f5f9249bf70146ecab75e51752f726ed61bf7566f17a8e93ccef5
 Description: Simple tool for change color, command prompt, and cursor termux
 
 Package: termux-ai

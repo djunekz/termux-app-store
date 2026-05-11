@@ -599,15 +599,15 @@ SHA256: a05f1df337bf7ed8982810d50397eedb52e692e3684983e77e05e717ecb7ccac
 Description: TDOC - Diagnostic and repair utility for Termux environment
 
 Package: termstyle
-Version: 1.0.0
+Version: 2.0.0
 Architecture: aarch64
 Maintainer: @djunekz
 Installed-Size: 
-Filename: pool/main/termstyle_1.0.0_aarch64.deb
-Size: 13056
-MD5sum: c0ea7eb8f534460d56deda1ff0b8e97e
-SHA1: 82d2d205761bc15428217cccc06b661789755ae6
-SHA256: 2ec350c6d8230eaa99df51ba500943357fd2f58c72dfcfe7ed83b8f7e026f16a
+Filename: pool/main/termstyle_2.0.0_aarch64.deb
+Size: 14832
+MD5sum: 65c44e860ec44a64bfc4fb876ff2d58e
+SHA1: 05f66cde7226a29b7d7638425728603cf6f22586
+SHA256: 5c74fd747dd026da182aa3a92e1c733294b14b8e9a449c9f91c6ba9932e256de
 Description: Simple tool for change color, command prompt, and cursor termux
 
 Package: termux-ai
