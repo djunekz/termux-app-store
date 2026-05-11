@@ -196,10 +196,10 @@ Architecture: i686
 Maintainer: @termux-app-store
 Installed-Size: 
 Filename: pool/main/dnsrecon_1.6.0_i686.deb
-Size: 562894
-MD5sum: 855774bbbc8cf3b0b84b1517482bc527
-SHA1: 4358dc6c3e9ac4d339feaf1403afd364ea862d99
-SHA256: 5ffd671a822a4aab488e762b41de4cb728459fa88e18d3d795572f3e6ff50956
+Size: 562848
+MD5sum: 2b422a8c73b4a9c420f16afff58fa8ef
+SHA1: abb18924f44057895dae1bb2013eb01213a0dff7
+SHA256: 9cfe81fdb0795db2b810b9774d2a4095df1e2b36b3c084a1698b42454ab1e72a
 Description: DNS Enumeration Script
 
 Package: doona
@@ -244,10 +244,10 @@ Architecture: i686
 Maintainer: @termux-app-store
 Installed-Size: 
 Filename: pool/main/eternal-scanner_2.2_i686.deb
-Size: 21644
-MD5sum: 76f186fc2c9f1626e25708eb6365b653
-SHA1: 21d342b4f6c3788f4e5c3b2c0ba7e2aeb39fac79
-SHA256: 4a45676545372de2796f0fe531bbd20047a07aadc42eb5addd5b0471b2aebac3
+Size: 21642
+MD5sum: 40ea9df56cadf8d35a5d821160522edb
+SHA1: 3f02617b46c770c3ea73a75a87095bbb3aadb30c
+SHA256: d5620c53f986e68b1692678ed576cde869757a07f6d8687cf0f29992437dae3e
 Description: An internet scanner for exploit CVE-2017-0144 (Eternal Blue) & CVE-2017-0145 (Eternal Romance)
 
 Package: fbvid
