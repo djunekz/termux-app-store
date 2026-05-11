@@ -25,13 +25,14 @@ Description: Vulnerability Scanner to automate certain tasks
 Package: bashxt
 Version: 2.2
 Architecture: i686
-Maintainer: @termux-app-store
-Installed-Size: 
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 0
+Homepage: https://github.com/djunekz/bashxt
 Filename: pool/main/bashxt_2.2_i686.deb
-Size: 4886
-MD5sum: 66c9d7b1c7e4e61f9ba40321576e896f
-SHA1: 266e15c205f19cde030ff0f12e83710edf50b6d9
-SHA256: ea9646023a2a9056dbb24cf70728639e67e8616f5aacaad7de70ce3c0d0057ef
+Size: 656
+MD5sum: a9e3166cc6d0364af01d8d39334e2899
+SHA1: b3bd5fc338eebe032f0cf9f01386456286583405
+SHA256: df97d030a3f13defac43b2d325d9637d5c531625ce6190ead387987978a980d3
 Description: basic command, code color, shortcut keyboar, etc information
 
 Package: basic
