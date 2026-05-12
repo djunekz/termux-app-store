@@ -76,10 +76,10 @@ Architecture: aarch64
 Maintainer: @termux-app-store
 Installed-Size: 
 Filename: pool/main/bower_1.8.12_aarch64.deb
-Size: 205856
-MD5sum: e1107aea1cf622bb30014c516e20ecf7
-SHA1: 49c9e113719cfd4908e36c1cd4c8f793c3f6abe1
-SHA256: 69087f92f12657f7f5c54c5f7968df5e7d3f85c4e0b6976873dd4fadea187bdb
+Size: 205892
+MD5sum: 65e3321e19191bd2e531cfd4882fed90
+SHA1: b660acf633382c112ffe4ddd18de362c2581671a
+SHA256: 3e79a490d6728ed2122cec5adfbb0575cc7ebfff9dfbce1a0cc83fd88a04a67f
 Description: A package manager for the web
 
 Package: clickjacking-tester
@@ -148,10 +148,10 @@ Architecture: aarch64
 Maintainer: @termux-app-store
 Installed-Size: 
 Filename: pool/main/crowbar_4.2_aarch64.deb
-Size: 344480
-MD5sum: 96e9989fc961417e52055a37d0f4d61e
-SHA1: dc65cc92194970c38a304f81d571de637886d143
-SHA256: cb8b597c465b39b9b84e5485e7fa4c070b4d7005600f3c57d0821febc5dd1af3
+Size: 344476
+MD5sum: 37d47943d12e38f474a98de0f2210b8d
+SHA1: c897b8289cc6d093cc7554bce02abb8b256fec8b
+SHA256: 48efc4b0ea50c0420f57d56b5ae8aa4d41310725ac8dde25ba118eab27de48e3
 Description: Crowbar is brute forcing tool that can be used during penetration tests. It is developed to support protocols that are not currently supported by thc-hydra and other popular brute forcing tools.
 
 Package: cupp
@@ -654,10 +654,10 @@ Architecture: aarch64
 Maintainer: @opsonusdh
 Installed-Size: 
 Filename: pool/main/termux-tui_1.0.2_aarch64.deb
-Size: 214288
-MD5sum: d55ca58996a530d5349e3a15f59429ae
-SHA1: 252fa5595fc4dbf84ddd21b123ff264405294abf
-SHA256: f1d73a87460b3f02586ecfa6d38120a499d89eb9a2eaf081ddd90f78c43f03be
+Size: 214240
+MD5sum: 905fca3191e7de99676c4e15aaff4f1f
+SHA1: 22f090ca8d2e13a958fc24f70679dca855fb34a9
+SHA256: a11bd00a060851a09442f4e7ef8d382f50224a6da614b13cf68600313a258746
 Description: A futuristic Jarvis-style terminal dashboard for Termux
 
 Package: termuxalpine
@@ -815,4 +815,3 @@ MD5sum: ad9b452b2d396cff867f9146b89c7008
 SHA1: 5ae1c518119491081af850e468931fbb867d418a
 SHA256: 6c456ae7bc84e8ee58a3eeab3cdd5a4a81494c9677301d9c3997697abd459343
 Description: Encrypter Stealth Binary Builder
-

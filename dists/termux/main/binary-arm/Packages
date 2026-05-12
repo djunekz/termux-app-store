@@ -76,10 +76,10 @@ Architecture: arm
 Maintainer: @termux-app-store
 Installed-Size: 
 Filename: pool/main/bower_1.8.12_arm.deb
-Size: 210520
-MD5sum: 4576f76ee30a4a8c549aaf1e57736250
-SHA1: 371fe78015e4c1b0ace0b0de8dca14f3f33c2eb2
-SHA256: e1fa3cb9d888c459c1e40c69dc9830778d7dd6e22dc67fda7d358faff4043394
+Size: 210660
+MD5sum: 68c9612d29eeb7fd19e3d49701312834
+SHA1: 1d83768f4e07a796246fecad5d60d8156050b2f4
+SHA256: 1fb82c62d6082fe5598e0c7e62e0bc4b869e1f3e68f9aa18c8c7c03a2d410991
 Description: A package manager for the web
 
 Package: clickjacking-tester
@@ -148,10 +148,10 @@ Architecture: arm
 Maintainer: @termux-app-store
 Installed-Size: 
 Filename: pool/main/crowbar_4.2_arm.deb
-Size: 343264
-MD5sum: 1f1235b7746d7d4f239fae365fcb5c96
-SHA1: 6e233602d8db821792e7797675b8384f55f4f73a
-SHA256: 876f0a10809fa20f9d2bb21b2069c0fe1783e72ad96f5d97b948fd862b19df4d
+Size: 343262
+MD5sum: 1b5138aae5ee33be76f98006b7008a88
+SHA1: adf682ef00fec50e3fda91ffb16f787327bbf307
+SHA256: 42f16b4be12d5e66c10228df382ac903987bdf4cb6a6d6466da959d5286618a5
 Description: Crowbar is brute forcing tool that can be used during penetration tests. It is developed to support protocols that are not currently supported by thc-hydra and other popular brute forcing tools.
 
 Package: cupp
@@ -654,10 +654,10 @@ Architecture: arm
 Maintainer: @opsonusdh
 Installed-Size: 
 Filename: pool/main/termux-tui_1.0.2_arm.deb
-Size: 214998
-MD5sum: f1018c44edb9aea08ddd3adc8cd39cc7
-SHA1: f46a75ec560c848062f8e404e5035b19f8d3ddfe
-SHA256: 4a88c41ccf00181102b0059f513fe9528d24ca558bc0c77e783516bc92529a82
+Size: 214954
+MD5sum: f8f81b73200a26cfe111bca84866cb18
+SHA1: 40f430f7614a72b047101d7e6919476afe055b97
+SHA256: 029cddd1df2414a0a4641480c783d9d755a1a202093a53a9231d2b449f77cb20
 Description: A futuristic Jarvis-style terminal dashboard for Termux
 
 Package: termuxalpine
@@ -815,4 +815,3 @@ MD5sum: a2018162c1e703d65735796c9e9536d9
 SHA1: 85a17ebe7dd6e1db102d51b509b08d0f0593fc83
 SHA256: 04f5bdbad3998de53a5255e265e1aebbbb285634dc95bbd139c7acce552aabea
 Description: Encrypter Stealth Binary Builder
-

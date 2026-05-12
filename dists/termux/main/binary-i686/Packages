@@ -76,10 +76,10 @@ Architecture: i686
 Maintainer: @termux-app-store
 Installed-Size: 
 Filename: pool/main/bower_1.8.12_i686.deb
-Size: 210590
-MD5sum: ceb901c8bedf54ce66d051078d800d08
-SHA1: 62fd28c0f5855ea462da00d917f5cef9efcd8141
-SHA256: c8fd25c06cf7f3d4676fe5dd861ad4488403b64c99f74422a562e5c7af2cee35
+Size: 210622
+MD5sum: 89aee9a219b7aebf960c3711a212d57b
+SHA1: f1d079786dee70e55c19ca652fcd134de9a73c68
+SHA256: e7abcf8966c371c9de292f0f804c235eb6f773a884bdbf212943f504ed00b714
 Description: A package manager for the web
 
 Package: clickjacking-tester
@@ -149,9 +149,9 @@ Maintainer: @termux-app-store
 Installed-Size: 
 Filename: pool/main/crowbar_4.2_i686.deb
 Size: 343264
-MD5sum: 2440c77762a7f2473f9d83dcf82c1a7f
-SHA1: 14d5b350cefddca03607b66dd2d599f2ef0de8ca
-SHA256: a1f0686a6cecb5c98a8314d18a78a52391cded36b50823c589197322849f3290
+MD5sum: 0360d73a801373c46f0a7d5426647493
+SHA1: e212402d1889f1fa98815a907bca4fcf98fd72be
+SHA256: 1013f233c6acbabe0544dcc4c217474eb6c51a46f28ecf36007d3e474918b66a
 Description: Crowbar is brute forcing tool that can be used during penetration tests. It is developed to support protocols that are not currently supported by thc-hydra and other popular brute forcing tools.
 
 Package: cupp
@@ -654,10 +654,10 @@ Architecture: i686
 Maintainer: @opsonusdh
 Installed-Size: 
 Filename: pool/main/termux-tui_1.0.2_i686.deb
-Size: 214998
-MD5sum: a1a24382ba694390978cc722644ebf36
-SHA1: 505118fd2c0ed30f987ea03becd09c811b102f49
-SHA256: 7386aad40338783d7f184369e55fa532681b05c6434ec8609c6c0a6ef2ac4224
+Size: 214954
+MD5sum: c9847cf573a113633d43a172bbe26732
+SHA1: a7b3810365ee6368150726b56af9d70a139d3cad
+SHA256: a6dee664119ef49b0102db029b13043114177440ff343f5a6c3661e286b45d37
 Description: A futuristic Jarvis-style terminal dashboard for Termux
 
 Package: termuxalpine
@@ -815,4 +815,3 @@ MD5sum: d26220e69c2c35cd9c2427669e6b8c68
 SHA1: c283dd78dbf924afb795cf36363bcb477ee17285
 SHA256: 772f94b3da47600b7d1c2074ffe4cbcfd843500429402a7e96aa30a313dbfe30
 Description: Encrypter Stealth Binary Builder
-
