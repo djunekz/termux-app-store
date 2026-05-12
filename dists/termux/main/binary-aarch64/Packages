@@ -124,10 +124,10 @@ Architecture: aarch64
 Maintainer: @termux-app-store
 Installed-Size: 
 Filename: pool/main/cmsmap_1.0.0_aarch64.deb
-Size: 383084
-MD5sum: 8d4e3a4d277ca48565b0bda690e8b790
-SHA1: d4719539db01a584e944c9aa18055db1e03a6ce0
-SHA256: 7fa6c192263023f1e8a45b024b316c6b2eef24f5bb79a25615f871e7c78ddfa9
+Size: 383204
+MD5sum: d1898a039556ec4c0716a84fb0b47416
+SHA1: 04fcb91110c0a743d134a580685cf73966106195
+SHA256: 4609a3049aedc23de40aeeb1f3ad445507f7e8a841317c61a1de34e9c446e774
 Description: CMSmap is a python open source CMS scanner that automates the process of detecting security flaws of the most popular CMSs.
 
 Package: commix
@@ -136,10 +136,10 @@ Architecture: aarch64
 Maintainer: @termux-app-store
 Installed-Size: 
 Filename: pool/main/commix_4.1_aarch64.deb
-Size: 172924
-MD5sum: d39c74cf71e810f4af92990fedd9b808
-SHA1: 87a0eee0ffcb0316ce52fd3512001b8f30eaf13f
-SHA256: edcec47b3e2fb8ab52ae7ee2462eae158064ab28f6e6b2a5a964b56d952d3106
+Size: 172972
+MD5sum: a63e7f87afe5c4fb49e1f4a43fc4f803
+SHA1: e768f6cd90926d4fa4921d422b238bf49a7fdea2
+SHA256: 6c28aa1d9191531cdfd4517d0c8b490538692a9e7d762966d32098d4b91d7d74
 Description: Automated All-in-One OS Command Injection Exploitation Tool
 
 Package: crowbar
@@ -184,10 +184,10 @@ Architecture: aarch64
 Maintainer: @termux-app-store
 Installed-Size: 
 Filename: pool/main/djangohunter_1.0.0_aarch64.deb
-Size: 5036
-MD5sum: 30165d357442eaa84dcd8ff482287398
-SHA1: 7511e1663072caf1e0148c0f212b954dace9e2c9
-SHA256: 87b53c25b1da7024c032e6048542e3ef7e237636413945de3fb04d1b7a24afa5
+Size: 5032
+MD5sum: 8ec8e2aeaa7573f4ad3907462906a645
+SHA1: 0af1ed230d36ecdc5a8e1ac888091457dfeeae75
+SHA256: a3d2af3e4a1a485e1256ce6b76f8cd1f3330dc497b3eedb4176b490e6f49bcd5
 Description: djangohunter — auto-packaged by termux-build-init
 
 Package: dnsrecon
@@ -472,10 +472,10 @@ Architecture: aarch64
 Maintainer: @termux-app-store
 Installed-Size: 
 Filename: pool/main/lux_0.24.1_aarch64.deb
-Size: 5137720
-MD5sum: a700442db50626dfd47b3aec68ce2ab3
-SHA1: bb44110008095e898bc156e6dd8071168a4e3864
-SHA256: 22ac8b7c93523ebe2717fc2bab75238efc058735587bcab44dbcde24055c6c34
+Size: 5144388
+MD5sum: c99729759de7503beeded45bf533745d
+SHA1: 7f95daf6a7bad55359b6c4e8f929e18783b13b40
+SHA256: b4dab74ccac9cccb658f02d0bcfc3fa9b8cf7b49ddc05cced442b0bf61148289
 Description: Fast and simple video download library and CLI tool written in Go
 
 Package: merlin

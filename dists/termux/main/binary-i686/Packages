@@ -124,10 +124,10 @@ Architecture: i686
 Maintainer: @termux-app-store
 Installed-Size: 
 Filename: pool/main/cmsmap_1.0.0_i686.deb
-Size: 389808
-MD5sum: 7375856814c27e866a7adde6afc3c553
-SHA1: 392a6590adf5f9bf4366b626338401e4958344a0
-SHA256: c3cb700390166652f08d334148e73938d5b48aaecd04cd1730f41e2e1efe68e4
+Size: 389812
+MD5sum: fd7af1166accd8ca666095649b235e84
+SHA1: 0e0730e5e8d376c9a0cba0aefaf1004d3dc17682
+SHA256: 50ef50f5aed09d0c685a48b377d1291ccab3374cc6250af73bac241c7b6b9659
 Description: CMSmap is a python open source CMS scanner that automates the process of detecting security flaws of the most popular CMSs.
 
 Package: commix
@@ -136,10 +136,10 @@ Architecture: i686
 Maintainer: @termux-app-store
 Installed-Size: 
 Filename: pool/main/commix_4.1_i686.deb
-Size: 176458
-MD5sum: a751a9472185d36a64755804e6708aa1
-SHA1: 53d9defd59a817da082b5a649f288dcd500b3020
-SHA256: 568b2856045af964e9dc8ebee9a360113fe9145a234f73cd92f7a89df06dbed2
+Size: 176476
+MD5sum: 1a41e62a7e73b9c21850ce4c430b851e
+SHA1: d8969e6a997058cba89d4958c5d52e912911b72c
+SHA256: 429b9760fbdeb3d83b659b6a0db5e3490cb8727df32e538f925d012173513f86
 Description: Automated All-in-One OS Command Injection Exploitation Tool
 
 Package: crowbar
@@ -184,10 +184,10 @@ Architecture: i686
 Maintainer: @termux-app-store
 Installed-Size: 
 Filename: pool/main/djangohunter_1.0.0_i686.deb
-Size: 4946
-MD5sum: fb78eb87d1c95c82ac16fa498ecb442b
-SHA1: 0894a7cf1ae2b0351374af3d47e7bab66ead3379
-SHA256: 1a0d14f8780a7315f9dc2a531fe83197994521ae1833a086b70b3237fde2123f
+Size: 4950
+MD5sum: 4abf1e0c0add92ff5b1517cc0a14e667
+SHA1: c681ae41e6c04faadd148f4d428124a8c46bd4ec
+SHA256: c297e173bfeecfa62db9118d8ad23faa1f31278baf901385b385389d4d4d03fc
 Description: djangohunter — auto-packaged by termux-build-init
 
 Package: dnsrecon
