@@ -623,17 +623,17 @@ SHA256: 92c2288e7baa9ea2715ca6b601c9ea28fcfd7fbbd45b69e743ac31396cb83e0a
 Description: Interactive AI tool for Termux with 10+ providers and 50+ image models ✨
 
 Package: termux-app-store
-Version: 0.3.0
+Version: 0.4.0
 Architecture: arm
 Maintainer: djunekz <gab288.gab288@passinbox.com>
 Installed-Size: 244
 Depends: python, python-pip
 Homepage: https://github.com/djunekz/termux-app-store
-Filename: pool/main/termux-app-store_0.3.0_arm.deb
-Size: 29148
-MD5sum: 8593c28168aba46af9640a094f184007
-SHA1: 2a57c18b5de658d6fc86baf449bd50e43f5ffcbd
-SHA256: e5125e46f1aa08337b4a5299357f845bc538d3360a8c79fb2fd28a7bfd40d00e
+Filename: pool/main/termux-app-store_0.4.0_arm.deb
+Size: 29136
+MD5sum: a6f6c33d1700b06f26421745b16c7b4f
+SHA1: fdec181b5049dd8973b1593d4c6e1503e2b035f5
+SHA256: 3f1d3fd1f8eb5bb6141b007756d06c8ee6b2d0cc5a900a862b065919c7226ccd
 Description: The first offline-first, source-based TUI package manager for Termux
 
 Package: termux-sync
