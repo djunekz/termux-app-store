@@ -622,6 +622,20 @@ SHA1: dd20b1e072fdcc0bdbe2047f2df9ee39c5de998f
 SHA256: 99ecbf0126322e4f1d13172882ce06ba86976f14d38c1a0e3f075429818c1990
 Description: Interactive AI tool for Termux with 10+ providers and 50+ image models ✨
 
+Package: termux-app-store
+Version: 0.3.0
+Architecture: aarch64
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 180
+Depends: python, python-pip
+Homepage: https://github.com/djunekz/termux-app-store
+Filename: pool/main/termux-app-store_0.3.0_aarch64.deb
+Size: 22804
+MD5sum: 3f954cd21a0c6ea009cb61deee77a7d0
+SHA1: a94e490c95660b83c2d59db31fed9735fb04d9c7
+SHA256: 6a3ab89e95bcb8a7f259e1041b88c93342bac7ebf10129837835c528576344be
+Description: The first offline-first, source-based TUI package manager for Termux
+
 Package: termux-sync
 Version: 1.1.1
 Architecture: aarch64
@@ -801,3 +815,4 @@ MD5sum: ad9b452b2d396cff867f9146b89c7008
 SHA1: 5ae1c518119491081af850e468931fbb867d418a
 SHA256: 6c456ae7bc84e8ee58a3eeab3cdd5a4a81494c9677301d9c3997697abd459343
 Description: Encrypter Stealth Binary Builder
+
