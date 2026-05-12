@@ -76,10 +76,10 @@ Architecture: x86_64
 Maintainer: @termux-app-store
 Installed-Size: 
 Filename: pool/main/bower_1.8.12_x86_64.deb
-Size: 210578
-MD5sum: 14c41495abe23e88b8da70d79a20bbdc
-SHA1: 87ea748c0a372ea4275a56a26570f363845ed3d4
-SHA256: 5d8e949bb19841a4473f3026c3ce65509d4722b4794dca935fde2b34a7cc1922
+Size: 210594
+MD5sum: 191628b566ca200e92de23c4880edf12
+SHA1: 58a9113449462f8f0fbae095be0a30a868861de1
+SHA256: 8aff39fa85a29f9a98d71e86365dad23030f8f3422a147bd0511873732f072ca
 Description: A package manager for the web
 
 Package: clickjacking-tester
@@ -148,10 +148,10 @@ Architecture: x86_64
 Maintainer: @termux-app-store
 Installed-Size: 
 Filename: pool/main/crowbar_4.2_x86_64.deb
-Size: 343220
-MD5sum: 57904045f2a219cbaf937e28a8f90300
-SHA1: 4d350e5c95bf3ad1c662e8632970adafd0ad1166
-SHA256: c679015bcc6f8101c342f45644779c45415cf66588a5ea0500d1dcbec5254971
+Size: 343268
+MD5sum: 348e61b9ad9468ccbcfee3fd27d10aad
+SHA1: 5678898bff21fc0446e7c5baef28ead1037a6132
+SHA256: 3899cbec1fa9d8367df45324f6e455891c65f8c1d230ea06afefb5b41f71923c
 Description: Crowbar is brute forcing tool that can be used during penetration tests. It is developed to support protocols that are not currently supported by thc-hydra and other popular brute forcing tools.
 
 Package: cupp
@@ -640,10 +640,10 @@ Architecture: x86_64
 Maintainer: @opsonusdh
 Installed-Size: 
 Filename: pool/main/termux-tui_1.0.2_x86_64.deb
-Size: 214970
-MD5sum: 712abd98746cfe55288a81fdcf275163
-SHA1: 2ea87792d5c4dcb4e4e74e62b37af06985a679d4
-SHA256: 19b2b888872835c103d8c0d617ee330481836f15c3905a4d89d0b6c75b859502
+Size: 215002
+MD5sum: a4701c25f5eeaba27ba74efa3b7c96a2
+SHA1: b96e9c5807799b34acb829d3319f7cec01bcb147
+SHA256: ef3d69936a4475dc4b01667cb209b6858f15fb8e7b2aa275e0d3feb4e1908a14
 Description: A futuristic Jarvis-style terminal dashboard for Termux
 
 Package: termuxalpine

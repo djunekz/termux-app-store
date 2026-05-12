@@ -76,10 +76,10 @@ Architecture: i686
 Maintainer: @termux-app-store
 Installed-Size: 
 Filename: pool/main/bower_1.8.12_i686.deb
-Size: 210576
-MD5sum: 58d84373a5c50bb84c620b9c76d580ad
-SHA1: a86d55c8ab5f55693e8d82cdb6d81a33a942e0d7
-SHA256: 268306fd2cc05513303b775872c0dec0a2799f045274c7c979cdf68447ca8283
+Size: 210590
+MD5sum: ceb901c8bedf54ce66d051078d800d08
+SHA1: 62fd28c0f5855ea462da00d917f5cef9efcd8141
+SHA256: c8fd25c06cf7f3d4676fe5dd861ad4488403b64c99f74422a562e5c7af2cee35
 Description: A package manager for the web
 
 Package: clickjacking-tester
@@ -148,10 +148,10 @@ Architecture: i686
 Maintainer: @termux-app-store
 Installed-Size: 
 Filename: pool/main/crowbar_4.2_i686.deb
-Size: 343218
-MD5sum: b195c94eea23ed940b518827e0509bd1
-SHA1: 8bf07c952519103ce89360631943e28682ee26c0
-SHA256: 9ffffea5afbabfd01c73ac1542d6cfe82e14574fc5ce4d85f1f48f9f70085455
+Size: 343264
+MD5sum: 2440c77762a7f2473f9d83dcf82c1a7f
+SHA1: 14d5b350cefddca03607b66dd2d599f2ef0de8ca
+SHA256: a1f0686a6cecb5c98a8314d18a78a52391cded36b50823c589197322849f3290
 Description: Crowbar is brute forcing tool that can be used during penetration tests. It is developed to support protocols that are not currently supported by thc-hydra and other popular brute forcing tools.
 
 Package: cupp
@@ -640,10 +640,10 @@ Architecture: i686
 Maintainer: @opsonusdh
 Installed-Size: 
 Filename: pool/main/termux-tui_1.0.2_i686.deb
-Size: 214968
-MD5sum: c16549ee30b88b1e7f7354259bd2e708
-SHA1: 72cc7bfd5cd16fd2ffc610d38a98cc663907e9fc
-SHA256: 01b01bf904577b3e461667df1c0e89060ce78464ab3d2055d23837d52d28e712
+Size: 214998
+MD5sum: a1a24382ba694390978cc722644ebf36
+SHA1: 505118fd2c0ed30f987ea03becd09c811b102f49
+SHA256: 7386aad40338783d7f184369e55fa532681b05c6434ec8609c6c0a6ef2ac4224
 Description: A futuristic Jarvis-style terminal dashboard for Termux
 
 Package: termuxalpine
