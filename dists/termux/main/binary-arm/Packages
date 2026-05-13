@@ -651,13 +651,15 @@ Description: OpenSource Backup and restore your entire Termux environment across
 Package: termux-tui
 Version: 1.0.2
 Architecture: arm
-Maintainer: @opsonusdh
-Installed-Size: 
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 256
+Depends: python, python-pip, python-setuptools
+Homepage: https://github.com/opsonusdh/Termux-TUI
 Filename: pool/main/termux-tui_1.0.2_arm.deb
-Size: 214954
-MD5sum: f8f81b73200a26cfe111bca84866cb18
-SHA1: 40f430f7614a72b047101d7e6919476afe055b97
-SHA256: 029cddd1df2414a0a4641480c783d9d755a1a202093a53a9231d2b449f77cb20
+Size: 225350
+MD5sum: 6cef9ac90666ae08e2638d1ec955e761
+SHA1: 2fe571c4af72b88b3b72dfa18d4dbafe3cfc1eeb
+SHA256: 352b6b9b462e9a77bdacc48857cf4ea01214e9513e3caf5c7b08bdaaee2a3e37
 Description: A futuristic Jarvis-style terminal dashboard for Termux
 
 Package: termuxalpine
