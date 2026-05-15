@@ -587,15 +587,15 @@ SHA256: 4992a2a35d4daea9cdc2f3c9cd7d6bb6f40cff5222ea76a9f713048a0f601153
 Description: Automatic SSRF fuzzer and exploitation tool
 
 Package: tdoc
-Version: 2.1.1
+Version: 2.2.0
 Architecture: aarch64
 Maintainer: @djunekz
 Installed-Size: 
-Filename: pool/main/tdoc_2.1.1_aarch64.deb
-Size: 30048
-MD5sum: 7452970c7e4da5a461410357d237a640
-SHA1: d742a1175963ee297ba74bcba02b9313ef544db5
-SHA256: 03395dc0a6169d42b51a2a4594c3176404c5d946afa38a9b242dad25bc29dd4a
+Filename: pool/main/tdoc_2.2.0_aarch64.deb
+Size: 37172
+MD5sum: 030b2e760b47d5f75dbaf255a851fb86
+SHA1: 50541629db8fc39e7eba8036fdb5f1d177d42cd5
+SHA256: fa8f37ece0578905bf5f1e9e3b3eb96fe0e9bf82f1cf34c6cb6ed07244c909b7
 Description: TDOC - Diagnostic and repair utility for Termux environment
 
 Package: termstyle
@@ -815,4 +815,3 @@ MD5sum: ad9b452b2d396cff867f9146b89c7008
 SHA1: 5ae1c518119491081af850e468931fbb867d418a
 SHA256: 6c456ae7bc84e8ee58a3eeab3cdd5a4a81494c9677301d9c3997697abd459343
 Description: Encrypter Stealth Binary Builder
-

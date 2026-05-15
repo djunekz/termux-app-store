@@ -589,13 +589,15 @@ Description: Automatic SSRF fuzzer and exploitation tool
 Package: tdoc
 Version: 2.1.1
 Architecture: x86_64
-Maintainer: @djunekz
-Installed-Size: 
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 0
+Depends: bash, coreutils, curl, git, gnupg, termux-tools
+Homepage: https://github.com/djunekz/tdoc
 Filename: pool/main/tdoc_2.1.1_x86_64.deb
-Size: 30816
-MD5sum: 715b4ae6c2714d3c96b22b68ad4b7acb
-SHA1: 3b21b00956da3106dcd95dbf756929c014d8edd4
-SHA256: c48c5da5e06d9ed343a1ce55d87ffa2c4177321e48444c11e9cebb8ddfb63b70
+Size: 704
+MD5sum: 7fa11c6e27011695bfff20969bcf1e6c
+SHA1: 65085823c9ec82e5864db0463046fd950854ff9f
+SHA256: 9c26b1aec8699f8e2ff0d661c5d778c60f93adec455faeac0a78b0444dcb836f
 Description: TDOC - Diagnostic and repair utility for Termux environment
 
 Package: termstyle
@@ -817,4 +819,3 @@ MD5sum: 3228566627f3f6340a958a5bb1052b6b
 SHA1: ae8fee3e6c5992c2405efd7ab2fb338a6cce4dd7
 SHA256: 9e13fd2f440d3310003c8ded7fa192bd980b53f6f12bc2e3750484791dfd4bd7
 Description: Encrypter Stealth Binary Builder
-
