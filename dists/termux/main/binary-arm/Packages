@@ -481,13 +481,14 @@ Description: Fast and simple video download library and CLI tool written in Go
 Package: merlin
 Version: 1.0.0
 Architecture: arm
-Maintainer: @termux-app-store
-Installed-Size: 
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 0
+Homepage: https://github.com/djunekz/merlin
 Filename: pool/main/merlin_1.0.0_arm.deb
-Size: 26566
-MD5sum: ce67f05a794986057df6ff6ec4afc06c
-SHA1: 8f54ced6a2678c640caca80b003e3c1ca7116aa1
-SHA256: 030e1208dd306fb0a42c03177b1a2f379539174cf58540388936eb6d61228d1b
+Size: 640
+MD5sum: 945b3aaf116d5549bb8eab4aab6e7efc
+SHA1: 3bd26a7962cc7c67c159ffb8bbe5625feedf4b59
+SHA256: d550991c9eadde64a7aa751b3a9c3dbbb3a5bbe26f87c15e4aa531418a9c85f4
 Description: Analyst website vulnerabillity scanner
 
 Package: myserver
