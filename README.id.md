@@ -56,32 +56,41 @@ Proyek ini bekerja sebagai **alternatif package manager untuk Termux**, memungki
 
 ## Tangkapan Layar
 
-[![Termux App Store — Tampilan Utama](.assets/0.jpeg)](https://github.com/djunekz/termux-app-store/blob/master/.assets/0.jpeg)
+<div align="center">
 
-### Antarmuka TUI
+<img src=".assets/0.jpeg" width="74%" alt="Termux App Store — Tampilan Utama"/>
+
+<br/><br/>
+<H1>Antarmuka TUI</H1>
 
 | TUI Utama | TUI Install | Menu Palette |
-|---|---|---|
-| [![TUI Main](.assets/0main.jpg)](https://github.com/djunekz/termux-app-store/blob/master/.assets/0main.jpg) | [![TUI Install](.assets/1install.jpg)](https://github.com/djunekz/termux-app-store/blob/master/.assets/1install.jpg) | [![Menu Palette](.assets/2pallete.jpg)](https://github.com/djunekz/termux-app-store/blob/master/.assets/2pallete.jpg) |
+|:---:|:---:|:---:|
+| <img src=".assets/0main.jpg" width="220" alt="TUI Main Interface"/> | <img src=".assets/1install.jpg" width="220" alt="TUI Install Interface"/> | <img src=".assets/2pallete.jpg" width="220" alt="Menu Palette Interface"/> |
 | Menu utama TUI | Proses install paket | Command palette |
 
 > TUI ramah pengguna dengan dukungan **touchscreen** penuh
 
-### Antarmuka CLI
+---
+
+<H1>Antarmuka CLI</H1>
 
 | Dukungan tools lain | CLI Install | CLI View |
-|---|---|---|
-| [![Other tools](.assets/0tas-and-termux-build.jpg)](https://github.com/djunekz/termux-app-store/blob/master/.assets/0tas-and-termux-build.jpg) | [![CLI Install](.assets/0cli-install.jpg)](https://github.com/djunekz/termux-app-store/blob/master/.assets/0cli-install.jpg) | [![CLI View](.assets/0cli-view.jpg)](https://github.com/djunekz/termux-app-store/blob/master/.assets/0cli-view.jpg) |
+|:---:|:---:|:---:|
+| <img src=".assets/0tas-and-termux-build.jpg" width="220" alt="Other tools support"/> | <img src=".assets/0cli-install.jpg" width="220" alt="CLI Install Interface"/> | <img src=".assets/0cli-view.jpg" width="220" alt="CLI View Interface"/> |
 | tasctl dan termux-build | Proses install paket | CLI help, list dan show |
 
-### GuideBook
+---
+
+<H1>GuideBook</H1>
 
 | Daftar menu | Menu tentang | Menu cara upload |
-|---|---|---|
-| [![List menu](.assets/0guide-menu.png)](https://github.com/djunekz/termux-app-store/blob/master/.assets/0guide-menu.png) | [![Menu about](.assets/0guide-about.png)](https://github.com/djunekz/termux-app-store/blob/master/.assets/0guide-about.png) | [![Menu how to upload](.assets/0guide-upload.png)](https://github.com/djunekz/termux-app-store/blob/master/.assets/0guide-upload.png) |
+|:---:|:---:|:---:|
+| <img src=".assets/0guide-menu.png" width="220" alt="List menu"/> | <img src=".assets/0guide-about.png" width="220" alt="Menu about"/> | <img src=".assets/0guide-upload.png" width="220" alt="Menu how to upload"/> |
 | Menu utama GuideBook | Informasi termux-app-store | Panduan cara upload |
 
-> GuideBook adalah panduan informasi — jalankan: `python guidebook.py`
+> GuideBook adalah panduan informasi, jalankan: `python guidebook.py`
+
+</div>
 
 ### Demo Video
 

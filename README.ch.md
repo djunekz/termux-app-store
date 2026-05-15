@@ -30,9 +30,30 @@
 
 ## 截图
 
-| TUI 主界面 | TUI 安装界面 | 命令面板 |
-|---|---|---|
-| [![TUI Main](.assets/0main.jpg)](https://github.com/djunekz/termux-app-store/blob/master/.assets/0main.jpg) | [![TUI Install](.assets/1install.jpg)](https://github.com/djunekz/termux-app-store/blob/master/.assets/1install.jpg) | [![Menu Palette](.assets/2pallete.jpg)](https://github.com/djunekz/termux-app-store/blob/master/.assets/2pallete.jpg) |
+<div align="center">
+
+<img src=".assets/0.jpeg" width="74%" alt="Termux App Store — 主界面"/>
+
+<br/><br/>
+<H1>TUI界面</H1>
+
+| TUI主界面 | TUI安装界面 | 菜单面板 |
+|:---:|:---:|:---:|
+| <img src=".assets/0main.jpg" width="220" alt="TUI Main Interface"/> | <img src=".assets/1install.jpg" width="220" alt="TUI Install Interface"/> | <img src=".assets/2pallete.jpg" width="220" alt="Menu Palette Interface"/> |
+| TUI主菜单 | 软件包安装过程 | 命令面板 |
+
+> TUI界面友好，完全支持**触摸屏**操作
+
+---
+
+<H1>CLI界面</H1>
+
+| 其他工具支持 | CLI安装界面 | CLI查看界面 |
+|:---:|:---:|:---:|
+| <img src=".assets/0tas-and-termux-build.jpg" width="220" alt="Other tools support"/> | <img src=".assets/0cli-install.jpg" width="220" alt="CLI Install Interface"/> | <img src=".assets/0cli-view.jpg" width="220" alt="CLI View Interface"/> |
+| tasctl和termux-build | 软件包安装过程 | CLI帮助、列表和显示 |
+
+</div>
 
 ---
 
