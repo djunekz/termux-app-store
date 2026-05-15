@@ -527,9 +527,9 @@ def test_wrapper_script(lines: list, values: dict) -> list:
     full_text = "\n".join(lines)
     if "WRAPPER" not in full_text:
         return [Issue(INFO, "Wrapper", "No wrapper script found (may be intentional)")]
-    if re.search(r'exec (python3?|bash|node|perl|php|ruby)\s+["\']?/data/', full_text):
+if re.search(r'exec (python3?|bash|node|perl|php|ruby)\s+["\']?/data/', full_text):
         return [Issue(PASS, "Wrapper", "Wrapper uses absolute path (correct for .deb)")]
-    if re.search(r'exec (python3?|bash|node|perl|php|ruby)\s+["\']?\$TERMUX_PREFIX', full_text):
+if re.search(r'exec (python3?|bash|node|perl|php|ruby)\s+["\']?\$TERMUX_PREFIX', full_text):
         return [Issue(
             WARN, "Wrapper",
             "$TERMUX_PREFIX in wrapper — will NOT expand after dpkg install",

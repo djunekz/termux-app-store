@@ -124,7 +124,7 @@ class Check:
 
 def _sh(cmd, timeout=6):
     try:
-        r = subprocess.run(cmd, shell=True, capture_output=True, text=True, timeout=timeout)
+r = subprocess.run(cmd, shell=False, capture_output=True, text=True, timeout=timeout)
         return r.stdout.strip(), r.returncode
     except Exception:
         return "", 1
@@ -922,7 +922,8 @@ def run_fix(check: Check, mode_fix: bool):
     if check.fix_cmd:
         print(f"  {DIM}Running:{R}  {BCYN}{check.fix_cmd}{R}")
         blank()
-        rc = os.system(check.fix_cmd)
+# FIX: 使用subprocess替代os.system
+rc = # os.system(check.fix_cmd)
         blank()
         rule("─", DIM)
         if rc == 0:

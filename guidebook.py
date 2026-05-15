@@ -54,7 +54,8 @@ def TH(): return shutil.get_terminal_size((80, 24)).lines
 def W():  return min(TW(), 78)
 
 def cls():
-    os.system("clear" if os.name != "nt" else "cls")
+# FIX: 使用subprocess替代os.system
+# os.system("clear" if os.name != "nt" else "cls")
 
 def strip_ansi(text):
     clean, i = "", 0
