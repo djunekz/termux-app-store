@@ -659,17 +659,15 @@ SHA256: 42c28c428aa84b21c226882f656b4c5d5c55ff71f007d3ad7c2a94fc380fe37b
 Description: A OSINT tool which helps you to quickly find information effectively.
 
 Package: instareporter
-Version: 1.0.0
+Version: 1.0.1
 Architecture: aarch64
-Maintainer: djunekz <gab288.gab288@passinbox.com>
-Installed-Size: 68
-Depends: python, python-pip, python-setuptools
-Homepage: https://github.com/muneebwanee/InstaReporter
-Filename: pool/main/instareporter_1.0.0_aarch64.deb
-Size: 32224
-MD5sum: 16d4162bc3fdaebe3116c91fd65c0ce3
-SHA1: 32c0a9053281fd252703c1a11da38026c0c7e60d
-SHA256: 9096a7e67dbdc99fac66b855b20d436e306074fc3124b35ce1834374696e0e2d
+Maintainer: @termux-app-store
+Installed-Size: 
+Filename: pool/main/instareporter_1.0.1_aarch64.deb
+Size: 27844
+MD5sum: e195628944289ee725a085a706f0107a
+SHA1: 0b0c3e5e3542c32abd2dfdc64827f022a837240e
+SHA256: c1699dea42699fbf03aa16e18cbb2245efefc169d1ced99dde5b86e62a3c0f25
 Description: Instagram Mass Reporting Tool
 
 Package: ip-tracker
