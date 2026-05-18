@@ -958,31 +958,6 @@ SHA1: aa190bdfe8fabb3db39d512fcee119bda8369095
 SHA256: f61c09a28b9ea8c2957beb85fe449d35d598f90de91ece85a544058bf1631748
 Description: Terminal file explorer
 
-Package: termstyle
-Version: 1.0.0
-Architecture: x86_64
-Maintainer: djunekz <gab288.gab288@passinbox.com>
-Installed-Size: 0
-Homepage: https://gtihub.com/djunekz/termstyle
-Filename: pool/main/termstyle_1.0.0_x86_64.deb
-Size: 676
-MD5sum: af7a74544077ea5ca654116a26b4e7bd
-SHA1: 5a11233688521f1fcb2fc8fa395fadaefcde9d93
-SHA256: a6ecb6d5e88f5f9249bf70146ecab75e51752f726ed61bf7566f17a8e93ccef5
-Description: Simple tool for change color, command prompt, and cursor termux
-
-Package: termstyle
-Version: 2.0.0
-Architecture: x86_64
-Maintainer: @djunekz
-Installed-Size: 
-Filename: pool/main/termstyle_2.0.0_x86_64.deb
-Size: 15172
-MD5sum: fb8d9c038b2a623fcb48ab83bfcef945
-SHA1: c831f532597b4e730409a6f7170e63fab0c5a021
-SHA256: 780a36c2bfd33a3027cdaad1505a1366138f550a761fd13b657dfd7e2ec40c7a
-Description: Simple tool for change color, command prompt, and cursor termux
-
 Package: termux-ai
 Version: 1.0.0
 Architecture: x86_64
