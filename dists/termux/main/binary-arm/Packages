@@ -24,20 +24,6 @@ SHA1: 28b46673125536fa08db41de5679da843e91ec35
 SHA256: 5a4d0008b7f67a157065acd982b9aa118ba9eadecfbcc7da728eceb827d22fd7
 Description: A cli tool to browse and play anime
 
-Package: aura
-Version: 0.10.0
-Architecture: arm
-Maintainer: djunekz <gab288.gab288@passinbox.com>
-Installed-Size: 0
-Depends: nodejs
-Homepage: https://github.com/djunekz/aura
-Filename: pool/main/aura_0.10.0_arm.deb
-Size: 644
-MD5sum: ecedc368ff3c589c978b47d918e8d6fb
-SHA1: bef512b5c78efc28efc2269dce6ed66c58359942
-SHA256: 6e1e88ff33d1b58def9dc30158da14e9c5691ed078cfeae92b18ce598fc48d63
-Description: Adaptive Unified Runtime Assistant
-
 Package: auxscan
 Version: 1.0.0
 Architecture: arm
