@@ -68,15 +68,13 @@ Description: basic command, code color, shortcut keyboar, etc information
 Package: basic
 Version: 1.2.0
 Architecture: arm
-Maintainer: djunekz <gab288.gab288@passinbox.com>
-Installed-Size: 0
-Depends: python
-Homepage: https://github.com/djunekz/basic
+Maintainer: @termux-app-store
+Installed-Size: 
 Filename: pool/main/basic_1.2.0_arm.deb
-Size: 672
-MD5sum: ce9972fbeb9e79ab303416e63a746e57
-SHA1: 6087eedccced264001f5f597de6b0aa745bdf454
-SHA256: 01cf9089884f49cc5f49699cea6cfc2fd51657704cb2799bd211e403845f9365
+Size: 31920
+MD5sum: daf18b8bbbed488a4009f206873bf19f
+SHA1: 75fa83c8d0918832d9b9f1dba444974e4cf4f037
+SHA256: 6296657384921835707d844ef7ed701e48ebaacc0e74c1c5b4c9667e24a277a4
 Description: Simulator Terminal learning basic command for beginner
 
 Package: baxter
