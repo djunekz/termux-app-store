@@ -753,10 +753,10 @@ Architecture: aarch64
 Maintainer: @termux-app-store
 Installed-Size: 
 Filename: pool/main/merlin_1.1.2_aarch64.deb
-Size: 65240
-MD5sum: b95ce339715abc2650addd9babee6743
-SHA1: a64d6cade6d06e37749ab022d7514df5c92df50c
-SHA256: 1dfbbed0f9cad30a7a4db031a1dedf535b073e2a40611ed6d41ad80ac024dc42
+Size: 65224
+MD5sum: 372fee6da5340ff11d7db3a2ff89dac7
+SHA1: c5b44d3167ab3fa0d4455ae494de78c5b38153bc
+SHA256: 8438c6062614e4a07ed1d575488166123a203d83580981a3bc5e635c9f4d85d5
 Description: Analyst website vulnerabillity scanner
 
 Package: myserver
@@ -939,14 +939,15 @@ Description: Terminal file explorer
 Package: termstyle
 Version: 2.0.0
 Architecture: aarch64
-Maintainer: @djunekz
+Maintainer: djunekz
 Installed-Size: 
+Homepage: https://github.com/djunekz/termstyle
 Filename: pool/main/termstyle_2.0.0_aarch64.deb
-Size: 4774124
-MD5sum: 58375ea6f2b63efbf0737bfe3e3556a7
-SHA1: f82622fbadc0213fb9702785f8ddc3e75a581493
-SHA256: bec2572a75f2506ec48dd9005d3d50f5c94e2578ef64f41e8d87f7d5ea70cad2
-Description: Simple tool for change color, command prompt, and cursor termux
+Size: 4781882
+MD5sum: 0feb56ee65e618d38be87b915f22d7f4
+SHA1: 40a17995e663d3ce284093526b6144463d9b52ce
+SHA256: a3e6e84649ecf0df7340b6eca9012dc47202d39c7f8c6060d1db45420ac6fe6f
+Description: Simple tool for change color, command prompt, and cursor (Termux only)
 
 Package: termux-ai
 Version: 1.0.0
