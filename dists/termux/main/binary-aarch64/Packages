@@ -24,6 +24,18 @@ SHA1: 79a80a468ebbd9c32a304103f31e7a8302930368
 SHA256: b61c1662cab0a563ae5112807b748e6ece061367403532bd154cc7292e696992
 Description: A cli tool to browse and play anime
 
+Package: aura
+Version: 0.10.0
+Architecture: aarch64
+Maintainer: @termux-app-store
+Installed-Size: 
+Filename: pool/main/aura_0.10.0_aarch64.deb
+Size: 87572
+MD5sum: 74123fb702e9aaab7309f4f7f04638e4
+SHA1: 41d264e484ec8e6c493733b63459120f4cb1b9bb
+SHA256: 4f9325792adc3838ddb5b9eccff2a1a80636564da2a3894229f57d2754445143
+Description: Adaptive Unified Runtime Assistant
+
 Package: auxscan
 Version: 1.0.0
 Architecture: aarch64
@@ -930,10 +942,10 @@ Architecture: aarch64
 Maintainer: @djunekz
 Installed-Size: 
 Filename: pool/main/termstyle_2.0.0_aarch64.deb
-Size: 4773700
-MD5sum: 01181274667807b01f79a3540a91ba78
-SHA1: e52f8d55d2ffdb5f42daf0af4c7e11e5aa572ddb
-SHA256: 336ed446be721dd484f12aa3d5406235649b8d785a9b0661508afef1c77eefe9
+Size: 4774132
+MD5sum: d04e9de13cde2951aa15f3e03fadb296
+SHA1: a43aecedabbf0c52bb3557ba886c796837921456
+SHA256: 8df05ea09cfa08e3991a2005f585a582aa417b2761eacfa8e009e02bcbcf45d2
 Description: Simple tool for change color, command prompt, and cursor termux
 
 Package: termux-ai
