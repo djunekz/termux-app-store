@@ -763,16 +763,15 @@ SHA256: 91727a2ba5dc8f1eee061429fd71e0a183317d5b3d1828c02ec601c3d1d1b533
 Description: Fast and simple video download library and CLI tool written in Go
 
 Package: merlin
-Version: 1.0.0
+Version: 1.1.2
 Architecture: x86_64
-Maintainer: djunekz <gab288.gab288@passinbox.com>
-Installed-Size: 0
-Homepage: https://github.com/djunekz/merlin
-Filename: pool/main/merlin_1.0.0_x86_64.deb
-Size: 652
-MD5sum: cef1350b3c63781bf7ab3bb43acfd7e0
-SHA1: 31961c7f405d9bff269e08f8120b3e71972d5e3c
-SHA256: ab3d961b29ff34bac8c7f7f2c3c7a280e5458cdcb76dd94c3705fb7e7a9ed004
+Maintainer: @termux-app-store
+Installed-Size: 
+Filename: pool/main/merlin_1.1.2_x86_64.deb
+Size: 66758
+MD5sum: a82a07f3798b8ece6d632e3692318724
+SHA1: 4290002d1018e4e71bc7269e9dd2029dac2d8ef9
+SHA256: 0e713739af6ae92432d2678b542a507713c1e55a2f0406638bcfc88ba599c281
 Description: Analyst website vulnerabillity scanner
 
 Package: myserver
