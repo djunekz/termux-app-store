@@ -29,12 +29,11 @@ Version: 0.10.0
 Architecture: aarch64
 Maintainer: @termux-app-store
 Installed-Size: 
-Depends: nodejs
 Filename: pool/main/aura_0.10.0_aarch64.deb
-Size: 67132
-MD5sum: c8a866470e3ecac1360993b23d7be380
-SHA1: 35132bf784683f2eb047e77c732257f57e061754
-SHA256: 47cdfde702121e05405cfa6b9817c3afd42e0b724604ed6de2b9c355f8602323
+Size: 100916
+MD5sum: 66c314d00fb74ec7dffc2d86c7cc4de2
+SHA1: 996e74bce45f24ed76aec3a48dbcf58e824a5180
+SHA256: 57ff70666b7b005fb2a3468e7cdc1e377187d9ee85ac25f4beec20a57cd1a3e3
 Description: Adaptive Unified Runtime Assistant
 
 Package: auxscan
@@ -755,9 +754,9 @@ Maintainer: @termux-app-store
 Installed-Size: 
 Filename: pool/main/merlin_1.1.2_aarch64.deb
 Size: 65240
-MD5sum: 23d0636c0a8fb386710150153cfe28e8
-SHA1: a01a2df56d83840734709e7021686d0bdb5465ec
-SHA256: f108057d5a755905eca13d048573eec3814b63fdb28e7c9a964f1745d2f4bc5c
+MD5sum: b95ce339715abc2650addd9babee6743
+SHA1: a64d6cade6d06e37749ab022d7514df5c92df50c
+SHA256: 1dfbbed0f9cad30a7a4db031a1dedf535b073e2a40611ed6d41ad80ac024dc42
 Description: Analyst website vulnerabillity scanner
 
 Package: myserver
@@ -942,12 +941,11 @@ Version: 2.0.0
 Architecture: aarch64
 Maintainer: @djunekz
 Installed-Size: 
-Depends: python
 Filename: pool/main/termstyle_2.0.0_aarch64.deb
-Size: 4774464
-MD5sum: 0c320ca1bee9538d85ccc8fb434135f7
-SHA1: 2fe84e658216521731004252edc9e79702bf7224
-SHA256: fafd25ed42902dda8697dd842ecb0143a1c3ecc8aee64341625ca03aeef1098b
+Size: 3596
+MD5sum: e8596b38bcda1851aff2591017f0a354
+SHA1: 9393e39852fa6616ba54e7e960fe73f0e5379ce8
+SHA256: 8d2c7e4f2b5602d742e911f25be7531af53a00e795a4656853dd6754377b71d5
 Description: Simple tool for change color, command prompt, and cursor termux
 
 Package: termux-ai

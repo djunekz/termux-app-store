@@ -29,12 +29,11 @@ Version: 0.10.0
 Architecture: i686
 Maintainer: @termux-app-store
 Installed-Size: 
-Depends: nodejs
 Filename: pool/main/aura_0.10.0_i686.deb
-Size: 68902
-MD5sum: cfa905f4d66e7083e45df7c7e2e71403
-SHA1: ce318b50c3368281423bacb08386c7306def2c99
-SHA256: bf4829a6716e5d214a69f37539be0c65bc8f48fe5b74954437baf85a377d7263
+Size: 103860
+MD5sum: 5d6fe90cbf28b1c8fa2e9dfeff9bca00
+SHA1: 238ce065a2b0c5a3d4c01940265e687b5c4ec225
+SHA256: d3959f4750776056da3481b745dc03a99491e1ba26e147b6608aaa35f76674d4
 Description: Adaptive Unified Runtime Assistant
 
 Package: auxscan
@@ -757,10 +756,10 @@ Architecture: i686
 Maintainer: @termux-app-store
 Installed-Size: 
 Filename: pool/main/merlin_1.1.2_i686.deb
-Size: 66754
-MD5sum: d20ae93f2fcf8909e02f41c7aebf712d
-SHA1: aacc4d54237e2a5a6f30e2a48f6e8f0ba9afafee
-SHA256: e485ae0ac40d187f99a0b781d2987a6a6aceb4c01bb2ce4cb248ae79c9c284fd
+Size: 66756
+MD5sum: 364ba4978be86e45a644709d866f6b6f
+SHA1: 94f485290872e4ea0807990c53f8473f3747e754
+SHA256: 76a2c60a6fdf1a3c0260bf384e5f95ccbf015a526800a40f1119e7abf376b668
 Description: Analyst website vulnerabillity scanner
 
 Package: myserver
@@ -941,6 +940,18 @@ MD5sum: db99ab8de296b9ff40bae62d04e2886a
 SHA1: 9f500db2ee14c01115709a0bc94304ca46a7cbba
 SHA256: 64bcb2e630657151992b3d8239cb0eb65b9f2fe8669b7fb4fca24b122da4958d
 Description: Terminal file explorer
+
+Package: termstyle
+Version: 2.0.0
+Architecture: i686
+Maintainer: @djunekz
+Installed-Size: 
+Filename: pool/main/termstyle_2.0.0_i686.deb
+Size: 3506
+MD5sum: 87dd2cfb0772b38db0c13c95a1d5c1ee
+SHA1: 76a8ccde2bdddb803b42597dc124d0044c34cf7a
+SHA256: 25c4af2d0de30e025273e15c00c7ac517652f8906aaff50ed151ca9907584738
+Description: Simple tool for change color, command prompt, and cursor termux
 
 Package: termux-ai
 Version: 1.0.0
