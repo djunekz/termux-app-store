@@ -941,18 +941,6 @@ SHA1: 1251eb51bad6c1a636cbf1487321366244448e31
 SHA256: 3245a01726a79d81ce2fce5abfa1f987fe11846e4066660075f4006d32865edf
 Description: Terminal file explorer
 
-Package: termstyle
-Version: 2.0.0
-Architecture: arm
-Maintainer: @djunekz
-Installed-Size: 
-Filename: pool/main/termstyle_2.0.0_arm.deb
-Size: 3506
-MD5sum: 341e6fc5d813402be37d0a78e80b0bc2
-SHA1: 38f03072d6c30a1b648d118c6c613f78d7235166
-SHA256: 00123c020e665155b483d8750ac851215e8de109bbe897de8509f9f4fc508419
-Description: Simple tool for change color, command prompt, and cursor termux
-
 Package: termux-ai
 Version: 1.0.0
 Architecture: arm
