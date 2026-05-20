@@ -29,11 +29,12 @@ Version: 0.10.0
 Architecture: x86_64
 Maintainer: @termux-app-store
 Installed-Size: 
+Depends: nodejs
 Filename: pool/main/aura_0.10.0_x86_64.deb
-Size: 90098
-MD5sum: e22f098db2317e08626bdd65f5fbfb03
-SHA1: 0a20ee326db2858d3f3f57deb73d3196807ad020
-SHA256: 8a1d7c725dcdbf492ca37551cf6d73e3cca385b25228c200544e8fc8c0ca0aa3
+Size: 90042
+MD5sum: 9f7e57d66961ad858e07651b75e8d32b
+SHA1: 759986d8bf74bb02dcbd8e4b48518816d4d13e1d
+SHA256: 323969c91a41adbe962851d08e99bf0893171765563e2b6b8828df89dd6bdfcb
 Description: Adaptive Unified Runtime Assistant
 
 Package: auxscan

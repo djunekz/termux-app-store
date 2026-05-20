@@ -29,11 +29,12 @@ Version: 0.10.0
 Architecture: arm
 Maintainer: @termux-app-store
 Installed-Size: 
+Depends: nodejs
 Filename: pool/main/aura_0.10.0_arm.deb
-Size: 90110
-MD5sum: faff958de6113cf771e7da7ec42422b1
-SHA1: 2b300d0180b508881677ebda0c703533f16caf75
-SHA256: eec421490f0306f57515e0773d020e76159453fa95332019cabad2e43e969f45
+Size: 90038
+MD5sum: fafc67aa84d4cd8d5fd1b85d8c213df8
+SHA1: 1cb2af6fdade96fc8a788b8642bed9cb6c1e0c19
+SHA256: 71c9145e2f97e3f8a75fb9c50bd09d1e61109c08c0612fa914b33b2ad04af7e4
 Description: Adaptive Unified Runtime Assistant
 
 Package: auxscan

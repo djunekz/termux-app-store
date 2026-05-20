@@ -29,11 +29,12 @@ Version: 0.10.0
 Architecture: aarch64
 Maintainer: @termux-app-store
 Installed-Size: 
+Depends: nodejs
 Filename: pool/main/aura_0.10.0_aarch64.deb
-Size: 87572
-MD5sum: 74123fb702e9aaab7309f4f7f04638e4
-SHA1: 41d264e484ec8e6c493733b63459120f4cb1b9bb
-SHA256: 4f9325792adc3838ddb5b9eccff2a1a80636564da2a3894229f57d2754445143
+Size: 87384
+MD5sum: 4c6d88d43e929d0bd7601859938e7e25
+SHA1: f29c63260146e49c84802ddcb4110227c36567ee
+SHA256: c2a2bc05dc9a19f1fe3c9559662423b18b0f3bc32748528a8d74d21dfbab5805
 Description: Adaptive Unified Runtime Assistant
 
 Package: auxscan
@@ -941,11 +942,12 @@ Version: 2.0.0
 Architecture: aarch64
 Maintainer: @djunekz
 Installed-Size: 
+Depends: python
 Filename: pool/main/termstyle_2.0.0_aarch64.deb
-Size: 4774132
-MD5sum: d04e9de13cde2951aa15f3e03fadb296
-SHA1: a43aecedabbf0c52bb3557ba886c796837921456
-SHA256: 8df05ea09cfa08e3991a2005f585a582aa417b2761eacfa8e009e02bcbcf45d2
+Size: 4774296
+MD5sum: 296d804cbe25dde4e0c814ff638098eb
+SHA1: b97855ac7d734acdaf9a177fcbe8cc13d8f2817d
+SHA256: 7698d4985d09f3fc943fb6412695b9efc3650434250b2ed2538f66693eee71ce
 Description: Simple tool for change color, command prompt, and cursor termux
 
 Package: termux-ai

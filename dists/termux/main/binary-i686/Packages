@@ -29,11 +29,12 @@ Version: 0.10.0
 Architecture: i686
 Maintainer: @termux-app-store
 Installed-Size: 
+Depends: nodejs
 Filename: pool/main/aura_0.10.0_i686.deb
-Size: 90094
-MD5sum: 799b5c73db00cd00fcd569bf30577e52
-SHA1: d2298c22c992a1b5f86eccdaae8141cf868a1553
-SHA256: 917e941acbd4fe7be9e7c8473bdf063e973b439feb9434bfdb35bafcada450c5
+Size: 90038
+MD5sum: 2aed72a1ffc63df71b8de9f6367003f9
+SHA1: 3d555d98f4f158ded9701c1e82a6b9b2cfcc6aa2
+SHA256: c82975c7a6b84bba91bd1608ec0df77d7ffe2ca7d3475d07c1a773df300f6590
 Description: Adaptive Unified Runtime Assistant
 
 Package: auxscan
