@@ -27,13 +27,15 @@ Description: A cli tool to browse and play anime
 Package: aura
 Version: 0.10.0
 Architecture: aarch64
-Maintainer: @termux-app-store
-Installed-Size: 
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 0
+Depends: nodejs
+Homepage: https://github.com/djunekz/aura
 Filename: pool/main/aura_0.10.0_aarch64.deb
-Size: 100916
-MD5sum: 66c314d00fb74ec7dffc2d86c7cc4de2
-SHA1: 996e74bce45f24ed76aec3a48dbcf58e824a5180
-SHA256: 57ff70666b7b005fb2a3468e7cdc1e377187d9ee85ac25f4beec20a57cd1a3e3
+Size: 648
+MD5sum: 31741a75ccdebcc62a73a7b9e4b296aa
+SHA1: 17b3c0e033708f5da2359575c5b7499777381dfd
+SHA256: 6aa80eaa6d594d7e913258ef3811946577a950dbb65b8ad17e5402acd15be541
 Description: Adaptive Unified Runtime Assistant
 
 Package: auxscan
@@ -65,13 +67,15 @@ Description: basic command, code color, shortcut keyboar, etc information
 Package: basic
 Version: 1.2.0
 Architecture: aarch64
-Maintainer: @termux-app-store
-Installed-Size: 
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 0
+Depends: python
+Homepage: https://github.com/djunekz/basic
 Filename: pool/main/basic_1.2.0_aarch64.deb
-Size: 31288
-MD5sum: 1d1235cf12a5869329747cd82b91be26
-SHA1: 2298fec1f4d95e95bd7cc25422d882d58e309dff
-SHA256: 02dfa14b3e03b54f54c73dada1d8043f78c16f51047ad3108581bb3b13a28be0
+Size: 674
+MD5sum: 58a6a0f46df205184b57c707f440f7a5
+SHA1: 0a3408a83d9b23b404c5793ac5b69096a2ebaa33
+SHA256: b020b0f504fa51eb05bda333664bd5bf9ad761d09f00d24cfc709357106d5a26
 Description: Simulator Terminal learning basic command for beginner
 
 Package: baxter
@@ -753,10 +757,10 @@ Architecture: aarch64
 Maintainer: @termux-app-store
 Installed-Size: 
 Filename: pool/main/merlin_1.1.2_aarch64.deb
-Size: 65224
-MD5sum: 372fee6da5340ff11d7db3a2ff89dac7
-SHA1: c5b44d3167ab3fa0d4455ae494de78c5b38153bc
-SHA256: 8438c6062614e4a07ed1d575488166123a203d83580981a3bc5e635c9f4d85d5
+Size: 65208
+MD5sum: b7e43e86157909e0ce14469b16c3ef3c
+SHA1: 0d5f134b5d6b455aa4df3a2207839c1f968a4d9c
+SHA256: e018e80c0b23675e4f80dc58d1f130d67b34589109b793e0a396f2fe22e019f4
 Description: Analyst website vulnerabillity scanner
 
 Package: myserver
@@ -870,18 +874,6 @@ SHA1: 7eaefa9995757ca96a3594727f5fe31a948fd775
 SHA256: aca2645c1d6a07802f2a111ef43ee93433ce15f663ac51e4f4d73f8c3b89516e
 Description: All in one tool for Information Gathering, Vulnerability Scanning and Crawling. A must have tool for all penetration testers
 
-Package: sigit
-Version: 2.0
-Architecture: aarch64
-Maintainer: @termux-app-store
-Installed-Size: 
-Filename: pool/main/sigit_2.0_aarch64.deb
-Size: 13368
-MD5sum: b8b7f258bfbe8403947899108951e088
-SHA1: 77fc9b696209f5c0559086e063fe61fed2e9fbc4
-SHA256: efb650b3eff52e45507360393a51e187e4f02ce09a93760cd100352cab41deb1
-Description: SIGIT - Simple Information Gathering Toolkit
-
 Package: ssrfmap
 Version: 1.0.0
 Architecture: aarch64
@@ -939,15 +931,14 @@ Description: Terminal file explorer
 Package: termstyle
 Version: 2.0.0
 Architecture: aarch64
-Maintainer: djunekz
+Maintainer: @djunekz
 Installed-Size: 
-Homepage: https://github.com/djunekz/termstyle
 Filename: pool/main/termstyle_2.0.0_aarch64.deb
-Size: 4781882
-MD5sum: 0feb56ee65e618d38be87b915f22d7f4
-SHA1: 40a17995e663d3ce284093526b6144463d9b52ce
-SHA256: a3e6e84649ecf0df7340b6eca9012dc47202d39c7f8c6060d1db45420ac6fe6f
-Description: Simple tool for change color, command prompt, and cursor (Termux only)
+Size: 14832
+MD5sum: 65c44e860ec44a64bfc4fb876ff2d58e
+SHA1: 05f66cde7226a29b7d7638425728603cf6f22586
+SHA256: 5c74fd747dd026da182aa3a92e1c733294b14b8e9a449c9f91c6ba9932e256de
+Description: Simple tool for change color, command prompt, and cursor termux
 
 Package: termux-ai
 Version: 1.0.0

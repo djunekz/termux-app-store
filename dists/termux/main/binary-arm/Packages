@@ -27,13 +27,15 @@ Description: A cli tool to browse and play anime
 Package: aura
 Version: 0.10.0
 Architecture: arm
-Maintainer: @termux-app-store
-Installed-Size: 
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 0
+Depends: nodejs
+Homepage: https://github.com/djunekz/aura
 Filename: pool/main/aura_0.10.0_arm.deb
-Size: 103858
-MD5sum: 87933f358963b84e341548e1a55d8769
-SHA1: 6f33bda1a7d1bea93811da9d3ff1523f609565f3
-SHA256: 1680a5b405f37fd1c813db5996165dee40407ddd8797d74887169b956d3dc93c
+Size: 644
+MD5sum: ecedc368ff3c589c978b47d918e8d6fb
+SHA1: bef512b5c78efc28efc2269dce6ed66c58359942
+SHA256: 6e1e88ff33d1b58def9dc30158da14e9c5691ed078cfeae92b18ce598fc48d63
 Description: Adaptive Unified Runtime Assistant
 
 Package: auxscan
@@ -66,13 +68,15 @@ Description: basic command, code color, shortcut keyboar, etc information
 Package: basic
 Version: 1.2.0
 Architecture: arm
-Maintainer: @termux-app-store
-Installed-Size: 
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 0
+Depends: python
+Homepage: https://github.com/djunekz/basic
 Filename: pool/main/basic_1.2.0_arm.deb
-Size: 31920
-MD5sum: daf18b8bbbed488a4009f206873bf19f
-SHA1: 75fa83c8d0918832d9b9f1dba444974e4cf4f037
-SHA256: 6296657384921835707d844ef7ed701e48ebaacc0e74c1c5b4c9667e24a277a4
+Size: 672
+MD5sum: ce9972fbeb9e79ab303416e63a746e57
+SHA1: 6087eedccced264001f5f597de6b0aa745bdf454
+SHA256: 01cf9089884f49cc5f49699cea6cfc2fd51657704cb2799bd211e403845f9365
 Description: Simulator Terminal learning basic command for beginner
 
 Package: baxter
@@ -751,15 +755,16 @@ SHA256: b74c9c335463bdcbdbde684d680a461d24017507d912f122533610926bcebeff
 Description: Fast and simple video download library and CLI tool written in Go
 
 Package: merlin
-Version: 1.1.2
+Version: 1.0.0
 Architecture: arm
-Maintainer: @termux-app-store
-Installed-Size: 
-Filename: pool/main/merlin_1.1.2_arm.deb
-Size: 66752
-MD5sum: 3e801350996e6f849d9478ed1428d17c
-SHA1: 6348fc4db4063e58f5d5179d5c83346fb185cf95
-SHA256: 113e6fdd9b38743eeef4c77b59af5f188efaa4540cad2c6ff8a2c0603a7a7a74
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 0
+Homepage: https://github.com/djunekz/merlin
+Filename: pool/main/merlin_1.0.0_arm.deb
+Size: 640
+MD5sum: 945b3aaf116d5549bb8eab4aab6e7efc
+SHA1: 3bd26a7962cc7c67c159ffb8bbe5625feedf4b59
+SHA256: d550991c9eadde64a7aa751b3a9c3dbbb3a5bbe26f87c15e4aa531418a9c85f4
 Description: Analyst website vulnerabillity scanner
 
 Package: myserver
@@ -873,18 +878,6 @@ SHA1: a680ef2fe3b0e567e81fd8e332614f63123f00b2
 SHA256: ef31f174ecb54f612bafba19b10165c3d72a8a5b5b30620b33b594638d8ab692
 Description: All in one tool for Information Gathering, Vulnerability Scanning and Crawling. A must have tool for all penetration testers
 
-Package: sigit
-Version: 2.0
-Architecture: arm
-Maintainer: @termux-app-store
-Installed-Size: 
-Filename: pool/main/sigit_2.0_arm.deb
-Size: 13580
-MD5sum: 16fbed6ee3a46faa871966943f5e6ea4
-SHA1: aa8375fed4cd2636a6388a473872d280dcffd1c9
-SHA256: 2032274afd9b3092e6c32080aa02abd75dadf5f1487c83ae3bcf4841f4dc86ff
-Description: SIGIT - Simple Information Gathering Toolkit
-
 Package: ssrfmap
 Version: 1.0.0
 Architecture: arm
@@ -940,6 +933,19 @@ MD5sum: 402b9904d4c7bccee9c13678eb493b42
 SHA1: 1251eb51bad6c1a636cbf1487321366244448e31
 SHA256: 3245a01726a79d81ce2fce5abfa1f987fe11846e4066660075f4006d32865edf
 Description: Terminal file explorer
+
+Package: termstyle
+Version: 1.0.0
+Architecture: arm
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 0
+Homepage: https://gtihub.com/djunekz/termstyle
+Filename: pool/main/termstyle_1.0.0_arm.deb
+Size: 672
+MD5sum: 1c9c35ac2b05bcd18eac1eb4a228602e
+SHA1: 38666f1a6e026b1c062ba320f521047f9dcc6320
+SHA256: 05c5a016e6dff7e4077b5df6ff7db6e67828395c9858da06f97231f31c682d80
+Description: Simple tool for change color, command prompt, and cursor termux
 
 Package: termux-ai
 Version: 1.0.0
