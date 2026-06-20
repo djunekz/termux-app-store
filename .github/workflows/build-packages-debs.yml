@@ -29,7 +29,7 @@ jobs:
       matrix: ${{ steps.detect.outputs.matrix }}
       has_packages: ${{ steps.detect.outputs.has_packages }}
     steps:
-      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10  # v6
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0  # v7
         with:
           fetch-depth: 2
 
@@ -90,7 +90,7 @@ jobs:
       matrix: ${{ fromJson(needs.detect-changes.outputs.matrix) }}
 
     steps:
-      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10  # v6
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0  # v7
 
       - name: Check binary cache
         id: cache
@@ -339,7 +339,7 @@ jobs:
       needs.detect-changes.outputs.has_packages == 'true' &&
       needs.build-deb.result != 'cancelled'
     steps:
-      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10  # v6
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0  # v7
 
       - name: Install tools
         run: sudo apt-get install -y -qq dpkg-dev python3
@@ -352,7 +352,7 @@ jobs:
           merge-multiple: true
 
       - name: Checkout gh-pages
-        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10  # v6
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0  # v7
         with:
           ref: gh-pages
           path: gh-pages
