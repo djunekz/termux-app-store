@@ -982,15 +982,15 @@ SHA256: a7c17490b5dd892b3dac1d26fa9718a43061b68d4e88e398487958a5c3971a6a
 Description: OpenSource Backup and restore your entire Termux environment across devices.
 
 Package: termux-tui
-Version: 2.7.3
+Version: 2.9.5
 Architecture: aarch64
 Maintainer: @opsonusdh
 Installed-Size: 
-Filename: pool/main/termux-tui_2.7.3_aarch64.deb
-Size: 2328800
-MD5sum: 45c7d772bf62050853bc36ef09972a0b
-SHA1: b1771c170e44e46d33029a4273ea85fd551ff4f0
-SHA256: 70e3789b9418eefa97d067e79e32407ec4dac0535f8528b1ce7affc4dfccc2e5
+Filename: pool/main/termux-tui_2.9.5_aarch64.deb
+Size: 3480432
+MD5sum: e50f65a09f074730b9763bc4cbef97c1
+SHA1: cab1c9a43587795afa615667e39af0124fb6b090
+SHA256: 002347dfc367ef2e33086da70dec4d7e4bfb0e5c77348c349622345eec14d63d
 Description: A futuristic Jarvis-style terminal dashboard for Termux
 
 Package: termuxalpine
