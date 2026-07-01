@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-07-01T04:09:56.461913+00:00",
-  "total": 88,
+  "generated_at": "2026-07-01T05:48:18.298710+00:00",
+  "total": 89,
   "packages": [
     {
       "package": "aichat",
@@ -1013,6 +1013,20 @@
         "python-pip",
         "python-setuptools"
       ]
+    },
+    {
+      "package": "padrelivio",
+      "version": "1.0.0",
+      "maintainer": "@enrilinux",
+      "description": "ASCII art of Padre Livio Fanzaga",
+      "homepage": "https://github.com/enrilinux/padrelivio",
+      "license": "Public Domain",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/enrilinux/padrelivio/archive/refs/tags/v1.0.0.tar.gz",
+      "sha256": "bb24ca52056bf8ee66b0b696d948647c19dc9c20d37e9e36fe915b254540bf10",
+      "platform_independent": true
     },
     {
       "package": "parsero",
