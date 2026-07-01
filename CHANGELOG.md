@@ -16,6 +16,9 @@ and this project adheres to semantic versioning.
 ### Changed
 - Package `termstyle` v2.0.0 - Updated metadata
 
+### Added
+- Package `padrelivio` v1.0.0 - ASCII art of Padre Livio Fanzaga
+
 ---
 
 ## [v0.4.1] - 2026-05-16
