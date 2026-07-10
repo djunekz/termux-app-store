@@ -968,17 +968,15 @@ SHA256: d3f2ce0e99a3c94d43dc1a372fa06561ebc7bbaafb9b86e6e6c93a7ec70a52fc
 Description: The first offline-first, source-based TUI package manager for Termux
 
 Package: termux-sync
-Version: 1.1.1
+Version: 1.2.3
 Architecture: aarch64
-Maintainer: djunekz <gab288.gab288@passinbox.com>
-Installed-Size: 0
-Depends: git, python, python-pip, python-setuptools
-Homepage: https://github.com/djunekz/termux-sync
-Filename: pool/main/termux-sync_1.1.1_aarch64.deb
-Size: 714
-MD5sum: 1a39510473d393dbd352a374270a7f5d
-SHA1: 2ae88463230e52eedf77ba2728d62a3ae442171d
-SHA256: a7c17490b5dd892b3dac1d26fa9718a43061b68d4e88e398487958a5c3971a6a
+Maintainer: @termux-app-store
+Installed-Size: 
+Filename: pool/main/termux-sync_1.2.3_aarch64.deb
+Size: 42328
+MD5sum: b228e722bffdd2768d64de6fb120597d
+SHA1: e1a98b8818e5ea7b8f1f9e817e910b9382f4a0c8
+SHA256: a22b71cc5c7f844d50520083e4d9abcf18ceb27855aafefb2a63499daf03880b
 Description: OpenSource Backup and restore your entire Termux environment across devices.
 
 Package: termux-tui
