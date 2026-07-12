@@ -5,22 +5,22 @@ Codename: termux
 Components: main
 Architectures: aarch64 arm x86_64 i686
 Description: Official Termux repository by @djunekz
-Date: Sun, 12 Jul 2026 03:16:49 UTC
+Date: Sun, 12 Jul 2026 05:35:13 UTC
 MD5Sum:
  c5b3e26a917cf70851343f62f115c57f 42937 main/binary-aarch64/Packages
- 754f74eb4e69ba20f9bd69744426a42c 14823 main/binary-aarch64/Packages.gz
+ 13ecc9696798d5abc81fe4ba568879e0 14823 main/binary-aarch64/Packages.gz
  0dcb934f55ba1a48ef8aed04ad595d3e 42924 main/binary-arm/Packages
- 063bc132102b69da1e9cbbaafa377a6e 14851 main/binary-arm/Packages.gz
+ c7ec3c706c5287eb76461263c7c61ac5 14851 main/binary-arm/Packages.gz
  193ad1fcbdfebdfc9bc10365d0c8b1c5 44211 main/binary-x86_64/Packages
- d71a2ef8547a52c7203d2f5d2bd17d4e 15113 main/binary-x86_64/Packages.gz
+ 711fa761a507914189978aff8c158504 15113 main/binary-x86_64/Packages.gz
  b15c643acff499aebc72ec642022a335 43102 main/binary-i686/Packages
- 53ab7ed241c4224f73691792c3822522 14864 main/binary-i686/Packages.gz
+ dc7acc5e07648e7306e2557830566677 14864 main/binary-i686/Packages.gz
 SHA256:
  a2479cc9a2974d76e598b986cb1531dabc41df01439985e3623d50c6f0454d9a 42937 main/binary-aarch64/Packages
- 6da06b86ff7c2714acf2055f7df7a248c5a7e8fe3530289afe131c5453ae6997 14823 main/binary-aarch64/Packages.gz
+ 85b8276c6bfe995e389ae34a27a49970f44dd5932fbe9d7c8f1d0a74ccd15ba7 14823 main/binary-aarch64/Packages.gz
  5abf50be50f8e9ab1ffe582cac664ae578514282f5eb02cf23a044d53e58c941 42924 main/binary-arm/Packages
- fa91e4a8fa44b7798c77fc0842a64cd59aa3162d59ccb541f9141f2e2585740c 14851 main/binary-arm/Packages.gz
+ bab8f847ea4b9c9467046da4b678324a53068f39919beac8c92b224e52e73ad9 14851 main/binary-arm/Packages.gz
  6776ae839c4ab4218bdecb469c41859120e97d618a621349cf79a54eb36b4b14 44211 main/binary-x86_64/Packages
- 5923de551e3bf87dc4fd8878a08d661af79d819477fa8a493066989f8fa77a7c 15113 main/binary-x86_64/Packages.gz
+ a0ff47a14d070ac5c6741f4c952e3755fcad7c812fc776faba6010da227f1736 15113 main/binary-x86_64/Packages.gz
  d4b90d2d988e5359b07471c5255a4ad8b4664265f061a658b08063dd888a52f5 43102 main/binary-i686/Packages
- 0552442857ec02d31a1edbf424eba83b6b67e88a8918da092fe796edfd694d2c 14864 main/binary-i686/Packages.gz
+ da50b51993f2071215e2c95e569d932d8d52a593852ad468f580683668e7235b 14864 main/binary-i686/Packages.gz
