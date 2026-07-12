@@ -2,9 +2,9 @@ TERMUX_PKG_HOMEPAGE=https://github.com/Gameye98/Auxscan
 TERMUX_PKG_DESCRIPTION="Vulnerability Scanner to automate certain tasks"
 TERMUX_PKG_LICENSE="UNKNOWN"
 TERMUX_PKG_MAINTAINER="@termux-app-store"
-TERMUX_PKG_VERSION=1.0.0
-TERMUX_PKG_SRCURL=https://github.com/Gameye98/Auxscan/archive/refs/heads/master.tar.gz
-TERMUX_PKG_SHA256=fc66c68f438df226328b6a78347c9862e33b9e30e60c3e0e73b57033c60a9631
+TERMUX_PKG_VERSION=0.0.0+4551c2f
+TERMUX_PKG_SRCURL=https://github.com/Gameye98/Auxscan/archive/4551c2f418070217a33297bdd981d6fddf1a6492.tar.gz
+TERMUX_PKG_SHA256=44c08fa9d4e2d1b2d8bb5bac1118f5915ff801b58d93716214172d859144e11f
 
 TERMUX_PKG_DEPENDS="python, python-pip, python-setuptools"
 TERMUX_PKG_BUILD_IN_SRC=true

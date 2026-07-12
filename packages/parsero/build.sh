@@ -2,9 +2,9 @@ TERMUX_PKG_HOMEPAGE=http://www.behindthefirewalls.com/
 TERMUX_PKG_DESCRIPTION="Parsero | Robots.txt audit tool"
 TERMUX_PKG_LICENSE="GPL-2.0"
 TERMUX_PKG_MAINTAINER="@termux-app-store"
-TERMUX_PKG_VERSION=1.0.0
-TERMUX_PKG_SRCURL=https://github.com/behindthefirewalls/Parsero/archive/refs/heads/master.tar.gz
-TERMUX_PKG_SHA256=bc34afddf5b902ae8fb64c5e3ab2007f651a0b9fe42d1169fabacfc7c750ed44
+TERMUX_PKG_VERSION=0.0.0+e5b585a
+TERMUX_PKG_SRCURL=https://github.com/behindthefirewalls/Parsero/archive/e5b585a19b79426975a825cafa4cc8a353cd267e.tar.gz
+TERMUX_PKG_SHA256=1780ddf21a5e51ef192529e108be10d516df7ad3a6822676b49abe36415259ef
 
 TERMUX_PKG_DEPENDS="python, python-pip, python-setuptools"
 TERMUX_PKG_BUILD_IN_SRC=true

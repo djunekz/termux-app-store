@@ -2,9 +2,9 @@ TERMUX_PKG_HOMEPAGE=https://github.com/Mebus/cupp
 TERMUX_PKG_DESCRIPTION="cupp — auto-packaged by termux-build-init"
 TERMUX_PKG_LICENSE="UNKNOWN"
 TERMUX_PKG_MAINTAINER="@termux-app-store"
-TERMUX_PKG_VERSION=1.0.0
-TERMUX_PKG_SRCURL=https://github.com/Mebus/cupp/archive/refs/heads/master.tar.gz
-TERMUX_PKG_SHA256=a3fe015604f5b4f6824a45b7127056c27f2b37e78ad2e2fbca019708818317c7
+TERMUX_PKG_VERSION=0.0.0+616a7b0
+TERMUX_PKG_SRCURL=https://github.com/Mebus/cupp/archive/616a7b0c01b9cec51954df86a2a538dffcba3834.tar.gz
+TERMUX_PKG_SHA256=21fb2b08ea3bb5850e194008cd2667e1abd6082750802efbcfb6b279161f7d57
 
 TERMUX_PKG_DEPENDS="python, python-pip, python-setuptools"
 TERMUX_PKG_BUILD_IN_SRC=true

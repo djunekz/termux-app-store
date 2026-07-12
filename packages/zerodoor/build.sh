@@ -2,9 +2,9 @@ TERMUX_PKG_HOMEPAGE=https://github.com/Souhardya/Zerodoor
 TERMUX_PKG_DESCRIPTION="A script written lazily for generating cross-platform  backdoors on the go :) "
 TERMUX_PKG_LICENSE="NOASSERTION"
 TERMUX_PKG_MAINTAINER="@termux-app-store"
-TERMUX_PKG_VERSION=1.0.0
-TERMUX_PKG_SRCURL=https://github.com/Souhardya/Zerodoor/archive/refs/heads/master.tar.gz
-TERMUX_PKG_SHA256=494be3ff04d5be6d285755c0e9b9382a7da3eb7721da259d40128ce8f2a5a6c2
+TERMUX_PKG_VERSION=0.0.0+e287b64
+TERMUX_PKG_SRCURL=https://github.com/Souhardya/Zerodoor/archive/e287b6474ca497e18a12991851bfc911a6cf28a7.tar.gz
+TERMUX_PKG_SHA256=95f3fa20943d79c60fdd9974e604848822e04d0c8f4ab6658fc68d07d54ff755
 
 TERMUX_PKG_DEPENDS="python, python-pip, python-setuptools"
 TERMUX_PKG_BUILD_IN_SRC=true

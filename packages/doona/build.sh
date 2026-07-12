@@ -2,9 +2,9 @@ TERMUX_PKG_HOMEPAGE=https://github.com/wireghoul/doona
 TERMUX_PKG_DESCRIPTION="Network based protocol fuzzer"
 TERMUX_PKG_LICENSE="UNKNOWN"
 TERMUX_PKG_MAINTAINER="@termux-app-store"
-TERMUX_PKG_VERSION=1.0.0
-TERMUX_PKG_SRCURL=https://github.com/wireghoul/doona/archive/refs/heads/master.tar.gz
-TERMUX_PKG_SHA256=7802a60981a80a53a1598e61943b564ecc937c4550a713fc354d02e8cec924e8
+TERMUX_PKG_VERSION=0.0.0+7a4796c
+TERMUX_PKG_SRCURL=https://github.com/wireghoul/doona/archive/7a4796cb4b898c251068e64f7524d125d50c8421.tar.gz
+TERMUX_PKG_SHA256=b0207257047d7d0c5bcd58052f836560dfe2fac421faef60f6bf642a9c7c5df3
 
 TERMUX_PKG_DEPENDS="perl"
 TERMUX_PKG_BUILD_IN_SRC=true

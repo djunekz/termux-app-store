@@ -2,9 +2,9 @@ TERMUX_PKG_HOMEPAGE=https://github.com/swisskyrepo/SSRFmap
 TERMUX_PKG_DESCRIPTION="Automatic SSRF fuzzer and exploitation tool"
 TERMUX_PKG_LICENSE="MIT"
 TERMUX_PKG_MAINTAINER="@termux-app-store"
-TERMUX_PKG_VERSION=1.0.0
-TERMUX_PKG_SRCURL=https://github.com/swisskyrepo/SSRFmap/archive/refs/heads/master.tar.gz
-TERMUX_PKG_SHA256=57c062c73383a5a6eb0780db73c6fc948bd53dd46659d9a87f8ada33d5386839
+TERMUX_PKG_VERSION=0.0.0+69103b2
+TERMUX_PKG_SRCURL=https://github.com/swisskyrepo/SSRFmap/archive/69103b27f5898d9707630dc572798df63727b90f.tar.gz
+TERMUX_PKG_SHA256=c1ef86b06978c036c1312f99719e246b479b520fd9fdae87c9ad2a9aa900efe2
 
 TERMUX_PKG_DEPENDS="python, python-pip, python-setuptools"
 TERMUX_PKG_BUILD_IN_SRC=true

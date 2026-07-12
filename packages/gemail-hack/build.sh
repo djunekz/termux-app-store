@@ -2,9 +2,9 @@ TERMUX_PKG_HOMEPAGE=https://github.com/Ha3MrX/Gemail-Hack
 TERMUX_PKG_DESCRIPTION="python script for Hack gmail account brute force"
 TERMUX_PKG_LICENSE="UNKNOWN"
 TERMUX_PKG_MAINTAINER="@termux-app-store"
-TERMUX_PKG_VERSION=1.0.0
-TERMUX_PKG_SRCURL=https://github.com/Ha3MrX/Gemail-Hack/archive/refs/heads/master.tar.gz
-TERMUX_PKG_SHA256=36dfa4b305e8b7660ae92e817254545e4aa6b5daf23446a2a4c475e3aef6cde9
+TERMUX_PKG_VERSION=0.0.0+34d9ba2
+TERMUX_PKG_SRCURL=https://github.com/Ha3MrX/Gemail-Hack/archive/34d9ba2ed2d4b2d8ff52aee4132e265285abfb36.tar.gz
+TERMUX_PKG_SHA256=52d10a90ce4befcd1e221615d89b38679ab2fc88db65981ad1ad29c18b3d6efe
 
 TERMUX_PKG_DEPENDS="python, python-pip, python-setuptools"
 TERMUX_PKG_BUILD_IN_SRC=true

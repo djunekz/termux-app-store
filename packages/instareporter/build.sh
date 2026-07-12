@@ -2,9 +2,9 @@ TERMUX_PKG_HOMEPAGE=https://github.com/muneebwanee/InstaReporter
 TERMUX_PKG_DESCRIPTION="Instagram Mass Reporting Tool"
 TERMUX_PKG_LICENSE="GPL-3.0"
 TERMUX_PKG_MAINTAINER="@termux-app-store"
-TERMUX_PKG_VERSION=1.0.1
-TERMUX_PKG_SRCURL=https://github.com/muneebwanee/InstaReporter/archive/refs/heads/main.tar.gz
-TERMUX_PKG_SHA256=7dbfe627db9b30f6e5a0522b846e9ee4e2594c618661520477b6951145440b44
+TERMUX_PKG_VERSION=0.0.0+c8e1527
+TERMUX_PKG_SRCURL=https://github.com/muneebwanee/InstaReporter/archive/c8e15277c0481f2cefa339b03818c412c0ab3186.tar.gz
+TERMUX_PKG_SHA256=d0f3a77fd24ff76e72d3274104d4993f687fbc6f4117754e6ce1ff121372921f
 
 TERMUX_PKG_DEPENDS="python, python-pip, python-setuptools"
 TERMUX_PKG_BUILD_IN_SRC=true

@@ -2,9 +2,9 @@ TERMUX_PKG_HOMEPAGE=https://gitbrew.org/dbd
 TERMUX_PKG_DESCRIPTION="Durandal's Backdoor"
 TERMUX_PKG_LICENSE="GPL-2.0"
 TERMUX_PKG_MAINTAINER="@termux-app-store"
-TERMUX_PKG_VERSION=1.0.0
-TERMUX_PKG_SRCURL=https://github.com/gitdurandal/dbd/archive/refs/heads/master.tar.gz
-TERMUX_PKG_SHA256=f633a0a65360db98aaa6a85cdfd63fdec36a7a60798420ba16f1cf0088eec18b
+TERMUX_PKG_VERSION=1.50
+TERMUX_PKG_SRCURL=https://github.com/gitdurandal/dbd/archive/refs/tags/1.50.tar.gz
+TERMUX_PKG_SHA256=4306ae2decaf02a68dace0cc5e5d9c1f5114c0ff8789c2f2294e82bc4b7fe9b1
 
 
 termux_step_make() {

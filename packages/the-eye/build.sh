@@ -2,9 +2,9 @@ TERMUX_PKG_HOMEPAGE=https://github.com/EgeBalci/The-Eye
 TERMUX_PKG_DESCRIPTION="Simple security surveillance script for linux distributions."
 TERMUX_PKG_LICENSE="GPL-3.0"
 TERMUX_PKG_MAINTAINER="@termux-app-store"
-TERMUX_PKG_VERSION=1.0.0
-TERMUX_PKG_SRCURL=https://github.com/EgeBalci/The-Eye/archive/refs/heads/master.tar.gz
-TERMUX_PKG_SHA256=a32f2b55436731b6347ef4c6ead5d9465e708414eda7323d0b4c63f29dde4765
+TERMUX_PKG_VERSION=0.0.0+51cfb45
+TERMUX_PKG_SRCURL=https://github.com/EgeBalci/The-Eye/archive/51cfb45eaa031928c6815c4c8dd509ef5930abf8.tar.gz
+TERMUX_PKG_SHA256=ce14826a7bc817d96fe0180bc9d952c91259bdfcd0681cd53af6ec03d6fd3b30
 
 TERMUX_PKG_DEPENDS="golang"
 

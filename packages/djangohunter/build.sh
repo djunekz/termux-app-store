@@ -2,9 +2,9 @@ TERMUX_PKG_HOMEPAGE=https://github.com/6IX7ine/djangohunter
 TERMUX_PKG_DESCRIPTION="djangohunter — auto-packaged by termux-build-init"
 TERMUX_PKG_LICENSE="UNKNOWN"
 TERMUX_PKG_MAINTAINER="@termux-app-store"
-TERMUX_PKG_VERSION=1.0.0
-TERMUX_PKG_SRCURL=https://github.com/6IX7ine/djangohunter/archive/refs/heads/master.tar.gz
-TERMUX_PKG_SHA256=6642cfc85c4e1820c768f85c3f94501d619dc96373b065771a6ef62c3cdeca14
+TERMUX_PKG_VERSION=0.0.0+a5a715e
+TERMUX_PKG_SRCURL=https://github.com/6IX7ine/djangohunter/archive/a5a715ee393f463dddf48d1b893eaaede241c58a.tar.gz
+TERMUX_PKG_SHA256=1d753e468b7acb3c856079a0316c6c001cf23e36d57134caadb33dbf81ee7ada
 
 TERMUX_PKG_DEPENDS="python, python-pip, python-setuptools"
 TERMUX_PKG_BUILD_IN_SRC=true

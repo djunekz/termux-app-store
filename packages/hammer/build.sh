@@ -2,9 +2,9 @@ TERMUX_PKG_HOMEPAGE=https://github.com/TermuxHackz/Hammer
 TERMUX_PKG_DESCRIPTION="Ddos attack tool for termux"
 TERMUX_PKG_LICENSE="UNKNOWN"
 TERMUX_PKG_MAINTAINER="@termux-app-store"
-TERMUX_PKG_VERSION=1.0.0
-TERMUX_PKG_SRCURL=https://github.com/TermuxHackz/Hammer/archive/refs/heads/master.tar.gz
-TERMUX_PKG_SHA256=d1b392377d0432efde5936a392e2b268bddff7d888b79bd5d19e13f089de8861
+TERMUX_PKG_VERSION=0.0.0+e63fbd7
+TERMUX_PKG_SRCURL=https://github.com/TermuxHackz/Hammer/archive/e63fbd772394f14ee48342518845c479878fb16a.tar.gz
+TERMUX_PKG_SHA256=68485d03070aef653cf875afe57608777ccde31c1eabde71a2628a967dc0a3f6
 
 TERMUX_PKG_DEPENDS="python, python-pip, python-setuptools"
 TERMUX_PKG_BUILD_IN_SRC=true

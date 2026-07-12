@@ -2,9 +2,9 @@ TERMUX_PKG_HOMEPAGE=https://github.com/Rajkumrdusad/MyServer
 TERMUX_PKG_DESCRIPTION="myserver — auto-packaged by termux-build-init"
 TERMUX_PKG_LICENSE="UNKNOWN"
 TERMUX_PKG_MAINTAINER="@termux-app-store"
-TERMUX_PKG_VERSION=1.0.0
-TERMUX_PKG_SRCURL=https://github.com/Rajkumrdusad/MyServer/archive/refs/heads/master.tar.gz
-TERMUX_PKG_SHA256=459a6caf18c8c70558a988b88c75be2d8512a165a034e3782a661967d26a9a43
+TERMUX_PKG_VERSION=1.0
+TERMUX_PKG_SRCURL=https://github.com/Rajkumrdusad/MyServer/archive/refs/tags/v1.0.tar.gz
+TERMUX_PKG_SHA256=5203c0be0eb9e689c93e45c700555c2dfe4623a3eca17a230a4a404a87f4253a
 
 TERMUX_PKG_DEPENDS="php, python, python-pip, python-setuptools"
 TERMUX_PKG_BUILD_IN_SRC=true

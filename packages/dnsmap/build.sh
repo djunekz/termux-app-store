@@ -2,9 +2,9 @@ TERMUX_PKG_HOMEPAGE=https://github.com/makefu/dnsmap
 TERMUX_PKG_DESCRIPTION="fork of http://code.google.com/p/dnsmap/source/checkout"
 TERMUX_PKG_LICENSE="UNKNOWN"
 TERMUX_PKG_MAINTAINER="@termux-app-store"
-TERMUX_PKG_VERSION=1.0.0
-TERMUX_PKG_SRCURL=https://github.com/makefu/dnsmap/archive/refs/heads/master.tar.gz
-TERMUX_PKG_SHA256=89358fece5f8734db6475b814d527ce7ae54b368e419a5ea0799f7c0ff38c922
+TERMUX_PKG_VERSION=0.0.0+d2f89e0
+TERMUX_PKG_SRCURL=https://github.com/makefu/dnsmap/archive/d2f89e0e97969961d53e2222839cdd079d7b4ed2.tar.gz
+TERMUX_PKG_SHA256=65bdf7f1f95df1ba1bb28d0b0be52c40b329df4107d8a3d29895824e511eabe3
 
 
 termux_step_make() {

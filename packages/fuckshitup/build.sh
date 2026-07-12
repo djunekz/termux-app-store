@@ -2,9 +2,9 @@ TERMUX_PKG_HOMEPAGE=https://github.com/Smaash/fuckshitup
 TERMUX_PKG_DESCRIPTION="php-cli vulnerability scanner"
 TERMUX_PKG_LICENSE="UNKNOWN"
 TERMUX_PKG_MAINTAINER="@termux-app-store"
-TERMUX_PKG_VERSION=1.0.0
-TERMUX_PKG_SRCURL=https://github.com/Smaash/fuckshitup/archive/refs/heads/master.tar.gz
-TERMUX_PKG_SHA256=d9ea301d0a1c823b793a5d5d141991d04c825f5030069946dfbd29be3e050054
+TERMUX_PKG_VERSION=0.0.0+91e555c
+TERMUX_PKG_SRCURL=https://github.com/Smaash/fuckshitup/archive/91e555c704fe48f26b71392c77a658f463014150.tar.gz
+TERMUX_PKG_SHA256=5b0931fd97faf4005cb305c05443a01faebe8e601a5b5105a18b23a334c600db
 
 TERMUX_PKG_DEPENDS="php"
 

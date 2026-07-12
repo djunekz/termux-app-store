@@ -2,9 +2,9 @@ TERMUX_PKG_HOMEPAGE=https://github.com/megadose/holehe
 TERMUX_PKG_DESCRIPTION="holehe allows you to check if the mail is used on different sites like twitter, instagram and will retrieve information on sites with the forgotten password function."
 TERMUX_PKG_LICENSE="GPL-3.0"
 TERMUX_PKG_MAINTAINER="@termux-app-store"
-TERMUX_PKG_VERSION=1.0.0
-TERMUX_PKG_SRCURL=https://github.com/megadose/holehe/archive/refs/heads/master.tar.gz
-TERMUX_PKG_SHA256=08327f53626ac6bc83a99f10ea0dfe9f0d2953d7c8c8d0fc2e170000670775b8
+TERMUX_PKG_VERSION=0.0.0+14da70f
+TERMUX_PKG_SRCURL=https://github.com/megadose/holehe/archive/14da70f588538936b20d238783c5e28a0772a2b3.tar.gz
+TERMUX_PKG_SHA256=4a69a7c7d5e65bc66f0bf990b3fdeae258074665359f7b6c3b3c12965ed69891
 
 TERMUX_PKG_DEPENDS="python, python-pip, python-setuptools"
 TERMUX_PKG_BUILD_IN_SRC=true

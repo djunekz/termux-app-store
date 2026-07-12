@@ -2,9 +2,9 @@ TERMUX_PKG_HOMEPAGE=https://malfrats.industries/
 TERMUX_PKG_DESCRIPTION="Fetch information about a public Google document."
 TERMUX_PKG_LICENSE="GPL-3.0"
 TERMUX_PKG_MAINTAINER="@termux-app-store"
-TERMUX_PKG_VERSION=1.0.0
-TERMUX_PKG_SRCURL=https://github.com/Malfrats/xeuledoc/archive/refs/heads/master.tar.gz
-TERMUX_PKG_SHA256=c78abd48c03a7103806f54f90716f6337f7af3b90b7ca68dd10d85e3ce53bec4
+TERMUX_PKG_VERSION=0.0.0+8a500d1
+TERMUX_PKG_SRCURL=https://github.com/Malfrats/xeuledoc/archive/8a500d1cd385d79b33a0defc7cfa8d10832b364b.tar.gz
+TERMUX_PKG_SHA256=a35c3d5b6b29eb588491d9abeae9f15d3a7248ef22df119eb5a46e0cfb131a24
 
 TERMUX_PKG_DEPENDS="python, python-pip, python-setuptools"
 TERMUX_PKG_BUILD_IN_SRC=true

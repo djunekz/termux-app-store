@@ -2,9 +2,9 @@ TERMUX_PKG_HOMEPAGE=https://github.com/Gameye98/Lazymux
 TERMUX_PKG_DESCRIPTION="termux tool installer"
 TERMUX_PKG_LICENSE="UNKNOWN"
 TERMUX_PKG_MAINTAINER="@termux-app-store"
-TERMUX_PKG_VERSION=1.0.0
-TERMUX_PKG_SRCURL=https://github.com/Gameye98/Lazymux/archive/refs/heads/master.tar.gz
-TERMUX_PKG_SHA256=a5036eec654ad1adf3736317104ec9fedd97511fe3ba8ccd956fe7bea431afcd
+TERMUX_PKG_VERSION=0.0.0+3b4e747
+TERMUX_PKG_SRCURL=https://github.com/Gameye98/Lazymux/archive/3b4e747e1bdd10f1240f78018ac8ee6fff6d0379.tar.gz
+TERMUX_PKG_SHA256=d30e4ee4e6490b2e6fa288a03f3120426d6bdea53c0f7a04f7d7ec7815e8a5e0
 
 TERMUX_PKG_DEPENDS="python, python-core, python-pip, python-setuptools"
 TERMUX_PKG_BUILD_IN_SRC=true

@@ -2,9 +2,9 @@ TERMUX_PKG_HOMEPAGE=https://blog.christophetd.fr/bypassing-cloudflare-using-inte
 TERMUX_PKG_DESCRIPTION="🔎 Find origin servers of websites behind CloudFlare by using Internet-wide scan data from Censys."
 TERMUX_PKG_LICENSE="UNKNOWN"
 TERMUX_PKG_MAINTAINER="@termux-app-store"
-TERMUX_PKG_VERSION=1.0.0
-TERMUX_PKG_SRCURL=https://github.com/christophetd/CloudFlair/archive/refs/heads/master.tar.gz
-TERMUX_PKG_SHA256=7d25c983530e7d91fd78504966625aa021083c75d81362893961fc76abf46893
+TERMUX_PKG_VERSION=0.0.0+13e3d80
+TERMUX_PKG_SRCURL=https://github.com/christophetd/CloudFlair/archive/13e3d806e6e730412a2f73b46f34d8a5677b163c.tar.gz
+TERMUX_PKG_SHA256=1b17f9ce64f0af6fecdbede5c3621052537d720137cdd97b5aeed115a535e7dc
 
 TERMUX_PKG_DEPENDS="python, python-pip, python-setuptools"
 TERMUX_PKG_BUILD_IN_SRC=true

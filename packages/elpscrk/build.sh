@@ -2,9 +2,9 @@ TERMUX_PKG_HOMEPAGE=https://github.com/D4Vinci/elpscrk
 TERMUX_PKG_DESCRIPTION="An Intelligent wordlist generator based on user profiling, permutations, and statistics. (Named after the same tool in Mr.Robot series S01E01)"
 TERMUX_PKG_LICENSE="GPL-3.0"
 TERMUX_PKG_MAINTAINER="@termux-app-store"
-TERMUX_PKG_VERSION=1.0.0
-TERMUX_PKG_SRCURL=https://github.com/D4Vinci/elpscrk/archive/refs/heads/master.tar.gz
-TERMUX_PKG_SHA256=14077506c401e1c899103273c1691e743cb9d15731949841c977b6c1ac2003ac
+TERMUX_PKG_VERSION=0.0.0+53caddb
+TERMUX_PKG_SRCURL=https://github.com/D4Vinci/elpscrk/archive/53caddb29512e7c7f06768ef6c9669788ee08e2b.tar.gz
+TERMUX_PKG_SHA256=42661eb304d50b8b8036d74b187d790940fc70568abe74b80fc4597454ef634a
 
 TERMUX_PKG_DEPENDS="python, python-pip, python-setuptools, python-psutil"
 TERMUX_PKG_BUILD_IN_SRC=true

@@ -2,9 +2,9 @@ TERMUX_PKG_HOMEPAGE=https://github.com/ruped24/killchain
 TERMUX_PKG_DESCRIPTION="killchain — auto-packaged by termux-build-init"
 TERMUX_PKG_LICENSE="UNKNOWN"
 TERMUX_PKG_MAINTAINER="@termux-app-store"
-TERMUX_PKG_VERSION=1.0.0
-TERMUX_PKG_SRCURL=https://github.com/ruped24/killchain/archive/refs/heads/master.tar.gz
-TERMUX_PKG_SHA256=e1a53020ad84e9ae057dabfe25cb2777b84ed0303675edbc7ec075f2007ea867
+TERMUX_PKG_VERSION=0.0.0+fef616f
+TERMUX_PKG_SRCURL=https://github.com/ruped24/killchain/archive/fef616f66ae18b9855cdd7f58a586551fcd3cdcb.tar.gz
+TERMUX_PKG_SHA256=c6b0bd9887ca2bb9ded7084ec7a3e907d5625c272de1df6db92789461323c609
 
 TERMUX_PKG_DEPENDS="python, python-pip, python-setuptools"
 TERMUX_PKG_BUILD_IN_SRC=true

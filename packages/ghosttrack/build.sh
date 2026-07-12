@@ -2,9 +2,9 @@ TERMUX_PKG_HOMEPAGE=https://github.com/HunxByts/GhostTrack
 TERMUX_PKG_DESCRIPTION="Useful tool to track location or mobile number"
 TERMUX_PKG_LICENSE="UNKNOWN"
 TERMUX_PKG_MAINTAINER="@termux-app-store"
-TERMUX_PKG_VERSION=1.0.0
-TERMUX_PKG_SRCURL=https://github.com/HunxByts/GhostTrack/archive/refs/heads/main.tar.gz
-TERMUX_PKG_SHA256=83934fc3b54ba51a2e44855380602b722dd5efb572259e3d462e0b14d32bef62
+TERMUX_PKG_VERSION=0.0.0+a5cb8ad
+TERMUX_PKG_SRCURL=https://github.com/HunxByts/GhostTrack/archive/a5cb8ad4c08acd803f166fb067b7dac724d6cb3d.tar.gz
+TERMUX_PKG_SHA256=19c209bca69ecac3a775b8961170a74f0afde555357be6894148c9a366515db6
 
 TERMUX_PKG_DEPENDS="python, python-pip, python-setuptools"
 TERMUX_PKG_BUILD_IN_SRC=true

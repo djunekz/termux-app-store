@@ -2,9 +2,9 @@ TERMUX_PKG_HOMEPAGE=https://github.com/peterpt/get
 TERMUX_PKG_DESCRIPTION="Get is a simple script to retrieve an ip from hostname or vice-versa ."
 TERMUX_PKG_LICENSE="UNKNOWN"
 TERMUX_PKG_MAINTAINER="@termux-app-store"
-TERMUX_PKG_VERSION=1.0.0
-TERMUX_PKG_SRCURL=https://github.com/peterpt/get/archive/refs/heads/master.tar.gz
-TERMUX_PKG_SHA256=e028dcbe1ae7809db24e6bcfda4159847adcfcdf28b3eb166a3329533b27d34a
+TERMUX_PKG_VERSION=0.0.0+14b0bc3
+TERMUX_PKG_SRCURL=https://github.com/peterpt/get/archive/14b0bc3f922abbe3d11087051b9b9c06f37284f4.tar.gz
+TERMUX_PKG_SHA256=4d28e816c7ecbdf3d2a812e3dbd6c7639c7a03eca35e0c01700d0ac46419efe7
 
 TERMUX_PKG_BUILD_IN_SRC=true
 

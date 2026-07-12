@@ -2,9 +2,9 @@ TERMUX_PKG_HOMEPAGE=https://github.com/D4Vinci/Clickjacking-Tester
 TERMUX_PKG_DESCRIPTION="A python script designed to check if the website if vulnerable of clickjacking and create a poc"
 TERMUX_PKG_LICENSE="GPL-3.0"
 TERMUX_PKG_MAINTAINER="@termux-app-store"
-TERMUX_PKG_VERSION=1.0.0
-TERMUX_PKG_SRCURL=https://github.com/D4Vinci/Clickjacking-Tester/archive/refs/heads/master.tar.gz
-TERMUX_PKG_SHA256=21c128c44d965ee337c8f946c07144de3a2a8d14320364015312870abe2267d3
+TERMUX_PKG_VERSION=0.0.0+d75d5fc
+TERMUX_PKG_SRCURL=https://github.com/D4Vinci/Clickjacking-Tester/archive/d75d5fcc62cef0031db9493b30911cd70c9bd606.tar.gz
+TERMUX_PKG_SHA256=295aac00657fc24152d67a8c9c3766b24381de5f696f18631aa5b4ce6086336b
 
 TERMUX_PKG_DEPENDS="python, python-pip, python-setuptools"
 TERMUX_PKG_BUILD_IN_SRC=true

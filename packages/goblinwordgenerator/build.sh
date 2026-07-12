@@ -2,9 +2,9 @@ TERMUX_PKG_HOMEPAGE=https://github.com/UndeadSec/GoblinWordGenerator
 TERMUX_PKG_DESCRIPTION="Python wordlist generator "
 TERMUX_PKG_LICENSE="BSD-3-Clause"
 TERMUX_PKG_MAINTAINER="@termux-app-store"
-TERMUX_PKG_VERSION=1.0.0
-TERMUX_PKG_SRCURL=https://github.com/UndeadSec/GoblinWordGenerator/archive/refs/heads/master.tar.gz
-TERMUX_PKG_SHA256=4751cc403e2bffd0540036ddc6c8fa2ec7cc50ac129bbeb17b6206d433b4f871
+TERMUX_PKG_VERSION=0.0.0+6afad56
+TERMUX_PKG_SRCURL=https://github.com/UndeadSec/GoblinWordGenerator/archive/6afad5658e7bda00441428efeb0ae35cc4397302.tar.gz
+TERMUX_PKG_SHA256=f5a51887f2551e533bc3ab495bf95d9d4b1d16394cb8a5298e8389d7cd192e61
 
 TERMUX_PKG_DEPENDS="python, python-pip, python-setuptools"
 TERMUX_PKG_BUILD_IN_SRC=true
