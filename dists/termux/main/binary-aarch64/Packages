@@ -764,17 +764,15 @@ SHA256: e018e80c0b23675e4f80dc58d1f130d67b34589109b793e0a396f2fe22e019f4
 Description: Analyst website vulnerabillity scanner
 
 Package: myserver
-Version: 1.0.0
+Version: 1.0
 Architecture: aarch64
-Maintainer: djunekz <gab288.gab288@passinbox.com>
-Installed-Size: 144
-Depends: php, python, python-pip, python-setuptools
-Homepage: https://github.com/Rajkumrdusad/MyServer
-Filename: pool/main/myserver_1.0.0_aarch64.deb
-Size: 107638
-MD5sum: d2e3ac21eb4cc5029870cd61b48d6e71
-SHA1: bf5fa402ba977e6b6427bbef9f8ff892406b0102
-SHA256: 2f11e66b7bdeb8ddb4be2367add747da7a053d6190a309db00ef1d5fd4e88718
+Maintainer: @termux-app-store
+Installed-Size: 
+Filename: pool/main/myserver_1.0_aarch64.deb
+Size: 100196
+MD5sum: b478d0ad7f57cfab405fcc2a8349e50d
+SHA1: 3cc977e2617c90a72e1fc91eb5beee555ecf698c
+SHA256: 9bf16a770d6510cbc84200c647ccb6636ec611604e352b08ec6186c63c15e4fe
 Description: myserver — auto-packaged by termux-build-init
 
 Package: orchat
@@ -1202,4 +1200,3 @@ MD5sum: a8749e49477f1c2d8a9fd976c09e6749
 SHA1: e928bc1dbe06c234e999c3daff6e16ece0d42377
 SHA256: 8e79bdb87ba4cdfb994166b860e5cee5145ebf543445f5ce1f74519ea218eb7e
 Description: Encrypter Stealth Binary Builder
-
