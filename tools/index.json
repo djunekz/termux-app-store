@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-07-19T02:56:31.281628+00:00",
-  "total": 92,
+  "generated_at": "2026-07-20T03:25:48.191304+00:00",
+  "total": 93,
   "packages": [
     {
       "package": "aichat",
@@ -1377,7 +1377,7 @@
     {
       "package": "tui-info",
       "version": "1.0.0",
-      "maintainer": "@termux-app-store",
+      "maintainer": "@enrilinux",
       "description": "A TUI system information tool for Android/Termux",
       "homepage": "https://github.com/enrilinux/tui-info",
       "license": "MIT",
@@ -1386,7 +1386,32 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/enrilinux/tui-info/archive/refs/tags/1.0.0.tar.gz",
       "sha256": "093866eb613a800427995ba02cb8637a9df3f2a5aff256236f38a8664e0c2a1d",
-      "platform_independent": false
+      "platform_independent": false,
+      "depends": [
+        "ncurses",
+        "gcc",
+        "make"
+      ]
+    },
+    {
+      "package": "tui-notes",
+      "version": "1.0.0",
+      "maintainer": "@enrilinux",
+      "description": "TUI note manager for Termux",
+      "homepage": "https://github.com/enrilinux/tui-notes",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/enrilinux/tui-notes/archive/refs/tags/1.0.0.tar.gz",
+      "sha256": "4591bc692ab043aba3f458e050e1aed8a569ca50f82f61e7660cd43254413108",
+      "platform_independent": false,
+      "depends": [
+        "ncurses",
+        "nano",
+        "gcc",
+        "make"
+      ]
     },
     {
       "package": "tuifimanager",
