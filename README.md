@@ -441,13 +441,7 @@ If Termux App Store has been useful to you:
 
 ## Star History
 
-<a href="https://www.star-history.com/?repos=djunekz%2Ftermux-app-store&type=date&legend=bottom-right">
- <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=djunekz/termux-app-store&type=date&theme=dark&legend=bottom-right&sealed_token=dUovvZ4qTYe6-3cHZJkYNy2Ht7VAKBtZfINRBBmyshGbxaZzlzoSXryXbqzfWJ_d6r5ma3kRriLK0UbG_jPcqTeJGX2t4AXm0nz3LMlfCy1ftHLi2Akcgg" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=djunekz/termux-app-store&type=date&legend=bottom-right&sealed_token=dUovvZ4qTYe6-3cHZJkYNy2Ht7VAKBtZfINRBBmyshGbxaZzlzoSXryXbqzfWJ_d6r5ma3kRriLK0UbG_jPcqTeJGX2t4AXm0nz3LMlfCy1ftHLi2Akcgg" />
-   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=djunekz/termux-app-store&type=date&legend=bottom-right&sealed_token=dUovvZ4qTYe6-3cHZJkYNy2Ht7VAKBtZfINRBBmyshGbxaZzlzoSXryXbqzfWJ_d6r5ma3kRriLK0UbG_jPcqTeJGX2t4AXm0nz3LMlfCy1ftHLi2Akcgg" />
- </picture>
-</a>
+[![Star History Chart](https://api.star-history.com/image?repos=djunekz/termux-app-store&type=date&legend=top-left)](https://www.star-history.com/?repos=djunekz%2Ftermux-app-store&type=date&legend=top-left)
 
 ---
 
