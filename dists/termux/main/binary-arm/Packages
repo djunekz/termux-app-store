@@ -968,10 +968,10 @@ Installed-Size: 272
 Depends: python, python-pip
 Homepage: https://github.com/djunekz/termux-app-store
 Filename: pool/main/termux-app-store_0.4.1_arm.deb
-Size: 34446
-MD5sum: a8d9f2486a4bc5c026020f0f934ae65b
-SHA1: bc8c1117f912b385f3b94a110b8a4cf67ad243dd
-SHA256: 698f8670f679f0ea9e9cd032764f8a332f2d4108c34504dfb59be691b00fe544
+Size: 34460
+MD5sum: 7ba20b6a94bdcb857d2e8566b4f93efa
+SHA1: c521316dd06aa93dc7a1264d0ad177f745b9ec2c
+SHA256: 3d32f0792f5df3829fbb4c7be22ea83ec6caff9d1a30affbb100fb6312453291
 Description: The first offline-first, source-based TUI package manager for Termux
 
 Package: termux-sync
