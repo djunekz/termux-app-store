@@ -145,11 +145,10 @@ jobs:
         id: changelog
         run: |
           VERSION="${{ steps.version.outputs.version }}"
-          VERSION_BARE="${VERSION#v}"
 
-          echo "Looking for changelog entry: [${VERSION_BARE}]"
+          echo "Looking for changelog entry: [${VERSION}]"
 
-          awk "/^## \[${VERSION_BARE}\]/{found=1; next} found && /^## \[/{exit} found{print}" \
+          awk "/^## \[${VERSION}\]/{found=1; next} found && /^## \[/{exit} found{print}" \
             CHANGELOG.md \
             | sed '/./,$!d' \
             | sed -e :a -e '/^\s*$/{$d;N;ba}' \
@@ -157,7 +156,7 @@ jobs:
 
           # Fail loudly — do NOT silently fall back to a generic message
           if [[ ! -s release_notes.txt ]]; then
-            echo "ERROR: No changelog entry found for [${VERSION_BARE}]"
+            echo "ERROR: No changelog entry found for [${VERSION}]"
             echo "Entries available in CHANGELOG.md:"
             grep "^## \[" CHANGELOG.md
             exit 1
