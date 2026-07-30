@@ -355,7 +355,7 @@ def fast_install(pkg_name: str,
     _progress(8)
 
     _log("Checking local cache...")
-    cached = get_cached_deb(pkg_name, version, arch)
+    cached = get_cached_deb(pkg_name, version, arch, sha256=deb_sha256 or None)
 
     if cached:
         elapsed = time.time() - start_time
@@ -390,7 +390,11 @@ def fast_install(pkg_name: str,
         )
 
         if downloaded:
-            if deb_sha256:
+            if not deb_sha256:
+                _log("✗ No SHA256 published for this package/arch in index.json")
+                _log("  Refusing to install an unverified binary")
+                downloaded = False
+            else:
                 _log("Verifying checksum...")
                 h = hashlib.sha256()
                 with open(deb_dest, "rb") as f:
@@ -442,11 +446,33 @@ def _fallback_build_from_source(pkg_name: str,
         try:
             req = urllib.request.Request(url, headers={"User-Agent": "termux-app-store"})
             with urllib.request.urlopen(req, timeout=15) as resp:
-                build_sh.write_bytes(resp.read())
-            build_sh.chmod(0o755)
+                downloaded_bytes = resp.read()
         except Exception as e:
             _log(f"✗ Failed to download build-package.sh: {e}")
             return False
+
+        expected_sha256 = os.environ.get("TERMUX_APP_STORE_BUILD_SH_SHA256", "")
+        actual_sha256 = hashlib.sha256(downloaded_bytes).hexdigest()
+        if expected_sha256:
+            if actual_sha256 != expected_sha256:
+                _log("✗ build-package.sh SHA256 mismatch — refusing to run it")
+                _log(f"  Expected: {expected_sha256}")
+                _log(f"  Got:      {actual_sha256}")
+                return False
+        else:
+            _log("⚠ TERMUX_APP_STORE_BUILD_SH_SHA256 not set — cannot verify authenticity")
+            _log(f"  Downloaded SHA256: {actual_sha256}")
+
+        syntax_check = subprocess.run(
+            ["bash", "-n"], input=downloaded_bytes, capture_output=True
+        )
+        if syntax_check.returncode != 0:
+            _log("✗ build-package.sh failed bash syntax check — refusing to run it")
+            _log(syntax_check.stderr.decode(errors="ignore"))
+            return False
+
+        build_sh.write_bytes(downloaded_bytes)
+        build_sh.chmod(0o755)
 
     proc = subprocess.Popen(
         ["bash", str(build_sh), pkg_name],
