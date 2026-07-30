@@ -2,7 +2,7 @@
 # Termux App Store -- Smart Doctor
 # github.com/djunekz/termux-app-store
 
-import os, sys, json, shutil, platform, subprocess, textwrap, re, stat
+import os, sys, json, shutil, platform, subprocess, textwrap, re, stat, shlex
 import urllib.request, urllib.error
 from pathlib import Path
 
@@ -282,7 +282,7 @@ def chk_tas_binary():
     if not (p.stat().st_mode & 0o111):
         return Check("termux-app-store binary", WARN,
                      f"{p} is not executable",
-                     fix_cmd=f"chmod +x {BIN_TAS}",
+                     fix_cmd=f"chmod +x {shlex.quote(str(BIN_TAS))}",
                      fix_hint=f"chmod +x {BIN_TAS}", category="TAS")
     return Check("termux-app-store binary", PASS, str(p), category="TAS")
 
@@ -501,7 +501,7 @@ def chk_build_package_sh():
                 return Check("build-package.sh", PASS, str(p), category="Project")
             return Check("build-package.sh", WARN,
                          f"{p} not executable",
-                         fix_cmd=f"chmod +x {p}",
+                         fix_cmd=f"chmod +x {shlex.quote(str(p))}",
                          fix_hint=f"chmod +x {p}", category="Project")
     return Check("build-package.sh", WARN,
                  "not found — run from inside the repo",
@@ -605,7 +605,7 @@ def chk_output_dir():
         names = ", ".join(d.name for d in corrupt[:3])
         return Check("output/ (.deb files)", WARN,
                      f"corrupt (0-byte): {names}",
-                     fix_cmd=f"rm -f {output}/*.deb",
+                     fix_cmd=f"rm -f {shlex.quote(str(output))}/*.deb",
                      fix_hint=f"rm {output}/*.deb  then rebuild",
                      category="Build")
     return Check("output/ (.deb files)", PASS,
@@ -922,11 +922,7 @@ def run_fix(check: Check, mode_fix: bool):
     if check.fix_cmd:
         print(f"  {DIM}Running:{R}  {BCYN}{check.fix_cmd}{R}")
         blank()
-        # FIX: 使用subprocess替代os.system
-        rc = subprocess.run(
-             check.fix_cmd,
-             shell=True
-        ).returncode# os.system(check.fix_cmd)
+        rc = subprocess.run(check.fix_cmd, shell=True).returncode
 
         blank()
         rule("─", DIM)
