@@ -239,6 +239,23 @@ def resolve_app_root() -> Path:
     save_cached_root(pip_home)
     return pip_home
 
+def _verify_downloaded_script(raw: bytes, env_sha256_var: str, log_prefix: str) -> bool:
+    if not raw:
+        return False
+
+    expected_sha256 = os.environ.get(env_sha256_var, "")
+    if expected_sha256:
+        import hashlib
+        actual_sha256 = hashlib.sha256(raw).hexdigest()
+        if actual_sha256 != expected_sha256:
+            return False
+
+    syntax_check = subprocess.run(
+        ["bash", "-n"], input=raw, capture_output=True
+    )
+    return syntax_check.returncode == 0
+
+
 def ensure_build_package_sh() -> bool:
     app_root = get_app_root()
     build_pkg = app_root / "build-package.sh"
@@ -249,7 +266,9 @@ def ensure_build_package_sh() -> bool:
         req = urllib.request.Request(url, headers={"User-Agent": "termux-app-store"})
         with urllib.request.urlopen(req, timeout=15) as resp:
             raw = resp.read()
-            if raw:
+            if raw and _verify_downloaded_script(
+                raw, "TERMUX_APP_STORE_BUILD_SH_SHA256", "build-package.sh"
+            ):
                 build_pkg.write_bytes(raw)
                 build_pkg.chmod(0o755)
                 return True
@@ -309,6 +328,11 @@ def ensure_package_files(name: str) -> bool:
         with urllib.request.urlopen(req, timeout=10) as resp:
             raw = resp.read()
             if raw:
+                syntax_check = subprocess.run(
+                    ["bash", "-n"], input=raw, capture_output=True
+                )
+                if syntax_check.returncode != 0:
+                    return False
                 build_sh.write_bytes(raw)
                 return True
     except Exception:
