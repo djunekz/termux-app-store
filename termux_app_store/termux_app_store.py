@@ -285,7 +285,15 @@ def fetch_index_from_github() -> list:
 
 
 
+_PKG_NAME_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._+-]*$")
+
+def is_safe_pkg_name(name: str) -> bool:
+    return bool(name) and bool(_PKG_NAME_RE.match(name)) and ".." not in name
+
 def ensure_package_files(name: str) -> bool:
+    if not is_safe_pkg_name(name):
+        return False
+
     pkg_dir = get_packages_dir() / name
     build_sh = pkg_dir / "build.sh"
 
