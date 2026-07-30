@@ -7,6 +7,10 @@ and this project adheres to semantic versioning.
 
 ## [Unreleased]
 
+---
+
+## [v0.4.5] - 2026-07-30
+
 ### Fixed
 - `termux_app_store/termux_app_store.py` & `termux_app_store/termux_app_store_cli.py` - `ensure_build_package_sh()` now runs a `bash -n` syntax check and supports optional SHA256 pinning (`TERMUX_APP_STORE_BUILD_SH_SHA256`, same variable used by `fast_install.py`) before saving a `build-package.sh` downloaded automatically from GitHub; refuses to use it if verification fails
 - `termux_app_store/termux_app_store.py` & `termux_app_store/termux_app_store_cli.py` - `ensure_package_files()` now runs a `bash -n` syntax check on a per-package `build.sh` before writing it to disk, refusing to save a file that fails to parse as valid bash

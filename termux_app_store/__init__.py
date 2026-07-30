@@ -14,7 +14,7 @@ The first offline-first, source-based TUI package manager built natively for Ter
 :license: MIT, see LICENSE for more details.
 """
 
-__version__ = "0.4.1"
+__version__ = "0.4.5"
 __author__ = "djunekz"
 __license__ = "MIT"
 __all__ = [
