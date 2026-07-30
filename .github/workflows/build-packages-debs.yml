@@ -35,10 +35,14 @@ jobs:
 
       - name: Detect packages to build
         id: detect
+        env:
+          SPECIFIC_INPUT: ${{ github.event.inputs.package }}
+          FORCE_INPUT: ${{ github.event.inputs.force }}
+          TRIGGER_INPUT: ${{ github.event_name }}
         run: |
-          SPECIFIC="${{ github.event.inputs.package }}"
-          FORCE="${{ github.event.inputs.force }}"
-          TRIGGER="${{ github.event_name }}"
+          SPECIFIC="$SPECIFIC_INPUT"
+          FORCE="$FORCE_INPUT"
+          TRIGGER="$TRIGGER_INPUT"
 
           if [[ -n "$SPECIFIC" ]]; then
             PKGS=$(echo "$SPECIFIC" | tr ',' ' ')
@@ -373,10 +377,16 @@ jobs:
 
       - name: Purge old .deb files from pool (force rebuild only)
         if: github.event.inputs.force == 'true'
+        env:
+          SPECIFIC_INPUT: ${{ github.event.inputs.package }}
         run: |
-          SPECIFIC="${{ github.event.inputs.package }}"
+          SPECIFIC="$SPECIFIC_INPUT"
           if [[ -n "$SPECIFIC" ]]; then
-            rm -f gh-pages/pool/main/${SPECIFIC}_*.deb gh-pages/pool/main/${SPECIFIC}_*.sha256
+            if [[ ! "$SPECIFIC" =~ ^[A-Za-z0-9._+-]+$ ]]; then
+              echo "Invalid package name: $SPECIFIC" >&2
+              exit 1
+            fi
+            rm -f "gh-pages/pool/main/${SPECIFIC}_"*.deb "gh-pages/pool/main/${SPECIFIC}_"*.sha256
             echo "Removed old .deb for: $SPECIFIC"
           else
             rm -f gh-pages/pool/main/*.deb gh-pages/pool/main/*.sha256
