@@ -60,6 +60,13 @@ class BinaryCache:
         mirror_url: str,
         sha256: str,
     ) -> Optional[Path]:
+        if not sha256:
+            logger.error(
+                f"Refusing to download {pkg_name}-{version} ({arch}): no SHA256 "
+                f"provided for verification"
+            )
+            return None
+
         cache_path = self.get_cache_path(pkg_name, version, arch)
         url = f"{mirror_url.rstrip('/')}/pool/main/{pkg_name}_{version}_{arch}.deb"
         tmp_path = cache_path.with_suffix(".tmp")
@@ -73,7 +80,7 @@ class BinaryCache:
                     while chunk := resp.read(65536):
                         f.write(chunk)
 
-            if sha256 and not _verify_sha256(tmp_path, sha256):
+            if not _verify_sha256(tmp_path, sha256):
                 tmp_path.unlink(missing_ok=True)
                 logger.error(f"SHA256 mismatch for {pkg_name}-{version}")
                 return None
@@ -105,8 +112,13 @@ class BinaryCache:
             return None
 
         if self.has_local_binary(pkg_name, version, arch):
-            logger.info(f"Cache HIT: {pkg_name}")
-            return self.get_cache_path(pkg_name, version, arch)
+            cache_path = self.get_cache_path(pkg_name, version, arch)
+            if sha256 and not _verify_sha256(cache_path, sha256):
+                logger.error(f"Cached binary for {pkg_name} failed SHA256 check — discarding")
+                cache_path.unlink(missing_ok=True)
+            else:
+                logger.info(f"Cache HIT: {pkg_name}")
+                return cache_path
 
         for mirror in self.mirror_manager.get_enabled_mirrors():
             result = self.download_from_mirror(
