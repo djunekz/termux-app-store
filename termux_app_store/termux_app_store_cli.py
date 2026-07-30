@@ -202,6 +202,22 @@ def resolve_app_root() -> Path:
 
 
 
+def _verify_downloaded_script(raw: bytes, env_sha256_var: str) -> bool:
+    if not raw:
+        return False
+
+    expected_sha256 = os.environ.get(env_sha256_var, "")
+    if expected_sha256:
+        actual_sha256 = hashlib.sha256(raw).hexdigest()
+        if actual_sha256 != expected_sha256:
+            return False
+
+    syntax_check = subprocess.run(
+        ["bash", "-n"], input=raw, capture_output=True
+    )
+    return syntax_check.returncode == 0
+
+
 def ensure_build_package_sh(app_root: Path) -> bool:
     build_pkg = app_root / "build-package.sh"
     if build_pkg.exists():
@@ -212,11 +228,13 @@ def ensure_build_package_sh(app_root: Path) -> bool:
         req = urllib.request.Request(url, headers={"User-Agent": "termux-app-store-cli"})
         with urllib.request.urlopen(req, timeout=15) as resp:
             raw = resp.read()
-            if raw:
+            if raw and _verify_downloaded_script(raw, "TERMUX_APP_STORE_BUILD_SH_SHA256"):
                 build_pkg.write_bytes(raw)
                 build_pkg.chmod(0o755)
                 print(f"  {GREEN}✔  build-package.sh ready.{R}")
                 return True
+            elif raw:
+                print(f"  {RED}✗  build-package.sh failed verification — refusing to use it{R}")
     except Exception as e:
         print(f"  {RED}✗  Failed to download build-package.sh: {e}{R}")
     return False
@@ -498,6 +516,11 @@ def ensure_package_files(packages_dir: Path, name: str, force_update: bool = Fal
         with urllib.request.urlopen(req, timeout=10) as resp:
             raw = resp.read()
             if raw:
+                syntax_check = subprocess.run(
+                    ["bash", "-n"], input=raw, capture_output=True
+                )
+                if syntax_check.returncode != 0:
+                    return False
                 build_sh.write_bytes(raw)
                 return True
     except Exception:
