@@ -58,7 +58,8 @@ class PackageValidator:
         source = data.get("source", {})
         if "url" not in source or not source.get("url"):
             errors.append("source.url is required")
-        if "sha256" not in source and source.get("sha256") != "SKIP":
+        source_sha256 = source.get("sha256", "")
+        if source_sha256 != "SKIP" and not source_sha256:
             errors.append("source.sha256 is required (use SKIP if trusted)")
 
         if "dependencies" in data and not isinstance(data["dependencies"], list):
