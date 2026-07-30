@@ -172,6 +172,10 @@ _ok "Syntax OK"
 
 export PATH="$PREFIX/bin:$PATH"
 
+_BUILD_SH_SHA256="$(sha256sum "$BUILD_SH" | awk '{print $1}')"
+_detail "build.sh SHA256:" "$_BUILD_SH_SHA256"
+_warn "build.sh will now be sourced and executed with full user privileges — only build packages from sources you trust"
+
 source "$BUILD_SH"
 
 _FIELD_ERRORS=()
@@ -500,7 +504,8 @@ if [[ -n "${TERMUX_PKG_SRCURL:-}" ]]; then
 
   if [[ "${TERMUX_PKG_SHA256:-}" == "SKIP" ]]; then
     _section "Integrity Check (SHA256)"
-    _skip "SHA256=SKIP — checksum verification bypassed (trusted source)"
+    _warn "SHA256=SKIP — checksum verification bypassed for this source"
+    _warn "The downloaded file's integrity/authenticity is NOT verified. Proceed only if you fully trust TERMUX_PKG_SRCURL"
   elif [[ -n "${TERMUX_PKG_SHA256:-}" ]]; then
     _section "Integrity Check (SHA256)"
     _progress "Computing checksum..."
@@ -861,12 +866,12 @@ elif [[ -n "$PREBUILT_DEB" ]]; then
           cat > "$WORK_DIR/pkg$PREFIX/bin/$PACKAGE" <<EOF
 #!/data/data/com.termux/files/usr/bin/bash
 export PYTHONPATH="$PREFIX/lib/$PACKAGE\${PYTHONPATH:+:\$PYTHONPATH}"
-exec $_SCRIPT_INTERPRETER "$PREFIX/lib/$PACKAGE/$(basename $BIN_FILE)" "\$@"
+exec $_SCRIPT_INTERPRETER "$PREFIX/lib/$PACKAGE/$(basename "$BIN_FILE")" "\$@"
 EOF
         else
           cat > "$WORK_DIR/pkg$PREFIX/bin/$PACKAGE" <<EOF
 #!/data/data/com.termux/files/usr/bin/bash
-exec $_SCRIPT_INTERPRETER "$PREFIX/lib/$PACKAGE/$(basename $BIN_FILE)" "\$@"
+exec $_SCRIPT_INTERPRETER "$PREFIX/lib/$PACKAGE/$(basename "$BIN_FILE")" "\$@"
 EOF
         fi
         _ok "Script staged into .deb"
