@@ -33,8 +33,14 @@ jobs:
       - name: Run re-pin tool
         env:
           GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+          PACKAGES_INPUT: ${{ github.event.inputs.packages }}
         run: |
-          python ci/repin_floating_sources.py --apply ${{ github.event.inputs.packages }}
+          if [[ -n "$PACKAGES_INPUT" ]] && ! [[ "$PACKAGES_INPUT" =~ ^[A-Za-z0-9._+,\ -]*$ ]]; then
+            echo "Invalid characters in 'packages' input — only letters, numbers, . _ + - , and spaces are allowed" >&2
+            exit 1
+          fi
+          # shellcheck disable=SC2086
+          python ci/repin_floating_sources.py --apply $PACKAGES_INPUT
 
       - name: Check for changes
         id: check
