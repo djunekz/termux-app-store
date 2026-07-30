@@ -7,6 +7,18 @@ and this project adheres to semantic versioning.
 
 ## [Unreleased]
 
+### Fixed
+- `build-package.sh` - the two heredoc wrappers (`bin/$PACKAGE`) no longer use unquoted `$(basename $BIN_FILE)`; now `$(basename "$BIN_FILE")` so it doesn't break when the main script's filename contains spaces
+- `build-package.sh` - added an audit trail (SHA256 of `build.sh` itself) and an explicit warning before `source "$BUILD_SH"` is executed
+- `build-package.sh` - the `TERMUX_PKG_SHA256=SKIP` warning is now more prominent so it isn't overlooked
+- `termux_app_store/termux_app_store.py` & `termux_app_store/termux_app_store_cli.py` - added package name validation (`is_safe_pkg_name`) before the name is used to build filesystem paths, closing a potential path traversal in `ensure_package_files()`, `cleanup_package_files()`, and `cmd_uninstall()` (e.g. a package name containing `../` could have triggered `shutil.rmtree()` outside the intended directory)
+- `termux_app_store/core/binary_core.py` - `download_from_mirror()` now refuses to download a binary without a SHA256; `get_best_binary()` also re-verifies the hash of files already present in the local cache, not just newly downloaded ones
+- `termux_app_store/core/validator.py` - an empty `source.sha256` (`""`) is now treated as invalid, previously it passed validation silently
+- `termux_app_store/fast_install.py` - `.deb` installation is now refused if `index.json` doesn't provide a SHA256 for the relevant architecture (applies to both cached and newly downloaded files)
+- `termux_app_store/fast_install.py` - `_fallback_build_from_source()` now runs `bash -n` (syntax check) and supports optional SHA256 verification (`TERMUX_APP_STORE_BUILD_SH_SHA256`) before executing a `build-package.sh` downloaded automatically from GitHub
+- `doctor.py` - paths interpolated into `fix_cmd` (`BIN_TAS`, binary path, output directory) are now quoted with `shlex.quote()` before being run through the shell
+- `guidebook.py` - `cls()` no longer uses `shell=True` to run `clear` on Linux/Termux; `shell=True` is only kept for `cls` on Windows
+
 ### Update
 - Package `tdoc` v2.1.1 → v2.2.0
 - Package `merlin` v1.0.0 → v1.1.0
