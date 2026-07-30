@@ -404,7 +404,16 @@ def unhold_package(name: str):
         pass
 
 
+_PKG_NAME_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._+-]*$")
+
+def is_safe_pkg_name(name: str) -> bool:
+    return bool(name) and bool(_PKG_NAME_RE.match(name)) and ".." not in name
+
+
 def cleanup_package_files(name: str) -> int:
+    if not is_safe_pkg_name(name):
+        return 0
+
     prefix = os.environ.get("PREFIX", "/data/data/com.termux/files/usr")
     cleanup_paths = [
         Path(prefix) / "lib" / name,
@@ -471,6 +480,9 @@ def cmd_show(packages_dir: Path, name: str):
 
 
 def ensure_package_files(packages_dir: Path, name: str, force_update: bool = False) -> bool:
+    if not is_safe_pkg_name(name):
+        return False
+
     pkg_dir = packages_dir / name
     build_sh = pkg_dir / "build.sh"
 
@@ -694,6 +706,10 @@ def cmd_install(app_root: Path, packages_dir: Path, name: str, silent: bool = Fa
 
 
 def cmd_uninstall(name: str):
+    if not is_safe_pkg_name(name):
+        print(f"{RED}[✗] Invalid package name: '{name}'{R}")
+        return
+
     installed = get_installed_version(name)
     if installed is None:
         print(f"{YELLOW}[!] '{name}' is not installed.{R}")
