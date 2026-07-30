@@ -8,6 +8,8 @@ and this project adheres to semantic versioning.
 ## [Unreleased]
 
 ### Fixed
+- `termux_app_store/termux_app_store.py` & `termux_app_store/termux_app_store_cli.py` - `ensure_build_package_sh()` now runs a `bash -n` syntax check and supports optional SHA256 pinning (`TERMUX_APP_STORE_BUILD_SH_SHA256`, same variable used by `fast_install.py`) before saving a `build-package.sh` downloaded automatically from GitHub; refuses to use it if verification fails
+- `termux_app_store/termux_app_store.py` & `termux_app_store/termux_app_store_cli.py` - `ensure_package_files()` now runs a `bash -n` syntax check on a per-package `build.sh` before writing it to disk, refusing to save a file that fails to parse as valid bash
 - `build-package.sh` - the two heredoc wrappers (`bin/$PACKAGE`) no longer use unquoted `$(basename $BIN_FILE)`; now `$(basename "$BIN_FILE")` so it doesn't break when the main script's filename contains spaces
 - `build-package.sh` - added an audit trail (SHA256 of `build.sh` itself) and an explicit warning before `source "$BUILD_SH"` is executed
 - `build-package.sh` - the `TERMUX_PKG_SHA256=SKIP` warning is now more prominent so it isn't overlooked
