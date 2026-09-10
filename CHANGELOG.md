@@ -11,6 +11,9 @@ and this project adheres to semantic versioning.
 - `.github/workflows/build-packages-debs.yml` - `github.event.inputs.package`/`.force` were interpolated directly into a `run:` shell block via `${{ }}` (GitHub Actions script-injection pattern, CWE-94); moved to `env:` and referenced as shell variables instead; added a package-name character check before the value is used in `rm -f`
 - `.github/workflows/repin-floating-sources.yml` - `github.event.inputs.packages` had the same direct-interpolation issue; moved to `env:`, added a character allowlist check before the value is word-split and passed to `ci/repin_floating_sources.py`
 
+### Update
+- Package `merlin` v1.1.2 → v1.1.3
+
 ---
 
 ## [v0.4.5] - 2026-07-30
