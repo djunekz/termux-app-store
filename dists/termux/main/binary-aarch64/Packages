@@ -685,15 +685,15 @@ SHA256: 1ae464188a32c47ab06c96c9b75a7094b1f10aa4675c93c4d68edddc0bb2eba1
 Description: Fast and simple video download library and CLI tool written in Go
 
 Package: merlin
-Version: 1.1.2
+Version: 1.1.3
 Architecture: aarch64
 Maintainer: @termux-app-store
 Installed-Size: 
-Filename: pool/main/merlin_1.1.2_aarch64.deb
-Size: 65208
-MD5sum: 4ed766aff90f8a403e6936f301ae1787
-SHA1: 96202be5d05ce2b37c974abf0d656248b62d2caa
-SHA256: 3ab1ca622e0b492bb23b9931525ea4b35ac0648fd40a3a70ed2d627aba225810
+Filename: pool/main/merlin_1.1.3_aarch64.deb
+Size: 76880
+MD5sum: f7d6fd4d8ea4b689e3af8e6a5613a697
+SHA1: 46b727166d06db8edb95e19d859a51ca47b2c096
+SHA256: 9cf6c6dca4c765eba90759d1241496c5642290da4e2faf194e3b92d4b0404efd
 Description: Analyst website vulnerabillity scanner
 
 Package: myserver
@@ -1119,4 +1119,3 @@ MD5sum: 63843bb7cf899e9e5236ab779742305f
 SHA1: 14da576ed609316981f3648798a756b4d119edc6
 SHA256: 0a0098b9f76b6da2c85a7552d3867e275a9b6ae43b995a423f69ea22746f6acf
 Description: Encrypter Stealth Binary Builder
-
