@@ -834,15 +834,15 @@ SHA256: 1a61a7c5d260c28aead211fcd85cf39e3fb877fc48e143c5de6c4f7d31cdf474
 Description: Fast subdomains enumeration tool for penetration testers
 
 Package: tdoc
-Version: 2.2.4
+Version: 2.3.0
 Architecture: aarch64
 Maintainer: @djunekz
 Installed-Size: 
-Filename: pool/main/tdoc_2.2.4_aarch64.deb
-Size: 49696
-MD5sum: c74b851bf14fc976383b2af0b911ee37
-SHA1: 5739ca1d851db9028d5af904944a37df81c92a4b
-SHA256: 21bf70e2541457d410e22c04c42b9698a2524d6f3eb2a1239952c533c4a7a999
+Filename: pool/main/tdoc_2.3.0_aarch64.deb
+Size: 53180
+MD5sum: 7668253d12be603f8f4796bbf7fe7eff
+SHA1: 6b55749b6ba84682ed297e0b0a12e58be51fba81
+SHA256: 8e77c0b1447b1334cbda646e2f9acff1b7bc6241eb3de8bf9461008f6fed1122
 Description: TDOC - Diagnostic and repair utility for Termux environment
 
 Package: tere
@@ -1119,4 +1119,3 @@ MD5sum: c32ed88df64b3f48d04f235e63d5c0a7
 SHA1: e40efd6ce119034313fa4d1352daf93d5da51388
 SHA256: fe572620d2c642f00aa24ef630c9be09d9ebedbe5aa4dd7cbdc674a563e202e1
 Description: Encrypter Stealth Binary Builder
-
