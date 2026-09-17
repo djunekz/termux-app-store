@@ -15,6 +15,9 @@ and this project adheres to semantic versioning.
 - Package `merlin` v1.1.2 → v1.1.3
 - Package `tdoc` v2.2.4 → v2.3.0
 
+### Changed
+- Package `dumpzilla` v1.0.0 - Updated metadata
+
 ---
 
 ## [v0.4.5] - 2026-07-30
