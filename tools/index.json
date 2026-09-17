@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-09-17T04:02:37.397944+00:00",
+  "generated_at": "2026-09-17T04:04:59.897584+00:00",
   "total": 93,
   "packages": [
     {
@@ -492,7 +492,7 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://gitlab.com/kalilinux/packages/dumpzilla/-/archive/kali/master/dumpzilla-kali/master.tar.gz",
-      "sha256": "53df946af387842561db5ca2bea7816a8e0870f7399fcaef4299411a04931b99",
+      "sha256": "ba9d8d93a49603eccbcc6b85dda7a2f38e0f4e47d59bdede0760f2f6177b4d3d",
       "platform_independent": false,
       "depends": [
         "python",
