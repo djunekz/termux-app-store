@@ -1,9 +1,17 @@
 import hashlib
+import importlib.util
+import os
+import sys
 import time
+from pathlib import Path
 
 import pytest
 
-from termux_app_store import fast_install as fi
+_FI_PATH = Path(__file__).resolve().parent.parent / "termux_app_store" / "fast_install.py"
+_spec = importlib.util.spec_from_file_location("tas_fast_install_under_test", str(_FI_PATH))
+fi = importlib.util.module_from_spec(_spec)
+sys.modules[_spec.name] = fi
+_spec.loader.exec_module(fi)
 
 
 @pytest.fixture
@@ -38,7 +46,6 @@ def test_cache_with_valid_checksum_is_returned(cache):
 def test_expired_cache_is_removed(cache):
     path, digest = _write(cache)
     old = time.time() - fi.DEB_TTL - 10
-    import os
     os.utime(path, (old, old))
     assert fi.get_cached_deb("pkg", "1.0", "aarch64", sha256=digest) is None
     assert not path.exists()
