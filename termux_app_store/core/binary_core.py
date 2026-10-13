@@ -111,9 +111,13 @@ class BinaryCache:
         if not self.enabled:
             return None
 
+        if not sha256:
+            logger.error(f"No SHA256 for {pkg_name} {version} ({arch}) — refusing cache and download")
+            return None
+
         if self.has_local_binary(pkg_name, version, arch):
             cache_path = self.get_cache_path(pkg_name, version, arch)
-            if sha256 and not _verify_sha256(cache_path, sha256):
+            if not _verify_sha256(cache_path, sha256):
                 logger.error(f"Cached binary for {pkg_name} failed SHA256 check — discarding")
                 cache_path.unlink(missing_ok=True)
             else:

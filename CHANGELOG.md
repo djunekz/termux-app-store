@@ -7,6 +7,22 @@ and this project adheres to semantic versioning.
 
 ## [Unreleased]
 
+### Security
+- `termux_app_store/fast_install.py` - `get_cached_deb()` no longer returns a cached `.deb` when no SHA256 is available; the cache path now requires a verified checksum like a fresh download
+- `termux_app_store/fast_install.py` - when `index.json` has no `sha256_by_arch`, the checksum is fetched from the `.deb.sha256` file on the `gh-pages` branch via GitHub raw, a source separate from the CDN mirrors that serve the `.deb`; without any trusted checksum the binary is refused and the source-build fallback is used
+- `termux_app_store/fast_install.py` - index responses are schema-validated before being cached; cache and index files are written atomically; package name, version and architecture are validated before being used in paths and URLs
+- `termux_app_store/fast_install.py` - `install_deb()` now retries `dpkg -i` after `apt-get install -f` instead of returning the old failing exit code
+- `termux_app_store/fast_install.py`, `termux_app_store/termux_app_store.py`, `termux_app_store/termux_app_store_cli.py` - a downloaded `build-package.sh` is refused unless `TERMUX_APP_STORE_BUILD_SH_SHA256` is set; `TERMUX_APP_STORE_ALLOW_UNVERIFIED_BUILD_SH=1` is the explicit opt-out
+- `termux_app_store/termux_app_store_cli.py` - `_direct_deb_install()` refuses a `.deb` without an expected SHA256
+- `termux_app_store/core/binary_core.py` - `get_best_binary()` refuses cache and downloads when no SHA256 is given
+- `.github/workflows/build-packages-debs.yml` - default permission is `contents: read`; only the publish job has `contents: write`; matrix values moved to `env:` instead of `${{ }}` interpolation in shell; a prebuilt `.deb` checksum mismatch or missing checksum now fails the job instead of printing a warning; publish job writes `gh-pages/tools/index.json` with `sha256_by_arch`
+
+### Removed
+- Packages `gemail-hack`, `hammer`, `zerodoor`, `ghosttrack` removed from the catalog: their descriptions state credential brute-forcing, DDoS, backdoor generation and location/number tracking with no stated defensive use
+
+### Changed
+- `README.md`, `INSTALL.md`, `PRIVACY.md`, `pyproject.toml` - wording aligned with actual behavior: no "offline-first"/"no cloud dependency" claims, SHA256 described as integrity checking rather than publisher authentication, install command unified to `pip install termux-app-store`, network use documented, "Official Developer" replaced with an unambiguous maintainer line
+
 ### Fixed
 - `doctor.py` - `_sh()` ran every check command with `subprocess.run(cmd, shell=False)` while every caller passed a shell-syntax string (pipes, `2>/dev/null`, `||`); with `shell=False` the whole string was treated as a single executable name, so it always failed silently and returned `("", 1)` — this caused false failures across almost the entire report (`pip` reported "not found", `TAS importable` failed, and `build.sh scan` reported all 93 packages as `syntax` errors even though `bash -n` was never actually able to run). Changed to `shell=True` so these checks now reflect the real environment state
 - `doctor.py` - `run_fix()` executed a check's fix (`fix_cmd`/`fix_fn`) but never re-ran the originating check afterward, so `--fix` could report "OK Fix applied" for an item while the summary counts, exit code, and printed status still showed the pre-fix `WARN`/`FAIL`. `run_fix()` now returns whether the fix succeeded, and `main()` re-runs the check function and updates the result whenever a fix was applied

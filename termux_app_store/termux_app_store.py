@@ -243,12 +243,14 @@ def _verify_downloaded_script(raw: bytes, env_sha256_var: str, log_prefix: str) 
     if not raw:
         return False
 
-    expected_sha256 = os.environ.get(env_sha256_var, "")
+    import hashlib
+    expected_sha256 = os.environ.get(env_sha256_var, "").strip().lower()
+    actual_sha256 = hashlib.sha256(raw).hexdigest()
     if expected_sha256:
-        import hashlib
-        actual_sha256 = hashlib.sha256(raw).hexdigest()
         if actual_sha256 != expected_sha256:
             return False
+    elif os.environ.get("TERMUX_APP_STORE_ALLOW_UNVERIFIED_BUILD_SH") != "1":
+        return False
 
     syntax_check = subprocess.run(
         ["bash", "-n"], input=raw, capture_output=True

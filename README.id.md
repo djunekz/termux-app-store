@@ -372,7 +372,7 @@ termux-app-store/
 | Tidak butuh izin tambahan | Tanpa akun atau registrasi |
 | Tidak membuka port jaringan | Tanpa analitik atau tracking |
 | Tidak ada layanan berjalan di background | Tanpa telemetri apapun |
-| Build hanya berjalan atas perintah eksplisit | Offline-first by design |
+| Build hanya berjalan atas perintah eksplisit | Local-first; jaringan dipakai untuk metadata dan unduhan |
 | Verifikasi SHA256 pada semua unduhan `.deb` | Sumber binary transparan dan bisa diaudit |
 
 > Detail lengkap: [SECURITY.md](SECURITY.md) | [PRIVACY.md](PRIVACY.md) | [DISCLAIMER.md](DISCLAIMER.md) | [BINARY_DISCLAIMER.md](BINARY_DISCLAIMER.md)

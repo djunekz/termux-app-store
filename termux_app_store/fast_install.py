@@ -2,6 +2,8 @@
 import hashlib
 import json
 import os
+import re
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -45,6 +47,16 @@ MIRRORS = [
 
 DEB_PATH_PATTERN = "pool/main/{pkg}_{version}_{arch}.deb"
 
+SHA256_SIDECAR_URL = (
+    f"https://raw.githubusercontent.com/{GITHUB_REPO}/gh-pages/pool/main/"
+    "{pkg}_{version}_{arch}.deb.sha256"
+)
+
+_SAFE_PKG   = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._+-]*$")
+_SAFE_VER   = re.compile(r"^[A-Za-z0-9][A-Za-z0-9.+~:-]*$")
+_SAFE_ARCH  = re.compile(r"^[a-z0-9_]+$")
+_SHA256_RE  = re.compile(r"^[0-9a-f]{64}$")
+
 INDEX_URLS = [
     f"https://raw.githubusercontent.com/{GITHUB_REPO}/master/tools/index.json",
     "https://termux-app-store.pages.dev/tools/index.json",
@@ -53,6 +65,33 @@ INDEX_URLS = [
 
 CACHE_BASE.mkdir(parents=True, exist_ok=True)
 DEB_CACHE_DIR.mkdir(parents=True, exist_ok=True)
+
+def _valid_ident(pkg: str, version: str, arch: str) -> bool:
+    return bool(
+        isinstance(pkg, str) and isinstance(version, str) and isinstance(arch, str)
+        and _SAFE_PKG.match(pkg) and _SAFE_VER.match(version) and _SAFE_ARCH.match(arch)
+    )
+
+def _sha256_file(path: Path) -> str:
+    h = hashlib.sha256()
+    with open(path, "rb") as f:
+        while chunk := f.read(65536):
+            h.update(chunk)
+    return h.hexdigest()
+
+def _normalize_sha256(value) -> str:
+    if not isinstance(value, str):
+        return ""
+    value = value.strip().lower()
+    return value if _SHA256_RE.match(value) else ""
+
+def _valid_index(data) -> bool:
+    if not isinstance(data, dict):
+        return False
+    pkgs = data.get("packages")
+    if not isinstance(pkgs, list):
+        return False
+    return all(isinstance(p, dict) and _SAFE_PKG.match(str(p.get("package", ""))) for p in pkgs)
 
 def get_arch() -> str:
     raw = os.uname().machine
@@ -122,7 +161,9 @@ def get_index(log_fn: Optional[Callable] = None) -> list:
         if age < INDEX_TTL:
             try:
                 with open(INDEX_CACHE) as f:
-                    return json.load(f).get("packages", [])
+                    data = json.load(f)
+                if _valid_index(data):
+                    return data["packages"]
             except Exception:
                 pass
 
@@ -131,16 +172,23 @@ def get_index(log_fn: Optional[Callable] = None) -> list:
             req = urllib.request.Request(url, headers={"User-Agent": "termux-app-store"})
             with urllib.request.urlopen(req, timeout=8) as resp:
                 data = json.loads(resp.read())
-                with open(INDEX_CACHE, "w") as f:
-                    json.dump(data, f)
-                return data.get("packages", [])
+            if not _valid_index(data):
+                _log(f"Rejected malformed index from {url}")
+                continue
+            tmp_cache = INDEX_CACHE.with_suffix(".tmp")
+            with open(tmp_cache, "w") as f:
+                json.dump(data, f)
+            os.replace(tmp_cache, INDEX_CACHE)
+            return data["packages"]
         except Exception:
             continue
 
     if INDEX_CACHE.exists():
         try:
             with open(INDEX_CACHE) as f:
-                return json.load(f).get("packages", [])
+                data = json.load(f)
+            if _valid_index(data):
+                return data["packages"]
         except Exception:
             pass
 
@@ -158,8 +206,12 @@ def _deb_cache_path(pkg: str, version: str, arch: str) -> Path:
 
 def get_cached_deb(pkg: str, version: str, arch: str,
                    sha256: Optional[str] = None) -> Optional[Path]:
+    expected = _normalize_sha256(sha256)
+    if not expected or not _valid_ident(pkg, version, arch):
+        return None
+
     path = _deb_cache_path(pkg, version, arch)
-    if not path.exists():
+    if not path.is_file() or path.is_symlink():
         return None
 
     age = time.time() - path.stat().st_mtime
@@ -167,22 +219,34 @@ def get_cached_deb(pkg: str, version: str, arch: str,
         path.unlink(missing_ok=True)
         return None
 
-    if sha256:
-        h = hashlib.sha256()
-        with open(path, "rb") as f:
-            while chunk := f.read(65536):
-                h.update(chunk)
-        if h.hexdigest() != sha256:
-            path.unlink(missing_ok=True)
-            return None
+    if _sha256_file(path) != expected:
+        path.unlink(missing_ok=True)
+        return None
 
     return path
 
 def save_deb_cache(src: Path, pkg: str, version: str, arch: str) -> Path:
     dest = _deb_cache_path(pkg, version, arch)
-    import shutil
-    shutil.copy2(src, dest)
+    tmp = dest.with_suffix(".part")
+    shutil.copy2(src, tmp)
+    os.replace(tmp, dest)
     return dest
+
+def fetch_published_sha256(pkg: str, version: str, arch: str,
+                           log_fn: Optional[Callable] = None) -> str:
+    if not _valid_ident(pkg, version, arch):
+        return ""
+    url = SHA256_SIDECAR_URL.format(pkg=pkg, version=version, arch=arch)
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "termux-app-store"})
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            line = resp.read(4096).decode("utf-8", errors="ignore").strip()
+    except Exception as e:
+        if log_fn:
+            log_fn(f"Could not fetch published checksum: {e}")
+        return ""
+    token = line.split()[0] if line else ""
+    return _normalize_sha256(token)
 
 def download_deb(pkg: str, version: str, arch: str,
                  dest: Path,
@@ -200,6 +264,10 @@ def download_deb(pkg: str, version: str, arch: str,
     def _eta(seconds):
         if eta_fn:
             eta_fn(seconds)
+
+    if not _valid_ident(pkg, version, arch):
+        _log("Invalid package name, version or architecture")
+        return False
 
     mirror = get_best_mirror()
     deb_path = DEB_PATH_PATTERN.format(pkg=pkg, version=version, arch=arch)
@@ -296,12 +364,22 @@ def install_deb(deb_path: Path,
             return True
         else:
             _log("Fixing dependencies...")
-            subprocess.run(
+            fix = subprocess.run(
                 ["apt-get", "install", "-f", "-y"],
                 stdout=subprocess.DEVNULL,
                 stderr=subprocess.DEVNULL,
             )
-            return proc.returncode == 0
+            if fix.returncode != 0:
+                return False
+            retry = subprocess.run(
+                ["dpkg", "-i", str(deb_path)],
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+            )
+            if retry.returncode == 0:
+                _progress(100)
+                return True
+            return False
 
     except FileNotFoundError:
         _log("dpkg not found, trying apt...")
@@ -347,19 +425,38 @@ def fast_install(pkg_name: str,
         _log(f"✗ Package '{pkg_name}' not found in index")
         return False
 
-    version = pkg_info.get("version", "")
-    sha256_by_arch = pkg_info.get("sha256_by_arch", {})
-    deb_sha256 = sha256_by_arch.get(arch, "")
+    version = str(pkg_info.get("version", ""))
+
+    if not _valid_ident(pkg_name, version, arch):
+        _log("✗ Invalid package name, version or architecture in index")
+        return False
+
+    sha256_by_arch = pkg_info.get("sha256_by_arch")
+    deb_sha256 = ""
+    if isinstance(sha256_by_arch, dict):
+        deb_sha256 = _normalize_sha256(sha256_by_arch.get(arch, ""))
+    if not deb_sha256:
+        _log("  Checksum not in index — fetching published checksum...")
+        deb_sha256 = fetch_published_sha256(pkg_name, version, arch, log_fn=log_fn)
 
     _log(f"  Version: {version}")
     _progress(8)
 
+    if not deb_sha256:
+        _log("✗ No trusted SHA256 available for this package/arch")
+        _log("  Refusing to install an unverified binary")
+        _log("")
+        _log("Falling back to build from source...")
+        _log("(This will take longer)")
+        _log("")
+        return _fallback_build_from_source(pkg_name, log_fn=log_fn, progress_fn=_progress)
+
     _log("Checking local cache...")
-    cached = get_cached_deb(pkg_name, version, arch, sha256=deb_sha256 or None)
+    cached = get_cached_deb(pkg_name, version, arch, sha256=deb_sha256)
 
     if cached:
         elapsed = time.time() - start_time
-        _log(f"✓ Cache HIT — {cached.name} ({elapsed:.1f}s)")
+        _log(f"✓ Cache HIT (checksum verified) — {cached.name} ({elapsed:.1f}s)")
         _progress(80)
         _eta(cached.stat().st_size / (500 * 1024))
 
@@ -368,7 +465,7 @@ def fast_install(pkg_name: str,
             elapsed = time.time() - start_time
             _log(f"✔ Installed from cache in {elapsed:.1f}s!")
         else:
-            _log(f"✗ Cached .deb appears corrupt — removing from cache")
+            _log("✗ Cached .deb could not be installed — removing from cache")
             cached.unlink(missing_ok=True)
             _log(f"  → Run: tas --fix-install {pkg_name}  (force rebuild from source)")
         return ok
@@ -390,38 +487,26 @@ def fast_install(pkg_name: str,
         )
 
         if downloaded:
-            if not deb_sha256:
-                _log("✗ No SHA256 published for this package/arch in index.json")
-                _log("  Refusing to install an unverified binary")
+            _log("Verifying checksum...")
+            actual = _sha256_file(deb_dest)
+            if actual != deb_sha256:
+                _log("✗ SHA256 mismatch — file corrupt or tampered")
+                _log(f"  Expected: {deb_sha256[:32]}...")
+                _log(f"  Got:      {actual[:32]}...")
                 downloaded = False
             else:
-                _log("Verifying checksum...")
-                h = hashlib.sha256()
-                with open(deb_dest, "rb") as f:
-                    while chunk := f.read(65536):
-                        h.update(chunk)
-                actual = h.hexdigest()
-                if actual != deb_sha256:
-                    _log(f"✗ SHA256 mismatch — file corrupt")
-                    _log(f"  Expected: {deb_sha256[:32]}...")
-                    _log(f"  Got:      {actual[:32]}...")
-                    downloaded = False
-                else:
-                    _log("✓ Checksum OK")
-
-            if downloaded:
+                _log("✓ Checksum OK")
                 save_deb_cache(deb_dest, pkg_name, version, arch)
                 ok = install_deb(deb_dest, log_fn=log_fn, progress_fn=_progress)
                 if ok:
                     elapsed = time.time() - start_time
                     _log(f"✔ Installed in {elapsed:.1f}s!")
                     return True
-                else:
-                    _log("✗ dpkg install failed")
-                    return False
+                _log("✗ dpkg install failed")
+                return False
 
     _log("")
-    _log("Pre-built .deb not available for this package/arch")
+    _log("Verified pre-built .deb not available for this package/arch")
     _log("Falling back to build from source...")
     _log("(This will take longer)")
     _log("")
@@ -437,6 +522,10 @@ def _fallback_build_from_source(pkg_name: str,
         if progress_fn:
             progress_fn(pct)
 
+    if not _SAFE_PKG.match(pkg_name or ""):
+        _log("✗ Invalid package name")
+        return False
+
     app_root = _get_app_root()
     build_sh = app_root / "build-package.sh"
 
@@ -451,7 +540,8 @@ def _fallback_build_from_source(pkg_name: str,
             _log(f"✗ Failed to download build-package.sh: {e}")
             return False
 
-        expected_sha256 = os.environ.get("TERMUX_APP_STORE_BUILD_SH_SHA256", "")
+        expected_sha256 = os.environ.get("TERMUX_APP_STORE_BUILD_SH_SHA256", "").strip().lower()
+        allow_unverified = os.environ.get("TERMUX_APP_STORE_ALLOW_UNVERIFIED_BUILD_SH") == "1"
         actual_sha256 = hashlib.sha256(downloaded_bytes).hexdigest()
         if expected_sha256:
             if actual_sha256 != expected_sha256:
@@ -459,9 +549,15 @@ def _fallback_build_from_source(pkg_name: str,
                 _log(f"  Expected: {expected_sha256}")
                 _log(f"  Got:      {actual_sha256}")
                 return False
-        else:
-            _log("⚠ TERMUX_APP_STORE_BUILD_SH_SHA256 not set — cannot verify authenticity")
+        elif allow_unverified:
+            _log("⚠ Running build-package.sh WITHOUT checksum pinning (explicitly allowed)")
             _log(f"  Downloaded SHA256: {actual_sha256}")
+        else:
+            _log("✗ Refusing to run a downloaded build-package.sh without a pinned checksum")
+            _log(f"  Downloaded SHA256: {actual_sha256}")
+            _log("  Review the script, then set TERMUX_APP_STORE_BUILD_SH_SHA256 to this value")
+            _log("  or clone the repository so a local build-package.sh is used")
+            return False
 
         syntax_check = subprocess.run(
             ["bash", "-n"], input=downloaded_bytes, capture_output=True
@@ -471,8 +567,10 @@ def _fallback_build_from_source(pkg_name: str,
             _log(syntax_check.stderr.decode(errors="ignore"))
             return False
 
-        build_sh.write_bytes(downloaded_bytes)
-        build_sh.chmod(0o755)
+        tmp_build = build_sh.with_suffix(".part")
+        tmp_build.write_bytes(downloaded_bytes)
+        tmp_build.chmod(0o755)
+        os.replace(tmp_build, build_sh)
 
     proc = subprocess.Popen(
         ["bash", str(build_sh), pkg_name],

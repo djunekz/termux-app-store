@@ -2,7 +2,7 @@
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
   "generated_at": "2026-05-12T11:29:41.660070+00:00",
-  "total": 89,
+  "total": 85,
   "packages": [
     {
       "package": "aichat",
@@ -636,25 +636,6 @@
       ]
     },
     {
-      "package": "gemail-hack",
-      "version": "1.0.0",
-      "maintainer": "@termux-app-store",
-      "description": "python script for Hack gmail account brute force",
-      "homepage": "https://github.com/Ha3MrX/Gemail-Hack",
-      "license": "UNKNOWN",
-      "download_size": "Unknown",
-      "installed_size": "Unknown",
-      "source": "https://github.com/djunekz/termux-app-store",
-      "srcurl": "https://github.com/Ha3MrX/Gemail-Hack/archive/refs/heads/master.tar.gz",
-      "sha256": "36dfa4b305e8b7660ae92e817254545e4aa6b5daf23446a2a4c475e3aef6cde9",
-      "platform_independent": false,
-      "depends": [
-        "python",
-        "python-pip",
-        "python-setuptools"
-      ]
-    },
-    {
       "package": "get",
       "version": "1.0.0",
       "maintainer": "@termux-app-store",
@@ -667,25 +648,6 @@
       "srcurl": "https://github.com/peterpt/get/archive/refs/heads/master.tar.gz",
       "sha256": "e028dcbe1ae7809db24e6bcfda4159847adcfcdf28b3eb166a3329533b27d34a",
       "platform_independent": false
-    },
-    {
-      "package": "ghosttrack",
-      "version": "1.0.0",
-      "maintainer": "@termux-app-store",
-      "description": "Useful tool to track location or mobile number",
-      "homepage": "https://github.com/HunxByts/GhostTrack",
-      "license": "UNKNOWN",
-      "download_size": "Unknown",
-      "installed_size": "Unknown",
-      "source": "https://github.com/djunekz/termux-app-store",
-      "srcurl": "https://github.com/HunxByts/GhostTrack/archive/refs/heads/main.tar.gz",
-      "sha256": "83934fc3b54ba51a2e44855380602b722dd5efb572259e3d462e0b14d32bef62",
-      "platform_independent": false,
-      "depends": [
-        "python",
-        "python-pip",
-        "python-setuptools"
-      ]
     },
     {
       "package": "goblinwordgenerator",
@@ -721,25 +683,6 @@
       "platform_independent": false,
       "depends": [
         "golang"
-      ]
-    },
-    {
-      "package": "hammer",
-      "version": "1.0.0",
-      "maintainer": "@termux-app-store",
-      "description": "Ddos attack tool for termux",
-      "homepage": "https://github.com/TermuxHackz/Hammer",
-      "license": "UNKNOWN",
-      "download_size": "Unknown",
-      "installed_size": "Unknown",
-      "source": "https://github.com/djunekz/termux-app-store",
-      "srcurl": "https://github.com/TermuxHackz/Hammer/archive/refs/heads/master.tar.gz",
-      "sha256": "d1b392377d0432efde5936a392e2b268bddff7d888b79bd5d19e13f089de8861",
-      "platform_independent": false,
-      "depends": [
-        "python",
-        "python-pip",
-        "python-setuptools"
       ]
     },
     {
@@ -1481,25 +1424,6 @@
         "luajit",
         "mpv",
         "openal-soft"
-      ]
-    },
-    {
-      "package": "zerodoor",
-      "version": "1.0.0",
-      "maintainer": "@termux-app-store",
-      "description": "A script written lazily for generating cross-platform  backdoors on the go :)",
-      "homepage": "https://github.com/Souhardya/Zerodoor",
-      "license": "NOASSERTION",
-      "download_size": "Unknown",
-      "installed_size": "Unknown",
-      "source": "https://github.com/djunekz/termux-app-store",
-      "srcurl": "https://github.com/Souhardya/Zerodoor/archive/refs/heads/master.tar.gz",
-      "sha256": "494be3ff04d5be6d285755c0e9b9382a7da3eb7721da259d40128ce8f2a5a6c2",
-      "platform_independent": false,
-      "depends": [
-        "python",
-        "python-pip",
-        "python-setuptools"
       ]
     },
     {

@@ -23,6 +23,8 @@ The application does **not** intentionally collect personal data.
 
 Network access may occur **only** for the following purposes:
 
+- Fetching the package index and checking mirror availability
+- Downloading pre-built `.deb` files and their checksums from the mirrors
 - Downloading source code during package builds
 - Fetching upstream dependencies
 - Accessing public repositories defined in build scripts

@@ -27,7 +27,7 @@ the binary release and hides internal implementation details.
 Run the following command:
 
 ```bash
-pip install termux-app-store textual
+pip install termux-app-store
 ```
 
 > Option 2 (Manual)

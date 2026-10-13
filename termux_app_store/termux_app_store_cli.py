@@ -206,11 +206,16 @@ def _verify_downloaded_script(raw: bytes, env_sha256_var: str) -> bool:
     if not raw:
         return False
 
-    expected_sha256 = os.environ.get(env_sha256_var, "")
+    expected_sha256 = os.environ.get(env_sha256_var, "").strip().lower()
+    actual_sha256 = hashlib.sha256(raw).hexdigest()
     if expected_sha256:
-        actual_sha256 = hashlib.sha256(raw).hexdigest()
         if actual_sha256 != expected_sha256:
             return False
+    elif os.environ.get("TERMUX_APP_STORE_ALLOW_UNVERIFIED_BUILD_SH") != "1":
+        print(f"  {RED}✗  No pinned checksum for downloaded build-package.sh{R}")
+        print(f"  {DIM}SHA256 of download: {actual_sha256}{R}")
+        print(f"  {DIM}Review it, then export {env_sha256_var}=<sha256> or clone the repository.{R}")
+        return False
 
     syntax_check = subprocess.run(
         ["bash", "-n"], input=raw, capture_output=True
@@ -550,8 +555,26 @@ def _direct_deb_install(name: str, version: str, pkg_info: Optional[dict] = None
 
     expected_sha = None
     if pkg_info:
-        sha_by_arch = pkg_info.get("sha256_by_arch", {})
-        expected_sha = sha_by_arch.get(arch)
+        sha_by_arch = pkg_info.get("sha256_by_arch")
+        if isinstance(sha_by_arch, dict):
+            candidate = sha_by_arch.get(arch)
+            if isinstance(candidate, str) and len(candidate) == 64:
+                expected_sha = candidate.lower()
+
+    if not re.match(r"^[A-Za-z0-9][A-Za-z0-9._+-]*$", name) or not re.match(r"^[A-Za-z0-9][A-Za-z0-9.+~:-]*$", str(version)):
+        _log("  ✗ Invalid package name or version")
+        return False
+
+    if not expected_sha and _FAST_INSTALL_AVAILABLE:
+        try:
+            from termux_app_store.fast_install import fetch_published_sha256
+        except ImportError:
+            from fast_install import fetch_published_sha256
+        expected_sha = fetch_published_sha256(name, str(version), arch, log_fn=_log) or None
+
+    if not expected_sha:
+        _log("  ✗ No trusted SHA256 for this package/arch — refusing unverified .deb")
+        return False
 
     import tempfile
     _log(f"  Trying direct .deb download: {fname}")
@@ -575,7 +598,7 @@ def _direct_deb_install(name: str, version: str, pkg_info: Optional[dict] = None
             continue
 
         actual_sha = hashlib.sha256(deb_bytes).hexdigest()
-        if expected_sha and actual_sha != expected_sha:
+        if actual_sha != expected_sha:
             _log(f"  ✗ SHA256 mismatch from {mirror['name']} — skipping (file corrupt/outdated)")
             _log(f"    Expected: {expected_sha[:32]}...")
             _log(f"    Got:      {actual_sha[:32]}...")

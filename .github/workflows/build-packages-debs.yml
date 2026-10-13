@@ -1,7 +1,7 @@
 name: Build Package .deb Files
 
 permissions:
-  contents: write
+  contents: read
 
 on:
   schedule:
@@ -111,11 +111,13 @@ jobs:
         if: |
           matrix.is_prebuilt_deb == 'true' &&
           (github.event.inputs.force == 'true' || steps.cache.outputs.cache-hit != 'true')
+        env:
+          PKG: ${{ matrix.package }}
+          VERSION: ${{ matrix.version }}
+          SRCURL: ${{ matrix.srcurl }}
+          SHA256: ${{ matrix.sha256 }}
         run: |
-          PKG="${{ matrix.package }}"
-          VERSION="${{ matrix.version }}"
-          SRCURL="${{ matrix.srcurl }}"
-          SHA256="${{ matrix.sha256 }}"
+          [[ "$PKG" =~ ^[A-Za-z0-9][A-Za-z0-9._+-]*$ ]] || { echo "Invalid package name"; exit 1; }
           mkdir -p output
 
           echo "=== Downloading prebuilt .deb ==="
@@ -125,13 +127,16 @@ jobs:
             exit 1
           }
 
-          if [[ -n "$SHA256" ]]; then
-            GOTSUM=$(sha256sum source.deb | cut -d' ' -f1)
-            if [[ "$GOTSUM" == "$SHA256"* || "$SHA256" == "$GOTSUM"* ]]; then
-              echo "Checksum OK"
-            else
-              echo "WARNING: checksum mismatch (expected prefix: $SHA256, got: $GOTSUM)"
-            fi
+          if [[ -z "$SHA256" ]]; then
+            echo "ERROR: no SHA256 declared for prebuilt .deb"
+            exit 1
+          fi
+          GOTSUM=$(sha256sum source.deb | cut -d' ' -f1)
+          if [[ "$GOTSUM" == "$SHA256"* || "$SHA256" == "$GOTSUM"* ]]; then
+            echo "Checksum OK"
+          else
+            echo "ERROR: checksum mismatch (expected prefix: $SHA256, got: $GOTSUM)"
+            exit 1
           fi
 
           echo "=== Extracting .deb ==="
@@ -208,7 +213,10 @@ jobs:
         if: |
           matrix.is_prebuilt_deb != 'true' &&
           (github.event.inputs.force == 'true' || steps.cache.outputs.cache-hit != 'true')
+        env:
+          MATRIX_PKG: ${{ matrix.package }}
         run: |
+          [[ "$MATRIX_PKG" =~ ^[A-Za-z0-9][A-Za-z0-9._+-]*$ ]] || { echo "Invalid package name"; exit 1; }
           mkdir -p output
 
           WORK_DIR=$(mktemp -d)
@@ -217,13 +225,14 @@ jobs:
           chmod -R 777 "$WORK_DIR"
           mkdir -p "$WORK_DIR/output"
 
-          PKG_DEPS=$(grep 'TERMUX_PKG_DEPENDS=' "packages/${{ matrix.package }}/build.sh" | head -1 \
+          PKG_DEPS=$(grep 'TERMUX_PKG_DEPENDS=' "packages/$MATRIX_PKG/build.sh" | head -1 \
             | cut -d= -f2 | tr -d "\"'" | tr ',' ' ' | xargs 2>/dev/null || true)
 
           docker run --rm \
             --platform linux/arm64 \
             -v "$WORK_DIR:/opt/tas" \
             -e "PKG_DEPS=$PKG_DEPS" \
+            -e "PKG=$MATRIX_PKG" \
             termux/termux-docker:aarch64 \
             bash -c '
               export HOME=/root
@@ -233,7 +242,6 @@ jobs:
               mkdir -p "$PREFIX/tmp"
               export TMPDIR="$PREFIX/tmp"
 
-              PKG="${{ matrix.package }}"
               cd /opt/tas
 
               echo "=== Updating pkg ==="
@@ -261,8 +269,11 @@ jobs:
 
       - name: Repackage for all architectures
         if: github.event.inputs.force == 'true' || steps.cache.outputs.cache-hit != 'true'
+        env:
+          PKG: ${{ matrix.package }}
+          MATRIX_VERSION: ${{ matrix.version }}
         run: |
-          PKG="${{ matrix.package }}"
+          [[ "$PKG" =~ ^[A-Za-z0-9][A-Za-z0-9._+-]*$ ]] || { echo "Invalid package name"; exit 1; }
           BUILT=$(ls output/${PKG}_*_aarch64.deb 2>/dev/null | head -1)
 
           if [[ -z "$BUILT" ]]; then
@@ -270,7 +281,7 @@ jobs:
             exit 0
           fi
 
-          BUILT_VERSION=$(dpkg-deb -f "$BUILT" Version 2>/dev/null || echo "${{ matrix.version }}")
+          BUILT_VERSION=$(dpkg-deb -f "$BUILT" Version 2>/dev/null || echo "$MATRIX_VERSION")
           echo "Repackaging from: $(basename $BUILT) (v$BUILT_VERSION)"
 
           TMPCHECK="repack_tmp/${PKG}_check"
@@ -338,6 +349,8 @@ jobs:
     name: Publish .deb to gh-pages
     runs-on: ubuntu-latest
     needs: [detect-changes, build-deb]
+    permissions:
+      contents: write
     if: |
       always() &&
       needs.detect-changes.outputs.has_packages == 'true' &&
@@ -409,6 +422,33 @@ jobs:
             echo "Added: $fname"
           done
           echo "Pool total: $(ls gh-pages/pool/main/*.deb 2>/dev/null | wc -l) .deb files"
+
+      - name: Publish checksum-enriched index
+        run: |
+          python3 - <<'EOF'
+          import json
+          from pathlib import Path
+
+          pool = Path("gh-pages/pool/main")
+          src = Path("tools/index.json")
+          data = json.loads(src.read_text(encoding="utf-8"))
+          archs = ["aarch64", "arm", "x86_64", "i686"]
+          for entry in data.get("packages", []):
+              name = entry["package"]
+              version = entry.get("version", "")
+              sums = {}
+              for arch in archs:
+                  sidecar = pool / f"{name}_{version}_{arch}.deb.sha256"
+                  if sidecar.is_file():
+                      token = sidecar.read_text(encoding="utf-8").split()[0].lower()
+                      if len(token) == 64:
+                          sums[arch] = token
+              if sums:
+                  entry["sha256_by_arch"] = sums
+          out = Path("gh-pages/tools/index.json")
+          out.parent.mkdir(parents=True, exist_ok=True)
+          out.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
+          EOF
 
       - name: Generate Packages index and Release
         run: |

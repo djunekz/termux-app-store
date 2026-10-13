@@ -2,7 +2,7 @@
 
 # [Termux App Store — TUI & CLI Package Manager for Termux](https://djunekz.github.io/termux-app-store/)
 
-**The first offline-first, binary-safe TUI package manager built natively for Termux on Android.**
+**A local-first TUI and CLI package manager built natively for Termux on Android, with checksum-verified binary installs and a source-build fallback.**
 
 > Read in: 🇮🇩 **[Bahasa Indonesia](README.id.md)** | 🇹🇭 **[ภาษาไทย](README.th.md)** | 🇯🇵 **[日本語](README.jp.md)** | 🇨🇳 **[中文](README.ch.md)** | 🇻🇳 **[Tiếng Việt](README.vi.md)** | 🇮🇳 **[हिन्दी](README.in.md)**
 
@@ -25,11 +25,11 @@
 
 ## What is Termux App Store?
 
-**Termux App Store** (`termux-app-store`) is a **TUI (Terminal User Interface)** and **CLI package manager** built with Python ([Textual](https://github.com/Textualize/textual)) that lets Termux users on Android **browse, install, and manage tools/packages** directly on-device — no account, no telemetry, no cloud dependency, no root required.
+**Termux App Store** (`termux-app-store`) is a **TUI (Terminal User Interface)** and **CLI package manager** built with Python ([Textual](https://github.com/Textualize/textual)) that lets Termux users on Android **browse, install, and manage tools/packages** directly on-device — no account, no telemetry, no root required. Package metadata and downloads use the network.
 
-Starting from **v0.4.0**, Termux App Store supports a **fast install engine**: packages are downloaded as pre-built `.deb` binaries from a mirror pool (GitHub Pages, Cloudflare CDN, jsDelivr), with local `.deb` caching (TTL 7 days) and per-arch SHA256 verification. Source builds remain available via `fix-install` for full control.
+Starting from **v0.4.0**, Termux App Store supports a **fast install engine**: packages are downloaded as pre-built `.deb` binaries from a mirror pool (GitHub Pages, Cloudflare CDN, jsDelivr), with local `.deb` caching (TTL 7 days). Every `.deb`, including cached ones, must match a per-arch SHA256 or it is refused. SHA256 detects corruption and mismatched files; it is not a publisher signature. Source builds remain available via `fix-install`.
 
-It works as an **alternative package manager for Termux**, letting you install community tools using verified `build.sh` scripts — similar in spirit to the AUR (Arch User Repository) but designed specifically for Termux on Android.
+It works as an **alternative package manager for Termux**, letting you install community tools using `build.sh` scripts — similar in spirit to the AUR (Arch User Repository) but designed specifically for Termux on Android.
 
 > **How is this different from `termux-packages` or TUR (Termux User Repository)?**
 >
@@ -181,7 +181,7 @@ termux-app-store help                     # Full help
 
 ## Features
 
-| **Package Browser (TUI)** Browse packages from the `packages/` folder interactively with keyboard & touchscreen navigation.<br>**Fast Install Engine** Downloads pre-built `.deb` from mirror pool — GitHub Pages, Cloudflare CDN, jsDelivr — with automatic fallback.<br>**Binary Cache** Local `.deb` cache with 7-day TTL and per-arch SHA256 verification. Cached packages install instantly.<br>**Smart Build Validator** Detects unsupported Termux dependencies with automatic status badges. | **Real-time Search & Filter** Search packages by name or description — `search`/`find` CLI commands included.<br>**Multi-package Install/Uninstall** Install or remove several packages in one command with a summary output.<br>**One-Click Manage** Install / update / uninstall Termux App Store itself via `./tasctl`.<br>**Privacy-First** No account, no tracking, no telemetry — fully offline after mirror sync. |
+| **Package Browser (TUI)** Browse packages from the `packages/` folder interactively with keyboard & touchscreen navigation.<br>**Fast Install Engine** Downloads pre-built `.deb` from mirror pool — GitHub Pages, Cloudflare CDN, jsDelivr — with automatic fallback.<br>**Binary Cache** Local `.deb` cache with 7-day TTL; cached files are re-verified against a per-arch SHA256 before every install. Cached packages install instantly.<br>**Smart Build Validator** Detects unsupported Termux dependencies with automatic status badges. | **Real-time Search & Filter** Search packages by name or description — `search`/`find` CLI commands included.<br>**Multi-package Install/Uninstall** Install or remove several packages in one command with a summary output.<br>**One-Click Manage** Install / update / uninstall Termux App Store itself via `./tasctl`.<br>**Privacy-First** No account, no tracking, no telemetry. Works from local data when already available; fetching metadata and packages needs the network. |
 |---|---|
 
 ---
@@ -363,8 +363,8 @@ termux-app-store/
 | No extra permissions required | No account or registration |
 | No network ports opened | No analytics or tracking |
 | No background services running | No telemetry of any kind |
-| Builds only run on explicit user command | Offline-first by design |
-| SHA256 verification on all `.deb` downloads | Binary source is transparent and auditable |
+| Builds only run on explicit user command | Local-first; network used for metadata and downloads |
+| SHA256 required for every `.deb` (download and cache) | Binary source is transparent and auditable |
 
 > Full details: [SECURITY.md](SECURITY.md) | [PRIVACY.md](PRIVACY.md) | [DISCLAIMER.md](DISCLAIMER.md) | [BINARY_DISCLAIMER.md](BINARY_DISCLAIMER.md)
 
@@ -421,7 +421,7 @@ This project is licensed under the **MIT License** — see [LICENSE](LICENSE) fo
 
 ## Maintainer
 
-**Djunekz** — Independent & Official Developer
+**Djunekz** — Independent developer and maintainer of Termux App Store
 
 [![GitHub](https://img.shields.io/badge/GitHub-djunekz-3fb950?style=for-the-badge&logo=github)](https://github.com/djunekz)
 
