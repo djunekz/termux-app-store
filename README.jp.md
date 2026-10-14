@@ -2,14 +2,14 @@
 
 # [Termux App Store — TUI & CLI パッケージマネージャー](https://djunekz.github.io/termux-app-store/)
 
-**Android の Termux 向けに作られた、初のオフラインファースト・バイナリ対応 TUI パッケージマネージャー。**
+**Android の Termux 向けに作られた、ローカルファーストの TUI & CLI パッケージマネージャー。チェックサム検証付きバイナリインストールとソースビルドのフォールバックに対応。**
 
 [![CI](https://github.com/djunekz/termux-app-store/actions/workflows/build.yml/badge.svg)](https://github.com/djunekz/termux-app-store/actions)
 [![PyPI](https://img.shields.io/pypi/v/termux-app-store?style=flat&logo=pypi&color=3fb950&label=pypi)](https://pypi.org/project/termux-app-store/)
 [![License](https://img.shields.io/badge/License-MIT-3fb950?style=flat)](LICENSE)
 [![Stars](https://img.shields.io/github/stars/djunekz/termux-app-store?style=flat&logo=github&color=white&label=stars)](https://github.com/djunekz/termux-app-store/stargazers)
 
-> **オフラインファースト • バイナリ対応 • ソースベース • Termux ネイティブ • Android ターミナル**
+> **ローカルファースト • チェックサム検証 • ソースベース • Termux ネイティブ • Android ターミナル**
 > ルート不要、アカウント不要、テレメトリなしで Termux パッケージを管理。
 
 > 他の言語で読む: 🇬🇧 **[English](README.md)** | 🇮🇩 **[Bahasa Indonesia](README.id.md)** | 🇹🇭 **[ภาษาไทย](README.th.md)** | 🇨🇳 **[中文](README.ch.md)** | 🇻🇳 **[Tiếng Việt](README.vi.md)** | 🇮🇳 **[हिन्दी](README.in.md)**
@@ -18,9 +18,9 @@
 
 ## Termux App Store とは？
 
-**Termux App Store** は Python ([Textual](https://github.com/Textualize/textual)) で作られた **TUI & CLI パッケージマネージャー**です。Android の Termux ユーザーがツールやパッケージをデバイス上で直接**ブラウズ、インストール、管理**できます — アカウント不要、テレメトリなし、クラウド依存なし、ルート不要。
+**Termux App Store** は Python ([Textual](https://github.com/Textualize/textual)) で作られた **TUI & CLI パッケージマネージャー**です。Android の Termux ユーザーがツールやパッケージをデバイス上で直接**ブラウズ、インストール、管理**できます — アカウント不要、テレメトリなし、ルート不要。パッケージ情報とダウンロードにはネットワークを使用します。
 
-**v0.4.0** からは **ファストインストールエンジン**を搭載: ミラープール（GitHub Pages、Cloudflare CDN、jsDelivr）からビルド済み `.deb` バイナリをダウンロードし、ローカルキャッシュ（TTL 7日）とアーキテクチャ別 SHA256 検証を行います。完全制御が必要な場合は `fix-install` でソースビルドも利用可能。
+**v0.4.0** からは **ファストインストールエンジン**を搭載: ミラープール（GitHub Pages、Cloudflare CDN、jsDelivr）からビルド済み `.deb` バイナリをダウンロードし、ローカルキャッシュ（TTL 7日）に対応します。キャッシュを含むすべての `.deb` はアーキテクチャ別 SHA256 と一致しなければ拒否されます。SHA256 は破損や不一致の検出用であり、発行元の署名ではありません。完全制御が必要な場合は `fix-install` でソースビルドも利用可能。
 
 > [!IMPORTANT]
 > Termux App Store は **隠れた自動インストーラーではありません**。
@@ -180,8 +180,8 @@ cd termux-app-store
 - 追加権限不要・バックグラウンドサービスなし
 - アカウント・登録不要
 - 分析・トラッキング・テレメトリ一切なし
-- すべての `.deb` ダウンロードに SHA256 検証実施
-- オフラインファースト設計
+- すべての `.deb`（ダウンロードとキャッシュ）に SHA256 を必須化
+- ローカルファースト設計（メタデータとダウンロードにはネットワークを使用）
 
 > 詳細: [SECURITY.md](SECURITY.md) | [PRIVACY.md](PRIVACY.md) | [BINARY_DISCLAIMER.md](BINARY_DISCLAIMER.md)
 

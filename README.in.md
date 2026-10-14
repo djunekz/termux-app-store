@@ -2,14 +2,14 @@
 
 # [Termux App Store — Termux के लिए TUI & CLI Package Manager](https://djunekz.github.io/termux-app-store/)
 
-**Android पर Termux के लिए बनाया गया पहला ऑफ़लाइन-फ़र्स्ट, बाइनरी-सेफ़ TUI पैकेज मैनेजर।**
+**Android पर Termux के लिए बनाया गया लोकल-फ़र्स्ट TUI और CLI पैकेज मैनेजर, चेकसम-वेरिफ़ाइड बाइनरी इंस्टॉल और सोर्स-बिल्ड फ़ॉलबैक के साथ।**
 
 [![CI](https://github.com/djunekz/termux-app-store/actions/workflows/build.yml/badge.svg)](https://github.com/djunekz/termux-app-store/actions)
 [![PyPI](https://img.shields.io/pypi/v/termux-app-store?style=flat&logo=pypi&color=3fb950&label=pypi)](https://pypi.org/project/termux-app-store/)
 [![License](https://img.shields.io/badge/License-MIT-3fb950?style=flat)](LICENSE)
 [![Stars](https://img.shields.io/github/stars/djunekz/termux-app-store?style=flat&logo=github&color=white&label=stars)](https://github.com/djunekz/termux-app-store/stargazers)
 
-> **ऑफ़लाइन-फ़र्स्ट • बाइनरी-सेफ़ • सोर्स-आधारित • Termux-नेटिव • Android Terminal**
+> **लोकल-फ़र्स्ट • चेकसम-वेरिफ़ाइड • सोर्स-आधारित • Termux-नेटिव • Android Terminal**
 > Termux पैकेज इंस्टॉल करें और प्रबंधित करें — बिना root, बिना account, बिना tracking के।
 
 > अन्य भाषाओं में पढ़ें: 🇬🇧 **[English](README.md)** | 🇮🇩 **[Bahasa Indonesia](README.id.md)** | 🇹🇭 **[ภาษาไทย](README.th.md)** | 🇯🇵 **[日本語](README.jp.md)** | 🇨🇳 **[中文](README.ch.md)** | 🇻🇳 **[Tiếng Việt](README.vi.md)**
@@ -18,9 +18,9 @@
 
 ## Termux App Store क्या है?
 
-**Termux App Store** Python ([Textual](https://github.com/Textualize/textual)) से बना एक **TUI & CLI पैकेज मैनेजर** है जो Android पर Termux उपयोगकर्ताओं को सीधे डिवाइस पर **टूल्स/पैकेज ब्राउज़ करने, इंस्टॉल करने और प्रबंधित करने** की सुविधा देता है — बिना account, बिना telemetry, बिना cloud निर्भरता, बिना root।
+**Termux App Store** Python ([Textual](https://github.com/Textualize/textual)) से बना एक **TUI & CLI पैकेज मैनेजर** है जो Android पर Termux उपयोगकर्ताओं को सीधे डिवाइस पर **टूल्स/पैकेज ब्राउज़ करने, इंस्टॉल करने और प्रबंधित करने** की सुविधा देता है — बिना account, बिना telemetry, बिना root। पैकेज मेटाडेटा और डाउनलोड के लिए नेटवर्क का उपयोग होता है।
 
-**v0.4.0** से **फ़ास्ट इंस्टॉल इंजन** जोड़ा गया है: मिरर पूल (GitHub Pages, Cloudflare CDN, jsDelivr) से पहले से बने `.deb` बाइनरी फ़ाइलें डाउनलोड होती हैं, लोकल `.deb` कैश (TTL 7 दिन) और आर्किटेक्चर-वाइज SHA256 वेरिफ़िकेशन के साथ। पूर्ण नियंत्रण के लिए `fix-install` से सोर्स बिल्ड भी उपलब्ध है।
+**v0.4.0** से **फ़ास्ट इंस्टॉल इंजन** जोड़ा गया है: मिरर पूल (GitHub Pages, Cloudflare CDN, jsDelivr) से पहले से बने `.deb` बाइनरी फ़ाइलें डाउनलोड होती हैं, लोकल `.deb` कैश (TTL 7 दिन) के साथ। कैश सहित हर `.deb` का आर्किटेक्चर-वाइज SHA256 से मेल खाना ज़रूरी है, वरना उसे अस्वीकार कर दिया जाता है। SHA256 फ़ाइल के खराब या बेमेल होने का पता लगाता है; यह प्रकाशक का हस्ताक्षर नहीं है। पूर्ण नियंत्रण के लिए `fix-install` से सोर्स बिल्ड भी उपलब्ध है।
 
 > [!IMPORTANT]
 > Termux App Store **कोई छिपा हुआ ऑटो-इंस्टॉलर नहीं है**।
@@ -179,8 +179,8 @@ cd termux-app-store
 - अतिरिक्त अनुमति की ज़रूरत नहीं, कोई बैकग्राउंड सर्विस नहीं
 - कोई account नहीं, कोई registration नहीं
 - कोई analytics, tracking या telemetry नहीं
-- सभी `.deb` डाउनलोड पर SHA256 वेरिफ़िकेशन
-- ऑफ़लाइन-फ़र्स्ट डिज़ाइन
+- हर `.deb` (डाउनलोड और कैश) के लिए SHA256 अनिवार्य
+- लोकल-फ़र्स्ट डिज़ाइन (मेटाडेटा और डाउनलोड के लिए नेटवर्क का उपयोग)
 
 > विवरण: [SECURITY.md](SECURITY.md) | [PRIVACY.md](PRIVACY.md) | [BINARY_DISCLAIMER.md](BINARY_DISCLAIMER.md)
 

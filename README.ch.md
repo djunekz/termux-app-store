@@ -2,14 +2,14 @@
 
 # [Termux App Store — Termux TUI & CLI 包管理器](https://djunekz.github.io/termux-app-store/)
 
-**专为 Android Termux 构建的首个离线优先、二进制安全的 TUI 包管理器。**
+**专为 Android Termux 构建的本地优先的 TUI 和 CLI 包管理器，支持带校验和验证的二进制安装及源码构建回退。**
 
 [![CI](https://github.com/djunekz/termux-app-store/actions/workflows/build.yml/badge.svg)](https://github.com/djunekz/termux-app-store/actions)
 [![PyPI](https://img.shields.io/pypi/v/termux-app-store?style=flat&logo=pypi&color=3fb950&label=pypi)](https://pypi.org/project/termux-app-store/)
 [![License](https://img.shields.io/badge/License-MIT-3fb950?style=flat)](LICENSE)
 [![Stars](https://img.shields.io/github/stars/djunekz/termux-app-store?style=flat&logo=github&color=white&label=stars)](https://github.com/djunekz/termux-app-store/stargazers)
 
-> **离线优先 • 二进制安全 • 基于源码 • Termux 原生 • Android 终端**
+> **本地优先 • 校验和验证 • 基于源码 • Termux 原生 • Android 终端**
 > 无需 root、无需账号、无遥测，安装和管理 Termux 包。
 
 > 其他语言版本: 🇬🇧 **[English](README.md)** | 🇮🇩 **[Bahasa Indonesia](README.id.md)** | 🇹🇭 **[ภาษาไทย](README.th.md)** | 🇯🇵 **[日本語](README.jp.md)** | 🇻🇳 **[Tiếng Việt](README.vi.md)** | 🇮🇳 **[हिन्दी](README.in.md)**
@@ -18,9 +18,9 @@
 
 ## 什么是 Termux App Store？
 
-**Termux App Store** 是一个用 Python ([Textual](https://github.com/Textualize/textual)) 构建的 **TUI & CLI 包管理器**，让 Android 上的 Termux 用户可以直接在设备上**浏览、安装和管理工具/包** — 无需账号、无遥测、无云依赖、无需 root。
+**Termux App Store** 是一个用 Python ([Textual](https://github.com/Textualize/textual)) 构建的 **TUI & CLI 包管理器**，让 Android 上的 Termux 用户可以直接在设备上**浏览、安装和管理工具/包** — 无需账号、无遥测、无需 root。获取包元数据和下载需要网络。
 
-从 **v0.4.0** 起，新增 **快速安装引擎**：从镜像池（GitHub Pages、Cloudflare CDN、jsDelivr）下载预构建 `.deb` 二进制文件，支持本地 `.deb` 缓存（TTL 7天）和按架构 SHA256 验证。需要完全控制时，`fix-install` 仍可使用源码构建。
+从 **v0.4.0** 起，新增 **快速安装引擎**：从镜像池（GitHub Pages、Cloudflare CDN、jsDelivr）下载预构建 `.deb` 二进制文件，支持本地 `.deb` 缓存（TTL 7天）。包括缓存在内的每个 `.deb` 都必须匹配按架构的 SHA256，否则会被拒绝。SHA256 用于检测文件损坏或不匹配，并不是发布者签名。需要完全控制时，`fix-install` 仍可使用源码构建。
 
 > [!IMPORTANT]
 > Termux App Store **不是隐藏的自动安装程序**。
@@ -201,8 +201,8 @@ cd termux-app-store
 - 无需额外权限，无后台服务
 - 无账号、无注册
 - 无分析、无追踪、无遥测
-- 所有 `.deb` 下载均进行 SHA256 验证
-- 离线优先设计
+- 每个 `.deb`（下载和缓存）都强制要求 SHA256
+- 本地优先设计（元数据和下载需要网络）
 
 > 详情: [SECURITY.md](SECURITY.md) | [PRIVACY.md](PRIVACY.md) | [BINARY_DISCLAIMER.md](BINARY_DISCLAIMER.md)
 

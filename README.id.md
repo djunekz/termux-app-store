@@ -2,7 +2,7 @@
 
 # [Termux App Store — Cara Install Tool di Termux Tanpa Ribet](https://djunekz.github.io/termux-app-store/)
 
-**Package manager TUI pertama yang offline-first dan binary-safe, dibangun khusus untuk Termux di Android. Seperti AUR, tapi untuk Termux.**
+**Package manager TUI dan CLI yang local-first, dibangun khusus untuk Termux di Android, dengan instalasi binary terverifikasi checksum dan fallback build dari source. Seperti AUR, tapi untuk Termux.**
 
 [![CI](https://github.com/djunekz/termux-app-store/actions/workflows/build.yml/badge.svg)](https://github.com/djunekz/termux-app-store/actions)
 [![Codecov](https://codecov.io/github/djunekz/termux-app-store/branch/master/graph/badge.svg?token=357W4EP8G0)](https://codecov.io/github/djunekz/termux-app-store)
@@ -16,7 +16,7 @@
 [![PRs](https://img.shields.io/github/issues-pr/djunekz/termux-app-store?style=flat&logo=git&logoColor=white&color=3fb950)](https://github.com/djunekz/termux-app-store/pulls)
 [![Komunitas](https://img.shields.io/badge/Komunitas-Terbuka-3fb950?style=flat&logo=github)](https://github.com/djunekz/termux-app-store)
 
-> **Offline-first • Binary-safe • Berbasis Source • Native Termux • Android Terminal**
+> **Local-first • Checksum-verified • Berbasis Source • Native Termux • Android Terminal**
 > Install dan kelola package Termux — binary pre-built atau build dari source — tanpa root, tanpa akun, tanpa telemetri.
 
 > Baca dengan bahasa lain: 🇬🇧 **[English](README.md)** | 🇹🇭 **[ภาษาไทย](README.th.md)** | 🇯🇵 **[日本語](README.jp.md)** | 🇨🇳 **[中文](README.ch.md)** | 🇻🇳 **[Tiếng Việt](README.vi.md)** | 🇮🇳 **[हिन्दी](README.in.md)**
@@ -38,9 +38,9 @@ Kalau kamu pengguna Termux, pasti pernah mengalami ini:
 
 ## Apa itu Termux App Store?
 
-**Termux App Store** (`termux-app-store`) adalah **package manager TUI (Terminal User Interface)** dan **CLI** yang dibangun dengan Python ([Textual](https://github.com/Textualize/textual)). Memungkinkan pengguna Termux di Android untuk **menjelajah, menginstal, dan mengelola tools/paket** langsung di perangkat — tanpa akun, tanpa telemetri, tanpa koneksi cloud, tanpa root.
+**Termux App Store** (`termux-app-store`) adalah **package manager TUI (Terminal User Interface)** dan **CLI** yang dibangun dengan Python ([Textual](https://github.com/Textualize/textual)). Memungkinkan pengguna Termux di Android untuk **menjelajah, menginstal, dan mengelola tools/paket** langsung di perangkat — tanpa akun, tanpa telemetri, tanpa root. Metadata paket dan unduhan memakai jaringan.
 
-Mulai dari **v0.4.0**, Termux App Store hadir dengan **fast install engine**: paket diunduh sebagai binary `.deb` pre-built dari mirror pool (GitHub Pages, Cloudflare CDN, jsDelivr), dengan cache lokal `.deb` (TTL 7 hari) dan verifikasi SHA256 per arsitektur. Build dari source tetap tersedia via `fix-install` untuk kontrol penuh.
+Mulai dari **v0.4.0**, Termux App Store hadir dengan **fast install engine**: paket diunduh sebagai binary `.deb` pre-built dari mirror pool (GitHub Pages, Cloudflare CDN, jsDelivr), dengan cache lokal `.deb` (TTL 7 hari) dan setiap `.deb`, termasuk dari cache, wajib cocok dengan SHA256 per arsitektur atau ditolak. SHA256 mendeteksi file rusak atau tidak cocok, bukan tanda tangan penerbit. Build dari source tetap tersedia via `fix-install` untuk kontrol penuh.
 
 Proyek ini bekerja sebagai **alternatif package manager untuk Termux**, memungkinkan kamu menginstal tools komunitas dari source menggunakan skrip `build.sh` yang terverifikasi — mirip semangat AUR (Arch User Repository) tapi dirancang khusus untuk Termux di Android.
 
@@ -192,7 +192,7 @@ termux-app-store help                       # Bantuan lengkap
 
 ## Fitur Unggulan
 
-| **Browser Paket (TUI)** Jelajahi paket dari folder `packages/` secara interaktif dengan keyboard & touchscreen.<br>**Fast Install Engine** Download `.deb` pre-built dari mirror pool — GitHub Pages, Cloudflare CDN, jsDelivr — dengan fallback otomatis.<br>**Binary Cache** Cache `.deb` lokal dengan TTL 7 hari dan verifikasi SHA256 per arsitektur. Paket yang sudah di-cache langsung diinstall.<br>**Validator Build Cerdas** Mendeteksi dependensi Termux yang tidak didukung dengan badge status otomatis. | **Pencarian & Filter Real-time** Cari paket berdasarkan nama atau deskripsi — termasuk perintah CLI `search`/`find`.<br>**Install/Uninstall Multi-paket** Install atau hapus beberapa paket sekaligus dengan ringkasan output.<br>**Kelola Satu Klik** Install / update / uninstall Termux App Store sendiri via `./tasctl`.<br>**Privasi Utama** Tanpa akun, tanpa tracking, tanpa telemetri — sepenuhnya offline setelah sinkronisasi mirror. |
+| **Browser Paket (TUI)** Jelajahi paket dari folder `packages/` secara interaktif dengan keyboard & touchscreen.<br>**Fast Install Engine** Download `.deb` pre-built dari mirror pool — GitHub Pages, Cloudflare CDN, jsDelivr — dengan fallback otomatis.<br>**Binary Cache** Cache `.deb` lokal dengan TTL 7 hari; file cache diverifikasi ulang terhadap SHA256 per arsitektur sebelum setiap instalasi.<br>**Validator Build Cerdas** Mendeteksi dependensi Termux yang tidak didukung dengan badge status otomatis. | **Pencarian & Filter Real-time** Cari paket berdasarkan nama atau deskripsi — termasuk perintah CLI `search`/`find`.<br>**Install/Uninstall Multi-paket** Install atau hapus beberapa paket sekaligus dengan ringkasan output.<br>**Kelola Satu Klik** Install / update / uninstall Termux App Store sendiri via `./tasctl`.<br>**Privasi Utama** Tanpa akun, tanpa tracking, tanpa telemetri — tetap bisa dipakai dari data lokal yang sudah ada; mengambil metadata dan paket butuh jaringan. |
 |---|---|
 
 ---
@@ -373,7 +373,7 @@ termux-app-store/
 | Tidak membuka port jaringan | Tanpa analitik atau tracking |
 | Tidak ada layanan berjalan di background | Tanpa telemetri apapun |
 | Build hanya berjalan atas perintah eksplisit | Local-first; jaringan dipakai untuk metadata dan unduhan |
-| Verifikasi SHA256 pada semua unduhan `.deb` | Sumber binary transparan dan bisa diaudit |
+| SHA256 wajib untuk setiap `.deb` (unduhan dan cache) | Sumber binary transparan dan bisa diaudit |
 
 > Detail lengkap: [SECURITY.md](SECURITY.md) | [PRIVACY.md](PRIVACY.md) | [DISCLAIMER.md](DISCLAIMER.md) | [BINARY_DISCLAIMER.md](BINARY_DISCLAIMER.md)
 
@@ -417,7 +417,7 @@ Termux App Store dibangun untuk pengguna yang ingin:
 
 - Benar-benar memahami apa yang berjalan di perangkat mereka
 - Mengontrol build dan sumber secara langsung
-- Menghindari ketergantungan vendor dan cloud
+- Menghindari ketergantungan vendor
 - Berbagi tools secara terbuka dengan komunitas Termux
 
 ---

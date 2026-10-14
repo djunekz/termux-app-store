@@ -24,6 +24,7 @@ jobs:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.sha }}
           allow-unsafe-pr-checkout: true
+          persist-credentials: false
 
       - name: Detect changed packages
         id: packages
@@ -35,10 +36,11 @@ jobs:
             | awk -F/ '/^packages\/[^/]+\/build\.sh$/ {print $2}' \
             | sort -u)
 
+          DELIM="EOF_$(openssl rand -hex 16)"
           {
-            echo "changed<<EOF"
+            echo "changed<<$DELIM"
             echo "$PKGS"
-            echo "EOF"
+            echo "$DELIM"
           } >> "$GITHUB_OUTPUT"
 
           echo "Changed packages: $PKGS"
@@ -56,11 +58,12 @@ jobs:
           if [[ -z "$CHANGED_PKGS" ]]; then
             REPORT+="ℹ️ No package changes detected in this PR\n"
             echo -e "$REPORT"
+            DELIM="EOF_$(openssl rand -hex 16)"
             {
-              echo "report<<EOF"
-              echo -e "$REPORT"
-              echo "EOF"
               echo "fail=0"
+              echo "report<<$DELIM"
+              echo -e "$REPORT"
+              echo "$DELIM"
             } >> "$GITHUB_OUTPUT"
             exit 0
           fi
@@ -188,11 +191,12 @@ jobs:
             REPORT+="The workflow will automatically re-run on new commits.\n"
           fi
 
+          DELIM="EOF_$(openssl rand -hex 16)"
           {
-            echo "report<<EOF"
-            echo -e "$REPORT"
-            echo "EOF"
             echo "fail=$FAIL"
+            echo "report<<$DELIM"
+            echo -e "$REPORT"
+            echo "$DELIM"
           } >> "$GITHUB_OUTPUT"
 
       - name: Post PR report

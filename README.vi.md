@@ -2,14 +2,14 @@
 
 # [Termux App Store — TUI & CLI Package Manager cho Termux](https://djunekz.github.io/termux-app-store/)
 
-**Package manager TUI đầu tiên ưu tiên ngoại tuyến, an toàn với nhị phân, được xây dựng riêng cho Termux trên Android.**
+**Package manager TUI và CLI ưu tiên chạy cục bộ, được xây dựng riêng cho Termux trên Android, cài nhị phân có xác minh checksum và có phương án dự phòng build từ source.**
 
 [![CI](https://github.com/djunekz/termux-app-store/actions/workflows/build.yml/badge.svg)](https://github.com/djunekz/termux-app-store/actions)
 [![PyPI](https://img.shields.io/pypi/v/termux-app-store?style=flat&logo=pypi&color=3fb950&label=pypi)](https://pypi.org/project/termux-app-store/)
 [![License](https://img.shields.io/badge/License-MIT-3fb950?style=flat)](LICENSE)
 [![Stars](https://img.shields.io/github/stars/djunekz/termux-app-store?style=flat&logo=github&color=white&label=stars)](https://github.com/djunekz/termux-app-store/stargazers)
 
-> **Ưu tiên ngoại tuyến • An toàn nhị phân • Dựa trên source • Native Termux • Android Terminal**
+> **Ưu tiên cục bộ • Xác minh checksum • Dựa trên source • Native Termux • Android Terminal**
 > Cài đặt và quản lý gói Termux — nhị phân dựng sẵn hoặc build từ source — không root, không tài khoản, không theo dõi.
 
 > Đọc bằng ngôn ngữ khác: 🇬🇧 **[English](README.md)** | 🇮🇩 **[Bahasa Indonesia](README.id.md)** | 🇹🇭 **[ภาษาไทย](README.th.md)** | 🇯🇵 **[日本語](README.jp.md)** | 🇨🇳 **[中文](README.ch.md)** | 🇮🇳 **[हिन्दी](README.in.md)**
@@ -18,9 +18,9 @@
 
 ## Termux App Store là gì?
 
-**Termux App Store** là **package manager TUI & CLI** được xây dựng bằng Python ([Textual](https://github.com/Textualize/textual)), cho phép người dùng Termux trên Android **duyệt, cài đặt và quản lý công cụ/gói** trực tiếp trên thiết bị — không cần tài khoản, không có telemetry, không phụ thuộc đám mây, không cần root.
+**Termux App Store** là **package manager TUI & CLI** được xây dựng bằng Python ([Textual](https://github.com/Textualize/textual)), cho phép người dùng Termux trên Android **duyệt, cài đặt và quản lý công cụ/gói** trực tiếp trên thiết bị — không cần tài khoản, không có telemetry, không cần root. Việc lấy metadata và tải xuống cần mạng.
 
-Từ **v0.4.0**, thêm **engine cài đặt nhanh**: tải xuống các file `.deb` nhị phân dựng sẵn từ nhóm mirror (GitHub Pages, Cloudflare CDN, jsDelivr), với bộ nhớ đệm `.deb` cục bộ (TTL 7 ngày) và xác minh SHA256 theo kiến trúc. Vẫn có thể dùng `fix-install` để build từ source khi cần kiểm soát đầy đủ.
+Từ **v0.4.0**, thêm **engine cài đặt nhanh**: tải xuống các file `.deb` nhị phân dựng sẵn từ nhóm mirror (GitHub Pages, Cloudflare CDN, jsDelivr), với bộ nhớ đệm `.deb` cục bộ (TTL 7 ngày) . Mọi file `.deb`, kể cả trong cache, phải khớp SHA256 theo kiến trúc, nếu không sẽ bị từ chối. SHA256 dùng để phát hiện file hỏng hoặc không khớp, không phải chữ ký của nhà phát hành. Vẫn có thể dùng `fix-install` để build từ source khi cần kiểm soát đầy đủ.
 
 > [!IMPORTANT]
 > Termux App Store **không phải là trình cài đặt tự động ẩn**.
@@ -179,8 +179,8 @@ cd termux-app-store
 - Không cần quyền bổ sung, không có dịch vụ chạy nền
 - Không cần tài khoản, không đăng ký
 - Không phân tích, không theo dõi, không telemetry
-- Xác minh SHA256 cho tất cả các tải xuống `.deb`
-- Thiết kế ưu tiên ngoại tuyến
+- Bắt buộc SHA256 cho mọi `.deb` (tải xuống và cache)
+- Thiết kế ưu tiên cục bộ (cần mạng cho metadata và tải xuống)
 
 > Chi tiết: [SECURITY.md](SECURITY.md) | [PRIVACY.md](PRIVACY.md) | [BINARY_DISCLAIMER.md](BINARY_DISCLAIMER.md)
 

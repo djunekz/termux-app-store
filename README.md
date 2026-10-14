@@ -18,7 +18,7 @@
 [![PRs](https://img.shields.io/github/issues-pr/djunekz/termux-app-store?style=flat&logo=git&logoColor=white&color=3fb950)](https://github.com/djunekz/termux-app-store/pulls)
 [![Community Ready](https://img.shields.io/badge/Community-Ready-3fb950?style=flat&logo=github)](https://github.com/djunekz/termux-app-store)
 
-> **Offline-first • Binary-safe • Source-based • Termux-native • Android Terminal**
+> **Local-first • Checksum-verified • Source-based • Termux-native • Android Terminal**
 > Install and manage Termux packages — pre-built binaries or source builds — no root, no account, no telemetry.
 
 ---
@@ -408,7 +408,7 @@ Termux App Store is built for users who want to:
 
 - Fully understand what runs on their device
 - Control builds and sources directly
-- Avoid vendor lock-in and cloud dependency
+- Avoid vendor lock-in
 - Share tools openly with the Termux community
 
 ---

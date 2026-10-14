@@ -9,8 +9,7 @@ on:
       - master
 
 permissions:
-  contents: write
-  pull-requests: write
+  contents: read
 
 jobs:
   cli-validation:
@@ -52,11 +51,13 @@ jobs:
 
       - name: Re-run validation after SHA256 fix
         if: steps.fix_sha256.outcome == 'success'
+        env:
+          REF_NAME: ${{ github.ref_name }}
         run: |
           echo "Re-running validation after SHA256 fixes..."
-          git fetch origin ${{ github.ref_name }}
-          git checkout ${{ github.ref_name }}
-          git reset --hard origin/${{ github.ref_name }}
+          git fetch origin "$REF_NAME"
+          git checkout "$REF_NAME"
+          git reset --hard "origin/$REF_NAME"
           python ci/run_termux_build.py
 
       - name: Fail if validation failed on PR

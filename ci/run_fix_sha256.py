@@ -7,7 +7,9 @@ reports a mismatch.
 Unlike the old version, this script never pushes directly to the default
 branch. It only touches packages whose TERMUX_PKG_SRCURL is pinned to an
 immutable ref (a Git tag or a full commit SHA) — for those, it opens a PR
-and auto-merges it, since the fix is mechanical and low-risk. Packages that
+for human review and never merges it. A hash mismatch on a tag is exactly what
+a moved or tampered tag looks like, so the new hash must be checked against
+upstream before it is accepted. Packages that
 are still pinned to a floating branch (archive/refs/heads/...) are left
 alone: their source can change silently upstream, so a SHA256 mismatch
 there needs a human to re-pin the package to a tag/commit first, not a bot
@@ -242,7 +244,7 @@ def github_api(method: str, path: str, token: str, body: dict | None = None) -> 
         return json.loads(resp.read().decode())
 
 
-def open_and_automerge_pr(fixed_packages: list[str]) -> None:
+def open_review_pr(fixed_packages: list[str]) -> None:
     if not fixed_packages:
         return
 
@@ -293,9 +295,12 @@ def open_and_automerge_pr(fixed_packages: list[str]) -> None:
                 "Automated SHA256 fix for the following tag/commit-pinned "
                 "packages, opened by `ci/run_fix_sha256.py`:\n\n"
                 + "\n".join(f"- `{p}`" for p in fixed_packages)
-                + "\n\nThese sources are pinned to an immutable tag or commit, "
-                  "so this PR is auto-merged. Floating-branch sources are "
-                  "never auto-fixed and are reported separately for manual review."
+                + "\n\n**This PR is not auto-merged.** A SHA256 mismatch on a "
+                  "tag or commit-pinned source can mean the upstream tag was "
+                  "moved or tampered with. Before merging, compare the new hash "
+                  "against the upstream release and review the content change. "
+                  "Floating-branch sources are never auto-fixed and are "
+                  "reported separately for manual review."
             ),
         })
         pr_number = pr["number"]
@@ -304,14 +309,7 @@ def open_and_automerge_pr(fixed_packages: list[str]) -> None:
         err(f"Failed to open PR: {e}")
         return
 
-    try:
-        github_api("PUT", f"/repos/{repo}/pulls/{pr_number}/merge", token, {
-            "merge_method": "squash",
-        })
-        ok(f"PR #{pr_number} auto-merged")
-    except Exception as e:
-        warn(f"Could not auto-merge PR #{pr_number}: {e}")
-        warn("The PR is open and waiting for manual merge.")
+    warn(f"PR #{pr_number} is open and requires manual review before merging.")
 
 
 def main():
@@ -363,7 +361,7 @@ def main():
             print(f"      {DIM}• {p}{R}")
 
     if results["fixed"]:
-        open_and_automerge_pr(results["fixed"])
+        open_review_pr(results["fixed"])
 
     if results["floating_needs_review"]:
         print(f"\n{YELLOW}{len(results['floating_needs_review'])} package(s) have a "

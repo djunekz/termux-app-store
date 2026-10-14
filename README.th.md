@@ -2,14 +2,14 @@
 
 # [Termux App Store — TUI & CLI Package Manager สำหรับ Termux](https://djunekz.github.io/termux-app-store/)
 
-**Package manager แบบ TUI ตัวแรกที่ออฟไลน์ได้ รองรับไบนารี สร้างมาเพื่อ Termux บน Android โดยเฉพาะ**
+**Package manager แบบ TUI และ CLI ที่เน้นการทำงานในเครื่อง สร้างมาเพื่อ Termux บน Android โดยเฉพาะ ติดตั้งไบนารีพร้อมตรวจสอบ checksum และมี fallback สร้างจาก source**
 
 [![CI](https://github.com/djunekz/termux-app-store/actions/workflows/build.yml/badge.svg)](https://github.com/djunekz/termux-app-store/actions)
 [![PyPI](https://img.shields.io/pypi/v/termux-app-store?style=flat&logo=pypi&color=3fb950&label=pypi)](https://pypi.org/project/termux-app-store/)
 [![License](https://img.shields.io/badge/License-MIT-3fb950?style=flat)](LICENSE)
 [![Stars](https://img.shields.io/github/stars/djunekz/termux-app-store?style=flat&logo=github&color=white&label=stars)](https://github.com/djunekz/termux-app-store/stargazers)
 
-> **ออฟไลน์ก่อน • ปลอดภัยกับไบนารี • ใช้ Source Code • Native บน Termux • Android Terminal**
+> **เน้นในเครื่อง • ตรวจสอบ checksum • ใช้ Source Code • Native บน Termux • Android Terminal**
 > ติดตั้งและจัดการแพ็กเกจ Termux ได้โดยไม่ต้อง root ไม่ต้องมีบัญชี ไม่มีการติดตาม
 
 > อ่านภาษาอื่น: 🇬🇧 **[English](README.md)** | 🇮🇩 **[Bahasa Indonesia](README.id.md)** | 🇯🇵 **[日本語](README.jp.md)** | 🇨🇳 **[中文](README.ch.md)** | 🇻🇳 **[Tiếng Việt](README.vi.md)** | 🇮🇳 **[हिन्दी](README.in.md)**
@@ -18,9 +18,9 @@
 
 ## Termux App Store คืออะไร?
 
-**Termux App Store** คือ **package manager แบบ TUI & CLI** ที่สร้างด้วย Python ([Textual](https://github.com/Textualize/textual)) ช่วยให้ผู้ใช้ Termux บน Android สามารถ**เรียกดู ติดตั้ง และจัดการเครื่องมือ/แพ็กเกจ**ได้โดยตรงบนอุปกรณ์ — ไม่ต้องมีบัญชี ไม่มีการติดตาม ไม่ต้องพึ่งคลาวด์ ไม่ต้อง root
+**Termux App Store** คือ **package manager แบบ TUI & CLI** ที่สร้างด้วย Python ([Textual](https://github.com/Textualize/textual)) ช่วยให้ผู้ใช้ Termux บน Android สามารถ**เรียกดู ติดตั้ง และจัดการเครื่องมือ/แพ็กเกจ**ได้โดยตรงบนอุปกรณ์ — ไม่ต้องมีบัญชี ไม่มีการติดตาม ไม่ต้อง root การดึงข้อมูลแพ็กเกจและการดาวน์โหลดใช้เครือข่าย
 
-ตั้งแต่ **v0.4.0** เพิ่ม **Fast Install Engine**: ดาวน์โหลด `.deb` ไบนารีที่สร้างไว้ล่วงหน้าจากกลุ่มมิเรอร์ (GitHub Pages, Cloudflare CDN, jsDelivr) พร้อมแคช `.deb` ในเครื่อง (TTL 7 วัน) และยืนยัน SHA256 ตามสถาปัตยกรรม หากต้องการควบคุมเต็มที่ยังสามารถใช้ `fix-install` เพื่อบิลด์จาก source code ได้
+ตั้งแต่ **v0.4.0** เพิ่ม **Fast Install Engine**: ดาวน์โหลด `.deb` ไบนารีที่สร้างไว้ล่วงหน้าจากกลุ่มมิเรอร์ (GitHub Pages, Cloudflare CDN, jsDelivr) พร้อมแคช `.deb` ในเครื่อง (TTL 7 วัน) ไฟล์ `.deb` ทุกไฟล์ รวมถึงที่อยู่ในแคช ต้องตรงกับ SHA256 ตามสถาปัตยกรรม มิฉะนั้นจะถูกปฏิเสธ SHA256 ใช้ตรวจจับไฟล์เสียหรือไม่ตรงกัน ไม่ใช่ลายเซ็นของผู้เผยแพร่ หากต้องการควบคุมเต็มที่ยังสามารถใช้ `fix-install` เพื่อบิลด์จาก source code ได้
 
 > [!IMPORTANT]
 > Termux App Store **ไม่ใช่ตัวติดตั้งอัตโนมัติที่ซ่อนอยู่**
@@ -179,8 +179,8 @@ cd termux-app-store
 - ไม่ต้องการสิทธิ์เพิ่มเติม ไม่มีบริการทำงานเบื้องหลัง
 - ไม่ต้องมีบัญชี ไม่มีการลงทะเบียน
 - ไม่มีการวิเคราะห์ ติดตาม หรือส่งข้อมูลเลย
-- ยืนยัน SHA256 สำหรับการดาวน์โหลด `.deb` ทุกครั้ง
-- ออกแบบมาให้ทำงานออฟไลน์เป็นหลัก
+- บังคับ SHA256 สำหรับ `.deb` ทุกไฟล์ (ดาวน์โหลดและแคช)
+- ออกแบบให้เน้นการทำงานในเครื่อง (ใช้เครือข่ายสำหรับเมตาดาต้าและการดาวน์โหลด)
 
 > รายละเอียด: [SECURITY.md](SECURITY.md) | [PRIVACY.md](PRIVACY.md) | [BINARY_DISCLAIMER.md](BINARY_DISCLAIMER.md)
 

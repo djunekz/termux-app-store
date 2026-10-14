@@ -16,6 +16,11 @@ and this project adheres to semantic versioning.
 - `termux_app_store/termux_app_store_cli.py` - `_direct_deb_install()` refuses a `.deb` without an expected SHA256
 - `termux_app_store/core/binary_core.py` - `get_best_binary()` refuses cache and downloads when no SHA256 is given
 - `.github/workflows/build-packages-debs.yml` - default permission is `contents: read`; only the publish job has `contents: write`; matrix values moved to `env:` instead of `${{ }}` interpolation in shell; a prebuilt `.deb` checksum mismatch or missing checksum now fails the job instead of printing a warning; publish job writes `gh-pages/tools/index.json` with `sha256_by_arch`
+- `ci/run_fix_sha256.py` - the auto-fix PR is no longer squash-merged automatically; a SHA256 mismatch on a tag-pinned source can mean a moved or tampered tag, so the new hash needs human review
+- `.github/workflows/lint-checker-report.yml` - PR number and status read from the artifact are validated, the PR is checked against the head SHA of the run that produced the artifact, and outputs use a random delimiter, so a crafted artifact can no longer forge labels or comments
+- `.github/workflows/pr-checker.yml` - random output delimiter, `persist-credentials: false` on the untrusted checkout
+- `.github/workflows/update_index.yml`, `.github/workflows/update_log.yml`, `.github/workflows/cli-ci.yml` - step values moved to `env:` instead of `${{ }}` in shell, package names validated, `cli-ci.yml` permissions reduced to `contents: read`, `actions/checkout` and `actions/setup-python` pinned to commit SHAs
+- `README.jp.md`, `README.th.md`, `README.ch.md`, `README.vi.md`, `README.in.md`, `README.id.md`, `README.md` - offline-first and cloud-free claims replaced and SHA256 described as integrity checking in every language
 
 ### Removed
 - Packages `gemail-hack`, `hammer`, `zerodoor`, `ghosttrack` removed from the catalog: their descriptions state credential brute-forcing, DDoS, backdoor generation and location/number tracking with no stated defensive use

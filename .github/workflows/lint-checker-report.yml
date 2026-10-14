@@ -28,19 +28,40 @@ jobs:
 
       - name: Read report
         id: report
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RUN_HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
         run: |
-          PR_NUMBER=$(cat /tmp/pr-report/pr_number.txt)
-          OVERALL_STATUS=$(cat /tmp/pr-report/overall_status.txt)
+          PR_NUMBER=$(head -c 20 /tmp/pr-report/pr_number.txt | tr -d '[:space:]')
+          OVERALL_STATUS=$(head -c 5 /tmp/pr-report/overall_status.txt | tr -d '[:space:]')
 
+          if [[ ! "$PR_NUMBER" =~ ^[0-9]+$ ]]; then
+            echo "Invalid PR number in artifact" >&2
+            exit 1
+          fi
+          if [[ "$OVERALL_STATUS" != "0" && "$OVERALL_STATUS" != "1" ]]; then
+            echo "Invalid status in artifact" >&2
+            exit 1
+          fi
+
+          ACTUAL_HEAD=$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER" --jq .head.sha)
+          if [[ "$ACTUAL_HEAD" != "$RUN_HEAD_SHA" ]]; then
+            echo "PR number does not match the workflow run that produced the artifact" >&2
+            exit 1
+          fi
+
+          DELIM="EOF_$(openssl rand -hex 16)"
           {
             echo "pr_number=$PR_NUMBER"
             echo "overall_status=$OVERALL_STATUS"
-            echo "lint_details<<EOF"
-            cat /tmp/pr-report/lint_details.txt
-            echo "EOF"
-            echo "validation_details<<EOF"
-            cat /tmp/pr-report/validation_details.txt
-            echo "EOF"
+            echo "lint_details<<$DELIM"
+            head -c 20000 /tmp/pr-report/lint_details.txt
+            echo
+            echo "$DELIM"
+            echo "validation_details<<$DELIM"
+            head -c 20000 /tmp/pr-report/validation_details.txt
+            echo
+            echo "$DELIM"
           } >> "$GITHUB_OUTPUT"
 
       - name: Remove old labels
