@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-10-14T04:05:15.536162+00:00",
-  "total": 89,
+  "generated_at": "2026-10-14T04:48:26.456562+00:00",
+  "total": 88,
   "packages": [
     {
       "package": "aichat",
@@ -397,20 +397,6 @@
       "depends": [
         "golang"
       ]
-    },
-    {
-      "package": "dbd",
-      "version": "1.50",
-      "maintainer": "@termux-app-store",
-      "description": "Durandal's Backdoor",
-      "homepage": "https://gitbrew.org/dbd",
-      "license": "GPL-2.0",
-      "download_size": "Unknown",
-      "installed_size": "Unknown",
-      "source": "https://github.com/djunekz/termux-app-store",
-      "srcurl": "https://github.com/gitdurandal/dbd/archive/refs/tags/1.50.tar.gz",
-      "sha256": "4306ae2decaf02a68dace0cc5e5d9c1f5114c0ff8789c2f2294e82bc4b7fe9b1",
-      "platform_independent": false
     },
     {
       "package": "djangohunter",
