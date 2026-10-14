@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-10-14T18:55:56.188985+00:00",
+  "generated_at": "2026-10-14T22:15:56.249076+00:00",
   "total": 88,
   "packages": [
     {
@@ -1599,7 +1599,7 @@
     },
     {
       "package": "termux-sync",
-      "version": "1.2.6",
+      "version": "1.2.8",
       "maintainer": "@termux-app-store",
       "description": "OpenSource Backup and restore your entire Termux environment across devices.",
       "homepage": "https://github.com/djunekz/termux-sync",
@@ -1608,8 +1608,8 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/termux-sync/archive/refs/tags/v${TERMUX_PKG_VERSION}.tar.gz",
-      "sha256": "0b80016921affc247063492527ce041be6330aede58e6cdeff4c4120e00ee2b7",
-      "recipe_sha256": "b9a9332a50089dabd58cb0710070454b0285503e5266cd5fccb78ae6461fcfd7",
+      "sha256": "e5b2d0a4c3a783f244ca8aa6529892aca046a997aed898a5a421b2b9d66472a2",
+      "recipe_sha256": "bff8420d6fa9bc5feee86c451a727506c811b5d7c84f26ad8065dc1f7ca17f2b",
       "platform_independent": false,
       "depends": [
         "git",
@@ -1618,10 +1618,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "49351c03ad445598cfd1224b5e5f440a7ab34f43758ce03bc40aa649be0d34b1",
-        "arm": "ccc653c74a1e0505e47c48f6cad65d69b01770f51b74eef4fdac2ae44cdfbd6a",
-        "x86_64": "795dc359842b5960f51cbfb55dced7109ae93655ce771ceada9845484bc160ef",
-        "i686": "98ed4dd4103163c2407109b083490d5bf2e4d8c3aa6bf523cea0b697e486b43c"
+        "aarch64": "6b19a470201d626ef952ed7486709d50b935950985350f84d4959c2ed28f9654",
+        "arm": "014cee7ae45c8bba99f025e1121985fa2b93720722ee10c649a3ef3d4ffaeda3",
+        "x86_64": "54c6969d331bcccf04429e5a4a6595b8b6cb9f9337da55a64190fb6ea0971fb5",
+        "i686": "c5b0984b5e3e51dad3e2c25542af5bbcbaadb5e32028d19fbe604796c5f5570b"
       }
     },
     {
