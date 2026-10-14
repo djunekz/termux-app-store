@@ -44,7 +44,13 @@
         "grep",
         "sed",
         "wget"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "da2c84bc03a76442fb2a842c8fa996302deacb87f252a0b898ee8e8e6568723a",
+        "arm": "7216f265babcf4b662dca78e0b658462d36176577828383b5a6cceb73bc575df",
+        "x86_64": "f270fc9196960c9aa8d727ec1c6aedd39d97185fe694e245dbf4d5471d3b3113",
+        "i686": "1ef2f4a62ea4c711f75652b4b929550edc97e96a9229800848d23d084eed294b"
+      }
     },
     {
       "package": "aura",
@@ -62,7 +68,13 @@
       "platform_independent": false,
       "depends": [
         "nodejs"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "fc43eb5dece32d94a72aaf75f71ef4f68fa123e26f8ddd449f10e5026884cef9",
+        "arm": "084c41894a51086a5ed137ae8ae4f34331fdbf69ea6c46b7eec8231c19a97639",
+        "x86_64": "d646cc1ff27e2ccd8c122825fd0116cec101895f64ae831a3ad090fee4955e8c",
+        "i686": "aecb8c7eae7c28f9f60cfaeb520d53fd49c24f32ba152c0be4e06492cfa22a2a"
+      }
     },
     {
       "package": "auxscan",
@@ -82,7 +94,13 @@
         "python",
         "python-pip",
         "python-setuptools"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "d6d0f8240576174e1d81689a004de6e064839c8528c68f21b678d4a3eeb98f14",
+        "arm": "7853f439c6ebf5399e4b220dec11db7ae3064703071ce6f6f16a93a49debc77e",
+        "x86_64": "58f37353d8253016696a8a02335a9997862d0c5f2cb03a63f31a7b4ee586c28a",
+        "i686": "d8c149a89b2c62d5624f8f20b49832a8fb759654005f8f3c1aa45d4a2a59e66b"
+      }
     },
     {
       "package": "bashxt",
@@ -99,10 +117,10 @@
       "recipe_sha256": "02ba21c331a37b60bb6d0d2cd279d0026ee6b8f7018a384a6fc3a0391cace5ab",
       "platform_independent": false,
       "sha256_by_arch": {
-        "aarch64": "39da33de969143e68010ffbed3876d90ebd4674fa8e4d35f18765d95d0f6bbde",
-        "arm": "fdbc6d42af38a6a3b728759d35caa89e3c35753072dd75707693a0aac04f2b8b",
-        "x86_64": "f49c40e86d9d1de51c01b5af614205fee5d25096846b245df83494632cf06cfd",
-        "i686": "4cc4de5658d7870cba93492b07d59f61565c21556109a0be5ca3d5ab0425bfba"
+        "aarch64": "c1d4e943f47a491749394cb5864d432d4f50543eaf6b08734c9d5f2cbc6c2191",
+        "arm": "bc955dc74c997eb294e54f26109129d476ff16bef90dbc0888bf9e7aa4cbef73",
+        "x86_64": "5f9456ff27545de74cef913389f4839d06a8ad83befe42098ae26fdb9f4fdd0a",
+        "i686": "1b1f97f44e808551feb765c040de5bfddbd3b8494cb9d18df7116dc647f9f769"
       }
     },
     {
@@ -123,10 +141,10 @@
         "python"
       ],
       "sha256_by_arch": {
-        "aarch64": "a49fe04b3322603c1e3f28a49adda739533be23ae64bdd0330072523c4d7fb12",
-        "arm": "7cdba202914dcf52312e33d2e5bbddd97bffca73c38477127ecff5cdb817aa4d",
-        "x86_64": "93bdc55fab93c975db5ac50ae175d98ae74d6cdf52fd90e32b73733482bd3054",
-        "i686": "8f3b3934e53831dad72930bacfa886fcc7d2b4cc9e4065fc29b13cda3fe54934"
+        "aarch64": "8f561b2d3d9499aeed08b13f07ee8c0391d799f2266256210fa02052e94e50f9",
+        "arm": "4402901924ce4a0aa4c9405353ddb2658dcfdf326a81d4451523a7a1f6ccb553",
+        "x86_64": "304300fb97e9ae8e2e325ba0469e9cb996cedbc41ef4137be7ef178738893804",
+        "i686": "d0ee0c01432cf1af4dca295cdec20ef450456a0a1b352e86be35e960047fb7ce"
       }
     },
     {
@@ -145,7 +163,13 @@
       "platform_independent": false,
       "depends": [
         "nodejs"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "5185e87ac0ce596ce6f900a49f64fee3814720b981820acef41a2fb8fb162e7a",
+        "arm": "8ab46478a7d73f8bfdb3a2be9ec497ca3584a8a8aab34dea15164bc43160f645",
+        "x86_64": "632c2aeb203c3a9833bd62965b6845228ab8b9baeaa2f929f009d4dc95c5fab7",
+        "i686": "c6311b9759922d73343171b4ca61fdc9b4ad9bc3579b12246b8c75547111d121"
+      }
     },
     {
       "package": "bing-ip2hosts",
@@ -160,7 +184,13 @@
       "srcurl": "https://github.com/urbanadventurer/bing-ip2hosts/archive/refs/tags/v1.0.5.tar.gz",
       "sha256": "0a198af8d7876d7adb9c0517025bd6443d13399a188615a078cf3e45e120f19e",
       "recipe_sha256": "a7c2eda1decad9e6274c7017f509347408feac85e3a6815e2b4c4e5b245364e8",
-      "platform_independent": false
+      "platform_independent": false,
+      "sha256_by_arch": {
+        "aarch64": "afc2e96c08f87be513eda40c2eb105a9188a297ce36e9a3c942f9a16a23cb51e",
+        "arm": "4e1972646f95aa43bb3a272fe1f8ac0e52d07d06095d362ccda2f196e6ca66d1",
+        "x86_64": "8c1cd6860aa7744199f3854b14d8ee1d2e26b138b697c0d19926b2ba07041579",
+        "i686": "3010270f8094932d82234185c99749f5ecf9ddc2ae744c3046e7569d0f1549fe"
+      }
     },
     {
       "package": "binwalk",
@@ -214,7 +244,13 @@
       "platform_independent": false,
       "depends": [
         "nodejs"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "cc60a9f169112c86e7edff9d5a482013614980eb1231ad9a46db346af4b1e183",
+        "arm": "4417a68c4551486c345e2732de843d76bad13b3a5727f952562849715e63d4e8",
+        "x86_64": "45bddb761738f1b25510d50b7924ff897c7629719a903e766a25b7667a8b5aa1",
+        "i686": "b9b3335fa1719b12791f3db5fb98c0320c352f21a5ae31b3608582f967cf8e85"
+      }
     },
     {
       "package": "broot",
@@ -270,7 +306,13 @@
         "python",
         "python-pip",
         "python-setuptools"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "5ac08118d7eb542bb15a109db261a36e04139e6b6ccf59896d717d4032f91930",
+        "arm": "47cdc1bcca0c78cbd5e0f587a71e0254b291ab44d200d16c50831a1404c9f13c",
+        "x86_64": "f9a7e0f6e3fbcb1327ea5ad24089a4863c6ec05a5270e4b62653d1b28b0856c0",
+        "i686": "8febe6ca563d7ce3f3e33984512a36e09e02daa32e74d30d11dfbcf51a0fe569"
+      }
     },
     {
       "package": "cloudflair",
@@ -290,7 +332,13 @@
         "python",
         "python-pip",
         "python-setuptools"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "69b5916bc4a54b83f1f3039cda5c324c1eef4bd39864579fa1059f907c5db9ce",
+        "arm": "3979ca99bc93528e6495a58ff1e78f891be0f243c1eb1cbf63ae6aab73d0d291",
+        "x86_64": "b2f36f6b3fabbc5be93ac3f0087a00900d2a262001ae3c01d5aa525e7076172e",
+        "i686": "92b4fd3ba68236a0e4bc69758611ba1606f2403e2aaf637dcc236591c32dacbc"
+      }
     },
     {
       "package": "cmseek",
@@ -310,7 +358,13 @@
         "python",
         "python-pip",
         "python-setuptools"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "2535e5763fccccb0ef729c14ee300e611786b8657e29a457d554bef72553bdd5",
+        "arm": "900ad84f0eadf59a28388060991e2add97b199d17422e49372c09952abc67b0d",
+        "x86_64": "f1938c230b3aece1dbd301eaf2b4831647932bc15fefaaa066dd8a02db5baec8",
+        "i686": "e93206cdab24e616fa464d9219e31b07c64903dc5cb9a70542025de18bcc3c6f"
+      }
     },
     {
       "package": "cmsmap",
@@ -330,7 +384,13 @@
         "python",
         "python-pip",
         "python-setuptools"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "ef12d957c51f6660beb583b524db451d1e15cfe2b3bc04c843ffc8562bbfbf44",
+        "arm": "6fe42c8d8e51d8591ff21fba22f73e5ca854a0deb64fe795f0a61af024c429ef",
+        "x86_64": "2038166b20bcfa47f197888385a16b7d58a3c6805da04fb6d5a3d0f29164562f",
+        "i686": "19a2733cda492ae3d16b036c1f462caee583ebac861e783a59f0ab1da3eaba45"
+      }
     },
     {
       "package": "commix",
@@ -350,7 +410,13 @@
         "python",
         "python-pip",
         "python-setuptools"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "a5253a0f972c0e01c5eec70b4fa05284f558ac2003b6d610d2c901cc8bdf27e5",
+        "arm": "ec52f8b91e1267078f7994d9437f7f69ff6224d05ea2e04e65901c726b3a10b6",
+        "x86_64": "0afd6eb9cb1ad682d6cf42e95fd1d6ad5b688f739a26c9adc9e4822da81e2154",
+        "i686": "e21502dabc7a5faa413c496962ec95590328ee3c50503bb405d53c0ddc5b0f1a"
+      }
     },
     {
       "package": "crowbar",
@@ -370,7 +436,13 @@
         "python",
         "python-pip",
         "python-setuptools"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "0567100dfc9ed4d141668fd75acfb6d4f454c68ca7ab83ab5b3cd2c016162f56",
+        "arm": "5f4c6e5e1c0c1a455e43111f7abca5a2e70864beeef0f03414682dadaa40c99b",
+        "x86_64": "cc85861e5e24bc84232326d06230342dbc9617b299879d45fb2709eeb0619068",
+        "i686": "0f76a011076a51343c89ad100ebe3f8eae8571f14afb125eeca352f28bbc4eed"
+      }
     },
     {
       "package": "cupp",
@@ -390,7 +462,13 @@
         "python",
         "python-pip",
         "python-setuptools"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "e94e3f0368a51c843627d3de76f69d3d72592574c503f669c391624d105213b2",
+        "arm": "44c0e7d1092105af289d1f084790476a18940de1508d54dc688377651b44bb1a",
+        "x86_64": "d18dbd07c2a4095a1a48e47dcb906809c45410ed62056058024114cdf581a69d",
+        "i686": "e01f454e698572e5ccbbd970c69a0d2b0a0354e061f500a3ffab1eb852b4fe31"
+      }
     },
     {
       "package": "cybertuz",
@@ -412,7 +490,13 @@
         "whois",
         "curl",
         "dnsutils"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "ebd9578d16a00cfc50ac0684665aaf09e1a1720bb1b3312c4ed248d1dd9bf077",
+        "arm": "77aa22874493701d9e06a334db26d60320d6cf0d80f6a011965f9c6e22c780d0",
+        "x86_64": "f75c85a349f809e30f21a9995fd7a6d48455e7d47285ec6f0c6bc56834327f08",
+        "i686": "b483a46f0ec901c47251c26996cec26d9b2ab4fe98d3ec2528dce1ab05fa665c"
+      }
     },
     {
       "package": "dalfox",
@@ -450,7 +534,13 @@
         "python",
         "python-pip",
         "python-setuptools"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "e626c79aa39b4002b8c4f07c062cd3a2c67e242c6031dd2635c62829e0cb977b",
+        "arm": "0b805929564227ad04b79d3b912431754be7495c90fe76db4478c24c30d37040",
+        "x86_64": "a548fbecd9ea2d8670ad5250ea9b3fb8e12e39ba580ca9def47b2db409d2fb20",
+        "i686": "a7d9f507feeeabae8ce72cbad779f8dd950384ec567063c44ba75b9b97f894d5"
+      }
     },
     {
       "package": "dnsmap",
@@ -485,7 +575,13 @@
         "python",
         "python-pip",
         "python-setuptools"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "7e9389dd5d83678ca59e22c013e89eaf7c46fa53c845d8cd4de531e6b0e77595",
+        "arm": "651c9ec40767f1089486a18d25df9fc5b829c84f5637ef0e7825431cd91f48c1",
+        "x86_64": "53b4510f7a3a47eafa4521fb0af7f4e0c88b84916c1d9089032f65808bdca637",
+        "i686": "2ceb96b1e67df0116d96ec9008036f2e8d958553941a8e805729bc50e65f725b"
+      }
     },
     {
       "package": "doona",
@@ -503,7 +599,13 @@
       "platform_independent": false,
       "depends": [
         "perl"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "55192411712f386be652184f0b1603b1f4851cfe0999aa870e19d2ffb91f3137",
+        "arm": "abed10be432c38840262bc4a0d18d5157a9828f8cd654f2a959546dbd5eeabe0",
+        "x86_64": "a99927e7e29bdbd59adb7cd4beed2ceff0ec86b590b39be582fc7e3737eb905b",
+        "i686": "f245f1e3da9c9def07629303ca6f7e5fcd215bd6691e64d19e75361f63830e98"
+      }
     },
     {
       "package": "dumpzilla",
@@ -523,7 +625,13 @@
         "python",
         "python-pip",
         "python-setuptools"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "bad82d3fd2b4ba0c95ac3055d0eeeee408594edd2cc092d4282180a6149943fc",
+        "arm": "0a7c7d5b6708d1a7ef1d3576fb31655b95cbb0f23c9455bd156c05b405fb5c32",
+        "x86_64": "1ba92933f3ecdea2d220ea7c00cbe2a4cc424a96ed41a8862834202ef7fa91fa",
+        "i686": "477607ba29d14d2f045967ec88223e71cfd6e5292e303265104ad9bb875344f1"
+      }
     },
     {
       "package": "dust",
@@ -562,7 +670,13 @@
         "python-pip",
         "python-setuptools",
         "python-psutil"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "b4171a914199a85082b81c925c30a427c24082a7d3e0259709daf0f04ff294b1",
+        "arm": "5965542dd552f385fe84de2bd3ecc2c44f191e48c3f59df2f4f7813436a79831",
+        "x86_64": "314d4ee4d0e55736e809c9c3aeef4f31f6f85c12a19a0377b268721d1631f5f2",
+        "i686": "5066f7941196f705efe05516372dd41a2480c07bd4ec7af443bb241026333bf7"
+      }
     },
     {
       "package": "encrypt",
@@ -597,7 +711,13 @@
         "python",
         "python-pip",
         "python-setuptools"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "b3658b69de1823ab60bdc253c25b29b8a6f53e6d3ea878d0bf158d846ff7b1b2",
+        "arm": "7d0fd2f0abe476d9929c575523b612b819b2661321525fcaaa13b54437559c5a",
+        "x86_64": "d29800fd6231019d6dd38373402db00131dcdd75df26a394ef6cbf1bec913a8e",
+        "i686": "b2705980a1190eb7b0930ea04f9efdaa9d823f2aff75fe666a0eac2e3cda0e7d"
+      }
     },
     {
       "package": "evilginx2",
@@ -633,7 +753,13 @@
       "platform_independent": false,
       "depends": [
         "php"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "704a644dede7f80e68fa69fe4d018b1b2056c1e0731bce892773144096f5a3f0",
+        "arm": "0013564ab822f3c0214b2ffd08578946149417c09e71d31eec71a69f68a379db",
+        "x86_64": "f6fa08c9f2cd89b9525d12bc24045cc56fab49cb9dfbcf47391fd4b9d7adadeb",
+        "i686": "083f2a2d7a9f07be73da56de4a35b4fb056dccff87e2425d5476cfe30f912b53"
+      }
     },
     {
       "package": "fd",
@@ -648,7 +774,10 @@
       "srcurl": "https://github.com/sharkdp/fd/releases/download/v${TERMUX_PKG_VERSION}/fd-v${TERMUX_PKG_VERSION}-aarch64-unknown-linux-musl.tar.gz",
       "sha256": "f32d3657473fba74e2600babc8db0b93420d51169223b7e8143b2ed55d8fd9e8",
       "recipe_sha256": "c59097dbffa4b35bd25eaa1f4764c7a666a445c0c9e61c3fd7cffe459f6fef24",
-      "platform_independent": false
+      "platform_independent": false,
+      "sha256_by_arch": {
+        "aarch64": "046c47319101e9bcf455f4177fe34563720d8ada5fc7eaca6987fdca99179da5"
+      }
     },
     {
       "package": "fuckshitup",
@@ -666,7 +795,13 @@
       "platform_independent": false,
       "depends": [
         "php"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "68543fe28d310db9070dcd22d216ce98c9e92ba33e65923273a5dbec9cca6238",
+        "arm": "525d989b4503c77e1af212813ba758c3273318879d8419ac5b5ef0b8b99776aa",
+        "x86_64": "1b006d2c6507c6d77884016961bbbcabb84e3e8605e7f4a00d1ecca0f110fd26",
+        "i686": "78622b46bccad20e0249430e5746e4bcebc2d404e9fd09a491053fcac813b2ad"
+      }
     },
     {
       "package": "get",
@@ -681,7 +816,13 @@
       "srcurl": "https://github.com/peterpt/get/archive/14b0bc3f922abbe3d11087051b9b9c06f37284f4.tar.gz",
       "sha256": "4d28e816c7ecbdf3d2a812e3dbd6c7639c7a03eca35e0c01700d0ac46419efe7",
       "recipe_sha256": "c1df8490f2bab50c308e006f42254fe383332180f0764eaead18e7213fb4664a",
-      "platform_independent": false
+      "platform_independent": false,
+      "sha256_by_arch": {
+        "aarch64": "4e61e9f8b9e4de30fcc8473294627a4df5c64ea736076ad24931c31579b9aa07",
+        "arm": "f19aff181a8943d8e6eab47c4a8e0094f62ca38e6412baf474afad90f441d56f",
+        "x86_64": "acd26d1d8922b3b9d8ce9b2d69503df42f1caadafb97d480c9c62ad89de6ea7e",
+        "i686": "da30da7190582743dae54e6e0a60215276ae3956cb1ee16f1aa7597a5cf107a9"
+      }
     },
     {
       "package": "goblinwordgenerator",
@@ -701,7 +842,13 @@
         "python",
         "python-pip",
         "python-setuptools"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "e693ea93946d0dbc49bbdb7d89678efccb1519262da10e713c6312940d22319e",
+        "arm": "0dc6892f4f3938b08016a7720284716fc84219615ebed8fd2efe6ba0c589af62",
+        "x86_64": "4a0d20f28216b79c06274ae3e5fe6927f9797cb82b14511365e1ffc64eaa4061",
+        "i686": "777b569b8d871680a04d805fe9fe774b34f33c84dd0aa1ecb397cbcc1068623a"
+      }
     },
     {
       "package": "gobuster",
@@ -754,7 +901,13 @@
         "python",
         "python-pip",
         "python-setuptools"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "f8efb65a502d48de81128cac2f483168dcfea5281bd8bf39b313591c8108107e",
+        "arm": "9cfe6979cbbf5905b4554ecbee4d9b86c739bd3328a5cc6f8af3b08d31f2ba80",
+        "x86_64": "d2a73a83acc33f7a329e2271b9edce8ff942912540ae6d50de4f123d429e0cab",
+        "i686": "0a963ce69262e48e6c5193e625d11b3e1d703e50ed7400949a6ef54bee314888"
+      }
     },
     {
       "package": "ht-wps-breaker",
@@ -769,7 +922,13 @@
       "srcurl": "https://github.com/SilentGhostX/HT-WPS-Breaker/archive/e218bdfa34364eabe6de2e982264451d2c597ff5.tar.gz",
       "sha256": "867c609f5abbe16e64721d559e6615411dd09c45abc834e4c98dd9755093048d",
       "recipe_sha256": "12a6f9598509a4e23a077fa7dcb07b95ed5a969618a70ef476d440836f79018f",
-      "platform_independent": false
+      "platform_independent": false,
+      "sha256_by_arch": {
+        "aarch64": "563b7980e4af353aad442f5364462594f40d702d25094c0e8ed752ff974b024b",
+        "arm": "0fe9864c0c715733aaa29ff0704937d65a4d33f22dfda1073c0f4ea7524519f3",
+        "x86_64": "aca8ed27bb0c43c389de30d8119a20f5d7e630b6658a4f3858c509d49780f626",
+        "i686": "57fcfc3c0137ebdece2d2ef32137e49f3041a42c4e4dc94659b5832b748fbf5b"
+      }
     },
     {
       "package": "hunner",
@@ -789,7 +948,13 @@
         "python",
         "python-pip",
         "python-setuptools"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "a94acf616698e2ff3e17c642ed62ed2f1ce2cb424d5696851abd56f207295224",
+        "arm": "3a96c68e8d380e24f1e896cbcc319ca799bc4668cb76be795383b17a403f7828",
+        "x86_64": "4b0d4a24aafb066d505a3db851a2f2892858b826b12502a894c77c4e05115261",
+        "i686": "0cf95dcf49526d05c8ab498ff1ec271c80177882d030c1e0f1a36f4476ed35ca"
+      }
     },
     {
       "package": "impulse",
@@ -807,7 +972,13 @@
       "platform_independent": true,
       "depends": [
         "python"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "1cd6f18c44161ad746439b1d73e264551e46be2d0b82dca46f5538718c9b78a6",
+        "arm": "c784b39695f76901a1434f3a3ef0dfe7824c479d1514e17efdfa65586b443460",
+        "x86_64": "210b05a0f7d04064795c1b48bc1f521562a63555f0a8d1faa211cd6c2152e837",
+        "i686": "17f891115a300da35cdb2ab98cacfd720acd343e944144e2a00b8e6302f233cb"
+      }
     },
     {
       "package": "infoooze",
@@ -845,7 +1016,13 @@
         "python",
         "python-pip",
         "python-setuptools"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "3dd05dc6ad4291539e70534ced8415227a5ce12236a2f448a97a9a2e581e52c7",
+        "arm": "ffb0cbd5c0ce18f0af3e42657135c06b1eca2e24e9ae7044ed324675122c4ded",
+        "x86_64": "67bbbb9b76cac51e370393bd00cbaf58e8c5341cba7f125702cb4eb7a78a654d",
+        "i686": "a87dbc3df738978b23302d5b429f64439564914a0c8faa9ba4ea0fe1641e8585"
+      }
     },
     {
       "package": "ip-tracker",
@@ -860,7 +1037,13 @@
       "srcurl": "https://github.com/KasRoudra/IP-Tracker/archive/728535ebc14e650d5309f72ee5d78b2d194e7649.tar.gz",
       "sha256": "28ca93cebf7cd59e76c9eb798f119bb594f633130d9f1d2c5c9d953a5e2a4a09",
       "recipe_sha256": "f3b0a19b26adde71ba622b6b14e5c34e0307c5da6006a860b32b07fc9b46cde9",
-      "platform_independent": false
+      "platform_independent": false,
+      "sha256_by_arch": {
+        "aarch64": "f6e9e323408926f5f1a6e89e9d8e6434ba5eb74e3a09deb7110e6f96a57bd1c7",
+        "arm": "d6c6563c7bf3faf8856fdd55931606874cfa34a702dfa7127458b54a467818f4",
+        "x86_64": "d29158de538fa7cb5db54dec79275c163443b35f96c7f5a69ba8f85eaad1a57b",
+        "i686": "b25cbb9ca25045067ca3de6c7e9e2d8e80ea08e02c89c4383ff6fd0c6f574ba8"
+      }
     },
     {
       "package": "ipgeolocation",
@@ -880,7 +1063,13 @@
         "python",
         "python-pip",
         "python-setuptools"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "978a7bafcea0cee9ad73073ba13ee4ba7d1cfbadb2defd838d414955db4ddabf",
+        "arm": "734e8e5652970e46cdf82111c7b1b41878cbabd525e428a5a88c49428cc2c207",
+        "x86_64": "b578ac6523545007b06492afabb78cd7f086aaa07321a2b0c0860cec73300ad0",
+        "i686": "bbf8e97845ed9ced0ad1568583b6a3d64b30ad6ccdc76c6f283b6cd9d875735e"
+      }
     },
     {
       "package": "killchain",
@@ -900,7 +1089,13 @@
         "python",
         "python-pip",
         "python-setuptools"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "09809f45e1f12d3dcd6575b474bbdee9a470d1ce2c4059411c5bcc48a9d48463",
+        "arm": "4d4ff4f0d8a98fb6a2666a7494ec8907cce9963ffb43c2177ec60e919a66b387",
+        "x86_64": "991750a4715c43bae873f6e6542f0628b2d0d4b361d5d942fee747bead83f29e",
+        "i686": "0a36a747a59afab2a946800b7146dbc95385dfa3024747f2c178145274a2ae3c"
+      }
     },
     {
       "package": "lalin",
@@ -915,7 +1110,13 @@
       "srcurl": "https://github.com/Screetsec/LALIN/archive/ab559794057a31ba9e38a4200073e5ca2d1f429a.tar.gz",
       "sha256": "482d6f88dbf07f82693372ddcea0444779b67f525d65fc50cb45be0c4aa1128a",
       "recipe_sha256": "76982b8be754a46afd5b73c1366deb1536d326878c1b389707d04ab110b7ad82",
-      "platform_independent": false
+      "platform_independent": false,
+      "sha256_by_arch": {
+        "aarch64": "ffcd8dbae8a937e38750f556c49f508e6172c1911c94df49636d36e09873ada5",
+        "arm": "ebd31fa028fcc8e3aab89006b1e8dac87aa5e4709bc1c9711caa74010c582793",
+        "x86_64": "62ec8e80c7f3a0664eeeea74ae3f82526c7153dc9c332c8c523b306e942e7673",
+        "i686": "f89c270a0ead6f0a3b5f27bb1cf78d4f3b1cd9a20125fc245baae112f3ae6f6b"
+      }
     },
     {
       "package": "lazymux",
@@ -936,7 +1137,13 @@
         "python-core",
         "python-pip",
         "python-setuptools"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "d452468fd506d62be8b73af51380f3971590740c67b0db42d43ef70e854669a2",
+        "arm": "75b6ccbb63c0f59e7669f5ae9312d5fc3246e73af555170f624bd51c50b4b16c",
+        "x86_64": "67c4f075521f7971225d3beef55bff208d792f4f54a241e46847c3e7a19ce43f",
+        "i686": "43a46cc7d952a0204ba7c73e8fc58e84bf31c1ee6bba0d798cdce1428e36a2f4"
+      }
     },
     {
       "package": "lux",
@@ -951,7 +1158,10 @@
       "srcurl": "https://github.com/iawia002/lux/releases/download/v${TERMUX_PKG_VERSION}/lux_${TERMUX_PKG_VERSION}_Linux_arm64.tar.gz",
       "sha256": "479b09290b8ddda43c994ec5685649eb4635f4bd24ff24e494eddaae473879d7",
       "recipe_sha256": "8df25e3c38390e0ba591c53cac3f7074b8d00ad19fa205b08a2e399c6ad3e0db",
-      "platform_independent": false
+      "platform_independent": false,
+      "sha256_by_arch": {
+        "aarch64": "77ec1594da9d8cc05ce5a372d67e55e4410e677edc343244eff3b428fe5f5e47"
+      }
     },
     {
       "package": "merlin",
@@ -966,7 +1176,13 @@
       "srcurl": "https://github.com/djunekz/merlin/archive/refs/tags/${TERMUX_PKG_VERSION}.tar.gz",
       "sha256": "96c68eb45e03ac6f5b9ebb42b037d943d3df3c44ab58a9746fa1e63400b1cb72",
       "recipe_sha256": "5bd592ca47d3998b76dbab651a528543eb30b8e0500c4fb1a90850edca854d11",
-      "platform_independent": false
+      "platform_independent": false,
+      "sha256_by_arch": {
+        "aarch64": "5c90e959084bff66c03bd8eba4fec7aa8f467e38bb2c6eeb8256c3d272b4c5fe",
+        "arm": "b87ac1d7d7e7f926c7c6f36dcf5bb97ca6746ff113da511ddffca31cd40e4a17",
+        "x86_64": "1da53fd76e46d01e9632544d61a0f34064aaccf88144b3f33e6da3a33d8f3a7e",
+        "i686": "e24b685239ca2e068ed2fa7efa245f41d33660b10e3c4cc087853afeeb1bf776"
+      }
     },
     {
       "package": "myserver",
@@ -987,7 +1203,13 @@
         "python",
         "python-pip",
         "python-setuptools"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "b287352d8b7a7363adb77c7047726fc999b169e2fbc2e343cca630885da92856",
+        "arm": "f17411b9b95137625f5ad2cc08209ee1112e24d7d4daff410f382d7b521c2017",
+        "x86_64": "0ed5d161487f453e0311e99e5da595dee9272f5c4c189541299371d22ad4589c",
+        "i686": "b309dfc2678d9766bfa97c2ed586f92f39908a44adfc2c75e37b6cf8b6929004"
+      }
     },
     {
       "package": "orchat",
@@ -1007,7 +1229,13 @@
         "python",
         "python-pip",
         "python-setuptools"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "d615f7f1e344b5b12e6cdb69c7b8881eae1e20de4824a362aafe8a061416812a",
+        "arm": "4cff330aae065f9986f5fc1c7a4a077a37ce0d83240000436d04bdf7a10df877",
+        "x86_64": "ca7bd4315692965c20779c744fff3a263b7ac310459dd051d2c9dae66c50bf8c",
+        "i686": "44f7926bae1083bcc0bfb6e7f5d124d75fe69c34115101451f70a56ae60807ba"
+      }
     },
     {
       "package": "padrelivio",
@@ -1022,7 +1250,13 @@
       "srcurl": "https://github.com/enrilinux/padrelivio/archive/refs/tags/v1.0.0.tar.gz",
       "sha256": "bb24ca52056bf8ee66b0b696d948647c19dc9c20d37e9e36fe915b254540bf10",
       "recipe_sha256": "ab16f2c2f4cdcb0fee2f8ab9847205e5c624fec229626202000c9ce38db3b8dd",
-      "platform_independent": true
+      "platform_independent": true,
+      "sha256_by_arch": {
+        "aarch64": "95992ff0cfba047050be8f50950aebd2d8f2aa7781d97574869f8f42e3aaea8e",
+        "arm": "9805070ee473a7723684a0c6148090b35df7c81cc518eafbb6353fda2b1b4e55",
+        "x86_64": "66c79894c6bdb8bb30770b2d6206c5072e19b28555c8c801f7e51b81946fbdcc",
+        "i686": "d897f966eb932cf034da83c660cd3922e5918aa411f283be8c0ee093c0e58de5"
+      }
     },
     {
       "package": "parsero",
@@ -1042,7 +1276,13 @@
         "python",
         "python-pip",
         "python-setuptools"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "80aca7c88831b6f7f3aa246cb9433e72a23bc5fb38f4c48777b7d5fc153ecd57",
+        "arm": "d480393fcb1b120f068ebaffbfab4f73468ec98fb4ac46094b05469c90e66db5",
+        "x86_64": "334be728905b0c55fafbfa6f9ce528735e1041b7791a130c17fd7667e58212c3",
+        "i686": "217358a967b8d71529d8144ae2977c5357a42bf4f0746bc4199ded0185cce6bc"
+      }
     },
     {
       "package": "photon",
@@ -1062,7 +1302,13 @@
         "python",
         "python-pip",
         "python-setuptools"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "11c4f1c75310bea12f39fab4c5c654090fa9475b43831ba79811709501c20acd",
+        "arm": "c72cbbee86f19bc90bbb0e5c0e4e9d1ea609e038dfdd34e794a1a5ed871c0f68",
+        "x86_64": "4780ff0f920b5b1c97a540c02e928491fd649daf265a52d88e9d0e2725f75fb7",
+        "i686": "bb04ec27dd13b9403dfa2a86d82662ed25c6853541b55aa1c501fd68cd5fd56a"
+      }
     },
     {
       "package": "pmcli",
@@ -1115,7 +1361,13 @@
       "platform_independent": true,
       "depends": [
         "python"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "b99cb6d5a08c5cce738224d11d55545721c638abc1213cb35fd7ee2bbb3b12c0",
+        "arm": "2fb1ea3d2e9d4314396df13008e8c3aba7c255217f2d622b8c6f6bff00e9ecdb",
+        "x86_64": "39e5b81f8bc6eb392aa15ec374376b9decb639382d97e61c86c39e8e6d026d03",
+        "i686": "ab11f3deae8f16d7bf38980e6e656c73fc4abbed30ab2892cf7ca7338f0eecc4"
+      }
     },
     {
       "package": "red-hawk",
@@ -1133,7 +1385,13 @@
       "platform_independent": false,
       "depends": [
         "php"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "203aea208d1321ad8cf94741b3ee7988146384deccc71904774eb44605588fac",
+        "arm": "fc1b10bf3bebbc08061d71c96ef2b76f8cc171efe6b7d048e2afe8beff4daf2f",
+        "x86_64": "c1684360ca2bca68a51e0a1831fa6e318fa212e92ed5bb66cbbe2afa28c5abde",
+        "i686": "e062042eee64b1c4582efcce6336f2c91a6e92391b179111ecdc4ecaeb53b91e"
+      }
     },
     {
       "package": "ssrfmap",
@@ -1153,7 +1411,13 @@
         "python",
         "python-pip",
         "python-setuptools"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "8895baed638cd75036b9782ad6e616164fea13aafbad854c2b855e7a7f031809",
+        "arm": "cf0488ac3f4546670005b1c2a3a87b2e99f3fe36e1fda7d09e07d09653280140",
+        "x86_64": "d4723c8349ad72b05252dc6007cd56f11e8789f965b555e78347d3e973e6316d",
+        "i686": "a7432eeea7cf9fc609d4f00c612fc51948fbdf2ef899959079ba6f6df0d395b4"
+      }
     },
     {
       "package": "sublist3r",
@@ -1196,7 +1460,13 @@
         "git",
         "gnupg",
         "termux-tools"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "59ff93035b513d548a683d4abd555d17c3cbc5d8d1d935174e4f5a4f2589ce69",
+        "arm": "6813252865f0f9000cbc0b5177046811a181d61a9d0ef60ce30ebe6797c11321",
+        "x86_64": "67e7888b996bbbc23dd208c6dd19735fba8f0948ceb9eac3e087d91e16d7012d",
+        "i686": "bea52a3ac78c6feef31d931ba4e048ed95e19ce02a6e23dc2e11fb2c1a335d90"
+      }
     },
     {
       "package": "tere",
@@ -1234,7 +1504,7 @@
         "python"
       ],
       "sha256_by_arch": {
-        "aarch64": "2fa0b5e3e3deb65d598ce090695cff73bf7606d2596c87d289d2d79a87e3be7f"
+        "aarch64": "0b9f8fe0bbfe4a2c4c099bed6f3368adc714b303b47c804889202d0ad7d6baff"
       }
     },
     {
@@ -1250,7 +1520,13 @@
       "srcurl": "https://github.com/Anon4You/Termux-Ai/archive/7e1b8ff3c0da05bc805d68a634bc2bc8aabcd62e.tar.gz",
       "sha256": "e65144e01ef0619b064809798c6cf5c19f0ee811ec8045b05caed26f68910217",
       "recipe_sha256": "01642fc0c275d4285650a2179d36068fbf19b5f2bbf08c4cd6b21a87f43c94b0",
-      "platform_independent": false
+      "platform_independent": false,
+      "sha256_by_arch": {
+        "aarch64": "11dd64a9c4322badef2b46e9a8b15772fef2b573c6de562edbea6df6de1c2642",
+        "arm": "32b177f6416c83ae8b7b6b32e8d2ea2bc03a6005b76a54b392577a9de5545cfe",
+        "x86_64": "aaf00a4195092cbe2a3e4fcd6e1d7d62aed2e3cecd420014d6ebed87c9b675e0",
+        "i686": "95a341bfcef382afe8a3d032aef986a7e98383c1bf948bfa89211ca69e5d4133"
+      }
     },
     {
       "package": "termux-fm",
@@ -1292,7 +1568,13 @@
         "python",
         "python-pip",
         "python-setuptools"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "e52c67492e0f4677a4a88ebd799aba3adbeca8e73422c048872a2656b5bd213e",
+        "arm": "ff78c616e5a8f42dbd89a93762033e93fb04284648af542769c460c4c7d264ae",
+        "x86_64": "bc2024183ed9b5d998e8b76c8a7732f7365164e8b4c02a62c1fe740367bd5906",
+        "i686": "4a5c366920ec602c63089a34bdfee5c0769fada9a370919068882541dd16b11b"
+      }
     },
     {
       "package": "termux-tui",
@@ -1313,7 +1595,13 @@
         "python-pip",
         "python-setuptools",
         "python-yt-dlp"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "567cfa3bdbdee2e2308d057a55b3eb50c1157152d683f16b54c2dc5cc7b196e3",
+        "arm": "bd9572dfffcb1a0176e96250c31abbd697b416110b4f6bc8da0e6da0e35da6f6",
+        "x86_64": "edd3aa402b6c60497864232a2b30ba8cb4a03d8e62259653984c8b376a91a1ee",
+        "i686": "cebf820687da6deca34267d3c139bbe9bbfa871601035242c5019752fa59851a"
+      }
     },
     {
       "package": "termuxalpine",
@@ -1328,7 +1616,13 @@
       "srcurl": "https://github.com/Hax4us/TermuxAlpine/archive/6c5d10ca41273fccc2370cb969b94211018ba3e3.tar.gz",
       "sha256": "6f2473ea2a292f3b85ceeb778f259289bcaa5e1e7dd7947b1b58ccc63310a6e1",
       "recipe_sha256": "b3a4bd2121220956b9135df512694c78afd0edba99d0f3180d6f026765ac5a8a",
-      "platform_independent": false
+      "platform_independent": false,
+      "sha256_by_arch": {
+        "aarch64": "2aaf128b2cdf6e577c469decdc7e540734eb632fd900a2fb316314f256bff316",
+        "arm": "d618be4e93e6e0d032326caeceb0180766b86236dfc79b5f861603d16e24150f",
+        "x86_64": "88f6817551a93e90426bb03ba4a7ec4c0514bd2bddac4901949dd90d14b92f83",
+        "i686": "720f14d3bb115c502fd00a7c7b685a9416a36428f863c59117bfab34b110fbb9"
+      }
     },
     {
       "package": "termuxbackup",
@@ -1449,7 +1743,13 @@
       "platform_independent": false,
       "depends": [
         "python"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "f7d205bd0cd9574d3ebee770a05aaa1e90ad5915ccf81e81114f038c5eb1cc0c",
+        "arm": "bcb75dbf744503baa5c316775ae50a29ae696c96fa284e0b1b5b36a10cea8737",
+        "x86_64": "841b4d48cde59481d3f6c90dd3207ee6da076c79873da6ef13849cb29e24dc20",
+        "i686": "478c360629425f3990a679276844b3db5711b4bb30a41396361686e673b1f3e6"
+      }
     },
     {
       "package": "tx",
@@ -1468,7 +1768,10 @@
       "depends": [
         "python",
         "ncurses"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "263079a44ed8e8b1f3e2f7cf11f48024e4b8c0a0b44e704d3987763bf3cf1ea2"
+      }
     },
     {
       "package": "userfinder",
@@ -1483,7 +1786,13 @@
       "srcurl": "https://github.com/mishakorzik/UserFinder/archive/a08a9a682b743fae9c84c9794d88b5b0e98946a7.tar.gz",
       "sha256": "da66d1d975f7325a4ef96ba8fb0641d788d8434e4e0de748423e769dd6bdb1a6",
       "recipe_sha256": "b2109465b85f5f7528ff971f393c4c825a1e4266101866b69829afdc462ad510",
-      "platform_independent": false
+      "platform_independent": false,
+      "sha256_by_arch": {
+        "aarch64": "7acffcb2967b083e85e24c71d524f995e60894638352b71f41f9989656b23b9b",
+        "arm": "0af57a551be17407bd41e7d5dd76f41de4c64e5094a6c62f761c5969cf237dc2",
+        "x86_64": "116b84577695bea241b630a475d19796987fa225a38561b4a46a7fa6c3778be8",
+        "i686": "326c88a517e1a611e0fcea9fe81bac3ba7ad6efa6875399e293fea8f13b6c89c"
+      }
     },
     {
       "package": "uv",
@@ -1498,7 +1807,10 @@
       "srcurl": "https://github.com/astral-sh/uv/releases/download/${TERMUX_PKG_VERSION}/uv-aarch64-unknown-linux-musl.tar.gz",
       "sha256": "46647dc16cbb7d6700f762fdd7a67d220abe18570914732bc310adc91308d272",
       "recipe_sha256": "76b8431058c21d5bb8e6c5a6b9f1231089080dd7ee1ed2a42323d2baa6d768c3",
-      "platform_independent": false
+      "platform_independent": false,
+      "sha256_by_arch": {
+        "aarch64": "0b6a6fb37bd09bb46b2af8ffb8da5e2b4e0354f6843cb338f7e4844e07de657d"
+      }
     },
     {
       "package": "viu",
@@ -1531,7 +1843,13 @@
       "srcurl": "https://github.com/djunekz/webshake/releases/download/v${TERMUX_PKG_VERSION}/webshake-${TERMUX_PKG_VERSION}.tar.gz",
       "sha256": "4312838c7d201f1540923dfbeeeb21d8af4ae9896a2ce18357208805a859cbe8",
       "recipe_sha256": "1ca1179147b36711f7e0740cfa142b1f0238946d0c605e7bfc49074776a7dd6d",
-      "platform_independent": false
+      "platform_independent": false,
+      "sha256_by_arch": {
+        "aarch64": "627fe9cb614807f3aa8c9793699860774bc38681f57148d8de4ccfa1ce1bdaa6",
+        "arm": "258643503e7767522edeca54c8bc0ced6302921401ad04ee9eed70a1b2071e8e",
+        "x86_64": "f24496951b04f075caa77618c47e691327c290d580cfdf8ba8eaeadc3916572a",
+        "i686": "99cdb2f8b5fc954997b4921c1ac4ba8527f83c85da5f6107a2c570b2906c55ff"
+      }
     },
     {
       "package": "xeuledoc",
@@ -1551,7 +1869,13 @@
         "python",
         "python-pip",
         "python-setuptools"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "6e11727a1b4dab3542c3748c5f4a87fa78a5f289a80f28109bb5d021027afc47",
+        "arm": "b1e1a258cebc856e017f7b9c56b84f89367196ff2ffab9606d9662a42510e1cb",
+        "x86_64": "a805165d5760dd359236339c7308961d1af29511b5f49c4e65dc2e5a1c5e8f29",
+        "i686": "ddf3e976ebd88fca0150f76970090fc06d8db854554f30b953762d72535dca9d"
+      }
     },
     {
       "package": "xsstrike",
@@ -1571,7 +1895,13 @@
         "python",
         "python-pip",
         "python-setuptools"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "d9a6a2e4d8ef639f2742a4d802fb85d39d2bd3f8791e93c5844034875dc1ad08",
+        "arm": "a694f7893e1e7da9308187dcbdff2e85bc911ae3627eef4ad5730d98477dfffd",
+        "x86_64": "60806c880025c383703dbcfd543805de83e186d705bd70a7eb1a6d82a5905a42",
+        "i686": "c60d49736d6379c0b5a497f3be932baa3b565f99b29bd13302689057ce268da8"
+      }
     },
     {
       "package": "ytfzf",
@@ -1598,7 +1928,13 @@
         "luajit",
         "mpv",
         "openal-soft"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "622fefd31480582bf8404b299bfb68647482a6afdaea3c9d12ae0977398aa9fc",
+        "arm": "b4df84120f7a5488bd66738374ab0b1b917ef199096e4d8487b0f9bd9c36c9cf",
+        "x86_64": "fa92b0811bffc3a489b138a31007c79c11531e68e3595d404fcf535b5c45633e",
+        "i686": "356f6686ce300af9aba338346ea3d2ae303824762b288f5793fbc34cc6671bfe"
+      }
     },
     {
       "package": "zora",
@@ -1616,7 +1952,10 @@
       "platform_independent": false,
       "depends": [
         "python"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "63701d3215dd87833ed60fbcdfded519a4b03bac644464fe75181d96022ebc2b"
+      }
     },
     {
       "package": "zorabuilder",
@@ -1635,7 +1974,10 @@
       "depends": [
         "python",
         "binutils-is-llvm"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "fd0ff84a0a0f61bb04bdad9b12f8920e014ca6df031381db96b5eb3b68e34161"
+      }
     },
     {
       "package": "zoracrypter",
@@ -1654,7 +1996,10 @@
       "depends": [
         "clang",
         "python"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "177aae86b791534d1ef50d5247e9c78f517ff7fdddba7d1fd71a5f8f5b31b933"
+      }
     }
   ]
 }
