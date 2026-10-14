@@ -57,16 +57,22 @@ jobs:
                   ['git', 'show', 'HEAD:tools/index.json'],
                   stderr=subprocess.DEVNULL
               ).decode()
-              old = {p['package']: p.get('version', '') for p in json.loads(old_raw).get('packages', [])}
-          except Exception:
+              old = {p['package']: (p.get('version', ''), p.get('recipe_sha256', '')) for p in json.loads(old_raw).get('packages', [])}
+          except (subprocess.CalledProcessError, ValueError):
               old = {}
 
           with open('tools/index.json') as f:
               new_data = json.load(f)
-          new = {p['package']: p.get('version', '') for p in new_data.get('packages', [])}
+          new = {p['package']: (p.get('version', ''), p.get('recipe_sha256', '')) for p in new_data.get('packages', [])}
 
           safe = re.compile(r'^[A-Za-z0-9][A-Za-z0-9._+-]*$')
-          changed = [pkg for pkg, ver in new.items() if old.get(pkg, '') != ver and safe.match(pkg)]
+          changed = []
+          for pkg, (ver, rec) in new.items():
+              prev = old.get(pkg)
+              if not safe.match(pkg):
+                  continue
+              if prev is None or prev[0] != ver or (prev[1] and prev[1] != rec):
+                  changed.append(pkg)
           print(' '.join(changed))
           PYEOF
           )
@@ -76,7 +82,7 @@ jobs:
           if [[ -n "$CHANGED" ]]; then
             echo "Changed packages: $CHANGED"
           else
-            echo "No package version changes detected"
+            echo "No package version or recipe changes detected"
           fi
 
       - name: Commit and push changes

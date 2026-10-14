@@ -227,6 +227,14 @@ def ensure_build_package_sh(app_root: Path) -> bool:
     build_pkg = app_root / "build-package.sh"
     if build_pkg.exists():
         return True
+    packaged = Path(__file__).resolve().parent / "data" / "build-package.sh"
+    if packaged.is_file():
+        try:
+            shutil.copy2(packaged, build_pkg)
+            build_pkg.chmod(0o755)
+            return True
+        except OSError:
+            return False
     url = f"https://raw.githubusercontent.com/{GITHUB_REPO}/master/build-package.sh"
     try:
         print(f"  {DIM}Downloading build-package.sh...{R}")

@@ -55,12 +55,17 @@ jobs:
             PKGS=$(python3 -c "
           import json, subprocess
           try:
-              old = {p['package']:p.get('version','') for p in json.loads(subprocess.check_output(['git','show','HEAD~1:tools/index.json'],stderr=subprocess.DEVNULL).decode()).get('packages',[])}
-          except:
+              old = {p['package']:(p.get('version',''), p.get('recipe_sha256','')) for p in json.loads(subprocess.check_output(['git','show','HEAD~1:tools/index.json'],stderr=subprocess.DEVNULL).decode()).get('packages',[])}
+          except (subprocess.CalledProcessError, ValueError):
               old = {}
-          new = {p['package']:p.get('version','') for p in json.load(open('tools/index.json')).get('packages',[])}
-          print(' '.join(pkg for pkg,ver in new.items() if old.get(pkg,'') != ver))
-          " 2>/dev/null || echo "")
+          new = {p['package']:(p.get('version',''), p.get('recipe_sha256','')) for p in json.load(open('tools/index.json')).get('packages',[])}
+          changed = []
+          for pkg, (ver, rec) in new.items():
+              prev = old.get(pkg)
+              if prev is None or prev[0] != ver or (prev[1] and prev[1] != rec):
+                  changed.append(pkg)
+          print(' '.join(changed))
+          " || echo "")
           fi
 
           if [[ -z "$(echo $PKGS | tr -d ' ')" ]]; then
@@ -73,12 +78,22 @@ jobs:
           for pkg in $PKGS; do
             [[ -f "packages/$pkg/build.sh" ]] || continue
             VERSION=$(grep 'TERMUX_PKG_VERSION=' "packages/$pkg/build.sh" | head -1 | cut -d= -f2 | tr -d "\"'" 2>/dev/null || echo "unknown")
-            SHA256=$(grep 'TERMUX_PKG_SHA256=' "packages/$pkg/build.sh" | head -1 | cut -d= -f2 | tr -d "\"'" 2>/dev/null | cut -c1-16 || echo "")
+            SHA256=$(grep 'TERMUX_PKG_SHA256=' "packages/$pkg/build.sh" | head -1 | cut -d= -f2 | tr -d "\"'" 2>/dev/null || echo "")
+            SHA256="${SHA256,,}"
+            [[ "$SHA256" =~ ^[0-9a-f]{64}$ ]] || SHA256=""
+            RECIPE=$(sha256sum "packages/$pkg/build.sh" | cut -d' ' -f1)
             SRCURL=$(grep 'TERMUX_PKG_SRCURL=' "packages/$pkg/build.sh" | head -1 | cut -d= -f2- | tr -d "\"'" | sed "s|\${TERMUX_PKG_VERSION}|$VERSION|g" 2>/dev/null || echo "")
+            VERSION_RE='^[A-Za-z0-9][A-Za-z0-9.+~:-]*$'
+            URL_RE='^[A-Za-z0-9:/._~%@+=?&,#-]*$'
+            PKG_RE='^[A-Za-z0-9][A-Za-z0-9._+-]*$'
+            if [[ ! "$pkg" =~ $PKG_RE || ! "$VERSION" =~ $VERSION_RE || ! "$SRCURL" =~ $URL_RE ]]; then
+              echo "ERROR: unsafe or malformed metadata in packages/$pkg/build.sh"
+              exit 1
+            fi
             IS_PREBUILT_DEB=false
             if echo "$SRCURL" | grep -q '\.deb$'; then IS_PREBUILT_DEB=true; fi
             [[ -n "$MATRIX_ITEMS" ]] && MATRIX_ITEMS="$MATRIX_ITEMS,"
-            MATRIX_ITEMS="${MATRIX_ITEMS}{\"package\":\"$pkg\",\"version\":\"$VERSION\",\"sha256\":\"$SHA256\",\"is_prebuilt_deb\":\"$IS_PREBUILT_DEB\",\"srcurl\":\"$SRCURL\"}"
+            MATRIX_ITEMS="${MATRIX_ITEMS}{\"package\":\"$pkg\",\"version\":\"$VERSION\",\"sha256\":\"$SHA256\",\"recipe\":\"$RECIPE\",\"is_prebuilt_deb\":\"$IS_PREBUILT_DEB\",\"srcurl\":\"$SRCURL\"}"
           done
 
           echo "matrix={\"include\":[$MATRIX_ITEMS]}" >> "$GITHUB_OUTPUT"
@@ -102,10 +117,7 @@ jobs:
         uses: actions/cache@v6
         with:
           path: output/
-          key: pkg-${{ matrix.package }}-${{ matrix.version }}-${{ matrix.sha256 }}
-          restore-keys: |
-            pkg-${{ matrix.package }}-${{ matrix.version }}-
-            pkg-${{ matrix.package }}-
+          key: pkg-${{ matrix.package }}-${{ matrix.version }}-${{ matrix.recipe }}-${{ matrix.sha256 }}
 
       - name: Repack prebuilt .deb (no Docker needed)
         if: |
@@ -127,15 +139,16 @@ jobs:
             exit 1
           }
 
-          if [[ -z "$SHA256" ]]; then
-            echo "ERROR: no SHA256 declared for prebuilt .deb"
+          SHA256="${SHA256,,}"
+          if [[ ! "$SHA256" =~ ^[0-9a-f]{64}$ ]]; then
+            echo "ERROR: a full 64-character SHA256 is required for a prebuilt .deb"
             exit 1
           fi
           GOTSUM=$(sha256sum source.deb | cut -d' ' -f1)
-          if [[ "$GOTSUM" == "$SHA256"* || "$SHA256" == "$GOTSUM"* ]]; then
+          if [[ "$GOTSUM" == "$SHA256" ]]; then
             echo "Checksum OK"
           else
-            echo "ERROR: checksum mismatch (expected prefix: $SHA256, got: $GOTSUM)"
+            echo "ERROR: checksum mismatch (expected: $SHA256, got: $GOTSUM)"
             exit 1
           fi
 
@@ -161,20 +174,21 @@ jobs:
             export TERMUX_PKG_SRCDIR="$PWD/$TMPDIR_EXTRACT"
             mkdir -p "$TERMUX_PREFIX/bin" "$TERMUX_PREFIX/lib/$PKG"
 
-            source "$BUILD_SH" 2>/dev/null || true
+            source "$BUILD_SH"
             if declare -f termux_step_make_install > /dev/null 2>&1; then
-              (cd "$TERMUX_PKG_SRCDIR" && termux_step_make_install) || true
+              (cd "$TERMUX_PKG_SRCDIR" && termux_step_make_install)
             fi
 
             mkdir -p "repack_final"
             cp -r "$TMPDIR_EXTRACT/." "repack_final/"
             if [[ -d "$STAGING$PREFIX_ORIG" ]]; then
-              cp -r "$STAGING$PREFIX_ORIG/." "repack_final$PREFIX_ORIG/" 2>/dev/null || true
+              mkdir -p "repack_final$PREFIX_ORIG"
+              cp -r "$STAGING$PREFIX_ORIG/." "repack_final$PREFIX_ORIG/"
             fi
 
             mkdir -p "repack_final/DEBIAN"
-            cp "$TMPDIR_EXTRACT/DEBIAN/"* "repack_final/DEBIAN/" 2>/dev/null || true
-            sed -i "s/^Architecture:.*/Architecture: aarch64/" "repack_final/DEBIAN/control" 2>/dev/null || true
+            cp "$TMPDIR_EXTRACT/DEBIAN/"* "repack_final/DEBIAN/"
+            sed -i "s/^Architecture:.*/Architecture: aarch64/" "repack_final/DEBIAN/control"
 
             echo "=== Contents after custom install ==="
             find repack_final -not -path "*/DEBIAN/*" -type f | sed 's|^repack_final||'
@@ -183,7 +197,7 @@ jobs:
 
           else
             echo "=== No custom install — repack as-is for aarch64 ==="
-            sed -i "s/^Architecture:.*/Architecture: aarch64/" "$TMPDIR_EXTRACT/DEBIAN/control" 2>/dev/null || true
+            sed -i "s/^Architecture:.*/Architecture: aarch64/" "$TMPDIR_EXTRACT/DEBIAN/control"
             dpkg-deb --build "$TMPDIR_EXTRACT" "output/${PKG}_${VERSION}_aarch64.deb"
           fi
 
@@ -228,6 +242,8 @@ jobs:
           PKG_DEPS=$(grep 'TERMUX_PKG_DEPENDS=' "packages/$MATRIX_PKG/build.sh" | head -1 \
             | cut -d= -f2 | tr -d "\"'" | tr ',' ' ' | xargs 2>/dev/null || true)
 
+          trap 'sudo rm -rf "$WORK_DIR" 2>/dev/null || rm -rf "$WORK_DIR" 2>/dev/null || true' EXIT
+
           docker run --rm \
             --platform linux/arm64 \
             -v "$WORK_DIR:/opt/tas" \
@@ -249,23 +265,26 @@ jobs:
 
               if [[ -n "$PKG_DEPS" ]]; then
                 echo "=== Pre-installing dependencies: $PKG_DEPS ==="
-                pkg install -y $PKG_DEPS 2>&1 || true
+                pkg install -y $PKG_DEPS 2>&1 || echo "WARNING: dependency pre-install failed; the build will report anything truly missing"
               fi
 
               echo "=== Building $PKG ==="
-              bash build-package.sh "$PKG" 2>&1
-              BUILD_EXIT=$?
+              BUILD_EXIT=0
+              bash build-package.sh "$PKG" 2>&1 || BUILD_EXIT=$?
 
               echo "=== Output ==="
               ls -lh output/ 2>/dev/null || echo "(no output)"
 
-              [[ $BUILD_EXIT -ne 0 ]] && echo "WARNING: build exit $BUILD_EXIT" || true
+              exit $BUILD_EXIT
             '
 
-          ls "$WORK_DIR/output/"*.deb 2>/dev/null && \
-            cp "$WORK_DIR/output/"*.deb output/ || true
-
-          sudo rm -rf "$WORK_DIR" 2>/dev/null || rm -rf "$WORK_DIR" 2>/dev/null || true
+          shopt -s nullglob
+          built_debs=("$WORK_DIR"/output/*.deb)
+          if [[ ${#built_debs[@]} -eq 0 ]]; then
+            echo "ERROR: the build produced no .deb"
+            exit 1
+          fi
+          cp "${built_debs[@]}" output/
 
       - name: Repackage for all architectures
         if: github.event.inputs.force == 'true' || steps.cache.outputs.cache-hit != 'true'
@@ -277,8 +296,8 @@ jobs:
           BUILT=$(ls output/${PKG}_*_aarch64.deb 2>/dev/null | head -1)
 
           if [[ -z "$BUILT" ]]; then
-            echo "No aarch64 .deb found — skip repackage"
-            exit 0
+            echo "ERROR: no aarch64 .deb found in output/"
+            exit 1
           fi
 
           BUILT_VERSION=$(dpkg-deb -f "$BUILT" Version 2>/dev/null || echo "$MATRIX_VERSION")
@@ -314,8 +333,8 @@ jobs:
             dpkg-deb -x "$BUILT" "$TMPDIR_ARCH/"
             dpkg-deb -e "$BUILT" "$TMPDIR_ARCH/DEBIAN"
             sed -i "s/^Architecture:.*/Architecture: $ARCH/" "$TMPDIR_ARCH/DEBIAN/control"
-            dpkg-deb --build "$TMPDIR_ARCH" "$TARGET" 2>/dev/null && \
-              echo "  [$ARCH] OK: $(basename $TARGET)" || echo "  [$ARCH] FAIL"
+            dpkg-deb --build "$TMPDIR_ARCH" "$TARGET" > /dev/null || { echo "  [$ARCH] FAIL"; exit 1; }
+            echo "  [$ARCH] OK: $(basename $TARGET)"
             rm -rf "$TMPDIR_ARCH"
           done
           ls -lh output/ || true
@@ -327,8 +346,8 @@ jobs:
           shopt -s nullglob
           debs=(*.deb)
           if [[ ${#debs[@]} -eq 0 ]]; then
-            echo "No .deb files"
-            exit 0
+            echo "ERROR: no .deb files to checksum"
+            exit 1
           fi
           for f in "${debs[@]}"; do
             sha256sum "$f" > "${f}.sha256"
@@ -343,7 +362,7 @@ jobs:
             output/*.deb
             output/*.sha256
           retention-days: 7
-          if-no-files-found: warn
+          if-no-files-found: error
 
   publish:
     name: Publish .deb to gh-pages
@@ -535,3 +554,9 @@ jobs:
           echo "**$COUNT** .deb files in pool" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "Built natively inside **termux-docker aarch64** — binaries compatible with Termux on Android." >> $GITHUB_STEP_SUMMARY
+
+      - name: Fail the run if any package build failed
+        if: always() && needs.build-deb.result != 'success'
+        run: |
+          echo "At least one package build failed. Packages that built successfully were published; this run is marked failed."
+          exit 1

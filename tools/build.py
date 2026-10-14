@@ -110,6 +110,7 @@ class PackageIndexGenerator:
             "source": self.repo_source,
             "srcurl": metadata['srcurl'],
             "sha256": metadata['sha256'],
+            "recipe_sha256": hashlib.sha256(build_sh_path.read_bytes()).hexdigest(),
             "platform_independent": metadata['platform_independent']
         }
 

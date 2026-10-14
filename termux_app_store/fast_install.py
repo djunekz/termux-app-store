@@ -530,6 +530,15 @@ def _fallback_build_from_source(pkg_name: str,
     build_sh = app_root / "build-package.sh"
 
     if not build_sh.exists():
+        packaged = _packaged_build_script()
+        if packaged is not None:
+            _log("Using the build-package.sh shipped with this installation")
+            tmp_copy = build_sh.with_suffix(".part")
+            shutil.copy2(packaged, tmp_copy)
+            tmp_copy.chmod(0o755)
+            os.replace(tmp_copy, build_sh)
+
+    if not build_sh.exists():
         _log("Downloading build-package.sh...")
         url = f"https://raw.githubusercontent.com/{GITHUB_REPO}/master/build-package.sh"
         try:
@@ -572,6 +581,9 @@ def _fallback_build_from_source(pkg_name: str,
         tmp_build.chmod(0o755)
         os.replace(tmp_build, build_sh)
 
+    if not _ensure_recipe(pkg_name, app_root, _log):
+        return False
+
     proc = subprocess.Popen(
         ["bash", str(build_sh), pkg_name],
         cwd=str(app_root),
@@ -589,6 +601,43 @@ def _fallback_build_from_source(pkg_name: str,
     proc.wait()
     _progress(100 if proc.returncode == 0 else 0)
     return proc.returncode == 0
+
+def _packaged_build_script() -> Optional[Path]:
+    candidate = Path(__file__).resolve().parent / "data" / "build-package.sh"
+    return candidate if candidate.is_file() else None
+
+def _ensure_recipe(pkg_name: str, app_root: Path, _log: Callable) -> bool:
+    recipe = app_root / "packages" / pkg_name / "build.sh"
+    if recipe.is_file():
+        return True
+
+    info = get_pkg_info(pkg_name) or {}
+    expected = _normalize_sha256(info.get("recipe_sha256"))
+    if not expected:
+        _log("✗ The index has no recipe checksum for this package — refusing to download its build.sh")
+        return False
+
+    url = f"https://raw.githubusercontent.com/{GITHUB_REPO}/master/packages/{pkg_name}/build.sh"
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "termux-app-store"})
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            data = resp.read()
+    except Exception as e:
+        _log(f"✗ Failed to download the recipe: {e}")
+        return False
+
+    actual = hashlib.sha256(data).hexdigest()
+    if actual != expected:
+        _log("✗ Recipe SHA256 does not match the index — refusing to run it")
+        _log(f"  Expected: {expected}")
+        _log(f"  Got:      {actual}")
+        return False
+
+    recipe.parent.mkdir(parents=True, exist_ok=True)
+    tmp_recipe = recipe.with_suffix(".part")
+    tmp_recipe.write_bytes(data)
+    os.replace(tmp_recipe, recipe)
+    return True
 
 def _get_app_root() -> Path:
     env = os.environ.get("TERMUX_APP_STORE_HOME")

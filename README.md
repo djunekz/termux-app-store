@@ -206,15 +206,14 @@ termux-app-store install <package>
   Check local .deb cache (TTL 7 days)
         │ cache HIT          │ cache MISS
         ▼                    ▼
-  Verify SHA256        Try mirrors in order:
-  (per arch)           1. GitHub Pages (primary)
-        │              2. Cloudflare CDN
+  Verify SHA256        Probe the mirrors, use the fastest:
+  (per arch)           1. Cloudflare CDN
+        │              2. GitHub Pages
         ▼              3. jsDelivr CDN
-  dpkg -i              4. Raw GitHub (fallback)
-                             │
+  dpkg -i                    │
                              ▼
                        Download .deb
-                       Verify SHA256 (sha256_by_arch)
+                       Verify SHA256 (index sha256_by_arch, else the published .deb.sha256)
                        Cache locally
                        dpkg -i
 ```

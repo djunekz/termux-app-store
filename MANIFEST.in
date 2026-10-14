@@ -2,3 +2,4 @@ include LICENSE
 include README.md
 include CHANGELOG.md
 recursive-include termux_app_store/data *.json
+include termux_app_store/data/build-package.sh

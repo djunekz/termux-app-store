@@ -21,6 +21,13 @@ and this project adheres to semantic versioning.
 - `.github/workflows/pr-checker.yml` - random output delimiter, `persist-credentials: false` on the untrusted checkout
 - `.github/workflows/update_index.yml`, `.github/workflows/update_log.yml`, `.github/workflows/cli-ci.yml` - step values moved to `env:` instead of `${{ }}` in shell, package names validated, `cli-ci.yml` permissions reduced to `contents: read`, `actions/checkout` and `actions/setup-python` pinned to commit SHAs
 - `README.jp.md`, `README.th.md`, `README.ch.md`, `README.vi.md`, `README.in.md`, `README.id.md`, `README.md` - offline-first and cloud-free claims replaced and SHA256 described as integrity checking in every language
+- `.github/workflows/build-packages-debs.yml` - the prebuilt-.deb checksum is no longer truncated to 16 characters: the full 64-character SHA256 is required and compared exactly (the old prefix comparison is gone)
+- `.github/workflows/build-packages-debs.yml` - a recipe change with the same version now triggers a rebuild: the cache key includes the build.sh hash and the cache no longer falls back to stale entries through restore-keys
+- `.github/workflows/build-packages-debs.yml` - build failures are no longer masked: the termux-docker build propagates its exit code, a missing .deb fails the job, `termux_step_make_install` and recipe errors fail the repack, artifact upload errors when empty, and the publish job marks the run failed if any package build failed while still publishing the packages that succeeded
+- `.github/workflows/build-packages-debs.yml` - package name, version and source URL taken from build.sh are validated before they are placed into the build matrix
+- `.github/workflows/update_index.yml`, `tools/build.py` - index entries carry `recipe_sha256` and change detection compares it together with the version; an index without the field does not trigger a mass rebuild
+- `termux_app_store/data/build-package.sh`, `pyproject.toml`, `MANIFEST.in`, `termux_app_store/fast_install.py`, `termux_app_store/termux_app_store_cli.py`, `termux_app_store/termux_app_store.py` - build-package.sh now ships inside the wheel, so the source-build fallback works after `pip install` without downloading or pinning it; a missing recipe is downloaded only if it matches `recipe_sha256` from the index
+- `README.md`, `README.id.md` - the mirror diagram now matches the implementation (fastest reachable mirror: Cloudflare CDN, GitHub Pages, jsDelivr; raw GitHub is not a .deb mirror)
 
 ### Removed
 - Packages `gemail-hack`, `hammer`, `dbd`, `zerodoor`, `ghosttrack` removed from the catalog: their descriptions state credential brute-forcing, DDoS, backdoor generation and location/number tracking with no stated defensive use

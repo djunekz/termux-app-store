@@ -217,12 +217,11 @@ termux-app-store install <paket>
   Cek cache .deb lokal (TTL 7 hari)
         │ cache HIT              │ cache MISS
         ▼                        ▼
-  Verifikasi SHA256         Coba mirror secara berurutan:
-  (per arsitektur)          1. GitHub Pages (utama)
-        │                   2. Cloudflare CDN
+  Verifikasi SHA256         Probe mirror, pakai yang tercepat:
+  (per arsitektur)          1. Cloudflare CDN
+        │                   2. GitHub Pages
         ▼                   3. jsDelivr CDN
-  dpkg -i                   4. Raw GitHub (fallback)
-                                 │
+  dpkg -i                         │
                                  ▼
                            Download .deb
                            Verifikasi SHA256 (sha256_by_arch)

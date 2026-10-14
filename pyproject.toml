@@ -56,4 +56,4 @@ where = ["."]
 include = ["termux_app_store*"]
 
 [tool.setuptools.package-data]
-termux_app_store = ["data/*.json"]
+termux_app_store = ["data/*.json", "data/build-package.sh"]

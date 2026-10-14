@@ -6,6 +6,7 @@ import os
 import json
 import re
 import urllib.request
+import shutil
 from pathlib import Path
 
 try:
@@ -263,6 +264,14 @@ def ensure_build_package_sh() -> bool:
     build_pkg = app_root / "build-package.sh"
     if build_pkg.exists():
         return True
+    packaged = Path(__file__).resolve().parent / "data" / "build-package.sh"
+    if packaged.is_file():
+        try:
+            shutil.copy2(packaged, build_pkg)
+            build_pkg.chmod(0o755)
+            return True
+        except OSError:
+            return False
     url = f"https://raw.githubusercontent.com/{GITHUB_REPO}/master/build-package.sh"
     try:
         req = urllib.request.Request(url, headers={"User-Agent": "termux-app-store"})
