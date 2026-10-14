@@ -847,8 +847,8 @@ def main():
             if _raw:
                 try:
                     _default_branch = json.loads(_raw).get("default_branch", "main")
-                except Exception:
-                    pass
+                except (ValueError, AttributeError):
+                    _default_branch = "main"
 
             log("Scanning repo files to detect how to build it...")
             _repo_files = fetch_repo_tree(github_url, _default_branch)

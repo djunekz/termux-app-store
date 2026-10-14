@@ -93,6 +93,16 @@ def _valid_index(data) -> bool:
         return False
     return all(isinstance(p, dict) and _SAFE_PKG.match(str(p.get("package", ""))) for p in pkgs)
 
+def _load_cached_index() -> Optional[list]:
+    try:
+        with open(INDEX_CACHE) as f:
+            data = json.load(f)
+    except (OSError, ValueError):
+        return None
+    if _valid_index(data):
+        return data["packages"]
+    return None
+
 def get_arch() -> str:
     raw = os.uname().machine
     return {
@@ -159,13 +169,9 @@ def get_index(log_fn: Optional[Callable] = None) -> list:
     if INDEX_CACHE.exists():
         age = time.time() - INDEX_CACHE.stat().st_mtime
         if age < INDEX_TTL:
-            try:
-                with open(INDEX_CACHE) as f:
-                    data = json.load(f)
-                if _valid_index(data):
-                    return data["packages"]
-            except Exception:
-                pass
+            cached_index = _load_cached_index()
+            if cached_index is not None:
+                return cached_index
 
     for url in INDEX_URLS:
         try:
@@ -183,14 +189,9 @@ def get_index(log_fn: Optional[Callable] = None) -> list:
         except Exception:
             continue
 
-    if INDEX_CACHE.exists():
-        try:
-            with open(INDEX_CACHE) as f:
-                data = json.load(f)
-            if _valid_index(data):
-                return data["packages"]
-        except Exception:
-            pass
+    stale_index = _load_cached_index()
+    if stale_index is not None:
+        return stale_index
 
     return []
 
@@ -493,7 +494,6 @@ def fast_install(pkg_name: str,
                 _log("✗ SHA256 mismatch — file corrupt or tampered")
                 _log(f"  Expected: {deb_sha256[:32]}...")
                 _log(f"  Got:      {actual[:32]}...")
-                downloaded = False
             else:
                 _log("✓ Checksum OK")
                 save_deb_cache(deb_dest, pkg_name, version, arch)
@@ -579,7 +579,6 @@ def _fallback_build_from_source(pkg_name: str,
         stderr=subprocess.STDOUT,
     )
 
-    import re
     ANSI = re.compile(r'\x1b\[[0-9;]*[mGKHf]')
 
     for line in iter(proc.stdout.readline, b""):
