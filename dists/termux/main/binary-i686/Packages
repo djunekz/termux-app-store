@@ -603,15 +603,15 @@ SHA256: fabb55ae5410248f388edc79915285da6f0c4ca43e4367d129b73ed409880778
 Description: The first offline-first, source-based TUI package manager for Termux
 
 Package: termux-sync
-Version: 1.2.4
+Version: 1.2.6
 Architecture: i686
 Maintainer: @termux-app-store
 Installed-Size: 
-Filename: pool/main/termux-sync_1.2.4_i686.deb
-Size: 44404
-MD5sum: 55530591ba7ce88c309c4dc9445d80e6
-SHA1: 2e898bac87a3c9b1829409217a8cca04ce6ef130
-SHA256: 7467f2a678fd254f004e7485f0e0f65ac28ef99099f0e747a1c7615d8afca5a6
+Filename: pool/main/termux-sync_1.2.6_i686.deb
+Size: 47580
+MD5sum: 2c093ce158c03ed721fb284dd952d578
+SHA1: b64cd325264ad8c57271f0bf32026971532c3b11
+SHA256: 98ed4dd4103163c2407109b083490d5bf2e4d8c3aa6bf523cea0b697e486b43c
 Description: OpenSource Backup and restore your entire Termux environment across devices.
 
 Package: termux-tui
@@ -709,4 +709,3 @@ MD5sum: 08d11330e23c991a61bcb50ac97ceba2
 SHA1: 5dfa87757fe3124b44d7b6b72207ab2505983883
 SHA256: fcda91c5d5b4df15d5ced1221e48436d225857603b7e146624f9f0c8ffa95b5b
 Description: A posix script to find and watch youtube videos from the terminal. (Without API)
-
