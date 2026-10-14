@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-10-14T06:00:59.769532+00:00",
+  "generated_at": "2026-10-14T10:33:13.919299+00:00",
   "total": 88,
   "packages": [
     {
@@ -1084,8 +1084,11 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://registry.npmjs.org/pnpm/-/pnpm-${TERMUX_PKG_VERSION}.tgz",
       "sha256": "bc8bb877378eab6a8a83114eeb6a31ef88528db4ab5570299baba8fa54da2375",
-      "recipe_sha256": "6b6b92a50307e3de0079b373bf403e301004242974c37dc9713d29edc7bcd92d",
-      "platform_independent": false
+      "recipe_sha256": "a057c3307d7143465a89ee0e4243ef052158efa05d830ae2a647ff16409425ad",
+      "platform_independent": false,
+      "depends": [
+        "nodejs"
+      ]
     },
     {
       "package": "pymaker",
