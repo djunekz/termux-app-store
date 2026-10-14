@@ -47,6 +47,7 @@ and this project adheres to semantic versioning.
 ### Update
 - Package `merlin` v1.1.2 → v1.1.3
 - Package `tdoc` v2.2.4 → v2.3.0
+- Package `termux-sync` v1.2.4 → v1.2.6
 
 ---
 
