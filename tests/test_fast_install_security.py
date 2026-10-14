@@ -209,3 +209,15 @@ def test_docker_step_passes_package_name_through_a_mounted_file():
     assert '-e "PKG_DEPS=$PKG_DEPS"' not in text
     assert ".tas_pkg_name" in text
     assert "package name was not passed into the container" in text
+
+
+def test_docker_step_uses_a_writable_home_and_installs_baseline_build_tools():
+    text = (ROOT / ".github" / "workflows" / "build-packages-debs.yml").read_text(encoding="utf-8")
+    assert "export HOME=/root" not in text
+    assert "export HOME=/data/data/com.termux/files/home" in text
+    assert "pkg install -y make clang binutils" in text
+
+
+def test_pnpm_declares_its_nodejs_dependency():
+    recipe = (ROOT / "packages" / "pnpm" / "build.sh").read_text(encoding="utf-8")
+    assert 'TERMUX_PKG_DEPENDS="nodejs"' in recipe

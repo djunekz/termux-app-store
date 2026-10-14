@@ -254,12 +254,17 @@ jobs:
             -v "$WORK_DIR:/opt/tas" \
             termux/termux-docker:aarch64 \
             bash -c '
-              export HOME=/root
               export PREFIX=/data/data/com.termux/files/usr
               export PATH="$PREFIX/bin:$PATH"
               export TERM=xterm-256color
               mkdir -p "$PREFIX/tmp"
               export TMPDIR="$PREFIX/tmp"
+
+              export HOME=/data/data/com.termux/files/home
+              if ! mkdir -p "$HOME" 2>/dev/null || [[ ! -w "$HOME" ]]; then
+                export HOME="$(mktemp -d)"
+              fi
+              echo "=== Running as $(id -un) with HOME=$HOME ==="
 
               cd /opt/tas
               PKG=$(cat /opt/tas/.tas_pkg_name)
@@ -272,6 +277,9 @@ jobs:
 
               echo "=== Updating pkg ==="
               pkg update -y -o Dpkg::Options::="--force-confnew" 2>/dev/null || true
+
+              echo "=== Installing baseline build tools ==="
+              pkg install -y make clang binutils 2>&1 || echo "WARNING: baseline build tools could not be installed"
 
               if [[ -n "$PKG_DEPS" ]]; then
                 echo "=== Pre-installing dependencies: $PKG_DEPS ==="
