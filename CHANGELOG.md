@@ -23,7 +23,7 @@ and this project adheres to semantic versioning.
 - `README.jp.md`, `README.th.md`, `README.ch.md`, `README.vi.md`, `README.in.md`, `README.id.md`, `README.md` - offline-first and cloud-free claims replaced and SHA256 described as integrity checking in every language
 
 ### Removed
-- Packages `gemail-hack`, `hammer`, `zerodoor`, `ghosttrack` removed from the catalog: their descriptions state credential brute-forcing, DDoS, backdoor generation and location/number tracking with no stated defensive use
+- Packages `gemail-hack`, `hammer`, `dbd`, `zerodoor`, `ghosttrack` removed from the catalog: their descriptions state credential brute-forcing, DDoS, backdoor generation and location/number tracking with no stated defensive use
 
 ### Changed
 - `README.md`, `INSTALL.md`, `PRIVACY.md`, `pyproject.toml` - wording aligned with actual behavior: no "offline-first"/"no cloud dependency" claims, SHA256 described as integrity checking rather than publisher authentication, install command unified to `pip install termux-app-store`, network use documented, "Official Developer" replaced with an unambiguous maintainer line
