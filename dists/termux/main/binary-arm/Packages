@@ -504,6 +504,18 @@ SHA1: e3f7253be6daff8d74cbb3b5381b7e8126f32d19
 SHA256: c72cbbee86f19bc90bbb0e5c0e4e9d1ea609e038dfdd34e794a1a5ed871c0f68
 Description: Incredibly fast crawler designed for OSINT.
 
+Package: pnpm
+Version: 10.30.1
+Architecture: arm
+Maintainer: @termux-app-store
+Installed-Size: 
+Filename: pool/main/pnpm_10.30.1_arm.deb
+Size: 2968488
+MD5sum: 1e4bf0aa00d8a7d3017080efdc53524e
+SHA1: 4f0664f6b3bb0d17022e3a5309f33329c534c5a8
+SHA256: 71343eaabff8a2e7b42ee1ff6a32821c4c94b563a38060b269388c9bab09e2aa
+Description: Fast, disk space efficient package manager
+
 Package: pymaker
 Version: 1.0.0
 Architecture: arm
