@@ -407,23 +407,25 @@ jobs:
             mkdir -p "gh-pages/dists/termux/main/binary-${arch}"
           done
 
-      - name: Purge old .deb files from pool (force rebuild only)
+      - name: Replace pool entries of rebuilt packages (force rebuild only)
         if: github.event.inputs.force == 'true'
-        env:
-          SPECIFIC_INPUT: ${{ github.event.inputs.package }}
         run: |
-          SPECIFIC="$SPECIFIC_INPUT"
-          if [[ -n "$SPECIFIC" ]]; then
-            if [[ ! "$SPECIFIC" =~ ^[A-Za-z0-9._+-]+$ ]]; then
-              echo "Invalid package name: $SPECIFIC" >&2
+          shopt -s nullglob
+          declare -A rebuilt=()
+          for deb in all-debs/*.deb; do
+            fname=$(basename "$deb")
+            PKG=$(echo "$fname" | sed 's/_[^_]*_[^_]*\.deb$//')
+            if [[ ! "$PKG" =~ ^[A-Za-z0-9][A-Za-z0-9._+-]*$ ]]; then
+              echo "Invalid package name: $PKG" >&2
               exit 1
             fi
-            rm -f "gh-pages/pool/main/${SPECIFIC}_"*.deb "gh-pages/pool/main/${SPECIFIC}_"*.sha256
-            echo "Removed old .deb for: $SPECIFIC"
-          else
-            rm -f gh-pages/pool/main/*.deb gh-pages/pool/main/*.sha256
-            echo "Removed ALL old .deb files"
-          fi
+            rebuilt["$PKG"]=1
+          done
+          for PKG in "${!rebuilt[@]}"; do
+            rm -f "gh-pages/pool/main/${PKG}_"*.deb "gh-pages/pool/main/${PKG}_"*.sha256
+            echo "Replaced pool entries for: $PKG"
+          done
+          echo "Packages that failed to build keep their existing pool entries"
 
       - name: Update pool
         run: |

@@ -194,3 +194,10 @@ def test_build_workflow_uses_full_checksums_and_fails_closed():
     assert "termux_step_make_install) || true" not in text
     assert "if-no-files-found: error" in text
     assert "matrix.recipe" in text
+
+
+def test_publish_never_purges_the_whole_pool():
+    text = (ROOT / ".github" / "workflows" / "build-packages-debs.yml").read_text(encoding="utf-8")
+    assert "rm -f gh-pages/pool/main/*.deb" not in text
+    assert "Removed ALL old .deb files" not in text
+    assert "Replace pool entries of rebuilt packages" in text
