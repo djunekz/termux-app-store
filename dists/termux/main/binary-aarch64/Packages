@@ -36,3 +36,18 @@ MD5sum: 105978356101278a420b1e80491732f3
 SHA1: de33ed9ee2e4cd49d08148de6b20ab1c46a0c788
 SHA256: 2fa0b5e3e3deb65d598ce090695cff73bf7606d2596c87d289d2d79a87e3be7f
 Description: Simple tool for change color, command prompt, and cursor (Termux only)
+
+Package: termux-app-store
+Version: 0.4.5
+Architecture: aarch64
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 340
+Depends: python, python-pip
+Homepage: https://github.com/djunekz/termux-app-store
+Filename: pool/main/termux-app-store_0.4.5_aarch64.deb
+Size: 48218
+MD5sum: 1cdb510d34cde766d104fecaccd59cbc
+SHA1: 34e1e2df2529521e526495866315697b289657bf
+SHA256: 05baef1a511675ed9ddc507d99b35347037a50b96ed733e24216ad7b81a10c68
+Description: The first offline-first, source-based TUI package manager for Termux
+

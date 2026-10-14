@@ -23,3 +23,18 @@ MD5sum: 15c5ad242507f2b50521a3cbc66bf0c1
 SHA1: 7e61888b5860b8160a0d01306cfb2b73a8aaf4dc
 SHA256: 8f3b3934e53831dad72930bacfa886fcc7d2b4cc9e4065fc29b13cda3fe54934
 Description: Simulator Terminal learning basic command for beginner
+
+Package: termux-app-store
+Version: 0.4.5
+Architecture: i686
+Maintainer: djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 340
+Depends: python, python-pip
+Homepage: https://github.com/djunekz/termux-app-store
+Filename: pool/main/termux-app-store_0.4.5_i686.deb
+Size: 48216
+MD5sum: b5a08a181c98f99077758df681e37688
+SHA1: 6ab12d3552f0c5cd17180dae1a89564e1eace64a
+SHA256: f0c9168ef9c9dd1d65de2ca0a9b7d9f70acac8ad657152cc9ced793070ade5e7
+Description: The first offline-first, source-based TUI package manager for Termux
+
