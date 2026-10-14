@@ -201,3 +201,11 @@ def test_publish_never_purges_the_whole_pool():
     assert "rm -f gh-pages/pool/main/*.deb" not in text
     assert "Removed ALL old .deb files" not in text
     assert "Replace pool entries of rebuilt packages" in text
+
+
+def test_docker_step_passes_package_name_through_a_mounted_file():
+    text = (ROOT / ".github" / "workflows" / "build-packages-debs.yml").read_text(encoding="utf-8")
+    assert '-e "PKG=$MATRIX_PKG"' not in text
+    assert '-e "PKG_DEPS=$PKG_DEPS"' not in text
+    assert ".tas_pkg_name" in text
+    assert "package name was not passed into the container" in text

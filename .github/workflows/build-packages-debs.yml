@@ -241,14 +241,17 @@ jobs:
 
           PKG_DEPS=$(grep 'TERMUX_PKG_DEPENDS=' "packages/$MATRIX_PKG/build.sh" | head -1 \
             | cut -d= -f2 | tr -d "\"'" | tr ',' ' ' | xargs 2>/dev/null || true)
+          PKG_DEPS=$(printf '%s' "$PKG_DEPS" | tr -cd 'A-Za-z0-9._+ -')
+
+          printf '%s' "$MATRIX_PKG" > "$WORK_DIR/.tas_pkg_name"
+          printf '%s' "$PKG_DEPS" > "$WORK_DIR/.tas_pkg_deps"
+          chmod 644 "$WORK_DIR/.tas_pkg_name" "$WORK_DIR/.tas_pkg_deps"
 
           trap 'sudo rm -rf "$WORK_DIR" 2>/dev/null || rm -rf "$WORK_DIR" 2>/dev/null || true' EXIT
 
           docker run --rm \
             --platform linux/arm64 \
             -v "$WORK_DIR:/opt/tas" \
-            -e "PKG_DEPS=$PKG_DEPS" \
-            -e "PKG=$MATRIX_PKG" \
             termux/termux-docker:aarch64 \
             bash -c '
               export HOME=/root
@@ -259,6 +262,13 @@ jobs:
               export TMPDIR="$PREFIX/tmp"
 
               cd /opt/tas
+              PKG=$(cat /opt/tas/.tas_pkg_name)
+              PKG_DEPS=$(cat /opt/tas/.tas_pkg_deps)
+
+              if [[ -z "$PKG" ]]; then
+                echo "ERROR: package name was not passed into the container"
+                exit 1
+              fi
 
               echo "=== Updating pkg ==="
               pkg update -y -o Dpkg::Options::="--force-confnew" 2>/dev/null || true
