@@ -5,10 +5,10 @@ Maintainer: djunekz
 Installed-Size: 231 kB
 Homepage: https://github.com/djunekz/bashxt
 Filename: pool/main/bashxt_3.0_aarch64.deb
-Size: 4938
-MD5sum: 0c5bab5f974fdf3caeb20d34d33b4875
-SHA1: c543ec8753c1bab25160033f7e9b14813f4a13ac
-SHA256: 61ddb2761ac6468e0b9695c0af1aa31d10e4c68d2b9dd0660f4180eb5aedf07b
+Size: 4940
+MD5sum: e992853a174b740fc95d60f2541f8ec4
+SHA1: 1d4c91cb749b19159756d88b8bdf4d2cea8d2064
+SHA256: 39da33de969143e68010ffbed3876d90ebd4674fa8e4d35f18765d95d0f6bbde
 Description: Simple tool information command basic for beginner
 
 Package: basic
@@ -18,10 +18,10 @@ Maintainer: @termux-app-store
 Installed-Size: 
 Depends: python
 Filename: pool/main/basic_1.2.0_aarch64.deb
-Size: 31922
-MD5sum: af17db741a517f6e5e4ffdf239d31164
-SHA1: 5a038827b9c4059ae3feaa80d02dfd4d177f705a
-SHA256: 629ee038f37fe7393438c57d537f5cf4a8da3021a8c37e1b7f89002ccdc0c133
+Size: 31928
+MD5sum: 46b0b9efffc1ae8c28f15b8192a7350a
+SHA1: fdff998f2db467285018ad5d28551faee2a0b601
+SHA256: a49fe04b3322603c1e3f28a49adda739533be23ae64bdd0330072523c4d7fb12
 Description: Simulator Terminal learning basic command for beginner
 
 Package: termstyle
@@ -32,7 +32,7 @@ Installed-Size:
 Homepage: https://github.com/djunekz/termstyle
 Filename: pool/main/termstyle_2.0.0_aarch64.deb
 Size: 4781884
-MD5sum: bcbef5b7735a38a5cb3307c0ada7a01f
-SHA1: 2c537f16cc30aee5f04d448c5cd7cbf973b2c9c7
-SHA256: 4f9a5db975c10771d25effa7a1d73b31d32700623f51c516445a8e7f4840cb07
+MD5sum: 105978356101278a420b1e80491732f3
+SHA1: de33ed9ee2e4cd49d08148de6b20ab1c46a0c788
+SHA256: 2fa0b5e3e3deb65d598ce090695cff73bf7606d2596c87d289d2d79a87e3be7f
 Description: Simple tool for change color, command prompt, and cursor (Termux only)
