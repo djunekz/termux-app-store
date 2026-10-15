@@ -281,6 +281,8 @@ def _recipe(name):
 def test_recipes_declare_what_their_builds_need():
     assert "libandroid-selinux" in _recipe("termux-fm")
     assert "libselinux," not in _recipe("termux-fm")
+    assert 'LDFLAGS="-landroid-selinux -lncurses"' in _recipe("termux-fm")
+    assert "make install" not in _recipe("termux-fm")
     assert "pkg-config" in _recipe("binwalk") and "fontconfig" in _recipe("binwalk")
     assert "OPENSSL_NO_VENDOR=1" in _recipe("pmcli")
 
