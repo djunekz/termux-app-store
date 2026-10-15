@@ -36,6 +36,9 @@ and this project adheres to semantic versioning.
 - `README.md`, `INSTALL.md`, `PRIVACY.md`, `pyproject.toml` - wording aligned with actual behavior: no "offline-first"/"no cloud dependency" claims, SHA256 described as integrity checking rather than publisher authentication, install command unified to `pip install termux-app-store`, network use documented, "Official Developer" replaced with an unambiguous maintainer line
 - Package `dumpzilla` v1.0.0 - Updated metadata
 - Package `pnpm` v10.30.1 - Updated metadata
+- Package `binwalk` v3.1.0 - Updated metadata
+- Package `hash-buster` v3.0 - Updated metadata
+- Package `termux-fm` v1.0.0 - Updated metadata
 
 ### Fixed
 - `doctor.py` - `_sh()` ran every check command with `subprocess.run(cmd, shell=False)` while every caller passed a shell-syntax string (pipes, `2>/dev/null`, `||`); with `shell=False` the whole string was treated as a single executable name, so it always failed silently and returned `("", 1)` — this caused false failures across almost the entire report (`pip` reported "not found", `TAS importable` failed, and `build.sh scan` reported all 93 packages as `syntax` errors even though `bash -n` was never actually able to run). Changed to `shell=True` so these checks now reflect the real environment state
