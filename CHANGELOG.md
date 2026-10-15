@@ -7,6 +7,11 @@ and this project adheres to semantic versioning.
 
 ## [Unreleased]
 
+### Added
+- `tests/test_fast_install_security.py` - regression tests for checksum-gated cache and install, recipe and index checksums, the packaged `build-package.sh`, the build workflow (full SHA256, fail-closed steps, pool handling, docker step) and the recipe fixes below
+- `termux_app_store/data/build-package.sh` - copy of `build-package.sh` shipped inside the wheel; a test keeps both files identical
+- `tools/build.py` - every index entry now carries `recipe_sha256`, the SHA256 of the package's `build.sh`
+
 ### Security
 - `termux_app_store/fast_install.py` - `get_cached_deb()` no longer returns a cached `.deb` when no SHA256 is available; the cache path now requires a verified checksum like a fresh download
 - `termux_app_store/fast_install.py` - when `index.json` has no `sha256_by_arch`, the checksum is fetched from the `.deb.sha256` file on the `gh-pages` branch via GitHub raw, a source separate from the CDN mirrors that serve the `.deb`; without any trusted checksum the binary is refused and the source-build fallback is used
@@ -22,23 +27,20 @@ and this project adheres to semantic versioning.
 - `.github/workflows/update_index.yml`, `.github/workflows/update_log.yml`, `.github/workflows/cli-ci.yml` - step values moved to `env:` instead of `${{ }}` in shell, package names validated, `cli-ci.yml` permissions reduced to `contents: read`, `actions/checkout` and `actions/setup-python` pinned to commit SHAs
 - `README.jp.md`, `README.th.md`, `README.ch.md`, `README.vi.md`, `README.in.md`, `README.id.md`, `README.md` - offline-first and cloud-free claims replaced and SHA256 described as integrity checking in every language
 - `.github/workflows/build-packages-debs.yml` - the prebuilt-.deb checksum is no longer truncated to 16 characters: the full 64-character SHA256 is required and compared exactly (the old prefix comparison is gone)
-- `.github/workflows/build-packages-debs.yml` - a recipe change with the same version now triggers a rebuild: the cache key includes the build.sh hash and the cache no longer falls back to stale entries through restore-keys
-- `.github/workflows/build-packages-debs.yml` - build failures are no longer masked: the termux-docker build propagates its exit code, a missing .deb fails the job, `termux_step_make_install` and recipe errors fail the repack, artifact upload errors when empty, and the publish job marks the run failed if any package build failed while still publishing the packages that succeeded
-- `.github/workflows/build-packages-debs.yml` - package name, version and source URL taken from build.sh are validated before they are placed into the build matrix
-- `.github/workflows/update_index.yml`, `tools/build.py` - index entries carry `recipe_sha256` and change detection compares it together with the version; an index without the field does not trigger a mass rebuild
-- `termux_app_store/data/build-package.sh`, `pyproject.toml`, `MANIFEST.in`, `termux_app_store/fast_install.py`, `termux_app_store/termux_app_store_cli.py`, `termux_app_store/termux_app_store.py` - build-package.sh now ships inside the wheel, so the source-build fallback works after `pip install` without downloading or pinning it; a missing recipe is downloaded only if it matches `recipe_sha256` from the index
+- `.github/workflows/build-packages-debs.yml` - a recipe change with the same version now triggers a rebuild: the cache key includes the `build.sh` hash and the cache no longer falls back to stale entries through `restore-keys`
+- `.github/workflows/build-packages-debs.yml` - build failures are no longer masked: the termux-docker build propagates its exit code, a missing .deb fails the job, `termux_step_make_install` and recipe errors fail the repack, an empty artifact upload is an error, and the publish job marks the run failed if any package build failed while still publishing the packages that succeeded
+- `.github/workflows/build-packages-debs.yml` - package name, version and source URL taken from `build.sh` are validated before they are placed into the build matrix
+- `.github/workflows/build-packages-debs.yml` - a forced rebuild no longer purges every .deb from the `gh-pages` pool: only the entries of packages that were rebuilt successfully are replaced, so packages whose build failed keep their last published binary
+- `.github/workflows/update_index.yml`, `tools/build.py` - change detection compares `recipe_sha256` together with the version; an index without the field does not trigger a mass rebuild
+- `termux_app_store/fast_install.py`, `termux_app_store/termux_app_store_cli.py`, `termux_app_store/termux_app_store.py`, `pyproject.toml`, `MANIFEST.in` - `build-package.sh` ships inside the wheel, so the source-build fallback works after `pip install` without downloading or pinning it; a missing recipe is downloaded only if it matches `recipe_sha256` from the index
 - `README.md`, `README.id.md` - the mirror diagram now matches the implementation (fastest reachable mirror: Cloudflare CDN, GitHub Pages, jsDelivr; raw GitHub is not a .deb mirror)
 
 ### Removed
-- Packages `gemail-hack`, `hammer`, `dbd`, `zerodoor`, `ghosttrack` removed from the catalog: their descriptions state credential brute-forcing, DDoS, backdoor generation and location/number tracking with no stated defensive use
+- Packages `gemail-hack`, `hammer`, `zerodoor`, `ghosttrack` removed from the catalog: their descriptions state credential brute-forcing, DDoS, backdoor generation and location/number tracking with no stated defensive use
+- Package `dbd` removed from the catalog (dual-use backdoor-style tool)
 
 ### Changed
 - `README.md`, `INSTALL.md`, `PRIVACY.md`, `pyproject.toml` - wording aligned with actual behavior: no "offline-first"/"no cloud dependency" claims, SHA256 described as integrity checking rather than publisher authentication, install command unified to `pip install termux-app-store`, network use documented, "Official Developer" replaced with an unambiguous maintainer line
-- Package `dumpzilla` v1.0.0 - Updated metadata
-- Package `pnpm` v10.30.1 - Updated metadata
-- Package `binwalk` v3.1.0 - Updated metadata
-- Package `hash-buster` v3.0 - Updated metadata
-- Package `termux-fm` v1.0.0 - Updated metadata
 
 ### Fixed
 - `doctor.py` - `_sh()` ran every check command with `subprocess.run(cmd, shell=False)` while every caller passed a shell-syntax string (pipes, `2>/dev/null`, `||`); with `shell=False` the whole string was treated as a single executable name, so it always failed silently and returned `("", 1)` — this caused false failures across almost the entire report (`pip` reported "not found", `TAS importable` failed, and `build.sh scan` reported all 93 packages as `syntax` errors even though `bash -n` was never actually able to run). Changed to `shell=True` so these checks now reflect the real environment state
@@ -46,11 +48,23 @@ and this project adheres to semantic versioning.
 - `pkg-scaffold.py` - the wizard blindly defaulted to "Python script" with an entrypoint guessed as `<name>.py` whenever no build system file (Cargo.toml, package.json, etc.) was found, so repos without that file (e.g. `mining`, which only has `install` and `request`) produced a `build.sh` that always failed to build. It now scans the repo root (extensions and shebangs of extensionless scripts), detects the method from real files, lists the runnable files it found, defaults to "Other / manual" when nothing is recognised, and refuses an entrypoint that does not exist in the repo root unless the user confirms
 - `.github/workflows/build-packages-debs.yml` - `github.event.inputs.package`/`.force` were interpolated directly into a `run:` shell block via `${{ }}` (GitHub Actions script-injection pattern, CWE-94); moved to `env:` and referenced as shell variables instead; added a package-name character check before the value is used in `rm -f`
 - `.github/workflows/repin-floating-sources.yml` - `github.event.inputs.packages` had the same direct-interpolation issue; moved to `env:`, added a character allowlist check before the value is word-split and passed to `ci/repin_floating_sources.py`
+- `.github/workflows/build-packages-debs.yml` - the docker build step lost the package name: termux-docker does not forward `-e` variables into the container, so `build-package.sh` ran with an empty name (`FATAL No package specified`); the name and dependency list are now passed through files in the mounted work directory and the step fails clearly if the name is empty
+- `.github/workflows/build-packages-debs.yml` - `HOME` was set to `/root`, which the non-root container user cannot write to, so cargo and Go builds failed with `Permission denied`; `HOME` is now the Termux home with a temporary-directory fallback, and `make`, `clang` and `binutils` are installed before every build
+- `.github/workflows/build-packages-debs.yml` - dependencies are installed one by one with three attempts, and a dependency that still fails is reported by name instead of being hidden
+- `build-package.sh`, `termux_app_store/data/build-package.sh` - a failed dependency install was reported as "Dependencies installed" and its log was deleted; it now prints a warning with the last lines of the log
+- `termux_app_store/fast_install.py`, `pkg-scaffold.py` - CodeQL alerts: the empty `except` blocks around the index cache are replaced by `_load_cached_index()` with specific exceptions, an unused variable and a duplicate `import re` are removed, and the default-branch lookup now catches `ValueError` and `AttributeError`
+- `packages/pnpm/build.sh` - declares `nodejs`, without which `npm` and `lib/node_modules` were missing
+- `packages/hash-buster/build.sh` - upstream `make install` calls `sudo` and writes to `/usr/local/bin`; the recipe now installs `hash.py` as `$PREFIX/bin/buster` directly, declares `python` and `python-pip` and bundles `requests`
+- `packages/termux-fm/build.sh` - the Makefile linked `-lselinux`, which does not exist in Termux; the recipe links `-landroid-selinux` (from `libandroid-selinux`) and installs the binary directly instead of using the upstream setuid `make install`
+- `packages/binwalk/build.sh` - declares `pkg-config` and `fontconfig`, needed by the `fontconfig-sys` crate
+- `packages/pmcli/build.sh` - sets `OPENSSL_NO_VENDOR=1` and `OPENSSL_DIR` so the Termux OpenSSL is used instead of building a vendored copy that required `perl`
 
 ### Update
 - Package `merlin` v1.1.2 → v1.1.3
 - Package `tdoc` v2.2.4 → v2.3.0
-- Package `termux-sync` v1.2.4 → v1.2.6
+
+### Changed
+- Package `dumpzilla` v1.0.0 - Updated metadata
 
 ---
 
