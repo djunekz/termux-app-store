@@ -32,6 +32,8 @@ termux_step_make() {
     esac
 
     echo "[*] Using Rust target: $RUST_TARGET"
+    export OPENSSL_NO_VENDOR=1
+    export OPENSSL_DIR="$TERMUX_PREFIX"
     cargo build --release --target "$RUST_TARGET"
 }
 

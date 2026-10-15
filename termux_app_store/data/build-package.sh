@@ -349,11 +349,17 @@ if [[ -n "${TERMUX_PKG_DEPENDS:-}" ]]; then
     sleep 0.1
     (( _spin_i++ )) || true
   done
-  wait "$_PKG_PID" || true
+  _PKG_STATUS=0
+  wait "$_PKG_PID" || _PKG_STATUS=$?
   printf "\r%*s\r" "$(tput cols 2>/dev/null || echo 80)" ""
-  rm -f "$_PKG_LOG"
 
-  _ok "Dependencies installed"
+  if [[ "$_PKG_STATUS" -ne 0 ]]; then
+    _warn "Some dependencies could not be installed (exit $_PKG_STATUS)"
+    tail -n 8 "$_PKG_LOG" | sed 's/^/      /'
+  else
+    _ok "Dependencies installed"
+  fi
+  rm -f "$_PKG_LOG"
 else
   _skip "No dependencies required"
 fi

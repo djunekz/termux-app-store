@@ -6,7 +6,7 @@ TERMUX_PKG_VERSION=3.1.0
 TERMUX_PKG_SRCURL=https://github.com/ReFirmLabs/binwalk/archive/refs/tags/v3.1.0.tar.gz
 TERMUX_PKG_SHA256=06f595719417b70a592580258ed980237892eadc198e02363201abe6ca59e49a
 
-TERMUX_PKG_DEPENDS="rust"
+TERMUX_PKG_DEPENDS="rust, pkg-config, fontconfig"
 
 termux_step_make_install() {
     cargo install --locked --path . --root "$TERMUX_PREFIX"

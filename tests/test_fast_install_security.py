@@ -221,3 +221,73 @@ def test_docker_step_uses_a_writable_home_and_installs_baseline_build_tools():
 def test_pnpm_declares_its_nodejs_dependency():
     recipe = (ROOT / "packages" / "pnpm" / "build.sh").read_text(encoding="utf-8")
     assert 'TERMUX_PKG_DEPENDS="nodejs"' in recipe
+
+
+def test_build_package_reports_failed_dependency_install():
+    script = (ROOT / "build-package.sh").read_text(encoding="utf-8")
+    assert 'wait "$_PKG_PID" || true' not in script
+    assert "Some dependencies could not be installed" in script
+
+
+def _run_dependency_block(tmp_path, pkg_body, deps):
+    import os
+    import subprocess
+
+    script = (ROOT / "build-package.sh").read_text(encoding="utf-8")
+    start = script.index('if [[ -n "${TERMUX_PKG_DEPENDS:-}" ]]; then')
+    end = script.index("_check_rust_env() {")
+    bindir = tmp_path / "bin"
+    bindir.mkdir()
+    pkg = bindir / "pkg"
+    pkg.write_text("#!/bin/bash\n" + pkg_body + "\n", encoding="utf-8")
+    pkg.chmod(0o755)
+    harness = (
+        "R=; GRAY=; WHITE=; BGREEN=; BCYAN=\n"
+        "_progress(){ :; }; _ok(){ echo \"OK: $*\"; }; _warn(){ echo \"WARN: $*\"; }; _skip(){ echo \"SKIP: $*\"; }\n"
+        f'export TERMUX_PKG_DEPENDS="{deps}"\n'
+    )
+    return subprocess.run(
+        ["bash", "-e", "-c", harness + script[start:end]],
+        env={**os.environ, "PATH": f"{bindir}:{os.environ['PATH']}"},
+        capture_output=True,
+        text=True,
+    )
+
+
+def test_dependency_block_confirms_success_and_surfaces_failure(tmp_path):
+    ok_dir = tmp_path / "a"
+    ok_dir.mkdir()
+    ok = _run_dependency_block(ok_dir, "exit 0", "python, python-pip")
+    assert "OK: Dependencies installed" in ok.stdout
+    bad_dir = tmp_path / "b"
+    bad_dir.mkdir()
+    bad = _run_dependency_block(bad_dir, 'echo "E: Unable to locate package nope"; exit 100', "ncurses, nope")
+    assert "WARN: Some dependencies could not be installed (exit 100)" in bad.stdout
+    assert "Unable to locate package nope" in bad.stdout
+    assert "OK: Dependencies installed" not in bad.stdout
+
+
+def test_docker_step_installs_dependencies_one_by_one_with_retry():
+    text = (ROOT / ".github" / "workflows" / "build-packages-debs.yml").read_text(encoding="utf-8")
+    assert 'for dep in $PKG_DEPS; do' in text
+    assert "pkg install -y $PKG_DEPS" not in text
+    assert "could not install dependency" in text
+
+
+def _recipe(name):
+    return (ROOT / "packages" / name / "build.sh").read_text(encoding="utf-8")
+
+
+def test_recipes_declare_what_their_builds_need():
+    assert "libandroid-selinux" in _recipe("termux-fm")
+    assert "libselinux," not in _recipe("termux-fm")
+    assert "pkg-config" in _recipe("binwalk") and "fontconfig" in _recipe("binwalk")
+    assert "OPENSSL_NO_VENDOR=1" in _recipe("pmcli")
+
+
+def test_hash_buster_installs_without_make_install_or_sudo():
+    recipe = _recipe("hash-buster")
+    assert "make install" not in recipe
+    assert "sudo" not in recipe
+    assert 'install -Dm755 hash.py "$TERMUX_PREFIX/bin/buster"' in recipe
+    assert 'TERMUX_PKG_DEPENDS="python, python-pip"' in recipe

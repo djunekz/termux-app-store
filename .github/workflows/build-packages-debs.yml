@@ -283,7 +283,20 @@ jobs:
 
               if [[ -n "$PKG_DEPS" ]]; then
                 echo "=== Pre-installing dependencies: $PKG_DEPS ==="
-                pkg install -y $PKG_DEPS 2>&1 || echo "WARNING: dependency pre-install failed; the build will report anything truly missing"
+                for dep in $PKG_DEPS; do
+                  dep_ok=false
+                  for attempt in 1 2 3; do
+                    if pkg install -y "$dep" 2>&1; then
+                      dep_ok=true
+                      break
+                    fi
+                    echo "WARNING: attempt $attempt to install $dep failed"
+                    sleep 5
+                  done
+                  if [[ "$dep_ok" != true ]]; then
+                    echo "WARNING: could not install dependency: $dep"
+                  fi
+                done
               fi
 
               echo "=== Building $PKG ==="
