@@ -807,6 +807,18 @@ SHA1: c477ba06d497f257d795e560a38209bc62c0e334
 SHA256: facc250374e620e2d3ee49db1c23b53ca70ebc122d99a2d8d7c3237a8ccb0adc
 Description: The first offline-first, source-based TUI package manager for Termux
 
+Package: termux-fm
+Version: 1.0.0
+Architecture: aarch64
+Maintainer: @termux-app-store
+Installed-Size: 
+Filename: pool/main/termux-fm_1.0.0_aarch64.deb
+Size: 7300
+MD5sum: f37519d5cdecefb11efab63e17510088
+SHA1: 99ce0711426e7ead806f7d5cda898f9e09b72cd8
+SHA256: d1b74bef57e46dd4a9fa10ac3a2239e0f1f271c749848084cd4f45917b0f8548
+Description: TUI file manager root for Termux
+
 Package: termux-sync
 Version: 1.2.8
 Architecture: aarch64
@@ -1046,4 +1058,3 @@ MD5sum: 16644b644600dc6d4055156adce70a0d
 SHA1: 816d6d9d5bd0e11a481480e30a8e0c8617fd7184
 SHA256: 08fc21cb7a2c55e08d87a74191a1a5b78b9fb23840946b347d17c7c05ca69f72
 Description: Encrypter Stealth Binary Builder
-

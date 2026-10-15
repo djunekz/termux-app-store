@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-10-15T10:51:33.982826+00:00",
+  "generated_at": "2026-10-15T21:05:25.922548+00:00",
   "total": 88,
   "packages": [
     {
@@ -1606,14 +1606,17 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/enrilinux/termux-fm/archive/refs/tags/1.0.0.tar.gz",
       "sha256": "bd273c29f85cf3361f64714afa370cc361041e16dd088187e0d7cbc67c04b92e",
-      "recipe_sha256": "ce533ba6fec58d21bc7bdeac126d613da521300ddd653f33c08f176fd3f7bd1f",
+      "recipe_sha256": "259076756ab3dd20ed9a980153a4bb4d22742e5aefac73f354ec97760c229c08",
       "platform_independent": false,
       "depends": [
         "ncurses",
         "libandroid-selinux",
         "clang",
         "make"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "d1b74bef57e46dd4a9fa10ac3a2239e0f1f271c749848084cd4f45917b0f8548"
+      }
     },
     {
       "package": "termux-sync",
