@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-10-15T03:47:09.822394+00:00",
+  "generated_at": "2026-10-15T10:51:33.982826+00:00",
   "total": 88,
   "packages": [
     {
@@ -162,10 +162,12 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/ReFirmLabs/binwalk/archive/refs/tags/v3.1.0.tar.gz",
       "sha256": "06f595719417b70a592580258ed980237892eadc198e02363201abe6ca59e49a",
-      "recipe_sha256": "05c1c3e9669e61fdd0102d510cc9319c329c842833e86a990e5f366448acee48",
+      "recipe_sha256": "89f4e6eb10727d362a20748acc3b65009a46d3f8aac07ff5f39a003274a1390d",
       "platform_independent": false,
       "depends": [
-        "rust"
+        "rust",
+        "pkg-config",
+        "fontconfig"
       ]
     },
     {
@@ -721,8 +723,12 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/UltimateHackers/Hash-Buster/archive/refs/tags/v3.0.tar.gz",
       "sha256": "b6581a0ce55deab0f2fba7c670b00da1e3909bc24db51f0a85d6d47aa8a8cb2c",
-      "recipe_sha256": "628c4b1fba45fc7d1f6655f1d4e3443bf5dbe14f0577a198d13997d16594b114",
-      "platform_independent": false
+      "recipe_sha256": "8fb1c623061e9b5c07a9336feeef133c4a8e27b0b9d2ee7dd2f0ea4c696dd863",
+      "platform_independent": false,
+      "depends": [
+        "python",
+        "python-pip"
+      ]
     },
     {
       "package": "holehe",
@@ -1064,7 +1070,7 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/pmcli/archive/refs/tags/v${TERMUX_PKG_VERSION}.tar.gz",
       "sha256": "b2e24af39111a75eacfdd195950423108c6c01b5caeed923a904b835a572dc53",
-      "recipe_sha256": "bc203b66e96e61882282ae42a1141d004f9b2717dab3818302d143f59ea2df6b",
+      "recipe_sha256": "34acc2e0d5ebafe37157b2406ca9c0867702bc00cd4bb4d96f2ce2ed994e3e2d",
       "platform_independent": false,
       "depends": [
         "rust",
@@ -1252,11 +1258,11 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/enrilinux/termux-fm/archive/refs/tags/1.0.0.tar.gz",
       "sha256": "bd273c29f85cf3361f64714afa370cc361041e16dd088187e0d7cbc67c04b92e",
-      "recipe_sha256": "26a123c09661ae5257fdb47f5ed36f34144fe497f1e821bde7d1c324d4202c9d",
+      "recipe_sha256": "ce533ba6fec58d21bc7bdeac126d613da521300ddd653f33c08f176fd3f7bd1f",
       "platform_independent": false,
       "depends": [
         "ncurses",
-        "libselinux",
+        "libandroid-selinux",
         "clang",
         "make"
       ]
