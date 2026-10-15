@@ -96,6 +96,18 @@ SHA1: c1b37c91323bc79fefc055f94fb2f1b22266c8b1
 SHA256: a3d44200f614f4fa382851318a89e45e1e2a4c01dbddce3a7c3fa9ba18ca4cdf
 Description: bingip2hosts is a Bing.com web scraper that discovers websites by IP address
 
+Package: binwalk
+Version: 3.1.0
+Architecture: aarch64
+Maintainer: @termux-app-store
+Installed-Size: 
+Filename: pool/main/binwalk_3.1.0_aarch64.deb
+Size: 1543320
+MD5sum: 93f22af698fbaecb7be6d6b67dd7e412
+SHA1: 803421519d0ab996a904231f49db5bd8803efad9
+SHA256: e5e226355f559963054f28e9e38e4fd40b26ff5786ac4a16f702ffa054199003
+Description: Firmware Analysis Tool
+
 Package: bit
 Version: 1.1.2
 Architecture: aarch64
@@ -444,6 +456,18 @@ SHA1: 2912eec076c6cba29eb4be1189dee2d1e485a388
 SHA256: 98e82e0046c80a404ce7664c4034c518fc19015110a94e56a17cd114c0e62a58
 Description: Directory/File, DNS and VHost busting tool written in Go
 
+Package: hash-buster
+Version: 3.0
+Architecture: aarch64
+Maintainer: @termux-app-store
+Installed-Size: 
+Filename: pool/main/hash-buster_3.0_aarch64.deb
+Size: 2732
+MD5sum: 0482fd0343ab7c1446f39ce62a9d792c
+SHA1: 0b0d60004b2ab8a1b464a1ba83f4af18d91c094e
+SHA256: e7fb7dc8baef9c4422d85f641a9308070a5a7c2979877f69752078fd1047287f
+Description: hash-buster — auto-packaged by termux-build-init
+
 Package: holehe
 Version: 0.0.0+14da70f
 Architecture: aarch64
@@ -659,6 +683,18 @@ MD5sum: c5fde9cac9f0034741e1c986df13eb98
 SHA1: 9cc31e15030bbea946446d804a531d0a6f3e3fcb
 SHA256: fb02ff2623e447c2d7f07f9cbd4a4ca95b22fa130b6ada33f56337f98551fa23
 Description: Incredibly fast crawler designed for OSINT.
+
+Package: pmcli
+Version: 0.1.0
+Architecture: aarch64
+Maintainer: Djunekz <gab288.gab288@passinbox.com>
+Installed-Size: 
+Filename: pool/main/pmcli_0.1.0_aarch64.deb
+Size: 887172
+MD5sum: 9bb0a46ec8dceaf46c09a16992eeea88
+SHA1: 68d4831a1bfd6acdc19516cfb00068f84ec693ab
+SHA256: b9ab9f20db6da9d7027f1c86aba9f9feb0c88af597696a5267631b272129dc04
+Description: Terminal-based project manager CLI
 
 Package: pnpm
 Version: 10.30.1
@@ -1010,4 +1046,3 @@ MD5sum: 16644b644600dc6d4055156adce70a0d
 SHA1: 816d6d9d5bd0e11a481480e30a8e0c8617fd7184
 SHA256: 08fc21cb7a2c55e08d87a74191a1a5b78b9fb23840946b347d17c7c05ca69f72
 Description: Encrypter Stealth Binary Builder
-

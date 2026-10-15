@@ -312,6 +312,18 @@ SHA1: 7a5963a2df94004850871f89d6903558e5022fd1
 SHA256: 7535952fe23b98d8702fe00a997c4894f444a9506daaebf0298711664931becd
 Description: Python wordlist generator
 
+Package: hash-buster
+Version: 3.0
+Architecture: arm
+Maintainer: @termux-app-store
+Installed-Size: 
+Filename: pool/main/hash-buster_3.0_arm.deb
+Size: 2528
+MD5sum: 5db9510bed549ba448a6a5fbae35eb0a
+SHA1: 691e07da239ec4f26d359040e7b0cebffb79cf5e
+SHA256: 1eb941883ac35fce744ccd8d00a271fdafa3e57d6cb769c70d7c4fc61a08fdb7
+Description: hash-buster — auto-packaged by termux-build-init
+
 Package: holehe
 Version: 0.0.0+14da70f
 Architecture: arm
@@ -709,4 +721,3 @@ MD5sum: 12f9505df033efe795f9ab1249308f4b
 SHA1: 718222b8fd29e7ae6bf95f8328df880fd82785d0
 SHA256: 966387ddc6be834b3bbf67ddb69dfc3e54f825a492a1c3130622484b3133782c
 Description: A posix script to find and watch youtube videos from the terminal. (Without API)
-
