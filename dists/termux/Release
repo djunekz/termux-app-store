@@ -5,22 +5,22 @@ Codename: termux
 Components: main
 Architectures: aarch64 arm x86_64 i686
 Description: Official Termux repository by @djunekz
-Date: Thu, 15 Oct 2026 03:47:37 UTC
+Date: Thu, 15 Oct 2026 10:52:06 UTC
 MD5Sum:
- 7106b2aad23a47377b781a85b4fb0f10 34251 main/binary-aarch64/Packages
- ed5293e671282efcf215518abe45e4cd 12983 main/binary-aarch64/Packages.gz
- 690c726ee164ee46d64daf2518249942 23842 main/binary-arm/Packages
- c5bb6401b8b295afcc2dfdb60cfc2583 9313 main/binary-arm/Packages.gz
- 7df27b1f7d42e133918ef66911a00788 25030 main/binary-x86_64/Packages
- 085773f7e894648efe237cd35c5f3939 9550 main/binary-x86_64/Packages.gz
- 6afd23b5bca0d37b1b01a90cde7f13b2 23960 main/binary-i686/Packages
- 6b643f6caa5d62ed758a3f58ec4f0569 9338 main/binary-i686/Packages.gz
+ a9e767d402e780f4aafa7a11483c8b33 34251 main/binary-aarch64/Packages
+ bffb3e2ddcbde70a7add671bc3b13ac5 12986 main/binary-aarch64/Packages.gz
+ 046801339b0bcb65de0e7552fe1e68c4 23842 main/binary-arm/Packages
+ 55dcd1d88c26d6bbd9609aa04fc7cab6 9308 main/binary-arm/Packages.gz
+ dfdd159cc6de2bcc33f83e559e474438 25030 main/binary-x86_64/Packages
+ 6c2a3269ba0569f0d5a5d29b7d70ecbf 9550 main/binary-x86_64/Packages.gz
+ eaa40cde5e6ad218eada696f7120529d 23960 main/binary-i686/Packages
+ ed668fd02d8cb256027a0114d3fe4667 9337 main/binary-i686/Packages.gz
 SHA256:
- 7adbc9c432467239219225f13bfa7c3dff46ade17209afd29f09c67522d7067c 34251 main/binary-aarch64/Packages
- 9a03ff456c350aaa53f54e696758b5de3834e0d3be87e9a145e8ac09fd06ccfe 12983 main/binary-aarch64/Packages.gz
- edaeba66f5febac5f9f46caeebd0c28f40f9d6b5586ddd023420a3f52a0e970c 23842 main/binary-arm/Packages
- a37aa2b385ed0309485ded0fc415758e1c59ead159ff1052b903c88d9b9cbcb4 9313 main/binary-arm/Packages.gz
- 8c28e2e84ad08d7ab39cd2b7c1955bcea834c6e1446e0fd429c0157280761a44 25030 main/binary-x86_64/Packages
- b7d8980a7d0eabc1492dcdecfb04f0a7e80fbbe4eb1a2ac2eaf466eb70f67725 9550 main/binary-x86_64/Packages.gz
- 9f78827bd884461ac4ddfa687bf73d441c1d0a9a3ad70bb583778721973d246d 23960 main/binary-i686/Packages
- bee40b4ecb8bf62cf9e4a107181512988c50c487ac1ad917b4115d1923cd981a 9338 main/binary-i686/Packages.gz
+ 146930f1481c418eb9fb30e8b9c958d5e602f58b439759f12bd244e9837ec2f0 34251 main/binary-aarch64/Packages
+ 3e3c18062f8c804074da05f3629743d4e1b26a11f32bf79fdd29c560ec3ce3ed 12986 main/binary-aarch64/Packages.gz
+ d8456877efa452197efa58b46e588802a4f9846d741d21f918a036335521c916 23842 main/binary-arm/Packages
+ a12ac4354aa62e1ba802158e8c3a04f31fb5ea142027623398bca9f5c58e54ab 9308 main/binary-arm/Packages.gz
+ dc1abfeba39590ea1a1d660a97212eb43e08a433a37ffee5945c65be5fd3204a 25030 main/binary-x86_64/Packages
+ 385a854ca5687fc700770bf74b8257160fee4d73223b57ecd0187e77d709854a 9550 main/binary-x86_64/Packages.gz
+ 2b17509c9fe2e9f6ccbfb689f4d1a6aadb7aeedab900e605b23fd0d9ae3f5aed 23960 main/binary-i686/Packages
+ 37cb4c1fa6fe3f6ddfca31e089a19f82437385638b05a7bfc536e0aaf7981fc3 9337 main/binary-i686/Packages.gz
