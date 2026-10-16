@@ -150,10 +150,10 @@ Architecture: aarch64
 Maintainer: @termux-app-store
 Installed-Size: 
 Filename: pool/main/brutespray_2.6.0_aarch64.deb
-Size: 11021760
-MD5sum: 5504f1f1f071eed079c644a39eed08de
-SHA1: e1859efafad76560947be8e265e420a9fb55ea40
-SHA256: b257565483b5019845b1da4986797490b880791478dd395480663f6569d8d201
+Size: 11025620
+MD5sum: 45add7e0211434d91aabd7c34685a2e2
+SHA1: f3a1ad76ebc49602621bbb2a4e6118bd9141c720
+SHA256: 9ac3e26a45c5ac9b7966498b5a697dafc74648fa6cb3c0e38d731d8cd6b6ff53
 Description: Fast, multi-protocol credential brute-forcer. Parses Nmap, Nessus, and Nexpose output to automatically test default and custom credentials across 30+ protocols.
 
 Package: clickjacking-tester
@@ -1070,4 +1070,3 @@ MD5sum: 7cb45f6b46dae64c5b0af2b7bb221e06
 SHA1: 5ebbcaf2f82ef0c4851fade17dad901445d585e8
 SHA256: 7c82b9b82e256f53b0810f04211958bd2103856619946d296e68a7cfa27f3fc4
 Description: Encrypter Stealth Binary Builder
-
