@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-10-15T21:05:25.922548+00:00",
+  "generated_at": "2026-10-16T02:21:31.401987+00:00",
   "total": 88,
   "packages": [
     {
@@ -236,7 +236,7 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/x90skysn3k/brutespray/archive/refs/tags/v2.6.0.tar.gz",
       "sha256": "cae09d60d49b46d56892caf1bab3ff56d135e9dedd110db8907ac98522327e4e",
-      "recipe_sha256": "3c8ab6e90a68e050dc7a3896f9bcaa9cd2f7279f5a9fce10ebf0dbdb3c7849ab",
+      "recipe_sha256": "01ff3e0818fb0883406675d806f1ed938356188342b684abd45658c5b592079f",
       "platform_independent": false,
       "depends": [
         "golang"
