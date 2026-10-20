@@ -205,7 +205,6 @@ a:hover{text-decoration:underline}
   padding:8px 12px;text-align:center;color:var(--text-dim);font-size:12px;
 }
 
-
 /* REQUIREMENTS */
 .req-section{margin:0 0 32px}
 .req-title{color:var(--blue-light);font-size:11px;font-weight:bold;text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px}
@@ -317,7 +316,6 @@ footer{
     </div>
   </div>
 
-
   <div class="req-section">
     <div class="req-title">Requirements</div>
     <div class="req-card">
@@ -373,7 +371,6 @@ termux-app-store install &lt;pkg&gt;  # install a package</code></pre>
     <button class="copy-btn" onclick="copyCode(this,document.getElementById('usage-code').innerText)">copy</button>
   </div>
 </div>
-
 
 <!-- ═══════════════ INSTALL ═══════════════ -->
 <div id="tab-install" class="section">
@@ -462,7 +459,6 @@ tasctl uninstall</code></pre>
   </div>
   </div>
 </div>
-
 
 <!-- ═══════════════ PACKAGES ═══════════════ -->
 <div id="tab-packages" class="section">
@@ -565,7 +561,6 @@ tasctl uninstall</code></pre>
     </tbody>
   </table>
 </div>
-
 
 <!-- ═══════════════ CONTRIBUTE ═══════════════ -->
 <div id="tab-contribute" class="section">
@@ -719,7 +714,6 @@ git push origin &lt;your-branch&gt;')">copy</button>
   </div>
 </div>
 
-
 <!-- ═══════════════ REPO ═══════════════ -->
 <div id="tab-repo" class="section">
   <div class="section-title">Repository Information</div>
@@ -727,11 +721,24 @@ git push origin &lt;your-branch&gt;')">copy</button>
     <p>This is an unofficial APT repository hosted on GitHub Pages. Add it to your Termux sources to install packages with <code>pkg</code>.</p>
   </div>
 
-  <div class="section-title">Repository Entry</div>
+  <div class="section-title">Recommended: signed repository (one command)</div>
   <div class="code-block">
-    <pre><code>deb [trusted=yes] https://djunekz.github.io/termux-app-store termux main</code></pre>
-    <button class="copy-btn" onclick="copyCode(this,'deb [trusted=yes] https://djunekz.github.io/termux-app-store termux main')">copy</button>
+    <pre><code>curl -fsSL https://djunekz.github.io/termux-app-store/install-repo.py | python</code></pre>
+    <button class="copy-btn" onclick="copyCode(this,'curl -fsSL https://djunekz.github.io/termux-app-store/install-repo.py | python')">copy</button>
   </div>
+
+  <div class="section-title">Manual setup &mdash; step 1: signing key</div>
+  <div class="code-block">
+    <pre><code>mkdir -p $PREFIX/etc/apt/keyrings &amp;&amp; curl -fsSL https://djunekz.github.io/termux-app-store/termux-app-store.gpg -o $PREFIX/etc/apt/keyrings/termux-app-store.gpg</code></pre>
+    <button class="copy-btn" onclick="copyCode(this,'mkdir -p $PREFIX/etc/apt/keyrings &amp;&amp; curl -fsSL https://djunekz.github.io/termux-app-store/termux-app-store.gpg -o $PREFIX/etc/apt/keyrings/termux-app-store.gpg')">copy</button>
+  </div>
+
+  <div class="section-title">Manual setup &mdash; step 2: repository entry</div>
+  <div class="code-block">
+    <pre><code>echo "deb [signed-by=$PREFIX/etc/apt/keyrings/termux-app-store.gpg] https://djunekz.github.io/termux-app-store termux main" &gt; $PREFIX/etc/apt/sources.list.d/tas.list</code></pre>
+    <button class="copy-btn" onclick="copyCode(this,'echo &quot;deb [signed-by=$PREFIX/etc/apt/keyrings/termux-app-store.gpg] https://djunekz.github.io/termux-app-store termux main&quot; &gt; $PREFIX/etc/apt/sources.list.d/tas.list')">copy</button>
+  </div>
+  <div class="info-box"><p>The repository metadata is GPG-signed (<code>InRelease</code> / <code>Release.gpg</code>). Do not use <code>[trusted=yes]</code>; it disables signature verification.</p></div>
 
   <div class="section-title">Supported Architectures</div>
   <div class="arch-grid">
@@ -769,15 +776,14 @@ pkg update')">copy</button>
   <div class="info-box">
     <p><strong style="color:var(--text)">Current version:</strong> <span style="color:var(--green)">v0.8.5</span></p>
     <p><strong style="color:var(--text)">Packages in index:</strong> <span style="color:var(--blue)">88</span></p>
-    <p><strong style="color:var(--text)">Last updated:</strong> <span style="color:var(--text-dim)">2026-10-20 00:37 UTC</span></p>
+    <p><strong style="color:var(--text)">Last updated:</strong> <span style="color:var(--text-dim)">2026-10-20 01:55 UTC</span></p>
     <p><strong style="color:var(--text)">Source:</strong> <a href="https://github.com/djunekz/termux-app-store">github.com/djunekz/termux-app-store</a></p>
   </div>
 </div>
 
-
 <footer>
   <span>Termux App Store &copy; <a href="https://github.com/djunekz">@djunekz</a></span>
-  <span>Last updated: 2026-10-20 00:37 UTC</span>
+  <span>Last updated: 2026-10-20 01:55 UTC</span>
 </footer>
 
 </div><!-- /wrap -->
