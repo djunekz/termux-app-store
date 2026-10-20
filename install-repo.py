@@ -375,10 +375,10 @@ def run_pkg_update() -> bool:
         blank()
         if result.returncode == 0:
             ok("pkg update complete")
-        else:
-            warn("pkg update finished with warnings")
-            info("Check the output above for signature errors.")
-        return True
+            return True
+        warn(f"pkg update failed (exit code {result.returncode})")
+        info("Check the output above for repository or signature errors.")
+        return False
     except FileNotFoundError:
         warn("'pkg' not found -- run manually:")
         code_line("pkg update")
@@ -474,16 +474,25 @@ def main():
         blank()
         sys.exit(1)
 
+    update_failed = False
     if prompt("Run pkg update now?", default_yes=True):
         if not run_pkg_update():
+            update_failed = True
             blank()
-            warn("Run manually:")
+            warn("Fix the error above, then run:")
             code_line("pkg update")
     else:
         blank()
         info("Run 'pkg update' manually to activate the repository.")
 
     blank()
+    if update_failed:
+        thick_rule(BYLW)
+        print(vcenter(f"{BYLW}{B}Repository added, but pkg update failed{R}", W()))
+        thick_rule(BYLW)
+        show_next_steps()
+        sys.exit(1)
+
     thick_rule(BGRN)
     print(vcenter(f"{BGRN}{B}Repository installed successfully{R}", W()))
     thick_rule(BGRN)

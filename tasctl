@@ -616,8 +616,12 @@ case "$cmd" in
     header "Add Repository"
     add_pkg_repo
     step "Running pkg update..."
-    pkg update || warn "pkg update failed — run manually: pkg update"
-    printf "\n%s  ✔ Repository added. Run: pkg install <package>%s\n\n" "$GREEN$B" "$R"
+    if pkg update; then
+      printf "\n%s  ✔ Repository added. Run: pkg install <package>%s\n\n" "$GREEN$B" "$R"
+    else
+      warn "Repository added, but pkg update failed — fix the error above, then run: pkg update"
+      exit 1
+    fi
     ;;
   uninstall-repo)
     banner

@@ -30,6 +30,8 @@ and this project adheres to semantic versioning.
 - `install-repo.py`, `tasctl`, `doctor.py`, `ci/gen_index.py`, `.github/workflows/build-termux-repo.yml` - hash comments removed from the source
 
 ### Fixed
+- `install-repo.py` - `run_pkg_update()` always returned `True`, even when `pkg update` failed, so the installer could report success after a failed update; it now returns `False` on a non-zero exit code, `main()` shows "Repository added, but pkg update failed" instead of the green success banner, and the script exits with status 1
+- `tasctl` - `install-repo` printed "Repository added" even when `pkg update` failed; it now warns and exits with status 1
 - `.github/workflows/build-packages-debs.yml` - the package publish job regenerated `Packages` and `Release` but never re-signed them, which would have left `InRelease` and `Release.gpg` stale and broken `apt update` after every package build; it now signs through `ci/sign_release.sh` before pushing
 - Open P0 finding: APT authentication - the repository published a `Release` file but no `InRelease` or `Release.gpg`, so clients could only use it with `trusted=yes`; the repository is now signed and clients verify it
 
