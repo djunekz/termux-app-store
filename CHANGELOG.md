@@ -7,6 +7,10 @@ and this project adheres to semantic versioning.
 
 ## [Unreleased]
 
+---
+
+## [v0.9.1] - 2026-10-21
+
 ### Added
 - `ci/sign_release.sh` - shared signing script used by both `build-termux-repo.yml` and `build-packages-debs.yml`; it refuses to sign with any key other than the pinned fingerprint, signs `Release` into `InRelease` and `Release.gpg`, publishes the public key and verifies both signatures with `gpgv` before the push
 - `SECURITY.md` - new "APT Repository Signing Key" section with the key ID and fingerprint, so the fingerprint can be checked through a channel independent of the download host
