@@ -523,7 +523,6 @@ def test_prefix_usage(lines: list) -> list:
     return issues
 
 def test_wrapper_script(lines: list, values: dict) -> list:
-    pkg = values.get("TERMUX_PKG_HOMEPAGE", "").rstrip("/").split("/")[-1]
     full_text = "\n".join(lines)
     if "WRAPPER" not in full_text:
         return [Issue(INFO, "Wrapper", "No wrapper script found (may be intentional)")]
@@ -765,23 +764,19 @@ def print_multi_summary(results: list):
     blank()
 
     w      = W() - 6
-    dash_w = w + 2
     lw     = max(len(r.pkg_name) for r in results) + 2
 
     print(f" {DIM}┌{'─' * (w + 2)}┐{R}")
     for r in results:
         col = {PASS: BGRN, WARN: BYLW, FAIL: BRED}.get(r.verdict, DIM)
-        verdict_str = f"{col}{B}{r.verdict:<4}{R}"
         counts = f"pass={r.n_pass} warn={r.n_warn} fail={r.n_fail}"
         name_s = f"{r.pkg_name:<{lw}}"
-        line   = f"  {verdict_str}  {name_s}  {DIM}{counts}{R}"
         pad    = max(0, w - 4 - lw - 2 - len(counts))
         print(f" {DIM}│{R} {col}{B}{r.verdict:<4}{R} {name_s} {DIM}{counts}{R}{' ' * pad} {DIM}│{R}")
     print(f" {DIM}└{'─' * (w + 2)}┘{R}")
     blank()
 
     total   = len(results)
-    n_pass  = sum(1 for r in results if r.verdict == PASS)
     n_warn  = sum(1 for r in results if r.verdict == WARN)
     n_fail  = sum(1 for r in results if r.verdict == FAIL)
 

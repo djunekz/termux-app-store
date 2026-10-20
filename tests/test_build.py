@@ -1,9 +1,8 @@
 import json
 import re
-import pytest
 from pathlib import Path
 from typing import Dict, List, Optional
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
 
 
 class BuildShParser:
@@ -468,7 +467,6 @@ class TestSave:
 
 
 import importlib.util as _ilu
-import sys as _sys
 
 def _import_build():
     build_path = Path(__file__).parent.parent / "tools" / "build.py"

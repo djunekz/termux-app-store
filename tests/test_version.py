@@ -1,5 +1,3 @@
-import re
-import pytest
 
 
 from _loader import load_cli

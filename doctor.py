@@ -2,7 +2,16 @@
 # Termux App Store -- Smart Doctor
 # github.com/djunekz/termux-app-store
 
-import os, sys, json, shutil, platform, subprocess, textwrap, re, stat, shlex, hashlib
+import os
+import sys
+import json
+import shutil
+import platform
+import subprocess
+import textwrap
+import re
+import shlex
+import hashlib
 import urllib.request, urllib.error
 from pathlib import Path
 
@@ -464,7 +473,7 @@ def _fix_repo_file():
     Path(KEYRING_FILE).parent.mkdir(parents=True, exist_ok=True)
     tmp = Path(KEYRING_FILE + ".tmp")
     tmp.write_bytes(data)
-    tmp.chmod(0o644)
+    tmp.chmod(0o600)
     os.replace(tmp, KEYRING_FILE)
     print(f"  {BGRN}OK{R}  Key {primary} installed")
 

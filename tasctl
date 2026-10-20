@@ -265,7 +265,7 @@ install_pkg_key() {
   done <<< "$report"
   ok "Key matches the pinned fingerprint"
 
-  chmod 644 "$tmp"
+  chmod 600 "$tmp"
   mv -f "$tmp" "$PKG_KEYRING_FILE"
   ok "Key installed: $PKG_KEYRING_FILE"
 }

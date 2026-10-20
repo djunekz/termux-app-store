@@ -1,4 +1,4 @@
-import json, sys, os
+import json, os
 
 version = os.environ.get('VERSION', '0.0.0')
 total   = os.environ.get('TOTAL', '0')
@@ -8,7 +8,7 @@ try:
     with open('tools/index.json') as f:
         data = json.load(f)
     pkgs = data.get('packages', [])
-except:
+except (OSError, ValueError):
     pkgs = []
 
 rows = []

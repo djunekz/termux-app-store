@@ -5,14 +5,12 @@ Generator index.json untuk termux-app-store fungsinya
 Scan semua packages/ dan parse build.sh untuk extract metadata
 """
 
-import os
 import re
 import json
 import sys
 import hashlib
 from pathlib import Path
 from typing import Dict, List, Optional
-import subprocess
 
 class BuildShParser:
 

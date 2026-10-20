@@ -15,12 +15,14 @@ and this project adheres to semantic versioning.
 - `install-repo.py`, `tasctl`, `doctor.py` - mandatory key pinning: the signing key fingerprint `D39134A177717A5BEBEEAE7105D70CDBB6D80295` is built in, and a downloaded key is rejected unless the file holds exactly one primary key with that fingerprint, with only public-key, user-id, subkey and signature packets; the check is pure Python (no `gpg` required) and `TAS_KEY_FPR` can override the pin for key-rotation tests
 
 ### Security
+- `install-repo.py`, `doctor.py`, `tasctl` - the installed signing key is now stored with mode 0600 instead of 0644 (CodeQL `py/overly-permissive-file`, alert #237); Termux runs `apt` as the same user that owns the file, so no other account needs read access
 - `install-repo.py`, `tasctl`, `doctor.py`, `ci/gen_index.py` - the apt repository entry no longer uses `deb [trusted=yes]`, which turned off signature verification for the whole repository; the entry is now `deb [signed-by=$PREFIX/etc/apt/keyrings/termux-app-store.gpg] https://djunekz.github.io/termux-app-store termux main`
 - `install-repo.py`, `tasctl`, `doctor.py` - the signing key is downloaded over HTTPS, size-limited, checked to be a binary OpenPGP public key and written atomically with mode 0644; if the key cannot be downloaded or validated the repository is not added and nothing falls back to `trusted=yes`
 - `install-repo.py`, `tasctl`, `doctor.py` - an existing `tas.list` with the old `trusted=yes` entry is detected and migrated to `signed-by`; `doctor.py` reports it as a warning and `--fix` migrates it
 - `.github/workflows/build-termux-repo.yml` - the workflow fails when `GPG_PRIVATE_KEY` is not set instead of publishing an unsigned repository; the private key lives in a temporary `GNUPGHOME` that is removed on exit and the passphrase is read from a mode 0600 file, not the command line
 
 ### Changed
+- `termux_app_store/__init__.py` - `import termux_app_store` no longer loads the TUI and CLI modules (and therefore `textual`) up front; `from termux_app_store import run_tui, run_cli` keeps working
 - `install-repo.py` - `remove_repo()` and the "remove this repository" hint now delete the keyring file together with `tas.list`
 - `tasctl` - `uninstall-repo` removes `tas.list` and the keyring file
 - `install-repo.py` - when stdin is not a terminal (`curl ... | python`) the prompts use their default answer instead of treating end-of-input as "no", so `pkg update` runs as intended
@@ -30,6 +32,12 @@ and this project adheres to semantic versioning.
 - `install-repo.py`, `tasctl`, `doctor.py`, `ci/gen_index.py`, `.github/workflows/build-termux-repo.yml` - hash comments removed from the source
 
 ### Fixed
+- `termux_app_store/__init__.py` - removed the module-level cyclic import between the package, `termux_app_store.termux_app_store`, `termux_app_store.termux_app_store_cli` and `termux_app_store.fast_install` (CodeQL `py/unsafe-cyclic-import`, alerts #213 to #221); `run_tui()` and `run_cli()` are now thin wrappers that import their modules on first call
+- `ci/gen_index.py` - the bare `except:` that also caught `BaseException` now catches only `OSError` and `ValueError`, so Ctrl-C and `SystemExit` are no longer swallowed (alert #236); removed the unused `sys` import (alert #234)
+- `doctor.py` - removed the unused `stat` import (alert #238)
+- `guidebook.py` - `subprocess` was used by `cls()` but never imported, which raised `NameError` as soon as the screen was cleared; the import is added
+- `build-tester.py` - removed four local variables that were assigned but never used
+- unused imports removed from `termux_app_store/main.py`, `termux_app_store/termux_app_store.py`, `termux_app_store/termux_app_store_cli.py`, `termux_app_store/core/package.py`, `termux_app_store/core/binary_core.py`, `termux_app_store/utils/installer.py`, `tools/build.py` and the files under `tests/`
 - `install-repo.py` - `run_pkg_update()` always returned `True`, even when `pkg update` failed, so the installer could report success after a failed update; it now returns `False` on a non-zero exit code, `main()` shows "Repository added, but pkg update failed" instead of the green success banner, and the script exits with status 1
 - `tasctl` - `install-repo` printed "Repository added" even when `pkg update` failed; it now warns and exits with status 1
 - `.github/workflows/build-packages-debs.yml` - the package publish job regenerated `Packages` and `Release` but never re-signed them, which would have left `InRelease` and `Release.gpg` stale and broken `apt update` after every package build; it now signs through `ci/sign_release.sh` before pushing

@@ -313,7 +313,7 @@ def install_key() -> bool:
     try:
         with os.fdopen(tmp_fd, "wb") as f:
             f.write(data)
-        os.chmod(tmp_path, 0o644)
+        os.chmod(tmp_path, 0o600)
         os.replace(tmp_path, KEYRING_FILE)
         tmp_path = None
         ok("Signing key installed")

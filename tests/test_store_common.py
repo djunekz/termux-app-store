@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pytest
 
-from _loader import PACKAGE_DIR, ROOT, load_cli, load_store_common
+from _loader import PACKAGE_DIR, load_cli, load_store_common
 
 sc = load_store_common()
 

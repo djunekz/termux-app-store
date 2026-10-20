@@ -1,8 +1,6 @@
-import re
 import json
 import pytest
-from pathlib import Path
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
 
 
 from _loader import load_cli

@@ -2,8 +2,17 @@ from .core.binary_core import BinaryCache
 from .core.mirrors import MirrorManager
 from .core.package import Package
 from .core.validator import PackageValidator, validate_package
-from termux_app_store.termux_app_store import run_tui
-from termux_app_store.termux_app_store_cli import run_cli
+
+
+def run_tui(*args, **kwargs):
+    from termux_app_store.termux_app_store import run_tui as _run_tui
+    return _run_tui(*args, **kwargs)
+
+
+def run_cli(*args, **kwargs):
+    from termux_app_store.termux_app_store_cli import run_cli as _run_cli
+    return _run_cli(*args, **kwargs)
+
 
 """
 termux-app-store

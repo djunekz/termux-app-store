@@ -2,11 +2,9 @@
 import asyncio
 import subprocess
 import sys
-import os
 import json
 import re
 import urllib.request
-import shutil
 from pathlib import Path
 
 try:
@@ -37,7 +35,6 @@ is_valid_root = _store.is_valid_root
 
 try:
     from termux_app_store.fast_install import FastInstaller
-    from termux_app_store.core.package import Package
     _BINARY_CACHE_AVAILABLE = True
 except ImportError:
     _BINARY_CACHE_AVAILABLE = False

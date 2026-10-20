@@ -1,5 +1,3 @@
-import pytest
-from pathlib import Path
 from conftest import make_build_sh, make_valid_root
 
 

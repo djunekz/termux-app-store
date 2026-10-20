@@ -57,7 +57,6 @@ is_valid_root = _store.is_valid_root
 
 try:
     from termux_app_store.fast_install import FastInstaller
-    from termux_app_store.core.package import Package
     _BINARY_CACHE_AVAILABLE = True
 except ImportError:
     _BINARY_CACHE_AVAILABLE = False
