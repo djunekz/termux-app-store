@@ -7,6 +7,10 @@ and this project adheres to semantic versioning.
 
 ## [Unreleased]
 
+---
+
+## [v0.8.5] - 2026-10-20
+
 ### Added
 - `tests/test_fast_install_security.py` - regression tests for checksum-gated cache and install, recipe and index checksums, the packaged `build-package.sh`, the build workflow (full SHA256, fail-closed steps, pool handling, docker step) and the recipe fixes below
 - `termux_app_store/data/build-package.sh` - copy of `build-package.sh` shipped inside the wheel; a test keeps both files identical
