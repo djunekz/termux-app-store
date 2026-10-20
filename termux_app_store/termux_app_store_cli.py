@@ -22,6 +22,7 @@ import sys
 import os
 import json
 import re
+import contextlib
 import hashlib
 import urllib.request
 import urllib.error
@@ -30,7 +31,7 @@ from pathlib import Path
 from typing import Optional
 
 try:
-    from termux_app_store import store_common as _store
+    from . import store_common as _store
 except ImportError:
     try:
         import store_common as _store
@@ -49,7 +50,6 @@ INDEX_CACHE = INDEX_CACHE_FILE
 FINGERPRINT_STRING = _store.FINGERPRINT_STRING
 GITHUB_REPO = _store.GITHUB_REPO
 INDEX_URL = _store.INDEX_URL
-_PKG_NAME_RE = _store.PKG_NAME_RE
 _ver_tuple = _store.ver_tuple
 is_safe_pkg_name = _store.is_safe_pkg_name
 has_store_fingerprint = _store.has_store_fingerprint
@@ -285,25 +285,21 @@ def fetch_latest_tag():
 
 
 def hold_package(name: str):
-    try:
+    with contextlib.suppress(Exception):
         subprocess.call(
             ["apt-mark", "hold", name],
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL,
         )
-    except Exception:
-        pass
 
 
 def unhold_package(name: str):
-    try:
+    with contextlib.suppress(Exception):
         subprocess.call(
             ["apt-mark", "unhold", name],
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL,
         )
-    except Exception:
-        pass
 
 
 def cleanup_package_files(name: str) -> int:

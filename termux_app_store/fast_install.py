@@ -15,7 +15,7 @@ from pathlib import Path
 from typing import Optional, Callable
 
 try:
-    from termux_app_store import store_common as _common
+    from . import store_common as _common
 except ImportError:
     try:
         import store_common as _common
@@ -50,7 +50,6 @@ SHA256_SIDECAR_URL = (
 _SAFE_PKG   = _common.PKG_NAME_RE
 _SAFE_VER   = re.compile(r"^[A-Za-z0-9][A-Za-z0-9.+~:-]*$")
 _SAFE_ARCH  = re.compile(r"^[a-z0-9_]+$")
-_SHA256_RE  = re.compile(r"^[0-9a-f]{64}$")
 
 INDEX_URLS = _common.index_urls()
 

@@ -8,7 +8,7 @@ import urllib.request
 from pathlib import Path
 
 try:
-    from termux_app_store import store_common as _store
+    from . import store_common as _store
 except ImportError:
     try:
         import store_common as _store
@@ -27,7 +27,6 @@ INDEX_CACHE = INDEX_CACHE_FILE
 FINGERPRINT_STRING = _store.FINGERPRINT_STRING
 GITHUB_REPO = _store.GITHUB_REPO
 INDEX_URL = _store.INDEX_URL
-_PKG_NAME_RE = _store.PKG_NAME_RE
 _ver_tuple = _store.ver_tuple
 is_safe_pkg_name = _store.is_safe_pkg_name
 has_store_fingerprint = _store.has_store_fingerprint
@@ -149,7 +148,7 @@ def get_installed_version(name: str):
         if "installed" in status_part:
             return version_part.strip() or None
     except Exception:
-        pass
+        return None
     return None
 
 def load_cached_root():

@@ -22,7 +22,7 @@ and this project adheres to semantic versioning.
 - `.github/workflows/build-termux-repo.yml` - the workflow fails when `GPG_PRIVATE_KEY` is not set instead of publishing an unsigned repository; the private key lives in a temporary `GNUPGHOME` that is removed on exit and the passphrase is read from a mode 0600 file, not the command line
 
 ### Changed
-- `termux_app_store/__init__.py` - `import termux_app_store` no longer loads the TUI and CLI modules (and therefore `textual`) up front; `from termux_app_store import run_tui, run_cli` keeps working
+- `termux_app_store/__init__.py` - `run_tui()` and `run_cli()` are now thin wrappers that import their modules on first call, so `import termux_app_store` no longer loads the TUI and CLI modules (and therefore `textual`) up front; `from termux_app_store import run_tui, run_cli` keeps working
 - `install-repo.py` - `remove_repo()` and the "remove this repository" hint now delete the keyring file together with `tas.list`
 - `tasctl` - `uninstall-repo` removes `tas.list` and the keyring file
 - `install-repo.py` - when stdin is not a terminal (`curl ... | python`) the prompts use their default answer instead of treating end-of-input as "no", so `pkg update` runs as intended
@@ -32,7 +32,9 @@ and this project adheres to semantic versioning.
 - `install-repo.py`, `tasctl`, `doctor.py`, `ci/gen_index.py`, `.github/workflows/build-termux-repo.yml` - hash comments removed from the source
 
 ### Fixed
-- `termux_app_store/__init__.py` - removed the module-level cyclic import between the package, `termux_app_store.termux_app_store`, `termux_app_store.termux_app_store_cli` and `termux_app_store.fast_install` (CodeQL `py/unsafe-cyclic-import`, alerts #213 to #221); `run_tui()` and `run_cli()` are now thin wrappers that import their modules on first call
+- `termux_app_store/fast_install.py`, `termux_app_store/termux_app_store.py`, `termux_app_store/termux_app_store_cli.py` - removed the module-level cyclic import (CodeQL `py/unsafe-cyclic-import`, alerts #213 to #221 and #239, and `py/cyclic-import`, alert #222); inside the package folder `from termux_app_store import store_common` was resolved to the sibling file `termux_app_store.py` instead of the package, so `fast_install` and `termux_app_store` imported each other; the three files now use `from . import store_common`, and the existing fallbacks for running as a script are unchanged
+- `termux_app_store/termux_app_store.py`, `termux_app_store/termux_app_store_cli.py` - the `except Exception: pass` blocks flagged as empty (CodeQL `py/empty-except`, alerts #231 and #232) now return `None` or use `contextlib.suppress(Exception)`; behaviour is the same
+- `termux_app_store/termux_app_store.py`, `termux_app_store/termux_app_store_cli.py`, `termux_app_store/fast_install.py` - removed the unused module variables `_PKG_NAME_RE` and `_SHA256_RE` (CodeQL `py/unused-global-variable`, alerts #210 to #212)
 - `ci/gen_index.py` - the bare `except:` that also caught `BaseException` now catches only `OSError` and `ValueError`, so Ctrl-C and `SystemExit` are no longer swallowed (alert #236); removed the unused `sys` import (alert #234)
 - `doctor.py` - removed the unused `stat` import (alert #238)
 - `guidebook.py` - `subprocess` was used by `cls()` but never imported, which raised `NameError` as soon as the screen was cleared; the import is added
