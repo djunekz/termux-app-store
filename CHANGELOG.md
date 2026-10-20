@@ -8,9 +8,11 @@ and this project adheres to semantic versioning.
 ## [Unreleased]
 
 ### Added
+- `ci/sign_release.sh` - shared signing script used by both `build-termux-repo.yml` and `build-packages-debs.yml`; it refuses to sign with any key other than the pinned fingerprint, signs `Release` into `InRelease` and `Release.gpg`, publishes the public key and verifies both signatures with `gpgv` before the push
+- `SECURITY.md` - new "APT Repository Signing Key" section with the key ID and fingerprint, so the fingerprint can be checked through a channel independent of the download host
 - `ci/gen_index.py` - the `index.html` generator for the GitHub Pages repository, moved out of the base64 blob that was embedded in `build-termux-repo.yml` so it can be read, reviewed and diffed
-- `.github/workflows/build-termux-repo.yml` - new `Sign Release (InRelease + Release.gpg) and publish public key` step: `dists/termux/Release` is signed into `InRelease` (clearsigned) and `Release.gpg` (detached) with the key from the `GPG_PRIVATE_KEY` secret (`GPG_PASSPHRASE` optional), the public key is published as `termux-app-store.gpg` (binary, for apt `signed-by`) and `termux-app-store.asc` (armored), and both signatures are verified with `gpgv` against the exported public key before anything is pushed to `gh-pages`
-- `install-repo.py`, `tasctl` - optional key pinning: when `TAS_KEY_FPR` is set (or `KEY_FINGERPRINT` is filled in `install-repo.py`), the downloaded key is rejected unless its fingerprint matches; this needs `gpg` (`pkg install gnupg`)
+- `.github/workflows/build-termux-repo.yml` - new signing step that runs `ci/sign_release.sh`: `dists/termux/Release` is signed into `InRelease` and `Release.gpg` with the key from the `GPG_PRIVATE_KEY` secret (`GPG_PASSPHRASE` optional), and the public key is published as `termux-app-store.gpg` (binary, for apt `signed-by`) and `termux-app-store.asc` (armored)
+- `install-repo.py`, `tasctl`, `doctor.py` - mandatory key pinning: the signing key fingerprint `D39134A177717A5BEBEEAE7105D70CDBB6D80295` is built in, and a downloaded key is rejected unless the file holds exactly one primary key with that fingerprint, with only public-key, user-id, subkey and signature packets; the check is pure Python (no `gpg` required) and `TAS_KEY_FPR` can override the pin for key-rotation tests
 
 ### Security
 - `install-repo.py`, `tasctl`, `doctor.py`, `ci/gen_index.py` - the apt repository entry no longer uses `deb [trusted=yes]`, which turned off signature verification for the whole repository; the entry is now `deb [signed-by=$PREFIX/etc/apt/keyrings/termux-app-store.gpg] https://djunekz.github.io/termux-app-store termux main`
@@ -28,6 +30,7 @@ and this project adheres to semantic versioning.
 - `install-repo.py`, `tasctl`, `doctor.py`, `ci/gen_index.py`, `.github/workflows/build-termux-repo.yml` - hash comments removed from the source
 
 ### Fixed
+- `.github/workflows/build-packages-debs.yml` - the package publish job regenerated `Packages` and `Release` but never re-signed them, which would have left `InRelease` and `Release.gpg` stale and broken `apt update` after every package build; it now signs through `ci/sign_release.sh` before pushing
 - Open P0 finding: APT authentication - the repository published a `Release` file but no `InRelease` or `Release.gpg`, so clients could only use it with `trusted=yes`; the repository is now signed and clients verify it
 
 ---

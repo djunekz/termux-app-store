@@ -42,6 +42,37 @@ Provide as much detail as possible:
 
 ---
 
+## APT Repository Signing Key
+
+The APT repository at `https://djunekz.github.io/termux-app-store` is
+signed. `InRelease` and `Release.gpg` are produced by CI with the key
+below, and clients verify them with `signed-by`.
+
+| | |
+|---|---|
+| Owner | djunekz <gab288.gab288@passinbox.com> |
+| Type | RSA 4096 |
+| Primary key ID | `05D70CDBB6D80295` |
+| Fingerprint | `D391 34A1 7771 7A5B EBEE AE71 05D7 0CDB B6D8 0295` |
+
+Plain form for copy and paste:
+
+```
+D39134A177717A5BEBEEAE7105D70CDBB6D80295
+```
+
+The same fingerprint is pinned in `install-repo.py`, `tasctl` and
+`doctor.py`. The installers refuse any key that is not exactly one primary
+key with this fingerprint, so a replaced `termux-app-store.gpg` on the
+download host is rejected. Compare the fingerprint above with the one shown
+during installation, and never use `[trusted=yes]`.
+
+Key rotation: a new key is introduced only through a reviewed commit that
+updates the pinned fingerprint and this table. Report suspected key
+compromise privately, as described above.
+
+---
+
 ## Response Timeline
 
 We aim to:

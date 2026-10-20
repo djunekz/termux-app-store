@@ -2,7 +2,7 @@
 # Termux App Store -- Smart Doctor
 # github.com/djunekz/termux-app-store
 
-import os, sys, json, shutil, platform, subprocess, textwrap, re, stat, shlex
+import os, sys, json, shutil, platform, subprocess, textwrap, re, stat, shlex, hashlib
 import urllib.request, urllib.error
 from pathlib import Path
 
@@ -24,6 +24,7 @@ REPO_URL     = "https://djunekz.github.io/termux-app-store"
 KEY_URL      = REPO_URL + "/termux-app-store.gpg"
 KEYRING_FILE = os.path.join(_PFX, "etc/apt/keyrings/termux-app-store.gpg")
 REPO_ENTRY   = f"deb [signed-by={KEYRING_FILE}] {REPO_URL} termux main"
+PINNED_FINGERPRINTS = ("D39134A177717A5BEBEEAE7105D70CDBB6D80295",)
 ARCH_OK      = {"aarch64", "armv7l", "arm", "x86_64", "i686"}
 MIN_PYTHON   = (3, 9)
 MIN_TEXTUAL  = (8, 0, 0)
@@ -391,28 +392,84 @@ def chk_tasctl():
                  fix_hint="bash install.sh  (from inside the repo directory)",
                  category="TAS")
 
+def _pinned():
+    override = os.environ.get("TAS_KEY_FPR", "").replace(" ", "").upper()
+    return (override,) if override else PINNED_FINGERPRINTS
+
+def _verify_key_data(data):
+    if len(data) > 65536:
+        raise ValueError("key file is too large")
+    if data.startswith(b"-----BEGIN"):
+        raise ValueError("key is ASCII-armored, a binary key is required")
+    packets, pos, n = [], 0, len(data)
+    try:
+        while pos < n:
+            hdr = data[pos]
+            pos += 1
+            if not hdr & 0x80:
+                raise ValueError("not an OpenPGP packet stream")
+            if hdr & 0x40:
+                tag = hdr & 0x3F
+                first = data[pos]
+                if first < 192:
+                    length, pos = first, pos + 1
+                elif first < 224:
+                    length, pos = ((first - 192) << 8) + data[pos + 1] + 192, pos + 2
+                elif first == 255:
+                    length, pos = int.from_bytes(data[pos + 1:pos + 5], "big"), pos + 5
+                else:
+                    raise ValueError("unsupported packet length encoding")
+            else:
+                tag = (hdr >> 2) & 0x0F
+                kind = hdr & 0x03
+                if kind == 3:
+                    raise ValueError("unsupported packet length encoding")
+                size = (1, 2, 4)[kind]
+                length = int.from_bytes(data[pos:pos + size], "big")
+                pos += size
+            if pos + length > n:
+                raise ValueError("truncated key file")
+            packets.append((tag, data[pos:pos + length]))
+            pos += length
+    except IndexError:
+        raise ValueError("truncated key file")
+    if not packets or packets[0][0] != 6:
+        raise ValueError("file does not start with a public key")
+    primary, primaries = None, 0
+    for tag, body in packets:
+        if tag not in (2, 6, 13, 14, 17):
+            raise ValueError(f"unexpected OpenPGP packet type {tag}")
+        if tag == 6:
+            if not body or body[0] != 4 or len(body) > 0xFFFF:
+                raise ValueError("only version 4 public keys are supported")
+            primaries += 1
+            primary = hashlib.sha1(b"\x99" + len(body).to_bytes(2, "big") + body).hexdigest().upper()
+        elif tag == 14 and (not body or body[0] != 4):
+            raise ValueError("only version 4 public keys are supported")
+    if primaries != 1:
+        raise ValueError("file must contain exactly one primary key")
+    if primary not in _pinned():
+        raise ValueError(f"key fingerprint {primary} does not match the pinned fingerprint")
+    return primary
+
 def _fix_repo_file():
     try:
         req = urllib.request.Request(KEY_URL, headers={"User-Agent": f"tas-doctor/{VERSION}"})
         with urllib.request.urlopen(req, timeout=20) as r:
             data = r.read(65537)
+        primary = _verify_key_data(data)
     except Exception as e:
-        print(f"  {BRED}XX{R}  Cannot download signing key: {e}")
-        return False
-    if len(data) > 65536 or not data or data[0] not in (0x98, 0x99, 0x9A, 0x9B, 0xC6):
-        print(f"  {BRED}XX{R}  Downloaded key is not a binary OpenPGP public key")
+        print(f"  {BRED}XX{R}  Signing key rejected: {e}")
         return False
     Path(KEYRING_FILE).parent.mkdir(parents=True, exist_ok=True)
     tmp = Path(KEYRING_FILE + ".tmp")
     tmp.write_bytes(data)
     tmp.chmod(0o644)
     os.replace(tmp, KEYRING_FILE)
-    print(f"  {BGRN}OK{R}  Written: {KEYRING_FILE}")
+    print(f"  {BGRN}OK{R}  Key {primary} installed")
 
     Path(SOURCES_DIR).mkdir(parents=True, exist_ok=True)
-    Path(SOURCES_FILE).write_text(
-        REPO_ENTRY + "\n"
-    )
+    Path(SOURCES_FILE).write_text(REPO_ENTRY + "\n")
     print(f"  {BGRN}OK{R}  Written: {SOURCES_FILE}")
     return True
 
@@ -436,6 +493,14 @@ def chk_repo_file():
             if not Path(KEYRING_FILE).exists():
                 return Check("apt repo (tas.list)", WARN,
                              f"signing key missing: {KEYRING_FILE}",
+                             fix_fn=_fix_repo_file,
+                             fix_hint="python3 install-repo.py",
+                             category="Repo")
+            try:
+                _verify_key_data(Path(KEYRING_FILE).read_bytes())
+            except Exception as e:
+                return Check("apt repo (tas.list)", WARN,
+                             f"keyring does not match pinned key: {e}",
                              fix_fn=_fix_repo_file,
                              fix_hint="python3 install-repo.py",
                              category="Repo")

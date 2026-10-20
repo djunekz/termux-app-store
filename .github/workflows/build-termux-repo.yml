@@ -14,6 +14,7 @@ on:
       - 'termux_app_store/termux_app_store_cli.py'
       - 'install-repo.py'
       - 'ci/gen_index.py'
+      - 'ci/sign_release.sh'
   workflow_dispatch:
 
 jobs:
@@ -215,45 +216,7 @@ jobs:
         env:
           GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
-        run: |
-          set -euo pipefail
-          if [ -z "${GPG_PRIVATE_KEY:-}" ]; then
-            echo "::error::Secret GPG_PRIVATE_KEY is not set - refusing to publish an unsigned repository"
-            exit 1
-          fi
-
-          export GNUPGHOME="$(mktemp -d)"
-          chmod 700 "$GNUPGHOME"
-          trap 'gpgconf --kill gpg-agent 2>/dev/null || true; rm -rf "$GNUPGHOME"' EXIT
-
-          printf '%s\n' "$GPG_PRIVATE_KEY" | gpg --batch --import
-          KEY_FPR=$(gpg --batch --list-secret-keys --with-colons | awk -F: '/^fpr:/ {print $10; exit}')
-          [ -n "$KEY_FPR" ] || { echo "::error::No secret key found after import"; exit 1; }
-
-          GPG_ARGS=(--batch --yes --pinentry-mode loopback --local-user "$KEY_FPR" --digest-algo SHA256)
-          if [ -n "${GPG_PASSPHRASE:-}" ]; then
-            PASSFILE="$GNUPGHOME/pass"
-            ( umask 077; printf '%s' "$GPG_PASSPHRASE" > "$PASSFILE" )
-            GPG_ARGS+=(--passphrase-file "$PASSFILE")
-          fi
-
-          cd gh-pages
-          rm -f dists/termux/InRelease dists/termux/Release.gpg
-          gpg "${GPG_ARGS[@]}" --clearsign    -o dists/termux/InRelease   dists/termux/Release
-          gpg "${GPG_ARGS[@]}" --detach-sign  -o dists/termux/Release.gpg dists/termux/Release
-
-          gpg --batch --export "$KEY_FPR"          > termux-app-store.gpg
-          gpg --batch --armor --export "$KEY_FPR"  > termux-app-store.asc
-
-          VERIFY_HOME="$(mktemp -d)"; chmod 700 "$VERIFY_HOME"
-          gpgv --homedir "$VERIFY_HOME" --keyring "$PWD/termux-app-store.gpg" \
-               dists/termux/Release.gpg dists/termux/Release
-          gpgv --homedir "$VERIFY_HOME" --keyring "$PWD/termux-app-store.gpg" \
-               dists/termux/InRelease
-          rm -rf "$VERIFY_HOME"
-
-          echo "Signed with key fingerprint: $KEY_FPR"
-          echo "Pin this in install-repo.py / TAS_KEY_FPR if you want key pinning."
+        run: bash ci/sign_release.sh gh-pages
 
       - name: Copy install-repo.py
         run: cp install-repo.py gh-pages/install-repo.py

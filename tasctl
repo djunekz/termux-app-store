@@ -12,9 +12,13 @@ TASCTL_SYMLINK="$BIN_DIR/$CTL_NAME"
 TASCTL_RAW="https://raw.githubusercontent.com/$REPO/master/tasctl"
 
 PKG_REPO_URL="https://djunekz.github.io/termux-app-store"
-PKG_REPO_ENTRY="deb [trusted=yes] ${PKG_REPO_URL} termux main"
+PKG_KEY_URL="${PKG_REPO_URL}/termux-app-store.gpg"
+PKG_KEYRING_DIR="${PREFIX}/etc/apt/keyrings"
+PKG_KEYRING_FILE="${PKG_KEYRING_DIR}/termux-app-store.gpg"
+PKG_REPO_ENTRY="deb [signed-by=${PKG_KEYRING_FILE}] ${PKG_REPO_URL} termux main"
 PKG_SOURCES_DIR="${PREFIX}/etc/apt/sources.list.d"
 PKG_SOURCES_FILE="${PKG_SOURCES_DIR}/tas.list"
+PKG_KEY_FPRS="${TAS_KEY_FPR:-D39134A177717A5BEBEEAE7105D70CDBB6D80295}"
 
 R=$'\033[0m'
 B=$'\033[1m'
@@ -24,6 +28,9 @@ GREEN=$'\033[32m'
 YELLOW=$'\033[33m'
 CYAN=$'\033[36m'
 MAGENTA=$'\033[35m'
+BRED=$'\033[91m'
+BGREEN=$'\033[92m'
+BCYAN=$'\033[96m'
 
 log()    { printf " %s[*]%s %s\n" "$CYAN$B" "$R" "$*"; }
 ok()     { printf " %s[✔]%s %s\n" "$GREEN$B" "$R" "$*"; }
@@ -49,6 +56,41 @@ banner() {
   printf "%s" "$R"
   printf "       %sTermux App Store Controller%s\n" "$DIM$YELLOW" "$R"
   printf "               %sby %s@djunekz%s\n\n" "$DIM$YELLOW" "$GREEN" "$R"
+}
+
+verify_official_source() {
+  log "Verifying official source..."
+
+  local api_full_name
+  api_full_name=$(curl -fsSL \
+    -H "Accept: application/vnd.github+json" \
+    "https://api.github.com/repos/$REPO" 2>/dev/null \
+    | grep '"full_name"' \
+    | head -1 \
+    | sed 's/.*"full_name": *"\([^"]*\)".*/\1/' || true)
+
+  if [[ "$api_full_name" != "$REPO" ]]; then
+    printf "\n"
+    printf "%s╔══════════════════════════════════════════════════════════╗%s\n" "$BRED$B" "$R"
+    printf "%s║                                                          ║%s\n" "$BRED$B" "$R"
+    printf "%s║   ⚠  BLOCKED — UNOFFICIAL / MODIFIED SOURCE  ⚠           ║%s\n" "$BRED$B" "$R"
+    printf "%s║                                                          ║%s\n" "$BRED$B" "$R"
+    printf "%s║   This tool only works with the official project:        ║%s\n" "$BRED$B" "$R"
+    printf "%s║   github.com/djunekz/termux-app-store                    ║%s\n" "$BRED$B" "$R"
+    printf "%s║                                                          ║%s\n" "$BRED$B" "$R"
+    printf "%s║   Any fork or renamed copy is NOT the official           ║%s\n" "$BRED$B" "$R"
+    printf "%s║   Termux App Store by @djunekz.                          ║%s\n" "$BRED$B" "$R"
+    printf "%s║                                                          ║%s\n" "$BRED$B" "$R"
+    printf "%s║   Get the real one:                                      ║%s\n" "$BRED$B" "$R"
+    printf "%s║                                                          ║%s\n" "$BRED$B" "$R"
+    printf "%s╚══════════════════════════════════════════════════════════╝%s\n" "$BRED$B" "$R"
+    printf "%sCopy this text command for installing termux-app-store:%s\n\n" "$BRED$B" "$R"
+    printf "%s curl -fsSL https://raw.githubusercontent.com/djunekz/termux-app-store/master/tasctl | bash -s install%s\n" "$BGREEN$B" "$R"
+    printf "\n"
+    exit 1
+  fi
+
+  ok "Official source verified: ${B}github.com/$REPO${R}"
 }
 
 get_installed_version() {
@@ -118,7 +160,115 @@ create_wrapper() {
   ok "Wrapper created: $SYMLINK"
 }
 
+verify_pkg_key() {
+  python3 - "$1" "${PKG_KEY_FPRS// /}" <<'PYEOF'
+import hashlib, sys
 
+path, pins = sys.argv[1], [p.upper() for p in sys.argv[2].split(",") if p]
+ALLOWED = (2, 6, 13, 14, 17)
+
+def fail(msg):
+    print(msg)
+    sys.exit(1)
+
+data = open(path, "rb").read()
+if len(data) > 65536:
+    fail("key file is too large")
+if data.startswith(b"-----BEGIN"):
+    fail("key is ASCII-armored, a binary key is required")
+
+packets, pos, n = [], 0, len(data)
+try:
+    while pos < n:
+        hdr = data[pos]
+        pos += 1
+        if not hdr & 0x80:
+            fail("not an OpenPGP packet stream")
+        if hdr & 0x40:
+            tag = hdr & 0x3F
+            first = data[pos]
+            if first < 192:
+                length, pos = first, pos + 1
+            elif first < 224:
+                length, pos = ((first - 192) << 8) + data[pos + 1] + 192, pos + 2
+            elif first == 255:
+                length, pos = int.from_bytes(data[pos + 1:pos + 5], "big"), pos + 5
+            else:
+                fail("unsupported packet length encoding")
+        else:
+            tag = (hdr >> 2) & 0x0F
+            kind = hdr & 0x03
+            if kind == 3:
+                fail("unsupported packet length encoding")
+            size = (1, 2, 4)[kind]
+            length = int.from_bytes(data[pos:pos + size], "big")
+            pos += size
+        if pos + length > n:
+            fail("truncated key file")
+        packets.append((tag, data[pos:pos + length]))
+        pos += length
+except IndexError:
+    fail("truncated key file")
+
+if not packets or packets[0][0] != 6:
+    fail("file does not start with a public key")
+
+keys, primaries = [], 0
+for tag, body in packets:
+    if tag not in ALLOWED:
+        fail("unexpected OpenPGP packet type %d" % tag)
+    if tag in (6, 14):
+        if not body or body[0] != 4 or len(body) > 0xFFFF:
+            fail("only version 4 public keys are supported")
+        fpr = hashlib.sha1(b"\x99" + len(body).to_bytes(2, "big") + body).hexdigest().upper()
+        if tag == 6:
+            primaries += 1
+            keys.append(("Key", fpr))
+        else:
+            keys.append(("Subkey", fpr))
+
+if primaries != 1:
+    fail("file must contain exactly one primary key")
+if keys[0][1] not in pins:
+    fail("key fingerprint %s does not match the pinned fingerprint" % keys[0][1])
+
+for kind, fpr in keys:
+    print(kind, fpr)
+PYEOF
+}
+
+install_pkg_key() {
+  step "Installing repository signing key..."
+  info "Key   : $PKG_KEY_URL"
+  info "File  : $PKG_KEYRING_FILE"
+
+  command -v curl >/dev/null 2>&1 || pkg install -y curl || err "Failed to install curl"
+  command -v python3 >/dev/null 2>&1 || pkg install -y python || err "Failed to install python"
+
+  mkdir -p "$PKG_KEYRING_DIR"
+  local tmp report
+  tmp=$(mktemp "${PKG_KEYRING_DIR}/.tas-key-XXXXXX") || err "Cannot create temp file"
+
+  if ! curl -fsSL --max-filesize 65536 -o "$tmp" "$PKG_KEY_URL"; then
+    rm -f "$tmp"
+    err "Could not download signing key (repository NOT added)"
+  fi
+
+  if ! report=$(verify_pkg_key "$tmp" 2>&1); then
+    rm -f "$tmp"
+    err "Signing key rejected: $report"
+  fi
+
+  local kind fpr
+  while read -r kind fpr; do
+    info "$kind: $fpr"
+  done <<< "$report"
+  ok "Key matches the pinned fingerprint"
+
+  chmod 644 "$tmp"
+  mv -f "$tmp" "$PKG_KEYRING_FILE"
+  ok "Key installed: $PKG_KEYRING_FILE"
+}
 
 add_pkg_repo() {
   step "Adding apt repository..."
@@ -127,26 +277,27 @@ add_pkg_repo() {
 
   mkdir -p "$PKG_SOURCES_DIR"
 
-  if [[ -f "$PKG_SOURCES_FILE" ]]; then
-    if grep -q "$PKG_REPO_URL" "$PKG_SOURCES_FILE" 2>/dev/null; then
-      ok "Repository already present: $PKG_SOURCES_FILE"
-      return 0
-    fi
+  if [[ -f "$PKG_SOURCES_FILE" ]] && grep -q "trusted=yes" "$PKG_SOURCES_FILE" 2>/dev/null; then
+    warn "Old insecure entry ([trusted=yes]) found -- migrating to signed-by"
   fi
 
-  printf "# Termux App Store — https://github.com/%s\n%s\n" \
-    "$REPO" "$PKG_REPO_ENTRY" > "$PKG_SOURCES_FILE"
+  install_pkg_key
+
+  printf "%s\n" "$PKG_REPO_ENTRY" > "$PKG_SOURCES_FILE"
   ok "Repository added: $PKG_SOURCES_FILE"
 }
 
 remove_pkg_repo() {
   step "Removing apt repository..."
-  if [[ -f "$PKG_SOURCES_FILE" ]]; then
-    rm -f "$PKG_SOURCES_FILE"
-    ok "Removed: $PKG_SOURCES_FILE"
-  else
-    warn "Repository file not found: $PKG_SOURCES_FILE"
-  fi
+  local f
+  for f in "$PKG_SOURCES_FILE" "$PKG_KEYRING_FILE"; do
+    if [[ -f "$f" ]]; then
+      rm -f "$f"
+      ok "Removed: $f"
+    else
+      warn "File not found: $f"
+    fi
+  done
 }
 
 install_app_source() {
@@ -442,6 +593,11 @@ cmd_update() {
 
 cmd="${1:-help}"
 flag="${2:-}"
+
+case "$cmd" in
+  help|-h|--help) : ;;
+  *) verify_official_source ;;
+esac
 
 case "$cmd" in
   install)
