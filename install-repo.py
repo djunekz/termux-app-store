@@ -8,6 +8,7 @@ import subprocess
 import platform
 import shutil
 import tempfile
+import hashlib
 import urllib.request
 import urllib.error
 
@@ -33,8 +34,13 @@ KEYRING_DIR  = os.path.join(_PREFIX, "etc/apt/keyrings")
 KEYRING_FILE = os.path.join(KEYRING_DIR, "termux-app-store.gpg")
 REPO_ENTRY   = f"deb [signed-by={KEYRING_FILE}] {REPO_URL} termux main"
 
-KEY_FINGERPRINT = os.environ.get("TAS_KEY_FPR", "").replace(" ", "").upper()
-MAX_KEY_SIZE    = 64 * 1024
+PINNED_FINGERPRINTS = ("D39134A177717A5BEBEEAE7105D70CDBB6D80295",)
+MAX_KEY_SIZE        = 64 * 1024
+ALLOWED_PACKET_TAGS = (2, 6, 13, 14, 17)
+
+def pinned_fingerprints():
+    override = os.environ.get("TAS_KEY_FPR", "").replace(" ", "").upper()
+    return (override,) if override else PINNED_FINGERPRINTS
 
 def TW(): return shutil.get_terminal_size((72, 24)).columns
 def W():  return min(TW(), 76)
@@ -202,32 +208,73 @@ def repo_in_main_sources() -> bool:
     with open(MAIN_SOURCES) as f:
         return REPO_URL in f.read()
 
-def _is_openpgp_binary(data: bytes) -> bool:
-    if not data or data.startswith(b"-----BEGIN"):
-        return False
-    return data[0] in (0x98, 0x99, 0x9A, 0x9B, 0xC6)
+class KeyRejected(ValueError):
+    def __init__(self, message, got=None):
+        super().__init__(message)
+        self.got = got
 
-def _key_fingerprints(path):
-    gpg = shutil.which("gpg")
-    if not gpg:
-        return None
+def _parse_packets(data):
+    packets, pos, n = [], 0, len(data)
     try:
-        out = subprocess.run(
-            [gpg, "--batch", "--no-tty", "--show-keys", "--with-colons", path],
-            capture_output=True, text=True, timeout=30,
-        ).stdout
-    except Exception:
-        return None
-    result, kind = [], "Key"
-    for ln in out.splitlines():
-        parts = ln.split(":")
-        if parts[0] == "pub":
-            kind = "Key"
-        elif parts[0] == "sub":
-            kind = "Subkey"
-        elif parts[0] == "fpr" and len(parts) > 9:
-            result.append((kind, parts[9]))
-    return result
+        while pos < n:
+            hdr = data[pos]
+            pos += 1
+            if not hdr & 0x80:
+                raise KeyRejected("not an OpenPGP packet stream")
+            if hdr & 0x40:
+                tag = hdr & 0x3F
+                first = data[pos]
+                if first < 192:
+                    length, pos = first, pos + 1
+                elif first < 224:
+                    length, pos = ((first - 192) << 8) + data[pos + 1] + 192, pos + 2
+                elif first == 255:
+                    length, pos = int.from_bytes(data[pos + 1:pos + 5], "big"), pos + 5
+                else:
+                    raise KeyRejected("unsupported packet length encoding")
+            else:
+                tag = (hdr >> 2) & 0x0F
+                kind = hdr & 0x03
+                if kind == 3:
+                    raise KeyRejected("unsupported packet length encoding")
+                size = (1, 2, 4)[kind]
+                length = int.from_bytes(data[pos:pos + size], "big")
+                pos += size
+            if pos + length > n:
+                raise KeyRejected("truncated key file")
+            packets.append((tag, data[pos:pos + length]))
+            pos += length
+    except IndexError:
+        raise KeyRejected("truncated key file")
+    return packets
+
+def verify_key_data(data):
+    if len(data) > MAX_KEY_SIZE:
+        raise KeyRejected("key file is too large")
+    if data.startswith(b"-----BEGIN"):
+        raise KeyRejected("key is ASCII-armored, a binary key is required")
+    packets = _parse_packets(data)
+    if not packets or packets[0][0] != 6:
+        raise KeyRejected("file does not start with a public key")
+
+    keys, primaries = [], 0
+    for tag, body in packets:
+        if tag not in ALLOWED_PACKET_TAGS:
+            raise KeyRejected(f"unexpected OpenPGP packet type {tag}")
+        if tag in (6, 14):
+            if not body or body[0] != 4 or len(body) > 0xFFFF:
+                raise KeyRejected("only version 4 public keys are supported")
+            fpr = hashlib.sha1(b"\x99" + len(body).to_bytes(2, "big") + body).hexdigest().upper()
+            if tag == 6:
+                primaries += 1
+                keys.append(("Key", fpr))
+            else:
+                keys.append(("Subkey", fpr))
+    if primaries != 1:
+        raise KeyRejected("file must contain exactly one primary key")
+    if keys[0][1] not in pinned_fingerprints():
+        raise KeyRejected("key fingerprint does not match the pinned fingerprint", got=keys[0][1])
+    return keys
 
 def fmt_fpr(fpr):
     groups = [fpr[i:i + 4] for i in range(0, len(fpr), 4)]
@@ -247,35 +294,25 @@ def install_key() -> bool:
         info("The repository will NOT be added without a verifiable key.")
         return False
 
-    if len(data) > MAX_KEY_SIZE or not _is_openpgp_binary(data):
-        err("Downloaded file is not a valid binary OpenPGP public key")
+    try:
+        keys = verify_key_data(data)
+    except KeyRejected as e:
+        err(f"Signing key rejected: {e}")
+        if e.got:
+            blank()
+            fields([("Got", fmt_fpr(e.got)),
+                    ("Expected", fmt_fpr(pinned_fingerprints()[0]))])
+        info("Nothing was installed.")
         return False
+
+    fields([(kind, fmt_fpr(x)) for kind, x in keys])
+    ok("Key matches the pinned fingerprint")
 
     os.makedirs(KEYRING_DIR, exist_ok=True)
     tmp_fd, tmp_path = tempfile.mkstemp(dir=KEYRING_DIR, prefix=".tas-key-")
     try:
         with os.fdopen(tmp_fd, "wb") as f:
             f.write(data)
-
-        fprs = _key_fingerprints(tmp_path)
-        if KEY_FINGERPRINT:
-            if fprs is None:
-                err("TAS_KEY_FPR is set but gpg is not installed (pkg install gnupg)")
-                return False
-            if KEY_FINGERPRINT not in [x.upper() for _, x in fprs]:
-                err("Key fingerprint does NOT match the pinned fingerprint")
-                blank()
-                fields([("Got", [l for _, x in fprs[:1] for l in fmt_fpr(x)]),
-                        ("Expected", fmt_fpr(KEY_FINGERPRINT))])
-                return False
-            ok("Fingerprint matches the pinned value")
-            blank()
-        elif fprs:
-            fields([(kind, fmt_fpr(x)) for kind, x in fprs])
-        else:
-            info("Install gnupg to display and verify the key fingerprint.")
-            blank()
-
         os.chmod(tmp_path, 0o644)
         os.replace(tmp_path, KEYRING_FILE)
         tmp_path = None
