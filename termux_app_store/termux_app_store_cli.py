@@ -30,6 +30,32 @@ from pathlib import Path
 from typing import Optional
 
 try:
+    from termux_app_store import store_common as _store
+except ImportError:
+    try:
+        import store_common as _store
+    except ImportError:
+        import importlib.util as _ilu
+        _spec = _ilu.spec_from_file_location(
+            "store_common", Path(__file__).resolve().with_name("store_common.py")
+        )
+        _store = _ilu.module_from_spec(_spec)
+        sys.modules["store_common"] = _store
+        _spec.loader.exec_module(_store)
+
+CACHE_FILE = _store.CACHE_FILE
+INDEX_CACHE_FILE = _store.INDEX_CACHE_FILE
+INDEX_CACHE = INDEX_CACHE_FILE
+FINGERPRINT_STRING = _store.FINGERPRINT_STRING
+GITHUB_REPO = _store.GITHUB_REPO
+INDEX_URL = _store.INDEX_URL
+_PKG_NAME_RE = _store.PKG_NAME_RE
+_ver_tuple = _store.ver_tuple
+is_safe_pkg_name = _store.is_safe_pkg_name
+has_store_fingerprint = _store.has_store_fingerprint
+is_valid_root = _store.is_valid_root
+
+try:
     from termux_app_store.fast_install import FastInstaller
     from termux_app_store.core.package import Package
     _BINARY_CACHE_AVAILABLE = True
@@ -45,29 +71,9 @@ except ImportError:
         _FAST_INSTALL_AVAILABLE = True
     except ImportError:
         _FAST_INSTALL_AVAILABLE = False
-        MIRRORS = [
-            {"name": "GitHub Pages",  "base_url": "https://djunekz.github.io/termux-app-store"},
-            {"name": "Cloudflare CDN","base_url": "https://termux-app-store.pages.dev"},
-            {"name": "jsDelivr CDN",  "base_url": "https://cdn.jsdelivr.net/gh/djunekz/termux-app-store@gh-pages"},
-            {"name": "Github Raw",    "base_url": "https://raw.githubusercontent.com/djunekz/termux-app-store/gh-pages"},
-        ]
+        MIRRORS = _store.MIRRORS
 
-CACHE_FILE = (
-    Path(os.environ.get("XDG_CACHE_HOME", Path.home() / ".cache"))
-    / "termux-app-store"
-    / "path.json"
-)
-
-INDEX_CACHE_FILE = (
-    Path(os.environ.get("XDG_CACHE_HOME", Path.home() / ".cache"))
-    / "termux-app-store"
-    / "index.json"
-)
-
-FINGERPRINT_STRING = "Termux App Store Official"
-GITHUB_REPO        = "djunekz/termux-app-store"
 GITHUB_API_TAG     = f"https://api.github.com/repos/{GITHUB_REPO}/releases/latest"
-INDEX_URL          = f"https://raw.githubusercontent.com/{GITHUB_REPO}/master/tools/index.json"
 
 _SELF_FILES = {
     "termux_app_store_cli.py": f"https://raw.githubusercontent.com/{GITHUB_REPO}/master/termux_app_store/termux_app_store_cli.py",
@@ -98,159 +104,31 @@ MAGENTA = "\033[35m"
 DIM     = "\033[2m"
 
 
-def _ver_tuple(v: str):
-    v = v.strip()
-    parts = v.split("-", 1)
-    base = parts[0]
-    rev_str = parts[1] if len(parts) > 1 else "0"
-
-    base_parts = []
-    for seg in re.split(r"[._]", base):
-        try:
-            base_parts.append(int(seg))
-        except ValueError:
-            base_parts.append(0)
-
-    try:
-        rev = int(rev_str)
-    except ValueError:
-        rev = 0
-
-    return tuple(base_parts) + (rev,)
-
-
 def is_installed_newer_or_equal(installed: str, store: str) -> bool:
     return _ver_tuple(installed) >= _ver_tuple(store)
 
 
-def has_store_fingerprint(path: Path) -> bool:
-    build = path / "build-package.sh"
-    if not build.exists():
-        return False
-    try:
-        with build.open(errors="ignore") as f:
-            for _ in range(20):
-                line = f.readline()
-                if not line:
-                    break
-                if FINGERPRINT_STRING in line:
-                    return True
-    except Exception: # pragma: no cover
-        pass # pragma: no cover
-    return False
-
-
-def is_valid_root(path: Path) -> bool:
-    if not path.is_dir():
-        return False
-    if not (path / "packages").is_dir():
-        return False
-    pip_home = Path.home() / ".termux-app-store"
-    if path.resolve() == pip_home.resolve():
-        return True
-    return (path / "build-package.sh").is_file() and has_store_fingerprint(path)
-
-
 def load_cached_root():
-    try:
-        if CACHE_FILE.exists():
-            data = json.loads(CACHE_FILE.read_text())
-            p = Path(data.get("app_root", "")).expanduser()
-            if is_valid_root(p):
-                return p.resolve()
-    except Exception:
-        pass
-    return None
+    return _store.load_cached_root(CACHE_FILE)
 
 
 def save_cached_root(path: Path):
-    try:
-        CACHE_FILE.parent.mkdir(parents=True, exist_ok=True)
-        CACHE_FILE.write_text(json.dumps({"app_root": str(path)}, indent=2))
-    except Exception:
-        pass
+    _store.save_cached_root(path, CACHE_FILE)
 
 
 def resolve_app_root() -> Path:
-    env = os.environ.get("TERMUX_APP_STORE_HOME")
-    if env:
-        p = Path(env).expanduser().resolve()
-        if is_valid_root(p):
-            save_cached_root(p)
-            return p
-
-    cached = load_cached_root()
-    if cached:
-        return cached
-
-    if getattr(sys, "frozen", False):
-        base = Path(sys.executable).resolve().parent
-        if is_valid_root(base):
-            save_cached_root(base)
-            return base
-
-    source_base = Path(__file__).resolve().parent.parent
-    if is_valid_root(source_base):
-        save_cached_root(source_base)
-        return source_base
-
-    pip_home = Path.home() / ".termux-app-store"
-    pip_home.mkdir(parents=True, exist_ok=True)
-    (pip_home / "packages").mkdir(exist_ok=True)
-    save_cached_root(pip_home)
-    return pip_home
+    return _store.resolve_app_root(__file__, CACHE_FILE)
 
 
 
-def _verify_downloaded_script(raw: bytes, env_sha256_var: str) -> bool:
-    if not raw:
-        return False
-
-    expected_sha256 = os.environ.get(env_sha256_var, "").strip().lower()
-    actual_sha256 = hashlib.sha256(raw).hexdigest()
-    if expected_sha256:
-        if actual_sha256 != expected_sha256:
-            return False
-    elif os.environ.get("TERMUX_APP_STORE_ALLOW_UNVERIFIED_BUILD_SH") != "1":
-        print(f"  {RED}✗  No pinned checksum for downloaded build-package.sh{R}")
-        print(f"  {DIM}SHA256 of download: {actual_sha256}{R}")
-        print(f"  {DIM}Review it, then export {env_sha256_var}=<sha256> or clone the repository.{R}")
-        return False
-
-    syntax_check = subprocess.run(
-        ["bash", "-n"], input=raw, capture_output=True
-    )
-    return syntax_check.returncode == 0
+def _cli_log(kind: str, message: str) -> None:
+    color = {"ok": GREEN, "error": RED, "dim": DIM}.get(kind, "")
+    symbol = {"ok": "✔  ", "error": "✗  "}.get(kind, "")
+    print(f"  {color}{symbol}{message}{R}")
 
 
 def ensure_build_package_sh(app_root: Path) -> bool:
-    build_pkg = app_root / "build-package.sh"
-    if build_pkg.exists():
-        return True
-    packaged = Path(__file__).resolve().parent / "data" / "build-package.sh"
-    if packaged.is_file():
-        try:
-            shutil.copy2(packaged, build_pkg)
-            build_pkg.chmod(0o755)
-            return True
-        except OSError:
-            return False
-    url = f"https://raw.githubusercontent.com/{GITHUB_REPO}/master/build-package.sh"
-    try:
-        print(f"  {DIM}Downloading build-package.sh...{R}")
-        req = urllib.request.Request(url, headers={"User-Agent": "termux-app-store-cli"})
-        with urllib.request.urlopen(req, timeout=15) as resp:
-            raw = resp.read()
-            if raw and _verify_downloaded_script(raw, "TERMUX_APP_STORE_BUILD_SH_SHA256"):
-                build_pkg.write_bytes(raw)
-                build_pkg.chmod(0o755)
-                print(f"  {GREEN}✔  build-package.sh ready.{R}")
-                return True
-            elif raw:
-                print(f"  {RED}✗  build-package.sh failed verification — refusing to use it{R}")
-    except Exception as e:
-        print(f"  {RED}✗  Failed to download build-package.sh: {e}{R}")
-    return False
+    return _store.ensure_build_package_sh(app_root, _cli_log, "termux-app-store-cli")
 
 
 def fetch_index() -> list:
@@ -282,13 +160,7 @@ fetch_index_from_github = fetch_index
 
 
 def load_index_cache() -> list:
-    try:
-        if INDEX_CACHE_FILE.exists():
-            data = json.loads(INDEX_CACHE_FILE.read_text())
-            return data.get("packages", [])
-    except Exception:
-        pass
-    return []
+    return _store.load_index_cache(INDEX_CACHE_FILE)
 
 
 def load_packages_from_local(packages_dir: Path) -> list:
@@ -435,12 +307,6 @@ def unhold_package(name: str):
         pass
 
 
-_PKG_NAME_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._+-]*$")
-
-def is_safe_pkg_name(name: str) -> bool:
-    return bool(name) and bool(_PKG_NAME_RE.match(name)) and ".." not in name
-
-
 def cleanup_package_files(name: str) -> int:
     if not is_safe_pkg_name(name):
         return 0
@@ -511,34 +377,10 @@ def cmd_show(packages_dir: Path, name: str):
 
 
 def ensure_package_files(packages_dir: Path, name: str, force_update: bool = False) -> bool:
-    if not is_safe_pkg_name(name):
-        return False
-
-    pkg_dir = packages_dir / name
-    build_sh = pkg_dir / "build.sh"
-
-    if build_sh.exists() and not force_update:
-        return True
-
-    url = (
-        f"https://raw.githubusercontent.com/{GITHUB_REPO}/master/packages/{name}/build.sh"
+    expected = _store.lookup_recipe_sha256(name, INDEX_CACHE_FILE)
+    return _store.download_recipe(
+        packages_dir, name, expected, force_update, _cli_log, "termux-app-store-cli"
     )
-    try:
-        pkg_dir.mkdir(parents=True, exist_ok=True)
-        req = urllib.request.Request(url, headers={"User-Agent": "termux-app-store-cli"})
-        with urllib.request.urlopen(req, timeout=10) as resp:
-            raw = resp.read()
-            if raw:
-                syntax_check = subprocess.run(
-                    ["bash", "-n"], input=raw, capture_output=True
-                )
-                if syntax_check.returncode != 0:
-                    return False
-                build_sh.write_bytes(raw)
-                return True
-    except Exception:
-        pass
-    return False
 
 
 def _get_arch() -> str:
@@ -1324,8 +1166,6 @@ CMD_ALIASES = {
     "--help":       "help",
 }
 
-
-INDEX_CACHE = INDEX_CACHE_FILE
 
 def _load_package_from_disk(pkg_dir: Path) -> dict:
     name = pkg_dir.name

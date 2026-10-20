@@ -5,54 +5,18 @@ from pathlib import Path
 from unittest.mock import patch, MagicMock
 
 
-def _ver_tuple(v: str):
-    v = v.strip()
-    parts = v.split("-", 1)
-    base = parts[0]
-    rev_str = parts[1] if len(parts) > 1 else "0"
-    base_parts = []
-    for seg in re.split(r"[._]", base):
-        try:
-            base_parts.append(int(seg))
-        except ValueError:
-            base_parts.append(0)
-    try:
-        rev = int(rev_str)
-    except ValueError:
-        rev = 0
-    return tuple(base_parts) + (rev,)
+from _loader import load_cli
+from conftest import make_valid_root
 
-
-def is_installed_newer_or_equal(installed: str, store: str) -> bool:
-    return _ver_tuple(installed) >= _ver_tuple(store)
+_cli = load_cli()
+_ver_tuple = _cli._ver_tuple
+is_installed_newer_or_equal = _cli.is_installed_newer_or_equal
+CMD_ALIASES = _cli.CMD_ALIASES
 
 
 def get_status_pure(installed_version, store_version: str) -> str:
-    """Pure logic dari get_status() tanpa ANSI color codes."""
-    if installed_version is None:
-        return "NOT INSTALLED"
-    if is_installed_newer_or_equal(installed_version, store_version):
-        return "INSTALLED"
-    return "UPDATE"
-
-
-CMD_ALIASES = {
-    "list":      "list",
-    "-l":        "list",
-    "-L":        "list",
-    "install":   "install",
-    "i":         "install",
-    "-i":        "install",
-    "uninstall": "uninstall",
-    "show":      "show",
-    "update":    "update",
-    "upgrade":   "upgrade",
-    "version":   "version",
-    "-v":        "version",
-    "help":      "help",
-    "-h":        "help",
-    "--help":    "help",
-}
+    with patch.object(_cli, "get_installed_version", return_value=installed_version):
+        return _cli.get_status("pkg", store_version)[0]
 
 
 class TestGetStatusLogic:
@@ -195,62 +159,65 @@ class TestCmdAliases:
         assert CMD_ALIASES.get("--version") is None
 
     def test_all_targets_are_valid(self):
-        valid = {"list", "install", "uninstall", "show", "update", "upgrade", "version", "help"}
+        valid = {"list", "search", "install", "uninstall", "fix-install", "show", "update", "upgrade", "version", "mirrors", "cache", "help"}
         for alias, target in CMD_ALIASES.items():
             assert target in valid, f"'{alias}' → unknown target '{target}'"
 
     def test_total_alias_count(self):
-        assert len(CMD_ALIASES) == 15
+        assert len(CMD_ALIASES) == 28
+
+    @pytest.mark.parametrize("alias,target", [
+        ("search", "search"), ("find", "search"), ("-f", "search"), ("-s", "search"),
+        ("un", "uninstall"), ("remove", "uninstall"),
+        ("fix-install", "fix-install"), ("--fix-install", "fix-install"), ("-fi", "fix-install"),
+        ("mirrors", "mirrors"), ("-m", "mirrors"), ("cache", "cache"), ("-c", "cache"),
+    ])
+    def test_aliases_missing_from_the_old_copy(self, alias, target):
+        assert CMD_ALIASES[alias] == target
 
 
 class TestCacheHandling:
 
-    def test_write_and_read_cache(self, tmp_path):
-        cache_file = tmp_path / "path.json"
-        app_root = tmp_path / "termux-app-store"
+    def test_write_and_read_cache(self, tmp_path, monkeypatch):
+        monkeypatch.setenv("HOME", str(tmp_path / "home"))
+        monkeypatch.setattr(_cli, "CACHE_FILE", tmp_path / "path.json")
+        root = make_valid_root(tmp_path / "termux-app-store")
+        _cli.save_cached_root(root)
+        assert json.loads((tmp_path / "path.json").read_text())["app_root"] == str(root)
+        assert _cli.load_cached_root() == root.resolve()
 
-        cache_file.write_text(json.dumps({"app_root": str(app_root)}, indent=2))
+    def test_cache_creates_parent_dirs(self, tmp_path, monkeypatch):
+        monkeypatch.setenv("HOME", str(tmp_path / "home"))
+        monkeypatch.setattr(_cli, "CACHE_FILE", tmp_path / "deep" / "nested" / "path.json")
+        _cli.save_cached_root(make_valid_root(tmp_path / "root"))
+        assert (tmp_path / "deep" / "nested" / "path.json").exists()
 
-        data = json.loads(cache_file.read_text())
-        assert data["app_root"] == str(app_root)
+    def test_cache_invalid_json_returns_none(self, tmp_path, monkeypatch):
+        monkeypatch.setattr(_cli, "CACHE_FILE", tmp_path / "path.json")
+        (tmp_path / "path.json").write_text("{ invalid json {{")
+        assert _cli.load_cached_root() is None
 
-    def test_cache_creates_parent_dirs(self, tmp_path):
-        cache_file = tmp_path / "deep" / "nested" / "path.json"
-        cache_file.parent.mkdir(parents=True, exist_ok=True)
-        cache_file.write_text(json.dumps({"app_root": "/some/path"}))
-        assert cache_file.exists()
+    def test_cache_missing_key_returns_none(self, tmp_path, monkeypatch):
+        monkeypatch.setattr(_cli, "CACHE_FILE", tmp_path / "path.json")
+        (tmp_path / "path.json").write_text(json.dumps({"other_key": "value"}))
+        assert _cli.load_cached_root() is None
 
-    def test_cache_invalid_json_returns_none(self, tmp_path):
-        cache_file = tmp_path / "path.json"
-        cache_file.write_text("{ invalid json {{")
-        result = None
-        try:
-            data = json.loads(cache_file.read_text())
-            result = data.get("app_root")  # pragma: no cover
-        except Exception:
-            result = None
-        assert result is None
+    def test_cache_missing_key_is_not_treated_as_the_current_directory(self, tmp_path, monkeypatch):
+        monkeypatch.setenv("HOME", str(tmp_path / "home"))
+        monkeypatch.chdir(make_valid_root(tmp_path / "cwd_is_a_valid_root"))
+        monkeypatch.setattr(_cli, "CACHE_FILE", tmp_path / "path.json")
+        (tmp_path / "path.json").write_text(json.dumps({"app_root": ""}))
+        assert _cli.load_cached_root() is None
 
-    def test_cache_missing_key_returns_empty(self, tmp_path):
-        cache_file = tmp_path / "path.json"
-        cache_file.write_text(json.dumps({"other_key": "value"}))
-        data = json.loads(cache_file.read_text())
-        assert data.get("app_root", "") == ""
+    def test_cache_nonexistent_file(self, tmp_path, monkeypatch):
+        monkeypatch.setattr(_cli, "CACHE_FILE", tmp_path / "nonexistent.json")
+        assert _cli.load_cached_root() is None
 
-    def test_cache_nonexistent_file(self, tmp_path):
-        cache_file = tmp_path / "nonexistent.json"
-        assert not cache_file.exists()
-        result = None
-        try:
-            data = json.loads(cache_file.read_text())
-            result = data.get("app_root")  # pragma: no cover
-        except Exception:
-            result = None
-        assert result is None
-
-    def test_cache_overwrite(self, tmp_path):
-        cache_file = tmp_path / "path.json"
-        cache_file.write_text(json.dumps({"app_root": "/old/path"}))
-        cache_file.write_text(json.dumps({"app_root": "/new/path"}))
-        data = json.loads(cache_file.read_text())
-        assert data["app_root"] == "/new/path"
+    def test_cache_overwrite(self, tmp_path, monkeypatch):
+        monkeypatch.setenv("HOME", str(tmp_path / "home"))
+        monkeypatch.setattr(_cli, "CACHE_FILE", tmp_path / "path.json")
+        first = make_valid_root(tmp_path / "old")
+        second = make_valid_root(tmp_path / "new")
+        _cli.save_cached_root(first)
+        _cli.save_cached_root(second)
+        assert _cli.load_cached_root() == second.resolve()

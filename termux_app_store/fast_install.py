@@ -14,7 +14,21 @@ import urllib.error
 from pathlib import Path
 from typing import Optional, Callable
 
-GITHUB_REPO   = "djunekz/termux-app-store"
+try:
+    from termux_app_store import store_common as _common
+except ImportError:
+    try:
+        import store_common as _common
+    except ImportError:
+        import importlib.util as _ilu
+        _spec = _ilu.spec_from_file_location(
+            "store_common", Path(__file__).resolve().with_name("store_common.py")
+        )
+        _common = _ilu.module_from_spec(_spec)
+        sys.modules["store_common"] = _common
+        _spec.loader.exec_module(_common)
+
+GITHUB_REPO   = _common.GITHUB_REPO
 CACHE_BASE    = Path(os.environ.get("XDG_CACHE_HOME", Path.home() / ".cache")) / "termux-app-store"
 DEB_CACHE_DIR = CACHE_BASE / "debs"
 MIRROR_CACHE  = CACHE_BASE / "best-mirror.json"
@@ -24,26 +38,7 @@ MIRROR_TTL    = 86400   # 24 hours
 DEB_TTL       = 604800  # 7 days
 INDEX_TTL     = 3600    # 1 hours
 
-MIRRORS = [
-    {
-        "id":       "cloudflare",
-        "name":     "Cloudflare CDN",
-        "base_url": "https://termux-app-store.pages.dev",
-        "priority": 1,
-    },
-    {
-        "id":       "github-pages",
-        "name":     "GitHub Pages",
-        "base_url": "https://djunekz.github.io/termux-app-store",
-        "priority": 2,
-    },
-    {
-        "id":       "jsdelivr",
-        "name":     "jsDelivr CDN",
-        "base_url": "https://cdn.jsdelivr.net/gh/djunekz/termux-app-store@gh-pages",
-        "priority": 3,
-    },
-]
+MIRRORS = _common.MIRRORS
 
 DEB_PATH_PATTERN = "pool/main/{pkg}_{version}_{arch}.deb"
 
@@ -52,16 +47,12 @@ SHA256_SIDECAR_URL = (
     "{pkg}_{version}_{arch}.deb.sha256"
 )
 
-_SAFE_PKG   = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._+-]*$")
+_SAFE_PKG   = _common.PKG_NAME_RE
 _SAFE_VER   = re.compile(r"^[A-Za-z0-9][A-Za-z0-9.+~:-]*$")
 _SAFE_ARCH  = re.compile(r"^[a-z0-9_]+$")
 _SHA256_RE  = re.compile(r"^[0-9a-f]{64}$")
 
-INDEX_URLS = [
-    f"https://raw.githubusercontent.com/{GITHUB_REPO}/master/tools/index.json",
-    "https://termux-app-store.pages.dev/tools/index.json",
-    "https://djunekz.github.io/termux-app-store/tools/index.json",
-]
+INDEX_URLS = _common.index_urls()
 
 CACHE_BASE.mkdir(parents=True, exist_ok=True)
 DEB_CACHE_DIR.mkdir(parents=True, exist_ok=True)
@@ -79,11 +70,7 @@ def _sha256_file(path: Path) -> str:
             h.update(chunk)
     return h.hexdigest()
 
-def _normalize_sha256(value) -> str:
-    if not isinstance(value, str):
-        return ""
-    value = value.strip().lower()
-    return value if _SHA256_RE.match(value) else ""
+_normalize_sha256 = _common.normalize_sha256
 
 def _valid_index(data) -> bool:
     if not isinstance(data, dict):
@@ -603,41 +590,19 @@ def _fallback_build_from_source(pkg_name: str,
     return proc.returncode == 0
 
 def _packaged_build_script() -> Optional[Path]:
-    candidate = Path(__file__).resolve().parent / "data" / "build-package.sh"
-    return candidate if candidate.is_file() else None
+    return _common.packaged_build_script()
 
 def _ensure_recipe(pkg_name: str, app_root: Path, _log: Callable) -> bool:
-    recipe = app_root / "packages" / pkg_name / "build.sh"
-    if recipe.is_file():
+    if (app_root / "packages" / pkg_name / "build.sh").is_file():
         return True
 
     info = get_pkg_info(pkg_name) or {}
     expected = _normalize_sha256(info.get("recipe_sha256"))
-    if not expected:
-        _log("✗ The index has no recipe checksum for this package — refusing to download its build.sh")
-        return False
 
-    url = f"https://raw.githubusercontent.com/{GITHUB_REPO}/master/packages/{pkg_name}/build.sh"
-    try:
-        req = urllib.request.Request(url, headers={"User-Agent": "termux-app-store"})
-        with urllib.request.urlopen(req, timeout=15) as resp:
-            data = resp.read()
-    except Exception as e:
-        _log(f"✗ Failed to download the recipe: {e}")
-        return False
+    def adapter(kind: str, message: str) -> None:
+        _log(f"✗ {message}" if kind == "error" else message)
 
-    actual = hashlib.sha256(data).hexdigest()
-    if actual != expected:
-        _log("✗ Recipe SHA256 does not match the index — refusing to run it")
-        _log(f"  Expected: {expected}")
-        _log(f"  Got:      {actual}")
-        return False
-
-    recipe.parent.mkdir(parents=True, exist_ok=True)
-    tmp_recipe = recipe.with_suffix(".part")
-    tmp_recipe.write_bytes(data)
-    os.replace(tmp_recipe, recipe)
-    return True
+    return _common.download_recipe(app_root / "packages", pkg_name, expected, False, adapter)
 
 def _get_app_root() -> Path:
     env = os.environ.get("TERMUX_APP_STORE_HOME")

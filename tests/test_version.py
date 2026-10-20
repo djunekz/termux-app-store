@@ -2,29 +2,11 @@ import re
 import pytest
 
 
-def _ver_tuple(v: str):
-    v = v.strip()
-    parts = v.split("-", 1)
-    base = parts[0]
-    rev_str = parts[1] if len(parts) > 1 else "0"
+from _loader import load_cli
 
-    base_parts = []
-    for seg in re.split(r"[._]", base):
-        try:
-            base_parts.append(int(seg))
-        except ValueError:
-            base_parts.append(0)
-
-    try:
-        rev = int(rev_str)
-    except ValueError:
-        rev = 0
-
-    return tuple(base_parts) + (rev,)
-
-
-def is_installed_newer_or_equal(installed: str, store: str) -> bool:
-    return _ver_tuple(installed) >= _ver_tuple(store)
+_cli = load_cli()
+_ver_tuple = _cli._ver_tuple
+is_installed_newer_or_equal = _cli.is_installed_newer_or_equal
 
 
 class TestVerTuple:

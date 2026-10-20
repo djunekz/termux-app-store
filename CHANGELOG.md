@@ -11,6 +11,8 @@ and this project adheres to semantic versioning.
 - `tests/test_fast_install_security.py` - regression tests for checksum-gated cache and install, recipe and index checksums, the packaged `build-package.sh`, the build workflow (full SHA256, fail-closed steps, pool handling, docker step) and the recipe fixes below
 - `termux_app_store/data/build-package.sh` - copy of `build-package.sh` shipped inside the wheel; a test keeps both files identical
 - `tools/build.py` - every index entry now carries `recipe_sha256`, the SHA256 of the package's `build.sh`
+- `termux_app_store/store_common.py` - one shared module for the logic that used to be copied into the CLI, the TUI and `fast_install.py`: version comparison, package-name validation, app-root resolution and cache, index cache, the mirror list, `build-package.sh` handling and recipe download
+- `tests/test_store_common.py`, `tests/_loader.py` - tests for the shared module, plus checks that fail if this logic is copied back into the CLI, the TUI or `fast_install.py`
 
 ### Security
 - `termux_app_store/fast_install.py` - `get_cached_deb()` no longer returns a cached `.deb` when no SHA256 is available; the cache path now requires a verified checksum like a fresh download
@@ -34,6 +36,7 @@ and this project adheres to semantic versioning.
 - `.github/workflows/update_index.yml`, `tools/build.py` - change detection compares `recipe_sha256` together with the version; an index without the field does not trigger a mass rebuild
 - `termux_app_store/fast_install.py`, `termux_app_store/termux_app_store_cli.py`, `termux_app_store/termux_app_store.py`, `pyproject.toml`, `MANIFEST.in` - `build-package.sh` ships inside the wheel, so the source-build fallback works after `pip install` without downloading or pinning it; a missing recipe is downloaded only if it matches `recipe_sha256` from the index
 - `README.md`, `README.id.md` - the mirror diagram now matches the implementation (fastest reachable mirror: Cloudflare CDN, GitHub Pages, jsDelivr; raw GitHub is not a .deb mirror)
+- `termux_app_store/store_common.py` - the CLI and the TUI downloaded `packages/<name>/build.sh` without any checksum check; the recipe is now verified against `recipe_sha256` from the index, as `fast_install` already did, and refused when the index has no checksum (`TERMUX_APP_STORE_ALLOW_UNVERIFIED_RECIPE=1` is the explicit opt-out)
 
 ### Removed
 - Packages `gemail-hack`, `hammer`, `zerodoor`, `ghosttrack` removed from the catalog: their descriptions state credential brute-forcing, DDoS, backdoor generation and location/number tracking with no stated defensive use
@@ -41,6 +44,9 @@ and this project adheres to semantic versioning.
 
 ### Changed
 - `README.md`, `INSTALL.md`, `PRIVACY.md`, `pyproject.toml` - wording aligned with actual behavior: no "offline-first"/"no cloud dependency" claims, SHA256 described as integrity checking rather than publisher authentication, install command unified to `pip install termux-app-store`, network use documented, "Official Developer" replaced with an unambiguous maintainer line
+- `termux_app_store/termux_app_store_cli.py`, `termux_app_store/termux_app_store.py`, `termux_app_store/fast_install.py` - the duplicated functions are removed and the three entry points call `store_common`; the CLI shrinks by about 160 lines and the TUI by about 157; the command output and exit codes are unchanged
+- `termux_app_store/store_common.py` - the mirror list and the index URLs are defined once; the CLI's own fallback list (which still ranked GitHub Pages first and listed raw GitHub as a .deb mirror) is gone
+- `tests/test_cli.py`, `tests/test_version.py` - the tests now run the real functions; they used to test private copies of `_ver_tuple`, `get_status` and `CMD_ALIASES`, and the alias test asserted 15 aliases while the CLI has 28
 
 ### Fixed
 - `doctor.py` - `_sh()` ran every check command with `subprocess.run(cmd, shell=False)` while every caller passed a shell-syntax string (pipes, `2>/dev/null`, `||`); with `shell=False` the whole string was treated as a single executable name, so it always failed silently and returned `("", 1)` — this caused false failures across almost the entire report (`pip` reported "not found", `TAS importable` failed, and `build.sh scan` reported all 93 packages as `syntax` errors even though `bash -n` was never actually able to run). Changed to `shell=True` so these checks now reflect the real environment state
@@ -58,6 +64,7 @@ and this project adheres to semantic versioning.
 - `packages/termux-fm/build.sh` - the Makefile linked `-lselinux`, which does not exist in Termux; the recipe links `-landroid-selinux` (from `libandroid-selinux`) and installs the binary directly instead of using the upstream setuid `make install`
 - `packages/binwalk/build.sh` - declares `pkg-config` and `fontconfig`, needed by the `fontconfig-sys` crate
 - `packages/pmcli/build.sh` - sets `OPENSSL_NO_VENDOR=1` and `OPENSSL_DIR` so the Termux OpenSSL is used instead of building a vendored copy that required `perl`
+- `termux_app_store/store_common.py` - a cache file with a missing or empty `app_root` was read as the current directory and accepted when that directory happened to be a valid root
 
 ### Update
 - Package `merlin` v1.1.2 → v1.1.3

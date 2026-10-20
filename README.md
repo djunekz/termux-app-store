@@ -344,8 +344,9 @@ termux-app-store/
 ├── utils/
 │   └── installer.py       # install_from_binary / install_from_source helpers
 ├── tools/
-│   └── mirrors.json       # Mirror registry (GitHub Pages, Cloudflare, jsDelivr, raw GitHub)
+│   └── mirrors.json       # Mirror registry
 ├── fast_install.py        # Fast install engine (.deb download + cache + SHA256 verify)
+├── store_common.py        # Shared logic: mirrors, app root, recipe and script verification
 ├── tasctl                 # TAS installer/updater/uninstaller
 ├── termux-build           # Validation & review tool
 └── install.sh             # Main installer
