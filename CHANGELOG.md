@@ -7,6 +7,29 @@ and this project adheres to semantic versioning.
 
 ## [Unreleased]
 
+### Added
+- `ci/gen_index.py` - the `index.html` generator for the GitHub Pages repository, moved out of the base64 blob that was embedded in `build-termux-repo.yml` so it can be read, reviewed and diffed
+- `.github/workflows/build-termux-repo.yml` - new `Sign Release (InRelease + Release.gpg) and publish public key` step: `dists/termux/Release` is signed into `InRelease` (clearsigned) and `Release.gpg` (detached) with the key from the `GPG_PRIVATE_KEY` secret (`GPG_PASSPHRASE` optional), the public key is published as `termux-app-store.gpg` (binary, for apt `signed-by`) and `termux-app-store.asc` (armored), and both signatures are verified with `gpgv` against the exported public key before anything is pushed to `gh-pages`
+- `install-repo.py`, `tasctl` - optional key pinning: when `TAS_KEY_FPR` is set (or `KEY_FINGERPRINT` is filled in `install-repo.py`), the downloaded key is rejected unless its fingerprint matches; this needs `gpg` (`pkg install gnupg`)
+
+### Security
+- `install-repo.py`, `tasctl`, `doctor.py`, `ci/gen_index.py` - the apt repository entry no longer uses `deb [trusted=yes]`, which turned off signature verification for the whole repository; the entry is now `deb [signed-by=$PREFIX/etc/apt/keyrings/termux-app-store.gpg] https://djunekz.github.io/termux-app-store termux main`
+- `install-repo.py`, `tasctl`, `doctor.py` - the signing key is downloaded over HTTPS, size-limited, checked to be a binary OpenPGP public key and written atomically with mode 0644; if the key cannot be downloaded or validated the repository is not added and nothing falls back to `trusted=yes`
+- `install-repo.py`, `tasctl`, `doctor.py` - an existing `tas.list` with the old `trusted=yes` entry is detected and migrated to `signed-by`; `doctor.py` reports it as a warning and `--fix` migrates it
+- `.github/workflows/build-termux-repo.yml` - the workflow fails when `GPG_PRIVATE_KEY` is not set instead of publishing an unsigned repository; the private key lives in a temporary `GNUPGHOME` that is removed on exit and the passphrase is read from a mode 0600 file, not the command line
+
+### Changed
+- `install-repo.py` - `remove_repo()` and the "remove this repository" hint now delete the keyring file together with `tas.list`
+- `tasctl` - `uninstall-repo` removes `tas.list` and the keyring file
+- `install-repo.py` - when stdin is not a terminal (`curl ... | python`) the prompts use their default answer instead of treating end-of-input as "no", so `pkg update` runs as intended
+- `install-repo.py`, `tasctl`, `doctor.py` - `tas.list` now contains only the repository line, without comment lines
+- `.github/workflows/build-termux-repo.yml` - runs `ci/gen_index.py` instead of decoding an embedded base64 script; installs `gnupg` and `gpgv`; also triggers when `install-repo.py` or `ci/gen_index.py` change; the redundant `# v7` suffix on the pinned `actions/checkout` lines is removed
+- `ci/gen_index.py` - the Repository tab of the generated page shows the one-line signed install command and the two manual steps (key, then `signed-by` entry) and warns against `[trusted=yes]`
+- `install-repo.py`, `tasctl`, `doctor.py`, `ci/gen_index.py`, `.github/workflows/build-termux-repo.yml` - hash comments removed from the source
+
+### Fixed
+- Open P0 finding: APT authentication - the repository published a `Release` file but no `InRelease` or `Release.gpg`, so clients could only use it with `trusted=yes`; the repository is now signed and clients verify it
+
 ---
 
 ## [v0.8.5] - 2026-10-20

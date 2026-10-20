@@ -21,6 +21,9 @@ SOURCES_FILE = os.path.join(SOURCES_DIR, "tas.list")
 MAIN_SOURCES = os.path.join(_PFX, "etc/apt/sources.list")
 APT_LISTS    = os.path.join(_PFX, "var/lib/apt/lists")
 REPO_URL     = "https://djunekz.github.io/termux-app-store"
+KEY_URL      = REPO_URL + "/termux-app-store.gpg"
+KEYRING_FILE = os.path.join(_PFX, "etc/apt/keyrings/termux-app-store.gpg")
+REPO_ENTRY   = f"deb [signed-by={KEYRING_FILE}] {REPO_URL} termux main"
 ARCH_OK      = {"aarch64", "armv7l", "arm", "x86_64", "i686"}
 MIN_PYTHON   = (3, 9)
 MIN_TEXTUAL  = (8, 0, 0)
@@ -389,12 +392,26 @@ def chk_tasctl():
                  category="TAS")
 
 def _fix_repo_file():
-    entry = f"deb [trusted=yes] {REPO_URL} termux main\n"
+    try:
+        req = urllib.request.Request(KEY_URL, headers={"User-Agent": f"tas-doctor/{VERSION}"})
+        with urllib.request.urlopen(req, timeout=20) as r:
+            data = r.read(65537)
+    except Exception as e:
+        print(f"  {BRED}XX{R}  Cannot download signing key: {e}")
+        return False
+    if len(data) > 65536 or not data or data[0] not in (0x98, 0x99, 0x9A, 0x9B, 0xC6):
+        print(f"  {BRED}XX{R}  Downloaded key is not a binary OpenPGP public key")
+        return False
+    Path(KEYRING_FILE).parent.mkdir(parents=True, exist_ok=True)
+    tmp = Path(KEYRING_FILE + ".tmp")
+    tmp.write_bytes(data)
+    tmp.chmod(0o644)
+    os.replace(tmp, KEYRING_FILE)
+    print(f"  {BGRN}OK{R}  Written: {KEYRING_FILE}")
+
     Path(SOURCES_DIR).mkdir(parents=True, exist_ok=True)
     Path(SOURCES_FILE).write_text(
-        "# Termux App Store\n"
-        "# https://github.com/djunekz/termux-app-store\n"
-        + entry
+        REPO_ENTRY + "\n"
     )
     print(f"  {BGRN}OK{R}  Written: {SOURCES_FILE}")
     return True
@@ -410,6 +427,18 @@ def chk_repo_file():
         if REPO_URL in txt:
             active = [ln for ln in txt.splitlines()
                       if ln.strip() and not ln.strip().startswith("#")]
+            if any("trusted=yes" in ln for ln in active):
+                return Check("apt repo (tas.list)", WARN,
+                             "insecure [trusted=yes] entry (no signature check)",
+                             fix_fn=_fix_repo_file,
+                             fix_hint="python3 install-repo.py  to migrate to signed-by",
+                             category="Repo")
+            if not Path(KEYRING_FILE).exists():
+                return Check("apt repo (tas.list)", WARN,
+                             f"signing key missing: {KEYRING_FILE}",
+                             fix_fn=_fix_repo_file,
+                             fix_hint="python3 install-repo.py",
+                             category="Repo")
             if len(active) > 1:
                 return Check("apt repo (tas.list)", WARN,
                              f"{len(active)} entries (duplicate risk)",
@@ -669,7 +698,6 @@ def chk_github():
                      str(e)[:50],
                      fix_hint="Check internet connection", category="Network")
 
-
 REQUIRED_FIELDS = [
     "TERMUX_PKG_HOMEPAGE", "TERMUX_PKG_DESCRIPTION", "TERMUX_PKG_LICENSE",
     "TERMUX_PKG_MAINTAINER", "TERMUX_PKG_VERSION",
@@ -900,7 +928,6 @@ def diagnose_build_sh(pkg_name: str) -> list:
 
     return results
 
-
 def run_fix(check: Check, mode_fix: bool):
     if not mode_fix or check.status not in (FAIL, WARN):
         return False
@@ -943,7 +970,6 @@ def run_fix(check: Check, mode_fix: bool):
     rule("─", DIM)
     return False
 
-
 SECTIONS = [
     ("System",           [chk_termux, chk_arch, chk_storage]),
     ("Python",           [chk_python, chk_pip, chk_textual, chk_python_importpath]),
@@ -957,7 +983,6 @@ SECTIONS = [
     ("Network",          [chk_network, chk_github]),
 ]
 ALL_FNS = [fn for _, fns in SECTIONS for fn in fns]
-
 
 def print_summary(checks, mode_fix=False):
     blank()
@@ -1014,7 +1039,6 @@ def print_summary(checks, mode_fix=False):
                 "Run with --fix to automatically apply fixes where possible.",
                 "tip")
         blank()
-
 
 def print_help():
     blank()
@@ -1078,7 +1102,6 @@ def print_help():
     code("python3 doctor.py --brief")
     code("python3 doctor.py --json | python3 -m json.tool")
     blank()
-
 
 def main():
     args       = sys.argv[1:]
@@ -1160,7 +1183,7 @@ def main():
             c = fn()
             c.print_line()
             if run_fix(c, mode_fix):
-                c = fn()  # re-check so summary/exit code reflect the fix
+                c = fn()
                 print(f"  {DIM}↳ re-checked:{R}")
                 c.print_line()
             all_checks.append(c)
@@ -1168,7 +1191,6 @@ def main():
 
     print_summary(all_checks, mode_fix=mode_fix)
     sys.exit(1 if any(c.status == FAIL for c in all_checks) else 0)
-
 
 if __name__ == "__main__":
     try:

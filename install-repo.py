@@ -8,6 +8,9 @@ import subprocess
 import platform
 import shutil
 import time
+import tempfile
+import urllib.request
+import urllib.error
 
 R    = "\033[0m"
 B    = "\033[1m"
@@ -30,11 +33,17 @@ BG_BRED = "\033[101m"
 BG_BGRN = "\033[102m"
 
 REPO_URL     = "https://djunekz.github.io/termux-app-store"
-REPO_ENTRY   = f"deb [trusted=yes] {REPO_URL} termux main"
+KEY_URL      = f"{REPO_URL}/termux-app-store.gpg"
 _PREFIX      = os.environ.get("PREFIX", "/data/data/com.termux/files/usr")
 SOURCES_DIR  = os.path.join(_PREFIX, "etc/apt/sources.list.d")
 SOURCES_FILE = os.path.join(SOURCES_DIR, "tas.list")
 MAIN_SOURCES = os.path.join(_PREFIX, "etc/apt/sources.list")
+KEYRING_DIR  = os.path.join(_PREFIX, "etc/apt/keyrings")
+KEYRING_FILE = os.path.join(KEYRING_DIR, "termux-app-store.gpg")
+REPO_ENTRY   = f"deb [signed-by={KEYRING_FILE}] {REPO_URL} termux main"
+
+KEY_FINGERPRINT = os.environ.get("TAS_KEY_FPR", "").replace(" ", "").upper()
+MAX_KEY_SIZE    = 64 * 1024
 
 def TW(): return shutil.get_terminal_size((72, 24)).columns
 def W():  return min(TW(), 76)
@@ -163,15 +172,23 @@ def banner():
 def is_termux() -> bool:
     return "com.termux" in _PREFIX or os.path.exists("/data/data/com.termux")
 
+def _active_lines(path):
+    try:
+        with open(path) as f:
+            return [ln.strip() for ln in f
+                    if ln.strip() and not ln.strip().startswith("#")]
+    except OSError:
+        return []
+
+def repo_is_legacy() -> bool:
+    return any(REPO_URL in ln and "trusted=yes" in ln
+               for ln in _active_lines(SOURCES_FILE))
+
 def repo_already_added() -> bool:
-    if not os.path.exists(SOURCES_FILE):
+    if not os.path.exists(KEYRING_FILE):
         return False
-    with open(SOURCES_FILE) as f:
-        for line in f:
-            s = line.strip()
-            if s and not s.startswith("#") and REPO_URL in s:
-                return True
-    return False
+    return any(REPO_URL in ln and "signed-by=" in ln and "trusted=yes" not in ln
+               for ln in _active_lines(SOURCES_FILE))
 
 def repo_in_main_sources() -> bool:
     if not os.path.exists(MAIN_SOURCES):
@@ -179,17 +196,95 @@ def repo_in_main_sources() -> bool:
     with open(MAIN_SOURCES) as f:
         return REPO_URL in f.read()
 
+def _is_openpgp_binary(data: bytes) -> bool:
+    if not data or data.startswith(b"-----BEGIN"):
+        return False
+    return data[0] in (0x98, 0x99, 0x9A, 0x9B, 0xC6)
+
+def _key_fingerprints(path):
+    gpg = shutil.which("gpg")
+    if not gpg:
+        return None
+    try:
+        out = subprocess.run(
+            [gpg, "--batch", "--no-tty", "--show-keys", "--with-colons", path],
+            capture_output=True, text=True, timeout=30,
+        ).stdout
+    except Exception:
+        return None
+    return [ln.split(":")[9] for ln in out.splitlines()
+            if ln.startswith("fpr:") and len(ln.split(":")) > 9]
+
+def install_key() -> bool:
+    step("Installing repository signing key")
+    path_box("keyring", KEYRING_FILE)
+    blank()
+    info(f"Downloading: {KEY_URL}")
+
+    try:
+        req = urllib.request.Request(KEY_URL, headers={"User-Agent": "tas-install-repo"})
+        with urllib.request.urlopen(req, timeout=20) as r:
+            data = r.read(MAX_KEY_SIZE + 1)
+    except (urllib.error.URLError, OSError) as e:
+        err(f"Could not download the signing key: {e}")
+        info("The repository will NOT be added without a verifiable key.")
+        return False
+
+    if len(data) > MAX_KEY_SIZE or not _is_openpgp_binary(data):
+        err("Downloaded file is not a valid binary OpenPGP public key")
+        return False
+
+    os.makedirs(KEYRING_DIR, exist_ok=True)
+    tmp_fd, tmp_path = tempfile.mkstemp(dir=KEYRING_DIR, prefix=".tas-key-")
+    try:
+        with os.fdopen(tmp_fd, "wb") as f:
+            f.write(data)
+
+        fprs = _key_fingerprints(tmp_path)
+        if KEY_FINGERPRINT:
+            if fprs is None:
+                err("TAS_KEY_FPR is set but 'gpg' is not installed (pkg install gnupg)")
+                return False
+            if KEY_FINGERPRINT not in [x.upper() for x in fprs]:
+                err("Key fingerprint does NOT match the pinned fingerprint")
+                for x in fprs:
+                    info(f"got      : {x}")
+                info(f"expected : {KEY_FINGERPRINT}")
+                return False
+            ok("Fingerprint matches pinned value")
+        elif fprs:
+            for x in fprs:
+                kv("Fingerprint", x)
+        else:
+            info("Install 'gnupg' to display/verify the key fingerprint")
+
+        os.chmod(tmp_path, 0o644)
+        os.replace(tmp_path, KEYRING_FILE)
+        tmp_path = None
+        ok(f"Written: {KEYRING_FILE}")
+        return True
+    except Exception as e:
+        err(f"Failed to install key: {e}")
+        return False
+    finally:
+        if tmp_path and os.path.exists(tmp_path):
+            os.remove(tmp_path)
+
 def add_repo() -> bool:
+    if repo_is_legacy():
+        warn("Old insecure entry ([trusted=yes]) found -- migrating to signed-by")
+
+    if not install_key():
+        return False
+
     step("Adding repository to sources")
     path_box("file", SOURCES_FILE)
     blank()
     entry_box("entry", REPO_ENTRY)
     blank()
-    os.makedirs(SOURCES_DIR, exist_ok=True)
     try:
+        os.makedirs(SOURCES_DIR, exist_ok=True)
         with open(SOURCES_FILE, "w") as f:
-            f.write("# Termux App Store\n")
-            f.write("# https://github.com/djunekz/termux-app-store\n")
             f.write(f"{REPO_ENTRY}\n")
         ok(f"Written: {SOURCES_FILE}")
         return True
@@ -201,17 +296,17 @@ def add_repo() -> bool:
         err(f"Failed to write file: {e}")
         return False
 
-
 def remove_repo() -> bool:
     step("Removing repository")
-    if os.path.exists(SOURCES_FILE):
-        os.remove(SOURCES_FILE)
-        ok(f"Removed: {SOURCES_FILE}")
-        return True
-    else:
-        warn(f"File not found: {SOURCES_FILE}")
-        return False
-
+    removed = False
+    for path in (SOURCES_FILE, KEYRING_FILE):
+        if os.path.exists(path):
+            os.remove(path)
+            ok(f"Removed: {path}")
+            removed = True
+        else:
+            warn(f"File not found: {path}")
+    return removed
 
 def run_pkg_update() -> bool:
     step("Running pkg update")
@@ -231,6 +326,8 @@ def run_pkg_update() -> bool:
         return False
 
 def prompt(question, default_yes=True) -> bool:
+    if not sys.stdin.isatty():
+        return default_yes
     hint = f"{BWHT}Y{R}{DIM}/n{R}" if default_yes else f"{DIM}y/{R}{BWHT}N{R}"
     blank()
     sep()
@@ -260,7 +357,7 @@ def show_next_steps():
 
     print(f"  {B}{BWHT}Remove this repository{R}")
     blank()
-    code_line(f"rm {SOURCES_FILE}")
+    code_line(f"rm {SOURCES_FILE} {KEYRING_FILE}")
     code_line("pkg update")
     blank()
     print(f"  {DIM}or via tasctl:{R}")
@@ -294,7 +391,7 @@ def main():
     kv("Repository",    REPO_URL)
     blank()
 
-    if repo_already_added():
+    if repo_already_added() and not repo_is_legacy():
         blank()
         header_bar("REPOSITORY ALREADY CONFIGURED")
         blank()
@@ -309,7 +406,8 @@ def main():
     if repo_in_main_sources():
         blank()
         warn("Repository URL detected in main sources.list")
-        info("It will also be added to sources.list.d/tas.list (cleaner)")
+        info("Remove that line (especially if it has [trusted=yes]); the signed")
+        info("entry in sources.list.d/tas.list is used instead")
 
     if not add_repo():
         blank()
@@ -333,7 +431,6 @@ def main():
     blank()
 
     show_next_steps()
-
 
 if __name__ == "__main__":
     try:

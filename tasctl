@@ -24,9 +24,6 @@ GREEN=$'\033[32m'
 YELLOW=$'\033[33m'
 CYAN=$'\033[36m'
 MAGENTA=$'\033[35m'
-BRED=$'\033[91m'
-BGREEN=$'\033[92m'
-BCYAN=$'\033[96m'
 
 log()    { printf " %s[*]%s %s\n" "$CYAN$B" "$R" "$*"; }
 ok()     { printf " %s[✔]%s %s\n" "$GREEN$B" "$R" "$*"; }
@@ -52,41 +49,6 @@ banner() {
   printf "%s" "$R"
   printf "       %sTermux App Store Controller%s\n" "$DIM$YELLOW" "$R"
   printf "               %sby %s@djunekz%s\n\n" "$DIM$YELLOW" "$GREEN" "$R"
-}
-
-verify_official_source() {
-  log "Verifying official source..."
-
-  local api_full_name
-  api_full_name=$(curl -fsSL \
-    -H "Accept: application/vnd.github+json" \
-    "https://api.github.com/repos/$REPO" 2>/dev/null \
-    | grep '"full_name"' \
-    | head -1 \
-    | sed 's/.*"full_name": *"\([^"]*\)".*/\1/' || true)
-
-  if [[ "$api_full_name" != "$REPO" ]]; then
-    printf "\n"
-    printf "%s╔══════════════════════════════════════════════════════════╗%s\n" "$BRED$B" "$R"
-    printf "%s║                                                          ║%s\n" "$BRED$B" "$R"
-    printf "%s║   ⚠  BLOCKED — UNOFFICIAL / MODIFIED SOURCE  ⚠           ║%s\n" "$BRED$B" "$R"
-    printf "%s║                                                          ║%s\n" "$BRED$B" "$R"
-    printf "%s║   This tool only works with the official project:        ║%s\n" "$BRED$B" "$R"
-    printf "%s║   github.com/djunekz/termux-app-store                    ║%s\n" "$BRED$B" "$R"
-    printf "%s║                                                          ║%s\n" "$BRED$B" "$R"
-    printf "%s║   Any fork or renamed copy is NOT the official           ║%s\n" "$BRED$B" "$R"
-    printf "%s║   Termux App Store by @djunekz.                          ║%s\n" "$BRED$B" "$R"
-    printf "%s║                                                          ║%s\n" "$BRED$B" "$R"
-    printf "%s║   Get the real one:                                      ║%s\n" "$BRED$B" "$R"
-    printf "%s║                                                          ║%s\n" "$BRED$B" "$R"
-    printf "%s╚══════════════════════════════════════════════════════════╝%s\n" "$BRED$B" "$R"
-    printf "%sCopy this text command for installing termux-app-store:%s\n\n" "$BRED$B" "$R"
-    printf "%s curl -fsSL https://raw.githubusercontent.com/djunekz/termux-app-store/master/tasctl | bash -s install%s\n" "$BGREEN$B" "$R"
-    printf "\n"
-    exit 1
-  fi
-
-  ok "Official source verified: ${B}github.com/$REPO${R}"
 }
 
 get_installed_version() {
@@ -480,11 +442,6 @@ cmd_update() {
 
 cmd="${1:-help}"
 flag="${2:-}"
-
-case "$cmd" in
-  help|-h|--help) : ;;
-  *) verify_official_source ;;
-esac
 
 case "$cmd" in
   install)
