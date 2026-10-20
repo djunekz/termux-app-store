@@ -47,6 +47,7 @@ and this project adheres to semantic versioning.
 - `termux_app_store/termux_app_store_cli.py`, `termux_app_store/termux_app_store.py`, `termux_app_store/fast_install.py` - the duplicated functions are removed and the three entry points call `store_common`; the CLI shrinks by about 160 lines and the TUI by about 157; the command output and exit codes are unchanged
 - `termux_app_store/store_common.py` - the mirror list and the index URLs are defined once; the CLI's own fallback list (which still ranked GitHub Pages first and listed raw GitHub as a .deb mirror) is gone
 - `tests/test_cli.py`, `tests/test_version.py` - the tests now run the real functions; they used to test private copies of `_ver_tuple`, `get_status` and `CMD_ALIASES`, and the alias test asserted 15 aliases while the CLI has 28
+- Package `dumpzilla` v1.0.0 - Updated metadata
 
 ### Fixed
 - `doctor.py` - `_sh()` ran every check command with `subprocess.run(cmd, shell=False)` while every caller passed a shell-syntax string (pipes, `2>/dev/null`, `||`); with `shell=False` the whole string was treated as a single executable name, so it always failed silently and returned `("", 1)` — this caused false failures across almost the entire report (`pip` reported "not found", `TAS importable` failed, and `build.sh scan` reported all 93 packages as `syntax` errors even though `bash -n` was never actually able to run). Changed to `shell=True` so these checks now reflect the real environment state
@@ -69,9 +70,6 @@ and this project adheres to semantic versioning.
 ### Update
 - Package `merlin` v1.1.2 → v1.1.3
 - Package `tdoc` v2.2.4 → v2.3.0
-
-### Changed
-- Package `dumpzilla` v1.0.0 - Updated metadata
 
 ---
 
