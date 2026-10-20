@@ -7,7 +7,6 @@ import sys
 import subprocess
 import platform
 import shutil
-import time
 import tempfile
 import urllib.request
 import urllib.error
@@ -15,11 +14,6 @@ import urllib.error
 R    = "\033[0m"
 B    = "\033[1m"
 DIM  = "\033[2m"
-IT   = "\033[3m"
-
-RED  = "\033[31m"
-GRN  = "\033[32m"
-CYN  = "\033[36m"
 
 BRED = "\033[91m"
 BGRN = "\033[92m"
@@ -27,10 +21,7 @@ BYLW = "\033[93m"
 BCYN = "\033[96m"
 BWHT = "\033[97m"
 
-BG_BBLK = "\033[100m"
 BG_BBLU = "\033[104m"
-BG_BRED = "\033[101m"
-BG_BGRN = "\033[102m"
 
 REPO_URL     = "https://djunekz.github.io/termux-app-store"
 KEY_URL      = f"{REPO_URL}/termux-app-store.gpg"
@@ -65,6 +56,35 @@ def vcenter(text, width=None):
     pad = max(0, (width - vlen(text)) // 2)
     return " " * pad + text
 
+def short(path):
+    return path.replace(_PREFIX, "$PREFIX") if path.startswith(_PREFIX) else path
+
+def _split_long(token, width):
+    parts = []
+    while len(token) > width:
+        cut = token.rfind("/", 1, width)
+        if cut <= 0:
+            cut = width - 1
+        parts.append(token[:cut + 1])
+        token = token[cut + 1:]
+    parts.append(token)
+    return parts
+
+def wrap(text, width):
+    width = max(10, width)
+    lines, cur = [], ""
+    for word in text.split(" "):
+        for tok in _split_long(word, width):
+            if not cur:
+                cur = tok
+            elif len(cur) + 1 + len(tok) <= width:
+                cur += " " + tok
+            else:
+                lines.append(cur)
+                cur = tok
+    lines.append(cur)
+    return lines
+
 def rule(char="─", color=DIM, width=None):
     if width is None: width = W()
     print(f"{color}{char * width}{R}")
@@ -75,6 +95,9 @@ def thick_rule(color=BCYN, width=None):
 
 def blank(): print()
 
+def sep():
+    rule("─", DIM)
+
 def header_bar(title, width=None):
     if width is None: width = W()
     plain = f"  {title}  "
@@ -83,69 +106,52 @@ def header_bar(title, width=None):
     print(f"{BG_BBLU}{BWHT}{B}  {title}  {R}{BG_BBLU}{' ' * pad}{R}")
     print(f"{BCYN}{'▀' * width}{R}")
 
+def _emit(tag_colored, tag_len, msg, color="", stream=None):
+    lines = wrap(msg, W() - tag_len)
+    out = stream or sys.stdout
+    print(f"{tag_colored}{color}{lines[0]}{R if color else ''}", file=out)
+    for ln in lines[1:]:
+        print(f"{' ' * tag_len}{color}{ln}{R if color else ''}", file=out)
+
 def log(msg):
-    print(f"  {BCYN}{B}::{R} {msg}")
+    _emit(f"  {BCYN}{B}::{R} ", 5, msg)
 
 def ok(msg):
-    print(f"  {BGRN}{B}OK{R}  {msg}")
+    _emit(f"  {BGRN}{B}OK{R}  ", 6, msg)
 
 def warn(msg):
-    print(f"  {BYLW}{B}!!{R}  {msg}", file=sys.stderr)
+    _emit(f"  {BYLW}{B}!!{R}  ", 6, msg, stream=sys.stderr)
 
 def err(msg):
-    print(f"  {BRED}{B}XX{R}  {msg}", file=sys.stderr)
+    _emit(f"  {BRED}{B}XX{R}  ", 6, msg, stream=sys.stderr)
 
 def info(msg):
-    print(f"      {DIM}{msg}{R}")
+    _emit("      ", 6, msg, color=DIM)
 
 def step(title):
     blank()
-    w     = W()
-    inner = f" {title}  "
-    pad   = max(0, w - len(inner) - 2)
     print(f" {BCYN}{B}>{R} {B}{BWHT}{title}{R}")
-    print(f" {DIM}{'─' * (w - 2)}{R}")
+    print(f" {DIM}{'─' * (W() - 2)}{R}")
 
-def kv(label, value, lw=18):
-    print(f"  {DIM}{label:<{lw}}{R}  {BCYN}{value}{R}")
-
-def sep():
-    rule("─", DIM)
+def fields(items, lw=None):
+    norm = [(label, [value] if isinstance(value, str) else list(value))
+            for label, value in items]
+    lw = lw or max(len(label) for label, _ in norm)
+    fits = all(2 + lw + 2 + max(len(v) for v in vals) <= W() for _, vals in norm)
+    for label, vals in norm:
+        if fits:
+            print(f"  {DIM}{label:<{lw}}{R}  {BCYN}{vals[0]}{R}")
+            for v in vals[1:]:
+                print(f"  {' ' * lw}  {BCYN}{v}{R}")
+        else:
+            print(f"  {DIM}{label}{R}")
+            for v in vals:
+                for ln in wrap(v, W() - 4):
+                    print(f"    {BCYN}{ln}{R}")
+    blank()
 
 def code_line(cmd, indent=4):
-    pad_l = " " * indent
-    print(f"{pad_l}{BYLW}${R} {BCYN}{cmd}{R}")
-
-def path_box(label, path):
-    w        = W() - 2
-    dash_w   = w + 2
-    lbl_str  = f" {label} "
-    fill     = max(0, dash_w - len(lbl_str))
-    top      = f"{DIM}┌{lbl_str}{'─' * fill}┐{R}"
-    pad      = max(0, w - len(path))
-    mid      = f"{DIM}│{R} {BCYN}{path}{R}{' ' * pad} {DIM}│{R}"
-    bot      = f"{DIM}└{'─' * dash_w}┘{R}"
-    print(top); print(mid); print(bot)
-
-def entry_box(label, entry):
-    import textwrap
-    w       = W() - 2
-    dash_w  = w + 2
-    lbl_str = f" {label} "
-    fill    = max(0, dash_w - len(lbl_str))
-    print(f"{DIM}┌{lbl_str}{'─' * fill}┐{R}")
-    for chunk in textwrap.wrap(entry, w - 2) or [entry]:
-        pad = max(0, w - len(chunk))
-        print(f"{DIM}│{R} {IT}{DIM}{chunk}{R}{' ' * pad} {DIM}│{R}")
-    print(f"{DIM}└{'─' * dash_w}┘{R}")
-
-_LOGO = [
-    r" _______ _______ _______",
-    r"|__   __|   _   |   ____|",
-    r"   | |  |  |_|  |__\  \ ",
-    r"   | |  |   _   | __\  \  ",
-    r"   |_|  |_| |_| |_______| ",
-]
+    print(f"{' ' * indent}{BYLW}${R} {BCYN}{cmd}{R}")
 
 _LOGO_BLOCK = """\
  ████████╗ █████╗ ███████╗
@@ -163,11 +169,11 @@ def banner():
         print(vcenter(f"{BCYN}{B}{line}{R}", w))
     blank()
     print(vcenter(f"{BWHT}{B}Termux App Store{R}", w))
-    print(vcenter(f"{DIM}Repository Installer  --  github.com/djunekz/termux-app-store{R}", w))
+    print(vcenter(f"{DIM}Repository Installer{R}", w))
+    print(vcenter(f"{DIM}github.com/djunekz/termux-app-store{R}", w))
     print(vcenter(f"{DIM}by {BGRN}@djunekz{R}", w))
     blank()
     thick_rule(BCYN, w)
-    blank()
 
 def is_termux() -> bool:
     return "com.termux" in _PREFIX or os.path.exists("/data/data/com.termux")
@@ -212,14 +218,25 @@ def _key_fingerprints(path):
         ).stdout
     except Exception:
         return None
-    return [ln.split(":")[9] for ln in out.splitlines()
-            if ln.startswith("fpr:") and len(ln.split(":")) > 9]
+    result, kind = [], "Key"
+    for ln in out.splitlines():
+        parts = ln.split(":")
+        if parts[0] == "pub":
+            kind = "Key"
+        elif parts[0] == "sub":
+            kind = "Subkey"
+        elif parts[0] == "fpr" and len(parts) > 9:
+            result.append((kind, parts[9]))
+    return result
+
+def fmt_fpr(fpr):
+    groups = [fpr[i:i + 4] for i in range(0, len(fpr), 4)]
+    half = (len(groups) + 1) // 2
+    return [" ".join(groups[:half]), " ".join(groups[half:])]
 
 def install_key() -> bool:
-    step("Installing repository signing key")
-    path_box("keyring", KEYRING_FILE)
-    blank()
-    info(f"Downloading: {KEY_URL}")
+    step("Installing signing key")
+    fields([("From", KEY_URL), ("To", short(KEYRING_FILE))])
 
     try:
         req = urllib.request.Request(KEY_URL, headers={"User-Agent": "tas-install-repo"})
@@ -243,25 +260,26 @@ def install_key() -> bool:
         fprs = _key_fingerprints(tmp_path)
         if KEY_FINGERPRINT:
             if fprs is None:
-                err("TAS_KEY_FPR is set but 'gpg' is not installed (pkg install gnupg)")
+                err("TAS_KEY_FPR is set but gpg is not installed (pkg install gnupg)")
                 return False
-            if KEY_FINGERPRINT not in [x.upper() for x in fprs]:
+            if KEY_FINGERPRINT not in [x.upper() for _, x in fprs]:
                 err("Key fingerprint does NOT match the pinned fingerprint")
-                for x in fprs:
-                    info(f"got      : {x}")
-                info(f"expected : {KEY_FINGERPRINT}")
+                blank()
+                fields([("Got", [l for _, x in fprs[:1] for l in fmt_fpr(x)]),
+                        ("Expected", fmt_fpr(KEY_FINGERPRINT))])
                 return False
-            ok("Fingerprint matches pinned value")
+            ok("Fingerprint matches the pinned value")
+            blank()
         elif fprs:
-            for x in fprs:
-                kv("Fingerprint", x)
+            fields([(kind, fmt_fpr(x)) for kind, x in fprs])
         else:
-            info("Install 'gnupg' to display/verify the key fingerprint")
+            info("Install gnupg to display and verify the key fingerprint.")
+            blank()
 
         os.chmod(tmp_path, 0o644)
         os.replace(tmp_path, KEYRING_FILE)
         tmp_path = None
-        ok(f"Written: {KEYRING_FILE}")
+        ok("Signing key installed")
         return True
     except Exception as e:
         err(f"Failed to install key: {e}")
@@ -272,24 +290,28 @@ def install_key() -> bool:
 
 def add_repo() -> bool:
     if repo_is_legacy():
-        warn("Old insecure entry ([trusted=yes]) found -- migrating to signed-by")
+        warn("Old insecure entry (trusted=yes) found")
+        info("It will be replaced with a signed entry.")
 
     if not install_key():
         return False
 
-    step("Adding repository to sources")
-    path_box("file", SOURCES_FILE)
-    blank()
-    entry_box("entry", REPO_ENTRY)
-    blank()
+    step("Adding repository")
+    fields([
+        ("File", short(SOURCES_FILE)),
+        ("Type", "deb"),
+        ("Signed-by", short(KEYRING_FILE)),
+        ("URL", REPO_URL),
+        ("Suite", "termux main"),
+    ])
     try:
         os.makedirs(SOURCES_DIR, exist_ok=True)
         with open(SOURCES_FILE, "w") as f:
             f.write(f"{REPO_ENTRY}\n")
-        ok(f"Written: {SOURCES_FILE}")
+        ok("Repository entry written")
         return True
     except PermissionError:
-        err(f"Permission denied writing to {SOURCES_FILE}")
+        err(f"Permission denied writing to {short(SOURCES_FILE)}")
         info("Try: python3 install-repo.py  (without sudo)")
         return False
     except Exception as e:
@@ -302,20 +324,23 @@ def remove_repo() -> bool:
     for path in (SOURCES_FILE, KEYRING_FILE):
         if os.path.exists(path):
             os.remove(path)
-            ok(f"Removed: {path}")
+            ok(f"Removed {short(path)}")
             removed = True
         else:
-            warn(f"File not found: {path}")
+            warn(f"Not found: {short(path)}")
     return removed
 
 def run_pkg_update() -> bool:
     step("Running pkg update")
+    blank()
     try:
         result = subprocess.run(["pkg", "update", "-y"])
+        blank()
         if result.returncode == 0:
             ok("pkg update complete")
         else:
-            warn("pkg update finished with warnings (usually safe to ignore)")
+            warn("pkg update finished with warnings")
+            info("Check the output above for signature errors.")
         return True
     except FileNotFoundError:
         warn("'pkg' not found -- run manually:")
@@ -339,8 +364,7 @@ def prompt(question, default_yes=True) -> bool:
     sep()
     if default_yes:
         return answer not in ("n", "no")
-    else:
-        return answer in ("y", "yes")
+    return answer in ("y", "yes")
 
 def show_next_steps():
     blank()
@@ -357,7 +381,8 @@ def show_next_steps():
 
     print(f"  {B}{BWHT}Remove this repository{R}")
     blank()
-    code_line(f"rm {SOURCES_FILE} {KEYRING_FILE}")
+    code_line(f"rm {short(SOURCES_FILE)}")
+    code_line(f"rm {short(KEYRING_FILE)}")
     code_line("pkg update")
     blank()
     print(f"  {DIM}or via tasctl:{R}")
@@ -367,8 +392,7 @@ def show_next_steps():
 
     print(f"  {B}{BWHT}Repository URL{R}")
     blank()
-    path_box("url", REPO_URL)
-    blank()
+    fields([("URL", REPO_URL)])
 
 def main():
     banner()
@@ -378,25 +402,24 @@ def main():
 
     if not is_termux():
         warn("This script is designed for Termux (Android)")
-        warn("Continuing -- but paths may differ from expected")
+        info("Continuing, but paths may differ from expected.")
         info(f"PREFIX: {os.environ.get('PREFIX', '(not set)')}")
     else:
         ok("Running inside Termux")
+    ok(f"Architecture: {platform.machine()}")
+    blank()
 
-    arch = platform.machine()
-    ok(f"Architecture : {arch}")
-    blank()
-    kv("Sources dir",   SOURCES_DIR)
-    kv("Sources file",  SOURCES_FILE)
-    kv("Repository",    REPO_URL)
-    blank()
+    fields([
+        ("Sources", short(SOURCES_FILE)),
+        ("Keyring", short(KEYRING_FILE)),
+        ("Repository", REPO_URL),
+    ])
 
     if repo_already_added() and not repo_is_legacy():
         blank()
-        header_bar("REPOSITORY ALREADY CONFIGURED")
+        header_bar("ALREADY CONFIGURED")
         blank()
-        ok(f"Found in: {SOURCES_FILE}")
-        blank()
+        ok(f"Found in {short(SOURCES_FILE)}")
         if not prompt("Re-install / refresh the entry?", default_yes=False):
             blank()
             ok("No changes made.")
@@ -404,10 +427,9 @@ def main():
             return
 
     if repo_in_main_sources():
+        warn("Repository URL found in the main sources.list")
+        info("Remove that line (especially one with trusted=yes). The signed entry in sources.list.d/tas.list is used instead.")
         blank()
-        warn("Repository URL detected in main sources.list")
-        info("Remove that line (especially if it has [trusted=yes]); the signed")
-        info("entry in sources.list.d/tas.list is used instead")
 
     if not add_repo():
         blank()
@@ -428,7 +450,6 @@ def main():
     thick_rule(BGRN)
     print(vcenter(f"{BGRN}{B}Repository installed successfully{R}", W()))
     thick_rule(BGRN)
-    blank()
 
     show_next_steps()
 
