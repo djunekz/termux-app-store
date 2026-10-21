@@ -13,6 +13,21 @@ and this project adheres to semantic versioning.
 - `ci/auto_update_packages.py` - adds a line like ``- Package `name` vOLD → vNEW`` under `### Update` in `[Unreleased]`; when the same package is updated again before a release, its line keeps the first OLD version and gets the latest NEW version
 - `ci/auto_update_packages.py` - packages that use a GitLab source, a floating branch tarball or the shared `djunekz/archive` repository are skipped, a package can opt out with `TERMUX_PKG_AUTO_UPDATE=false` in `build.sh`, and packages pinned to a commit (`0.0.0+<sha7>`) are only followed with `--include-commit-pinned`
 
+### Update
+- Package `ani-cli` v4.13 → v5.1
+- Package `broot` v1.56.2 → v1.61.0
+- Package `brutespray` v2.6.0 → v2.7.2
+- Package `cupp` v0.0.0+616a7b0 → v0.0.0+b77f1ae
+- Package `cybertuz` v1.0.2-1 → v1.0.2-2
+- Package `dalfox` v2.12.0 → v3.2.4
+- Package `dnsrecon` v1.6.0 → v1.6.3
+- Package `dust` v1.2.4 → v1.2.6
+- Package `fd` v10.4.2 → v10.5.0
+- Package `pnpm` v10.30.1 → v12.14.0
+- Package `ssrfmap` v0.0.0+69103b2 → v0.0.0+290e07d
+- Package `termux-ai` v0.0.0+7e1b8ff → v0.0.0+0dea995
+- Package `uv` v0.11.7 → v0.13.4
+
 ---
 
 ## [v0.9.1] - 2026-10-21
