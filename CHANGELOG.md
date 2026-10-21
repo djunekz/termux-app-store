@@ -18,6 +18,7 @@ and this project adheres to semantic versioning.
 - `build-package.sh` - dependency installation now retries up to 5 times with an increasing, randomised back-off and refreshes the apt index between attempts (`Acquire::Retries=5`); this covers the HTTP 429 "Too Many Requests" answers and the transient "Hashes of expected file" mismatches returned by the Termux mirror when many jobs hit it at once
 - `.github/workflows/build-packages-debs.yml` - `build-deb` now runs at most 12 matrix jobs at the same time (`max-parallel: 12`) instead of all ~88 at once, so the Termux mirror is no longer rate-limited by one workflow run
 - `.github/workflows/build-packages-debs.yml` - `pkg update` and the dependency pre-install inside termux-docker retry 5 times with back-off, and `pkg update` errors are no longer hidden
+- Package `dalfox` v3.2.4 - Updated metadata
 
 ### Fixed
 - `build-package.sh` - a failed `pkg install` of `TERMUX_PKG_DEPENDS` was only a warning, so the build carried on without the toolchain and died later with `cargo: command not found`, `go: command not found` or `npm: command not found`; the build now stops with a `FATAL` message naming the missing dependencies once all retries are used (workflow run #136: `aichat` v0.30.0, `brutespray` v2.7.2 and `pnpm` v12.14.0)
