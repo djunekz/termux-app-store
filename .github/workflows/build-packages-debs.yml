@@ -280,7 +280,7 @@ jobs:
               for attempt in 1 2 3 4 5; do
                 pkg update -y -o Acquire::Retries=5 -o Dpkg::Options::="--force-confnew" && break
                 echo "WARNING: pkg update attempt $attempt failed"
-                rm -rf "$PREFIX/var/lib/apt/lists/"* 2>/dev/null || true
+                rm -rf "${PREFIX:?}/var/lib/apt/lists/"* 2>/dev/null || true
                 sleep $(( attempt * 15 + RANDOM % 10 ))
               done
 
@@ -297,7 +297,7 @@ jobs:
                       break
                     fi
                     echo "WARNING: attempt $attempt to install $dep failed"
-                    rm -rf "$PREFIX/var/lib/apt/lists/"* 2>/dev/null || true
+                    rm -rf "${PREFIX:?}/var/lib/apt/lists/"* 2>/dev/null || true
                     sleep $(( attempt * 20 + RANDOM % 15 ))
                     pkg update -y -o Acquire::Retries=5 >/dev/null 2>&1 || true
                   done

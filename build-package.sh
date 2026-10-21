@@ -366,7 +366,7 @@ if [[ -n "${TERMUX_PKG_DEPENDS:-}" ]]; then
       _warn "Dependency install failed (exit $_PKG_STATUS), retry $_attempt/$(( _DEPS_MAX_ATTEMPTS - 1 )) in ${_delay}s"
       tail -n 3 "$_PKG_LOG" | sed 's/^/      /'
       sleep "$_delay"
-      rm -rf "$PREFIX/var/lib/apt/lists/"* 2>/dev/null || true
+      [[ -n "${PREFIX:-}" ]] && rm -rf "${PREFIX:?}/var/lib/apt/lists/"* 2>/dev/null || true
       pkg update -y -o Acquire::Retries=5 > /dev/null 2>&1 || true
     fi
   done

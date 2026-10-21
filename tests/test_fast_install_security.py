@@ -215,7 +215,7 @@ def test_docker_step_uses_a_writable_home_and_installs_baseline_build_tools():
     text = (ROOT / ".github" / "workflows" / "build-packages-debs.yml").read_text(encoding="utf-8")
     assert "export HOME=/root" not in text
     assert "export HOME=/data/data/com.termux/files/home" in text
-    assert "pkg install -y make clang binutils" in text
+    assert "pkg install -y -o Acquire::Retries=5 make clang binutils" in text
 
 
 def test_pnpm_declares_its_nodejs_dependency():
@@ -226,10 +226,10 @@ def test_pnpm_declares_its_nodejs_dependency():
 def test_build_package_reports_failed_dependency_install():
     script = (ROOT / "build-package.sh").read_text(encoding="utf-8")
     assert 'wait "$_PKG_PID" || true' not in script
-    assert "Some dependencies could not be installed" in script
+    assert "Dependencies could not be installed" in script
 
 
-def _run_dependency_block(tmp_path, pkg_body, deps):
+def _run_dependency_block(tmp_path, pkg_body, deps, present=()):
     import os
     import subprocess
 
@@ -241,30 +241,66 @@ def _run_dependency_block(tmp_path, pkg_body, deps):
     pkg = bindir / "pkg"
     pkg.write_text("#!/bin/bash\n" + pkg_body + "\n", encoding="utf-8")
     pkg.chmod(0o755)
+    dpkg = bindir / "dpkg"
+    dpkg.write_text(
+        "#!/bin/bash\ncase \" $* \" in\n"
+        + "".join(f'  *" {d} "*) exit 0 ;;\n' for d in present)
+        + "esac\nexit 1\n",
+        encoding="utf-8",
+    )
+    dpkg.chmod(0o755)
     harness = (
         "R=; GRAY=; WHITE=; BGREEN=; BCYAN=\n"
         "_progress(){ :; }; _ok(){ echo \"OK: $*\"; }; _warn(){ echo \"WARN: $*\"; }; _skip(){ echo \"SKIP: $*\"; }\n"
+        "_fatal(){ echo \"FATAL: $*\"; }\n"
+        "sleep(){ :; }\n"
         f'export TERMUX_PKG_DEPENDS="{deps}"\n'
     )
     return subprocess.run(
         ["bash", "-e", "-c", harness + script[start:end]],
-        env={**os.environ, "PATH": f"{bindir}:{os.environ['PATH']}"},
+        env={**os.environ, "PATH": f"{bindir}:{os.environ['PATH']}", "PREFIX": str(tmp_path / "prefix")},
         capture_output=True,
         text=True,
     )
 
 
-def test_dependency_block_confirms_success_and_surfaces_failure(tmp_path):
-    ok_dir = tmp_path / "a"
-    ok_dir.mkdir()
-    ok = _run_dependency_block(ok_dir, "exit 0", "python, python-pip")
+def test_dependency_block_confirms_success(tmp_path):
+    ok = _run_dependency_block(tmp_path, "exit 0", "python, python-pip")
+    assert ok.returncode == 0
     assert "OK: Dependencies installed" in ok.stdout
-    bad_dir = tmp_path / "b"
-    bad_dir.mkdir()
-    bad = _run_dependency_block(bad_dir, 'echo "E: Unable to locate package nope"; exit 100', "ncurses, nope")
-    assert "WARN: Some dependencies could not be installed (exit 100)" in bad.stdout
+
+
+def test_dependency_block_stops_when_a_dependency_is_missing(tmp_path):
+    bad = _run_dependency_block(
+        tmp_path,
+        'echo "E: Unable to locate package nope"; exit 100',
+        "ncurses, nope",
+        present=("ncurses",),
+    )
+    assert bad.returncode == 1
+    assert "FATAL: Dependencies could not be installed: nope" in bad.stdout
     assert "Unable to locate package nope" in bad.stdout
+    assert "retry 4/4" in bad.stdout
     assert "OK: Dependencies installed" not in bad.stdout
+
+
+def test_dependency_block_retries_a_transient_failure(tmp_path):
+    counter = tmp_path / "count"
+    body = (
+        f'n=$(cat "{counter}" 2>/dev/null || echo 0); echo $((n+1)) > "{counter}"\n'
+        'if [[ "$1" == "install" && $n -lt 2 ]]; then echo "429  Too Many Requests"; exit 100; fi\n'
+        "exit 0"
+    )
+    res = _run_dependency_block(tmp_path, body, "rust")
+    assert res.returncode == 0
+    assert "WARN: Dependency install failed (exit 100), retry 1/4" in res.stdout
+    assert "OK: Dependencies installed" in res.stdout
+
+
+def test_dependency_block_continues_when_pkg_fails_but_deps_are_present(tmp_path):
+    res = _run_dependency_block(tmp_path, "exit 100", "python", present=("python",))
+    assert res.returncode == 0
+    assert "WARN: pkg reported exit 100 but all dependencies are installed" in res.stdout
 
 
 def test_docker_step_installs_dependencies_one_by_one_with_retry():
