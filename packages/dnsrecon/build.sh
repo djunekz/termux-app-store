@@ -2,9 +2,9 @@ TERMUX_PKG_HOMEPAGE=https://github.com/darkoperator/dnsrecon
 TERMUX_PKG_DESCRIPTION="DNS Enumeration Script"
 TERMUX_PKG_LICENSE="GPL-2.0"
 TERMUX_PKG_MAINTAINER="@termux-app-store"
-TERMUX_PKG_VERSION=1.6.0
-TERMUX_PKG_SRCURL=https://github.com/darkoperator/dnsrecon/archive/refs/tags/1.6.0.tar.gz
-TERMUX_PKG_SHA256=21b83c22e4dcf684b623c824a678c371d803952d99d4758c9b1c45bce409eb3d
+TERMUX_PKG_VERSION=1.6.3
+TERMUX_PKG_SRCURL=https://github.com/darkoperator/dnsrecon/archive/refs/tags/1.6.3.tar.gz
+TERMUX_PKG_SHA256=7f7e230bb3fae959ff37ac19d1c1deea25089ac6a1bbbbf3b4e26e78ed96bd7a
 
 TERMUX_PKG_DEPENDS="python, python-pip, python-setuptools"
 TERMUX_PKG_BUILD_IN_SRC=true
