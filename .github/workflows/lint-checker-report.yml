@@ -26,8 +26,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           run-id: ${{ github.event.workflow_run.id }}
 
-      - name: Read report
-        id: report
+      - name: Apply labels and comment
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RUN_HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
@@ -46,101 +45,84 @@ jobs:
 
           ACTUAL_HEAD=$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER" --jq .head.sha)
           if [[ "$ACTUAL_HEAD" != "$RUN_HEAD_SHA" ]]; then
-            echo "PR number does not match the workflow run that produced the artifact" >&2
-            exit 1
+            echo "::notice::Skipping report: PR #$PR_NUMBER head ($ACTUAL_HEAD) differs from the checked commit ($RUN_HEAD_SHA). A newer run will report."
+            exit 0
           fi
 
-          DELIM="EOF_$(openssl rand -hex 16)"
-          {
-            echo "pr_number=$PR_NUMBER"
-            echo "overall_status=$OVERALL_STATUS"
-            echo "lint_details<<$DELIM"
-            head -c 20000 /tmp/pr-report/lint_details.txt
-            echo
-            echo "$DELIM"
-            echo "validation_details<<$DELIM"
-            head -c 20000 /tmp/pr-report/validation_details.txt
-            echo
-            echo "$DELIM"
-          } >> "$GITHUB_OUTPUT"
+          gh label create checker-approved --repo "$GITHUB_REPOSITORY" --color 0e8a16 --description "Automated lint checks passed" 2>/dev/null || true
+          gh label create checker-failed --repo "$GITHUB_REPOSITORY" --color d73a4a --description "Automated lint checks failed" 2>/dev/null || true
+          gh label create needs-review --repo "$GITHUB_REPOSITORY" --color fbca04 --description "Waiting for maintainer review" 2>/dev/null || true
 
-      - name: Remove old labels
-        continue-on-error: true
-        uses: actions-ecosystem/action-remove-labels@2ce5d41b4b6aa8503e285553f75ed56e0a40bae0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          number: ${{ steps.report.outputs.pr_number }}
-          labels: |
-            checker-approved
-            checker-failed
+          for LABEL in checker-approved checker-failed; do
+            gh api -X DELETE "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/labels/$LABEL" >/dev/null 2>&1 || true
+          done
 
-      - name: Add review-approved label
-        if: steps.report.outputs.overall_status == '0'
-        uses: actions-ecosystem/action-add-labels@18f1af5e3544586314bbe15c0273249c770b2daf
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          number: ${{ steps.report.outputs.pr_number }}
-          labels: |
-            checker-approved
-            needs-review
+          BODY=/tmp/comment_body.md
+          MARKER="<!-- lint-validation -->"
 
-      - name: Add review-failed label
-        if: steps.report.outputs.overall_status == '1'
-        uses: actions-ecosystem/action-add-labels@18f1af5e3544586314bbe15c0273249c770b2daf
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          number: ${{ steps.report.outputs.pr_number }}
-          labels: |
-            checker-failed
+          if [[ "$OVERALL_STATUS" == "0" ]]; then
+            gh api -X POST "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/labels" \
+              -f 'labels[]=checker-approved' -f 'labels[]=needs-review' >/dev/null
 
-      - name: Comment - Validation Failed
-        if: steps.report.outputs.overall_status == '1'
-        uses: marocchino/sticky-pull-request-comment@5770ad5eb8f42dd2c4f34da00c94c5381e49af88
-        with:
-          header: lint-validation
-          number: ${{ steps.report.outputs.pr_number }}
-          message: |
-            # ❌ Build Script Validation Failed
+            {
+              echo "$MARKER"
+              cat <<'EOF'
+          # ✅ Build Script Validation Passed
 
-            Your `build.sh` file(s) failed automated validation checks.
+          Your `build.sh` file(s) have passed all automated checks:
 
-            ${{ steps.report.outputs.lint_details }}
+          - ✅ Bash syntax is correct
+          - ✅ All required TERMUX_PKG_* variables are defined
+          - ✅ SRCURL is valid and reachable
+          - ✅ SHA256 checksum verified successfully
 
-            ${{ steps.report.outputs.validation_details }}
+          **Label `checker-approved` has been added automatically.**
 
-            ## 🔧 How to Fix
-            1. **Check syntax errors** - Ensure all bash syntax is valid
-            2. **Verify SRCURL** - Ensure the URL is correct and accessible
-            3. **Update SHA256** - Download the file and compute the correct hash:
-               ```bash
-               curl -L "YOUR_SRCURL" -o file.tar.gz
-               sha256sum file.tar.gz
-               ```
-            4. **Add required fields**:
-               - `TERMUX_PKG_VERSION` (required)
-               - `TERMUX_PKG_SRCURL` (required)
-               - `TERMUX_PKG_SHA256` (required)
-               - `TERMUX_PKG_LICENSE` (recommended)
-               - `TERMUX_PKG_HOMEPAGE` (recommended)
+          Thank you for your contribution! 🎉
+          EOF
+            } > "$BODY"
+          else
+            gh api -X POST "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/labels" \
+              -f 'labels[]=checker-failed' >/dev/null
 
-            Push new commits to automatically re-run validation.
+            {
+              echo "$MARKER"
+              echo "# ❌ Build Script Validation Failed"
+              echo
+              echo 'Your `build.sh` file(s) failed automated validation checks.'
+              echo
+              head -c 20000 /tmp/pr-report/lint_details.txt
+              echo
+              echo
+              head -c 20000 /tmp/pr-report/validation_details.txt
+              echo
+              echo
+              cat <<'EOF'
+          ## 🔧 How to Fix
+          1. **Check syntax errors** - Ensure all bash syntax is valid
+          2. **Verify SRCURL** - Ensure the URL is correct and accessible
+          3. **Update SHA256** - Download the file and compute the correct hash:
+             ```bash
+             curl -L "YOUR_SRCURL" -o file.tar.gz
+             sha256sum file.tar.gz
+             ```
+          4. **Add required fields**:
+             - `TERMUX_PKG_VERSION` (required)
+             - `TERMUX_PKG_SRCURL` (required)
+             - `TERMUX_PKG_SHA256` (required)
+             - `TERMUX_PKG_LICENSE` (recommended)
+             - `TERMUX_PKG_HOMEPAGE` (recommended)
 
-      - name: Comment - Validation Passed
-        if: steps.report.outputs.overall_status == '0'
-        uses: marocchino/sticky-pull-request-comment@5770ad5eb8f42dd2c4f34da00c94c5381e49af88
-        with:
-          header: lint-validation
-          number: ${{ steps.report.outputs.pr_number }}
-          message: |
-            # ✅ Build Script Validation Passed
+          Push new commits to automatically re-run validation.
+          EOF
+            } > "$BODY"
+          fi
 
-            Your `build.sh` file(s) have passed all automated checks:
+          COMMENT_ID=$(gh api --paginate "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments" \
+            --jq '.[] | select(.user.type == "Bot" and (.body | contains("<!-- lint-validation -->"))) | .id' | head -n1)
 
-            - ✅ Bash syntax is correct
-            - ✅ All required TERMUX_PKG_* variables are defined
-            - ✅ SRCURL is valid and reachable
-            - ✅ SHA256 checksum verified successfully
-
-            **Label `checker-approved` has been added automatically.**
-
-            Thank you for your contribution! 🎉
+          if [[ -n "$COMMENT_ID" ]]; then
+            gh api -X PATCH "repos/$GITHUB_REPOSITORY/issues/comments/$COMMENT_ID" -F body=@"$BODY" >/dev/null
+          else
+            gh api -X POST "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments" -F body=@"$BODY" >/dev/null
+          fi
