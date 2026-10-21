@@ -8,38 +8,38 @@ Codename: termux
 Components: main
 Architectures: aarch64 arm x86_64 i686
 Description: Official Termux repository by @djunekz
-Date: Wed, 21 Oct 2026 02:58:53 UTC
+Date: Wed, 21 Oct 2026 03:50:46 UTC
 MD5Sum:
- f08f9acece84c6013de40c991ab1aca9 36129 main/binary-aarch64/Packages
- 2fd877077ef553e5095bfb2dc6f62726 13592 main/binary-aarch64/Packages.gz
- 38c9e54ddef9ba81a9d9f5f1fc1e4d2d 24592 main/binary-arm/Packages
- 0428563e5a500f5b6d6adf1f8821666d 9553 main/binary-arm/Packages.gz
- 07825e13cbe9761008f5a725b18c201d 25333 main/binary-x86_64/Packages
- cff7d5c0fd1c107b5dd74b3d692ccee7 9705 main/binary-x86_64/Packages.gz
- 1bff70e8c2061d78f9cce2c390f0fc6d 24714 main/binary-i686/Packages
- f6d6228ea436068de1ce760f6e10f8dc 9562 main/binary-i686/Packages.gz
+ 5a38d1d143fcc1f7e6489db2cabafd45 36130 main/binary-aarch64/Packages
+ 74867e9acfc5dd6b4dc6f96f73e8faab 13591 main/binary-aarch64/Packages.gz
+ b6bddfddbac6134abb12402279489188 24593 main/binary-arm/Packages
+ 43cbbcf3bba1b80091252f2ad3f89c46 9556 main/binary-arm/Packages.gz
+ d166e7c0b4d9ebc6ef7d06a2a0739970 25334 main/binary-x86_64/Packages
+ 69bf93fb08c86cb5b7ed2e02e413f7fe 9703 main/binary-x86_64/Packages.gz
+ 52f5f624f1e78f49035562758b56cffa 24715 main/binary-i686/Packages
+ e73df741c11e7cdd60367c86253c218f 9564 main/binary-i686/Packages.gz
 SHA256:
- 6d83492f8fa1a95b31a43c32b1c051c4513e420b9b95a63f8087f0aaa8c9df7b 36129 main/binary-aarch64/Packages
- 37803e4766ec26b654e3e04d97108c5073ab9ead62d6a3f7e4c013c573127029 13592 main/binary-aarch64/Packages.gz
- 0102a006227f5b5f9073ca0494c07c6f914830dda073311ff2afc7d2dba664ce 24592 main/binary-arm/Packages
- c9f64bce1a1e1d1ebe07f5a0db9cd215c412570ba2532f94deedf5f8c4051e98 9553 main/binary-arm/Packages.gz
- 41e0e6176123367cc18506dc64aa42dcc37e74539b9b73fd6145755cebdf216e 25333 main/binary-x86_64/Packages
- 2d5305fe092fd19de943566dacb01ad1c8e0ce7d6eb310076ce17f9cde45659b 9705 main/binary-x86_64/Packages.gz
- ca0fcc9aa16249bd3c8b07986f8658d5c6256691e6c2e1e05e719f26a5619ec9 24714 main/binary-i686/Packages
- f5d2e2bf9d53782bcbfc4383601021d9ab5b54724cedee87e6cc6e55cbe48647 9562 main/binary-i686/Packages.gz
+ c5f2545dcc2d8e6272810ad10db8c20d260e345f87a4a70983177c5b9345fd89 36130 main/binary-aarch64/Packages
+ 7b152c32c4d75e2c3dc24fb2134b596f0173c2b19cd7c6107d7f2a4cdf768383 13591 main/binary-aarch64/Packages.gz
+ fa8bd2c0d697f71a612907bfc2a70ededcbd84e540d0dcc9af711bb0df75b26d 24593 main/binary-arm/Packages
+ ae23aa8a54ab3a6cce56032f552535d20196ebd7874381c37b241955c192acc8 9556 main/binary-arm/Packages.gz
+ b57f21ed569653beca401102715704310c2f5a8cd58adb15f0d21094ee198edb 25334 main/binary-x86_64/Packages
+ 57dd5287d418817126f4c3c65b0569767b918b665aa2e95d7b2099af8151ffda 9703 main/binary-x86_64/Packages.gz
+ 1d5bb6082ea3dc645447fa7c7287ba9f0a83a512dcac3a39b66c3547948529b0 24715 main/binary-i686/Packages
+ 5cd1bdc103bb19f82a7434aa01b16d5b3cf60f0a90927bd7fe4374c6efcd8d62 9564 main/binary-i686/Packages.gz
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCAAdFiEE05E0oXdxelvr7q5xBdcM27bYApUFAmrYKm0ACgkQBdcM27bY
-ApWohg/+LxO6dSD14fm4GgXf9bdv0azVfDR3zQ86pjTaZYN99NS8vitneaBqrcM6
-hpI6UgZhxUJ++c8ggdVaO8x2PaLvcQJda0nUEqyLeEqo7O0l6rNeMduC4DiYa5uG
-cpCw6/eCr3wvVsVxIUkY37zaeftwMcbqSdZuhW7pSGarIDnpfqh/rhM1eHml6cy0
-cxBt0uRL/70pIf9k3dg3Vp8d7bWdVGd9yL9dwqSxVquH1eCwZ+9m0yNSbQruhbKS
-7zw6czrfTrZIDNE/BSN+DtQfLUdjsJ2iorouR0N9Do6C6FGC86OOK0WTL4x1nscg
-a4sdLxwjf+xv1i+CNLu3UFor+m2noxF9YWcY6X5r8b8zQZ2CyeNlkMSySPWFm3GX
-9iPS0FX/g8F6Dp3eiF6yxqNhnKgpsGXjKSgvn5Xn+NyYxuvb1pcfoIjNjA7tqr6Y
-yqHZoTYFJBIfQF1rM5JkXjkGY6jAOnhsTATsNltgXhCXfz+5gALUybreQX7humgl
-yhHXiWMMfXeVZ5IEgAXYW1riSil798mZ7OYSe3m5RNzuHl+CEmjVQsuYgy1up/Ac
-fSyiZqYIlk5Xj3g0nATa2alCSBi2Gsk89LrO/tSlAcQSO7T6qj6asZTYielwxLAA
-vrw0f8wv+vPxKcCTTeIYkj5c8X3yjnVaard56yXvDvFQDI+XsBI=
-=2geU
+iQIzBAEBCAAdFiEE05E0oXdxelvr7q5xBdcM27bYApUFAmrYNpYACgkQBdcM27bY
+ApVAHQ/8CoPJmfxsUdwFNqx9dQkgI9b+Lx9F5/7hNqzMcRIcUFJCBCk51ifiIauB
+Au7oSLxSJrKhAQSzOdvgC/IctgnT8rIj6iZsYUzVgElml3Ir1+T5PlPYslNrPcDf
+5F4sqUCXUzKIlaFX0Mv0j4KC8QD16pq6A5OMn+7j5wE9D6pWoU0lFxw8VqZnojyw
+TRnWnpcYzPbb4Zyc8A03SeXgIuN8RRmRso87VdhwN2veVbVHLX0s8nvjIjiaqRY1
+cCW7GaFxJktMdSR/+l0k+E/rps8XLZIrl9MoQh/5z/yJTYhkLuxX26c9aaednmyQ
+dztnxKzG0dm4UtsuSegNjOYF3zQUUbsNDSm7spwj+aR77z1ROjy7ajpZ2PlfK5SW
+KvtWHJoSCKuV6FndwKaVL1e7IQKiTdsV/iJUqGQbd4GvNN2oJJ0joIWC8y6ibj5Y
+wRMEHwBWGbNNfqmHwqFM/o06Ys133BNOjNfp4RuOMHFnHiEhmwsTJ6ZGN8xrnLoI
+LBgF88a6i0nSB144kzT1eVRsxGf8ISH5fUOtEyuGAsiW/7R1i7vYswvU6no0LXnA
+FyWWSicvfdxoE0QPV19Y33C2gaF8yE8PzKR5gl270qOkWgrkhyhrMC7+RToQ/uBX
+DNssDNKLgE+vgba6qyxOVRepsA5ASqLW4OCfCyn4davsJ9fucyw=
+=wild
 -----END PGP SIGNATURE-----
