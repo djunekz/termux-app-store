@@ -468,6 +468,18 @@ SHA1: c6db7552a7163ebb9dd6a2f5fe310a12524202ef
 SHA256: 9a8984472c7e15d9cbd9ef8e1c8b4185dc6096eeaba826f63cf023744c601f9f
 Description: Analyst website vulnerabillity scanner
 
+Package: mining
+Version: 1.0.4
+Architecture: arm
+Maintainer: @termux-app-store
+Installed-Size: 
+Filename: pool/main/mining_1.0.4_arm.deb
+Size: 36340
+MD5sum: 02b99de9f38692f8e2b4c05e129091d2
+SHA1: 0dd0524d4609824378c731846d5f66050c91973e
+SHA256: 58996bde333e8a836a2f95e7a9c7b9717252292c31128e1a0fa4d87dadd7e3d5
+Description: Termux mining coin, simple tools and userfriendly
+
 Package: myserver
 Version: 1.0
 Architecture: arm
@@ -733,4 +745,3 @@ MD5sum: a333a154975f848958dbb9ab4c1c52a3
 SHA1: 77726990c329705c542482051a4aa6dae97fe5ea
 SHA256: 139cadce1b08ed6ab223c7761214ea99485a8a5f56f701c49a09b1c8e659541a
 Description: A posix script to find and watch youtube videos from the terminal. (Without API)
-

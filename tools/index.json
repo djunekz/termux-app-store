@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-10-21T03:50:06.269468+00:00",
-  "total": 88,
+  "generated_at": "2026-10-21T13:34:05.729367+00:00",
+  "total": 89,
   "packages": [
     {
       "package": "aichat",
@@ -1233,6 +1233,27 @@
         "arm": "9a8984472c7e15d9cbd9ef8e1c8b4185dc6096eeaba826f63cf023744c601f9f",
         "x86_64": "c3ec543e2015cfcfd9225cb02751299947c4b0ad318b8f425e933a5c95872d2d",
         "i686": "8a6ea63604929b52a0e50aae8a492bbc949619e25c329945cc6ce26f9266b94e"
+      }
+    },
+    {
+      "package": "mining",
+      "version": "1.0.4",
+      "maintainer": "@termux-app-store",
+      "description": "Termux mining coin, simple tools and userfriendly",
+      "homepage": "https://github.com/djunekz/mining",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/djunekz/mining/archive/refs/tags/v${TERMUX_PKG_VERSION}.tar.gz",
+      "sha256": "8f2d3c07fa0c1cc550fe2d5510e8a6392ecdaa1d70115c1d127f6cc8dba99555",
+      "recipe_sha256": "f4546f8ef1b257fcd55f82d76681f1d9af2491af6d6207e71e4415d76e1d0d1a",
+      "platform_independent": false,
+      "sha256_by_arch": {
+        "aarch64": "fd26ef211e53cc51c2ddbd7944754bae2bea54af1d14d335384527b5dd70b979",
+        "arm": "58996bde333e8a836a2f95e7a9c7b9717252292c31128e1a0fa4d87dadd7e3d5",
+        "x86_64": "0f36d817ea02896430c72f226f780a8f66369df70de07a577d21873557b4c688",
+        "i686": "ec37787072df38a2cdf586ff95f50b1b51d1d63ae04695d06d5faee182ed871c"
       }
     },
     {

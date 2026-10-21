@@ -624,6 +624,18 @@ SHA1: defe41bbd78e711c5db439edeeafecef74b1eb4a
 SHA256: a86d0d214e64935652dddb5959fb34b7ff5dd537309d2349fe40fc59385e3f69
 Description: Analyst website vulnerabillity scanner
 
+Package: mining
+Version: 1.0.4
+Architecture: aarch64
+Maintainer: @termux-app-store
+Installed-Size: 
+Filename: pool/main/mining_1.0.4_aarch64.deb
+Size: 35436
+MD5sum: bbd37e51045d0ca609ba0959bff2fb34
+SHA1: 4d2bc32fcce4a6a17a85c24f393780176fcad9ba
+SHA256: fd26ef211e53cc51c2ddbd7944754bae2bea54af1d14d335384527b5dd70b979
+Description: Termux mining coin, simple tools and userfriendly
+
 Package: myserver
 Version: 1.0
 Architecture: aarch64
@@ -1070,4 +1082,3 @@ MD5sum: cff40fc0d1f78d54d24c3da9c10fdce1
 SHA1: 350d62b573f8476e58582ee59fc35732981ae07e
 SHA256: 9991991e2146cb88a75058bbb4adf202cc2998dbdfb1f0de868077d1c3211406
 Description: Encrypter Stealth Binary Builder
-
