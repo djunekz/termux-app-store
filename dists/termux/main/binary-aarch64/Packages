@@ -849,10 +849,10 @@ Architecture: aarch64
 Maintainer: @termux-app-store
 Installed-Size: 
 Filename: pool/main/termux-sync_1.2.8_aarch64.deb
-Size: 50068
-MD5sum: 14229a047349e627c07f036baa8704cb
-SHA1: 470417170e7318b30fa5c640bca57aa97620d42b
-SHA256: c3e6454265802c282f7701fdf6221eae483bc31816ab4d1b9810cfc09c306722
+Size: 50032
+MD5sum: 14e83aa54d68df4dfa379bb3702e9e50
+SHA1: 395986c339da2bbb0e8dd25944264755904953a2
+SHA256: 6b19a470201d626ef952ed7486709d50b935950985350f84d4959c2ed28f9654
 Description: OpenSource Backup and restore your entire Termux environment across devices.
 
 Package: termux-tui
@@ -1082,4 +1082,3 @@ MD5sum: cff40fc0d1f78d54d24c3da9c10fdce1
 SHA1: 350d62b573f8476e58582ee59fc35732981ae07e
 SHA256: 9991991e2146cb88a75058bbb4adf202cc2998dbdfb1f0de868077d1c3211406
 Description: Encrypter Stealth Binary Builder
-

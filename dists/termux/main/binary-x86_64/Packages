@@ -656,10 +656,10 @@ Architecture: x86_64
 Maintainer: @termux-app-store
 Installed-Size: 
 Filename: pool/main/termux-sync_1.2.8_x86_64.deb
-Size: 50870
-MD5sum: c06b51d433fb5340e959b1acf84f3e34
-SHA1: 98309d8e41845e353eff5c103f90628e12307d64
-SHA256: 66907ef486f0c186b50797f7dad5658c526d03dc664a9e5fd4e9f8c5131e5875
+Size: 50838
+MD5sum: d3df42773a790cb0b79bd094b1308b04
+SHA1: 276f30327b894c612cc4f6f878dc8ead1fa35a46
+SHA256: 54c6969d331bcccf04429e5a4a6595b8b6cb9f9337da55a64190fb6ea0971fb5
 Description: OpenSource Backup and restore your entire Termux environment across devices.
 
 Package: termux-tui
@@ -757,4 +757,3 @@ MD5sum: 14f074ec82f7538769be3ee75c42605d
 SHA1: e73d4f5b88d632cc208555f1814743c789bb8435
 SHA256: 4fa9908b76316b59cc4ae2417e4190e18ab54956735983867c552faa85c7df47
 Description: A posix script to find and watch youtube videos from the terminal. (Without API)
-
