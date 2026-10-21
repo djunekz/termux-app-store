@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-10-18T03:39:29.737815+00:00",
+  "generated_at": "2026-10-21T00:27:03.196295+00:00",
   "total": 88,
   "packages": [
     {
@@ -27,7 +27,7 @@
     },
     {
       "package": "ani-cli",
-      "version": "4.13",
+      "version": "5.1",
       "maintainer": "@termux-app-store",
       "description": "A cli tool to browse and play anime",
       "homepage": "https://github.com/pystardust/ani-cli",
@@ -36,8 +36,8 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/pystardust/ani-cli/releases/download/v${TERMUX_PKG_VERSION}/ani-cli",
-      "sha256": "17c8a97b034d3e48ba4663d538a5705adfbbffb951fa67650a57f7e4414959e2",
-      "recipe_sha256": "dbe1be1d54c4cb41756fd0432713cd9a2e86b6cce75b7dcccdc93a47b2f8180f",
+      "sha256": "f99a1dac807004becfb732a5518a0f2ded9dc08b467805abd03df5d580becd46",
+      "recipe_sha256": "4e35b26dce900f670b1409d27c51f545eebb30675507f91bc3bbd5c74e9f033e",
       "platform_independent": false,
       "depends": [
         "nodejs",
@@ -49,10 +49,10 @@
         "wget"
       ],
       "sha256_by_arch": {
-        "aarch64": "47c41f57c822ebcf4171017bad415b8c5dfff942a258ebcd5d81fceae17888c7",
-        "arm": "0505114849e06602dcd333490e9a2235886bd606a53f1836ec27dcd87f6c7132",
-        "x86_64": "23e8018d1707a3ede60bc4723d8f8ebff2a34e038345cfd57ea311fa06d386c7",
-        "i686": "516e24199ab6fa0e80d53df8bb4dedeffaa909612c1e7629dcaef2cf0734fe30"
+        "aarch64": "ce8322cbdea6a9227036172e6dccfbd8a4ded47bfa934e848bda255cee857d6f",
+        "arm": "f01fd804e157bed021206519ce4b4a6914fdf3b45899cde6309c80208f590347",
+        "x86_64": "dc570b6663f5254c45eb50d69c1b0eaea6ac2e5094489f43c1bb912b6611cd2b",
+        "i686": "272c405cabc232dde16c73a2fd5cc9a6482d9a8ffb2b64ba220fe70b63a00802"
       }
     },
     {
@@ -73,10 +73,10 @@
         "nodejs"
       ],
       "sha256_by_arch": {
-        "aarch64": "dfbc759949fc9af7df904d6e8ad1460974f0338f55ab79cc77a0e03b9d48800a",
-        "arm": "427be6aee0e459a2f80604c11ffce54d0f3cfbc634076da2668e8a1a7a0f2813",
-        "x86_64": "cdfe5e30780587bb7cbf536f47fdbad44c04ad59324056c4d4c7f89d13dcd79b",
-        "i686": "3eabb253a5a521493db6d31997438a6b62606621772107f3521fb76ab5ec6a3f"
+        "aarch64": "351df9adaef5dc2a4dc70b9e38947d19722b71ad557e9d6cd9774eaf92ef1e27",
+        "arm": "056d65b035666d7fe9adb2c88d69fd67640771af8ea397ad7e7095d57d409222",
+        "x86_64": "18313476257da805b82df633ae96aed7e1fcf9a3d616857dc98b200e9f1d74d9",
+        "i686": "c27e45345c063cc54d8e86594daf05faf6b6db96e14cf47b49443a2e5db5ae04"
       }
     },
     {
@@ -99,10 +99,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "a0f96a2a23ba27c8d78fd7eb5efd6ff83c6e8e39f4cc73a77ef99a5a7caad5c8",
-        "arm": "8c87b9fe0164b5b3f6ee16c184ac5f73a50ad8c030ff395b82eb03f1b513aac7",
-        "x86_64": "12fe336a4697b42be705a2f47cf2dfda0f284731fb80ef0250fc99a835a6738d",
-        "i686": "4dd124764b5516aee0ca92e8c60e63795be5680f8dbcfb892965be4214e81e9d"
+        "aarch64": "7f5365b0cf84d1c0951c49e13c25e0f540a856dcbb3995c651b9502ef0722a95",
+        "arm": "ed7be1311d1c23c45927876eeee299d7397ac222ff03b01c77a80c4bd86739c3",
+        "x86_64": "4d35ec09abdb79dc7883c8d62ac4083c2acb0e0612055bb2c368f90d30297949",
+        "i686": "d71c5e7fc2da5901879bc900120eeee64ee9b0db41bcc9ce58c73dad7aff920e"
       }
     },
     {
@@ -120,10 +120,10 @@
       "recipe_sha256": "02ba21c331a37b60bb6d0d2cd279d0026ee6b8f7018a384a6fc3a0391cace5ab",
       "platform_independent": false,
       "sha256_by_arch": {
-        "aarch64": "ae20769b64fa17e92458bd7dcbc5549eb9dac2dc8e96719b3e33bd6ade630850",
-        "arm": "c78e1bb5b6bfe44c9cf5b030332af0d8a21d71d01c5156c324db600a894eb32c",
-        "x86_64": "ccbe28426efe620c9398af92108f93260828f6191db9fdd72a3a353abbefbb9b",
-        "i686": "130421ef416a8a7988d9d66f87cbfbe3df84a810d6670e9415c34d31740727b9"
+        "aarch64": "1008b200641166b887eef82108f7f368d2f052150d24ec1da8471fd79b7b37fb",
+        "arm": "6f4a988b5e0d79c597a8d0f0d1ffbe63ce3f641b9c92b55f3ba30019b1680f41",
+        "x86_64": "db677c7830cc6020eac0680ec359a92968d71b20743af79c8187cc4641e8c9aa",
+        "i686": "3ebf76395976e714724830cda1adea89466a03ef15c48569d3479da11c3cda7a"
       }
     },
     {
@@ -144,10 +144,10 @@
         "python"
       ],
       "sha256_by_arch": {
-        "aarch64": "2f1571814f497423d52b6381dcf1fffec1f8a3f565ab53b60b17fff3ba181931",
-        "arm": "a1943c8a0ae7535092875174f305ac7979669b2dd8e8b166cd47d9ff4c2909e9",
-        "x86_64": "25f7ebaed12181251652316045e1368dde5610201562a62acb3b86097f1799f6",
-        "i686": "5aea5597738592c09be5b8ff9825986c8b1151f6de761e0dfa08c48f6bfa65eb"
+        "aarch64": "dcdf946c8e4960c4c649396d74172a2a0722f8698fc12be216384e9a0b9bd3df",
+        "arm": "b24375d9bb79e3539ece1b90a2d3746a73071f971e1c5e66762942dc3a57fa9b",
+        "x86_64": "6309b5a525f60b673da61b7f8e01eb0b11829edac40e7900cc5e9503fb4cd727",
+        "i686": "87fc809126e769f8cb0899b3ae8969de41f9ba29759a876ec177079ac81575db"
       }
     },
     {
@@ -168,10 +168,10 @@
         "nodejs"
       ],
       "sha256_by_arch": {
-        "aarch64": "871accf16f29a524f394be15d421a975a759b9c9796ad55154fb5e730564d709",
-        "arm": "cab79ceefe99beef01adfaa2998a42661263e6ac7b663d107990db14854d6ef2",
-        "x86_64": "a9d14333f5bf93744718ff5f73b5b467915536290b16c9a8828d20b8795c01e1",
-        "i686": "a3787d870412f73d32329d0215a39c7b0bbc8ec2bcccfe91665177270b6e89d2"
+        "aarch64": "fa9506616b3f968394b00a2b3cb5bdaa5c28551bbd12204cc86e481cc98e39fb",
+        "arm": "f68a9a06a1ecafcaa766a524186dee22f41268ec4ab8fec4d91cf0e4fee7f665",
+        "x86_64": "a4cdd8c952067cc39f84bbafa7d1ad5ce46e38023f69e60248ee68418e2b3184",
+        "i686": "6ef584fa49f233b4c5bc932fec099bf961e4319857e395e88dd153a9743a26f9"
       }
     },
     {
@@ -189,10 +189,10 @@
       "recipe_sha256": "a7c2eda1decad9e6274c7017f509347408feac85e3a6815e2b4c4e5b245364e8",
       "platform_independent": false,
       "sha256_by_arch": {
-        "aarch64": "61ad6ed0c02c893c63f432f638f15ffe6b825594792e80fed9419afd87841f1c",
-        "arm": "283721284c3fcc5931152c9614cd4685018c4347de5e66da6ec03f0cfefb2775",
-        "x86_64": "375fb5dc8ddc434af07a969488a5f866a72f6730cacd7f31fbd8be8d5eb5679a",
-        "i686": "b076e11d4a3322280da26da32d791a7670255815e71c151fcc63cb51324bbe68"
+        "aarch64": "ebfc5a4c6c4d74f4fb87bac886bc8162b116e874cb4d6c687c76a7b043a293e5",
+        "arm": "aa67c528de121f00fe3bee79ec599576230ccd9f65cd3267756c4353b1b5fd28",
+        "x86_64": "021dd9cc02da35f09b3eb77308fb3cdd48817334e2d5565694d65c7ecf1b46f5",
+        "i686": "3cb7695c4b872158acd6d1ade089aace392d08d9c5bd6008842ff56571cf2c16"
       }
     },
     {
@@ -215,7 +215,7 @@
         "fontconfig"
       ],
       "sha256_by_arch": {
-        "aarch64": "e5e226355f559963054f28e9e38e4fd40b26ff5786ac4a16f702ffa054199003"
+        "aarch64": "d11baf89fb17ee84d6c78552d143a2149ddfbcea1e4ffd98511c1c6758f08923"
       }
     },
     {
@@ -236,7 +236,7 @@
         "golang"
       ],
       "sha256_by_arch": {
-        "aarch64": "87199d9a14f468e91c0d2c1f1e5d8deb713add717d13f77c13db5bdfc1658723"
+        "aarch64": "29b65a324f4ce885cd66a0776b46b68be688a2e10577ef6d41ccc183d448f2cc"
       }
     },
     {
@@ -257,15 +257,15 @@
         "nodejs"
       ],
       "sha256_by_arch": {
-        "aarch64": "2302a6e45e2bc824d24a91074b4754c4e977c0d9a0f66f4ef347fe4b9fe9e10e",
-        "arm": "b0c6aff00b05938bf970251980b420cf68f4d468c3afaafa17f9422ca404452b",
-        "x86_64": "fb0742547661856357963de222a002782379d45e29cca3a6d206f1693b999252",
-        "i686": "8792b52bc7c2ad70a3559b2984a6c0e792987875526b1338a32e2ad6ba033518"
+        "aarch64": "599b96519be8dbf22eee0388b0b82b358b53ae0b255b294f31b0928c663e67f1",
+        "arm": "7f98dd7d9b8a4daeac63506308b5dbb9817ec5551f22d50f106f8db07e3adae8",
+        "x86_64": "7dee3fac740b67288f76f3f2d37fc547163d67b3b40b0aaafc3d6be11df15ca6",
+        "i686": "2d1a1472df3931b3b061d419f8742b18dbc6ff03a46973f356a5b7ee9347ebef"
       }
     },
     {
       "package": "broot",
-      "version": "1.56.2",
+      "version": "1.61.0",
       "maintainer": "@termux-app-store",
       "description": "A new way to see and navigate directory trees : https://dystroy.org/broot",
       "homepage": "https://github.com/Canop/broot",
@@ -273,20 +273,20 @@
       "download_size": "Unknown",
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
-      "srcurl": "https://github.com/Canop/broot/archive/refs/tags/v1.56.2.tar.gz",
-      "sha256": "3e7be4252c76565f6d71b34bd07d26e1444b9ac2e1c8271c724f6e866fe75565",
-      "recipe_sha256": "06695bfdb0eac34445177e0a6ef530bb6a1d3d8e6c9eb44d89cd49c4e4906a85",
+      "srcurl": "https://github.com/Canop/broot/archive/refs/tags/v1.61.0.tar.gz",
+      "sha256": "458f1be5d78fe3b062618e9b1dbc32cf53171b0ca0769b3f32dfae65e753c264",
+      "recipe_sha256": "6cbca33ef01390544d6186d5ffa3dc3d439711d75e43c06cc784582a75b53dc6",
       "platform_independent": false,
       "depends": [
         "rust"
       ],
       "sha256_by_arch": {
-        "aarch64": "709654f0f46e95185c3f14324c1b277fc3082d0333fe2940ca2ff9f670870199"
+        "aarch64": "11b2ddf1690dcbe52c143ce0391296bfb48d2057918e0b65710332eb8f49fba0"
       }
     },
     {
       "package": "brutespray",
-      "version": "2.6.0",
+      "version": "2.7.2",
       "maintainer": "@termux-app-store",
       "description": "Fast, multi-protocol credential brute-forcer. Parses Nmap, Nessus, and Nexpose output to automatically test default and custom credentials across 30+ protocols.",
       "homepage": "https://pkg.go.dev/github.com/x90skysn3k/brutespray/v2",
@@ -294,16 +294,13 @@
       "download_size": "Unknown",
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
-      "srcurl": "https://github.com/x90skysn3k/brutespray/archive/refs/tags/v2.6.0.tar.gz",
-      "sha256": "cae09d60d49b46d56892caf1bab3ff56d135e9dedd110db8907ac98522327e4e",
-      "recipe_sha256": "01ff3e0818fb0883406675d806f1ed938356188342b684abd45658c5b592079f",
+      "srcurl": "https://github.com/x90skysn3k/brutespray/archive/refs/tags/v2.7.2.tar.gz",
+      "sha256": "551f8a4fe270a86cae63cc78a1cc4a79d0939b84710b1d507fcb7a4fa06b8b8a",
+      "recipe_sha256": "63a82716e6245baebcc6910c01a2f3c3930712c62f49ad46296b575a60abf7cb",
       "platform_independent": false,
       "depends": [
         "golang"
-      ],
-      "sha256_by_arch": {
-        "aarch64": "9ac3e26a45c5ac9b7966498b5a697dafc74648fa6cb3c0e38d731d8cd6b6ff53"
-      }
+      ]
     },
     {
       "package": "clickjacking-tester",
@@ -325,10 +322,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "0bc20db68194904ecc47dd7c0288488d01f16cbcb3778386b572479a15c46880",
-        "arm": "48f1a0cecfb645d631ebf2a28fd8d95f21b1c8529b3ec18b4ecd8309681fc585",
-        "x86_64": "15ea7141f51b32eb64f4a9d2e7206a32da561b7e1a84f4fe1573aae97478fd6d",
-        "i686": "d9305dea47d2631ad7c5ae13a537d1e8afcb2bb9cf123a66f3d8273f88e1c87d"
+        "aarch64": "ad2a2d7cca9b9112ea9ec1fa1d56e75e3465d5daad3a569dba763e40a267aa59",
+        "arm": "1094065177781c2d1864927e750195e3ef33ca11e5c5f4bf09fdf7718a0bb2f1",
+        "x86_64": "06abc0c4fbb3d9095fb8491e1dc1f33a6331942c0d1b0ac1bc9c60a4a5f6a693",
+        "i686": "df54c208ed7ce5f411a540d1bbf26406f6b22375ba4419586f7c2698bdf075ff"
       }
     },
     {
@@ -351,10 +348,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "7cc55789e9a2ee2314fe493bf102e61b9086778a802c5ea62da0a613ee207f5c",
-        "arm": "aee8f21872d5dc7be3648f7d148943e06749bfb2d27a4f7098ba13ac371f0dca",
-        "x86_64": "eb44e7e85e4097b7d92c1a56e9ce2d3abe35510b586517ddf22ee30321c5c224",
-        "i686": "b06ffbfbbcd378c00ebeb0c073d7f9b3a0ec021db5b2b0fc609d8e54c98dc156"
+        "aarch64": "8c2ca49e07f2173bd7afbcd7d0372dce51a0aaa3118977e328de361425090c76",
+        "arm": "e022112b77f60da3703325010f3c326817619c190c267d426bb08f1c530e3b86",
+        "x86_64": "26a63e75417cdff9e55cf8c4dc3de8bbf47f4ca67c809bc8441fef6f50a4c18a",
+        "i686": "e3cfd493e19c19a052b5af72b64835c47ae4d7b7a39f5e76b9cc5d3dd169767c"
       }
     },
     {
@@ -377,10 +374,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "c088ac31fa02fd2266291acfb3da3752361b06d81e6eae8d2523385c388c4e60",
-        "arm": "eea4e673c7d2d6d24917a1c1e32a6b8dd7b9c0bec9d04a50390512232087b854",
-        "x86_64": "09771ca0c16067903e5dec2f0c5ab9ff22951d749ae668efff6260855fa04b85",
-        "i686": "9943bc42d7c2712c2412581f42a763a36694e2cf8388f623387f4a9ce883537b"
+        "aarch64": "5275f3e62f07945853d219d557f675ebad53a453b9a7e7f801214e90809eb127",
+        "arm": "cdc8f035ca7bdd1d57ee62b75793a1b3dd118bcd01bbef0e832d7f29d30530bd",
+        "x86_64": "5106f4b916e6ce15b6123550ca18aa921d3d468c1d732ce0a4feae0696a5bc45",
+        "i686": "79bc6d33741af720e0bca184779301dcfe469d4c432fe6a1f8c217d401d6ee71"
       }
     },
     {
@@ -403,10 +400,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "7c404c16dd515c3aeee6231dad220125549ca6d87894263cadcd8af8031907b0",
-        "arm": "f9351b60341a90a9eba0ac4b1d44bd17a231ecf9ed77c5e5ccbfb2c75afa596f",
-        "x86_64": "f8fc1eb4451d733b9f6c61703e33734e2242a7d8958aa8b8cf228368e9bc06e1",
-        "i686": "1bc084cfb52650c877de60663650e3653d1a3dbd5185ad19e9cf4e95a421391c"
+        "aarch64": "6762dfa12b40e1f50ef65037c451f4671d48a7e84296fe85187de334eb09daf7",
+        "arm": "e8d6ad2cbd6adaf1c8951811c2bca019bc33cbd3add36a48ee3e5899215873e1",
+        "x86_64": "1a80c67c4681ce1834072f553e520d6ac623b7579faecc80d198d31f1c1323ae",
+        "i686": "be9378aebfab1cda6f8e2f8d600a8afcd8be08aead2ffaf6cb1c309fd5e12a4d"
       }
     },
     {
@@ -429,10 +426,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "d52716b79aef1dea0990a461c163c47048f01ad7e432fa092dbc39aea4022a3c",
-        "arm": "35b9fdf341140002061ce02f3625895868982bd24ceee44619d13e39b946410c",
-        "x86_64": "97e768de0e44de67ac6b8b099fe5e235e65fad2d9754ad4b8e6212d00aabd76f",
-        "i686": "a14041f6bdc0b6863298b9796b010e7dd079c801349dcd58fd7ff076b1334563"
+        "aarch64": "c368be3a991d3d8ef273b6fbf88b8a8d5a24a96a4f84cb22bcfd39ea2cbb4fe1",
+        "arm": "0b0beaf504e37a0faedb13db11ef0e568ed15ec6b9fec5623f0439c843400c2b",
+        "x86_64": "8605f2f8a48e3bc929a78d09e2435b7613c141470999c6eec206db804e180869",
+        "i686": "13bc87f35ff184c696bb88536f2dee0a395427e6e02e427f22c509e12cd105a7"
       }
     },
     {
@@ -455,15 +452,15 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "c44759b2bfa920aa257faac79ff1b2f43141db2dbc5d124d2501f1023111d2d7",
-        "arm": "952f40d3d403f5554fbee1eec37d68bbe845ef1e5fa95ec23b2893afe0f4e1ce",
-        "x86_64": "38205696e5fa097294cb9ddedbf7bcd3918ccb8dca1d2a94ee7ffb8f4b71e4c8",
-        "i686": "5ba399db61b83fc26961c6af3cebadc2ad1e4a055795b32ec729fce099b6f340"
+        "aarch64": "14193adfc80b65d1657f52681eb0e205912ecd6dceb93cf8377f8fc0142db4db",
+        "arm": "cd588dc13162015a6adece7ba657ccbe70243d5e4eef6b20f1fba87e1b0621f8",
+        "x86_64": "e352d579cbeb1ec14049a02423d97e48b23ab9a4b0a790d8de97bcb928a4a646",
+        "i686": "774550bf5cc1a55847098f00c9e6c0e7d9e79f5ed33946203ef39838de447002"
       }
     },
     {
       "package": "cupp",
-      "version": "0.0.0+616a7b0",
+      "version": "0.0.0+b77f1ae",
       "maintainer": "@termux-app-store",
       "description": "cupp — auto-packaged by termux-build-init",
       "homepage": "https://github.com/Mebus/cupp",
@@ -471,9 +468,9 @@
       "download_size": "Unknown",
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
-      "srcurl": "https://github.com/Mebus/cupp/archive/616a7b0c01b9cec51954df86a2a538dffcba3834.tar.gz",
-      "sha256": "21fb2b08ea3bb5850e194008cd2667e1abd6082750802efbcfb6b279161f7d57",
-      "recipe_sha256": "9e80750c1754243c69399ec5e208a91d97bcad473b4d2d6483f8cbba18a02404",
+      "srcurl": "https://github.com/Mebus/cupp/archive/b77f1ae66c10ab2d0fa09c67017949fb5ba187aa.tar.gz",
+      "sha256": "2b88e3df1af6df952dfe6b08d151fe017f527388e35dd44940b4e6bcfc16d918",
+      "recipe_sha256": "44d71ffd4f3f24bc1c48e6ce94ac6326f72765f7a30535fe60122c6c2bce77c1",
       "platform_independent": false,
       "depends": [
         "python",
@@ -481,15 +478,15 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "df134df4ad1a59a5fb796e08a955551c34b2e2c21306c1d476c11234c7bcf467",
-        "arm": "969411317f031d5dd70e92749ff78e7cf78f4eae2617a5d46728a62802642922",
-        "x86_64": "cc1b78fc01cb602739902eb0f49bd5f2652a033f69f9d063404b1e60a5e5a0ab",
-        "i686": "cee2504a8437113250e1022b3f3f5efd49ea5b468659f6ca61e2e3cc83ceb252"
+        "aarch64": "1fff9a3fee06cea4311138b639ca60263a9a7353daee8471ac860a443eda3e3a",
+        "arm": "15d4d9e2a022eaae959b41ce906a5bc56f074448da5d8a8f7dc060067ec43cd2",
+        "x86_64": "f24d1132e34ff4ceccfa5883db9cd4cd4fde3512dd2582bdc04c7f534a653501",
+        "i686": "697b6cce99529aabb565825f1b8bbd4b86c1df8f78cac6c64bc48b5277ec804f"
       }
     },
     {
       "package": "cybertuz",
-      "version": "1.0.2-1",
+      "version": "1.0.2-2",
       "maintainer": "@termux-app-store",
       "description": "Comprehensive Educational Learning Platform for Termux",
       "homepage": "https://github.com/djunekz/cybertuz",
@@ -498,8 +495,8 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/cybertuz/archive/refs/tags/v${TERMUX_PKG_VERSION}.tar.gz",
-      "sha256": "9b678169bad675762dd4768cf4be6a08445fd5eb9008487a85b1a72af716e129",
-      "recipe_sha256": "2de2bee25dfa191c708ecfb32c7ac100f5218df67185fa49b799eab541b74489",
+      "sha256": "bb13587b662be15317a3d32c9f2f8bbfb4b602ff745d201b981c1022e0c7a0f9",
+      "recipe_sha256": "b2ae95c3631faad22bd65a9a04442f38d02d384c3917bd4c708a499193f12fd4",
       "platform_independent": true,
       "depends": [
         "nmap",
@@ -509,15 +506,15 @@
         "dnsutils"
       ],
       "sha256_by_arch": {
-        "aarch64": "2727b72295ca8f48044f90b77eb4c84ac06214a29d78dc48cae3ccbf3ee1c820",
-        "arm": "ad7ec90bb4614fada06db6863761c984a7c0b87e4f21f125dbbfb37e53e457a0",
-        "x86_64": "c878fd21b4ed76d7e1d08a22737a5013be4e2506b8da0ace4acc56f27a235ed0",
-        "i686": "9b96b8feec72640c0353a30947b7321dc9f8b9347e6a834f50747cabaec69fe4"
+        "aarch64": "e5cf886c793d83b0d7ec9ae1f95e2447e5b2dd1b9aad047d2e398c9298463095",
+        "arm": "bfe1dfa1cf48da460702f63aa63e96ae204491be3587c017b3e876626f3b765d",
+        "x86_64": "ba359b10a7f48283d8584f85d903d9f1115daefa9cdb4b3ca1c6684ebfc17b5c",
+        "i686": "60af5060a3286446dceb27a6cf4770c00ee1a849497f1f9ca33643eff617ed9e"
       }
     },
     {
       "package": "dalfox",
-      "version": "2.12.0",
+      "version": "3.2.4",
       "maintainer": "@termux-app-store",
       "description": "🌙🦊 Dalfox is a powerful open-source XSS scanner and utility focused on automation.",
       "homepage": "https://dalfox.hahwul.com",
@@ -525,16 +522,13 @@
       "download_size": "Unknown",
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
-      "srcurl": "https://github.com/hahwul/dalfox/archive/refs/tags/v2.12.0.tar.gz",
-      "sha256": "b87848b17cac23352d674e63fee554ae6b976a53fe3e62822512232030430cd5",
-      "recipe_sha256": "742ecd0c2350c83261719a4d8887f9751534cd5eeee7cb5a621e31f580d3d916",
+      "srcurl": "https://github.com/hahwul/dalfox/archive/refs/tags/v3.2.4.tar.gz",
+      "sha256": "d86cae222a4db6c8a335013c980d0c6d672b3abee8cfb44da6ce1b489e4d3a9b",
+      "recipe_sha256": "5fc190219c2429e547c016e67b4111fed0442fcd3e269394e6228961265d64f6",
       "platform_independent": false,
       "depends": [
         "golang"
-      ],
-      "sha256_by_arch": {
-        "aarch64": "2d2991d6a48f4cde7cbc27bb0bc975e23b4e3ed8864a4aa65b6a9768e9020706"
-      }
+      ]
     },
     {
       "package": "djangohunter",
@@ -556,10 +550,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "5bb097d0a00778f318b6a85b24fe88a2ab4e0c7089a7e15d83ee65ad80e51438",
-        "arm": "29e0ed41c171e1a465e6a377b83afc4de1d4df6844252928175e34bace081d64",
-        "x86_64": "a47d7e5f2b5d7484daf7d26569f72a823ac90e7bf5616dc09f96a222e91461a4",
-        "i686": "d002b3d958b502d768dd429a8f505ef30804336fd9b6dd7a2c8358b38e34b3aa"
+        "aarch64": "31fee84c2c709c9aad99db7d31335fd48abcba3d17f90f705e8053c4a57afeb9",
+        "arm": "045d5ed454c229765c2c2e3ec03304e23a8b86cf6a499a600a2aac4683444748",
+        "x86_64": "0595fb3608656a95749e367dff83f67d4e577994a6e2816ecf3fc9489a39ad58",
+        "i686": "c381d359bb8651d9ff6b2d0ff3f8648f016dff13c0b25972fb1a0437ecd59080"
       }
     },
     {
@@ -577,12 +571,12 @@
       "recipe_sha256": "46f35d3264b328498d282a75f090f353777345664d8b72fb3da7ca6a3f525698",
       "platform_independent": false,
       "sha256_by_arch": {
-        "aarch64": "e59519c022a4bb16388fb07074b43b91e3b4a692662ae7ee56e557a7f9cc8976"
+        "aarch64": "d10ee6a436e2f642c44893b68ceda4b15aaa600a39922ff19aa3342905385179"
       }
     },
     {
       "package": "dnsrecon",
-      "version": "1.6.0",
+      "version": "1.6.3",
       "maintainer": "@termux-app-store",
       "description": "DNS Enumeration Script",
       "homepage": "https://github.com/darkoperator/dnsrecon",
@@ -590,9 +584,9 @@
       "download_size": "Unknown",
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
-      "srcurl": "https://github.com/darkoperator/dnsrecon/archive/refs/tags/1.6.0.tar.gz",
-      "sha256": "21b83c22e4dcf684b623c824a678c371d803952d99d4758c9b1c45bce409eb3d",
-      "recipe_sha256": "01d129ae129f204697a4f7a499ce4351fc4a7a6a206156f6c47ecab7039914dd",
+      "srcurl": "https://github.com/darkoperator/dnsrecon/archive/refs/tags/1.6.3.tar.gz",
+      "sha256": "7f7e230bb3fae959ff37ac19d1c1deea25089ac6a1bbbbf3b4e26e78ed96bd7a",
+      "recipe_sha256": "50ce12dabb8992a8e7bf5406f2d10fd6f0f7ba55a5f32925acd2bcf9ae9b6949",
       "platform_independent": false,
       "depends": [
         "python",
@@ -600,10 +594,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "7642e7a46fd5f7e9f9a4f4691b49508f048e067ae76068dc3aad910b3509c9ce",
-        "arm": "6e372f3e48a94f93df860c3d6ac91d2bde042ea543ffea3595763868b272cf87",
-        "x86_64": "e5da4f664c2a8005f7ad3f1d2557af654b3fce773c4e02f3311b75d443f3ce9a",
-        "i686": "ee421f308b6a304d9e94d415c30f9a6d73d08a837eabce012117030999616008"
+        "aarch64": "5c695c9ed479a4ed416c55ecb1019bc152a852702028c8982c80f71f06b5f380",
+        "arm": "52bb33300621fe82e58c1b508a55da814835fd07c61d2a1956001dac436da8fc",
+        "x86_64": "1b06668054428ee8082f0af130bf689a09acd0ef38a37b19e6e7de57e338c252",
+        "i686": "190b57817eacbe4b0792987062ab6aedecf3b9220e687096040d17943cf66569"
       }
     },
     {
@@ -624,10 +618,10 @@
         "perl"
       ],
       "sha256_by_arch": {
-        "aarch64": "db0cab7f21b20de4073a127303404fa2398a167474bd6c5230345750759edac7",
-        "arm": "fc7e81ce28a0f351c6bf7cfeb600966e5a4a3acb88e323f9174bf02c5bc51178",
-        "x86_64": "83b8e0d089e699d66c46218a664efe4b74b4e882c3e8a76d9206a6cac33c2f45",
-        "i686": "4e1e0ac9100d8f467140b05a55c0697a1f111408ddec810cd44ad453800afad4"
+        "aarch64": "021a2907f491a8b5f9d2059452075b8d59e53a5920097634ecb58fa6d7806d89",
+        "arm": "351c4a472697d8622bd5937f046029914f15e8a01313d2af30cc2a64c5f58337",
+        "x86_64": "b1c782c9178d1548de1868b2874c5002ac6caeefd7c9ad282446e1ece4419904",
+        "i686": "e140ff9294b0df6e08c583eb7a4336a2bf5735de174b5041912914cd10ed086c"
       }
     },
     {
@@ -650,15 +644,15 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "88a62f71b032b4df5ba56808eb2c32788b7ecfcf9d5c758cddcbe98c36834e7c",
-        "arm": "c63cd552b80fea204933e3eace4ccec0be215a855f525a8bd8a3fe7d18d1c6a5",
-        "x86_64": "689dc1f93eed205bf4df79f5607eeb32459e88a850cf075f8d91250607f66ac3",
-        "i686": "c3c7fdaa4b0f47c79d64eac27b66bfc671c3d4d65b4704645bbe89f2ab238879"
+        "aarch64": "de82da37be819e35af85015520cd771d3c1d2b75bb6cc76b387b00969d40e1a2",
+        "arm": "e5f3ee4cff973bd142b8ef670725936fd1352eb9f2bef2d1b90008c424fa8bbc",
+        "x86_64": "2754377eb8c0fd183b70179acfb7aa96a4d51b8ad67a644b421cb1bbcaaef650",
+        "i686": "0ec759a475867a8b3d75c538d3fef38e5922f516e681da3ec3e3fdebfa9777b2"
       }
     },
     {
       "package": "dust",
-      "version": "1.2.4",
+      "version": "1.2.6",
       "maintainer": "@termux-app-store",
       "description": "A more intuitive version of du in rust",
       "homepage": "https://github.com/bootandy/dust",
@@ -666,15 +660,15 @@
       "download_size": "Unknown",
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
-      "srcurl": "https://github.com/bootandy/dust/archive/refs/tags/v1.2.4.tar.gz",
-      "sha256": "2f6768534bd01727234e67f1dd3754c9547aa18c715f6ee52094e881ebac50e3",
-      "recipe_sha256": "d0f69ce66b202682cf279285fe93fcfab0890677d20f40ea5aa81c69d3bec679",
+      "srcurl": "https://github.com/bootandy/dust/archive/refs/tags/v1.2.6.tar.gz",
+      "sha256": "9dd1ec7576d43574e6f48342cb96a5087338b4c308460a848f5895f72ddc3bc9",
+      "recipe_sha256": "d899a8b393a7ed0b748be682da307b30e1f95d88e2bd40834519b4732a689a52",
       "platform_independent": false,
       "depends": [
         "rust"
       ],
       "sha256_by_arch": {
-        "aarch64": "51e46accda4cc6e529b6229de367f92da70d5b72ff38051e4c2b485997973150"
+        "aarch64": "969e81055f90ee7def0880434c4f497467e3abe5820773fb90738a5a4d277cbf"
       }
     },
     {
@@ -698,10 +692,10 @@
         "python-psutil"
       ],
       "sha256_by_arch": {
-        "aarch64": "4d292d4449ed64582aa6d85c5b820acccd4eaaec606d7d99c7521da358f25ec4",
-        "arm": "ef072781d30db6b7aefee66beae55862205fa8278a8272fcb9b39dd685a329c0",
-        "x86_64": "38f1ad8f49c98725e4d7412388ebd262ff2159ed467d3b506285c58aeb2ff096",
-        "i686": "f9f60c2b1c96fcdcb8163950fd491b11137c3fccb31e8fb6b01794bcd65c9532"
+        "aarch64": "bc2776729f2cd97afe055e1dc237c1488a84e0e6e128fe4ce286454ee071a3fc",
+        "arm": "dcd1ef51fb77f5e6c58a154079a5ea2ed2a3a6b9a756d2230f2af8ff6b37b1f0",
+        "x86_64": "534dbefa491c9b4f6aa5a59206113b33162914787995d913eadb89ca2d33ea13",
+        "i686": "1da4a2251759cbbb24026cef0df7777a8a5a49b7caafeb6863fa12fac3dc35fe"
       }
     },
     {
@@ -719,7 +713,7 @@
       "recipe_sha256": "71ed10a7b474a6f3cd99734652ea56fe1e039e75e33110985d2648d461467d52",
       "platform_independent": false,
       "sha256_by_arch": {
-        "aarch64": "e8e559c454708600ff32eb0bbb1629b7ae9bbe41efb84d1e73fa165256ebd2f9"
+        "aarch64": "d52f1f67ff925b609f9b797585d01312cb93f0d0761c78d37367447d3cb559fe"
       }
     },
     {
@@ -742,10 +736,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "dbb206cda27c347ebd70058e8ed85da09ad2c94189da2ec3e981ac764be8ad6e",
-        "arm": "912562a1afb1b06ab0f37266981f7182bd2b018feca24e8bfd801612477fc3b9",
-        "x86_64": "fea08fe7fd3f2edf9e5a2232884cffe9fe6c2e1af3fe54cd355b7028ad36b87f",
-        "i686": "3774ac82a9122cfc6129a12ac4b70f19e34206d5a3c97661d4cceb0f27417233"
+        "aarch64": "b37b1e0649eb41ab3dafb28e8665d602d468cc5a9fbb90145d42b9398a64412b",
+        "arm": "c344c3f4d81fc160fa89d5bb5d4c71a6c699cebd0798af52724872c9a0213673",
+        "x86_64": "77e79ed5d7a05f7f78bfbfa328cef7a282846788c5cd518e3bd6dc9ab84a468c",
+        "i686": "34981c699a7b807d49cebd85c4f8afd44b7b10a1243f77e22786de1993f828bd"
       }
     },
     {
@@ -766,7 +760,7 @@
         "golang"
       ],
       "sha256_by_arch": {
-        "aarch64": "f1f5549b00d20bc80d0a1b9e3cd4474e94f366eb3ffad4bc8d363292283c2a9f"
+        "aarch64": "e597f5a1ed0387281f24acff48c2230a892e1a2cc0d33c725799aa03c704aacd"
       }
     },
     {
@@ -787,15 +781,15 @@
         "php"
       ],
       "sha256_by_arch": {
-        "aarch64": "617f8cae88d62ed4ba22cc9eb18d7863194a766169c022270a443afe2937e400",
-        "arm": "70f411f1b4cb174ed1759104472c59bcf6fc063fb6185f532af955481ecfdd4f",
-        "x86_64": "0000b3e316864f9491ae8d3e79780e124ea86a7a2875f834317558839af97bd9",
-        "i686": "bc11ada0bc5794cb8702e999dbd9f0e948c164d3627aad68c73e8727d7937e00"
+        "aarch64": "91b7e60e283006f3122f9c1c442eba99be3ae1f8b6dda263d32de3bfa7ba28ec",
+        "arm": "f1fe3dbf44eeed471ce379fbcc65c7016d2df78a194e89bf0cfab7f0e369ea41",
+        "x86_64": "7176b8ea953720397e1ffda1d3b4ddbcf94a282c387f499c504d296468e1b02a",
+        "i686": "fef06d0eb502474b39aa40ae45063793ff82f61bbeea1fc3aad5393862fd3dde"
       }
     },
     {
       "package": "fd",
-      "version": "10.4.2",
+      "version": "10.5.0",
       "maintainer": "@termux-app-store",
       "description": "A simple, fast and user-friendly alternative to 'find'",
       "homepage": "https://github.com/sharkdp/fd",
@@ -804,11 +798,11 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/sharkdp/fd/releases/download/v${TERMUX_PKG_VERSION}/fd-v${TERMUX_PKG_VERSION}-aarch64-unknown-linux-musl.tar.gz",
-      "sha256": "f32d3657473fba74e2600babc8db0b93420d51169223b7e8143b2ed55d8fd9e8",
-      "recipe_sha256": "c59097dbffa4b35bd25eaa1f4764c7a666a445c0c9e61c3fd7cffe459f6fef24",
+      "sha256": "d76c4317f7d5dba69f8a2a15856c90c777e7f0dd4e85f0de8c76de6992c374d4",
+      "recipe_sha256": "81b77eb2541560c01f1e72a75e7518eb88cf02124aad4bfe8e615fd7687054b3",
       "platform_independent": false,
       "sha256_by_arch": {
-        "aarch64": "53ebdb883f3ccdc8b1ee8665cbf3290d3261f114b0f3af0cec77e6961d5b3ac7"
+        "aarch64": "d655541daebee8c39b318730590b09d4f37cc9fa1c425942e07c0f1892e40e64"
       }
     },
     {
@@ -829,10 +823,10 @@
         "php"
       ],
       "sha256_by_arch": {
-        "aarch64": "666d8bed4329c1c8bb4000ffe0fdd11143d62827a506cbeee05eed26beed92be",
-        "arm": "40ca46af413f872a53b8165b2702f9833a14e2b98721542b54b5328d98fa7a90",
-        "x86_64": "7e575774057b6869d76eb91a77c628c26a4704cc275d2173801a83c32db2f9ae",
-        "i686": "da2b0aa081aa775b2d6f2150bec8a05b1b4bbfce150187ce7058b41e895378ce"
+        "aarch64": "3039c4a0c51c47cd7f11a79f22224717bf0b82190026ba5d0f045b027fadbaa9",
+        "arm": "11e577d51af0eb961a6c30e93e79cddda424aad5016e2cb3f7d36b3e6ed894c8",
+        "x86_64": "197072e10ef9139d6adc7e9004f8c1176dc3dbff5e15640ec5fa7befdfc3c3a0",
+        "i686": "e676f38ad14e141e718e3b5e978f33659b8f5fe8888de0cc3842deb6888da210"
       }
     },
     {
@@ -850,10 +844,10 @@
       "recipe_sha256": "c1df8490f2bab50c308e006f42254fe383332180f0764eaead18e7213fb4664a",
       "platform_independent": false,
       "sha256_by_arch": {
-        "aarch64": "e9056b38eddcec88406df4be79db0e1f7ff4cb78644e1184ab55247179b87bd2",
-        "arm": "a33db238d569f6f18b598bbcdfab653f8fe797cb0c7bb850f2bec39728648929",
-        "x86_64": "fc513434f0bacfc08e9dd4b934cf0bd5db8f5b57f88f437269a91d92b7fa2113",
-        "i686": "1c6d3cfb1c680aace125ff0d0a8e63e968bf0b7d77790c30c28ef3e2717a1306"
+        "aarch64": "64cd9a7c9228babe1bf1989b9d5d7accb28937b70ae9446dcf2843f2c2a6663a",
+        "arm": "d423c724800ddc28d64294f953fe65971701bb85b6e0b1ba82dfbd9cba8fd89d",
+        "x86_64": "8aa77a2822f446686c8e46d67befbbcfe77baaf838ecd30b5894587955a87cd1",
+        "i686": "8039f312f127fefe6374ebc849b7ca270961ce808c72d2544e7f9c55ddbcb9df"
       }
     },
     {
@@ -876,10 +870,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "e240d6fd1c875c3a3101c0dca2d89d91838dba4251049881c0e1f33b090db955",
-        "arm": "9cc470aab3051bb915eb6a6d7d53bbaa02ed12690174f4ec7636ced186fc9f73",
-        "x86_64": "934289079fe7e13d0831ffaa2d57d5c0bed7d621e5bbcbc37097ee5eb4333d28",
-        "i686": "25622d41ab64eda018c04b78b7bb3bc286e14f96faabda90522df20d23061647"
+        "aarch64": "8e8fe29032dd7ea71934596e0a5d40f5d2c606a9bd96fe72e103f69f2b2b8a69",
+        "arm": "618b80e10d21bcc868292cc3de42a82f1e9eaf4e21806a84b4985f631cb8a20d",
+        "x86_64": "29fe1cb25207544774604c1144e29014069b13aa0732fa61aa772150b903e34d",
+        "i686": "54009154349a681a70347519b7f312299ed4951114246cecb416bd8401153b1c"
       }
     },
     {
@@ -900,7 +894,7 @@
         "golang"
       ],
       "sha256_by_arch": {
-        "aarch64": "48ef0cc97a7d43262a4cbe9b47ab9e077c78d0c285334290a642e4b7461f5d66"
+        "aarch64": "5ff17f33bd0cbb946b688a89e100a6662a4edba8a865c5dd7c460f0155423674"
       }
     },
     {
@@ -922,10 +916,10 @@
         "python-pip"
       ],
       "sha256_by_arch": {
-        "aarch64": "e7fb7dc8baef9c4422d85f641a9308070a5a7c2979877f69752078fd1047287f",
-        "arm": "1eb941883ac35fce744ccd8d00a271fdafa3e57d6cb769c70d7c4fc61a08fdb7",
-        "x86_64": "88eb8b2a80b97185b2e742cfa99e5af890327bf6a7b25ef1d392a6fd2b9d6b1a",
-        "i686": "5785d643d7bb1f400c435bc7a9215f048bf8f6754db8bc8d293f4c994d50b499"
+        "aarch64": "e69974ebc6d5e60edb9eff0fa6b9377bf668bdcea2b058595894d2998a3b2292",
+        "arm": "55353387e6efdb98b1c952e6e0ce6b63268350e61b27aad5e8e1e7bcced6669b",
+        "x86_64": "2b7134a9bedb79af7bf6f49ebb71b6d7e26c20df902ac0ee375215edad086251",
+        "i686": "fa96bfef0fa9bc3030a1140abc8467b884a73813a6bd09a5716884aeb34e9f2b"
       }
     },
     {
@@ -948,10 +942,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "60a9e9302886a45ddf9cc5f3c7b74e195a5b33ddaec1a4590c82fec6f7cf088a",
-        "arm": "f6b606dcc055378f0fb99962a18e493e5e8ffba629e0a5a7545a911f0ddc8d3a",
-        "x86_64": "46628e8727a6f8d2c13a7376a0ffa262274d28694099537fded865ce38d9446d",
-        "i686": "c2c2d1be17c9ec0c8f42feae61ad63afde066d65c1812bbcc944ea18684ae61b"
+        "aarch64": "ba613af5bfb7ca20153c6dfc5c126c467f31c2958ac06648853e0c8c83c6419b",
+        "arm": "a925d0f8ea4004a4d3e92b7663d67937a758d90060481ecf53927fa0e5b90038",
+        "x86_64": "ea4abe0ab98127bc682afa956bc6ecf84a35d5ed7fb2dfe6ed57f2c87c440fe5",
+        "i686": "af493956d5cb44a85721ac0336dfd9c361f5595a15d95ac765b2eb7433a876c4"
       }
     },
     {
@@ -969,10 +963,10 @@
       "recipe_sha256": "12a6f9598509a4e23a077fa7dcb07b95ed5a969618a70ef476d440836f79018f",
       "platform_independent": false,
       "sha256_by_arch": {
-        "aarch64": "beda6db3f050ab6bdb0ab3cfb92a4e58287f91010c1b115a2a769b4295a9401c",
-        "arm": "56763d500923fdf253f921547bf3bd7b50e38025af73ab27bc7c2a452305775c",
-        "x86_64": "8e336fe0da2cc1da03061413813e35e0f1acdef5558411070e9029532b46f1c5",
-        "i686": "ed02381355968fc8d4e4f53a3ff265e6eade4353d712e47f10bf105f5a3cf35e"
+        "aarch64": "ab9e1e016f4693b842714af3fd783652025ab0f87b05c3b039323bb1fae09f1b",
+        "arm": "c7b730663ddb38ff3e6f2dfceb5bb764bfc0769357c1d0fc5bc3437c0faf43b8",
+        "x86_64": "87f4bae6c439a7833b3d3e49822265e49fa4765ea143ec003f03f834e5c46bbb",
+        "i686": "aca55a1277cb00cc3dd5dcbfb888fec22e8fa677fd95d2f9d1f75e15a80dcc2a"
       }
     },
     {
@@ -995,10 +989,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "3f65f0ea4786004f9bd207928770de136c1dfa5cf2a2d2af7c45a9ae2f72fb21",
-        "arm": "316c3813fa63ab8012f55dca07f4d16cf8ea0af9d6254c6cc08383ac686f7e84",
-        "x86_64": "66ec8d2e5375639128cf3352f0302b5998a47c1d64c601ec1c43e4a4f0ecf217",
-        "i686": "634b2229f5629b486c297cc174151138cad73fb3c212ab9fff29881152708e20"
+        "aarch64": "f42021c94ffbdcd1264787679ac4d4ed02469c1751a66f4a5af7af313122afff",
+        "arm": "8c189139faed92f96f512c284c5e651a32df2aeb120effd541a203e3ffbf627c",
+        "x86_64": "64c8f2a0e93fbe94317928139e66e9ca4723f489bf591efab397ae253f8fb4c9",
+        "i686": "e6c6c3530e554430929a009100bfc03e875f69aea6e0d8534278560a9ba80847"
       }
     },
     {
@@ -1019,10 +1013,10 @@
         "python"
       ],
       "sha256_by_arch": {
-        "aarch64": "0546bb1a281cd585958bd04a655794baf1b8aa3e6da27969a73b6b37902c9b64",
-        "arm": "0530c4e3e677d946bf71f97a52846954552c98b659e2bc3f5a10b62a48dc1203",
-        "x86_64": "4d26672609f28ffdc902d156346b59d4319e43bd6b97a4af0882cddd45c34bec",
-        "i686": "e1f882a127e9707d9d8d2123b602c3841f8982917083c6d156b456b39aedf438"
+        "aarch64": "2765f30be776e9ffc1fe9ef99dad83154771ede0666a253871059843a656a0c7",
+        "arm": "301b53398eca6758aa9bb3286e3a2e06e122762f6f59d46b48c7fc712b6f43e2",
+        "x86_64": "7ce9cafcc01a71fb20848970d2a6b3bf2c82f8fc36d8a73c78159ac60015794b",
+        "i686": "aaa161bc6481d0c6bbeb5102d8f512d7748fdf3cedce687d6915fd9c08b9ace0"
       }
     },
     {
@@ -1043,10 +1037,10 @@
         "nodejs"
       ],
       "sha256_by_arch": {
-        "aarch64": "69cb5c004c61dc56504b0224fbc8700e8e88eb3d0f9c537773d853a59c9c0ac0",
-        "arm": "3f845dabd778790920b73ce41fa092826576fdbf31ff46d1fbe6cd3a0300a5f2",
-        "x86_64": "6ba0e7559c6c28ac4c1a92554415021803c71cb37f2298077bad4355c13408b4",
-        "i686": "bb695b55d42a65698d26ec226ca80b03b30bb1f427ddfbabbee8f78a49043617"
+        "aarch64": "a4f29d24775408b10041f3de58f8e6afe236f92f8f20d3ef0a748af96478c7f2",
+        "arm": "a0d4add7e1179b0955579c9953a82cf25ec18b53314e46fefbd8fed0d40c3f02",
+        "x86_64": "53ee1997ca9802d39da3eb73b9b37c129444a3687a729e4cea42d1e55f67e08c",
+        "i686": "a2445f4dbb8f286feec33c81646e8669d0ab3feb815f6b9c84439593f5214037"
       }
     },
     {
@@ -1069,10 +1063,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "772d0e47263a507ba996348df8d4b981aa87e44f7598db4874e2c601b2cf5efc",
-        "arm": "dd6f19ee059540f467f64eb27e056d8729b021d1835eb2dbb878b4d202b9c9aa",
-        "x86_64": "29705fec2d5a457f6eac28e9c0c8bbba91210c6f1f79afa67057246b91fb8bca",
-        "i686": "47e19dd6306f7bef6d4de54a28d2ba9eaad348cc2d829547c0905b7eb276b07b"
+        "aarch64": "df6f5e55ece97acafec0a81183c050548a7430a44e14632225f4bc9a0545518e",
+        "arm": "6e5d3df083dc6ea1f38ddfe8b7677fc26277496832200c6218b6786ddf59fa57",
+        "x86_64": "a69ee49f7427a7d507407047a49ea3d316a74c9ca8f385b9492995e37642dda4",
+        "i686": "52b49e9636b71832ff93c2f96d44e45608ba2958b5ea40d5bb9b211a4c445da8"
       }
     },
     {
@@ -1090,10 +1084,10 @@
       "recipe_sha256": "f3b0a19b26adde71ba622b6b14e5c34e0307c5da6006a860b32b07fc9b46cde9",
       "platform_independent": false,
       "sha256_by_arch": {
-        "aarch64": "6708011c04fb4d145d18d49dfbc2e7ce3519008a9830b96fbcc5d1880336c17d",
-        "arm": "a133c496f98040285927919657a8d22d768a77e6a8e18a152caf70e63e9f3cb4",
-        "x86_64": "a1a7e0b9337776de71af398c314cafad30b365af1d937117437cb5fd47e2e636",
-        "i686": "eec802c0e714880cefa6ce9832e02b619b777bbe662a42a8cdb1c2feea1b99dd"
+        "aarch64": "42d7bcdd1e2baeacc2b8ea974ff3b048da41ba470da7219592e890651360bacc",
+        "arm": "1fe0b853cc386fa398cf0d15017458e3ec9fdc435969bbdbbd9ddd47f2ce57b0",
+        "x86_64": "4cdce70cda1907b1e165c0b3bc6133c0c525b17f829919a707342b5266f2c672",
+        "i686": "a5e429cd12c127d76a6548bde45560f1b0e0119611f913877ce3a47a2dc61611"
       }
     },
     {
@@ -1116,10 +1110,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "5523012d858155a490dd52b24a8049552fb908e80706099e99cc05295f76cf14",
-        "arm": "fffe160ada75bdb58fff47944765ece5a46e5e47bc8c5e7b217e500d76921bf3",
-        "x86_64": "a94ccfd86acd690469106a52845851d97372469f9a87dd1863467013ed969cc2",
-        "i686": "783dfb27e6324336a81fbb4f52d399433083fa5543d75edd460fa70df1987267"
+        "aarch64": "aa684e5ccbfb8f1ff0507eb914adfff14a738f0bfb4a6188269949468a0794c8",
+        "arm": "f58290c7f1b68b015d9f420adb6ca1903fb95ac21426bfbd56b9a910935f96db",
+        "x86_64": "0f4d6dbf3bd565229f701d2aca0b67e5c95d63051953fea7cb29daded28f3944",
+        "i686": "4a86390adf51084ded3f882ce09ce3bbd74c1ee26c98880ebb610c9d9201fe9d"
       }
     },
     {
@@ -1142,10 +1136,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "31c252f1c726b2464c6cb1824a3338272c6c6c878b703766ee2b1ef03a291221",
-        "arm": "dcf77af222abc4c9cc18d1725b658258122ef80cfd417a30402c6da2f361977a",
-        "x86_64": "43abde78829a905a24690fe1bc65b8f9ef7e18da89372a431a0903d485c79591",
-        "i686": "018a008ac54312c5bca053e7f208a4db52a71d39ec7645595737d240a6a0d271"
+        "aarch64": "92f5bc058df4f37eeb5c1b078134c73e8ea390cd0c3a56cb39af7dc8984683f3",
+        "arm": "d0fcb87966807298782a18127ed97048f2f2e1dbeef89aa2d466b91d00262f1c",
+        "x86_64": "e9b6303c40dfb21cea2d728eaaecc3dc8dfe113cc9fa64b6e478206745464f2a",
+        "i686": "f5bf5b68e42c75c94b8f4c57dd7e0c71ce3369ff5d9292ee61e7a882e4ac1872"
       }
     },
     {
@@ -1163,10 +1157,10 @@
       "recipe_sha256": "76982b8be754a46afd5b73c1366deb1536d326878c1b389707d04ab110b7ad82",
       "platform_independent": false,
       "sha256_by_arch": {
-        "aarch64": "648726fc9654a8c0f409041b388c7367e4bc7ae6582bbdad6111076858804f68",
-        "arm": "8ff9f4dd069cb8d3d69d7b7f7f07f186feaf0afbcaff70ee60af19ee1e077117",
-        "x86_64": "0e6df2395ab30792468922b23858cd0a79045d261767fa4a60689ef43a803a93",
-        "i686": "7ebba059388150174b228e7f4f7738125f273f947e6b7ca8504bef167a2a754c"
+        "aarch64": "3a9607d1f87543c33246d9a9a9869c7d4ad290a5cd1552eb699a1b64fe9746cf",
+        "arm": "66a200ced1c7eff2af33890553d0031c653011038ce4a3631a396c4e45a331c6",
+        "x86_64": "03f46a09c5269ef0b4d729a14924afefbf0861da502d45b9d1810ad603517eca",
+        "i686": "e5206c8e6eda8f3eb82245dc4f5d2ca3df366fd353a19396d80b98e6fc684b08"
       }
     },
     {
@@ -1190,10 +1184,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "d388a31659b5593f15e1931fd1d5b65e44bb2886ca3a7a5a998863372e0bac4f",
-        "arm": "6e4ab62356e9745d88b5142135a5914831b82f860addd7d52642a562b59abea7",
-        "x86_64": "d0dc8112f3c0a1463b055a191119e70c69092efe7b6aacd2c7882ca5a2d2e895",
-        "i686": "ad21929f22c9fb2c8f77abdd32cb102917e71b09338f25a4f577c7772207f7ff"
+        "aarch64": "e4c84775adb13de7f8b100d0570d59e6a886d67ecd394d27955752cc28cf70c7",
+        "arm": "17c3a49123f2156ed83b4b1c3d9bd94d5d4a8d3313a3bd892ef9fa3e0c2985f2",
+        "x86_64": "10b711da0cc56d179b453af90569559ef677ba2bdbbc577ad91f37e30991dac5",
+        "i686": "9e7f8b70e85834c046caabfda29d5870b0afc873692660f64cb0192e22eb873a"
       }
     },
     {
@@ -1211,7 +1205,7 @@
       "recipe_sha256": "8df25e3c38390e0ba591c53cac3f7074b8d00ad19fa205b08a2e399c6ad3e0db",
       "platform_independent": false,
       "sha256_by_arch": {
-        "aarch64": "2f7385f07634cc57dd7857c760be90eee0e1080c3ccf5885f23890be4d22d3ec"
+        "aarch64": "97571c0ae8fb3d5bdba1c8920b08097ad8ba47da22da5bf2b7a92e52706f93e0"
       }
     },
     {
@@ -1229,10 +1223,10 @@
       "recipe_sha256": "5bd592ca47d3998b76dbab651a528543eb30b8e0500c4fb1a90850edca854d11",
       "platform_independent": false,
       "sha256_by_arch": {
-        "aarch64": "bdf63a5e572bed258dd15789d7017027ce45f4d8cd4571cff64360b51928e1f0",
-        "arm": "e8d10f2db4579caf4331dd1612e218655e65540c10be5aef1a0bb58389b686cc",
-        "x86_64": "43ebd4c91570db00c25d1cdc0292bc9e67d7e65ef1423280302aded20aadc115",
-        "i686": "7313ba4451354d8cb65622a14f99aa27329e04c1654f05901ad71179ca9e6e7c"
+        "aarch64": "a86d0d214e64935652dddb5959fb34b7ff5dd537309d2349fe40fc59385e3f69",
+        "arm": "9a8984472c7e15d9cbd9ef8e1c8b4185dc6096eeaba826f63cf023744c601f9f",
+        "x86_64": "c3ec543e2015cfcfd9225cb02751299947c4b0ad318b8f425e933a5c95872d2d",
+        "i686": "8a6ea63604929b52a0e50aae8a492bbc949619e25c329945cc6ce26f9266b94e"
       }
     },
     {
@@ -1256,10 +1250,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "daa7946bfa686570c384420006b01730f6651de2f89a2a329fff7b2087059a5b",
-        "arm": "95c658dda9003bfef3f2cfa6ad05c75a58a2d8d3de3730887e4c815eb2f1e910",
-        "x86_64": "459e49d69879da6be866edc05f7fa3232be8d7b234e65175ed1a83aba6f9399a",
-        "i686": "b6a7c385289229a6371ca81a2917e81558e8126a50293a96a1e0cbb4284b8d4a"
+        "aarch64": "563898740d88688b11400273caf44442c6ec89877dea6ffc50119736a5e3df1f",
+        "arm": "ae6db4ad7a6e41ea44c1dd2157446e533c8ad587606c70e024d82a99ab0cc10f",
+        "x86_64": "ca34513b4c263f748af4610de681e2aff4f323b0e52c51b02a5123636e0f319a",
+        "i686": "dddbd4affddf9e05aecb4ee001f604bb8680251abe05ca9e850ab49b47588b10"
       }
     },
     {
@@ -1282,10 +1276,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "fbeba4212cc80d908fd467a85e001fff0d18f04e3bd6663f1157eab9901d189c",
-        "arm": "2f842c93bc536526a1ea6f9bac28bf34f71bdc3e375d29ebc2ce063550352df1",
-        "x86_64": "44432dab5acfd1f462d34a3e10c4ee716b14d8cd07373b16462bcb9c71214a1c",
-        "i686": "0cb6ced983833e1bfd528182ba0e2fb975f8712461abb389e9a483b54144db83"
+        "aarch64": "cc2306d82f3bd18bf720af6c6ec1ccc25e0655a75d6bf01422d5d92fd21617cd",
+        "arm": "fcd20b137158007c283877ac71750d52abebb276f19b6c0e479548d5b17b3430",
+        "x86_64": "70c099d0cee884b1eac4b7e53b7e0c6e39bebbee6064ea3f875efd7e23cb2aea",
+        "i686": "cff6fc1bd5ea2c6596a183eeebe51c26bfc923fe74da0f66ccbf10cd88b93e3d"
       }
     },
     {
@@ -1303,10 +1297,10 @@
       "recipe_sha256": "ab16f2c2f4cdcb0fee2f8ab9847205e5c624fec229626202000c9ce38db3b8dd",
       "platform_independent": true,
       "sha256_by_arch": {
-        "aarch64": "386159e3047fcef1c6631b33d7acca768f5b6e5f0f764b7e2a28809c95f24a40",
-        "arm": "2416c12abb94d3670d3d4f7c87c76f868578fe78165c1e36c45facc32f971e67",
-        "x86_64": "ee582fe7a637de57d840fda2295e82db1b1d6606946784d1e4a274c9d61b8817",
-        "i686": "c2f02573eb6d3b309046948e92aea6a5b8cf57ca1717862a5b310739149e72f5"
+        "aarch64": "15e5c901b998e2bd561bb86c6e576ffe252f9d8553745f9e1220d4961cf56953",
+        "arm": "09a4fd0d0dec50c4a83c5f1791bd363ec2ec05ae6df5fa4905464e40c966732c",
+        "x86_64": "8925ec4c378b4ca38350b3d5885663d2043511ded0149e181e66927bad7107f1",
+        "i686": "b79634513c9347d2c22c434f9ca8a16648f095fa1863488dea98fc2aa025824e"
       }
     },
     {
@@ -1329,10 +1323,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "9a28bcb23acd751fa6c64f038d5448b83c94483370389f58a5f505b067018a40",
-        "arm": "594b715f3fd83381667c36e77e7feb10eb4a2aad3e5625d7972713b2a2dfe246",
-        "x86_64": "675f86dd4aa98e1a14a001a01ee7119d914b299de17b9829b63a13813a82e4ed",
-        "i686": "dde7264cba007fffc8d8de54708f8c3694316ef60ff64a568095d60714dfc9fa"
+        "aarch64": "2a3def732a5ee0ed79383f543f0f2a9ec546ecb936df26523a4ed739858cb9a0",
+        "arm": "4d4fa927319384abd8ad52d06341506060fbc58834b620481785dcc213045630",
+        "x86_64": "696aaff38f25ac50e6f9a4ec898f044a2bc956ddb092a20a7dae90b79a34966b",
+        "i686": "828ec23f48bc07a92c76489d3069248c23faebbb8b38abf3300753f966038e02"
       }
     },
     {
@@ -1355,10 +1349,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "4eb7d745baaf7b81e61eff45077148cbf5834614d609493c4f766791553b29ef",
-        "arm": "ac58da120947816db094c4dd664bd25c8c67f85e7cc35fc88c49fda4f80c13af",
-        "x86_64": "c708f51f680ef0c613eb7568a76efb4ca76200ddba989f011b7ff5621ab63073",
-        "i686": "2ef17030af2f5abed7c8cd77c131e208fc759a8c1eeefa284bbd3ea4d7d7b827"
+        "aarch64": "df105f153e545d9f5a87f486b78d9c55a45220b5b9720c46ad897f065fc4b9db",
+        "arm": "851064f9bb72bdd9f45b22dbede1723f7aabe7d44e17aff383fe14beed6831fd",
+        "x86_64": "83de17c33c2a147ee9f530d77eda2f37ffa5744d18b55e1f7678983de8474b4d",
+        "i686": "812018d2622001ea9a06d5152d5803c29ff37a609c0c34609661122a9b1ce8e5"
       }
     },
     {
@@ -1381,12 +1375,12 @@
         "zlib"
       ],
       "sha256_by_arch": {
-        "aarch64": "b9ab9f20db6da9d7027f1c86aba9f9feb0c88af597696a5267631b272129dc04"
+        "aarch64": "11f613fe118c1f4820bfbdc8a09307afa237a3fdc902365fc7ddf7aea23fc0a2"
       }
     },
     {
       "package": "pnpm",
-      "version": "10.30.1",
+      "version": "12.14.0",
       "maintainer": "@termux-app-store",
       "description": "Fast, disk space efficient package manager",
       "homepage": "https://github.com/pnpm/pnpm",
@@ -1395,18 +1389,12 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://registry.npmjs.org/pnpm/-/pnpm-${TERMUX_PKG_VERSION}.tgz",
-      "sha256": "bc8bb877378eab6a8a83114eeb6a31ef88528db4ab5570299baba8fa54da2375",
-      "recipe_sha256": "a057c3307d7143465a89ee0e4243ef052158efa05d830ae2a647ff16409425ad",
+      "sha256": "ea206e35474bf87be9564a85ca70ed1c8ebdc45da55aafb0a3bf09d1ba69b179",
+      "recipe_sha256": "7eb1388d160696b62b49e0343e756c838c086cc170af3cecf6351cd1c010869c",
       "platform_independent": false,
       "depends": [
         "nodejs"
-      ],
-      "sha256_by_arch": {
-        "aarch64": "742037d1a756325b2715f7d690120021a85ce954f3cc726305e0b9050af5ad0b",
-        "arm": "71343eaabff8a2e7b42ee1ff6a32821c4c94b563a38060b269388c9bab09e2aa",
-        "x86_64": "675e61fa059c6f83f71e2c60e77d72d7cd0745d7056c3dc1fc366dd7083b01ff",
-        "i686": "d08a5ed3437f3979d870a4f84de8f3f51a883dec82cb38f1aa3f9302d335cbf5"
-      }
+      ]
     },
     {
       "package": "pymaker",
@@ -1426,10 +1414,10 @@
         "python"
       ],
       "sha256_by_arch": {
-        "aarch64": "655d6c6468c4e05bfcfaeb7f6b33fa4c675faa55cdb80c9452c1533eccbba038",
-        "arm": "4a7786d5f6c71728f3dcf0a250a1ac5d77c394dddc48105655a60b2cfea2ad8e",
-        "x86_64": "8ae15d099ad3be7407fa5b7519def8529d42f8a56fae96d2d97ed8b13d21fbed",
-        "i686": "067b99af4154baed249789b1ed40c5db006f3123cd29e192bd23e38638a7a53e"
+        "aarch64": "3fd1208fd57fb67eb6d5cdc83d9cf0c58800f553eb30ce8a212371b76eb56c45",
+        "arm": "512b1b81adcd4768ff44f919090bd9367d7f5f29f1c7a14f1c5ffbd2bf84faf1",
+        "x86_64": "0825707938c26c70e34ed20037bd33cc7e6a2d2c1376da45b39c6dc6381543d1",
+        "i686": "cd8a699000f2c0a114040073ef17fbb7597404afc38e0aa891bd29e495b1209b"
       }
     },
     {
@@ -1450,15 +1438,15 @@
         "php"
       ],
       "sha256_by_arch": {
-        "aarch64": "4bcfa34ce4139a4c95c0404f85b1f1d38b8eca1391505877213305d83871a249",
-        "arm": "dfaaddeb8fa06398c526a08a44dfc26d3660d6bb0da5372c0e8cd04600e97439",
-        "x86_64": "8c6c2934fe21b0a08c8e04e9d0c53ecd354655cf6a343a8bdd5dbd193a252077",
-        "i686": "1795e6421b11656c759a6ec6db08cd4e15a4c4e4cc372ec924d66a4b7833685b"
+        "aarch64": "4ef9a3e8eefca70b5e7515965ec8182d89c02dfb83ed88fc8379679e87b00fae",
+        "arm": "1e7edea883294ba4a4e205be6f0b4cacc970ab9e1f5319abd9fee57d009c2dcc",
+        "x86_64": "07d63c588756d30c89a95daea93a78b8a9fb9c5bcb3eb46c5c1b8dd8cf0d6185",
+        "i686": "42cd2687127622e31e2e384f5d4959b986d7ca5ae5f807d103771d14b4871384"
       }
     },
     {
       "package": "ssrfmap",
-      "version": "0.0.0+69103b2",
+      "version": "0.0.0+290e07d",
       "maintainer": "@termux-app-store",
       "description": "Automatic SSRF fuzzer and exploitation tool",
       "homepage": "https://github.com/swisskyrepo/SSRFmap",
@@ -1466,9 +1454,9 @@
       "download_size": "Unknown",
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
-      "srcurl": "https://github.com/swisskyrepo/SSRFmap/archive/69103b27f5898d9707630dc572798df63727b90f.tar.gz",
-      "sha256": "c1ef86b06978c036c1312f99719e246b479b520fd9fdae87c9ad2a9aa900efe2",
-      "recipe_sha256": "cd1dfd256b7c03f60a7882f11e59a167fa79e795141bcd24a66b5005f1e54d0f",
+      "srcurl": "https://github.com/swisskyrepo/SSRFmap/archive/290e07d75c52d68e021b6d0b4200c2a41ea20365.tar.gz",
+      "sha256": "f4d01953a07d64b5ad8e96aefb22d984518c2a43f5ecd71efbd034194660bfff",
+      "recipe_sha256": "173ed2f63ab8da8a20cfb208919a690d91fe9a3dc04dd770a368eaa6348e4a00",
       "platform_independent": false,
       "depends": [
         "python",
@@ -1476,10 +1464,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "0115a797b955d9e0aa7d80287a49f688dfe93e6effb9cef5fa022c6ecfcab5b7",
-        "arm": "ef950f5891591f4a9ea21cf7f55d6c7e589f84743a8f30401bea0773159bc5e9",
-        "x86_64": "8022aedb016d20d8d3d2508a3010ea14a79fca1a5f17778b9bf780d893ec06d7",
-        "i686": "03b7be40a0b0cad3fa34b1c277c3bcfb86a9861a5ca9c036fb47a4d26dc7f18e"
+        "aarch64": "7ce1ecd9c08523ea68537dba75ffd28e777874327053dfac3765ff027f2ce8dd",
+        "arm": "13fd676ac5e3bdaf89ed850f9b0080ccb539731e65749fc8f369e21a661e53a2",
+        "x86_64": "1c96aeb844cf5df398da26f2129594a4714a5921811b0e784e1e9e317ca92df3",
+        "i686": "1d183fdf796a96237d3f8039934e6b5e406c115717d8fff84f30b5946b5a15d9"
       }
     },
     {
@@ -1502,10 +1490,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "d03ae924d10b48ec0c367b4faacaade0d67e5cd709129447d8fb287f4f5b8fff",
-        "arm": "fef014742a707a51db9925699fe4d4a3f9d7bb4374ca3d03381743a3873aa9cc",
-        "x86_64": "1080c67c29456e790cedd44a75354115dbd74035225ce66361e89a6e2a7a96be",
-        "i686": "0f68fcdb5a919f91aae2b06e6d233cb78afaed80cf7cd52b9e1e0767641f2070"
+        "aarch64": "6d8ed2ecba600c13f5d761ce866fc428489cc527bcaedf2194dcb5a0e52f573a",
+        "arm": "6575f0532751215d30497e22fd0a8e9ed169e57567dfc92d1e28ab85f4f62fa0",
+        "x86_64": "089c3511a3c2cfa2182b536f66bac86f077a00e288ef96452803f49e52c20344",
+        "i686": "e7ce8be260d13abd1da696d863d312a7c8e93714f43831ae18458cbed0732f62"
       }
     },
     {
@@ -1531,10 +1519,10 @@
         "termux-tools"
       ],
       "sha256_by_arch": {
-        "aarch64": "bbad4d01d84d119ae5428323c9bef730ff9c92cd69f2b1a6b6ed455541b07d08",
-        "arm": "dfe313b3d6ec89f727d30c7b6b0649a1fdb636d53060aac6b6de3d66e31f9450",
-        "x86_64": "790afb13cb01f2c4d7da36305e5244333987480ee0eb452b5bb8b56a747d46c1",
-        "i686": "53a9814d377fee59caf45770977adbad91a3eff43097b28cf0c5824e5247a27f"
+        "aarch64": "db975324e0cffcb0e77110ead664164c6ea871dabfb9f6187d0bfbfcc00bf1c5",
+        "arm": "d1f0489da3b80e7573876693ceac8cac1fa10a901fb9c378e975e634db74e5b9",
+        "x86_64": "5e23e6c2f122adc36d2328ce72e0499ec1b0f3fac66c0a11c7bef02baf5e0f72",
+        "i686": "6b4741dffb662f3d85859a793152379ed37887f92635cdf986748bb81a925084"
       }
     },
     {
@@ -1555,7 +1543,7 @@
         "rust"
       ],
       "sha256_by_arch": {
-        "aarch64": "11e4684c4e20ff46f4b7b556d8f547c3f13c889a92a2de9bb5d9f67360f20eb2"
+        "aarch64": "6caf5a44c11f3dad68f31696a3718cec56edd8875e2284b83270e3c7982d5df6"
       }
     },
     {
@@ -1576,12 +1564,12 @@
         "python"
       ],
       "sha256_by_arch": {
-        "aarch64": "15482fb106e133a1471908097a13d8afc23bf9fa1ea1d7d4819f9fedcdaeb211"
+        "aarch64": "68449f055a1dc6529c59b0e799b84e72167ee6d0cf6f92c50a16362a33eb3cec"
       }
     },
     {
       "package": "termux-ai",
-      "version": "0.0.0+7e1b8ff",
+      "version": "0.0.0+0dea995",
       "maintainer": "@termux-app-store",
       "description": "Interactive AI tool for Termux with 10+ providers and 50+ image models ✨",
       "homepage": "https://github.com/Anon4You/Termux-Ai",
@@ -1589,15 +1577,15 @@
       "download_size": "Unknown",
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
-      "srcurl": "https://github.com/Anon4You/Termux-Ai/archive/7e1b8ff3c0da05bc805d68a634bc2bc8aabcd62e.tar.gz",
-      "sha256": "e65144e01ef0619b064809798c6cf5c19f0ee811ec8045b05caed26f68910217",
-      "recipe_sha256": "01642fc0c275d4285650a2179d36068fbf19b5f2bbf08c4cd6b21a87f43c94b0",
+      "srcurl": "https://github.com/Anon4You/Termux-Ai/archive/0dea9953a863fb0df884a4fefa01b82ae01924a2.tar.gz",
+      "sha256": "f5a4c4f7c6f77377dfd80fd86070070452d6277de1522ec044f8254907c8e64d",
+      "recipe_sha256": "372c1c1c5ec87aa2788c0229f797c5fa84b0f66f11ebb33295739346445afa79",
       "platform_independent": false,
       "sha256_by_arch": {
-        "aarch64": "697bd08246c24ac295b5e37e48f7e882075af46b76e468a49006e9a905e3ad7c",
-        "arm": "85349fd9f41bafe4a60dcf60be535ebe211043fdd5318074e83516aad0107eb7",
-        "x86_64": "c2ca6ac6d5350762b7cb9081fd0e0ca1bb9297b3c7839f2906fdc7ab4068e1ed",
-        "i686": "cd3bf82d43c069dac37854b2a5871bebacdbece1eeaabd4b1d3136b98f048ba0"
+        "aarch64": "066910697583204bce6d887fb13fd56a1ebec22c8845fe119caca24e1376f124",
+        "arm": "65b4abb60b646c540e6f518c0c524db80f5576417626797309c2d2898e96faef",
+        "x86_64": "a7cfd57d73d78d071acac937e5e0fe38db9d87944cf82562168f3af2a0f7ae26",
+        "i686": "b1ad115295f7adcde6857e5a4f91adddeaaa617b37dd6d42ce4a96cf27b59741"
       }
     },
     {
@@ -1621,7 +1609,7 @@
         "make"
       ],
       "sha256_by_arch": {
-        "aarch64": "d1b74bef57e46dd4a9fa10ac3a2239e0f1f271c749848084cd4f45917b0f8548"
+        "aarch64": "9dc56a07c6f25f06248765c9485fad083cbe8981efdf4d25e541eb43e978f9c2"
       }
     },
     {
@@ -1645,10 +1633,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "6b19a470201d626ef952ed7486709d50b935950985350f84d4959c2ed28f9654",
-        "arm": "014cee7ae45c8bba99f025e1121985fa2b93720722ee10c649a3ef3d4ffaeda3",
-        "x86_64": "54c6969d331bcccf04429e5a4a6595b8b6cb9f9337da55a64190fb6ea0971fb5",
-        "i686": "c5b0984b5e3e51dad3e2c25542af5bbcbaadb5e32028d19fbe604796c5f5570b"
+        "aarch64": "c3e6454265802c282f7701fdf6221eae483bc31816ab4d1b9810cfc09c306722",
+        "arm": "f1eb06635aa7f6301285d2460f881db1a97dd4c452a8fd1bb34c0332e2ec28be",
+        "x86_64": "66907ef486f0c186b50797f7dad5658c526d03dc664a9e5fd4e9f8c5131e5875",
+        "i686": "13385be712a9d402278e91f37c22deafcf2a85dac72c64b4f5c43eac0c6c6c41"
       }
     },
     {
@@ -1672,10 +1660,10 @@
         "python-yt-dlp"
       ],
       "sha256_by_arch": {
-        "aarch64": "bb53cc42218afccb18022f7cc1892823381b73095365e926113c22809a44f925",
-        "arm": "eae5c3a1f0f8e7294d513aa95a0ce62326cdf563482639598cedcf5893dc00d9",
-        "x86_64": "821f0c43c6b249fb7ef82fb2ad83c69ecb396634f1dd3f71932b4bcd124dfdf3",
-        "i686": "dfdf11d1518354bb9322e01f0849f15deecba15b48d2e8476a04668e361cc904"
+        "aarch64": "f73a70d5e47ece4fecbfbe8e220aa58472073cb9421a575c6129bb666a5b7e99",
+        "arm": "f6313a871092bbb93d3f2c05502beb3d140840e3bdb5522107f52d932f6415a0",
+        "x86_64": "c2b67fb8d2cecf5a76bedd096a1352010312f2da0fb1179c882c2bba71e03dc2",
+        "i686": "d4a80655c4461d2f37569c2e3411336fe2f8e82b87c6d99b1b31c7557713177e"
       }
     },
     {
@@ -1693,10 +1681,10 @@
       "recipe_sha256": "b3a4bd2121220956b9135df512694c78afd0edba99d0f3180d6f026765ac5a8a",
       "platform_independent": false,
       "sha256_by_arch": {
-        "aarch64": "77770e2ec7a85514587f23e782282317a252a7690aac54b8f9cf307269fa3cac",
-        "arm": "cdda2065a46eea40ffb2f39e280d890f522e3b13b94d6410ca7aacbf23952c12",
-        "x86_64": "f9af582b5294811cb993187e730ecc532322a74ede0550ff7e5a7ebfc2a8b6ba",
-        "i686": "1bcbb08fa44d857e23999cc0b88ec18dd68f11c9d1509011b32dcc71c4c9ccc2"
+        "aarch64": "fd847874e8afd9e58e814dc056feb251a6a0a2913549c5609a314975ad477222",
+        "arm": "b290e363c1a2e91f10c43c999026186956e967262db13f2dea2d46c033082531",
+        "x86_64": "51049878c3b6de24020692d81dc8befecd86594b95467123da6e1aae5f45b8b8",
+        "i686": "8feb0e4960e608770994343b36b410fdcfbb3742fb5b6dbaa59a6a7c27b8737c"
       }
     },
     {
@@ -1725,7 +1713,7 @@
         "pigz"
       ],
       "sha256_by_arch": {
-        "aarch64": "2559332cd7a925fe6c21aa1b1015944f962b390934c4685a8162813a054a22a9"
+        "aarch64": "faa81998c35ecc282200d974a843da5cf2e5b55483e2b2c06f105194499b48c6"
       }
     },
     {
@@ -1746,7 +1734,7 @@
         "golang"
       ],
       "sha256_by_arch": {
-        "aarch64": "2c03fd6b947ac9e0e1d126c14407474fa6a0cdbfa29caa23de3fb9e221382cd9"
+        "aarch64": "b54ca8f70679c9ccbf225b9de5f637b2a559e834ff57a76fb5a44c8a9f79a549"
       }
     },
     {
@@ -1767,7 +1755,7 @@
         "rust"
       ],
       "sha256_by_arch": {
-        "aarch64": "c12512afcb189ac8c73146f5e6d6bc1ac0927eed825e91d29a4bfc789fe68025"
+        "aarch64": "0fc083b7cc93b9244701ddba1110697926dc16fc8e8ceae9715581879d38a2e8"
       }
     },
     {
@@ -1790,7 +1778,7 @@
         "make"
       ],
       "sha256_by_arch": {
-        "aarch64": "739f0a01fdc4add5c928142e3a18055f3f8f44e0a249c41d81ea79a51eeee31a"
+        "aarch64": "12c7382ceeabc8b702bb2e8cfb056f387ceed5388755a0956c4620a97eaca340"
       }
     },
     {
@@ -1814,7 +1802,7 @@
         "make"
       ],
       "sha256_by_arch": {
-        "aarch64": "0063137ef88a55212a0471edc784189fc249fdf8bde93b88a2989d33118b46c1"
+        "aarch64": "020dc3a3f19537079a81f669c5f1c3140e4edb65d62a0345bfa6a1f47958c850"
       }
     },
     {
@@ -1835,10 +1823,10 @@
         "python"
       ],
       "sha256_by_arch": {
-        "aarch64": "d4a32677646e7b7881a3defdd525538013b748adb46f18103e39ed193cf9f240",
-        "arm": "97a6d2b94ed3619d255aff4651e99cd59c09274fc2ea45b013b94ae2cf4c87a1",
-        "x86_64": "03089667d8bf2d4b0e67f4dfe8face53c1ce560d39510f9ebbbd449ba0e62cca",
-        "i686": "fa440945014d19a6d3b6c477b30b4f0d834ecf1b1e445320adfe27737b5a354d"
+        "aarch64": "0606f4508b1bc3ed39b56a59822246cb14b7dadf9072d9c3caf8ede60d5eca95",
+        "arm": "ea5a18f9dda51699f3140aa6c4155e0191e0ba79bd46858479dd40b8ff5265f5",
+        "x86_64": "46da3c3a2b948f19d8164c94b54e91e506ce45051988d30a192f189b87d524d3",
+        "i686": "63afa684fc7e38953496b4fd0a323f8f5933d73e5c584906f098e0fcee2c4603"
       }
     },
     {
@@ -1860,7 +1848,7 @@
         "ncurses"
       ],
       "sha256_by_arch": {
-        "aarch64": "bf1a93d727e844489fb21aa090699f94ed7abb2e31467a45738fc394b88df456"
+        "aarch64": "33c3f012ac09308669f2c3e17a6a4a6fca7c51f2978aab031c2bb3f7d9e8a9c9"
       }
     },
     {
@@ -1878,15 +1866,15 @@
       "recipe_sha256": "b2109465b85f5f7528ff971f393c4c825a1e4266101866b69829afdc462ad510",
       "platform_independent": false,
       "sha256_by_arch": {
-        "aarch64": "5093ee810755b3896912fbcedcf15019bc42b222ed857effbfe619f06cb39dfd",
-        "arm": "35fb665f0afc7e9452053f4e589f12008bf3328f33199407d602b2e165f86e53",
-        "x86_64": "d818b7750320848bc61d5a21ef4b48c5167598460ed69508f2421420a6dea222",
-        "i686": "1b8928a0753fe47e8bcfd53aa8ea50748de67e4bc4ee04582be7800ea2895f5f"
+        "aarch64": "85dfa8939dd377580c0e0d69953bdf3618b324ce69eb6d31b014140063ebb7e7",
+        "arm": "09c7a5ff117c200586b1fd4dfc19754abdb7a092ff701954c832269fc0a8295b",
+        "x86_64": "1c64ee7eb27607c423960d2f8b9af1ad71a213f721da159846a73b1b361aeed2",
+        "i686": "83e19a812533f7663a394e97ef899788e8aa9ec0ce082e651867cf3d2c625e5e"
       }
     },
     {
       "package": "uv",
-      "version": "0.11.7",
+      "version": "0.13.4",
       "maintainer": "@termux-app-store",
       "description": "An extremely fast Python package and project manager, written in Rust.",
       "homepage": "https://github.com/astral-sh/uv",
@@ -1895,11 +1883,11 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/astral-sh/uv/releases/download/${TERMUX_PKG_VERSION}/uv-aarch64-unknown-linux-musl.tar.gz",
-      "sha256": "46647dc16cbb7d6700f762fdd7a67d220abe18570914732bc310adc91308d272",
-      "recipe_sha256": "76b8431058c21d5bb8e6c5a6b9f1231089080dd7ee1ed2a42323d2baa6d768c3",
+      "sha256": "253a17cadcb659ae77a0fe3b9a2f1c14297528d480c421899e61e64d64f24e8f",
+      "recipe_sha256": "a6fb8131660d0fb7640bffde3b4fb1c3da0d7bf452f7ccbba4cc1ae1012c3053",
       "platform_independent": false,
       "sha256_by_arch": {
-        "aarch64": "98650554af6193cba6e1021399931e05d1cc67199f22f7da3ccd92a43ca956dd"
+        "aarch64": "5fbd3ac82e72afff25d7d916b63def4d6dd27f48ce224e99e89ee848ea002db7"
       }
     },
     {
@@ -1920,7 +1908,7 @@
         "rust"
       ],
       "sha256_by_arch": {
-        "aarch64": "84c9ae9b266d23ab7ef7ea820507511038e0a7acd475b4f209d8291aff107ad1"
+        "aarch64": "7bd43b4fba8a1244c489f4537883e518cd86e021ac1c55a25ad1ffe1206dbff9"
       }
     },
     {
@@ -1938,10 +1926,10 @@
       "recipe_sha256": "1ca1179147b36711f7e0740cfa142b1f0238946d0c605e7bfc49074776a7dd6d",
       "platform_independent": false,
       "sha256_by_arch": {
-        "aarch64": "44f9b5f7b6fd54d16dca46916e7716dc17585da390167b73c002b6c966fd8afa",
-        "arm": "c31e12a93c2ef7466fa1b86a9bf0b6891369ecb26e41561fe582bb53c1c0f8bc",
-        "x86_64": "271009b79aa2e8061f831ee3e0a1657b908ca8390f754cff8d74a44035a5d554",
-        "i686": "5ff0d6f3463ee8132dd8ce34c4eb29a084de3da6b2e5a33835d302f8fec3415b"
+        "aarch64": "8360a19f29f391c9b18119ea4d4eae9ca8af5b87832c4d45adf34005747b1400",
+        "arm": "79d83816c3a184cf6e3823b72c8e66fb975ca16104a2717b2232ad375e42d4e4",
+        "x86_64": "99d2e54467dce11357aed52d94b82184b877c6a7fd763eccf7aafc5adaa4b926",
+        "i686": "fb102654c503ad7941ea44abdf8c9d62cbcd9e4d3363314727ab5da45b37c0a1"
       }
     },
     {
@@ -1964,10 +1952,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "ba899e3740bd409bc7f5cd61fefa2f87b11983da662b53e1e2311b769ff1cb7f",
-        "arm": "98276130c152048c54972c7dafcfecccf8363ae9557fa3a11b5c35eae744b8d7",
-        "x86_64": "70a285d69a3d5a698aa471e8b4f283c17e3076dfb28941efec1d909ce3f5813f",
-        "i686": "5a8f2a3a24fc6f8d3c7960e0e6432d007d96513b2f387168a1b51e9d9423b266"
+        "aarch64": "3727e06018625bad9369c563f71ac7097e98cd351caa5f00bf6b31e073d368ac",
+        "arm": "389ebf2c2f5a49aacf44d9452d026a16ee3b182d821040ac9b791d086c0a5e53",
+        "x86_64": "d99408a9b73985f55b513cd6d4aaa4959e42264ebe2a87163e17686fdcd20b7f",
+        "i686": "87c4157ef424d808a4e47ee1564c0cb8bcf7b5714212f753a82fe463d72b6722"
       }
     },
     {
@@ -1990,10 +1978,10 @@
         "python-setuptools"
       ],
       "sha256_by_arch": {
-        "aarch64": "7d46d3ac05b6d2d3c0da6c6233a27a2be18fbc12fe0b51759ed76e93b90ba44c",
-        "arm": "1fffa0841627559d9d83375a6ce656a25ef1ae12cdf404f9a20f0dd9cda86db9",
-        "x86_64": "cef0edbe63cc06688d5440e95ed7c9c4c2a702cb2f665cff1f8ee71413342f90",
-        "i686": "858734b5297dcbde0f6373426a98d63059bf8b3367f5878eb7ae1690f9e87d4e"
+        "aarch64": "22cbfb06396b8417a09d1abff390bad0a2e4f634ebec0404132ca3ca2d0597b2",
+        "arm": "0bf880d70d27579df482262f2a895bcb1807e09db6a1c447b102b0ca8fa9f032",
+        "x86_64": "c36ad24a5d9ee458ce3ff631d1120acd690c0c44f913a13f8e4696ec1e14e754",
+        "i686": "0da14a2345f306590318878aaf5f36c922d21c0e3cbcbcd28667c307f723c764"
       }
     },
     {
@@ -2023,10 +2011,10 @@
         "openal-soft"
       ],
       "sha256_by_arch": {
-        "aarch64": "e55f3f65f7ffe3f22d024449c5b91a24d08e030ac185c73262b4d01bb046b75f",
-        "arm": "083226f3b1f84a171463741eace7ee5067e6e8f239a79316875b38259d8860c9",
-        "x86_64": "2f8c75e29ffe07e43460c3706575b8926f75a13673c3cde918d223d59fd93521",
-        "i686": "03c5c89a6b275e55728c55ec2f7b87fb922284b0570e5283e82a3193886b005f"
+        "aarch64": "308020542eea90d4a479c23f7e545b2ea37fe82f03b5a87b72fce66aa54e8471",
+        "arm": "139cadce1b08ed6ab223c7761214ea99485a8a5f56f701c49a09b1c8e659541a",
+        "x86_64": "4fa9908b76316b59cc4ae2417e4190e18ab54956735983867c552faa85c7df47",
+        "i686": "bd2e90c781f46777b3c3f3767cc0206f04959571bbd78bf76e377a384ee5d02e"
       }
     },
     {
@@ -2047,7 +2035,7 @@
         "python"
       ],
       "sha256_by_arch": {
-        "aarch64": "cef8117311250031de77293564b121b32edfe0105b2b79a0acd63d662ac37828"
+        "aarch64": "b9945a9008c0421cf25eec5129700c50eca715817876046afcc0adab7ce18841"
       }
     },
     {
@@ -2069,7 +2057,7 @@
         "binutils-is-llvm"
       ],
       "sha256_by_arch": {
-        "aarch64": "5ac189498f9166196df8347985a0503b94614c6a9eff9e9e1c74424031cd730b"
+        "aarch64": "0970d800e0b73603d433c616312188450d58e288bc5a0c43479a5a59db129c63"
       }
     },
     {
@@ -2091,7 +2079,7 @@
         "python"
       ],
       "sha256_by_arch": {
-        "aarch64": "5a6bc8a48859502fb9e9a947f237f1e8b64879dac29ebe4cc13582e641705fd7"
+        "aarch64": "9991991e2146cb88a75058bbb4adf202cc2998dbdfb1f0de868077d1c3211406"
       }
     }
   ]
