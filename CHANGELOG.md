@@ -20,6 +20,10 @@ and this project adheres to semantic versioning.
 - `.github/workflows/build-packages-debs.yml` - `pkg update` and the dependency pre-install inside termux-docker retry 5 times with back-off, and `pkg update` errors are no longer hidden
 - `termux_app_store/data/build-package.sh` - packaged copy refreshed so it stays identical to the root `build-package.sh`
 - `tests/test_fast_install_security.py` - the dependency-block test now covers the new behaviour: success, a transient failure that succeeds on retry, a missing dependency that stops the build with `FATAL`, and `pkg` failing while every dependency is already installed; the harness stubs `sleep` and `dpkg`, so the tests run instantly and never touch the real apt state
+- `guidebook.py` - the "About" timeline now continues from v0.2.6 up to v0.9.1 (v0.3.0, v0.4.0, v0.4.5, v0.8.5 and v0.9.1) in both languages; the Indonesian timeline was also missing v0.2.6 and now matches the English one
+- `guidebook.py` - "How to Install" has a new "Option 3 -- Signed apt repository" (`./tasctl install-repo`, then `pkg update`), and "How to Uninstall" shows how to remove the repository with `./tasctl uninstall-repo`; both are written in English and Indonesian
+- `guidebook.py` - the "Using tasctl" command list now includes `install-repo` and `uninstall-repo`, matching `tasctl help`
+- `guidebook.py` - the header comment lines are removed from the source; the script has no `#` comments apart from the shebang
 
 ### Fixed
 - `build-package.sh` - a failed `pkg install` of `TERMUX_PKG_DEPENDS` was only a warning, so the build carried on without the toolchain and died later with `cargo: command not found`, `go: command not found` or `npm: command not found`; the build now stops with a `FATAL` message naming the missing dependencies once all retries are used (workflow run #136: `aichat` v0.30.0, `brutespray` v2.7.2 and `pnpm` v12.14.0)

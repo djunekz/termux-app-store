@@ -1,7 +1,4 @@
 #!/usr/bin/env python3
-# Termux App Store -- Interactive Bilingual Guidebook
-# github.com/djunekz/termux-app-store
-# Redesigned with a refined, high-contrast terminal aesthetic
 
 import os
 import sys
@@ -286,6 +283,11 @@ def content_about(L):
             ("v0.2.3", "Apr 2026", "pip install support, source mode resolver"),
             ("v0.2.4", "Apr 2026", "termux-build init (auto create & build)"),
             ("v0.2.6", "Apr 2026", "Update termux-app-store TUI to new version Textual"),
+            ("v0.3.0", "May 2026", "Dozens of new packages added to the store"),
+            ("v0.4.0", "May 2026", "Fast install (.deb from mirrors), search, multi-install"),
+            ("v0.4.5", "Jul 2026", "Security hardening: SHA256 checks, name validation"),
+            ("v0.8.5", "Oct 2026", "Shared store_common module, checksum-gated cache"),
+            ("v0.9.1", "Oct 2026", "Signed apt repository (signed-by), key pinning"),
         ]
         for ver, date, desc in timeline:
             lines.append(f"  {BCYN}{B}{ver:<8}{R}  {DIM}{date}{R}  {desc}")
@@ -344,6 +346,12 @@ def content_about(L):
             ("v0.1.7", "Mar 2026", "15+ package baru, uninstall button di TUI"),
             ("v0.2.3", "Apr 2026", "pip install support, source mode resolver"),
             ("v0.2.4", "Apr 2026", "termux-build init (auto create & build)"),
+            ("v0.2.6", "Apr 2026", "Update TUI termux-app-store ke Textual versi baru"),
+            ("v0.3.0", "Mei 2026", "Puluhan package baru ditambahkan ke store"),
+            ("v0.4.0", "Mei 2026", "Fast install (.deb dari mirror), search, multi-install"),
+            ("v0.4.5", "Jul 2026", "Penguatan keamanan: cek SHA256, validasi nama"),
+            ("v0.8.5", "Okt 2026", "Modul store_common bersama, cache wajib checksum"),
+            ("v0.9.1", "Okt 2026", "Repository apt bertanda tangan (signed-by), key pinning"),
         ]
         for ver, date, desc in timeline:
             lines.append(f"  {BCYN}{B}{ver:<8}{R}  {DIM}{date}{R}  {desc}")
@@ -390,6 +398,18 @@ def content_install(L):
             "git clone https://github.com/djunekz/termux-app-store",
             "cd termux-app-store",
             "./tasctl install",
+            title="terminal",
+        )
+        lines += [""] + subsection("Option 3 -- Signed apt repository")
+        lines += [
+            f"  {DIM}Adds the repository with a pinned signing key (signed-by),{R}",
+            f"  {DIM}never with trusted=yes.{R}", "",
+        ]
+        lines += code_block(
+            "git clone https://github.com/djunekz/termux-app-store",
+            "cd termux-app-store",
+            "./tasctl install-repo",
+            "pkg update",
             title="terminal",
         )
         lines += [""] + subsection("After Install")
@@ -439,6 +459,18 @@ def content_install(L):
             "./tasctl install",
             title="terminal",
         )
+        lines += [""] + subsection("Opsi 3 -- Repository apt bertanda tangan")
+        lines += [
+            f"  {DIM}Menambahkan repository dengan signing key yang dipin (signed-by),{R}",
+            f"  {DIM}tidak pernah memakai trusted=yes.{R}", "",
+        ]
+        lines += code_block(
+            "git clone https://github.com/djunekz/termux-app-store",
+            "cd termux-app-store",
+            "./tasctl install-repo",
+            "pkg update",
+            title="terminal",
+        )
         lines += [""] + subsection("Setelah Install")
         lines += code_block(
             "termux-app-store        # Buka TUI interaktif",
@@ -479,6 +511,8 @@ def content_uninstall(L):
             "rm -rf $PREFIX/lib/.tas",
             title="terminal",
         )
+        lines += [""] + subsection("Remove the apt repository (if added)")
+        lines += code_block("./tasctl uninstall-repo", "pkg update", title="terminal")
         lines += [""]
         lines += callout("", "Uninstall does not remove packages/ you created manually.", "note")
     else:
@@ -493,6 +527,8 @@ def content_uninstall(L):
             "rm -rf $PREFIX/lib/.tas",
             title="terminal",
         )
+        lines += [""] + subsection("Hapus repository apt (jika sudah ditambahkan)")
+        lines += code_block("./tasctl uninstall-repo", "pkg update", title="terminal")
         lines += [""]
         lines += callout("", "Uninstall tidak menghapus packages/ yang sudah kamu buat sendiri.", "note")
     lines.append("")
@@ -597,6 +633,8 @@ def content_tasctl(L):
             "tasctl install      # Install latest TAS",
             "tasctl update       # Update to latest version",
             "tasctl uninstall    # Remove TAS",
+            "tasctl install-repo    # Add the signed apt repository only",
+            "tasctl uninstall-repo  # Remove the apt repository and its key",
             "tasctl doctor       # Diagnose environment",
             "tasctl self-update  # Update tasctl itself",
             "tasctl help         # Show help",
@@ -624,6 +662,8 @@ def content_tasctl(L):
             "tasctl install      # Install TAS versi terbaru",
             "tasctl update       # Update ke versi terbaru",
             "tasctl uninstall    # Hapus TAS",
+            "tasctl install-repo    # Tambah repository apt bertanda tangan saja",
+            "tasctl uninstall-repo  # Hapus repository apt beserta key-nya",
             "tasctl doctor       # Diagnosa environment",
             "tasctl self-update  # Update tasctl itu sendiri",
             "tasctl help         # Tampilkan bantuan",
