@@ -13,7 +13,6 @@ and this project adheres to semantic versioning.
 - `ci/auto_update_packages.py` - adds a line like ``- Package `name` vOLD → vNEW`` under `### Update` in `[Unreleased]`; when the same package is updated again before a release, its line keeps the first OLD version and gets the latest NEW version
 - `ci/auto_update_packages.py` - packages that use a GitLab source, a floating branch tarball or the shared `djunekz/archive` repository are skipped, a package can opt out with `TERMUX_PKG_AUTO_UPDATE=false` in `build.sh`, and packages pinned to a commit (`0.0.0+<sha7>`) are only followed with `--include-commit-pinned`
 - `ACCESSIBILITY.md` - new accessibility statement for the CLI (`tas`) and the TUI: supported environments, what works today (every TUI action also available as a CLI command, keyboard shortcuts, light text on a dark background), known limitations (not tested with screen readers, single fixed dark theme, `NO_COLOR` not supported, `Ctrl+I` may behave like `Tab` in some terminals, few shortcuts) and how to report an accessibility barrier through issues, discussions or private email
-- Package `mining` v1.0.4 - Termux mining coin, simple tools and userfriendly
 
 ### Changed
 - `build-package.sh` - dependency installation now retries up to 5 times with an increasing, randomised back-off and refreshes the apt index between attempts (`Acquire::Retries=5`); this covers the HTTP 429 "Too Many Requests" answers and the transient "Hashes of expected file" mismatches returned by the Termux mirror when many jobs hit it at once
@@ -31,9 +30,6 @@ and this project adheres to semantic versioning.
 - `.github/workflows/build-packages-debs.yml` - a dependency that still could not be installed after the retries was only a warning (`could not install dependency`); the job now exits with status 1 right there
 - `packages/dalfox` - `dalfox` v3.2.4 is a Rust project (`Cargo.toml`, no Go sources), but the recipe still built it as a Go program and failed with `malformed import path "*.go": invalid char '*'`; it now depends on `rust` and installs with `cargo install --locked --path . --root "$TERMUX_PREFIX"` (workflow run #136)
 - `packages/pnpm` - `termux_step_make_install()` now creates `$TERMUX_PREFIX/lib/node_modules` before copying, so it no longer fails with `cp: cannot create directory '.../lib/node_modules/pnpm': No such file or directory` when the directory does not exist yet
-
-### Removed
-- Package `mining` - Removed
 
 ---
 
