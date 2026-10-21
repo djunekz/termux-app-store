@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-10-21T01:41:48.067700+00:00",
+  "generated_at": "2026-10-21T03:50:06.269468+00:00",
   "total": 88,
   "packages": [
     {
@@ -22,7 +22,7 @@
         "rust"
       ],
       "sha256_by_arch": {
-        "aarch64": "a4c827d1a28fc25be2d1b6cc0d2b912f3b4fdb3eb5c4c95bfcc8d847de6b4bf7"
+        "aarch64": "a93c9c69ea8948053da2aac7ec7b14bee18777fbebfbf895feb385429e54465b"
       }
     },
     {
@@ -300,7 +300,10 @@
       "platform_independent": false,
       "depends": [
         "golang"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "85d7a5b1894f6327c3b0034b6e88d55ccef4eea462d562c0913f10b45c93250b"
+      }
     },
     {
       "package": "clickjacking-tester",

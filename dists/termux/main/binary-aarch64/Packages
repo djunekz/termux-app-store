@@ -4,10 +4,10 @@ Architecture: aarch64
 Maintainer: @termux-app-store
 Installed-Size: 
 Filename: pool/main/aichat_0.30.0_aarch64.deb
-Size: 3988976
-MD5sum: a411a9aa53fc3e951cc5ece6a25d02cf
-SHA1: 7425f38e4e81659e6268df95e9f77cef5e636944
-SHA256: a4c827d1a28fc25be2d1b6cc0d2b912f3b4fdb3eb5c4c95bfcc8d847de6b4bf7
+Size: 3986216
+MD5sum: f7f38fba3f6b583cd678eeafd5e1fa2c
+SHA1: ce5b1ed16eb32e2c324fa353500ace19c6b1445f
+SHA256: a93c9c69ea8948053da2aac7ec7b14bee18777fbebfbf895feb385429e54465b
 Description: All-in-one LLM CLI tool featuring Shell Assistant, Chat-REPL, RAG, AI Tools & Agents, with access to OpenAI, Claude, Gemini, Ollama, Groq, and more.
 
 Package: ani-cli
@@ -145,15 +145,15 @@ SHA256: 11b2ddf1690dcbe52c143ce0391296bfb48d2057918e0b65710332eb8f49fba0
 Description: A new way to see and navigate directory trees : https://dystroy.org/broot
 
 Package: brutespray
-Version: 2.6.0
+Version: 2.7.2
 Architecture: aarch64
 Maintainer: @termux-app-store
 Installed-Size: 
-Filename: pool/main/brutespray_2.6.0_aarch64.deb
-Size: 11025620
-MD5sum: 45add7e0211434d91aabd7c34685a2e2
-SHA1: f3a1ad76ebc49602621bbb2a4e6118bd9141c720
-SHA256: 9ac3e26a45c5ac9b7966498b5a697dafc74648fa6cb3c0e38d731d8cd6b6ff53
+Filename: pool/main/brutespray_2.7.2_aarch64.deb
+Size: 12113408
+MD5sum: 1ebc8a3efa808c4516f9edcf2f43e008
+SHA1: 50fae8f49528e048f5fdbe8461ddbba7642cd9bb
+SHA256: 85d7a5b1894f6327c3b0034b6e88d55ccef4eea462d562c0913f10b45c93250b
 Description: Fast, multi-protocol credential brute-forcer. Parses Nmap, Nessus, and Nexpose output to automatically test default and custom credentials across 30+ protocols.
 
 Package: clickjacking-tester
@@ -1070,4 +1070,3 @@ MD5sum: cff40fc0d1f78d54d24c3da9c10fdce1
 SHA1: 350d62b573f8476e58582ee59fc35732981ae07e
 SHA256: 9991991e2146cb88a75058bbb4adf202cc2998dbdfb1f0de868077d1c3211406
 Description: Encrypter Stealth Binary Builder
-
