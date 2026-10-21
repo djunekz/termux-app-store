@@ -540,6 +540,18 @@ SHA1: 65b7b10d73d04b67a0069d0c4fd33d0ee35da8ae
 SHA256: 675e61fa059c6f83f71e2c60e77d72d7cd0745d7056c3dc1fc366dd7083b01ff
 Description: Fast, disk space efficient package manager
 
+Package: pnpm
+Version: 12.14.0
+Architecture: x86_64
+Maintainer: @termux-app-store
+Installed-Size: 
+Filename: pool/main/pnpm_12.14.0_x86_64.deb
+Size: 769974
+MD5sum: 1b9c011a170247c54ae04e5632816a84
+SHA1: 009122b4642458fee2f2d075101b6b51902b6c1c
+SHA256: ae916d6331fc73e35a535579b39727733718435c51866b1b72ab849635f3edf0
+Description: Fast, disk space efficient package manager
+
 Package: pymaker
 Version: 1.0.0
 Architecture: x86_64

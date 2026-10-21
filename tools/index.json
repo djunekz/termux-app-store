@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-10-21T00:27:03.196295+00:00",
+  "generated_at": "2026-10-21T01:41:48.067700+00:00",
   "total": 88,
   "packages": [
     {
@@ -524,11 +524,14 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/hahwul/dalfox/archive/refs/tags/v3.2.4.tar.gz",
       "sha256": "d86cae222a4db6c8a335013c980d0c6d672b3abee8cfb44da6ce1b489e4d3a9b",
-      "recipe_sha256": "5fc190219c2429e547c016e67b4111fed0442fcd3e269394e6228961265d64f6",
+      "recipe_sha256": "7c91c43af5104b310a79e126aab43c6d98a838841458d9b49b63dfb1d6687dcd",
       "platform_independent": false,
       "depends": [
-        "golang"
-      ]
+        "rust"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "9e4c2ba8d8235168e926e7dd6abf94ffceed2b99b68903e881a08f2a3267c634"
+      }
     },
     {
       "package": "djangohunter",
@@ -1390,11 +1393,17 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://registry.npmjs.org/pnpm/-/pnpm-${TERMUX_PKG_VERSION}.tgz",
       "sha256": "ea206e35474bf87be9564a85ca70ed1c8ebdc45da55aafb0a3bf09d1ba69b179",
-      "recipe_sha256": "7eb1388d160696b62b49e0343e756c838c086cc170af3cecf6351cd1c010869c",
+      "recipe_sha256": "9b2361993c59bdc2c515f1490a13108a41b392ef472e25f323728fdb5ec92f0e",
       "platform_independent": false,
       "depends": [
         "nodejs"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "45e82a48ba603f3477e91b2c0b9c07060be8aea3a199da965c119bdafec70bd2",
+        "arm": "48d118b05b55917d3a58b3e678e471fcc28e392f011d275993fedc88f6cea7d1",
+        "x86_64": "ae916d6331fc73e35a535579b39727733718435c51866b1b72ab849635f3edf0",
+        "i686": "5038ea145fd17e2d631a816b74836aff19e312c5908d9b2dd9dcb6573c417565"
+      }
     },
     {
       "package": "pymaker",

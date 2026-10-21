@@ -253,15 +253,15 @@ SHA256: e5cf886c793d83b0d7ec9ae1f95e2447e5b2dd1b9aad047d2e398c9298463095
 Description: Comprehensive Educational Learning Platform for Termux
 
 Package: dalfox
-Version: 2.12.0
+Version: 3.2.4
 Architecture: aarch64
 Maintainer: @termux-app-store
 Installed-Size: 
-Filename: pool/main/dalfox_2.12.0_aarch64.deb
-Size: 11888032
-MD5sum: 92b16befbd0383cb3bcafa40c8efdb1b
-SHA1: f2a85067594f71c914885ce85e01b416819b7cc4
-SHA256: 2d2991d6a48f4cde7cbc27bb0bc975e23b4e3ed8864a4aa65b6a9768e9020706
+Filename: pool/main/dalfox_3.2.4_aarch64.deb
+Size: 4046968
+MD5sum: 62a4175b6c9d22e5016840b63e4a1b9d
+SHA1: 4123a6c85ab5650576382348865bb77f7f340f85
+SHA256: 9e4c2ba8d8235168e926e7dd6abf94ffceed2b99b68903e881a08f2a3267c634
 Description: 🌙🦊 Dalfox is a powerful open-source XSS scanner and utility focused on automation.
 
 Package: djangohunter
@@ -697,15 +697,15 @@ SHA256: 11f613fe118c1f4820bfbdc8a09307afa237a3fdc902365fc7ddf7aea23fc0a2
 Description: Terminal-based project manager CLI
 
 Package: pnpm
-Version: 10.30.1
+Version: 12.14.0
 Architecture: aarch64
 Maintainer: @termux-app-store
 Installed-Size: 
-Filename: pool/main/pnpm_10.30.1_aarch64.deb
-Size: 2806692
-MD5sum: 4ef0d68edf97000baea60d599a1896be
-SHA1: 69e420d36173a832c093c7375ddb8251138e9efe
-SHA256: 742037d1a756325b2715f7d690120021a85ce954f3cc726305e0b9050af5ad0b
+Filename: pool/main/pnpm_12.14.0_aarch64.deb
+Size: 752020
+MD5sum: 0cc6229eb95942b2571862a8f66fda33
+SHA1: b0718ee410e57c658d916df1ce73a60fc7c22173
+SHA256: 45e82a48ba603f3477e91b2c0b9c07060be8aea3a199da965c119bdafec70bd2
 Description: Fast, disk space efficient package manager
 
 Package: pymaker
