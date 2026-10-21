@@ -7,6 +7,12 @@ and this project adheres to semantic versioning.
 
 ## [Unreleased]
 
+### Added
+- `.github/workflows/auto-update-packages.yml` - new workflow that checks every package against its upstream every 12 hours (00:00 and 12:00 UTC) and can also be run manually for all packages or a list of packages; manual inputs are `packages`, `dry_run`, `mode` (`push` or `pull-request`) and `include_commit_pinned`; the run publishes a summary, commits the result with the repository bot identity and, in `pull-request` mode, keeps a single rolling `auto-update/packages` PR instead of opening a new one every run
+- `ci/auto_update_packages.py` - upstream checker used by the workflow: reads the latest GitHub Release (or the highest stable tag) for GitHub sources and the `latest` dist-tag for npm sources, never downgrades, rewrites `TERMUX_PKG_VERSION`, `TERMUX_PKG_SRCURL` and `TERMUX_PKG_SHA256` in `build.sh` keeping the original quote style, and computes the SHA256 from the file downloaded from the new URL; a package whose new URL cannot be downloaded is reported and left unchanged
+- `ci/auto_update_packages.py` - adds a line like ``- Package `name` vOLD → vNEW`` under `### Update` in `[Unreleased]`; when the same package is updated again before a release, its line keeps the first OLD version and gets the latest NEW version
+- `ci/auto_update_packages.py` - packages that use a GitLab source, a floating branch tarball or the shared `djunekz/archive` repository are skipped, a package can opt out with `TERMUX_PKG_AUTO_UPDATE=false` in `build.sh`, and packages pinned to a commit (`0.0.0+<sha7>`) are only followed with `--include-commit-pinned`
+
 ---
 
 ## [v0.9.1] - 2026-10-21

@@ -1,0 +1,153 @@
+name: Auto Update Packages
+
+on:
+  schedule:
+    - cron: '0 */12 * * *'
+  workflow_dispatch:
+    inputs:
+      packages:
+        description: 'Nama package dipisah spasi (kosong = cek semua package)'
+        required: false
+        default: ''
+      dry_run:
+        description: 'Hanya cek dan tampilkan hasil, tanpa mengubah/commit apa pun'
+        required: false
+        default: false
+        type: boolean
+      mode:
+        description: 'Cara menyimpan hasil update'
+        required: false
+        default: 'push'
+        type: choice
+        options:
+          - push
+          - pull-request
+      include_commit_pinned:
+        description: 'Ikut cek package yang dipin ke commit (versi 0.0.0+sha)'
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: auto-update-packages
+  cancel-in-progress: false
+
+jobs:
+  auto-update:
+    name: Check upstream and update packages
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    if: github.repository == 'djunekz/termux-app-store'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.PAT_TOKEN }}
+          ref: ${{ github.ref_name }}
+
+      - name: Setup Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+
+      - name: Validate inputs
+        env:
+          PACKAGES_INPUT: ${{ github.event.inputs.packages }}
+        run: |
+          if [[ -n "$PACKAGES_INPUT" ]] && ! [[ "$PACKAGES_INPUT" =~ ^[A-Za-z0-9._+,\ -]*$ ]]; then
+            echo "Invalid characters in 'packages' input — only letters, numbers, . _ + - , and spaces are allowed" >&2
+            exit 1
+          fi
+
+      - name: Check upstream and update build.sh + CHANGELOG
+        id: update
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+          PACKAGES_INPUT: ${{ github.event.inputs.packages }}
+          DRY_RUN: ${{ github.event.inputs.dry_run }}
+          INCLUDE_COMMIT_PINNED: ${{ github.event.inputs.include_commit_pinned }}
+          OUT_DIR: ${{ runner.temp }}/auto-update
+        run: |
+          set -euo pipefail
+          PACKAGES="${PACKAGES_INPUT//,/ }"
+
+          args=(--out-dir "$OUT_DIR")
+          if [[ "$DRY_RUN" != "true" ]]; then
+            args+=(--apply)
+          fi
+          if [[ "$INCLUDE_COMMIT_PINNED" == "true" ]]; then
+            args+=(--include-commit-pinned)
+          fi
+
+          python ci/auto_update_packages.py "${args[@]}" $PACKAGES
+
+      - name: Publish summary
+        if: always()
+        env:
+          OUT_DIR: ${{ runner.temp }}/auto-update
+        run: |
+          if [ -f "$OUT_DIR/summary.md" ]; then
+            cat "$OUT_DIR/summary.md" >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Commit changes
+        if: steps.update.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.PAT_TOKEN }}
+          REF_NAME: ${{ github.ref_name }}
+          OUT_DIR: ${{ runner.temp }}/auto-update
+          MODE: ${{ github.event.inputs.mode || 'push' }}
+        run: |
+          set -euo pipefail
+
+          git config user.name "Termux App Store"
+          git config user.email "258516621+termux-app-store@users.noreply.github.com"
+
+          git add packages/*/build.sh CHANGELOG.md
+          if git diff --staged --quiet; then
+            echo "Nothing to commit"
+            exit 0
+          fi
+
+          if [[ "$MODE" == "pull-request" ]]; then
+            BRANCH="auto-update/packages"
+            git checkout -B "$BRANCH"
+            git commit -F "$OUT_DIR/commit-message.txt"
+            git push --force -u origin "$BRANCH"
+
+            if [ -z "$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number')" ]; then
+              gh pr create \
+                --base "$REF_NAME" \
+                --head "$BRANCH" \
+                --title "$(head -n 1 "$OUT_DIR/commit-message.txt")" \
+                --body-file "$OUT_DIR/summary.md"
+            else
+              gh pr edit "$BRANCH" \
+                --title "$(head -n 1 "$OUT_DIR/commit-message.txt")" \
+                --body-file "$OUT_DIR/summary.md"
+            fi
+            exit 0
+          fi
+
+          git commit -F "$OUT_DIR/commit-message.txt"
+
+          MAX_RETRIES=3
+          RETRY=0
+          while [ "$RETRY" -lt "$MAX_RETRIES" ]; do
+            if git push origin "HEAD:${REF_NAME}"; then
+              echo "✅ Push successful"
+              exit 0
+            fi
+            RETRY=$((RETRY + 1))
+            echo "Retry $RETRY/$MAX_RETRIES"
+            git pull --rebase origin "$REF_NAME"
+            sleep 2
+          done
+          echo "❌ Push failed"
+          exit 1
