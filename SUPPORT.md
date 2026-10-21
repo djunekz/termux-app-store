@@ -208,8 +208,7 @@ The following are out of scope:
   Termux App Store (for those, see the official Termux documentation and
   community)
 - Bugs in third-party software distributed through packages here
-- Requests to remove safety checks such as UNSUPPORTED blocking or SHA256
-  verification
+- Requests to remove safety checks such as SHA256 verification
 
 ---
 
