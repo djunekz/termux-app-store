@@ -339,23 +339,54 @@ if [[ -n "${TERMUX_PKG_DEPENDS:-}" ]]; then
   done
 
   _spin_chars='⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏'
-  _spin_i=0
   _PKG_LOG=$(mktemp)
-  pkg install -y "${_DEPS_ARRAY[@]}" > "$_PKG_LOG" 2>&1 &
-  _PKG_PID=$!
-  while kill -0 "$_PKG_PID" 2>/dev/null; do
-    _sc="${_spin_chars:$(( _spin_i % ${#_spin_chars} )):1}"
-    printf "\r ${BGREEN}[${BCYAN} %s ${BGREEN}]${R} Installing dependencies..." "$_sc"
-    sleep 0.1
-    (( _spin_i++ )) || true
-  done
-  _PKG_STATUS=0
-  wait "$_PKG_PID" || _PKG_STATUS=$?
-  printf "\r%*s\r" "$(tput cols 2>/dev/null || echo 80)" ""
+  _PKG_STATUS=1
+  _DEPS_MAX_ATTEMPTS=5
 
+  for (( _attempt=1; _attempt<=_DEPS_MAX_ATTEMPTS; _attempt++ )); do
+    _spin_i=0
+    pkg install -y -o Acquire::Retries=5 "${_DEPS_ARRAY[@]}" > "$_PKG_LOG" 2>&1 &
+    _PKG_PID=$!
+    while kill -0 "$_PKG_PID" 2>/dev/null; do
+      _sc="${_spin_chars:$(( _spin_i % ${#_spin_chars} )):1}"
+      printf "\r ${BGREEN}[${BCYAN} %s ${BGREEN}]${R} Installing dependencies..." "$_sc"
+      sleep 0.1
+      (( _spin_i++ )) || true
+    done
+    _PKG_STATUS=0
+    wait "$_PKG_PID" || _PKG_STATUS=$?
+    printf "\r%*s\r" "$(tput cols 2>/dev/null || echo 80)" ""
+
+    [[ "$_PKG_STATUS" -eq 0 ]] && break
+
+    # Mirror rate limits (HTTP 429) and half-synced indexes (hash mismatch)
+    # are transient: back off with jitter, refresh the index, then try again.
+    if (( _attempt < _DEPS_MAX_ATTEMPTS )); then
+      _delay=$(( _attempt * 20 + RANDOM % 15 ))
+      _warn "Dependency install failed (exit $_PKG_STATUS), retry $_attempt/$(( _DEPS_MAX_ATTEMPTS - 1 )) in ${_delay}s"
+      tail -n 3 "$_PKG_LOG" | sed 's/^/      /'
+      sleep "$_delay"
+      rm -rf "$PREFIX/var/lib/apt/lists/"* 2>/dev/null || true
+      pkg update -y -o Acquire::Retries=5 > /dev/null 2>&1 || true
+    fi
+  done
+
+  # A dependency that is still missing here would only surface later as
+  # "cargo/go/npm: command not found", so stop now with the real cause.
+  _MISSING_DEPS=()
   if [[ "$_PKG_STATUS" -ne 0 ]]; then
-    _warn "Some dependencies could not be installed (exit $_PKG_STATUS)"
+    for dep in "${_DEPS_ARRAY[@]}"; do
+      dpkg -s "$dep" > /dev/null 2>&1 || _MISSING_DEPS+=("$dep")
+    done
+  fi
+
+  if [[ "${#_MISSING_DEPS[@]}" -gt 0 ]]; then
+    _fatal "Dependencies could not be installed: ${_MISSING_DEPS[*]}"
     tail -n 8 "$_PKG_LOG" | sed 's/^/      /'
+    rm -f "$_PKG_LOG"
+    exit 1
+  elif [[ "$_PKG_STATUS" -ne 0 ]]; then
+    _warn "pkg reported exit $_PKG_STATUS but all dependencies are installed"
   else
     _ok "Dependencies installed"
   fi

@@ -10,6 +10,7 @@ TERMUX_PKG_DEPENDS="nodejs"
 termux_step_make_install() {
     local dest="$TERMUX_PREFIX/lib/node_modules/pnpm"
     rm -rf "$dest"
+    mkdir -p "$(dirname "$dest")"
     cp -r "${TERMUX_PKG_SRCDIR:-$PWD}" "$dest"
 
     mkdir -p "$TERMUX_PREFIX/bin"

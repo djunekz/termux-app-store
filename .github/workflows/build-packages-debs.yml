@@ -106,6 +106,7 @@ jobs:
     if: needs.detect-changes.outputs.has_packages == 'true'
     strategy:
       fail-fast: false
+      max-parallel: 12
       matrix: ${{ fromJson(needs.detect-changes.outputs.matrix) }}
 
     steps:
@@ -276,25 +277,33 @@ jobs:
               fi
 
               echo "=== Updating pkg ==="
-              pkg update -y -o Dpkg::Options::="--force-confnew" 2>/dev/null || true
+              for attempt in 1 2 3 4 5; do
+                pkg update -y -o Acquire::Retries=5 -o Dpkg::Options::="--force-confnew" && break
+                echo "WARNING: pkg update attempt $attempt failed"
+                rm -rf "$PREFIX/var/lib/apt/lists/"* 2>/dev/null || true
+                sleep $(( attempt * 15 + RANDOM % 10 ))
+              done
 
               echo "=== Installing baseline build tools ==="
-              pkg install -y make clang binutils 2>&1 || echo "WARNING: baseline build tools could not be installed"
+              pkg install -y -o Acquire::Retries=5 make clang binutils 2>&1 || echo "WARNING: baseline build tools could not be installed"
 
               if [[ -n "$PKG_DEPS" ]]; then
                 echo "=== Pre-installing dependencies: $PKG_DEPS ==="
                 for dep in $PKG_DEPS; do
                   dep_ok=false
-                  for attempt in 1 2 3; do
-                    if pkg install -y "$dep" 2>&1; then
+                  for attempt in 1 2 3 4 5; do
+                    if pkg install -y -o Acquire::Retries=5 "$dep" 2>&1; then
                       dep_ok=true
                       break
                     fi
                     echo "WARNING: attempt $attempt to install $dep failed"
-                    sleep 5
+                    rm -rf "$PREFIX/var/lib/apt/lists/"* 2>/dev/null || true
+                    sleep $(( attempt * 20 + RANDOM % 15 ))
+                    pkg update -y -o Acquire::Retries=5 >/dev/null 2>&1 || true
                   done
                   if [[ "$dep_ok" != true ]]; then
-                    echo "WARNING: could not install dependency: $dep"
+                    echo "ERROR: could not install dependency: $dep"
+                    exit 1
                   fi
                 done
               fi
