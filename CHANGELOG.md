@@ -32,6 +32,9 @@ and this project adheres to semantic versioning.
 - `packages/dalfox` - `dalfox` v3.2.4 is a Rust project (`Cargo.toml`, no Go sources), but the recipe still built it as a Go program and failed with `malformed import path "*.go": invalid char '*'`; it now depends on `rust` and installs with `cargo install --locked --path . --root "$TERMUX_PREFIX"` (workflow run #136)
 - `packages/pnpm` - `termux_step_make_install()` now creates `$TERMUX_PREFIX/lib/node_modules` before copying, so it no longer fails with `cp: cannot create directory '.../lib/node_modules/pnpm': No such file or directory` when the directory does not exist yet
 
+### Removed
+- Package `mining` - Removed
+
 ---
 
 ## [v0.9.1] - 2026-10-21
