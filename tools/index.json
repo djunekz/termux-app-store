@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-10-20T20:02:12.087896+00:00",
+  "generated_at": "2026-10-21T00:22:30.389179+00:00",
   "total": 88,
   "packages": [
     {
@@ -24,7 +24,7 @@
     },
     {
       "package": "ani-cli",
-      "version": "4.13",
+      "version": "5.1",
       "maintainer": "@termux-app-store",
       "description": "A cli tool to browse and play anime",
       "homepage": "https://github.com/pystardust/ani-cli",
@@ -33,8 +33,8 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/pystardust/ani-cli/releases/download/v${TERMUX_PKG_VERSION}/ani-cli",
-      "sha256": "17c8a97b034d3e48ba4663d538a5705adfbbffb951fa67650a57f7e4414959e2",
-      "recipe_sha256": "dbe1be1d54c4cb41756fd0432713cd9a2e86b6cce75b7dcccdc93a47b2f8180f",
+      "sha256": "f99a1dac807004becfb732a5518a0f2ded9dc08b467805abd03df5d580becd46",
+      "recipe_sha256": "4e35b26dce900f670b1409d27c51f545eebb30675507f91bc3bbd5c74e9f033e",
       "platform_independent": false,
       "depends": [
         "nodejs",
@@ -208,7 +208,7 @@
     },
     {
       "package": "broot",
-      "version": "1.56.2",
+      "version": "1.61.0",
       "maintainer": "@termux-app-store",
       "description": "A new way to see and navigate directory trees : https://dystroy.org/broot",
       "homepage": "https://github.com/Canop/broot",
@@ -216,9 +216,9 @@
       "download_size": "Unknown",
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
-      "srcurl": "https://github.com/Canop/broot/archive/refs/tags/v1.56.2.tar.gz",
-      "sha256": "3e7be4252c76565f6d71b34bd07d26e1444b9ac2e1c8271c724f6e866fe75565",
-      "recipe_sha256": "06695bfdb0eac34445177e0a6ef530bb6a1d3d8e6c9eb44d89cd49c4e4906a85",
+      "srcurl": "https://github.com/Canop/broot/archive/refs/tags/v1.61.0.tar.gz",
+      "sha256": "458f1be5d78fe3b062618e9b1dbc32cf53171b0ca0769b3f32dfae65e753c264",
+      "recipe_sha256": "6cbca33ef01390544d6186d5ffa3dc3d439711d75e43c06cc784582a75b53dc6",
       "platform_independent": false,
       "depends": [
         "rust"
@@ -226,7 +226,7 @@
     },
     {
       "package": "brutespray",
-      "version": "2.6.0",
+      "version": "2.7.2",
       "maintainer": "@termux-app-store",
       "description": "Fast, multi-protocol credential brute-forcer. Parses Nmap, Nessus, and Nexpose output to automatically test default and custom credentials across 30+ protocols.",
       "homepage": "https://pkg.go.dev/github.com/x90skysn3k/brutespray/v2",
@@ -234,9 +234,9 @@
       "download_size": "Unknown",
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
-      "srcurl": "https://github.com/x90skysn3k/brutespray/archive/refs/tags/v2.6.0.tar.gz",
-      "sha256": "cae09d60d49b46d56892caf1bab3ff56d135e9dedd110db8907ac98522327e4e",
-      "recipe_sha256": "01ff3e0818fb0883406675d806f1ed938356188342b684abd45658c5b592079f",
+      "srcurl": "https://github.com/x90skysn3k/brutespray/archive/refs/tags/v2.7.2.tar.gz",
+      "sha256": "551f8a4fe270a86cae63cc78a1cc4a79d0939b84710b1d507fcb7a4fa06b8b8a",
+      "recipe_sha256": "63a82716e6245baebcc6910c01a2f3c3930712c62f49ad46296b575a60abf7cb",
       "platform_independent": false,
       "depends": [
         "golang"
@@ -364,7 +364,7 @@
     },
     {
       "package": "cupp",
-      "version": "0.0.0+616a7b0",
+      "version": "0.0.0+b77f1ae",
       "maintainer": "@termux-app-store",
       "description": "cupp — auto-packaged by termux-build-init",
       "homepage": "https://github.com/Mebus/cupp",
@@ -372,9 +372,9 @@
       "download_size": "Unknown",
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
-      "srcurl": "https://github.com/Mebus/cupp/archive/616a7b0c01b9cec51954df86a2a538dffcba3834.tar.gz",
-      "sha256": "21fb2b08ea3bb5850e194008cd2667e1abd6082750802efbcfb6b279161f7d57",
-      "recipe_sha256": "9e80750c1754243c69399ec5e208a91d97bcad473b4d2d6483f8cbba18a02404",
+      "srcurl": "https://github.com/Mebus/cupp/archive/b77f1ae66c10ab2d0fa09c67017949fb5ba187aa.tar.gz",
+      "sha256": "2b88e3df1af6df952dfe6b08d151fe017f527388e35dd44940b4e6bcfc16d918",
+      "recipe_sha256": "44d71ffd4f3f24bc1c48e6ce94ac6326f72765f7a30535fe60122c6c2bce77c1",
       "platform_independent": false,
       "depends": [
         "python",
@@ -384,7 +384,7 @@
     },
     {
       "package": "cybertuz",
-      "version": "1.0.2-1",
+      "version": "1.0.2-2",
       "maintainer": "@termux-app-store",
       "description": "Comprehensive Educational Learning Platform for Termux",
       "homepage": "https://github.com/djunekz/cybertuz",
@@ -393,8 +393,8 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/cybertuz/archive/refs/tags/v${TERMUX_PKG_VERSION}.tar.gz",
-      "sha256": "9b678169bad675762dd4768cf4be6a08445fd5eb9008487a85b1a72af716e129",
-      "recipe_sha256": "2de2bee25dfa191c708ecfb32c7ac100f5218df67185fa49b799eab541b74489",
+      "sha256": "bb13587b662be15317a3d32c9f2f8bbfb4b602ff745d201b981c1022e0c7a0f9",
+      "recipe_sha256": "b2ae95c3631faad22bd65a9a04442f38d02d384c3917bd4c708a499193f12fd4",
       "platform_independent": true,
       "depends": [
         "nmap",
@@ -406,7 +406,7 @@
     },
     {
       "package": "dalfox",
-      "version": "2.12.0",
+      "version": "3.2.4",
       "maintainer": "@termux-app-store",
       "description": "🌙🦊 Dalfox is a powerful open-source XSS scanner and utility focused on automation.",
       "homepage": "https://dalfox.hahwul.com",
@@ -414,9 +414,9 @@
       "download_size": "Unknown",
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
-      "srcurl": "https://github.com/hahwul/dalfox/archive/refs/tags/v2.12.0.tar.gz",
-      "sha256": "b87848b17cac23352d674e63fee554ae6b976a53fe3e62822512232030430cd5",
-      "recipe_sha256": "742ecd0c2350c83261719a4d8887f9751534cd5eeee7cb5a621e31f580d3d916",
+      "srcurl": "https://github.com/hahwul/dalfox/archive/refs/tags/v3.2.4.tar.gz",
+      "sha256": "d86cae222a4db6c8a335013c980d0c6d672b3abee8cfb44da6ce1b489e4d3a9b",
+      "recipe_sha256": "5fc190219c2429e547c016e67b4111fed0442fcd3e269394e6228961265d64f6",
       "platform_independent": false,
       "depends": [
         "golang"
@@ -459,7 +459,7 @@
     },
     {
       "package": "dnsrecon",
-      "version": "1.6.0",
+      "version": "1.6.3",
       "maintainer": "@termux-app-store",
       "description": "DNS Enumeration Script",
       "homepage": "https://github.com/darkoperator/dnsrecon",
@@ -467,9 +467,9 @@
       "download_size": "Unknown",
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
-      "srcurl": "https://github.com/darkoperator/dnsrecon/archive/refs/tags/1.6.0.tar.gz",
-      "sha256": "21b83c22e4dcf684b623c824a678c371d803952d99d4758c9b1c45bce409eb3d",
-      "recipe_sha256": "01d129ae129f204697a4f7a499ce4351fc4a7a6a206156f6c47ecab7039914dd",
+      "srcurl": "https://github.com/darkoperator/dnsrecon/archive/refs/tags/1.6.3.tar.gz",
+      "sha256": "7f7e230bb3fae959ff37ac19d1c1deea25089ac6a1bbbbf3b4e26e78ed96bd7a",
+      "recipe_sha256": "50ce12dabb8992a8e7bf5406f2d10fd6f0f7ba55a5f32925acd2bcf9ae9b6949",
       "platform_independent": false,
       "depends": [
         "python",
@@ -517,7 +517,7 @@
     },
     {
       "package": "dust",
-      "version": "1.2.4",
+      "version": "1.2.6",
       "maintainer": "@termux-app-store",
       "description": "A more intuitive version of du in rust",
       "homepage": "https://github.com/bootandy/dust",
@@ -525,9 +525,9 @@
       "download_size": "Unknown",
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
-      "srcurl": "https://github.com/bootandy/dust/archive/refs/tags/v1.2.4.tar.gz",
-      "sha256": "2f6768534bd01727234e67f1dd3754c9547aa18c715f6ee52094e881ebac50e3",
-      "recipe_sha256": "d0f69ce66b202682cf279285fe93fcfab0890677d20f40ea5aa81c69d3bec679",
+      "srcurl": "https://github.com/bootandy/dust/archive/refs/tags/v1.2.6.tar.gz",
+      "sha256": "9dd1ec7576d43574e6f48342cb96a5087338b4c308460a848f5895f72ddc3bc9",
+      "recipe_sha256": "d899a8b393a7ed0b748be682da307b30e1f95d88e2bd40834519b4732a689a52",
       "platform_independent": false,
       "depends": [
         "rust"
@@ -627,7 +627,7 @@
     },
     {
       "package": "fd",
-      "version": "10.4.2",
+      "version": "10.5.0",
       "maintainer": "@termux-app-store",
       "description": "A simple, fast and user-friendly alternative to 'find'",
       "homepage": "https://github.com/sharkdp/fd",
@@ -636,8 +636,8 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/sharkdp/fd/releases/download/v${TERMUX_PKG_VERSION}/fd-v${TERMUX_PKG_VERSION}-aarch64-unknown-linux-musl.tar.gz",
-      "sha256": "f32d3657473fba74e2600babc8db0b93420d51169223b7e8143b2ed55d8fd9e8",
-      "recipe_sha256": "c59097dbffa4b35bd25eaa1f4764c7a666a445c0c9e61c3fd7cffe459f6fef24",
+      "sha256": "d76c4317f7d5dba69f8a2a15856c90c777e7f0dd4e85f0de8c76de6992c374d4",
+      "recipe_sha256": "81b77eb2541560c01f1e72a75e7518eb88cf02124aad4bfe8e615fd7687054b3",
       "platform_independent": false
     },
     {
@@ -1080,7 +1080,7 @@
     },
     {
       "package": "pnpm",
-      "version": "10.30.1",
+      "version": "12.14.0",
       "maintainer": "@termux-app-store",
       "description": "Fast, disk space efficient package manager",
       "homepage": "https://github.com/pnpm/pnpm",
@@ -1089,8 +1089,8 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://registry.npmjs.org/pnpm/-/pnpm-${TERMUX_PKG_VERSION}.tgz",
-      "sha256": "bc8bb877378eab6a8a83114eeb6a31ef88528db4ab5570299baba8fa54da2375",
-      "recipe_sha256": "a057c3307d7143465a89ee0e4243ef052158efa05d830ae2a647ff16409425ad",
+      "sha256": "ea206e35474bf87be9564a85ca70ed1c8ebdc45da55aafb0a3bf09d1ba69b179",
+      "recipe_sha256": "7eb1388d160696b62b49e0343e756c838c086cc170af3cecf6351cd1c010869c",
       "platform_independent": false,
       "depends": [
         "nodejs"
@@ -1134,7 +1134,7 @@
     },
     {
       "package": "ssrfmap",
-      "version": "0.0.0+69103b2",
+      "version": "0.0.0+290e07d",
       "maintainer": "@termux-app-store",
       "description": "Automatic SSRF fuzzer and exploitation tool",
       "homepage": "https://github.com/swisskyrepo/SSRFmap",
@@ -1142,9 +1142,9 @@
       "download_size": "Unknown",
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
-      "srcurl": "https://github.com/swisskyrepo/SSRFmap/archive/69103b27f5898d9707630dc572798df63727b90f.tar.gz",
-      "sha256": "c1ef86b06978c036c1312f99719e246b479b520fd9fdae87c9ad2a9aa900efe2",
-      "recipe_sha256": "cd1dfd256b7c03f60a7882f11e59a167fa79e795141bcd24a66b5005f1e54d0f",
+      "srcurl": "https://github.com/swisskyrepo/SSRFmap/archive/290e07d75c52d68e021b6d0b4200c2a41ea20365.tar.gz",
+      "sha256": "f4d01953a07d64b5ad8e96aefb22d984518c2a43f5ecd71efbd034194660bfff",
+      "recipe_sha256": "173ed2f63ab8da8a20cfb208919a690d91fe9a3dc04dd770a368eaa6348e4a00",
       "platform_independent": false,
       "depends": [
         "python",
@@ -1233,7 +1233,7 @@
     },
     {
       "package": "termux-ai",
-      "version": "0.0.0+7e1b8ff",
+      "version": "0.0.0+0dea995",
       "maintainer": "@termux-app-store",
       "description": "Interactive AI tool for Termux with 10+ providers and 50+ image models ✨",
       "homepage": "https://github.com/Anon4You/Termux-Ai",
@@ -1241,9 +1241,9 @@
       "download_size": "Unknown",
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
-      "srcurl": "https://github.com/Anon4You/Termux-Ai/archive/7e1b8ff3c0da05bc805d68a634bc2bc8aabcd62e.tar.gz",
-      "sha256": "e65144e01ef0619b064809798c6cf5c19f0ee811ec8045b05caed26f68910217",
-      "recipe_sha256": "01642fc0c275d4285650a2179d36068fbf19b5f2bbf08c4cd6b21a87f43c94b0",
+      "srcurl": "https://github.com/Anon4You/Termux-Ai/archive/0dea9953a863fb0df884a4fefa01b82ae01924a2.tar.gz",
+      "sha256": "f5a4c4f7c6f77377dfd80fd86070070452d6277de1522ec044f8254907c8e64d",
+      "recipe_sha256": "372c1c1c5ec87aa2788c0229f797c5fa84b0f66f11ebb33295739346445afa79",
       "platform_independent": false
     },
     {
@@ -1481,7 +1481,7 @@
     },
     {
       "package": "uv",
-      "version": "0.11.7",
+      "version": "0.13.4",
       "maintainer": "@termux-app-store",
       "description": "An extremely fast Python package and project manager, written in Rust.",
       "homepage": "https://github.com/astral-sh/uv",
@@ -1490,8 +1490,8 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/astral-sh/uv/releases/download/${TERMUX_PKG_VERSION}/uv-aarch64-unknown-linux-musl.tar.gz",
-      "sha256": "46647dc16cbb7d6700f762fdd7a67d220abe18570914732bc310adc91308d272",
-      "recipe_sha256": "76b8431058c21d5bb8e6c5a6b9f1231089080dd7ee1ed2a42323d2baa6d768c3",
+      "sha256": "253a17cadcb659ae77a0fe3b9a2f1c14297528d480c421899e61e64d64f24e8f",
+      "recipe_sha256": "a6fb8131660d0fb7640bffde3b4fb1c3da0d7bf452f7ccbba4cc1ae1012c3053",
       "platform_independent": false
     },
     {
