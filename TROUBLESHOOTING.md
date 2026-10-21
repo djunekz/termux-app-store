@@ -20,13 +20,12 @@ ask for help.
 8. [Fast Install Fails](#fast-install-fails)
 9. [Checksum Errors](#checksum-errors)
 10. [Source Build Fails](#source-build-fails)
-11. [Unsupported Package](#unsupported-package)
-12. [APT Repository and Signing Key Problems](#apt-repository-and-signing-key-problems)
-13. [Network Issues](#network-issues)
-14. [UI Issues](#ui-issues)
-15. [Moved Folder, Cache and Path Issues](#moved-folder-cache-and-path-issues)
-16. [Clean Reinstall](#clean-reinstall)
-17. [Reporting a Bug](#reporting-a-bug)
+11. [APT Repository and Signing Key Problems](#apt-repository-and-signing-key-problems)
+12. [Network Issues](#network-issues)
+13. [UI Issues](#ui-issues)
+14. [Moved Folder, Cache and Path Issues](#moved-folder-cache-and-path-issues)
+15. [Clean Reinstall](#clean-reinstall)
+16. [Reporting a Bug](#reporting-a-bug)
 
 ---
 
@@ -44,10 +43,10 @@ termux-app-store mirrors     # are the download mirrors reachable?
 Then run the environment doctor from the project folder:
 
 ```bash
-./tasctl doctor                # installation checks
-python doctor.py               # full diagnosis
-python doctor.py --brief       # one line per check
-python doctor.py --fix         # also apply automatic fixes
+./tasctl doctor              # installation checks
+python doctor.py             # full diagnosis
+python doctor.py --brief     # one line per check
+python doctor.py --fix       # also apply automatic fixes
 python doctor.py --pkg <name>  # deep check of one package's build.sh
 ```
 
@@ -464,29 +463,6 @@ termux-change-repo
 ```
 
 Then run the install again.
-
----
-
-## Unsupported Package
-
-### Symptom
-
-- A package is marked **UNSUPPORTED**
-- Installation is blocked or skipped
-
-### Cause
-
-The package depends on libraries that do not exist in Termux, for example
-`sdl`, `gtk2` or `systemd`.
-
-### Solution
-
-This is intentional and prevents broken builds. Options:
-
-- Choose another package
-- Request a compatible port in an issue
-- Developers: change `build.sh` to use Termux-supported dependencies, then
-  validate with `./termux-build lint packages/<name>`
 
 ---
 
