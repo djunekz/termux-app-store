@@ -7,6 +7,7 @@
 > Read in: 🇮🇩 **[Bahasa Indonesia](README.id.md)** | 🇹🇭 **[ภาษาไทย](README.th.md)** | 🇯🇵 **[日本語](README.jp.md)** | 🇨🇳 **[中文](README.ch.md)** | 🇻🇳 **[Tiếng Việt](README.vi.md)** | 🇮🇳 **[हिन्दी](README.in.md)**
 
 [![CI](https://github.com/djunekz/termux-app-store/actions/workflows/build.yml/badge.svg)](https://github.com/djunekz/termux-app-store/actions)
+[![Auto Update Packages](https://github.com/djunekz/termux-app-store/actions/workflows/auto-update-packages.yml/badge.svg)](https://github.com/djunekz/termux-app-store/actions/workflows/auto-update-packages.yml)
 [![Codecov](https://codecov.io/github/djunekz/termux-app-store/branch/master/graph/badge.svg?token=357W4EP8G0)](https://codecov.io/github/djunekz/termux-app-store)
 [![PyPI](https://img.shields.io/pypi/v/termux-app-store?style=flat&logo=pypi&color=3fb950&label=pypi)](https://pypi.org/project/termux-app-store/)
 [![Version](https://badgen.net/github/release/djunekz/termux-app-store?icon=github&color=3fb950&label=release)](https://github.com/djunekz/termux-app-store/releases)
