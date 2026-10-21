@@ -2,9 +2,9 @@ TERMUX_PKG_HOMEPAGE=https://github.com/djunekz/termux-sync
 TERMUX_PKG_DESCRIPTION="OpenSource Backup and restore your entire Termux environment across devices."
 TERMUX_PKG_LICENSE="MIT"
 TERMUX_PKG_MAINTAINER="@termux-app-store"
-TERMUX_PKG_VERSION=1.2.8
+TERMUX_PKG_VERSION=1.3.0
 TERMUX_PKG_SRCURL=https://github.com/djunekz/termux-sync/archive/refs/tags/v${TERMUX_PKG_VERSION}.tar.gz
-TERMUX_PKG_SHA256=e5b2d0a4c3a783f244ca8aa6529892aca046a997aed898a5a421b2b9d66472a2
+TERMUX_PKG_SHA256=26c2bbab666787d2f56694ccd418910d35a4cc6e53c8d9dd3f601ed6f575a029
 
 TERMUX_PKG_DEPENDS="git, python, python-pip, python-setuptools"
 TERMUX_PKG_BUILD_IN_SRC=true
