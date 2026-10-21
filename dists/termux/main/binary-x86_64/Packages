@@ -4,10 +4,10 @@ Architecture: x86_64
 Maintainer: @termux-app-store
 Installed-Size: 
 Filename: pool/main/ani-cli_5.1_x86_64.deb
-Size: 9410
-MD5sum: b3fe7a37c39de8420c62af9b65fc30b1
-SHA1: 7904763279a760b839c5799856a567639da99801
-SHA256: dc570b6663f5254c45eb50d69c1b0eaea6ac2e5094489f43c1bb912b6611cd2b
+Size: 9406
+MD5sum: cebedbea5086b0fe4a1800a7a67f545d
+SHA1: 550b0e7d15c134e55f83b70130be79417bebe058
+SHA256: c9a033e507cd393d01e9a40e2baf13d72739cabc5143ff3723ad1fe24de80520
 Description: A cli tool to browse and play anime
 
 Package: aura
@@ -16,10 +16,10 @@ Architecture: x86_64
 Maintainer: @termux-app-store
 Installed-Size: 
 Filename: pool/main/aura_0.10.0_x86_64.deb
-Size: 2227642
-MD5sum: 876ccc9d641031d2ab945033c4a7b0f2
-SHA1: dafea275199f9b8e1e75a83f41bf34953bf2b550
-SHA256: 18313476257da805b82df633ae96aed7e1fcf9a3d616857dc98b200e9f1d74d9
+Size: 2227754
+MD5sum: 7dbfda19dc5bcd2d9e8db03a2959bfde
+SHA1: 97f3bf83c4b271868c88acb1ea91b0d78e948640
+SHA256: 42e4e4a3e3b605447da69527b970016f49c11a62bfd02449bc4aed350106dc5c
 Description: Adaptive Unified Runtime Assistant
 
 Package: auxscan
@@ -41,10 +41,10 @@ Maintainer: djunekz
 Installed-Size: 231 kB
 Homepage: https://github.com/djunekz/bashxt
 Filename: pool/main/bashxt_3.0_x86_64.deb
-Size: 4936
-MD5sum: e23eeb098469684dbb84c078fc27ef9b
-SHA1: 20d39d134c1e452eb5de6e1fd57cb99c28f0e4e9
-SHA256: db677c7830cc6020eac0680ec359a92968d71b20743af79c8187cc4641e8c9aa
+Size: 4940
+MD5sum: 0db206cff827c5272112bfef15e83097
+SHA1: f7961b23c67b97880ce30c6bb8a31bb8f299d9e3
+SHA256: c63eb4ffe7b70a07bb2741001f397496ed3af294715b2b4f4afc8c5a0fedceb7
 Description: Simple tool information command basic for beginner
 
 Package: basic
@@ -54,10 +54,10 @@ Maintainer: @termux-app-store
 Installed-Size: 
 Depends: python
 Filename: pool/main/basic_1.2.0_x86_64.deb
-Size: 31934
-MD5sum: 257f93056927ec949a9eaa88dd33deed
-SHA1: 3335c948cdfba954ada02aacc3a05cdff703f689
-SHA256: 6309b5a525f60b673da61b7f8e01eb0b11829edac40e7900cc5e9503fb4cd727
+Size: 31928
+MD5sum: f25b2ec1128218e13d114f0bb1bc0af0
+SHA1: b5ed3d8b9caed9d227aa1e98d7ddfc46b93ce3f4
+SHA256: 51cfe7a7b48ae55805a029888cb775e4b0b6619abd69a82fcfb6c8a52bd8faf6
 Description: Simulator Terminal learning basic command for beginner
 
 Package: baxter
@@ -67,9 +67,9 @@ Maintainer: @djunekz
 Installed-Size: 
 Filename: pool/main/baxter_1.2.4_x86_64.deb
 Size: 2428
-MD5sum: 8e7e551b6c86583953f691ebcc07278b
-SHA1: 5daaeb2c9d6811b4289c1f1aaed36f6548b264de
-SHA256: a4cdd8c952067cc39f84bbafa7d1ad5ce46e38023f69e60248ee68418e2b3184
+MD5sum: 3b9930c2c51c0966d19f370dde61a5d1
+SHA1: 108825e42cb8a897e565e45192edb8cc404b30a0
+SHA256: efdb3ee8ad693fa28eaa0240ce0c14eb91f0e1d353dd74cddccf9643a5ebe2a1
 Description: Encrypt and decrypt files termux
 
 Package: bing-ip2hosts
@@ -79,9 +79,9 @@ Maintainer: @termux-app-store
 Installed-Size: 
 Filename: pool/main/bing-ip2hosts_1.0.5_x86_64.deb
 Size: 5264
-MD5sum: aef6b3f190acc298a6ec71712da1c176
-SHA1: 50f2e4f87dd3022bcfc9ba0b8f899506f1fbe3fb
-SHA256: 021dd9cc02da35f09b3eb77308fb3cdd48817334e2d5565694d65c7ecf1b46f5
+MD5sum: 336fbb2e8bac6c0a4ade93e71359fced
+SHA1: 79f5776c4cce21a8e1b8f40f5e71a747623165ae
+SHA256: 343c570acd5dfcef935c1b55ece61771912ddddcbde1100574e2f0b0b4866139
 Description: bingip2hosts is a Bing.com web scraper that discovers websites by IP address
 
 Package: bower
@@ -90,10 +90,10 @@ Architecture: x86_64
 Maintainer: @termux-app-store
 Installed-Size: 
 Filename: pool/main/bower_1.8.12_x86_64.deb
-Size: 8614122
-MD5sum: 08b3cf90945a19980b3e1c322e212fe7
-SHA1: befa74e42ea2e1e98a287e34a8fe4d636c0aafab
-SHA256: 7dee3fac740b67288f76f3f2d37fc547163d67b3b40b0aaafc3d6be11df15ca6
+Size: 7471778
+MD5sum: 70711c875e13378eb394884c8d252235
+SHA1: 1ae588665c2726c2f5bd020cdf9f3f96bc8b7911
+SHA256: 58679638795e1a14960ede1d9550d2e5ecce2d35a315d8de7c7d1cc77fc89ee4
 Description: A package manager for the web
 
 Package: clickjacking-tester

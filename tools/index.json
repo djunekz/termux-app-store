@@ -49,10 +49,10 @@
         "wget"
       ],
       "sha256_by_arch": {
-        "aarch64": "ce8322cbdea6a9227036172e6dccfbd8a4ded47bfa934e848bda255cee857d6f",
-        "arm": "f01fd804e157bed021206519ce4b4a6914fdf3b45899cde6309c80208f590347",
-        "x86_64": "dc570b6663f5254c45eb50d69c1b0eaea6ac2e5094489f43c1bb912b6611cd2b",
-        "i686": "272c405cabc232dde16c73a2fd5cc9a6482d9a8ffb2b64ba220fe70b63a00802"
+        "aarch64": "0617ba736f5b1703c64e853d710be7d3d24eb525e4361bcaf327ddaacfb840fc",
+        "arm": "13c8eafaec3e2b541fe28cc9f98ec2a05bd76a9067c6934f1e48ab2e94ffdabe",
+        "x86_64": "c9a033e507cd393d01e9a40e2baf13d72739cabc5143ff3723ad1fe24de80520",
+        "i686": "456d8c29f43442ee1040b9543ee4ff0e24227a5ba9ee03a15ab97ffea21c271c"
       }
     },
     {
@@ -73,10 +73,10 @@
         "nodejs"
       ],
       "sha256_by_arch": {
-        "aarch64": "351df9adaef5dc2a4dc70b9e38947d19722b71ad557e9d6cd9774eaf92ef1e27",
-        "arm": "056d65b035666d7fe9adb2c88d69fd67640771af8ea397ad7e7095d57d409222",
-        "x86_64": "18313476257da805b82df633ae96aed7e1fcf9a3d616857dc98b200e9f1d74d9",
-        "i686": "c27e45345c063cc54d8e86594daf05faf6b6db96e14cf47b49443a2e5db5ae04"
+        "aarch64": "e136bcc4811e633e718f6aeaae18db3d3dbd41e63e54e52ad6d6b586e2383270",
+        "arm": "fcf270bbaf6c4e44db76a433224b68264ead2b4673a803ce4a5506685521d4c0",
+        "x86_64": "42e4e4a3e3b605447da69527b970016f49c11a62bfd02449bc4aed350106dc5c",
+        "i686": "ab81f39e1c33e40a2fbcbe363281ebbfc59c8217f12cd9911b7682abc1ba426b"
       }
     },
     {
@@ -120,10 +120,10 @@
       "recipe_sha256": "02ba21c331a37b60bb6d0d2cd279d0026ee6b8f7018a384a6fc3a0391cace5ab",
       "platform_independent": false,
       "sha256_by_arch": {
-        "aarch64": "1008b200641166b887eef82108f7f368d2f052150d24ec1da8471fd79b7b37fb",
-        "arm": "6f4a988b5e0d79c597a8d0f0d1ffbe63ce3f641b9c92b55f3ba30019b1680f41",
-        "x86_64": "db677c7830cc6020eac0680ec359a92968d71b20743af79c8187cc4641e8c9aa",
-        "i686": "3ebf76395976e714724830cda1adea89466a03ef15c48569d3479da11c3cda7a"
+        "aarch64": "5c132af4aace3eac9fdaead80ab0501429534c9445776481bfcab91617912456",
+        "arm": "544909e011f34abdcb7174787ece07c69d3469950c2f6650ab467ce37f884e6c",
+        "x86_64": "c63eb4ffe7b70a07bb2741001f397496ed3af294715b2b4f4afc8c5a0fedceb7",
+        "i686": "9e68a5cf4dfc01bc44762384975bee5bb68541b439df97581cad2425bc12b9f1"
       }
     },
     {
@@ -144,10 +144,10 @@
         "python"
       ],
       "sha256_by_arch": {
-        "aarch64": "dcdf946c8e4960c4c649396d74172a2a0722f8698fc12be216384e9a0b9bd3df",
-        "arm": "b24375d9bb79e3539ece1b90a2d3746a73071f971e1c5e66762942dc3a57fa9b",
-        "x86_64": "6309b5a525f60b673da61b7f8e01eb0b11829edac40e7900cc5e9503fb4cd727",
-        "i686": "87fc809126e769f8cb0899b3ae8969de41f9ba29759a876ec177079ac81575db"
+        "aarch64": "a33b16df7afefb02501f2d0e0dd4d3163d6cf4056624c112328d7f36415d16be",
+        "arm": "f5652ff7793f9fe1809edc8b9973c5be4b4aaa21726c059fd0bd855d4a69d991",
+        "x86_64": "51cfe7a7b48ae55805a029888cb775e4b0b6619abd69a82fcfb6c8a52bd8faf6",
+        "i686": "b0254b4bdf682661417271116ca49e0fda081236fed8bdd19b0bdb8bb8178d88"
       }
     },
     {
@@ -168,10 +168,10 @@
         "nodejs"
       ],
       "sha256_by_arch": {
-        "aarch64": "fa9506616b3f968394b00a2b3cb5bdaa5c28551bbd12204cc86e481cc98e39fb",
-        "arm": "f68a9a06a1ecafcaa766a524186dee22f41268ec4ab8fec4d91cf0e4fee7f665",
-        "x86_64": "a4cdd8c952067cc39f84bbafa7d1ad5ce46e38023f69e60248ee68418e2b3184",
-        "i686": "6ef584fa49f233b4c5bc932fec099bf961e4319857e395e88dd153a9743a26f9"
+        "aarch64": "b9001f7359fd06af4059342bdbeeae5873a6f4f430482c22c20bd460f6ff967d",
+        "arm": "5ae0d214c54e71b37659723ee111afadcadf28c829f9324387683ff5e6523a2d",
+        "x86_64": "efdb3ee8ad693fa28eaa0240ce0c14eb91f0e1d353dd74cddccf9643a5ebe2a1",
+        "i686": "b9b549e6f32c681b80a7588707dc546840901c0886566c9e61d6ba5168c0d883"
       }
     },
     {
@@ -189,10 +189,10 @@
       "recipe_sha256": "a7c2eda1decad9e6274c7017f509347408feac85e3a6815e2b4c4e5b245364e8",
       "platform_independent": false,
       "sha256_by_arch": {
-        "aarch64": "ebfc5a4c6c4d74f4fb87bac886bc8162b116e874cb4d6c687c76a7b043a293e5",
-        "arm": "aa67c528de121f00fe3bee79ec599576230ccd9f65cd3267756c4353b1b5fd28",
-        "x86_64": "021dd9cc02da35f09b3eb77308fb3cdd48817334e2d5565694d65c7ecf1b46f5",
-        "i686": "3cb7695c4b872158acd6d1ade089aace392d08d9c5bd6008842ff56571cf2c16"
+        "aarch64": "ace0584f2b645d768875569d34a1f57d8d9ded2566cd433263fed2fc98f5f6b0",
+        "arm": "fe4d5a87573c8a937f3117cc79e069cb50705aa01fba2efb3bd76a7042b96be3",
+        "x86_64": "343c570acd5dfcef935c1b55ece61771912ddddcbde1100574e2f0b0b4866139",
+        "i686": "4ceff12827ab081738eb48269e00f0ee7928177397ad6dc9a6a5706f6036014d"
       }
     },
     {
@@ -257,10 +257,10 @@
         "nodejs"
       ],
       "sha256_by_arch": {
-        "aarch64": "599b96519be8dbf22eee0388b0b82b358b53ae0b255b294f31b0928c663e67f1",
-        "arm": "7f98dd7d9b8a4daeac63506308b5dbb9817ec5551f22d50f106f8db07e3adae8",
-        "x86_64": "7dee3fac740b67288f76f3f2d37fc547163d67b3b40b0aaafc3d6be11df15ca6",
-        "i686": "2d1a1472df3931b3b061d419f8742b18dbc6ff03a46973f356a5b7ee9347ebef"
+        "aarch64": "f6e9fe70bdc2e98f72f1f155d8628a4f738205668c1289b8625cce2304c70829",
+        "arm": "0ea97441db118d1536a31ec32f9630bf3a23bf505ef38c71e7603315c659c0a6",
+        "x86_64": "58679638795e1a14960ede1d9550d2e5ecce2d35a315d8de7c7d1cc77fc89ee4",
+        "i686": "424f74f8f01dab9ff08e1aaf16c498fc2a348d4928d6dcbe3d4d63c1dbc016e6"
       }
     },
     {
