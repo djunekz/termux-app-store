@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+message: "If you use Termux App Store in your work, please cite it using the metadata in this file."
+title: "Termux App Store"
+type: software
+version: "0.9.1"
+date-released: "2026-10-21"
+license: MIT
+authors:
+  - alias: "djunekz"
+    email: "gab288.gab288@passinbox.com"
+    website: "https://github.com/djunekz"
+repository-code: "https://github.com/djunekz/termux-app-store"
+repository-artifact: "https://pypi.org/project/termux-app-store/"
+url: "https://djunekz.github.io/termux-app-store/"
+abstract: >-
+  Termux App Store is a TUI and CLI package manager built natively for
+  Termux on Android. It installs community packages as pre-built .deb files
+  that are verified against a per-architecture SHA256 checksum, falls back to
+  building from a package build.sh recipe when no verified binary is
+  available, and also publishes a signed APT repository. It needs no root
+  access, no account and sends no telemetry.
+keywords:
+  - termux
+  - android
+  - package-manager
+  - tui
+  - cli
