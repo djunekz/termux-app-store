@@ -33,6 +33,7 @@ and this project adheres to semantic versioning.
 
 ### Update
 - Package `termux-sync` v1.2.8 → v1.3.0
+- Package `uv` v0.13.4 → v0.13.5
 
 ---
 
