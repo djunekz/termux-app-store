@@ -517,15 +517,15 @@ SHA256: 2765f30be776e9ffc1fe9ef99dad83154771ede0666a253871059843a656a0c7
 Description: Denial-of-Service ToolKit with multiple attack methods
 
 Package: infoooze
-Version: 1.1.9
+Version: 1.2.2
 Architecture: aarch64
 Maintainer: @termux-app-store
 Installed-Size: 
-Filename: pool/main/infoooze_1.1.9_aarch64.deb
-Size: 10959124
-MD5sum: 678dc057c82bb7aae048cea7245360aa
-SHA1: a0e0255f6a1a9f25fe391d7de2014f6ef9721e49
-SHA256: a4f29d24775408b10041f3de58f8e6afe236f92f8f20d3ef0a748af96478c7f2
+Filename: pool/main/infoooze_1.2.2_aarch64.deb
+Size: 10825960
+MD5sum: 575a36f1ba8b4e57296e0bec1f99d24b
+SHA1: d142e55cf4fbeae1746d80f9ee72bd0a84135681
+SHA256: be07ace7af2321e3d096846572666b71b74a6cb648f67d98e13ebf7224cc6005
 Description: A OSINT tool which helps you to quickly find information effectively.
 
 Package: instareporter
@@ -709,15 +709,15 @@ SHA256: 11f613fe118c1f4820bfbdc8a09307afa237a3fdc902365fc7ddf7aea23fc0a2
 Description: Terminal-based project manager CLI
 
 Package: pnpm
-Version: 12.14.0
+Version: 12.15.0
 Architecture: aarch64
 Maintainer: @termux-app-store
 Installed-Size: 
-Filename: pool/main/pnpm_12.14.0_aarch64.deb
-Size: 752020
-MD5sum: 0cc6229eb95942b2571862a8f66fda33
-SHA1: b0718ee410e57c658d916df1ce73a60fc7c22173
-SHA256: 45e82a48ba603f3477e91b2c0b9c07060be8aea3a199da965c119bdafec70bd2
+Filename: pool/main/pnpm_12.15.0_aarch64.deb
+Size: 758164
+MD5sum: 6459f96a25ebb5a1ca05a32d6d698cf5
+SHA1: c1117f64f0e7223332364b545aac7133a6506f90
+SHA256: 53c93cf1c843145c0fd5b5e82e6123c91a54d2d257ffa285ee04ab6250c25be3
 Description: Fast, disk space efficient package manager
 
 Package: pymaker
@@ -1082,4 +1082,3 @@ MD5sum: cff40fc0d1f78d54d24c3da9c10fdce1
 SHA1: 350d62b573f8476e58582ee59fc35732981ae07e
 SHA256: 9991991e2146cb88a75058bbb4adf202cc2998dbdfb1f0de868077d1c3211406
 Description: Encrypter Stealth Binary Builder
-

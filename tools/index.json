@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-10-22T04:21:28.966339+00:00",
+  "generated_at": "2026-10-22T17:02:14.123575+00:00",
   "total": 88,
   "packages": [
     {
@@ -1027,7 +1027,7 @@
     },
     {
       "package": "infoooze",
-      "version": "1.1.9",
+      "version": "1.2.2",
       "maintainer": "@termux-app-store",
       "description": "A OSINT tool which helps you to quickly find information effectively.",
       "homepage": "https://github.com/devxprite/infoooze",
@@ -1035,18 +1035,18 @@
       "download_size": "Unknown",
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
-      "srcurl": "https://api.github.com/repos/devxprite/infoooze/tarball/v1.1.9",
-      "sha256": "b856ff7dc73ac57985372d833429c89cf03f52105039e48b71aee6d628abeb36",
-      "recipe_sha256": "c8144721172c9b36b5e84df2cef67e7261d9f8340a30eb32703278129a33d9cd",
+      "srcurl": "https://api.github.com/repos/devxprite/infoooze/tarball/v1.2.2",
+      "sha256": "4a02d4b6e878f9abb76d340574199bf4b6bf4eb0edb252e7eb6967903e121d62",
+      "recipe_sha256": "c715257f4705509466b6e79663f32b1f311cc1a2c196a67d90b6b5cc22ba3e90",
       "platform_independent": false,
       "depends": [
         "nodejs"
       ],
       "sha256_by_arch": {
-        "aarch64": "a4f29d24775408b10041f3de58f8e6afe236f92f8f20d3ef0a748af96478c7f2",
-        "arm": "a0d4add7e1179b0955579c9953a82cf25ec18b53314e46fefbd8fed0d40c3f02",
-        "x86_64": "53ee1997ca9802d39da3eb73b9b37c129444a3687a729e4cea42d1e55f67e08c",
-        "i686": "a2445f4dbb8f286feec33c81646e8669d0ab3feb815f6b9c84439593f5214037"
+        "aarch64": "be07ace7af2321e3d096846572666b71b74a6cb648f67d98e13ebf7224cc6005",
+        "arm": "37039917ffe9b3e80032414091a828dbefe0af42857e7c2593755558cf61a3c0",
+        "x86_64": "b00e4c4dec18746ca15f460fd6a09f148cb110b631900fbc708441048bb4536a",
+        "i686": "52351ab5a2b16cc9f12776c0d2b4ed002ea3ccf08136934bb6e7b9dd29732585"
       }
     },
     {
@@ -1386,7 +1386,7 @@
     },
     {
       "package": "pnpm",
-      "version": "12.14.0",
+      "version": "12.15.0",
       "maintainer": "@termux-app-store",
       "description": "Fast, disk space efficient package manager",
       "homepage": "https://github.com/pnpm/pnpm",
@@ -1395,17 +1395,17 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://registry.npmjs.org/pnpm/-/pnpm-${TERMUX_PKG_VERSION}.tgz",
-      "sha256": "ea206e35474bf87be9564a85ca70ed1c8ebdc45da55aafb0a3bf09d1ba69b179",
-      "recipe_sha256": "9b2361993c59bdc2c515f1490a13108a41b392ef472e25f323728fdb5ec92f0e",
+      "sha256": "f5173f6127cc505cdb36ec17719fe54a8511c6fd8560c7ceb4bf7c73e3b4458b",
+      "recipe_sha256": "2ce90d1435e800c16b49394cd484d2f0162813419413e4a42bafb7c5ca7987e7",
       "platform_independent": false,
       "depends": [
         "nodejs"
       ],
       "sha256_by_arch": {
-        "aarch64": "45e82a48ba603f3477e91b2c0b9c07060be8aea3a199da965c119bdafec70bd2",
-        "arm": "48d118b05b55917d3a58b3e678e471fcc28e392f011d275993fedc88f6cea7d1",
-        "x86_64": "ae916d6331fc73e35a535579b39727733718435c51866b1b72ab849635f3edf0",
-        "i686": "5038ea145fd17e2d631a816b74836aff19e312c5908d9b2dd9dcb6573c417565"
+        "aarch64": "53c93cf1c843145c0fd5b5e82e6123c91a54d2d257ffa285ee04ab6250c25be3",
+        "arm": "840d9bed387843242c8755abf6a3480d797c57143e06ce190ad1676a2a4e3115",
+        "x86_64": "4b05aec31992f4c3dde4de6665a0b46ccbbf3d5aa8009966ed9d00c08db2fd38",
+        "i686": "0c5311dfc95cf0a01da67a7e5526e6b2d537ba026fadb9fdf913a18a1700a289"
       }
     },
     {

@@ -373,15 +373,15 @@ SHA256: 301b53398eca6758aa9bb3286e3a2e06e122762f6f59d46b48c7fc712b6f43e2
 Description: Denial-of-Service ToolKit with multiple attack methods
 
 Package: infoooze
-Version: 1.1.9
+Version: 1.2.2
 Architecture: arm
 Maintainer: @termux-app-store
 Installed-Size: 
-Filename: pool/main/infoooze_1.1.9_arm.deb
-Size: 11073192
-MD5sum: b2064f94262e0c83631cbd5e78d16f16
-SHA1: 0ca65b2f6288fcc39dbe97e0b7fe6a349a4a9d6b
-SHA256: a0d4add7e1179b0955579c9953a82cf25ec18b53314e46fefbd8fed0d40c3f02
+Filename: pool/main/infoooze_1.2.2_arm.deb
+Size: 10844252
+MD5sum: 0b88157b2680f081687d1eb69909acd2
+SHA1: 01a51fc6c02608c527c2bb819c539035a91e4c96
+SHA256: 37039917ffe9b3e80032414091a828dbefe0af42857e7c2593755558cf61a3c0
 Description: A OSINT tool which helps you to quickly find information effectively.
 
 Package: instareporter
@@ -541,15 +541,15 @@ SHA256: 851064f9bb72bdd9f45b22dbede1723f7aabe7d44e17aff383fe14beed6831fd
 Description: Incredibly fast crawler designed for OSINT.
 
 Package: pnpm
-Version: 12.14.0
+Version: 12.15.0
 Architecture: arm
 Maintainer: @termux-app-store
 Installed-Size: 
-Filename: pool/main/pnpm_12.14.0_arm.deb
-Size: 769906
-MD5sum: dfb13ceb57133ad7a70cbb1f01a3483b
-SHA1: 76f03097e74f691c9039e754eb2b39f7f4b629cb
-SHA256: 48d118b05b55917d3a58b3e678e471fcc28e392f011d275993fedc88f6cea7d1
+Filename: pool/main/pnpm_12.15.0_arm.deb
+Size: 776236
+MD5sum: 477edfeb2870ae4ab45928691c041c4d
+SHA1: 0c3fb6f55708cbe8706ff248effd292f3a8c2235
+SHA256: 840d9bed387843242c8755abf6a3480d797c57143e06ce190ad1676a2a4e3115
 Description: Fast, disk space efficient package manager
 
 Package: pymaker
@@ -745,4 +745,3 @@ MD5sum: a333a154975f848958dbb9ab4c1c52a3
 SHA1: 77726990c329705c542482051a4aa6dae97fe5ea
 SHA256: 139cadce1b08ed6ab223c7761214ea99485a8a5f56f701c49a09b1c8e659541a
 Description: A posix script to find and watch youtube videos from the terminal. (Without API)
-
