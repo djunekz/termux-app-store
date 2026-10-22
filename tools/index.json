@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-10-22T04:23:28.496095+00:00",
+  "generated_at": "2026-10-22T17:02:14.123575+00:00",
   "total": 88,
   "packages": [
     {
@@ -805,7 +805,7 @@
     },
     {
       "package": "infoooze",
-      "version": "1.1.9",
+      "version": "1.2.2",
       "maintainer": "@termux-app-store",
       "description": "A OSINT tool which helps you to quickly find information effectively.",
       "homepage": "https://github.com/devxprite/infoooze",
@@ -813,9 +813,9 @@
       "download_size": "Unknown",
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
-      "srcurl": "https://api.github.com/repos/devxprite/infoooze/tarball/v1.1.9",
-      "sha256": "b856ff7dc73ac57985372d833429c89cf03f52105039e48b71aee6d628abeb36",
-      "recipe_sha256": "c8144721172c9b36b5e84df2cef67e7261d9f8340a30eb32703278129a33d9cd",
+      "srcurl": "https://api.github.com/repos/devxprite/infoooze/tarball/v1.2.2",
+      "sha256": "4a02d4b6e878f9abb76d340574199bf4b6bf4eb0edb252e7eb6967903e121d62",
+      "recipe_sha256": "c715257f4705509466b6e79663f32b1f311cc1a2c196a67d90b6b5cc22ba3e90",
       "platform_independent": false,
       "depends": [
         "nodejs"
@@ -1080,7 +1080,7 @@
     },
     {
       "package": "pnpm",
-      "version": "12.14.0",
+      "version": "12.15.0",
       "maintainer": "@termux-app-store",
       "description": "Fast, disk space efficient package manager",
       "homepage": "https://github.com/pnpm/pnpm",
@@ -1089,8 +1089,8 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://registry.npmjs.org/pnpm/-/pnpm-${TERMUX_PKG_VERSION}.tgz",
-      "sha256": "ea206e35474bf87be9564a85ca70ed1c8ebdc45da55aafb0a3bf09d1ba69b179",
-      "recipe_sha256": "9b2361993c59bdc2c515f1490a13108a41b392ef472e25f323728fdb5ec92f0e",
+      "sha256": "f5173f6127cc505cdb36ec17719fe54a8511c6fd8560c7ceb4bf7c73e3b4458b",
+      "recipe_sha256": "2ce90d1435e800c16b49394cd484d2f0162813419413e4a42bafb7c5ca7987e7",
       "platform_independent": false,
       "depends": [
         "nodejs"
