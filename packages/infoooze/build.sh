@@ -2,9 +2,9 @@ TERMUX_PKG_HOMEPAGE=https://github.com/devxprite/infoooze
 TERMUX_PKG_DESCRIPTION="A OSINT tool which helps you to quickly find information effectively."
 TERMUX_PKG_LICENSE="MIT"
 TERMUX_PKG_MAINTAINER="@termux-app-store"
-TERMUX_PKG_VERSION=1.1.9
-TERMUX_PKG_SRCURL=https://api.github.com/repos/devxprite/infoooze/tarball/v1.1.9
-TERMUX_PKG_SHA256=b856ff7dc73ac57985372d833429c89cf03f52105039e48b71aee6d628abeb36
+TERMUX_PKG_VERSION=1.2.2
+TERMUX_PKG_SRCURL=https://api.github.com/repos/devxprite/infoooze/tarball/v1.2.2
+TERMUX_PKG_SHA256=4a02d4b6e878f9abb76d340574199bf4b6bf4eb0edb252e7eb6967903e121d62
 TERMUX_PKG_DEPENDS="nodejs"
 
 termux_step_make_install() {

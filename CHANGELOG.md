@@ -34,6 +34,8 @@ and this project adheres to semantic versioning.
 ### Update
 - Package `termux-sync` v1.2.8 → v1.3.0
 - Package `uv` v0.13.4 → v0.13.5
+- Package `infoooze` v1.1.9 → v1.2.2
+- Package `pnpm` v12.14.0 → v12.15.0
 
 ---
 
