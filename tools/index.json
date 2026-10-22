@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-10-21T13:45:46.299088+00:00",
+  "generated_at": "2026-10-22T04:21:28.966339+00:00",
   "total": 88,
   "packages": [
     {
@@ -1626,7 +1626,7 @@
     },
     {
       "package": "termux-sync",
-      "version": "1.2.8",
+      "version": "1.3.0",
       "maintainer": "@termux-app-store",
       "description": "OpenSource Backup and restore your entire Termux environment across devices.",
       "homepage": "https://github.com/djunekz/termux-sync",
@@ -1635,21 +1635,15 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/termux-sync/archive/refs/tags/v${TERMUX_PKG_VERSION}.tar.gz",
-      "sha256": "e5b2d0a4c3a783f244ca8aa6529892aca046a997aed898a5a421b2b9d66472a2",
-      "recipe_sha256": "bff8420d6fa9bc5feee86c451a727506c811b5d7c84f26ad8065dc1f7ca17f2b",
+      "sha256": "26c2bbab666787d2f56694ccd418910d35a4cc6e53c8d9dd3f601ed6f575a029",
+      "recipe_sha256": "9887ccdbd959093a3289c2afbc1298b26a0dcc85ebec84b92112b10315241c09",
       "platform_independent": false,
       "depends": [
         "git",
         "python",
         "python-pip",
         "python-setuptools"
-      ],
-      "sha256_by_arch": {
-        "aarch64": "6b19a470201d626ef952ed7486709d50b935950985350f84d4959c2ed28f9654",
-        "arm": "014cee7ae45c8bba99f025e1121985fa2b93720722ee10c649a3ef3d4ffaeda3",
-        "x86_64": "54c6969d331bcccf04429e5a4a6595b8b6cb9f9337da55a64190fb6ea0971fb5",
-        "i686": "c5b0984b5e3e51dad3e2c25542af5bbcbaadb5e32028d19fbe604796c5f5570b"
-      }
+      ]
     },
     {
       "package": "termux-tui",
@@ -1886,7 +1880,7 @@
     },
     {
       "package": "uv",
-      "version": "0.13.4",
+      "version": "0.13.5",
       "maintainer": "@termux-app-store",
       "description": "An extremely fast Python package and project manager, written in Rust.",
       "homepage": "https://github.com/astral-sh/uv",
@@ -1895,11 +1889,11 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/astral-sh/uv/releases/download/${TERMUX_PKG_VERSION}/uv-aarch64-unknown-linux-musl.tar.gz",
-      "sha256": "253a17cadcb659ae77a0fe3b9a2f1c14297528d480c421899e61e64d64f24e8f",
-      "recipe_sha256": "a6fb8131660d0fb7640bffde3b4fb1c3da0d7bf452f7ccbba4cc1ae1012c3053",
+      "sha256": "7906c79adb21c81abd559841ba76bb1d9af9d791acac7a041b2972e03ae16538",
+      "recipe_sha256": "5d45163227a68b4bd7005a405b3beaec33a0601640d31b94a686ca2a25ac20c6",
       "platform_independent": false,
       "sha256_by_arch": {
-        "aarch64": "5fbd3ac82e72afff25d7d916b63def4d6dd27f48ce224e99e89ee848ea002db7"
+        "aarch64": "5aaad5fed5528cc7aaf28b3d53df2f09ed4a156fa6c59df8276f271085fd71ac"
       }
     },
     {
