@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-10-22T03:49:59.752504+00:00",
+  "generated_at": "2026-10-22T04:21:28.966339+00:00",
   "total": 88,
   "packages": [
     {
@@ -1481,7 +1481,7 @@
     },
     {
       "package": "uv",
-      "version": "0.13.4",
+      "version": "0.13.5",
       "maintainer": "@termux-app-store",
       "description": "An extremely fast Python package and project manager, written in Rust.",
       "homepage": "https://github.com/astral-sh/uv",
@@ -1490,8 +1490,8 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/astral-sh/uv/releases/download/${TERMUX_PKG_VERSION}/uv-aarch64-unknown-linux-musl.tar.gz",
-      "sha256": "253a17cadcb659ae77a0fe3b9a2f1c14297528d480c421899e61e64d64f24e8f",
-      "recipe_sha256": "a6fb8131660d0fb7640bffde3b4fb1c3da0d7bf452f7ccbba4cc1ae1012c3053",
+      "sha256": "7906c79adb21c81abd559841ba76bb1d9af9d791acac7a041b2972e03ae16538",
+      "recipe_sha256": "5d45163227a68b4bd7005a405b3beaec33a0601640d31b94a686ca2a25ac20c6",
       "platform_independent": false
     },
     {
