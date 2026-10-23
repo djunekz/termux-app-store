@@ -2,19 +2,19 @@
 # Termux App Store -- Repository Installer
 # github.com/djunekz/termux-app-store
 
+import hashlib
 import os
-import sys
-import subprocess
 import platform
 import shutil
+import subprocess
+import sys
 import tempfile
-import hashlib
-import urllib.request
 import urllib.error
+import urllib.request
 
-R    = "\033[0m"
-B    = "\033[1m"
-DIM  = "\033[2m"
+R = "\033[0m"
+B = "\033[1m"
+DIM = "\033[2m"
 
 BRED = "\033[91m"
 BGRN = "\033[92m"
@@ -24,46 +24,60 @@ BWHT = "\033[97m"
 
 BG_BBLU = "\033[104m"
 
-REPO_URL     = "https://djunekz.github.io/termux-app-store"
-KEY_URL      = f"{REPO_URL}/termux-app-store.gpg"
-_PREFIX      = os.environ.get("PREFIX", "/data/data/com.termux/files/usr")
-SOURCES_DIR  = os.path.join(_PREFIX, "etc/apt/sources.list.d")
+REPO_URL = "https://djunekz.github.io/termux-app-store"
+KEY_URL = f"{REPO_URL}/termux-app-store.gpg"
+_PREFIX = os.environ.get("PREFIX", "/data/data/com.termux/files/usr")
+SOURCES_DIR = os.path.join(_PREFIX, "etc/apt/sources.list.d")
 SOURCES_FILE = os.path.join(SOURCES_DIR, "tas.list")
 MAIN_SOURCES = os.path.join(_PREFIX, "etc/apt/sources.list")
-KEYRING_DIR  = os.path.join(_PREFIX, "etc/apt/keyrings")
+KEYRING_DIR = os.path.join(_PREFIX, "etc/apt/keyrings")
 KEYRING_FILE = os.path.join(KEYRING_DIR, "termux-app-store.gpg")
-REPO_ENTRY   = f"deb [signed-by={KEYRING_FILE}] {REPO_URL} termux main"
+REPO_ENTRY = f"deb [signed-by={KEYRING_FILE}] {REPO_URL} termux main"
 
 PINNED_FINGERPRINTS = ("D39134A177717A5BEBEEAE7105D70CDBB6D80295",)
-MAX_KEY_SIZE        = 64 * 1024
+MAX_KEY_SIZE = 64 * 1024
 ALLOWED_PACKET_TAGS = (2, 6, 13, 14, 17)
+
 
 def pinned_fingerprints():
     override = os.environ.get("TAS_KEY_FPR", "").replace(" ", "").upper()
     return (override,) if override else PINNED_FINGERPRINTS
 
-def TW(): return shutil.get_terminal_size((72, 24)).columns
-def W():  return min(TW(), 76)
+
+def TW():
+    return shutil.get_terminal_size((72, 24)).columns
+
+
+def W():
+    return min(TW(), 76)
+
 
 def strip_ansi(s):
     out, i = "", 0
     while i < len(s):
         if s[i] == "\033":
-            while i < len(s) and s[i] != "m": i += 1
+            while i < len(s) and s[i] != "m":
+                i += 1
         else:
             out += s[i]
         i += 1
     return out
 
-def vlen(s): return len(strip_ansi(s))
+
+def vlen(s):
+    return len(strip_ansi(s))
+
 
 def vcenter(text, width=None):
-    if width is None: width = W()
+    if width is None:
+        width = W()
     pad = max(0, (width - vlen(text)) // 2)
     return " " * pad + text
 
+
 def short(path):
     return path.replace(_PREFIX, "$PREFIX") if path.startswith(_PREFIX) else path
+
 
 def _split_long(token, width):
     parts = []
@@ -71,10 +85,11 @@ def _split_long(token, width):
         cut = token.rfind("/", 1, width)
         if cut <= 0:
             cut = width - 1
-        parts.append(token[:cut + 1])
-        token = token[cut + 1:]
+        parts.append(token[: cut + 1])
+        token = token[cut + 1 :]
     parts.append(token)
     return parts
+
 
 def wrap(text, width):
     width = max(10, width)
@@ -91,26 +106,36 @@ def wrap(text, width):
     lines.append(cur)
     return lines
 
+
 def rule(char="─", color=DIM, width=None):
-    if width is None: width = W()
+    if width is None:
+        width = W()
     print(f"{color}{char * width}{R}")
 
+
 def thick_rule(color=BCYN, width=None):
-    if width is None: width = W()
+    if width is None:
+        width = W()
     print(f"{color}{'━' * width}{R}")
 
-def blank(): print()
+
+def blank():
+    print()
+
 
 def sep():
     rule("─", DIM)
 
+
 def header_bar(title, width=None):
-    if width is None: width = W()
+    if width is None:
+        width = W()
     plain = f"  {title}  "
-    pad   = max(0, width - len(plain))
+    pad = max(0, width - len(plain))
     print(f"{BCYN}{'▄' * width}{R}")
     print(f"{BG_BBLU}{BWHT}{B}  {title}  {R}{BG_BBLU}{' ' * pad}{R}")
     print(f"{BCYN}{'▀' * width}{R}")
+
 
 def _emit(tag_colored, tag_len, msg, color="", stream=None):
     lines = wrap(msg, W() - tag_len)
@@ -119,29 +144,35 @@ def _emit(tag_colored, tag_len, msg, color="", stream=None):
     for ln in lines[1:]:
         print(f"{' ' * tag_len}{color}{ln}{R if color else ''}", file=out)
 
+
 def log(msg):
     _emit(f"  {BCYN}{B}::{R} ", 5, msg)
+
 
 def ok(msg):
     _emit(f"  {BGRN}{B}OK{R}  ", 6, msg)
 
+
 def warn(msg):
     _emit(f"  {BYLW}{B}!!{R}  ", 6, msg, stream=sys.stderr)
+
 
 def err(msg):
     _emit(f"  {BRED}{B}XX{R}  ", 6, msg, stream=sys.stderr)
 
+
 def info(msg):
     _emit("      ", 6, msg, color=DIM)
+
 
 def step(title):
     blank()
     print(f" {BCYN}{B}>{R} {B}{BWHT}{title}{R}")
     print(f" {DIM}{'─' * (W() - 2)}{R}")
 
+
 def fields(items, lw=None):
-    norm = [(label, [value] if isinstance(value, str) else list(value))
-            for label, value in items]
+    norm = [(label, [value] if isinstance(value, str) else list(value)) for label, value in items]
     lw = lw or max(len(label) for label, _ in norm)
     fits = all(2 + lw + 2 + max(len(v) for v in vals) <= W() for _, vals in norm)
     for label, vals in norm:
@@ -156,8 +187,10 @@ def fields(items, lw=None):
                     print(f"    {BCYN}{ln}{R}")
     blank()
 
+
 def code_line(cmd, indent=4):
     print(f"{' ' * indent}{BYLW}${R} {BCYN}{cmd}{R}")
+
 
 _LOGO_BLOCK = """\
  ████████╗ █████╗ ███████╗
@@ -166,6 +199,7 @@ _LOGO_BLOCK = """\
     ██║   ██╔══██║╚════██║
     ██║   ██║  ██║███████║
     ╚═╝   ╚═╝  ╚═╝╚══════╝"""
+
 
 def banner():
     w = W()
@@ -181,26 +215,28 @@ def banner():
     blank()
     thick_rule(BCYN, w)
 
+
 def is_termux() -> bool:
     return "com.termux" in _PREFIX or os.path.exists("/data/data/com.termux")
+
 
 def _active_lines(path):
     try:
         with open(path) as f:
-            return [ln.strip() for ln in f
-                    if ln.strip() and not ln.strip().startswith("#")]
+            return [ln.strip() for ln in f if ln.strip() and not ln.strip().startswith("#")]
     except OSError:
         return []
 
+
 def repo_is_legacy() -> bool:
-    return any(REPO_URL in ln and "trusted=yes" in ln
-               for ln in _active_lines(SOURCES_FILE))
+    return any(REPO_URL in ln and "trusted=yes" in ln for ln in _active_lines(SOURCES_FILE))
+
 
 def repo_already_added() -> bool:
     if not os.path.exists(KEYRING_FILE):
         return False
-    return any(REPO_URL in ln and "signed-by=" in ln and "trusted=yes" not in ln
-               for ln in _active_lines(SOURCES_FILE))
+    return any(REPO_URL in ln and "signed-by=" in ln and "trusted=yes" not in ln for ln in _active_lines(SOURCES_FILE))
+
 
 def repo_in_main_sources() -> bool:
     if not os.path.exists(MAIN_SOURCES):
@@ -208,10 +244,12 @@ def repo_in_main_sources() -> bool:
     with open(MAIN_SOURCES) as f:
         return REPO_URL in f.read()
 
+
 class KeyRejected(ValueError):
     def __init__(self, message, got=None):
         super().__init__(message)
         self.got = got
+
 
 def _parse_packets(data):
     packets, pos, n = [], 0, len(data)
@@ -229,7 +267,7 @@ def _parse_packets(data):
                 elif first < 224:
                     length, pos = ((first - 192) << 8) + data[pos + 1] + 192, pos + 2
                 elif first == 255:
-                    length, pos = int.from_bytes(data[pos + 1:pos + 5], "big"), pos + 5
+                    length, pos = int.from_bytes(data[pos + 1 : pos + 5], "big"), pos + 5
                 else:
                     raise KeyRejected("unsupported packet length encoding")
             else:
@@ -238,15 +276,16 @@ def _parse_packets(data):
                 if kind == 3:
                     raise KeyRejected("unsupported packet length encoding")
                 size = (1, 2, 4)[kind]
-                length = int.from_bytes(data[pos:pos + size], "big")
+                length = int.from_bytes(data[pos : pos + size], "big")
                 pos += size
             if pos + length > n:
                 raise KeyRejected("truncated key file")
-            packets.append((tag, data[pos:pos + length]))
+            packets.append((tag, data[pos : pos + length]))
             pos += length
     except IndexError:
         raise KeyRejected("truncated key file")
     return packets
+
 
 def verify_key_data(data):
     if len(data) > MAX_KEY_SIZE:
@@ -276,10 +315,12 @@ def verify_key_data(data):
         raise KeyRejected("key fingerprint does not match the pinned fingerprint", got=keys[0][1])
     return keys
 
+
 def fmt_fpr(fpr):
-    groups = [fpr[i:i + 4] for i in range(0, len(fpr), 4)]
+    groups = [fpr[i : i + 4] for i in range(0, len(fpr), 4)]
     half = (len(groups) + 1) // 2
     return [" ".join(groups[:half]), " ".join(groups[half:])]
+
 
 def install_key() -> bool:
     step("Installing signing key")
@@ -300,8 +341,7 @@ def install_key() -> bool:
         err(f"Signing key rejected: {e}")
         if e.got:
             blank()
-            fields([("Got", fmt_fpr(e.got)),
-                    ("Expected", fmt_fpr(pinned_fingerprints()[0]))])
+            fields([("Got", fmt_fpr(e.got)), ("Expected", fmt_fpr(pinned_fingerprints()[0]))])
         info("Nothing was installed.")
         return False
 
@@ -325,6 +365,7 @@ def install_key() -> bool:
         if tmp_path and os.path.exists(tmp_path):
             os.remove(tmp_path)
 
+
 def add_repo() -> bool:
     if repo_is_legacy():
         warn("Old insecure entry (trusted=yes) found")
@@ -334,13 +375,15 @@ def add_repo() -> bool:
         return False
 
     step("Adding repository")
-    fields([
-        ("File", short(SOURCES_FILE)),
-        ("Type", "deb"),
-        ("Signed-by", short(KEYRING_FILE)),
-        ("URL", REPO_URL),
-        ("Suite", "termux main"),
-    ])
+    fields(
+        [
+            ("File", short(SOURCES_FILE)),
+            ("Type", "deb"),
+            ("Signed-by", short(KEYRING_FILE)),
+            ("URL", REPO_URL),
+            ("Suite", "termux main"),
+        ]
+    )
     try:
         os.makedirs(SOURCES_DIR, exist_ok=True)
         with open(SOURCES_FILE, "w") as f:
@@ -355,6 +398,7 @@ def add_repo() -> bool:
         err(f"Failed to write file: {e}")
         return False
 
+
 def remove_repo() -> bool:
     step("Removing repository")
     removed = False
@@ -366,6 +410,7 @@ def remove_repo() -> bool:
         else:
             warn(f"Not found: {short(path)}")
     return removed
+
 
 def run_pkg_update() -> bool:
     step("Running pkg update")
@@ -387,6 +432,7 @@ def run_pkg_update() -> bool:
         warn(f"pkg update error: {e}")
         return False
 
+
 def prompt(question, default_yes=True) -> bool:
     if not sys.stdin.isatty():
         return default_yes
@@ -402,6 +448,7 @@ def prompt(question, default_yes=True) -> bool:
     if default_yes:
         return answer not in ("n", "no")
     return answer in ("y", "yes")
+
 
 def show_next_steps():
     blank()
@@ -431,6 +478,7 @@ def show_next_steps():
     blank()
     fields([("URL", REPO_URL)])
 
+
 def main():
     banner()
 
@@ -446,11 +494,13 @@ def main():
     ok(f"Architecture: {platform.machine()}")
     blank()
 
-    fields([
-        ("Sources", short(SOURCES_FILE)),
-        ("Keyring", short(KEYRING_FILE)),
-        ("Repository", REPO_URL),
-    ])
+    fields(
+        [
+            ("Sources", short(SOURCES_FILE)),
+            ("Keyring", short(KEYRING_FILE)),
+            ("Repository", REPO_URL),
+        ]
+    )
 
     if repo_already_added() and not repo_is_legacy():
         blank()
@@ -465,7 +515,9 @@ def main():
 
     if repo_in_main_sources():
         warn("Repository URL found in the main sources.list")
-        info("Remove that line (especially one with trusted=yes). The signed entry in sources.list.d/tas.list is used instead.")
+        info(
+            "Remove that line (especially one with trusted=yes). The signed entry in sources.list.d/tas.list is used instead."
+        )
         blank()
 
     if not add_repo():
@@ -498,6 +550,7 @@ def main():
     thick_rule(BGRN)
 
     show_next_steps()
+
 
 if __name__ == "__main__":
     try:
