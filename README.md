@@ -19,6 +19,7 @@
 [![Issues](https://img.shields.io/badge/issues-open-3fb950?style=flat&logo=github&logoColor=white)](https://github.com/djunekz/termux-app-store/issues)
 [![PRs](https://img.shields.io/github/issues-pr/djunekz/termux-app-store?style=flat&logo=git&logoColor=white&color=3fb950)](https://github.com/djunekz/termux-app-store/pulls)
 [![Community Ready](https://img.shields.io/badge/Community-Ready-3fb950?style=flat&logo=github)](https://github.com/djunekz/termux-app-store)
+[![RepoGrade](https://www.repo-grade.com/api/badge/djunekz/termux-app-store)](https://www.repo-grade.com/report/djunekz/termux-app-store)
 
 > **Local-first • Checksum-verified • Source-based • Termux-native • Android Terminal**
 > Install and manage Termux packages — pre-built binaries or source builds — no root, no account, no telemetry.
