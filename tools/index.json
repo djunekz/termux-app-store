@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-10-22T17:02:14.123575+00:00",
-  "total": 88,
+  "generated_at": "2026-10-23T06:02:17.434859+00:00",
+  "total": 89,
   "packages": [
     {
       "package": "aichat",
@@ -1855,6 +1855,36 @@
       ],
       "sha256_by_arch": {
         "aarch64": "33c3f012ac09308669f2c3e17a6a4a6fca7c51f2978aab031c2bb3f7d9e8a9c9"
+      }
+    },
+    {
+      "package": "unmineable",
+      "version": "0.1.0",
+      "maintainer": "@termux-app-store",
+      "description": "Mining multiple coins cryptocurrency with simple setup and pool unmineable",
+      "homepage": "https://github.com/djunekz/unmineable",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/djunekz/unmineable/archive/refs/tags/v${TERMUX_PKG_VERSION}.tar.gz",
+      "sha256": "cdc2b594fb341b34ffe1ea9557de140366ddc3a66f394ddfa4c62c5ca3f149a7",
+      "recipe_sha256": "3b12d20559883b743e85265d7e7286f93d4270ac0953ef51f238d8361cdd5762",
+      "platform_independent": false,
+      "depends": [
+        "python",
+        "cmake",
+        "make",
+        "clang",
+        "libuv",
+        "openssl",
+        "build-essential"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "68d14a7be261fac4175adc51da5327f8136314cc7f36c91aafff091383293882",
+        "arm": "3b6724ea8459051050fdd0e74b0ce348c7aeecba98f34b34503f743e3a619526",
+        "x86_64": "cc763ae9c2a690294083ef35267cbacfd177078a01af4e0ebffa3adacb260851",
+        "i686": "a73dc54d10edc572a26d8c081fa6ead0dcfeacfd16182baa72c1b4801ce0f854"
       }
     },
     {
