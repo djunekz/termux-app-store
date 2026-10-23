@@ -5,21 +5,23 @@ import re
 from pathlib import Path
 
 import pytest
-
 from _loader import PACKAGE_DIR, load_cli, load_store_common
 
 sc = load_store_common()
 
 
 class TestVerTuple:
-    @pytest.mark.parametrize("version,expected", [
-        ("1.2.3", (1, 2, 3, 0)),
-        ("1.2.3-4", (1, 2, 3, 4)),
-        ("0.0.0+4551c2f", (0, 0, 0, 0)),
-        ("1.alpha.3", (1, 0, 3, 0)),
-        ("1.2.3-beta", (1, 2, 3, 0)),
-        ("  2.0  ", (2, 0, 0)),
-    ])
+    @pytest.mark.parametrize(
+        "version,expected",
+        [
+            ("1.2.3", (1, 2, 3, 0)),
+            ("1.2.3-4", (1, 2, 3, 4)),
+            ("0.0.0+4551c2f", (0, 0, 0, 0)),
+            ("1.alpha.3", (1, 0, 3, 0)),
+            ("1.2.3-beta", (1, 2, 3, 0)),
+            ("  2.0  ", (2, 0, 0)),
+        ],
+    )
     def test_values(self, version, expected):
         assert sc.ver_tuple(version) == expected
 
@@ -128,11 +130,17 @@ class TestIndexCache:
     def test_recipe_checksum_lookup(self, tmp_path):
         cache = tmp_path / "index.json"
         digest = "b" * 64
-        cache.write_text(json.dumps({"packages": [
-            {"package": "a", "recipe_sha256": digest.upper()},
-            {"package": "b"},
-            {"package": "c", "recipe_sha256": "short"},
-        ]}))
+        cache.write_text(
+            json.dumps(
+                {
+                    "packages": [
+                        {"package": "a", "recipe_sha256": digest.upper()},
+                        {"package": "b"},
+                        {"package": "c", "recipe_sha256": "short"},
+                    ]
+                }
+            )
+        )
         assert sc.lookup_recipe_sha256("a", cache) == digest
         assert sc.lookup_recipe_sha256("b", cache) == ""
         assert sc.lookup_recipe_sha256("c", cache) == ""
@@ -344,8 +352,13 @@ class TestMirrors:
 
 FRONTENDS = ["termux_app_store_cli.py", "termux_app_store.py", "fast_install.py"]
 MOVED = {
-    "_ver_tuple", "ver_tuple", "is_safe_pkg_name", "has_store_fingerprint", "is_valid_root",
-    "_verify_downloaded_script", "verify_downloaded_script",
+    "_ver_tuple",
+    "ver_tuple",
+    "is_safe_pkg_name",
+    "has_store_fingerprint",
+    "is_valid_root",
+    "_verify_downloaded_script",
+    "verify_downloaded_script",
 }
 
 
@@ -363,15 +376,18 @@ class TestNoDuplicatedLogic:
 
     def test_mirror_urls_live_in_one_place(self):
         offenders = [
-            p.name for p in PACKAGE_DIR.glob("*.py")
+            p.name
+            for p in PACKAGE_DIR.glob("*.py")
             if p.name != "store_common.py" and "termux-app-store.pages.dev" in p.read_text(encoding="utf-8")
         ]
         assert offenders == []
 
     def test_recipe_download_is_defined_once(self):
         offenders = [
-            p.name for p in PACKAGE_DIR.glob("*.py")
-            if p.name != "store_common.py" and re.search(r"/packages/\{[a-z_]+\}/build\.sh", p.read_text(encoding="utf-8"))
+            p.name
+            for p in PACKAGE_DIR.glob("*.py")
+            if p.name != "store_common.py"
+            and re.search(r"/packages/\{[a-z_]+\}/build\.sh", p.read_text(encoding="utf-8"))
         ]
         assert offenders == []
 

@@ -1,5 +1,3 @@
-
-
 from _loader import load_cli
 
 _cli = load_cli()
@@ -8,7 +6,6 @@ is_installed_newer_or_equal = _cli.is_installed_newer_or_equal
 
 
 class TestVerTuple:
-
     def test_simple_three_part(self):
         assert _ver_tuple("1.2.3") == (1, 2, 3, 0)
 
@@ -25,9 +22,9 @@ class TestVerTuple:
         assert _ver_tuple("4.10-1") == (4, 10, 1)
 
     def test_with_non_numeric_suffix(self):
-        assert _ver_tuple("2.0-pre")  == (2, 0, 0)
+        assert _ver_tuple("2.0-pre") == (2, 0, 0)
         assert _ver_tuple("1.0-beta") == (1, 0, 0)
-        assert _ver_tuple("1.0-rc1")  == (1, 0, 0)
+        assert _ver_tuple("1.0-rc1") == (1, 0, 0)
 
     def test_with_leading_trailing_spaces(self):
         assert _ver_tuple("  1.2.3  ") == (1, 2, 3, 0)
@@ -67,9 +64,7 @@ class TestVerTuple:
         assert _ver_tuple("1.2.3") == _ver_tuple("1.2.3")
 
 
-
 class TestIsInstalledNewerOrEqual:
-
     def test_same_version(self):
         assert is_installed_newer_or_equal("1.2.3", "1.2.3") is True
 

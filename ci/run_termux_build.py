@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 import os
 import re
-import sys
 import subprocess
+import sys
 
 PACKAGES_DIR = "packages"
 FAILED = False
@@ -36,9 +36,7 @@ for pkg in sorted(os.listdir(PACKAGES_DIR)):
 
         declared_name = parse_var(build_sh, "TERMUX_PKG_NAME")
         if declared_name and declared_name != pkg:
-            raise ValueError(
-                f"TERMUX_PKG_NAME mismatch (expected '{pkg}', got '{declared_name}')"
-            )
+            raise ValueError(f"TERMUX_PKG_NAME mismatch (expected '{pkg}', got '{declared_name}')")
 
         result = subprocess.run(
             ["./termux-build", "lint", pkg],

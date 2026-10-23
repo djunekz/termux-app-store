@@ -1,8 +1,8 @@
 import hashlib
 import logging
 import time
-import urllib.request
 import urllib.error
+import urllib.request
 from pathlib import Path
 from typing import Optional
 
@@ -23,7 +23,6 @@ def _verify_sha256(path: Path, expected: str) -> bool:
 
 
 class BinaryCache:
-
     def __init__(self):
         self.mirror_manager = MirrorManager()
         self.cache_dir: Path = self._get_cache_dir()
@@ -36,9 +35,7 @@ class BinaryCache:
         logger.debug(f"Cache directory: {self.cache_dir}")
 
     def _get_cache_dir(self) -> Path:
-        cache_path = self.mirror_manager.binary_config.get(
-            "cache_dir", "~/.cache/termux-app-store/binaries"
-        )
+        cache_path = self.mirror_manager.binary_config.get("cache_dir", "~/.cache/termux-app-store/binaries")
         return Path(cache_path).expanduser()
 
     def get_cache_path(self, pkg_name: str, version: str, arch: str) -> Path:
@@ -61,10 +58,7 @@ class BinaryCache:
         sha256: str,
     ) -> Optional[Path]:
         if not sha256:
-            logger.error(
-                f"Refusing to download {pkg_name}-{version} ({arch}): no SHA256 "
-                f"provided for verification"
-            )
+            logger.error(f"Refusing to download {pkg_name}-{version} ({arch}): no SHA256 provided for verification")
             return None
 
         cache_path = self.get_cache_path(pkg_name, version, arch)
@@ -72,9 +66,7 @@ class BinaryCache:
         tmp_path = cache_path.with_suffix(".tmp")
 
         try:
-            req = urllib.request.Request(
-                url, headers={"User-Agent": "termux-app-store"}
-            )
+            req = urllib.request.Request(url, headers={"User-Agent": "termux-app-store"})
             with urllib.request.urlopen(req, timeout=60) as resp:
                 with open(tmp_path, "wb") as f:
                     while chunk := resp.read(65536):
@@ -125,9 +117,7 @@ class BinaryCache:
                 return cache_path
 
         for mirror in self.mirror_manager.get_enabled_mirrors():
-            result = self.download_from_mirror(
-                pkg_name, version, arch, mirror.url, sha256
-            )
+            result = self.download_from_mirror(pkg_name, version, arch, mirror.url, sha256)
             if result:
                 return result
 

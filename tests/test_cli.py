@@ -1,8 +1,7 @@
 import json
-import pytest
 from unittest.mock import patch
 
-
+import pytest
 from _loader import load_cli
 from conftest import make_valid_root
 
@@ -18,7 +17,6 @@ def get_status_pure(installed_version, store_version: str) -> str:
 
 
 class TestGetStatusLogic:
-
     def test_not_installed(self):
         assert get_status_pure(None, "1.0.0") == "NOT INSTALLED"
 
@@ -85,7 +83,6 @@ class TestGetStatusLogic:
 
 
 class TestVerTuple:
-
     def test_non_numeric_base_segment(self):
         # Triggers except ValueError: base_parts.append(0) — baris 17-18
         result = _ver_tuple("1.alpha.3")
@@ -103,7 +100,6 @@ class TestVerTuple:
 
 
 class TestCmdAliases:
-
     def test_list_primary(self):
         assert CMD_ALIASES["list"] == "list"
 
@@ -150,32 +146,56 @@ class TestCmdAliases:
         assert CMD_ALIASES["--help"] == "help"
 
     def test_unknown_returns_none(self):
-        assert CMD_ALIASES.get("unknown")   is None
-        assert CMD_ALIASES.get("")          is None
-        assert CMD_ALIASES.get("INSTALL")   is None
-        assert CMD_ALIASES.get("LIST")      is None
+        assert CMD_ALIASES.get("unknown") is None
+        assert CMD_ALIASES.get("") is None
+        assert CMD_ALIASES.get("INSTALL") is None
+        assert CMD_ALIASES.get("LIST") is None
         assert CMD_ALIASES.get("--version") is None
 
     def test_all_targets_are_valid(self):
-        valid = {"list", "search", "install", "uninstall", "fix-install", "show", "update", "upgrade", "version", "mirrors", "cache", "help"}
+        valid = {
+            "list",
+            "search",
+            "install",
+            "uninstall",
+            "fix-install",
+            "show",
+            "update",
+            "upgrade",
+            "version",
+            "mirrors",
+            "cache",
+            "help",
+        }
         for alias, target in CMD_ALIASES.items():
             assert target in valid, f"'{alias}' → unknown target '{target}'"
 
     def test_total_alias_count(self):
         assert len(CMD_ALIASES) == 28
 
-    @pytest.mark.parametrize("alias,target", [
-        ("search", "search"), ("find", "search"), ("-f", "search"), ("-s", "search"),
-        ("un", "uninstall"), ("remove", "uninstall"),
-        ("fix-install", "fix-install"), ("--fix-install", "fix-install"), ("-fi", "fix-install"),
-        ("mirrors", "mirrors"), ("-m", "mirrors"), ("cache", "cache"), ("-c", "cache"),
-    ])
+    @pytest.mark.parametrize(
+        "alias,target",
+        [
+            ("search", "search"),
+            ("find", "search"),
+            ("-f", "search"),
+            ("-s", "search"),
+            ("un", "uninstall"),
+            ("remove", "uninstall"),
+            ("fix-install", "fix-install"),
+            ("--fix-install", "fix-install"),
+            ("-fi", "fix-install"),
+            ("mirrors", "mirrors"),
+            ("-m", "mirrors"),
+            ("cache", "cache"),
+            ("-c", "cache"),
+        ],
+    )
     def test_aliases_missing_from_the_old_copy(self, alias, target):
         assert CMD_ALIASES[alias] == target
 
 
 class TestCacheHandling:
-
     def test_write_and_read_cache(self, tmp_path, monkeypatch):
         monkeypatch.setenv("HOME", str(tmp_path / "home"))
         monkeypatch.setattr(_cli, "CACHE_FILE", tmp_path / "path.json")

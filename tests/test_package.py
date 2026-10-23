@@ -1,24 +1,23 @@
 import json
 import sys
 from pathlib import Path
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock, patch
 
 sys.path.insert(0, str(Path(__file__).parent.parent / "tools"))
 from package_manager import (
-    get_architecture,
+    APP_VERSION,
+    AppUpdateChecker,
+    PackageManager,
+    PackageSource,
+    compare_versions,
     download_file,
     fetch_json,
+    get_architecture,
     parse_version,
-    compare_versions,
-    PackageSource,
-    PackageManager,
-    AppUpdateChecker,
-    APP_VERSION,
 )
 
 
 class TestGetArchitecture:
-
     def test_aarch64(self):
         with patch("platform.machine", return_value="aarch64"):
             assert get_architecture() == "aarch64"
@@ -53,7 +52,6 @@ class TestGetArchitecture:
 
 
 class TestDownloadFile:
-
     def test_success(self, tmp_path):
         dest = tmp_path / "file.bin"
         mock_response = MagicMock()
@@ -89,6 +87,7 @@ class TestDownloadFile:
 
     def test_network_error_returns_false(self, tmp_path):
         import urllib.error
+
         dest = tmp_path / "file.bin"
         with patch("urllib.request.urlopen", side_effect=urllib.error.URLError("no network")):
             result = download_file("https://example.com/file", dest)
@@ -97,7 +96,6 @@ class TestDownloadFile:
 
 
 class TestFetchJson:
-
     def test_success(self):
         payload = {"packages": [{"package": "bower", "version": "1.8.12"}]}
         mock_response = MagicMock()
@@ -129,7 +127,6 @@ class TestFetchJson:
 
 
 class TestParseVersion:
-
     def test_simple(self):
         assert parse_version("1.2.3") == (1, 2, 3)
 
@@ -156,7 +153,6 @@ class TestParseVersion:
 
 
 class TestCompareVersions:
-
     def test_equal(self):
         assert compare_versions("1.0.0", "1.0.0") == 0
 
@@ -171,7 +167,6 @@ class TestCompareVersions:
 
 
 class TestPackageSource:
-
     def test_env_override(self):
         with patch.dict("os.environ", {"TERMUX_APP_STORE_MODE": "LOCAL"}):
             assert PackageSource.detect_mode() == "local"
@@ -195,7 +190,6 @@ class TestPackageSource:
 
 
 class TestPackageManagerCache:
-
     def test_cache_invalid_when_missing(self, tmp_path):
         pm = PackageManager()
         pm.cache_file = tmp_path / "index.json"
@@ -252,7 +246,6 @@ class TestPackageManagerCache:
 
 
 class TestPackageManagerLocal:
-
     def _make_pkg(self, root, name, content):
         pkg = root / name
         pkg.mkdir()
@@ -339,7 +332,6 @@ class TestPackageManagerLocal:
 
 
 class TestPackageManagerRemote:
-
     def test_load_remote_from_network(self, tmp_path):
         payload = {"packages": [{"package": "bower", "version": "1.8.12"}]}
         pm = PackageManager()
@@ -415,7 +407,6 @@ class TestPackageManagerRemote:
 
 
 class TestGetPackage:
-
     def test_found_by_package_key(self, tmp_path):
         (tmp_path / "bower").mkdir()
         (tmp_path / "bower" / "build.sh").write_text('TERMUX_PKG_VERSION="1.8.12"\n')
@@ -432,7 +423,6 @@ class TestGetPackage:
 
 
 class TestGetInstalledVersion:
-
     def test_pkg_info_success(self):
         pm = PackageManager()
         with patch("subprocess.check_output", return_value="Name: bower\nVersion: 1.8.12\n"):
@@ -440,10 +430,12 @@ class TestGetInstalledVersion:
 
     def test_pkg_info_fails_dpkg_success(self):
         pm = PackageManager()
+
         def side_effect(cmd, **kwargs):
             if cmd[0] == "pkg":
                 raise Exception("not found")
             return "1.8.12"
+
         with patch("subprocess.check_output", side_effect=side_effect):
             assert pm.get_installed_version("bower") == "1.8.12"
 
@@ -454,16 +446,17 @@ class TestGetInstalledVersion:
 
     def test_dpkg_empty_returns_none(self):
         pm = PackageManager()
+
         def side_effect(cmd, **kwargs):
             if cmd[0] == "pkg":
                 raise Exception("not found")
             return ""
+
         with patch("subprocess.check_output", side_effect=side_effect):
             assert pm.get_installed_version("bower") is None
 
 
 class TestGetStatus:
-
     def test_not_installed(self):
         pm = PackageManager()
         with patch.object(pm, "get_installed_version", return_value=None):
@@ -486,7 +479,6 @@ class TestGetStatus:
 
 
 class TestAppUpdateChecker:
-
     def test_get_latest_version_success(self):
         with patch("package_manager.fetch_json", return_value={"tag_name": "v0.2.0"}):
             assert AppUpdateChecker.get_latest_version() == "0.2.0"
@@ -522,14 +514,27 @@ class TestAppUpdateChecker:
         assert "0.2.0" in url
         assert "aarch64" in url
 
-
     def test_upgrade_app_success(self, tmp_path):
-        with patch("package_manager.download_file", side_effect=lambda url, dest, **kw: [dest.parent.mkdir(parents=True, exist_ok=True), dest.write_bytes(b"binary"), True][-1]), \
-             patch("package_manager.get_architecture", return_value="aarch64"), \
-             patch("shutil.move"), \
-             patch("package_manager.PREFIX", str(tmp_path)):
+        with (
+            patch(
+                "package_manager.download_file",
+                side_effect=lambda url, dest, **kw: [
+                    dest.parent.mkdir(parents=True, exist_ok=True),
+                    dest.write_bytes(b"binary"),
+                    True,
+                ][-1],
+            ),
+            patch("package_manager.get_architecture", return_value="aarch64"),
+            patch("shutil.move"),
+            patch("package_manager.PREFIX", str(tmp_path)),
+        ):
             (tmp_path / "bin").mkdir(parents=True, exist_ok=True)
-            with patch("package_manager.Path", side_effect=lambda p: tmp_path / "termux-app-store-new" if str(p) == "/tmp/termux-app-store-new" else Path(p)):
+            with patch(
+                "package_manager.Path",
+                side_effect=lambda p: (
+                    tmp_path / "termux-app-store-new" if str(p) == "/tmp/termux-app-store-new" else Path(p)
+                ),
+            ):
                 result = AppUpdateChecker.upgrade_app("0.2.0")
         assert result is True
 
@@ -539,9 +544,23 @@ class TestAppUpdateChecker:
         assert result is False
 
     def test_upgrade_app_install_fails(self, tmp_path):
-        with patch("package_manager.download_file", side_effect=lambda url, dest, **kw: [dest.parent.mkdir(parents=True, exist_ok=True), dest.write_bytes(b"binary"), True][-1]), \
-             patch("package_manager.get_architecture", return_value="aarch64"), \
-             patch("shutil.move", side_effect=Exception("permission denied")):
-            with patch("package_manager.Path", side_effect=lambda p: tmp_path / "termux-app-store-new" if str(p) == "/tmp/termux-app-store-new" else Path(p)):
+        with (
+            patch(
+                "package_manager.download_file",
+                side_effect=lambda url, dest, **kw: [
+                    dest.parent.mkdir(parents=True, exist_ok=True),
+                    dest.write_bytes(b"binary"),
+                    True,
+                ][-1],
+            ),
+            patch("package_manager.get_architecture", return_value="aarch64"),
+            patch("shutil.move", side_effect=Exception("permission denied")),
+        ):
+            with patch(
+                "package_manager.Path",
+                side_effect=lambda p: (
+                    tmp_path / "termux-app-store-new" if str(p) == "/tmp/termux-app-store-new" else Path(p)
+                ),
+            ):
                 result = AppUpdateChecker.upgrade_app("0.2.0")
         assert result is False

@@ -27,15 +27,9 @@ VERSION_RE = re.compile(r"^[0-9][0-9A-Za-z.+~_-]*$")
 PRERELEASE_RE = re.compile(r"alpha|beta|rc|pre|dev|nightly|snapshot|canary|preview", re.I)
 COMMIT_VERSION_RE = re.compile(r"^0\.0\.0\+([0-9a-f]{7,40})$")
 
-COMMIT_ARCHIVE_RE = re.compile(
-    r"^https://github\.com/([^/]+)/([^/]+)/archive/([0-9a-f]{40})(\.tar\.gz|\.zip)$"
-)
-GITHUB_RE = re.compile(
-    r"^https://github\.com/([^/]+)/([^/]+)/(?:archive/|releases/download/)"
-)
-GITHUB_API_RE = re.compile(
-    r"^https://api\.github\.com/repos/([^/]+)/([^/]+)/(?:tarball|zipball)/"
-)
+COMMIT_ARCHIVE_RE = re.compile(r"^https://github\.com/([^/]+)/([^/]+)/archive/([0-9a-f]{40})(\.tar\.gz|\.zip)$")
+GITHUB_RE = re.compile(r"^https://github\.com/([^/]+)/([^/]+)/(?:archive/|releases/download/)")
+GITHUB_API_RE = re.compile(r"^https://api\.github\.com/repos/([^/]+)/([^/]+)/(?:tarball|zipball)/")
 NPM_RE = re.compile(r"^https://registry\.npmjs\.org/((?:@[^/]+/)?[^/]+)/-/")
 
 ALLOWED_DOWNLOAD_HOSTS = (
@@ -193,8 +187,7 @@ class Fetcher:
 def classify(raw_url: str, version: str) -> Source | None:
     m = COMMIT_ARCHIVE_RE.match(raw_url)
     if m and COMMIT_VERSION_RE.match(version):
-        return Source("commit", m.group(1), m.group(2), prefix_len=m.end(),
-                      ext=m.group(4), sha=m.group(3))
+        return Source("commit", m.group(1), m.group(2), prefix_len=m.end(), ext=m.group(4), sha=m.group(3))
     m = GITHUB_RE.match(raw_url) or GITHUB_API_RE.match(raw_url)
     if m:
         return Source("github", m.group(1), m.group(2), prefix_len=m.end())
@@ -452,8 +445,11 @@ def main() -> int:
     ap = argparse.ArgumentParser(description="Check packages against upstream and update build.sh and CHANGELOG.md")
     ap.add_argument("packages", nargs="*", help="package names (default: all)")
     ap.add_argument("--apply", action="store_true", help="write build.sh and CHANGELOG.md")
-    ap.add_argument("--include-commit-pinned", action="store_true",
-                    help="also follow packages pinned to a commit (version 0.0.0+sha)")
+    ap.add_argument(
+        "--include-commit-pinned",
+        action="store_true",
+        help="also follow packages pinned to a commit (version 0.0.0+sha)",
+    )
     ap.add_argument("--out-dir", help="write report.json, summary.md, commit-message.txt here")
     args = ap.parse_args()
 
@@ -477,7 +473,7 @@ def main() -> int:
         except RateLimited as e:
             print(f"! {e}; stopping, remaining packages not checked", file=sys.stderr)
             results.append(Result(name, "error", reason="GitHub API rate limit reached"))
-            results += [Result(n, "skipped", reason="not checked (rate limit)") for n in names[i + 1:]]
+            results += [Result(n, "skipped", reason="not checked (rate limit)") for n in names[i + 1 :]]
             break
         if res.status == "update" and args.apply:
             write_update(res)
@@ -497,8 +493,7 @@ def main() -> int:
         out = Path(args.out_dir)
         out.mkdir(parents=True, exist_ok=True)
         (out / "summary.md").write_text(summary, encoding="utf-8")
-        (out / "report.json").write_text(
-            json.dumps([asdict(r) for r in results], indent=2), encoding="utf-8")
+        (out / "report.json").write_text(json.dumps([asdict(r) for r in results], indent=2), encoding="utf-8")
         (out / "commit-message.txt").write_text(build_commit_message(results), encoding="utf-8")
     write_github_output(results)
     return 0

@@ -45,9 +45,7 @@ LogFn = Callable[[str, str], None]
 
 
 def index_urls() -> list:
-    return [INDEX_URL] + [
-        f"{m['base_url']}/tools/index.json" for m in MIRRORS if m.get("index")
-    ]
+    return [INDEX_URL] + [f"{m['base_url']}/tools/index.json" for m in MIRRORS if m.get("index")]
 
 
 def _cache_dir() -> Path:
@@ -204,9 +202,7 @@ def _bash_syntax_ok(raw: bytes) -> bool:
     return subprocess.run(["bash", "-n"], input=raw, capture_output=True).returncode == 0
 
 
-def verify_downloaded_script(
-    raw: bytes, env_sha256_var: str, log: Optional[LogFn] = None
-) -> bool:
+def verify_downloaded_script(raw: bytes, env_sha256_var: str, log: Optional[LogFn] = None) -> bool:
     log = log or _silent
     if not raw:
         return False
@@ -282,7 +278,10 @@ def download_recipe(
     expected = normalize_sha256(expected_sha256)
     if not expected and os.environ.get("TERMUX_APP_STORE_ALLOW_UNVERIFIED_RECIPE") != "1":
         log("error", f"No recipe checksum in the index for {name} — refusing to download its build.sh")
-        log("dim", "Refresh the package index, or set TERMUX_APP_STORE_ALLOW_UNVERIFIED_RECIPE=1 after reviewing the recipe.")
+        log(
+            "dim",
+            "Refresh the package index, or set TERMUX_APP_STORE_ALLOW_UNVERIFIED_RECIPE=1 after reviewing the recipe.",
+        )
         return False
 
     url = f"{RAW_BASE}/packages/{name}/build.sh"

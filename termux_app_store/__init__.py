@@ -6,11 +6,13 @@ from .core.validator import PackageValidator, validate_package
 
 def run_tui(*args, **kwargs):
     from termux_app_store.termux_app_store import run_tui as _run_tui
+
     return _run_tui(*args, **kwargs)
 
 
 def run_cli(*args, **kwargs):
     from termux_app_store.termux_app_store_cli import run_cli as _run_cli
+
     return _run_cli(*args, **kwargs)
 
 

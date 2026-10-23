@@ -1,8 +1,8 @@
 import json
 import logging
-from pathlib import Path
 from dataclasses import dataclass
-from typing import List, Dict, Optional
+from pathlib import Path
+from typing import Dict, List, Optional
 
 logger = logging.getLogger(__name__)
 
@@ -20,7 +20,6 @@ class Mirror:
 
 
 class MirrorManager:
-
     def __init__(self):
         self.mirrors: List[Mirror] = []
         self.binary_config: Dict = {}
@@ -55,16 +54,18 @@ class MirrorManager:
 
             self.mirrors = []
             for m in data.get("mirrors", []):
-                self.mirrors.append(Mirror(
-                    id=m.get("id", ""),
-                    name=m.get("name", ""),
-                    url=m.get("url", ""),
-                    type=m.get("type", "apt"),
-                    region=m.get("region", "global"),
-                    priority=m.get("priority", 999),
-                    enabled=m.get("enabled", True),
-                    cdn=m.get("cdn", False),
-                ))
+                self.mirrors.append(
+                    Mirror(
+                        id=m.get("id", ""),
+                        name=m.get("name", ""),
+                        url=m.get("url", ""),
+                        type=m.get("type", "apt"),
+                        region=m.get("region", "global"),
+                        priority=m.get("priority", 999),
+                        enabled=m.get("enabled", True),
+                        cdn=m.get("cdn", False),
+                    )
+                )
 
             self.mirrors.sort(key=lambda x: x.priority)
 

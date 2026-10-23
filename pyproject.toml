@@ -37,6 +37,8 @@ dependencies = [
 dev = [
     "pytest>=7.0",
     "pytest-cov",
+    "ruff>=0.6",
+    "mypy>=1.10",
 ]
 
 [project.urls]
@@ -57,3 +59,37 @@ include = ["termux_app_store*"]
 
 [tool.setuptools.package-data]
 termux_app_store = ["data/*.json", "data/build-package.sh"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py39"
+extend-exclude = ["packages", ".assets"]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "W", "I"]
+ignore = ["E701", "E702", "E731", "E741"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["E402"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["termux_app_store", "tools"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "lf"
+
+[tool.mypy]
+python_version = "3.10"
+ignore_missing_imports = true
+check_untyped_defs = false
+warn_unused_ignores = false
+files = ["termux_app_store", "tools"]
+
+[[tool.mypy.overrides]]
+module = ["termux_app_store.*"]
+disable_error_code = ["no-redef", "union-attr", "var-annotated", "arg-type", "assignment", "misc", "annotation-unchecked"]
+
+[tool.coverage.run]
+source = ["tools", "termux_app_store"]

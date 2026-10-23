@@ -69,9 +69,74 @@ CI will reject PRs that fail validation.
 
 ---
 
+## Development Setup
+1. Fork and clone the repository
+```Sh
+git clone https://github.com/<your-username>/termux-app-store.git
+cd termux-app-store
+```
+2. Create a virtual environment and install development dependencies
+```Sh
+python3 -m venv .venv
+source .venv/bin/activate
+make install
+```
+or with uv, using the committed `uv.lock`
+```Sh
+uv sync --extra dev
+```
+3. Copy the environment template when you need to override defaults
+```Sh
+cp .env.example .env
+```
+Python 3.9 or newer is required.
+
+---
+
+## Code Style
+Python code is linted and formatted with [Ruff](https://docs.astral.sh/ruff/) and type checked with [mypy](https://mypy.readthedocs.io/). Configuration lives in `pyproject.toml`.
+- Maximum line length is 120 characters
+- Imports are sorted automatically
+- Strings use double quotes
+- Shell scripts must pass `bash -n` and `./termux-build lint <pkg-name>`
+
+Run the checks locally before every commit:
+```Sh
+make lint
+make typecheck
+```
+Apply automatic fixes and formatting:
+```Sh
+make format
+```
+
+---
+
+## Testing
+Tests are written with [pytest](https://docs.pytest.org/) and live in `tests/`.
+```Sh
+make test
+```
+or directly
+```Sh
+python3 -m pytest
+python3 -m pytest tests/test_package.py -k version
+python3 -m pytest --cov=tools --cov=termux_app_store --cov-report=term
+```
+Run the full quality gate used by CI:
+```Sh
+make check
+```
+New features and bug fixes must include tests.
+
+---
+
 ## CI & Quality Gates
 All pull requests are automatically checked via GitHub Actions:
 - Linting packages
+- Ruff lint and format checks
+- Mypy type checks
+- Pytest suite
 - Validating build.sh
 - CLI behavior checks
 - Python coverage enforcement

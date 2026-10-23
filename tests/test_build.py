@@ -6,25 +6,20 @@ from unittest.mock import patch
 
 
 class BuildShParser:
-
     def __init__(self, build_sh_path: str):
         self.path = build_sh_path
         self.content = self._read_file()
 
     def _read_file(self) -> str:
         try:
-            with open(self.path, 'r', encoding='utf-8') as f:
+            with open(self.path, "r", encoding="utf-8") as f:
                 return f.read()
         except Exception as e:
             print(f"[ERROR] Gagal membaca {self.path}: {e}")
             return ""
 
     def _extract_var(self, var_name: str) -> Optional[str]:
-        patterns = [
-            rf'{var_name}="([^"]*)"',
-            rf"{var_name}='([^']*)'",
-            rf'{var_name}=([^\s\n]+)'
-        ]
+        patterns = [rf'{var_name}="([^"]*)"', rf"{var_name}='([^']*)'", rf"{var_name}=([^\s\n]+)"]
         for pattern in patterns:
             match = re.search(pattern, self.content)
             if match:
@@ -33,28 +28,27 @@ class BuildShParser:
 
     def parse(self) -> Dict:
         data = {
-            'homepage':             self._extract_var('TERMUX_PKG_HOMEPAGE') or '',
-            'description':          self._extract_var('TERMUX_PKG_DESCRIPTION') or '',
-            'license':              self._extract_var('TERMUX_PKG_LICENSE') or '',
-            'maintainer':           self._extract_var('TERMUX_PKG_MAINTAINER') or '',
-            'version':              self._extract_var('TERMUX_PKG_VERSION') or '',
-            'srcurl':               self._extract_var('TERMUX_PKG_SRCURL') or '',
-            'sha256':               self._extract_var('TERMUX_PKG_SHA256') or '',
-            'depends':              self._parse_depends(),
-            'platform_independent': self._extract_var('TERMUX_PKG_PLATFORM_INDEPENDENT') == 'true',
+            "homepage": self._extract_var("TERMUX_PKG_HOMEPAGE") or "",
+            "description": self._extract_var("TERMUX_PKG_DESCRIPTION") or "",
+            "license": self._extract_var("TERMUX_PKG_LICENSE") or "",
+            "maintainer": self._extract_var("TERMUX_PKG_MAINTAINER") or "",
+            "version": self._extract_var("TERMUX_PKG_VERSION") or "",
+            "srcurl": self._extract_var("TERMUX_PKG_SRCURL") or "",
+            "sha256": self._extract_var("TERMUX_PKG_SHA256") or "",
+            "depends": self._parse_depends(),
+            "platform_independent": self._extract_var("TERMUX_PKG_PLATFORM_INDEPENDENT") == "true",
         }
         return data
 
     def _parse_depends(self) -> List[str]:
-        depends_str = self._extract_var('TERMUX_PKG_DEPENDS')
+        depends_str = self._extract_var("TERMUX_PKG_DEPENDS")
         if not depends_str:
             return []
-        deps = [dep.strip() for dep in depends_str.split(',')]
+        deps = [dep.strip() for dep in depends_str.split(",")]
         return [dep for dep in deps if dep]
 
 
 class PackageIndexGenerator:
-
     def __init__(self, packages_dir: str = "packages", output_file: str = "tools/index.json"):
         self.packages_dir = Path(packages_dir)
         self.output_file = Path(output_file)
@@ -82,21 +76,21 @@ class PackageIndexGenerator:
         parser = BuildShParser(str(build_sh_path))
         metadata = parser.parse()
         entry = {
-            "package":            package_name,
-            "version":            metadata['version'],
-            "maintainer":         metadata['maintainer'],
-            "description":        metadata['description'],
-            "homepage":           metadata['homepage'],
-            "license":            metadata['license'],
-            "download_size":      self._estimate_download_size(metadata['srcurl']),
-            "installed_size":     self._estimate_installed_size(package_name),
-            "source":             self.repo_source,
-            "srcurl":             metadata['srcurl'],
-            "sha256":             metadata['sha256'],
-            "platform_independent": metadata['platform_independent'],
+            "package": package_name,
+            "version": metadata["version"],
+            "maintainer": metadata["maintainer"],
+            "description": metadata["description"],
+            "homepage": metadata["homepage"],
+            "license": metadata["license"],
+            "download_size": self._estimate_download_size(metadata["srcurl"]),
+            "installed_size": self._estimate_installed_size(package_name),
+            "source": self.repo_source,
+            "srcurl": metadata["srcurl"],
+            "sha256": metadata["sha256"],
+            "platform_independent": metadata["platform_independent"],
         }
-        if metadata['depends']:
-            entry['depends'] = metadata['depends']
+        if metadata["depends"]:
+            entry["depends"] = metadata["depends"]
         return entry
 
     def generate(self) -> Dict:
@@ -111,20 +105,21 @@ class PackageIndexGenerator:
             except Exception as e:
                 print(f"[ERROR] Failed to process {pkg_dir.name}: {e}")
                 continue
-        packages.sort(key=lambda x: x['package'])
+        packages.sort(key=lambda x: x["package"])
         from datetime import datetime, timezone
+
         index_data = {
-            "version":      "1.0",
-            "repository":   self.repo_source,
+            "version": "1.0",
+            "repository": self.repo_source,
             "generated_at": datetime.now(timezone.utc).isoformat(),
-            "total":        len(packages),
-            "packages":     packages,
+            "total": len(packages),
+            "packages": packages,
         }
         return index_data
 
     def save(self, data: Dict):
         self.output_file.parent.mkdir(parents=True, exist_ok=True)
-        with open(self.output_file, 'w', encoding='utf-8') as f:
+        with open(self.output_file, "w", encoding="utf-8") as f:
             json.dump(data, f, indent=2, ensure_ascii=False)
 
     def run(self):
@@ -140,7 +135,6 @@ def make_build_sh(pkg_dir: Path, fields: dict) -> Path:
 
 
 class TestMakeBuildSh:
-
     def test_creates_dir_and_file(self, tmp_path):
         pkg_dir = tmp_path / "bower"
         result = make_build_sh(pkg_dir, {"TERMUX_PKG_VERSION": "1.8.12"})
@@ -149,10 +143,13 @@ class TestMakeBuildSh:
 
     def test_file_content_correct(self, tmp_path):
         pkg_dir = tmp_path / "mytool"
-        make_build_sh(pkg_dir, {
-            "TERMUX_PKG_VERSION": "1.0",
-            "TERMUX_PKG_LICENSE": "MIT",
-        })
+        make_build_sh(
+            pkg_dir,
+            {
+                "TERMUX_PKG_VERSION": "1.0",
+                "TERMUX_PKG_LICENSE": "MIT",
+            },
+        )
         content = (pkg_dir / "build.sh").read_text()
         assert 'TERMUX_PKG_VERSION="1.0"' in content
         assert 'TERMUX_PKG_LICENSE="MIT"' in content
@@ -165,12 +162,11 @@ class TestMakeBuildSh:
 
 
 class TestBuildShParserReadFile:
-
     def test_reads_valid_file(self, tmp_path):
         f = tmp_path / "build.sh"
         f.write_text('TERMUX_PKG_VERSION="1.0"\n')
         parser = BuildShParser(str(f))
-        assert 'TERMUX_PKG_VERSION' in parser.content
+        assert "TERMUX_PKG_VERSION" in parser.content
 
     def test_returns_empty_on_missing_file(self, tmp_path):
         parser = BuildShParser(str(tmp_path / "nonexistent.sh"))
@@ -185,7 +181,6 @@ class TestBuildShParserReadFile:
 
 
 class TestBuildShParserExtractVar:
-
     def _parser(self, content: str) -> BuildShParser:
         p = BuildShParser.__new__(BuildShParser)
         p.path = "mock"
@@ -222,7 +217,6 @@ class TestBuildShParserExtractVar:
 
 
 class TestBuildShParserParse:
-
     def test_full_parse(self, tmp_path):
         f = tmp_path / "build.sh"
         f.write_text(
@@ -238,33 +232,32 @@ class TestBuildShParserParse:
         )
         parser = BuildShParser(str(f))
         data = parser.parse()
-        assert data['homepage']             == "https://example.com"
-        assert data['description']          == "A cool tool"
-        assert data['license']              == "MIT"
-        assert data['maintainer']           == "@djunekz"
-        assert data['version']              == "1.2.3"
-        assert data['srcurl']               == "https://example.com/src.tar.gz"
-        assert data['sha256']               == "abc123"
-        assert data['depends']              == ["nodejs", "python"]
-        assert data['platform_independent'] is True
+        assert data["homepage"] == "https://example.com"
+        assert data["description"] == "A cool tool"
+        assert data["license"] == "MIT"
+        assert data["maintainer"] == "@djunekz"
+        assert data["version"] == "1.2.3"
+        assert data["srcurl"] == "https://example.com/src.tar.gz"
+        assert data["sha256"] == "abc123"
+        assert data["depends"] == ["nodejs", "python"]
+        assert data["platform_independent"] is True
 
     def test_empty_file_defaults(self, tmp_path):
         f = tmp_path / "build.sh"
         f.write_text("")
         data = BuildShParser(str(f)).parse()
-        assert data['version']              == ""
-        assert data['description']          == ""
-        assert data['depends']              == []
-        assert data['platform_independent'] is False
+        assert data["version"] == ""
+        assert data["description"] == ""
+        assert data["depends"] == []
+        assert data["platform_independent"] is False
 
     def test_missing_file_defaults(self, tmp_path):
         data = BuildShParser(str(tmp_path / "missing.sh")).parse()
-        assert data['version'] == ""
-        assert data['depends'] == []
+        assert data["version"] == ""
+        assert data["depends"] == []
 
 
 class TestParseDependsMethod:
-
     def _parser(self, content: str) -> BuildShParser:
         p = BuildShParser.__new__(BuildShParser)
         p.path = "mock"
@@ -294,7 +287,6 @@ class TestParseDependsMethod:
 
 
 class TestGetPackageDirs:
-
     def test_returns_sorted_dirs(self, tmp_path):
         for name in ["zx", "aircrack", "bower"]:
             d = tmp_path / name
@@ -325,7 +317,6 @@ class TestGetPackageDirs:
 
 
 class TestGenerate:
-
     def test_empty_packages(self, tmp_path):
         gen = PackageIndexGenerator(str(tmp_path))
         result = gen.generate()
@@ -350,7 +341,7 @@ class TestGenerate:
         for name in ["zx", "aircrack", "bower"]:
             d = tmp_path / name
             d.mkdir()
-            (d / "build.sh").write_text(f'TERMUX_PKG_VERSION="1.0"\n')
+            (d / "build.sh").write_text('TERMUX_PKG_VERSION="1.0"\n')
         gen = PackageIndexGenerator(str(tmp_path))
         result = gen.generate()
         names = [p["package"] for p in result["packages"]]
@@ -390,10 +381,7 @@ class TestGenerate:
     def test_platform_independent_field(self, tmp_path):
         d = tmp_path / "mytool"
         d.mkdir()
-        (d / "build.sh").write_text(
-            'TERMUX_PKG_VERSION="1.0"\n'
-            'TERMUX_PKG_PLATFORM_INDEPENDENT="true"\n'
-        )
+        (d / "build.sh").write_text('TERMUX_PKG_VERSION="1.0"\nTERMUX_PKG_PLATFORM_INDEPENDENT="true"\n')
         gen = PackageIndexGenerator(str(tmp_path))
         result = gen.generate()
         assert result["packages"][0]["platform_independent"] is True
@@ -401,10 +389,7 @@ class TestGenerate:
     def test_depends_included_when_present(self, tmp_path):
         d = tmp_path / "mytool"
         d.mkdir()
-        (d / "build.sh").write_text(
-            'TERMUX_PKG_VERSION="1.0"\n'
-            'TERMUX_PKG_DEPENDS="nodejs"\n'
-        )
+        (d / "build.sh").write_text('TERMUX_PKG_VERSION="1.0"\nTERMUX_PKG_DEPENDS="nodejs"\n')
         gen = PackageIndexGenerator(str(tmp_path))
         result = gen.generate()
         assert "depends" in result["packages"][0]
@@ -420,7 +405,6 @@ class TestGenerate:
 
 
 class TestRun:
-
     def test_run_creates_output_file(self, tmp_path):
         d = tmp_path / "bower"
         d.mkdir()
@@ -442,7 +426,6 @@ class TestRun:
 
 
 class TestSave:
-
     def test_saves_valid_json(self, tmp_path):
         output = tmp_path / "out" / "index.json"
         gen = PackageIndexGenerator(output_file=str(output))
@@ -468,6 +451,7 @@ class TestSave:
 
 import importlib.util as _ilu
 
+
 def _import_build():
     build_path = Path(__file__).parent.parent / "tools" / "build.py"
     spec = _ilu.spec_from_file_location("build_module", str(build_path))
@@ -477,7 +461,6 @@ def _import_build():
 
 
 class TestMainFunction:
-
     def test_main_from_root_with_packages(self, tmp_path, monkeypatch):
         (tmp_path / "packages").mkdir()
         bower = tmp_path / "packages" / "bower"

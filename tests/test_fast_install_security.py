@@ -51,12 +51,15 @@ def test_expired_cache_is_removed(cache):
     assert not path.exists()
 
 
-@pytest.mark.parametrize("pkg,ver,arch", [
-    ("../x", "1.0", "aarch64"),
-    ("pkg", "1.0/../../x", "aarch64"),
-    ("pkg", "1.0", "a b"),
-    ("", "1.0", "aarch64"),
-])
+@pytest.mark.parametrize(
+    "pkg,ver,arch",
+    [
+        ("../x", "1.0", "aarch64"),
+        ("pkg", "1.0/../../x", "aarch64"),
+        ("pkg", "1.0", "a b"),
+        ("", "1.0", "aarch64"),
+    ],
+)
 def test_invalid_identifiers_rejected(cache, pkg, ver, arch):
     assert fi.get_cached_deb(pkg, ver, arch, sha256="0" * 64) is None
     assert not fi._valid_ident(pkg, ver, arch)
@@ -82,9 +85,15 @@ def test_fast_install_refuses_without_trusted_checksum(monkeypatch, cache):
 
 def test_unpinned_build_script_refused(monkeypatch, tmp_path):
     class Resp:
-        def __enter__(self): return self
-        def __exit__(self, *a): return False
-        def read(self): return b"echo hi\n"
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *a):
+            return False
+
+        def read(self):
+            return b"echo hi\n"
+
     monkeypatch.setattr(fi, "_get_app_root", lambda: tmp_path)
     monkeypatch.setattr(fi, "_packaged_build_script", lambda: None)
     monkeypatch.setattr(fi.urllib.request, "urlopen", lambda *a, **k: Resp())
@@ -140,9 +149,15 @@ def test_fallback_uses_packaged_script_without_network(monkeypatch, tmp_path):
 
 def _recipe_env(monkeypatch, tmp_path, body, recipe_sha):
     class Resp:
-        def __enter__(self): return self
-        def __exit__(self, *a): return False
-        def read(self): return body
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *a):
+            return False
+
+        def read(self):
+            return body
+
     monkeypatch.setattr(fi.urllib.request, "urlopen", lambda *a, **k: Resp())
     monkeypatch.setattr(fi, "get_pkg_info", lambda name: {"package": name, "recipe_sha256": recipe_sha})
 
@@ -173,9 +188,9 @@ def test_index_entries_carry_recipe_checksum(tmp_path):
     pkg.mkdir(parents=True)
     recipe = (
         "TERMUX_PKG_HOMEPAGE=https://example.com\n"
-        "TERMUX_PKG_DESCRIPTION=\"d\"\n"
-        "TERMUX_PKG_LICENSE=\"MIT\"\n"
-        "TERMUX_PKG_MAINTAINER=\"@m\"\n"
+        'TERMUX_PKG_DESCRIPTION="d"\n'
+        'TERMUX_PKG_LICENSE="MIT"\n'
+        'TERMUX_PKG_MAINTAINER="@m"\n'
         "TERMUX_PKG_VERSION=1.0\n"
         "TERMUX_PKG_SRCURL=https://example.com/a.tar.gz\n"
         "TERMUX_PKG_SHA256=" + "a" * 64 + "\n"
@@ -190,7 +205,7 @@ def test_build_workflow_uses_full_checksums_and_fails_closed():
     text = (ROOT / ".github" / "workflows" / "build-packages-debs.yml").read_text(encoding="utf-8")
     assert "cut -c1-16 ||" not in text
     assert '"$GOTSUM" == "$SHA256"*' not in text
-    assert "source \"$BUILD_SH\" 2>/dev/null || true" not in text
+    assert 'source "$BUILD_SH" 2>/dev/null || true' not in text
     assert "termux_step_make_install) || true" not in text
     assert "if-no-files-found: error" in text
     assert "matrix.recipe" in text
@@ -243,16 +258,14 @@ def _run_dependency_block(tmp_path, pkg_body, deps, present=()):
     pkg.chmod(0o755)
     dpkg = bindir / "dpkg"
     dpkg.write_text(
-        "#!/bin/bash\ncase \" $* \" in\n"
-        + "".join(f'  *" {d} "*) exit 0 ;;\n' for d in present)
-        + "esac\nexit 1\n",
+        '#!/bin/bash\ncase " $* " in\n' + "".join(f'  *" {d} "*) exit 0 ;;\n' for d in present) + "esac\nexit 1\n",
         encoding="utf-8",
     )
     dpkg.chmod(0o755)
     harness = (
         "R=; GRAY=; WHITE=; BGREEN=; BCYAN=\n"
-        "_progress(){ :; }; _ok(){ echo \"OK: $*\"; }; _warn(){ echo \"WARN: $*\"; }; _skip(){ echo \"SKIP: $*\"; }\n"
-        "_fatal(){ echo \"FATAL: $*\"; }\n"
+        '_progress(){ :; }; _ok(){ echo "OK: $*"; }; _warn(){ echo "WARN: $*"; }; _skip(){ echo "SKIP: $*"; }\n'
+        '_fatal(){ echo "FATAL: $*"; }\n'
         "sleep(){ :; }\n"
         f'export TERMUX_PKG_DEPENDS="{deps}"\n'
     )
@@ -305,7 +318,7 @@ def test_dependency_block_continues_when_pkg_fails_but_deps_are_present(tmp_path
 
 def test_docker_step_installs_dependencies_one_by_one_with_retry():
     text = (ROOT / ".github" / "workflows" / "build-packages-debs.yml").read_text(encoding="utf-8")
-    assert 'for dep in $PKG_DEPS; do' in text
+    assert "for dep in $PKG_DEPS; do" in text
     assert "pkg install -y $PKG_DEPS" not in text
     assert "could not install dependency" in text
 

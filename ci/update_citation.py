@@ -102,9 +102,7 @@ def _write_outputs(changed, version):
 
 
 def _parse_args(argv):
-    parser = argparse.ArgumentParser(
-        description="Update version and date-released in CITATION.cff from a release tag."
-    )
+    parser = argparse.ArgumentParser(description="Update version and date-released in CITATION.cff from a release tag.")
     parser.add_argument("--version", required=True)
     parser.add_argument("--date")
     parser.add_argument("--file", default="CITATION.cff")
@@ -149,8 +147,7 @@ def main(argv=None):
             print(f"ok: {citation} is at {version} ({date})")
             return 0
         print(
-            f"mismatch: {citation} has version {current_version} / date {current_date}, "
-            f"release is {version} / {date}",
+            f"mismatch: {citation} has version {current_version} / date {current_date}, release is {version} / {date}",
             file=sys.stderr,
         )
         return 1
@@ -169,10 +166,7 @@ def main(argv=None):
     changed = new_text != text
     if changed:
         citation.write_text(new_text, encoding="utf-8")
-        message = (
-            f"{citation} updated: version {current_version} -> {version}, "
-            f"date {current_date} -> {date}"
-        )
+        message = f"{citation} updated: version {current_version} -> {version}, date {current_date} -> {date}"
         print(message)
         if args.warn and os.environ.get("GITHUB_ACTIONS") == "true":
             print(

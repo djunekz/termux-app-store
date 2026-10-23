@@ -1,14 +1,12 @@
 import json
+import logging
 from pathlib import Path
 from typing import Dict, List, Tuple
-
-import logging
 
 logger = logging.getLogger(__name__)
 
 
 class PackageValidator:
-
     REQUIRED_FIELDS = ["name", "version", "maintainer", "source"]
 
     def validate(self, index_path: Path) -> Tuple[bool, List[str]]:

@@ -230,9 +230,11 @@ python termux_app_store/main.py list       # run a CLI command
 Run the tests with:
 
 ```bash
-pip install pytest pytest-cov
-pytest
+pip install -e ".[dev]"
+make test
 ```
+
+Optional environment overrides are listed in `.env.example`. Dependencies are pinned in `uv.lock` (`uv sync --extra dev`).
 
 This mode is intended for developers. Normal users should use Option 1.
 

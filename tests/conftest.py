@@ -1,5 +1,6 @@
-import pytest
 from pathlib import Path
+
+import pytest
 
 
 def make_build_sh(root: Path, pkg_name: str, fields: dict) -> Path:

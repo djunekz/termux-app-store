@@ -4,7 +4,6 @@ from typing import Dict, List, Optional
 
 @dataclass
 class Package:
-
     name: str
     version: str
     description: str = ""
@@ -28,7 +27,7 @@ class Package:
     build_date: Optional[str] = None
 
     @classmethod
-    def from_dict(cls, data: Dict) -> 'Package':
+    def from_dict(cls, data: Dict) -> "Package":
         return cls(
             name=data.get("name", ""),
             version=data.get("version", ""),
@@ -36,16 +35,14 @@ class Package:
             maintainer=data.get("maintainer", ""),
             license=data.get("license", "Unknown"),
             arch=data.get("arch", ["aarch64"]),
-
             binary_support=data.get("binary_support", False),
             prebuilt=data.get("prebuilt", {}),
-
             source=data.get("source", {}),
             dependencies=data.get("dependencies", []),
             category=data.get("category", "misc"),
             tags=data.get("tags", []),
             status=data.get("status", "stable"),
-            build_date=data.get("build_date")
+            build_date=data.get("build_date"),
         )
 
     def has_prebuilt_for_arch(self, arch: str) -> bool:

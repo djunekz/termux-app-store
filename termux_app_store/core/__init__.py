@@ -1,5 +1,5 @@
 from .binary_core import BinaryCache
-from .mirrors import MirrorManager, Mirror
+from .mirrors import Mirror, MirrorManager
 from .package import Package
 from .validator import PackageValidator, validate_package
 

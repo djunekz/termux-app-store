@@ -17,16 +17,16 @@ USAGE:
 # Open Contributor
 # https://github.com/djunekz/termux-app-store
 
-import subprocess
-import sys
-import os
-import json
-import re
 import contextlib
 import hashlib
-import urllib.request
-import urllib.error
+import json
+import os
+import re
 import shutil
+import subprocess
+import sys
+import urllib.error
+import urllib.request
 from pathlib import Path
 from typing import Optional
 
@@ -37,9 +37,8 @@ except ImportError:
         import store_common as _store
     except ImportError:
         import importlib.util as _ilu
-        _spec = _ilu.spec_from_file_location(
-            "store_common", Path(__file__).resolve().with_name("store_common.py")
-        )
+
+        _spec = _ilu.spec_from_file_location("store_common", Path(__file__).resolve().with_name("store_common.py"))
         _store = _ilu.module_from_spec(_spec)
         sys.modules["store_common"] = _store
         _spec.loader.exec_module(_store)
@@ -57,26 +56,29 @@ is_valid_root = _store.is_valid_root
 
 try:
     from termux_app_store.fast_install import FastInstaller
+
     _BINARY_CACHE_AVAILABLE = True
 except ImportError:
     _BINARY_CACHE_AVAILABLE = False
 
 try:
-    from termux_app_store.fast_install import fast_install, check_mirrors, cache_info, clear_deb_cache, MIRRORS
+    from termux_app_store.fast_install import MIRRORS, cache_info, check_mirrors, clear_deb_cache, fast_install
+
     _FAST_INSTALL_AVAILABLE = True
 except ImportError:
     try:
-        from fast_install import fast_install, check_mirrors, cache_info, clear_deb_cache, MIRRORS
+        from fast_install import MIRRORS, cache_info, check_mirrors, clear_deb_cache, fast_install
+
         _FAST_INSTALL_AVAILABLE = True
     except ImportError:
         _FAST_INSTALL_AVAILABLE = False
         MIRRORS = _store.MIRRORS
 
-GITHUB_API_TAG     = f"https://api.github.com/repos/{GITHUB_REPO}/releases/latest"
+GITHUB_API_TAG = f"https://api.github.com/repos/{GITHUB_REPO}/releases/latest"
 
 _SELF_FILES = {
     "termux_app_store_cli.py": f"https://raw.githubusercontent.com/{GITHUB_REPO}/master/termux_app_store/termux_app_store_cli.py",
-    "termux_app_store.py":     f"https://raw.githubusercontent.com/{GITHUB_REPO}/master/termux_app_store/termux_app_store.py",
+    "termux_app_store.py": f"https://raw.githubusercontent.com/{GITHUB_REPO}/master/termux_app_store/termux_app_store.py",
 }
 
 _INSTALL_DIR = Path(os.environ.get("PREFIX", "/data/data/com.termux/files/usr")) / "lib" / ".tas"
@@ -85,6 +87,7 @@ _INSTALL_DIR = Path(os.environ.get("PREFIX", "/data/data/com.termux/files/usr"))
 def _is_pip_mode() -> bool:
     try:
         import importlib.util
+
         spec = importlib.util.find_spec("termux_app_store")
         if spec and spec.origin:
             return "site-packages" in str(spec.origin)
@@ -93,14 +96,14 @@ def _is_pip_mode() -> bool:
     return False
 
 
-R       = "\033[0m"
-B       = "\033[1m"
-RED     = "\033[31m"
-GREEN   = "\033[32m"
-YELLOW  = "\033[33m"
-CYAN    = "\033[36m"
+R = "\033[0m"
+B = "\033[1m"
+RED = "\033[31m"
+GREEN = "\033[32m"
+YELLOW = "\033[33m"
+CYAN = "\033[36m"
 MAGENTA = "\033[35m"
-DIM     = "\033[2m"
+DIM = "\033[2m"
 
 
 def is_installed_newer_or_equal(installed: str, store: str) -> bool:
@@ -117,7 +120,6 @@ def save_cached_root(path: Path):
 
 def resolve_app_root() -> Path:
     return _store.resolve_app_root(__file__, CACHE_FILE)
-
 
 
 def _cli_log(kind: str, message: str) -> None:
@@ -183,10 +185,10 @@ def load_packages_from_local(packages_dir: Path) -> list:
             for line in f:
                 for key, field in [
                     ("TERMUX_PKG_DESCRIPTION=", "description"),
-                    ("TERMUX_PKG_VERSION=",     "version"),
-                    ("TERMUX_PKG_MAINTAINER=",  "maintainer"),
-                    ("TERMUX_PKG_HOMEPAGE=",    "homepage"),
-                    ("TERMUX_PKG_LICENSE=",     "license"),
+                    ("TERMUX_PKG_VERSION=", "version"),
+                    ("TERMUX_PKG_MAINTAINER=", "maintainer"),
+                    ("TERMUX_PKG_HOMEPAGE=", "homepage"),
+                    ("TERMUX_PKG_LICENSE=", "license"),
                 ]:
                     if line.startswith(key):
                         data[field] = line.split("=", 1)[1].strip().strip('"')
@@ -204,13 +206,13 @@ def normalize_pkg(raw: dict) -> dict:
     elif not deps:
         deps = "-"
     result = {
-        "name":       raw.get("package", raw.get("name", "?")),
-        "desc":       raw.get("description", raw.get("desc", "-")),
-        "version":    raw.get("version", "?"),
-        "deps":       deps,
+        "name": raw.get("package", raw.get("name", "?")),
+        "desc": raw.get("description", raw.get("desc", "-")),
+        "version": raw.get("version", "?"),
+        "deps": deps,
         "maintainer": raw.get("maintainer", "-"),
-        "homepage":   raw.get("homepage", "-"),
-        "license":    raw.get("license", "-"),
+        "homepage": raw.get("homepage", "-"),
+        "license": raw.get("license", "-"),
     }
     if "sha256" in raw:
         result["sha256"] = raw["sha256"]
@@ -265,10 +267,7 @@ def get_status(name: str, store_version: str):
     if is_installed_newer_or_equal(installed, store_version):
         return "INSTALLED", f"{GREEN}✔ up-to-date{R}       {DIM}{installed}{R}"
     else:
-        return "UPDATE", (
-            f"{YELLOW}↑ update available{R}  "
-            f"{DIM}{installed}{R} → {GREEN}{store_version}{R}"
-        )
+        return "UPDATE", (f"{YELLOW}↑ update available{R}  {DIM}{installed}{R} → {GREEN}{store_version}{R}")
 
 
 def fetch_latest_tag():
@@ -333,14 +332,15 @@ def cmd_list(packages_dir: Path):
 
     W = 24
     print(f"\n  {B}{CYAN}{'PACKAGE':<{W}} {'VERSION':<12} STATUS{R}")
-    print(f"  {DIM}{'─'*62}{R}")
+    print(f"  {DIM}{'─' * 62}{R}")
 
     for p in pkgs:
         _, label = get_status(p["name"], p["version"])
         print(f"  {B}{p['name']:<{W}}{R} {CYAN}{p['version']:<12}{R} {label}")
 
-    print(f"\n  {DIM}{'─'*62}{R}")
+    print(f"\n  {DIM}{'─' * 62}{R}")
     print(f"  {DIM}{len(pkgs)} package(s) total{R}\n")
+
 
 def cmd_show(packages_dir: Path, name: str):
     pkgs = load_all_packages(packages_dir)
@@ -358,31 +358,35 @@ def cmd_show(packages_dir: Path, name: str):
         deps_str = deps if deps and deps != "-" else "-"
 
     W = 46
-    print(f"\n  {B}{CYAN}{'━'*W}{R}")
+    print(f"\n  {B}{CYAN}{'━' * W}{R}")
     print(f"  {B}  {p['name']}{R}")
     print(f"  {DIM}  {label}{R}")
-    print(f"  {B}{CYAN}{'━'*W}{R}\n")
+    print(f"  {B}{CYAN}{'━' * W}{R}\n")
     print(f"  {B}Description{R}   {p['desc']}")
     print(f"  {B}Version    {R}   {CYAN}{p['version']}{R}")
     print(f"  {B}Maintainer {R}   {p['maintainer']}")
     print(f"  {B}License    {R}   {p.get('license', '-')}")
     print(f"  {B}Homepage   {R}   {DIM}{p.get('homepage', '-')}{R}")
     print(f"  {B}Depends    {R}   {YELLOW}{deps_str}{R}")
-    print(f"\n  {B}{CYAN}{'━'*W}{R}\n")
+    print(f"\n  {B}{CYAN}{'━' * W}{R}\n")
 
 
 def ensure_package_files(packages_dir: Path, name: str, force_update: bool = False) -> bool:
     expected = _store.lookup_recipe_sha256(name, INDEX_CACHE_FILE)
-    return _store.download_recipe(
-        packages_dir, name, expected, force_update, _cli_log, "termux-app-store-cli"
-    )
+    return _store.download_recipe(packages_dir, name, expected, force_update, _cli_log, "termux-app-store-cli")
 
 
 def _get_arch() -> str:
     try:
         out = subprocess.check_output(["uname", "-m"], text=True).strip()
-        mapping = {"aarch64": "aarch64", "armv7l": "arm", "armv8l": "arm",
-                   "x86_64": "x86_64", "i686": "i686", "i386": "i686"}
+        mapping = {
+            "aarch64": "aarch64",
+            "armv7l": "arm",
+            "armv8l": "arm",
+            "x86_64": "x86_64",
+            "i686": "i686",
+            "i386": "i686",
+        }
         return mapping.get(out, out)
     except Exception:
         return "aarch64"
@@ -406,7 +410,9 @@ def _direct_deb_install(name: str, version: str, pkg_info: Optional[dict] = None
             if isinstance(candidate, str) and len(candidate) == 64:
                 expected_sha = candidate.lower()
 
-    if not re.match(r"^[A-Za-z0-9][A-Za-z0-9._+-]*$", name) or not re.match(r"^[A-Za-z0-9][A-Za-z0-9.+~:-]*$", str(version)):
+    if not re.match(r"^[A-Za-z0-9][A-Za-z0-9._+-]*$", name) or not re.match(
+        r"^[A-Za-z0-9][A-Za-z0-9.+~:-]*$", str(version)
+    ):
         _log("  ✗ Invalid package name or version")
         return False
 
@@ -422,6 +428,7 @@ def _direct_deb_install(name: str, version: str, pkg_info: Optional[dict] = None
         return False
 
     import tempfile
+
     _log(f"  Trying direct .deb download: {fname}")
 
     for mirror in MIRRORS:
@@ -454,8 +461,7 @@ def _direct_deb_install(name: str, version: str, pkg_info: Optional[dict] = None
             tmp_path = tmp.name
 
         try:
-            ret = subprocess.call(["dpkg", "-i", tmp_path],
-                                  stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            ret = subprocess.call(["dpkg", "-i", tmp_path], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
             if ret == 0:
                 _log(f"  ✔ Installed via dpkg: {fname}")
                 return True
@@ -471,11 +477,18 @@ def _direct_deb_install(name: str, version: str, pkg_info: Optional[dict] = None
             except Exception:
                 pass
 
-    _log(f"  ✗ Not available in any mirror")
+    _log("  ✗ Not available in any mirror")
     return False
 
 
-def cmd_install(app_root: Path, packages_dir: Path, name: str, silent: bool = False, force_update: bool = False, force_source: bool = False) -> bool:
+def cmd_install(
+    app_root: Path,
+    packages_dir: Path,
+    name: str,
+    silent: bool = False,
+    force_update: bool = False,
+    force_source: bool = False,
+) -> bool:
     pkgs = load_all_packages(packages_dir)
     p = next((x for x in pkgs if x["name"] == name), None)
 
@@ -489,9 +502,9 @@ def cmd_install(app_root: Path, packages_dir: Path, name: str, silent: bool = Fa
         print(f"  {GREEN}✔  '{name}' is already up-to-date  {DIM}v{p['version']}{R}")
         return True
 
-    print(f"\n  {DIM}{'─'*46}{R}")
+    print(f"\n  {DIM}{'─' * 46}{R}")
     print(f"  {B}  Installing {CYAN}{name}{R}{B}  {DIM}v{p['version']}{R}")
-    print(f"  {DIM}{'─'*46}{R}\n")
+    print(f"  {DIM}{'─' * 46}{R}\n")
 
     success = False
 
@@ -500,6 +513,7 @@ def cmd_install(app_root: Path, packages_dir: Path, name: str, silent: bool = Fa
         try:
             installer = FastInstaller()
             import asyncio
+
             success = asyncio.run(installer.install(name, force_source=force_source))
         except Exception as e:
             print(f"  {YELLOW}Binary cache failed: {e}{R}")
@@ -529,23 +543,23 @@ def cmd_install(app_root: Path, packages_dir: Path, name: str, silent: bool = Fa
             success = _direct_deb_install(name, p["version"], pkg_info=p)
 
         if not success:
-                if not ensure_package_files(packages_dir, name, force_update):
-                    print(f"{RED}[✗] Failed to prepare package files.{R}")
-                    return False
+            if not ensure_package_files(packages_dir, name, force_update):
+                print(f"{RED}[✗] Failed to prepare package files.{R}")
+                return False
 
-                if not ensure_build_package_sh(app_root):
-                    return False
+            if not ensure_build_package_sh(app_root):
+                return False
 
-                proc = subprocess.Popen(
-                    ["bash", "build-package.sh", name],
-                    cwd=str(app_root),
-                    stdout=subprocess.PIPE,
-                    stderr=subprocess.STDOUT,
-                )
-                for line in iter(proc.stdout.readline, b""):
-                    print(" ", line.decode(errors="ignore").rstrip())
-                proc.wait()
-                success = proc.returncode == 0
+            proc = subprocess.Popen(
+                ["bash", "build-package.sh", name],
+                cwd=str(app_root),
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+            )
+            for line in iter(proc.stdout.readline, b""):
+                print(" ", line.decode(errors="ignore").rstrip())
+            proc.wait()
+            success = proc.returncode == 0
         if success:
             hold_package(name)
             print(f"\n  {GREEN}{B}✔  '{name}' installed successfully!{R}\n")
@@ -553,7 +567,9 @@ def cmd_install(app_root: Path, packages_dir: Path, name: str, silent: bool = Fa
         else:
             print(f"\n  {RED}✗  Installation failed.{R}")
             print(f"  {DIM}The downloaded .deb may be corrupt or unavailable for your architecture.{R}")
-            print(f"  {YELLOW}↳ Try:{R} {B}{CYAN}tas --fix-install {name}{DIM} or{R}{B}{CYAN} termux-app-store fix-install {name}{R}")
+            print(
+                f"  {YELLOW}↳ Try:{R} {B}{CYAN}tas --fix-install {name}{DIM} or{R}{B}{CYAN} termux-app-store fix-install {name}{R}"
+            )
             print(f"  {DIM}  (Forces a clean rebuild from source, bypassing cache){R}\n")
             return False
 
@@ -566,7 +582,7 @@ def cmd_install(app_root: Path, packages_dir: Path, name: str, silent: bool = Fa
 
         if not ensure_package_files(packages_dir, name, force_update=force_update):
             print(f"{RED}[✗] Failed to download build files for '{name}'.{R}")
-            print(f"    Check your internet connection or try again later.")
+            print("    Check your internet connection or try again later.")
             return False
 
         if not ensure_build_package_sh(app_root):
@@ -606,9 +622,9 @@ def cmd_uninstall(name: str):
         print(f"{YELLOW}[!] '{name}' is not installed.{R}")
         return
 
-    print(f"\n  {DIM}{'─'*46}{R}")
+    print(f"\n  {DIM}{'─' * 46}{R}")
     print(f"  {B}  Uninstalling {CYAN}{name}{R}")
-    print(f"  {DIM}{'─'*46}{R}\n")
+    print(f"  {DIM}{'─' * 46}{R}\n")
 
     prefix = os.environ.get("PREFIX", "/data/data/com.termux/files/usr")
     cleanup_paths = [
@@ -621,15 +637,15 @@ def cmd_uninstall(name: str):
     for base_path in cleanup_paths:
         if base_path.exists():
             for root, dirs, files in os.walk(base_path, topdown=False):
-                if '__pycache__' in dirs:
-                    pycache_path = Path(root) / '__pycache__'
+                if "__pycache__" in dirs:
+                    pycache_path = Path(root) / "__pycache__"
                     try:
                         shutil.rmtree(pycache_path)
                         print(f"{DIM}  ✓ Removed: {pycache_path}{R}")
                     except Exception:
                         pass
                 for file in files:
-                    if file.endswith('.pyc') or file.endswith('.pyo'):
+                    if file.endswith(".pyc") or file.endswith(".pyo"):
                         file_path = Path(root) / file
                         try:
                             file_path.unlink()
@@ -665,6 +681,7 @@ def cmd_update(packages_dir: Path):
 
         if packages_dir.exists():
             import shutil as _shutil
+
             index_names = {p.get("package", p.get("name", "")) for p in raw}
             removed_local = []
             for pkg_dir in sorted(packages_dir.iterdir()):
@@ -675,7 +692,9 @@ def cmd_update(packages_dir: Path):
                     except Exception:
                         pass
             if removed_local:
-                print(f"{DIM}[*] Removed {len(removed_local)} obsolete local package(s): {', '.join(removed_local)}{R}\n")
+                print(
+                    f"{DIM}[*] Removed {len(removed_local)} obsolete local package(s): {', '.join(removed_local)}{R}\n"
+                )
     else:
         print(f"  {YELLOW}  Offline — using cached index.{R}\n")
         pkgs = get_packages(packages_dir, online=False)
@@ -697,21 +716,14 @@ def cmd_update(packages_dir: Path):
             outdated.append((p["name"], inst, p["version"]))
 
     print(f"\n  {B}{CYAN}{'PACKAGE':<24} {'INSTALLED':<14} LATEST{R}")
-    print(f"  {DIM}{'─'*60}{R}")
+    print(f"  {DIM}{'─' * 60}{R}")
 
     if not outdated:
         print(f"  {GREEN}✔  All {installed_count} installed package(s) are up-to-date!{R}")
     else:
         for name, inst, latest in outdated:
-            print(
-                f"  {B}{name:<24}{R} "
-                f"{DIM}{inst:<14}{R} "
-                f"{GREEN}{latest:<12}{R}  {YELLOW}↑{R}"
-            )
-        print(
-            f"\n  {YELLOW}{len(outdated)} update(s) available.{R}  "
-            f"{DIM}Run: {CYAN}termux-app-store upgrade{R}"
-        )
+            print(f"  {B}{name:<24}{R} {DIM}{inst:<14}{R} {GREEN}{latest:<12}{R}  {YELLOW}↑{R}")
+        print(f"\n  {YELLOW}{len(outdated)} update(s) available.{R}  {DIM}Run: {CYAN}termux-app-store upgrade{R}")
 
     print(f"\n  {DIM}Checked {installed_count} installed package(s){R}\n")
 
@@ -745,9 +757,9 @@ def cmd_upgrade(app_root: Path, packages_dir: Path, target=None):
         print(f"\n  {GREEN}✔  All installed packages are up-to-date!{R}\n")
         return
 
-    print(f"\n  {DIM}{'─'*46}{R}")
+    print(f"\n  {DIM}{'─' * 46}{R}")
     print(f"  {B}{YELLOW}  {len(to_upgrade)} package(s) to upgrade{R}")
-    print(f"  {DIM}{'─'*46}{R}\n")
+    print(f"  {DIM}{'─' * 46}{R}\n")
     for p in to_upgrade:
         inst = get_installed_version(p["name"])
         print(f"  {CYAN}{p['name']:<24}{R} {DIM}{inst}{R} → {GREEN}{p['version']}{R}")
@@ -762,15 +774,16 @@ def cmd_upgrade(app_root: Path, packages_dir: Path, target=None):
         else:
             fail += 1
 
-    print(f"\n  {DIM}{'─'*46}{R}")
+    print(f"\n  {DIM}{'─' * 46}{R}")
     print(f"  {B}  Upgrade summary{R}   {GREEN}{ok} succeeded{R}", end="")
     if fail:
         print(f"  {RED}{fail} failed{R}", end="")
-    print(f"\n  {DIM}{'─'*46}{R}\n")
+    print(f"\n  {DIM}{'─' * 46}{R}\n")
 
 
 def _fetch_remote_content(url: str):
     import time
+
     sep = "&" if "?" in url else "?"
     bust_url = f"{url}{sep}_cb={int(time.time())}"
     try:
@@ -803,13 +816,14 @@ def cmd_self_update(silent: bool = False) -> bool:
         if not silent:
             print(f"{DIM}[*] Pip mode detected — upgrading via pip...{R}")
         ret = subprocess.call(
-            [sys.executable, "-m", "pip", "install", "--upgrade",
-             "termux-app-store", "--break-system-packages"],
-            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+            [sys.executable, "-m", "pip", "install", "--upgrade", "termux-app-store", "--break-system-packages"],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
         )
         if ret == 0:
             try:
                 import importlib.metadata
+
                 new_ver = importlib.metadata.version("termux-app-store")
             except Exception:
                 new_ver = None
@@ -836,6 +850,7 @@ def cmd_self_update(silent: bool = False) -> bool:
                     try:
                         content = wrapper.read_text()
                         import re as _re
+
                         content = _re.sub(
                             r'export TERMUX_APP_STORE_VERSION="[^"]*"',
                             f'export TERMUX_APP_STORE_VERSION="{new_ver}"',
@@ -854,10 +869,10 @@ def cmd_self_update(silent: bool = False) -> bool:
                 print(f"{RED}[✗] pip upgrade failed.{R}")
             return False
 
-    this_file   = Path(__file__).resolve()
-    app_dir     = this_file.parent
+    this_file = Path(__file__).resolve()
+    app_dir = this_file.parent
 
-    updated   = []
+    updated = []
     has_error = False
 
     for filename, url in _SELF_FILES.items():
@@ -880,7 +895,7 @@ def cmd_self_update(silent: bool = False) -> bool:
             local_path.write_bytes(remote)
             updated.append(filename)
             if not silent:
-                print(f"{DIM}[*] Repacking {filename.replace('.py','')}... Done{R}")
+                print(f"{DIM}[*] Repacking {filename.replace('.py', '')}... Done{R}")
         except PermissionError:
             has_error = True
             if not silent:
@@ -917,6 +932,7 @@ def cmd_version():
     if not local_ver:
         try:
             from termux_app_store import __version__
+
             if __version__:
                 local_ver = __version__
         except Exception:
@@ -955,10 +971,10 @@ def cmd_version():
     remote_ver = remote_tag.lstrip("v") if remote_tag else None
 
     W = 46
-    print(f"\n  {B}{CYAN}{'━'*W}{R}")
+    print(f"\n  {B}{CYAN}{'━' * W}{R}")
     print(f"  {B}   Termux App Store{R}")
     print(f"  {CYAN}{DIM}   https://github.com/{GITHUB_REPO}{R}")
-    print(f"  {B}{CYAN}{'━'*W}{R}\n")
+    print(f"  {B}{CYAN}{'━' * W}{R}\n")
 
     if local_ver:
         print(f"  {B}  Installed {R}  {GREEN}{B}v{local_ver}{R}")
@@ -977,28 +993,24 @@ def cmd_version():
         if local_ver:
             print(f"\n  {DIM}  Cannot determine if update is available{R}")
 
-    print(f"\n  {B}{CYAN}{'━'*W}{R}\n")
+    print(f"\n  {B}{CYAN}{'━' * W}{R}\n")
 
 
 def cmd_search(packages_dir: Path, query: str):
     query_lower = query.lower()
     pkgs = load_all_packages(packages_dir)
-    results = [
-        p for p in pkgs
-        if query_lower in p.get("name", "").lower()
-        or query_lower in p.get("desc", "").lower()
-    ]
+    results = [p for p in pkgs if query_lower in p.get("name", "").lower() or query_lower in p.get("desc", "").lower()]
     if not results:
         print(f"\n  {YELLOW}No packages found matching '{query}'{R}\n")
         return
     print(f"\n  {CYAN}{B}Search results for '{query}' — {len(results)} found:{R}\n")
     sep = "─"
     print(f"  {'Package':<28} {'Version':<12} {'Status':<12} Description")
-    print(f"  {sep*28} {sep*12} {sep*12} {sep*30}")
+    print(f"  {sep * 28} {sep * 12} {sep * 12} {sep * 30}")
     for p in results:
-        name    = p.get("name", "")
+        name = p.get("name", "")
         version = p.get("version", "?")
-        desc    = p.get("desc", "-")[:40]
+        desc = p.get("desc", "-")[:40]
         status, _ = get_status(name, version)
         if status == "INSTALLED":
             st_color = f"{GREEN}✔ installed{R}"
@@ -1017,10 +1029,10 @@ def cmd_fix_install(app_root: Path, packages_dir: Path, name: str):
         print(f"\n  {RED}✗  Package '{name}' not found.{R}\n")
         sys.exit(1)
     sep = "─"
-    print(f"\n  {DIM}{sep*46}{R}")
+    print(f"\n  {DIM}{sep * 46}{R}")
     print(f"  {B}  Fix Install {CYAN}{name}{R}{B}  {DIM}v{p['version']}{R}")
     print(f"  {DIM}(using build-package.sh){R}")
-    print(f"  {DIM}{sep*46}{R}\n")
+    print(f"  {DIM}{sep * 46}{R}\n")
     if not ensure_package_files(packages_dir, name, force_update=True):
         print(f"  {RED}✗  Failed to download build files.{R}\n")
         return
@@ -1054,7 +1066,7 @@ def cmd_install_multi(app_root: Path, packages_dir: Path, names: list):
         ok = cmd_install(app_root, packages_dir, name, silent=False)
         (success_list if ok else failed_list).append(name)
     sep = "─"
-    print(f"\n  {DIM}{sep*46}{R}")
+    print(f"\n  {DIM}{sep * 46}{R}")
     print(f"  {CYAN}{B}Summary:{R}")
     if success_list:
         print(f"  {GREEN}✔  Installed ({len(success_list)}): {', '.join(success_list)}{R}")
@@ -1080,7 +1092,7 @@ def cmd_uninstall_multi(names: list):
         except SystemExit:
             failed_list.append(name)
     sep = "─"
-    print(f"\n  {DIM}{sep*46}{R}")
+    print(f"\n  {DIM}{sep * 46}{R}")
     print(f"  {CYAN}{B}Summary:{R}")
     if success_list:
         print(f"  {GREEN}✔  Uninstalled ({len(success_list)}): {', '.join(success_list)}{R}")
@@ -1130,35 +1142,36 @@ def cmd_help():
   {DIM}termux-app-store -l{R}
 """)
 
+
 CMD_ALIASES = {
-    "list":         "list",
-    "-l":           "list",
-    "-L":           "list",
-    "search":       "search",
-    "find":         "search",
-    "-f":           "search",
-    "-s":           "search",
-    "install":      "install",
-    "i":            "install",
-    "-i":           "install",
-    "uninstall":    "uninstall",
-    "un":           "uninstall",
-    "remove":       "uninstall",
-    "fix-install":  "fix-install",
-    "--fix-install":"fix-install",
-    "-fi":          "fix-install",
-    "show":         "show",
-    "update":       "update",
-    "upgrade":      "upgrade",
-    "version":      "version",
-    "-v":           "version",
-    "mirrors":      "mirrors",
-    "-m":           "mirrors",
-    "cache":        "cache",
-    "-c":           "cache",
-    "help":         "help",
-    "-h":           "help",
-    "--help":       "help",
+    "list": "list",
+    "-l": "list",
+    "-L": "list",
+    "search": "search",
+    "find": "search",
+    "-f": "search",
+    "-s": "search",
+    "install": "install",
+    "i": "install",
+    "-i": "install",
+    "uninstall": "uninstall",
+    "un": "uninstall",
+    "remove": "uninstall",
+    "fix-install": "fix-install",
+    "--fix-install": "fix-install",
+    "-fi": "fix-install",
+    "show": "show",
+    "update": "update",
+    "upgrade": "upgrade",
+    "version": "version",
+    "-v": "version",
+    "mirrors": "mirrors",
+    "-m": "mirrors",
+    "cache": "cache",
+    "-c": "cache",
+    "help": "help",
+    "-h": "help",
+    "--help": "help",
 }
 
 
@@ -1180,10 +1193,10 @@ def _load_package_from_disk(pkg_dir: Path) -> dict:
         for line in f:
             for key, field in [
                 ("TERMUX_PKG_DESCRIPTION=", "desc"),
-                ("TERMUX_PKG_VERSION=",     "version"),
-                ("TERMUX_PKG_MAINTAINER=",  "maintainer"),
-                ("TERMUX_PKG_HOMEPAGE=",    "homepage"),
-                ("TERMUX_PKG_LICENSE=",     "license"),
+                ("TERMUX_PKG_VERSION=", "version"),
+                ("TERMUX_PKG_MAINTAINER=", "maintainer"),
+                ("TERMUX_PKG_HOMEPAGE=", "homepage"),
+                ("TERMUX_PKG_LICENSE=", "license"),
             ]:
                 if line.startswith(key):
                     data[field] = line.split("=", 1)[1].strip().strip('"')
@@ -1223,10 +1236,10 @@ def load_package(pkg_dir: Path) -> dict:
         for line in f:
             for key, field in [
                 ("TERMUX_PKG_DESCRIPTION=", "desc"),
-                ("TERMUX_PKG_VERSION=",     "version"),
-                ("TERMUX_PKG_MAINTAINER=",  "maintainer"),
-                ("TERMUX_PKG_HOMEPAGE=",    "homepage"),
-                ("TERMUX_PKG_LICENSE=",     "license"),
+                ("TERMUX_PKG_VERSION=", "version"),
+                ("TERMUX_PKG_MAINTAINER=", "maintainer"),
+                ("TERMUX_PKG_HOMEPAGE=", "homepage"),
+                ("TERMUX_PKG_LICENSE=", "license"),
             ]:
                 if line.startswith(key):
                     data[field] = line.split("=", 1)[1].strip().strip('"')
@@ -1257,6 +1270,7 @@ def run_cli():
     if not args:
         try:
             from termux_app_store.termux_app_store import run_tui
+
             run_tui()
         except ImportError:
             print(f"{RED}[!] commamd not found.{R}")
@@ -1280,7 +1294,7 @@ def run_cli():
         cmd_version()
         return
 
-    APP_ROOT     = resolve_app_root()
+    APP_ROOT = resolve_app_root()
     PACKAGES_DIR = APP_ROOT / "packages"
 
     if cmd == "list":
@@ -1347,7 +1361,7 @@ def run_cli():
                 print(f"  {YELLOW}Fast install module not available.{R}\n")
         else:
             print(f"  {RED}Unknown cache subcommand: '{sub}'{R}")
-            print(f"  Usage: termux-app-store cache [info|clear]")
+            print("  Usage: termux-app-store cache [info|clear]")
 
 
 if __name__ == "__main__":

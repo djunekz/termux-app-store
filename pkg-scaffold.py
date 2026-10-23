@@ -3,21 +3,21 @@
 # Semi-Auto create build.sh
 # github.com/djunekz/termux-app-store
 
+import hashlib
+import json
 import os
-import sys
 import re
 import shutil
+import sys
 import textwrap
-import urllib.request
 import urllib.error
-import json
-import hashlib
+import urllib.request
 from pathlib import Path
 
-R    = "\033[0m"
-B    = "\033[1m"
-DIM  = "\033[2m"
-IT   = "\033[3m"
+R = "\033[0m"
+B = "\033[1m"
+DIM = "\033[2m"
+IT = "\033[3m"
 
 BRED = "\033[91m"
 BGRN = "\033[92m"
@@ -28,96 +28,145 @@ BWHT = "\033[97m"
 BG_BBLK = "\033[100m"
 BG_BBLU = "\033[104m"
 
-_PREFIX     = os.environ.get("PREFIX", "/data/data/com.termux/files/usr")
-TIMEOUT     = 10
+_PREFIX = os.environ.get("PREFIX", "/data/data/com.termux/files/usr")
+TIMEOUT = 10
 
 VALID_LICENSES = [
-    "MIT", "Apache-2.0", "GPL-2.0", "GPL-3.0", "LGPL-2.1", "LGPL-3.0",
-    "BSD-2-Clause", "BSD-3-Clause", "ISC", "MPL-2.0", "AGPL-3.0",
-    "Unlicense", "CC0-1.0", "UNKNOWN",
+    "MIT",
+    "Apache-2.0",
+    "GPL-2.0",
+    "GPL-3.0",
+    "LGPL-2.1",
+    "LGPL-3.0",
+    "BSD-2-Clause",
+    "BSD-3-Clause",
+    "ISC",
+    "MPL-2.0",
+    "AGPL-3.0",
+    "Unlicense",
+    "CC0-1.0",
+    "UNKNOWN",
 ]
 
 BUILD_METHODS = [
     ("python-script", "Python script (copy + wrapper)"),
-    ("pip",           "Python package (pip install)"),
-    ("shell",         "Shell script (bash/sh)"),
-    ("npm",           "Node.js (npm install)"),
-    ("cargo",         "Rust (cargo build)"),
-    ("go",            "Go (go build)"),
-    ("make",          "Makefile (make install)"),
-    ("cmake",         "CMake project"),
-    ("ruby",          "Ruby (gem)"),
-    ("perl",          "Perl script"),
-    ("lua",           "Lua script"),
-    ("php",           "PHP script"),
-    ("unknown",       "Other / manual"),
+    ("pip", "Python package (pip install)"),
+    ("shell", "Shell script (bash/sh)"),
+    ("npm", "Node.js (npm install)"),
+    ("cargo", "Rust (cargo build)"),
+    ("go", "Go (go build)"),
+    ("make", "Makefile (make install)"),
+    ("cmake", "CMake project"),
+    ("ruby", "Ruby (gem)"),
+    ("perl", "Perl script"),
+    ("lua", "Lua script"),
+    ("php", "PHP script"),
+    ("unknown", "Other / manual"),
 ]
 
 VERSION_RE = re.compile(r"^\d[\w.\-+]*$")
 
-def TW(): return shutil.get_terminal_size((72, 24)).columns
-def W():  return min(TW(), 76)
+
+def TW():
+    return shutil.get_terminal_size((72, 24)).columns
+
+
+def W():
+    return min(TW(), 76)
+
 
 def strip_ansi(s):
     out, i = "", 0
     while i < len(s):
         if s[i] == "\033":
-            while i < len(s) and s[i] != "m": i += 1
+            while i < len(s) and s[i] != "m":
+                i += 1
         else:
             out += s[i]
         i += 1
     return out
 
-def vlen(s): return len(strip_ansi(s))
+
+def vlen(s):
+    return len(strip_ansi(s))
+
 
 def vcenter(text, width=None):
-    if width is None: width = W()
+    if width is None:
+        width = W()
     pad = max(0, (width - vlen(text)) // 2)
     return " " * pad + text
 
+
 def rule(char="─", color=DIM, width=None):
-    if width is None: width = W()
+    if width is None:
+        width = W()
     print(f"{color}{char * width}{R}")
 
+
 def thick_rule(color=BCYN, width=None):
-    if width is None: width = W()
+    if width is None:
+        width = W()
     print(f"{color}{'━' * width}{R}")
 
-def blank(): print()
+
+def blank():
+    print()
+
 
 def header_bar(title, width=None):
-    if width is None: width = W()
+    if width is None:
+        width = W()
     plain = f"  {title}  "
-    pad   = max(0, width - len(plain))
+    pad = max(0, width - len(plain))
     print(f"{BCYN}{'▄' * width}{R}")
     print(f"{BG_BBLU}{BWHT}{B}  {title}  {R}{BG_BBLU}{' ' * pad}{R}")
     print(f"{BCYN}{'▀' * width}{R}")
+
 
 def subsection(title):
     blank()
     print(f"  {BCYN}{B}>{R} {B}{BWHT}{title}{R}")
     print(f"  {DIM}{'─' * (W() - 2)}{R}")
 
-def info(msg):  print(f"      {DIM}{msg}{R}")
-def ok(msg):    print(f"  {BGRN}{B}OK{R}  {msg}")
-def warn(msg):  print(f"  {BYLW}{B}!!{R}  {msg}")
-def err(msg):   print(f"  {BRED}{B}XX{R}  {msg}", file=sys.stderr)
-def log(msg):   print(f"  {BCYN}{B}::{R} {msg}")
 
-def sep(): rule("─", DIM)
+def info(msg):
+    print(f"      {DIM}{msg}{R}")
+
+
+def ok(msg):
+    print(f"  {BGRN}{B}OK{R}  {msg}")
+
+
+def warn(msg):
+    print(f"  {BYLW}{B}!!{R}  {msg}")
+
+
+def err(msg):
+    print(f"  {BRED}{B}XX{R}  {msg}", file=sys.stderr)
+
+
+def log(msg):
+    print(f"  {BCYN}{B}::{R} {msg}")
+
+
+def sep():
+    rule("─", DIM)
+
 
 def code_line(cmd, indent=4):
     print(f"{' ' * indent}{BYLW}${R} {BCYN}{cmd}{R}")
 
+
 def callout(label, text, style="note"):
     styles = {
-        "note":    (BYLW, "CATATAN"),
-        "tip":     (BGRN, "TIP"),
+        "note": (BYLW, "CATATAN"),
+        "tip": (BGRN, "TIP"),
         "warning": (BRED, "WARNING"),
     }
     col, default_lbl = styles.get(style, styles["note"])
-    lbl  = label or default_lbl
-    w    = W() - 4
+    lbl = label or default_lbl
+    w = W() - 4
     fill = max(0, w - len(lbl) - 5)
     print(f"  {col}╭─[ {B}{lbl}{R}{col} ]{'─' * fill}╮{R}")
     for ln in textwrap.wrap(text, w - 4) or [""]:
@@ -125,15 +174,17 @@ def callout(label, text, style="note"):
         print(f"  {col}│{R}  {ln}{' ' * pad}  {col}│{R}")
     print(f"  {col}╰{'─' * w}╯{R}")
 
+
 def path_box(label, path, color=BCYN):
-    w      = W() - 6
+    w = W() - 6
     dash_w = w + 2
-    lbl    = f" {label} "
-    fill   = max(0, dash_w - len(lbl))
-    pad    = max(0, w - len(path))
+    lbl = f" {label} "
+    fill = max(0, dash_w - len(lbl))
+    pad = max(0, w - len(path))
     print(f"  {DIM}┌{lbl}{'─' * fill}┐{R}")
     print(f"  {DIM}│{R} {color}{path}{R}{' ' * pad} {DIM}│{R}")
     print(f"  {DIM}└{'─' * dash_w}┘{R}")
+
 
 _LOGO = """\
  ████████╗ █████╗ ███████╗
@@ -142,6 +193,7 @@ _LOGO = """\
     ██║   ██╔══██║╚════██║
     ██║   ██║  ██║███████║
     ╚═╝   ╚═╝  ╚═╝╚══════╝"""
+
 
 def banner():
     w = W()
@@ -155,6 +207,7 @@ def banner():
     blank()
     thick_rule(BCYN, w)
     blank()
+
 
 def ask(prompt, default="", validator=None, hint=""):
     while True:
@@ -182,6 +235,7 @@ def ask(prompt, default="", validator=None, hint=""):
                 continue
         return val
 
+
 def ask_optional(prompt, default="", hint=""):
     if hint:
         print(f" {DIM}{IT}{hint}{R}")
@@ -196,6 +250,7 @@ def ask_optional(prompt, default="", hint=""):
         blank()
         sys.exit(130)
     return val if val else default
+
 
 def ask_choice(prompt, choices, default_idx=0):
     blank()
@@ -222,6 +277,7 @@ def ask_choice(prompt, choices, default_idx=0):
         except ValueError:
             pass
         print(f"      {BRED}Enter a number between 1 and {len(choices)}{R}")
+
 
 def ask_license(default="MIT"):
     blank()
@@ -251,6 +307,7 @@ def ask_license(default="MIT"):
                 return val
         print(f"      {BRED}Invalid choice{R}")
 
+
 def ask_yn(prompt, default_yes=True):
     hint = f"{BWHT}Y{R}{DIM}/n{R}" if default_yes else f"{DIM}y/{R}{BWHT}N{R}"
     print(f"\n  {DIM}[{hint}]{R} {prompt} ", end="", flush=True)
@@ -263,6 +320,7 @@ def ask_yn(prompt, default_yes=True):
         return val not in ("n", "no")
     return val in ("y", "yes")
 
+
 def validate_pkg_name(val):
     if not re.match(r"^[a-z0-9][a-z0-9\-]*$", val):
         return "Package name must be lowercase letters, numbers, and hyphens only."
@@ -270,15 +328,18 @@ def validate_pkg_name(val):
         return "Package name must be at least 2 characters."
     return None
 
+
 def validate_version(val):
     if not VERSION_RE.match(val):
         return "Version must start with a digit (e.g. 1.0.0, 2.3.4-rc1). No 'v' prefix."
     return None
 
+
 def validate_url(val):
     if not (val.startswith("http://") or val.startswith("https://")):
         return "URL must start with http:// or https://"
     return None
+
 
 def validate_sha256(val):
     if val.upper() == "SKIP":
@@ -287,17 +348,17 @@ def validate_sha256(val):
         return "SHA256 must be 64 hex characters or 'SKIP'."
     return None
 
+
 def _http_get(url, timeout=TIMEOUT):
     try:
         req = urllib.request.Request(
-            url,
-            headers={"User-Agent": "tas-scaffold/1.0",
-                     "Accept": "application/vnd.github+json"}
+            url, headers={"User-Agent": "tas-scaffold/1.0", "Accept": "application/vnd.github+json"}
         )
         with urllib.request.urlopen(req, timeout=timeout) as r:
             return r.read().decode("utf-8", errors="replace")
     except Exception:
         return None
+
 
 def fetch_github_meta(repo_url):
     m = re.match(r"https://github\.com/([^/]+)/([^/\s]+?)(?:\.git)?$", repo_url)
@@ -319,10 +380,9 @@ def fetch_github_meta(repo_url):
         return {}
 
     result = {}
-    result["name"]        = re.sub(r"[^a-z0-9\-]", "-",
-                                   data.get("name", repo).lower()).strip("-")
+    result["name"] = re.sub(r"[^a-z0-9\-]", "-", data.get("name", repo).lower()).strip("-")
     result["description"] = data.get("description") or ""
-    result["homepage"]    = data.get("homepage") or repo_url
+    result["homepage"] = data.get("homepage") or repo_url
     if not result["homepage"] or result["homepage"] == "null":
         result["homepage"] = repo_url
 
@@ -340,7 +400,7 @@ def fetch_github_meta(repo_url):
             tag = rel.get("tag_name", "")
             if tag:
                 result["version"] = tag.lstrip("v")
-                result["srcurl"]  = f"{repo_url}/archive/refs/tags/{tag}.tar.gz"
+                result["srcurl"] = f"{repo_url}/archive/refs/tags/{tag}.tar.gz"
                 ok(f"Latest release: {tag}")
                 return result
         except Exception:
@@ -354,7 +414,7 @@ def fetch_github_meta(repo_url):
                 tag = tags[0].get("name", "")
                 if tag:
                     result["version"] = tag.lstrip("v")
-                    result["srcurl"]  = f"{repo_url}/archive/refs/tags/{tag}.tar.gz"
+                    result["srcurl"] = f"{repo_url}/archive/refs/tags/{tag}.tar.gz"
                     ok(f"No release found, using latest tag: {tag}")
                     return result
         except Exception:
@@ -370,27 +430,25 @@ def fetch_github_meta(repo_url):
             if sha:
                 date_tag = commit_date[:10].replace("-", "") if commit_date else "unknown"
                 result["version"] = f"0.0.0+{sha[:7]}"
-                result["srcurl"]  = f"{repo_url}/archive/{sha}.tar.gz"
+                result["srcurl"] = f"{repo_url}/archive/{sha}.tar.gz"
                 info(f"Pinned to commit {sha[:7]} ({date_tag})")
                 return result
         except Exception:
             pass
 
     result["version"] = "0.0.0"
-    result["srcurl"]  = f"{repo_url}/archive/refs/heads/{default_branch}.tar.gz"
-    warn(f"Could not resolve a release, tag, or commit SHA — "
-         f"falling back to floating branch '{default_branch}'.")
+    result["srcurl"] = f"{repo_url}/archive/refs/heads/{default_branch}.tar.gz"
+    warn(f"Could not resolve a release, tag, or commit SHA — falling back to floating branch '{default_branch}'.")
     warn("This package will need manual re-pinning before it's safe to trust long-term.")
 
     return result
 
+
 def compute_sha256_from_url(url):
-    log(f"Downloading to compute SHA256...")
+    log("Downloading to compute SHA256...")
     info(url)
     try:
-        req = urllib.request.Request(
-            url, headers={"User-Agent": "tas-scaffold/1.0"}
-        )
+        req = urllib.request.Request(url, headers={"User-Agent": "tas-scaffold/1.0"})
         h = hashlib.sha256()
         total = 0
         with urllib.request.urlopen(req, timeout=30) as r:
@@ -408,13 +466,15 @@ def compute_sha256_from_url(url):
         warn(f"Download failed: {e}")
         return None
 
+
 def _wrap_quoted(val):
     if " " in val:
         return f'"{val}"'
     return val
 
+
 INSTALL_TEMPLATES = {
-    "python-script": '''\
+    "python-script": """\
 termux_step_make_install() {{
     local libdir="$TERMUX_PREFIX/lib/{pkg}"
     mkdir -p "$libdir"
@@ -431,17 +491,15 @@ cd "/data/data/com.termux/files/usr/lib/{pkg}" || exit 1
 exec python3 "/data/data/com.termux/files/usr/lib/{pkg}/{entrypoint}" "$@"
 WRAPPER
     chmod 0755 "$TERMUX_PREFIX/bin/{pkg}"
-}}''',
-
-    "pip": '''\
+}}""",
+    "pip": """\
 termux_step_make_install() {{
     pip install --quiet setuptools wheel --break-system-packages 2>/dev/null || true
     pip install . --prefix="$TERMUX_PREFIX" --no-deps --break-system-packages 2>/dev/null \\
         || pip install . --prefix="$TERMUX_PREFIX" --no-deps --no-build-isolation \\
                --break-system-packages
-}}''',
-
-    "shell": '''\
+}}""",
+    "shell": """\
 termux_step_make_install() {{
     local libdir="$TERMUX_PREFIX/lib/{pkg}"
     mkdir -p "$libdir"
@@ -453,48 +511,41 @@ termux_step_make_install() {{
 exec bash "/data/data/com.termux/files/usr/lib/{pkg}/{entrypoint}" "$@"
 WRAPPER
     chmod 0755 "$TERMUX_PREFIX/bin/{pkg}"
-}}''',
-
-    "npm": '''\
+}}""",
+    "npm": """\
 termux_step_make_install() {{
     npm install --prefix "$TERMUX_PREFIX" -g .
-}}''',
-
-    "cargo": '''\
+}}""",
+    "cargo": """\
 termux_step_make_install() {{
     cargo install --locked --path . --root "$TERMUX_PREFIX"
-}}''',
-
-    "go": '''\
+}}""",
+    "go": """\
 termux_step_make_install() {{
     export GOPATH="$PWD/gopath"
     export GOPROXY="https://proxy.golang.org,direct"
     go mod tidy 2>/dev/null || true
     go build -v -o "$TERMUX_PREFIX/bin/{pkg}" .
-}}''',
-
-    "make": '''\
+}}""",
+    "make": """\
 termux_step_make() {{
     make -j"$(nproc)" PREFIX="$TERMUX_PREFIX"
 }}
 
 termux_step_make_install() {{
     make install PREFIX="$TERMUX_PREFIX"
-}}''',
-
+}}""",
     "cmake": '''\
 TERMUX_PKG_EXTRA_CONFIGURE_ARGS="
     -DCMAKE_BUILD_TYPE=Release
     -DCMAKE_INSTALL_PREFIX=$TERMUX_PREFIX
 "''',
-
-    "ruby": '''\
+    "ruby": """\
 termux_step_make_install() {{
     ls *.gemspec 2>/dev/null && gem build *.gemspec && gem install --local *.gem --no-document \\
         || {{ mkdir -p "$TERMUX_PREFIX/lib/{pkg}"; cp -r . "$TERMUX_PREFIX/lib/{pkg}/"; }}
-}}''',
-
-    "perl": '''\
+}}""",
+    "perl": """\
 termux_step_make_install() {{
     local libdir="$TERMUX_PREFIX/lib/{pkg}"
     mkdir -p "$libdir"
@@ -504,14 +555,12 @@ termux_step_make_install() {{
 exec perl "/data/data/com.termux/files/usr/lib/{pkg}/{entrypoint}" "$@"
 WRAPPER
     chmod 0755 "$TERMUX_PREFIX/bin/{pkg}"
-}}''',
-
-    "lua": '''\
+}}""",
+    "lua": """\
 termux_step_make_install() {{
     install -Dm755 "{entrypoint}" "$TERMUX_PREFIX/bin/{pkg}"
-}}''',
-
-    "php": '''\
+}}""",
+    "php": """\
 termux_step_make_install() {{
     mkdir -p "$TERMUX_PREFIX/lib/{pkg}"
     cp -r . "$TERMUX_PREFIX/lib/{pkg}/"
@@ -520,82 +569,82 @@ termux_step_make_install() {{
 exec php "/data/data/com.termux/files/usr/lib/{pkg}/{entrypoint}" "$@"
 WRAPPER
     chmod 0755 "$TERMUX_PREFIX/bin/{pkg}"
-}}''',
-
-    "unknown": '''\
+}}""",
+    "unknown": """\
 termux_step_make_install() {{
     # TODO: implement install steps
     echo "Placeholder -- edit this function"
     mkdir -p "$TERMUX_PREFIX/lib/{pkg}"
     cp -r . "$TERMUX_PREFIX/lib/{pkg}/"
-}}''',
+}}""",
 }
 
 DEPENDS_FOR_METHOD = {
     "python-script": "python",
-    "pip":           "python, python-pip",
-    "npm":           "nodejs",
-    "cargo":         "rust",
-    "go":            "golang",
-    "ruby":          "ruby",
-    "perl":          "perl",
-    "lua":           "lua54",
-    "php":           "php",
-    "cmake":         "libandroid-support",
+    "pip": "python, python-pip",
+    "npm": "nodejs",
+    "cargo": "rust",
+    "go": "golang",
+    "ruby": "ruby",
+    "perl": "perl",
+    "lua": "lua54",
+    "php": "php",
+    "cmake": "libandroid-support",
 }
 
 _METHOD_SIGNALS = [
-    ("Cargo.toml",      "cargo"),
-    ("go.mod",          "go"),
-    ("package.json",    "npm"),
-    ("pyproject.toml",  "pip"),
-    ("setup.py",        "pip"),
-    ("setup.cfg",       "pip"),
-    ("CMakeLists.txt",  "cmake"),
-    ("Makefile",        "make"),
-    ("makefile",        "make"),
-    ("GNUmakefile",     "make"),
-    ("Gemfile",         "ruby"),
-    ("*.gemspec",       "ruby"),
+    ("Cargo.toml", "cargo"),
+    ("go.mod", "go"),
+    ("package.json", "npm"),
+    ("pyproject.toml", "pip"),
+    ("setup.py", "pip"),
+    ("setup.cfg", "pip"),
+    ("CMakeLists.txt", "cmake"),
+    ("Makefile", "make"),
+    ("makefile", "make"),
+    ("GNUmakefile", "make"),
+    ("Gemfile", "ruby"),
+    ("*.gemspec", "ruby"),
 ]
 
 _SCRIPT_EXT = {
-    ".py":  "python-script",
-    ".sh":  "shell",
+    ".py": "python-script",
+    ".sh": "shell",
     ".bash": "shell",
-    ".pl":  "perl",
+    ".pl": "perl",
     ".lua": "lua",
     ".php": "php",
 }
 
 _SHEBANG_METHOD = [
     ("python", "python-script"),
-    ("bash",   "shell"),
-    ("/sh",    "shell"),
+    ("bash", "shell"),
+    ("/sh", "shell"),
     ("env sh", "shell"),
-    ("perl",   "perl"),
-    ("lua",    "lua"),
-    ("php",    "php"),
+    ("perl", "perl"),
+    ("lua", "lua"),
+    ("php", "php"),
 ]
+
 
 def _repo_parts(repo_url):
     m = re.match(r"https://github\.com/([^/]+)/([^/\s]+?)(?:\.git)?/?$", repo_url)
     return (m.group(1), m.group(2)) if m else (None, None)
 
+
 def fetch_repo_tree(repo_url, default_branch="main"):
     owner, repo = _repo_parts(repo_url)
     if not owner:
         return None
-    body = _http_get(
-        f"https://api.github.com/repos/{owner}/{repo}/git/trees/{default_branch}")
+    body = _http_get(f"https://api.github.com/repos/{owner}/{repo}/git/trees/{default_branch}")
     if not body:
         return None
     try:
         tree = json.loads(body).get("tree", [])
     except Exception:
         return None
-    return [{"path": t["path"], "size": t.get("size", 0)}
-            for t in tree if t.get("type") == "blob"]
+    return [{"path": t["path"], "size": t.get("size", 0)} for t in tree if t.get("type") == "blob"]
+
 
 def _sniff_shebang(repo_url, branch, path):
     owner, repo = _repo_parts(repo_url)
@@ -610,6 +659,7 @@ def _sniff_shebang(repo_url, branch, path):
             return method
     return None
 
+
 def detect_entrypoints(repo_url, branch, files):
     found = []
     for f in files:
@@ -617,28 +667,46 @@ def detect_entrypoints(repo_url, branch, files):
         ext = os.path.splitext(name)[1].lower()
         if ext in _SCRIPT_EXT:
             found.append((name, _SCRIPT_EXT[ext]))
-        elif ext == "" and name.isascii() and 0 < f["size"] < 500_000 \
-                and not name.upper().startswith(("LICENSE", "README", "MAKEFILE",
-                                                 "DOCKERFILE", "CHANGELOG",
-                                                 "AUTHORS", "CODEOWNERS")):
+        elif (
+            ext == ""
+            and name.isascii()
+            and 0 < f["size"] < 500_000
+            and not name.upper().startswith(
+                ("LICENSE", "README", "MAKEFILE", "DOCKERFILE", "CHANGELOG", "AUTHORS", "CODEOWNERS")
+            )
+        ):
             m = _sniff_shebang(repo_url, branch, name)
             if m:
                 found.append((name, m))
     return found
 
+
 def rank_entrypoints(found, pkg):
-    preferred = [f"{pkg}", f"{pkg}.py", f"{pkg}.sh", "main.py", "main.sh",
-                 "run", "run.sh", "start", "start.sh", "app.py", "cli.py"]
+    preferred = [
+        f"{pkg}",
+        f"{pkg}.py",
+        f"{pkg}.sh",
+        "main.py",
+        "main.sh",
+        "run",
+        "run.sh",
+        "start",
+        "start.sh",
+        "app.py",
+        "cli.py",
+    ]
+
     def score(item):
         n = item[0]
         for i, p in enumerate(preferred):
             if n == p:
                 return i
-        if n.lower() in ("setup.py", "install", "install.sh", "uninstall.sh",
-                         "conftest.py"):
+        if n.lower() in ("setup.py", "install", "install.sh", "uninstall.sh", "conftest.py"):
             return 900
         return 100
+
     return sorted(found, key=score)
+
 
 def detect_method_from_github(repo_url, default_branch="main", files=None):
     if files is None:
@@ -661,11 +729,11 @@ def detect_method_from_github(repo_url, default_branch="main", files=None):
 
 
 def build_sh_content(data):
-    pkg        = data["name"]
-    method     = data["method"]
+    pkg = data["name"]
+    method = data["method"]
     entrypoint = data.get("entrypoint", f"{pkg}.py")
 
-    template   = INSTALL_TEMPLATES.get(method, INSTALL_TEMPLATES["unknown"])
+    template = INSTALL_TEMPLATES.get(method, INSTALL_TEMPLATES["unknown"])
     install_fn = template.format(pkg=pkg, entrypoint=entrypoint)
 
     base_dep = DEPENDS_FOR_METHOD.get(method, "")
@@ -689,14 +757,14 @@ def build_sh_content(data):
     if all_deps:
         lines.append(f'TERMUX_PKG_DEPENDS="{all_deps}"')
 
-    if method in ("python-script", "pip", "shell", "npm", "ruby", "perl",
-                  "lua", "php", "unknown"):
+    if method in ("python-script", "pip", "shell", "npm", "ruby", "perl", "lua", "php", "unknown"):
         lines.append("TERMUX_PKG_BUILD_IN_SRC=true")
 
     lines.append("")
     lines.append(install_fn)
 
     return "\n".join(lines) + "\n"
+
 
 def find_packages_dir():
     candidates = [
@@ -709,12 +777,13 @@ def find_packages_dir():
             return p
     return Path("packages")
 
+
 def main():
     args = sys.argv[1:]
 
     banner()
 
-    prefill_url  = ""
+    prefill_url = ""
     prefill_name = ""
     if "--from" in args:
         idx = args.index("--from")
@@ -726,10 +795,11 @@ def main():
     subsection("Step 1  --  Source Repository (optional)")
     blank()
 
-    callout("TIP",
-            "If you provide a GitHub URL, metadata (description, license, "
-            "version, SHA256) will be fetched automatically.",
-            "tip")
+    callout(
+        "TIP",
+        "If you provide a GitHub URL, metadata (description, license, version, SHA256) will be fetched automatically.",
+        "tip",
+    )
     blank()
 
     github_url = ask_optional(
@@ -813,7 +883,7 @@ def main():
 
     if want_auto:
         actual_url = srcurl.replace("${TERMUX_PKG_VERSION}", version)
-        computed   = compute_sha256_from_url(actual_url)
+        computed = compute_sha256_from_url(actual_url)
         if computed:
             ok(f"SHA256: {computed}")
             sha256 = computed
@@ -837,9 +907,9 @@ def main():
 
     _detected_method = None
     _detected_signal = None
-    _default_branch  = "main"
-    _repo_files      = None
-    _candidates      = []
+    _default_branch = "main"
+    _repo_files = None
+    _candidates = []
     if github_url and meta:
         _owner, _repo = _repo_parts(github_url)
         if _owner:
@@ -854,21 +924,20 @@ def main():
             _repo_files = fetch_repo_tree(github_url, _default_branch)
             if _repo_files is not None:
                 _detected_method, _detected_signal = detect_method_from_github(
-                    github_url, _default_branch, files=_repo_files)
+                    github_url, _default_branch, files=_repo_files
+                )
                 if _detected_method:
                     ok(f"Detected: {BCYN}{_detected_method}{R}  {DIM}(found {_detected_signal}){R}")
                 else:
                     _candidates = rank_entrypoints(
-                        detect_entrypoints(github_url, _default_branch, _repo_files),
-                        pkg_name)
+                        detect_entrypoints(github_url, _default_branch, _repo_files), pkg_name
+                    )
                     if _candidates:
                         _detected_method = _candidates[0][1]
-                        ok(f"Detected: {BCYN}{_detected_method}{R}  "
-                           f"{DIM}(found script {_candidates[0][0]}){R}")
+                        ok(f"Detected: {BCYN}{_detected_method}{R}  {DIM}(found script {_candidates[0][0]}){R}")
                     else:
                         warn("No build files or runnable script found in the repo root.")
-                        info("Files in repo root: " +
-                             ", ".join(f["path"] for f in _repo_files[:12]))
+                        info("Files in repo root: " + ", ".join(f["path"] for f in _repo_files[:12]))
                         info("Choose 'Other / manual' and edit build.sh afterwards.")
             else:
                 warn("Could not read the repo file list — pick the method manually.")
@@ -897,16 +966,14 @@ def main():
         blank()
         ext_map = {
             "python-script": f"{pkg_name}.py",
-            "shell":         f"{pkg_name}.sh",
-            "perl":          f"{pkg_name}.pl",
-            "lua":           f"{pkg_name}.lua",
-            "php":           f"{pkg_name}.php",
+            "shell": f"{pkg_name}.sh",
+            "perl": f"{pkg_name}.pl",
+            "lua": f"{pkg_name}.lua",
+            "php": f"{pkg_name}.php",
         }
 
         if _repo_files is not None and not _candidates:
-            _candidates = rank_entrypoints(
-                detect_entrypoints(github_url, _default_branch, _repo_files),
-                pkg_name)
+            _candidates = rank_entrypoints(detect_entrypoints(github_url, _default_branch, _repo_files), pkg_name)
         _same = [c for c in _candidates if c[1] == method] or _candidates
 
         _default_entry = ext_map.get(method, f"{pkg_name}")
@@ -926,10 +993,8 @@ def main():
             )
             if _root_names is None or entrypoint in _root_names:
                 break
-            warn(f"'{entrypoint}' does NOT exist in the repo root — "
-                 "the build would fail.")
-            if not ask_yn("Use it anyway? (e.g. file is in a subfolder)",
-                          default_yes=False):
+            warn(f"'{entrypoint}' does NOT exist in the repo root — the build would fail.")
+            if not ask_yn("Use it anyway? (e.g. file is in a subfolder)", default_yes=False):
                 blank()
                 continue
             break
@@ -939,11 +1004,13 @@ def main():
             print(f"  {DIM}  Step 5 skipped — entrypoint not needed for {BCYN}{method}{DIM} builds.{R}")
             blank()
         elif method == "unknown":
-            callout("NOTE",
-                    "build.sh will contain a placeholder install step. Open "
-                    f"packages/{pkg_name}/build.sh and edit "
-                    "termux_step_make_install() before building.",
-                    "warning")
+            callout(
+                "NOTE",
+                "build.sh will contain a placeholder install step. Open "
+                f"packages/{pkg_name}/build.sh and edit "
+                "termux_step_make_install() before building.",
+                "warning",
+            )
             blank()
 
     subsection("Step 6  --  Additional Dependencies (optional)")
@@ -963,17 +1030,17 @@ def main():
     blank()
 
     fields = [
-        ("name",        pkg_name),
+        ("name", pkg_name),
         ("description", description),
-        ("homepage",    homepage),
-        ("license",     license_),
-        ("maintainer",  maintainer),
-        ("version",     version),
-        ("srcurl",      srcurl),
-        ("sha256",      sha256[:16] + "..." if len(sha256) == 64 else sha256),
-        ("method",      method),
-        ("entrypoint",  entrypoint),
-        ("extra deps",  extra_dep or "(none)"),
+        ("homepage", homepage),
+        ("license", license_),
+        ("maintainer", maintainer),
+        ("version", version),
+        ("srcurl", srcurl),
+        ("sha256", sha256[:16] + "..." if len(sha256) == 64 else sha256),
+        ("method", method),
+        ("entrypoint", entrypoint),
+        ("extra deps", extra_dep or "(none)"),
     ]
     lw = max(len(f[0]) for f in fields) + 2
     print(f"  {DIM}┌{'─' * (W() - 4)}┐{R}")
@@ -990,22 +1057,22 @@ def main():
         sys.exit(0)
 
     data = {
-        "name":        pkg_name,
+        "name": pkg_name,
         "description": description,
-        "homepage":    homepage,
-        "license":     license_,
-        "maintainer":  maintainer,
-        "version":     version,
-        "srcurl":      srcurl,
-        "sha256":      sha256,
-        "method":      method,
-        "entrypoint":  entrypoint,
-        "depends":     extra_dep,
+        "homepage": homepage,
+        "license": license_,
+        "maintainer": maintainer,
+        "version": version,
+        "srcurl": srcurl,
+        "sha256": sha256,
+        "method": method,
+        "entrypoint": entrypoint,
+        "depends": extra_dep,
     }
 
     packages_dir = find_packages_dir()
-    pkg_dir      = packages_dir / pkg_name
-    build_sh     = pkg_dir / "build.sh"
+    pkg_dir = packages_dir / pkg_name
+    build_sh = pkg_dir / "build.sh"
 
     pkg_dir.mkdir(parents=True, exist_ok=True)
     content = build_sh_content(data)
@@ -1023,7 +1090,7 @@ def main():
 
     subsection("build.sh preview")
     blank()
-    w      = W() - 6
+    w = W() - 6
     dash_w = w + 2
     print(f"  {DIM}┌ build.sh {'─' * (dash_w - 10)}┐{R}")
     for line in content.splitlines():
@@ -1047,15 +1114,15 @@ def main():
     code_line(f"./termux-build check-pr {pkg_name}")
     code_line(f"./build-package.sh {pkg_name}")
     blank()
-    callout("TIP",
-            "Run './termux-build lint <name>' to validate your build.sh before submitting a PR.",
-            "tip")
+    callout("TIP", "Run './termux-build lint <name>' to validate your build.sh before submitting a PR.", "tip")
     if method in ("python-script", "shell", "perl", "lua", "php"):
-        callout("WARNING",
-                f"Make sure \'{entrypoint}\' actually exists in the repo root. "
-                "If the build fails, the entrypoint may be wrong or the repo uses "
-                "a different build system (e.g. \'cargo\' for Rust, \'pip\' for Python packages).",
-                "warning")
+        callout(
+            "WARNING",
+            f"Make sure '{entrypoint}' actually exists in the repo root. "
+            "If the build fails, the entrypoint may be wrong or the repo uses "
+            "a different build system (e.g. 'cargo' for Rust, 'pip' for Python packages).",
+            "warning",
+        )
         blank()
 
     blank()

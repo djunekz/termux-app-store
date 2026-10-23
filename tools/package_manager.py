@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 import json
 import os
-import subprocess
-import urllib.request
-import urllib.error
-import time
 import platform
+import subprocess
+import time
+import urllib.error
+import urllib.request
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
@@ -21,7 +21,7 @@ _INDEX_BRANCHES = [
 
 _INDEX_URL_OVERRIDE = os.getenv("TERMUX_APP_STORE_INDEX_URL")
 if _INDEX_URL_OVERRIDE:
-    GITHUB_INDEX_URLS = [_INDEX_URL_OVERRIDE] # pragma: no cover
+    GITHUB_INDEX_URLS = [_INDEX_URL_OVERRIDE]  # pragma: no cover
 else:
     GITHUB_INDEX_URLS = [
         f"https://raw.githubusercontent.com/{GITHUB_REPO}/{branch}/tools/index.json"
@@ -35,17 +35,18 @@ CACHE_TTL = 6 * 3600
 
 PREFIX = os.environ.get("PREFIX", "/data/data/com.termux/files/usr")
 
+
 def get_architecture() -> str:
     arch = platform.machine().lower()
     arch_map = {
-        'aarch64': 'aarch64',
-        'armv7l': 'arm',
-        'armv8l': 'arm',
-        'x86_64': 'x86_64',
-        'i686': 'i686',
-        'i386': 'i686',
+        "aarch64": "aarch64",
+        "armv7l": "arm",
+        "armv8l": "arm",
+        "x86_64": "x86_64",
+        "i686": "i686",
+        "i386": "i686",
     }
-    return arch_map.get(arch, 'unknown')
+    return arch_map.get(arch, "unknown")
 
 
 def download_file(url: str, destination: Path, timeout: int = 30) -> bool:
@@ -119,7 +120,6 @@ class PackageSource:
 
 
 class PackageManager:
-
     def __init__(self, packages_dir: Optional[Path] = None):
         self.packages_dir = packages_dir
         self.mode = PackageSource.detect_mode(packages_dir)
@@ -195,35 +195,35 @@ class PackageManager:
                     line = line.strip()
 
                     if line.startswith("TERMUX_PKG_DESCRIPTION="):
-                        val = line.split("=", 1)[1].strip().strip('"\'')
+                        val = line.split("=", 1)[1].strip().strip("\"'")
                         data["desc"] = val
                         data["description"] = val
 
                     elif line.startswith("TERMUX_PKG_VERSION="):
-                        data["version"] = line.split("=", 1)[1].strip().strip('"\'')
+                        data["version"] = line.split("=", 1)[1].strip().strip("\"'")
 
                     elif line.startswith("TERMUX_PKG_DEPENDS="):
-                        deps_str = line.split("=", 1)[1].strip().strip('"\'')
+                        deps_str = line.split("=", 1)[1].strip().strip("\"'")
                         data["deps"] = deps_str
                         data["depends"] = [d.strip() for d in deps_str.split(",") if d.strip()]
 
                     elif line.startswith("TERMUX_PKG_MAINTAINER="):
-                        data["maintainer"] = line.split("=", 1)[1].strip().strip('"\'')
+                        data["maintainer"] = line.split("=", 1)[1].strip().strip("\"'")
 
                     elif line.startswith("TERMUX_PKG_HOMEPAGE="):
-                        data["homepage"] = line.split("=", 1)[1].strip().strip('"\'')
+                        data["homepage"] = line.split("=", 1)[1].strip().strip("\"'")
 
                     elif line.startswith("TERMUX_PKG_LICENSE="):
-                        data["license"] = line.split("=", 1)[1].strip().strip('"\'')
+                        data["license"] = line.split("=", 1)[1].strip().strip("\"'")
 
                     elif line.startswith("TERMUX_PKG_SRCURL="):
-                        data["srcurl"] = line.split("=", 1)[1].strip().strip('"\'')
+                        data["srcurl"] = line.split("=", 1)[1].strip().strip("\"'")
 
                     elif line.startswith("TERMUX_PKG_SHA256="):
-                        data["sha256"] = line.split("=", 1)[1].strip().strip('"\'')
+                        data["sha256"] = line.split("=", 1)[1].strip().strip("\"'")
 
-        except Exception as e: # pragma: no cover
-            print(f"[WARNING] Failed to parse {build_sh}: {e}") # pragma: no cover
+        except Exception as e:  # pragma: no cover
+            print(f"[WARNING] Failed to parse {build_sh}: {e}")  # pragma: no cover
 
         return data
 
@@ -313,7 +313,7 @@ class AppUpdateChecker:
     def get_latest_version() -> Optional[str]:
         data = fetch_json(GITHUB_API_LATEST)
         if data and "tag_name" in data:
-            return data["tag_name"].lstrip('v')
+            return data["tag_name"].lstrip("v")
         return None
 
     @staticmethod
@@ -347,17 +347,19 @@ class AppUpdateChecker:
         target = Path(PREFIX) / "bin" / "termux-app-store"
         try:
             import shutil
+
             shutil.move(str(temp_file), str(target))
             print(f"[✔] Successfully upgraded to v{latest_version}!")
-            print(f"    Restart termux-app-store to use the new version.")
+            print("    Restart termux-app-store to use the new version.")
             return True
         except Exception as e:
             print(f"[ERROR] Failed to install: {e}")
             return False
 
+
 __all__ = [
-    'PackageManager',
-    'AppUpdateChecker',
-    'APP_VERSION',
-    'compare_versions',
+    "PackageManager",
+    "AppUpdateChecker",
+    "APP_VERSION",
+    "compare_versions",
 ]

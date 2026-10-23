@@ -2,7 +2,6 @@ from conftest import make_build_sh, make_valid_root
 
 
 class TestMakeBuildSh:
-
     def test_creates_pkg_dir(self, tmp_path):
         pkg_dir = make_build_sh(tmp_path, "mypkg", {})
         assert pkg_dir.exists()
@@ -14,10 +13,14 @@ class TestMakeBuildSh:
         assert build_sh.exists()
 
     def test_fields_written_to_build_sh(self, tmp_path):
-        make_build_sh(tmp_path, "mypkg", {
-            "TERMUX_PKG_VERSION": "2.0.0",
-            "TERMUX_PKG_DESCRIPTION": "A cool tool",
-        })
+        make_build_sh(
+            tmp_path,
+            "mypkg",
+            {
+                "TERMUX_PKG_VERSION": "2.0.0",
+                "TERMUX_PKG_DESCRIPTION": "A cool tool",
+            },
+        )
         content = (tmp_path / "packages" / "mypkg" / "build.sh").read_text()
         assert 'TERMUX_PKG_VERSION="2.0.0"' in content
         assert 'TERMUX_PKG_DESCRIPTION="A cool tool"' in content
@@ -39,7 +42,6 @@ class TestMakeBuildSh:
 
 
 class TestMakeValidRoot:
-
     def test_creates_packages_dir(self, tmp_path):
         make_valid_root(tmp_path)
         assert (tmp_path / "packages").exists()
@@ -70,7 +72,6 @@ class TestMakeValidRoot:
 
 
 class TestFixtures:
-
     def test_tmp_root_fixture(self, tmp_root):
         assert (tmp_root / "packages").exists()
         assert (tmp_root / "build-package.sh").exists()

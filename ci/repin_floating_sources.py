@@ -40,30 +40,43 @@ import re
 import sys
 import tempfile
 import time
-import urllib.request
 import urllib.error
+import urllib.request
 from pathlib import Path
 
 PACKAGES_DIR = Path("packages")
 TIMEOUT = 20
 FLOATING_RE = re.compile(r"archive/refs/heads/")
 
-R      = "\033[0m"
-B      = "\033[1m"
-DIM    = "\033[2m"
-GREEN  = "\033[92m"
+R = "\033[0m"
+B = "\033[1m"
+DIM = "\033[2m"
+GREEN = "\033[92m"
 YELLOW = "\033[93m"
-CYAN   = "\033[96m"
-RED    = "\033[91m"
+CYAN = "\033[96m"
+RED = "\033[91m"
 
 TOKEN = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN")
 
 
-def ok(msg):    print(f"  {GREEN}✓{R}  {msg}")
-def info(msg):  print(f"  {CYAN}→{R}  {msg}")
-def warn(msg):  print(f"  {YELLOW}!{R}  {msg}")
-def err(msg):   print(f"  {RED}✗{R}  {msg}")
-def header(msg):print(f"\n{CYAN}{B}{'─'*54}{R}\n{B}{msg}{R}")
+def ok(msg):
+    print(f"  {GREEN}✓{R}  {msg}")
+
+
+def info(msg):
+    print(f"  {CYAN}→{R}  {msg}")
+
+
+def warn(msg):
+    print(f"  {YELLOW}!{R}  {msg}")
+
+
+def err(msg):
+    print(f"  {RED}✗{R}  {msg}")
+
+
+def header(msg):
+    print(f"\n{CYAN}{B}{'─' * 54}{R}\n{B}{msg}{R}")
 
 
 def http_get(url: str) -> str | None:
@@ -89,7 +102,7 @@ def http_get(url: str) -> str | None:
 
 
 def parse_var(build_sh: Path, var: str) -> str:
-    pattern = re.compile(rf'^{var}=(.+)$', re.MULTILINE)
+    pattern = re.compile(rf"^{var}=(.+)$", re.MULTILINE)
     content = build_sh.read_text(encoding="utf-8")
     m = pattern.search(content)
     if not m:
@@ -196,7 +209,7 @@ def apply_changes(build_sh: Path, new_version: str, new_srcurl: str, new_sha256:
     content = build_sh.read_text(encoding="utf-8")
 
     def replace_var(content: str, var: str, new_val: str) -> str:
-        pattern = re.compile(rf'^{var}=.+$', re.MULTILINE)
+        pattern = re.compile(rf"^{var}=.+$", re.MULTILINE)
         return pattern.sub(f"{var}={new_val}", content, count=1)
 
     content = replace_var(content, "TERMUX_PKG_VERSION", new_version)
@@ -287,9 +300,9 @@ def main():
         results[status].append(pkg)
         time.sleep(0.5)  # be polite to the GitHub API
 
-    print(f"\n{CYAN}{B}{'═'*30}{R}")
+    print(f"\n{CYAN}{B}{'═' * 30}{R}")
     print(f"{CYAN}{B}Summary{R}")
-    print(f"{'─'*30}")
+    print(f"{'─' * 30}")
     if apply:
         print(f"  {GREEN}✓  Fixed        : {len(results['fixed'])}{R}")
     else:

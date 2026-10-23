@@ -9,10 +9,10 @@ import sys
 import tempfile
 import threading
 import time
-import urllib.request
 import urllib.error
+import urllib.request
 from pathlib import Path
-from typing import Optional, Callable
+from typing import Callable, Optional
 
 try:
     from . import store_common as _common
@@ -21,46 +21,50 @@ except ImportError:
         import store_common as _common
     except ImportError:
         import importlib.util as _ilu
-        _spec = _ilu.spec_from_file_location(
-            "store_common", Path(__file__).resolve().with_name("store_common.py")
-        )
+
+        _spec = _ilu.spec_from_file_location("store_common", Path(__file__).resolve().with_name("store_common.py"))
         _common = _ilu.module_from_spec(_spec)
         sys.modules["store_common"] = _common
         _spec.loader.exec_module(_common)
 
-GITHUB_REPO   = _common.GITHUB_REPO
-CACHE_BASE    = Path(os.environ.get("XDG_CACHE_HOME", Path.home() / ".cache")) / "termux-app-store"
+GITHUB_REPO = _common.GITHUB_REPO
+CACHE_BASE = Path(os.environ.get("XDG_CACHE_HOME", Path.home() / ".cache")) / "termux-app-store"
 DEB_CACHE_DIR = CACHE_BASE / "debs"
-MIRROR_CACHE  = CACHE_BASE / "best-mirror.json"
-INDEX_CACHE   = CACHE_BASE / "index.json"
+MIRROR_CACHE = CACHE_BASE / "best-mirror.json"
+INDEX_CACHE = CACHE_BASE / "index.json"
 
-MIRROR_TTL    = 86400   # 24 hours
-DEB_TTL       = 604800  # 7 days
-INDEX_TTL     = 3600    # 1 hours
+MIRROR_TTL = 86400  # 24 hours
+DEB_TTL = 604800  # 7 days
+INDEX_TTL = 3600  # 1 hours
 
 MIRRORS = _common.MIRRORS
 
 DEB_PATH_PATTERN = "pool/main/{pkg}_{version}_{arch}.deb"
 
 SHA256_SIDECAR_URL = (
-    f"https://raw.githubusercontent.com/{GITHUB_REPO}/gh-pages/pool/main/"
-    "{pkg}_{version}_{arch}.deb.sha256"
+    f"https://raw.githubusercontent.com/{GITHUB_REPO}/gh-pages/pool/main/{{pkg}}_{{version}}_{{arch}}.deb.sha256"
 )
 
-_SAFE_PKG   = _common.PKG_NAME_RE
-_SAFE_VER   = re.compile(r"^[A-Za-z0-9][A-Za-z0-9.+~:-]*$")
-_SAFE_ARCH  = re.compile(r"^[a-z0-9_]+$")
+_SAFE_PKG = _common.PKG_NAME_RE
+_SAFE_VER = re.compile(r"^[A-Za-z0-9][A-Za-z0-9.+~:-]*$")
+_SAFE_ARCH = re.compile(r"^[a-z0-9_]+$")
 
 INDEX_URLS = _common.index_urls()
 
 CACHE_BASE.mkdir(parents=True, exist_ok=True)
 DEB_CACHE_DIR.mkdir(parents=True, exist_ok=True)
 
+
 def _valid_ident(pkg: str, version: str, arch: str) -> bool:
     return bool(
-        isinstance(pkg, str) and isinstance(version, str) and isinstance(arch, str)
-        and _SAFE_PKG.match(pkg) and _SAFE_VER.match(version) and _SAFE_ARCH.match(arch)
+        isinstance(pkg, str)
+        and isinstance(version, str)
+        and isinstance(arch, str)
+        and _SAFE_PKG.match(pkg)
+        and _SAFE_VER.match(version)
+        and _SAFE_ARCH.match(arch)
     )
+
 
 def _sha256_file(path: Path) -> str:
     h = hashlib.sha256()
@@ -69,7 +73,9 @@ def _sha256_file(path: Path) -> str:
             h.update(chunk)
     return h.hexdigest()
 
+
 _normalize_sha256 = _common.normalize_sha256
+
 
 def _valid_index(data) -> bool:
     if not isinstance(data, dict):
@@ -78,6 +84,7 @@ def _valid_index(data) -> bool:
     if not isinstance(pkgs, list):
         return False
     return all(isinstance(p, dict) and _SAFE_PKG.match(str(p.get("package", ""))) for p in pkgs)
+
 
 def _load_cached_index() -> Optional[list]:
     try:
@@ -89,26 +96,28 @@ def _load_cached_index() -> Optional[list]:
         return data["packages"]
     return None
 
+
 def get_arch() -> str:
     raw = os.uname().machine
     return {
         "aarch64": "aarch64",
-        "armv7l":  "arm",
-        "armv8l":  "arm",
-        "x86_64":  "x86_64",
-        "i686":    "i686",
+        "armv7l": "arm",
+        "armv8l": "arm",
+        "x86_64": "x86_64",
+        "i686": "i686",
     }.get(raw, raw)
+
 
 def _ping_mirror(mirror: dict, timeout: int = 4) -> Optional[float]:
     url = f"{mirror['base_url']}/dists/termux/Release"
     try:
         start = time.time()
-        req = urllib.request.Request(url, method="HEAD",
-                                     headers={"User-Agent": "termux-app-store"})
+        req = urllib.request.Request(url, method="HEAD", headers={"User-Agent": "termux-app-store"})
         with urllib.request.urlopen(req, timeout=timeout):
             return (time.time() - start) * 1000
     except Exception:
         return None
+
 
 def get_best_mirror(force: bool = False) -> dict:
     if not force and MIRROR_CACHE.exists():
@@ -147,6 +156,7 @@ def get_best_mirror(force: bool = False) -> dict:
 
     return best
 
+
 def get_index(log_fn: Optional[Callable] = None) -> list:
     def _log(msg):
         if log_fn:
@@ -181,6 +191,7 @@ def get_index(log_fn: Optional[Callable] = None) -> list:
 
     return []
 
+
 def get_pkg_info(pkg_name: str, index: Optional[list] = None) -> Optional[dict]:
     pkgs = index if index is not None else get_index()
     for p in pkgs:
@@ -188,11 +199,12 @@ def get_pkg_info(pkg_name: str, index: Optional[list] = None) -> Optional[dict]:
             return p
     return None
 
+
 def _deb_cache_path(pkg: str, version: str, arch: str) -> Path:
     return DEB_CACHE_DIR / f"{pkg}_{version}_{arch}.deb"
 
-def get_cached_deb(pkg: str, version: str, arch: str,
-                   sha256: Optional[str] = None) -> Optional[Path]:
+
+def get_cached_deb(pkg: str, version: str, arch: str, sha256: Optional[str] = None) -> Optional[Path]:
     expected = _normalize_sha256(sha256)
     if not expected or not _valid_ident(pkg, version, arch):
         return None
@@ -212,6 +224,7 @@ def get_cached_deb(pkg: str, version: str, arch: str,
 
     return path
 
+
 def save_deb_cache(src: Path, pkg: str, version: str, arch: str) -> Path:
     dest = _deb_cache_path(pkg, version, arch)
     tmp = dest.with_suffix(".part")
@@ -219,8 +232,8 @@ def save_deb_cache(src: Path, pkg: str, version: str, arch: str) -> Path:
     os.replace(tmp, dest)
     return dest
 
-def fetch_published_sha256(pkg: str, version: str, arch: str,
-                           log_fn: Optional[Callable] = None) -> str:
+
+def fetch_published_sha256(pkg: str, version: str, arch: str, log_fn: Optional[Callable] = None) -> str:
     if not _valid_ident(pkg, version, arch):
         return ""
     url = SHA256_SIDECAR_URL.format(pkg=pkg, version=version, arch=arch)
@@ -235,11 +248,16 @@ def fetch_published_sha256(pkg: str, version: str, arch: str,
     token = line.split()[0] if line else ""
     return _normalize_sha256(token)
 
-def download_deb(pkg: str, version: str, arch: str,
-                 dest: Path,
-                 log_fn: Optional[Callable] = None,
-                 progress_fn: Optional[Callable] = None,
-                 eta_fn: Optional[Callable] = None) -> bool:
+
+def download_deb(
+    pkg: str,
+    version: str,
+    arch: str,
+    dest: Path,
+    log_fn: Optional[Callable] = None,
+    progress_fn: Optional[Callable] = None,
+    eta_fn: Optional[Callable] = None,
+) -> bool:
     def _log(msg):
         if log_fn:
             log_fn(msg)
@@ -320,9 +338,8 @@ def download_deb(pkg: str, version: str, arch: str,
 
     return False
 
-def install_deb(deb_path: Path,
-                log_fn: Optional[Callable] = None,
-                progress_fn: Optional[Callable] = None) -> bool:
+
+def install_deb(deb_path: Path, log_fn: Optional[Callable] = None, progress_fn: Optional[Callable] = None) -> bool:
     def _log(msg):
         if log_fn:
             log_fn(msg)
@@ -376,10 +393,13 @@ def install_deb(deb_path: Path,
         )
         return result.returncode == 0
 
-def fast_install(pkg_name: str,
-                 log_fn:      Optional[Callable] = None,
-                 progress_fn: Optional[Callable] = None,
-                 eta_fn:      Optional[Callable] = None) -> bool:
+
+def fast_install(
+    pkg_name: str,
+    log_fn: Optional[Callable] = None,
+    progress_fn: Optional[Callable] = None,
+    eta_fn: Optional[Callable] = None,
+) -> bool:
 
     _current_pct = [0]
 
@@ -498,12 +518,14 @@ def fast_install(pkg_name: str,
     _log("")
     return _fallback_build_from_source(pkg_name, log_fn=log_fn, progress_fn=_progress)
 
-def _fallback_build_from_source(pkg_name: str,
-                                  log_fn:      Optional[Callable] = None,
-                                  progress_fn: Optional[Callable] = None) -> bool:
+
+def _fallback_build_from_source(
+    pkg_name: str, log_fn: Optional[Callable] = None, progress_fn: Optional[Callable] = None
+) -> bool:
     def _log(msg):
         if log_fn:
             log_fn(msg)
+
     def _progress(pct):
         if progress_fn:
             progress_fn(pct)
@@ -554,9 +576,7 @@ def _fallback_build_from_source(pkg_name: str,
             _log("  or clone the repository so a local build-package.sh is used")
             return False
 
-        syntax_check = subprocess.run(
-            ["bash", "-n"], input=downloaded_bytes, capture_output=True
-        )
+        syntax_check = subprocess.run(["bash", "-n"], input=downloaded_bytes, capture_output=True)
         if syntax_check.returncode != 0:
             _log("✗ build-package.sh failed bash syntax check — refusing to run it")
             _log(syntax_check.stderr.decode(errors="ignore"))
@@ -577,7 +597,7 @@ def _fallback_build_from_source(pkg_name: str,
         stderr=subprocess.STDOUT,
     )
 
-    ANSI = re.compile(r'\x1b\[[0-9;]*[mGKHf]')
+    ANSI = re.compile(r"\x1b\[[0-9;]*[mGKHf]")
 
     for line in iter(proc.stdout.readline, b""):
         clean = ANSI.sub("", line.decode(errors="ignore").rstrip())
@@ -588,8 +608,10 @@ def _fallback_build_from_source(pkg_name: str,
     _progress(100 if proc.returncode == 0 else 0)
     return proc.returncode == 0
 
+
 def _packaged_build_script() -> Optional[Path]:
     return _common.packaged_build_script()
+
 
 def _ensure_recipe(pkg_name: str, app_root: Path, _log: Callable) -> bool:
     if (app_root / "packages" / pkg_name / "build.sh").is_file():
@@ -603,11 +625,13 @@ def _ensure_recipe(pkg_name: str, app_root: Path, _log: Callable) -> bool:
 
     return _common.download_recipe(app_root / "packages", pkg_name, expected, False, adapter)
 
+
 def _get_app_root() -> Path:
     env = os.environ.get("TERMUX_APP_STORE_HOME")
     if env:
         return Path(env).expanduser().resolve()
     return Path(__file__).resolve().parent.parent
+
 
 def check_mirrors(log_fn: Optional[Callable] = None) -> list:
     def _log(msg):
@@ -633,6 +657,7 @@ def check_mirrors(log_fn: Optional[Callable] = None) -> list:
     results.sort(key=lambda x: (not x["online"], x["latency"] or 9999))
     return results
 
+
 def clear_deb_cache(log_fn: Optional[Callable] = None):
     def _log(msg):
         if log_fn:
@@ -646,6 +671,7 @@ def clear_deb_cache(log_fn: Optional[Callable] = None):
         count += 1
 
     _log(f"Cleared {count} cached .deb files ({freed // 1024}KB freed)")
+
 
 def cache_info(log_fn: Optional[Callable] = None):
     def _log(msg):
@@ -661,6 +687,7 @@ def cache_info(log_fn: Optional[Callable] = None):
         age_h = int((time.time() - deb.stat().st_mtime) / 3600)
         _log(f"  • {deb.name} ({age_h}h ago)")
 
+
 class FastInstaller:
     async def install(
         self,
@@ -672,22 +699,18 @@ class FastInstaller:
         import asyncio
 
         if force_source:
-            return await asyncio.to_thread(
-                _fallback_build_from_source, pkg_name,
-                log_fn, progress_fn
-            )
-        return await asyncio.to_thread(
-            fast_install, pkg_name, log_fn, progress_fn
-        )
+            return await asyncio.to_thread(_fallback_build_from_source, pkg_name, log_fn, progress_fn)
+        return await asyncio.to_thread(fast_install, pkg_name, log_fn, progress_fn)
 
 
 if __name__ == "__main__":
     import argparse
+
     parser = argparse.ArgumentParser(description="Termux App Store - Fast Install Engine")
-    parser.add_argument("--install",       metavar="PKG",  help="Install package")
+    parser.add_argument("--install", metavar="PKG", help="Install package")
     parser.add_argument("--check-mirrors", action="store_true")
-    parser.add_argument("--cache-info",    action="store_true")
-    parser.add_argument("--clear-cache",   action="store_true")
+    parser.add_argument("--cache-info", action="store_true")
+    parser.add_argument("--clear-cache", action="store_true")
     args = parser.parse_args()
 
     if args.install:

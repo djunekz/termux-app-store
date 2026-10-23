@@ -1,24 +1,25 @@
-import json, os
+import json
+import os
 
-version = os.environ.get('VERSION', '0.0.0')
-total   = os.environ.get('TOTAL', '0')
-updated = os.environ.get('UPDATED', '')
+version = os.environ.get("VERSION", "0.0.0")
+total = os.environ.get("TOTAL", "0")
+updated = os.environ.get("UPDATED", "")
 
 try:
-    with open('tools/index.json') as f:
+    with open("tools/index.json") as f:
         data = json.load(f)
-    pkgs = data.get('packages', [])
+    pkgs = data.get("packages", [])
 except (OSError, ValueError):
     pkgs = []
 
 rows = []
 for p in pkgs:
-    name = p.get('package','')
-    ver  = p.get('version','')
-    desc = p.get('description','').replace('<','&lt;').replace('>','&gt;')
-    dep  = ', '.join(p.get('depends',[])) or '&mdash;'
-    rows.append(f'<tr><td>{name}</td><td>{ver}</td><td>{desc}</td><td>{dep}</td></tr>')
-pkg_rows = '\n'.join(rows)
+    name = p.get("package", "")
+    ver = p.get("version", "")
+    desc = p.get("description", "").replace("<", "&lt;").replace(">", "&gt;")
+    dep = ", ".join(p.get("depends", [])) or "&mdash;"
+    rows.append(f"<tr><td>{name}</td><td>{ver}</td><td>{desc}</td><td>{dep}</td></tr>")
+pkg_rows = "\n".join(rows)
 
 html = f"""<!DOCTYPE html>
 <html lang="en">

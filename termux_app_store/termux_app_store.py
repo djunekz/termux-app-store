@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 import asyncio
-import subprocess
-import sys
 import json
 import re
+import subprocess
+import sys
 import urllib.request
 from pathlib import Path
 
@@ -14,9 +14,8 @@ except ImportError:
         import store_common as _store
     except ImportError:
         import importlib.util as _ilu
-        _spec = _ilu.spec_from_file_location(
-            "store_common", Path(__file__).resolve().with_name("store_common.py")
-        )
+
+        _spec = _ilu.spec_from_file_location("store_common", Path(__file__).resolve().with_name("store_common.py"))
         _store = _ilu.module_from_spec(_spec)
         sys.modules["store_common"] = _store
         _spec.loader.exec_module(_store)
@@ -34,35 +33,38 @@ is_valid_root = _store.is_valid_root
 
 try:
     from termux_app_store.fast_install import FastInstaller
+
     _BINARY_CACHE_AVAILABLE = True
 except ImportError:
     _BINARY_CACHE_AVAILABLE = False
 
 try:
-    from termux_app_store.fast_install import fast_install, check_mirrors, cache_info, clear_deb_cache
+    from termux_app_store.fast_install import cache_info, check_mirrors, clear_deb_cache, fast_install
+
     _FAST_INSTALL_AVAILABLE = True
 except ImportError:
     try:
-        from fast_install import fast_install, check_mirrors, cache_info, clear_deb_cache
+        from fast_install import cache_info, check_mirrors, clear_deb_cache, fast_install
+
         _FAST_INSTALL_AVAILABLE = True
     except ImportError:
         _FAST_INSTALL_AVAILABLE = False
 
 try:
     from textual.app import App, ComposeResult, SystemCommand
-    from textual.widgets import (
-        Header,
-        Input,
-        ListView,
-        ListItem,
-        Label,
-        Static,
-        Button,
-        ProgressBar,
-    )
     from textual.containers import Horizontal, Vertical, VerticalScroll
     from textual.reactive import reactive
     from textual.widget import Widget
+    from textual.widgets import (
+        Button,
+        Header,
+        Input,
+        Label,
+        ListItem,
+        ListView,
+        ProgressBar,
+        Static,
+    )
 
     class SimpleProgressBar(Widget):
         DEFAULT_CSS = """
@@ -84,6 +86,7 @@ try:
             def _tick():
                 if self._eta_seconds > 0 and self.get_remaining() > 0:
                     self.refresh()
+
             self.set_interval(1.0, _tick)
 
         def set_eta(self, seconds: float):
@@ -123,17 +126,25 @@ except ImportError:
     _TEXTUAL_AVAILABLE = False
 
     class _Stub:
-        class Pressed: pass
-        class Changed: pass
-        class Highlighted: pass
+        class Pressed:
+            pass
+
+        class Changed:
+            pass
+
+        class Highlighted:
+            pass
+
     Header = Input = ListView = ListItem = Label = _Stub
     Static = Button = ProgressBar = SimpleProgressBar = _Stub
     Horizontal = Vertical = VerticalScroll = _Stub
 
-ANSI_ESCAPE = re.compile(r'\x1b\[[0-9;]*[mGKHf]')
+ANSI_ESCAPE = re.compile(r"\x1b\[[0-9;]*[mGKHf]")
+
 
 def strip_ansi(text: str) -> str:
-    return ANSI_ESCAPE.sub('', text)
+    return ANSI_ESCAPE.sub("", text)
+
 
 def get_installed_version(name: str):
     try:
@@ -151,14 +162,18 @@ def get_installed_version(name: str):
         return None
     return None
 
+
 def load_cached_root():
     return _store.load_cached_root(CACHE_FILE)
+
 
 def save_cached_root(path: Path):
     _store.save_cached_root(path, CACHE_FILE)
 
+
 def resolve_app_root() -> Path:
     return _store.resolve_app_root(__file__, CACHE_FILE)
+
 
 def ensure_build_package_sh() -> bool:
     return _store.ensure_build_package_sh(get_app_root())
@@ -189,14 +204,14 @@ def fetch_index_from_github() -> list:
         return []
 
 
-
-
 def ensure_package_files(name: str) -> bool:
     expected = _store.lookup_recipe_sha256(name, INDEX_CACHE_FILE)
     return _store.download_recipe(get_packages_dir(), name, expected)
 
+
 def load_index_cache() -> list:
     return _store.load_index_cache(INDEX_CACHE_FILE)
+
 
 def load_packages_from_local(packages_dir: Path) -> list:
     pkgs = []
@@ -227,15 +242,16 @@ def load_packages_from_local(packages_dir: Path) -> list:
         pkgs.append(data)
     return pkgs
 
+
 def normalize_pkg(raw: dict) -> dict:
     deps = raw.get("depends", [])
     if isinstance(deps, str):
         deps = [d.strip() for d in deps.split(",") if d.strip()]
     result = {
-        "name":       raw.get("package", raw.get("name", "?")),
-        "desc":       raw.get("description", raw.get("desc", "-")),
-        "version":    raw.get("version", "?"),
-        "deps":       deps,
+        "name": raw.get("package", raw.get("name", "?")),
+        "desc": raw.get("description", raw.get("desc", "-")),
+        "version": raw.get("version", "?"),
+        "deps": deps,
         "maintainer": raw.get("maintainer", "-"),
     }
     if "sha256" in raw:
@@ -243,6 +259,7 @@ def normalize_pkg(raw: dict) -> dict:
     if "sha256_by_arch" in raw:
         result["sha256_by_arch"] = raw["sha256_by_arch"]
     return result
+
 
 def get_packages(packages_dir: Path, online: bool = True) -> list:
     if online:
@@ -260,11 +277,13 @@ def get_packages(packages_dir: Path, online: bool = True) -> list:
 
 _APP_ROOT = None
 
+
 def get_app_root() -> Path:
     global _APP_ROOT
     if _APP_ROOT is None:
         _APP_ROOT = resolve_app_root()
     return _APP_ROOT
+
 
 def get_packages_dir() -> Path:
     return get_app_root() / "packages"
@@ -284,8 +303,8 @@ try:
 except ImportError:
     _ModalScreen = object  # type: ignore
 
-class ConfirmUninstall(_ModalScreen):
 
+class ConfirmUninstall(_ModalScreen):
     DEFAULT_CSS = """
     ConfirmUninstall {
         align: center middle;
@@ -329,7 +348,7 @@ class ConfirmUninstall(_ModalScreen):
         super().__init__()
         self.package_name = package_name
 
-    def compose(self) -> ComposeResult: # pragma: no cover
+    def compose(self) -> ComposeResult:  # pragma: no cover
         with Vertical(id="dialog"):
             yield Static("⚠  Confirm Uninstall", id="dialog-title")
             yield Static(
@@ -340,16 +359,14 @@ class ConfirmUninstall(_ModalScreen):
                 yield Button("Cancel", id="btn-cancel")
                 yield Button("Uninstall", id="btn-confirm-uninstall")
 
-    def on_button_pressed(self, event) -> None: # pragma: no cover
+    def on_button_pressed(self, event) -> None:  # pragma: no cover
         if event.button.id == "btn-cancel":
             self.dismiss(False)
         elif event.button.id == "btn-confirm-uninstall":
             self.dismiss(True)
 
 
-
 class AboutScreen(_ModalScreen):
-
     DEFAULT_CSS = """
     AboutScreen {
         align: center middle;
@@ -444,7 +461,6 @@ class AboutScreen(_ModalScreen):
 
 
 class ContactScreen(_ModalScreen):
-
     DEFAULT_CSS = """
     ContactScreen {
         align: center middle;
@@ -511,16 +527,14 @@ class ContactScreen(_ModalScreen):
             yield Static("", classes="contact-spacer")
             yield Static("[b]GitHub Issues[/b]", classes="contact-section")
             yield Static(
-                "  Report bugs or request features:\n"
-                "  github.com/djunekz/termux-app-store/issues",
+                "  Report bugs or request features:\n  github.com/djunekz/termux-app-store/issues",
                 classes="contact-row",
             )
 
             yield Static("", classes="contact-spacer")
             yield Static("[b]GitHub Discussions[/b]", classes="contact-section")
             yield Static(
-                "  Community help & general questions:\n"
-                "  github.com/djunekz/termux-app-store/discussions",
+                "  Community help & general questions:\n  github.com/djunekz/termux-app-store/discussions",
                 classes="contact-row",
             )
 
@@ -546,10 +560,11 @@ class ContactScreen(_ModalScreen):
         if event.button.id == "btn-open-issue":
             try:
                 import subprocess as _sp
+
                 _sp.Popen(
-                    ["termux-open-url",
-                     "https://github.com/djunekz/termux-app-store/issues"],
-                    stdout=_sp.DEVNULL, stderr=_sp.DEVNULL,
+                    ["termux-open-url", "https://github.com/djunekz/termux-app-store/issues"],
+                    stdout=_sp.DEVNULL,
+                    stderr=_sp.DEVNULL,
                 )
             except Exception:
                 pass
@@ -559,7 +574,6 @@ class ContactScreen(_ModalScreen):
 
 
 class TermuxAppStore(App):
-
     BINDINGS = [
         ("ctrl+r", "refresh", "Refresh packages"),
         ("ctrl+i", "install_selected", "Install selected"),
@@ -607,7 +621,7 @@ class TermuxAppStore(App):
     #status-bar { height: 1; content-align: left middle; color: #6272a4; padding-left: 1; }
     """
 
-    async def on_mount(self): # pragma: no cover
+    async def on_mount(self):  # pragma: no cover
         self.packages = []
         self.status_cache = {}
         self.search_query = ""
@@ -625,7 +639,7 @@ class TermuxAppStore(App):
 
         self.binary_installer = FastInstaller() if _BINARY_CACHE_AVAILABLE else None
 
-    async def _fetch_online_worker(self): # pragma: no cover
+    async def _fetch_online_worker(self):  # pragma: no cover
         try:
             raw = await asyncio.to_thread(fetch_index_from_github)
             if not raw:
@@ -705,22 +719,22 @@ class TermuxAppStore(App):
             return False
 
         STAGE_FLOORS = [
-            ("Downloading",          15),
-            ("Checksum",             20),
-            ("Extracting",           25),
-            ("Source root",          30),
-            ("Installing Files",     40),
-            ("termux_step_make",     50),
-            ("Generating Package",   70),
-            ("Control file",         72),
-            ("Building .deb",        75),
-            ("Running dpkg-deb",     78),
-            ("built successfully",   82),
-            ("Installing Package",   85),
-            ("Running dpkg",         87),
+            ("Downloading", 15),
+            ("Checksum", 20),
+            ("Extracting", 25),
+            ("Source root", 30),
+            ("Installing Files", 40),
+            ("termux_step_make", 50),
+            ("Generating Package", 70),
+            ("Control file", 72),
+            ("Building .deb", 75),
+            ("Running dpkg-deb", 78),
+            ("built successfully", 82),
+            ("Installing Package", 85),
+            ("Running dpkg", 87),
             ("Selecting previously", 88),
-            ("Unpacking",            90),
-            ("Setting up",           94),
+            ("Unpacking", 90),
+            ("Setting up", 94),
         ]
 
         current_pct = [10]
@@ -728,9 +742,7 @@ class TermuxAppStore(App):
         def _set_progress(pct):
             if pct > current_pct[0]:
                 current_pct[0] = pct
-                self.call_from_thread(
-                    lambda p=pct: setattr(self.progress, "progress", p)
-                )
+                self.call_from_thread(lambda p=pct: setattr(self.progress, "progress", p))
 
         self.call_from_thread(lambda: self.progress.set_eta(180))
         _set_progress(10)
@@ -756,7 +768,6 @@ class TermuxAppStore(App):
         _set_progress(95)
         return proc.returncode == 0
 
-
     def _build_from_source(self, name: str):
         app_root = get_app_root()
         build_sh = app_root / "build-package.sh"
@@ -780,7 +791,7 @@ class TermuxAppStore(App):
         proc.wait()
         return proc.returncode == 0
 
-    def compose(self) -> ComposeResult: # pragma: no cover
+    def compose(self) -> ComposeResult:  # pragma: no cover
         yield Header()
 
         with Horizontal(id="body"):
@@ -916,11 +927,13 @@ class TermuxAppStore(App):
 
         elif event.button.id == "uninstall" and self.current_item:
             name = self.current_item.pkg["name"]
-            def handle_confirm(confirmed: bool) -> None: # pragma: no cover
+
+            def handle_confirm(confirmed: bool) -> None:  # pragma: no cover
                 if confirmed:
                     asyncio.get_running_loop().call_soon_threadsafe(
                         lambda: self.worker_queue.put_nowait(("uninstall", name))
                     )
+
             self.push_screen(ConfirmUninstall(name), handle_confirm)
 
     async def consume_worker_queue(self):
@@ -943,13 +956,12 @@ class TermuxAppStore(App):
         success = False
 
         if _FAST_INSTALL_AVAILABLE:
+
             def _log(msg):
                 self.call_from_thread(lambda t=msg: self.update_log(t))
 
             def _progress(pct):
-                self.call_from_thread(
-                    lambda p=pct: setattr(self.progress, "progress", p)
-                )
+                self.call_from_thread(lambda p=pct: setattr(self.progress, "progress", p))
 
             success = fast_install(
                 pkg_name=name,
@@ -957,18 +969,12 @@ class TermuxAppStore(App):
                 progress_fn=_progress,
             )
         else:
-            self.call_from_thread(lambda: self.update_log(
-                "Fast install unavailable — building from source...\n"
-            ))
+            self.call_from_thread(lambda: self.update_log("Fast install unavailable — building from source...\n"))
 
             if not ensure_package_files(name):
-                self.call_from_thread(
-                    lambda: self.update_log(f"\n✗ Failed to download build files for {name}.")
-                )
+                self.call_from_thread(lambda: self.update_log(f"\n✗ Failed to download build files for {name}."))
             elif not ensure_build_package_sh():
-                self.call_from_thread(
-                    lambda: self.update_log("\n✗ Failed to download build-package.sh.")
-                )
+                self.call_from_thread(lambda: self.update_log("\n✗ Failed to download build-package.sh."))
             else:
                 proc = subprocess.Popen(
                     ["bash", "build-package.sh", name],
@@ -985,13 +991,9 @@ class TermuxAppStore(App):
 
         if success:
             self.call_from_thread(lambda: setattr(self.progress, "progress", 100))
-            self.call_from_thread(
-                lambda: self.update_log("\n✔ Installation completed successfully!")
-            )
+            self.call_from_thread(lambda: self.update_log("\n✔ Installation completed successfully!"))
         else:
-            self.call_from_thread(
-                lambda: self.update_log("\n✗ Installation failed.")
-            )
+            self.call_from_thread(lambda: self.update_log("\n✗ Installation failed."))
 
         self.installing = False
         self.status_cache.clear()
@@ -1012,8 +1014,7 @@ class TermuxAppStore(App):
         self.call_from_thread(lambda: self.update_log(f"Uninstalling {name}...\n"))
 
         try:
-            subprocess.call(["apt-mark", "unhold", name],
-                            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            subprocess.call(["apt-mark", "unhold", name], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         except Exception:
             pass
 
@@ -1026,9 +1027,7 @@ class TermuxAppStore(App):
         for line in iter(proc.stdout.readline, b""):
             clean_line = strip_ansi(line.decode(errors="ignore").rstrip())
             if clean_line:
-                self.call_from_thread(
-                    lambda t=clean_line: self.update_log(t)
-                )
+                self.call_from_thread(lambda t=clean_line: self.update_log(t))
 
         proc.wait()
 
@@ -1061,9 +1060,12 @@ class TermuxAppStore(App):
             return
         self.log_buffer.clear()
         self.update_log("Checking mirrors...\n")
+
         def _run():
             check_mirrors(log_fn=lambda m: self.call_from_thread(lambda t=m: self.update_log(t)))
+
         import threading
+
         threading.Thread(target=_run, daemon=True).start()
 
     def action_cache_info(self):  # pragma: no cover
@@ -1106,8 +1108,7 @@ class TermuxAppStore(App):
         if self.current_item:
             name = self.current_item.pkg["name"]
             try:
-                subprocess.run(["termux-clipboard-set", name],
-                               capture_output=True, timeout=3)
+                subprocess.run(["termux-clipboard-set", name], capture_output=True, timeout=3)
                 self.status_bar.update(f"Copied: {name}")
             except Exception:
                 self.status_bar.update(f"Package name: {name}  (clipboard unavailable)")
@@ -1117,8 +1118,7 @@ class TermuxAppStore(App):
             pkg = self.current_item.pkg
             url = pkg.get("url") or f"https://github.com/search?q={pkg['name']}"
             try:
-                subprocess.Popen(["termux-open-url", url],
-                                 stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                subprocess.Popen(["termux-open-url", url], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
                 self.status_bar.update(f"Opening: {url}")
             except Exception:
                 self.status_bar.update(f"URL: {url}")
@@ -1207,9 +1207,11 @@ class TermuxAppStore(App):
             self.action_quit,
         )
 
+
 def run_tui():
     get_app_root()
     TermuxAppStore().run()
 
-if __name__ == "__main__": # pragma: no cover
+
+if __name__ == "__main__":  # pragma: no cover
     run_tui()
