@@ -19,6 +19,7 @@ and this project adheres to semantic versioning.
 - `uv.lock` - dependency lockfile for reproducible installs (`uv sync --extra dev`)
 - `.gitignore` - ignores Python caches, build output, virtual environments, `.env`, coverage reports and editor files
 - `.env.example` - template listing the supported environment variables (`TERMUX_APP_STORE_HOME`, `TERMUX_APP_STORE_GITHUB_REPO`, `TERMUX_APP_STORE_INDEX_BRANCH`, `TERMUX_APP_STORE_INDEX_URL`, `TERMUX_APP_STORE_MODE`, `TERMUX_APP_STORE_BUILD_SH_SHA256`, `TERMUX_APP_STORE_ALLOW_UNVERIFIED_BUILD_SH`, `TERMUX_APP_STORE_ALLOW_UNVERIFIED_RECIPE`, `XDG_CACHE_HOME`, `PREFIX`)
+- `package.json` - private task runner manifest with `test`, `lint`, `format`, `typecheck` and `check` scripts that call the Python tools (`npm test` runs `python3 -m pytest`); it has no dependencies
 - `.github/workflows/build-packages-debs.yml` - new `quality` job that runs ruff, mypy and pytest
 - `pyproject.toml` - `[tool.pytest.ini_options]` so the test command is defined in the build config as well as `pytest.ini`
 - `ruff.toml` - Ruff lint and format configuration, moved out of `pyproject.toml`

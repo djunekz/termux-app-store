@@ -117,6 +117,10 @@ Tests are written with [pytest](https://docs.pytest.org/) and live in `tests/`.
 ```Sh
 make test
 ```
+or
+```Sh
+npm test
+```
 or directly
 ```Sh
 python3 -m pytest

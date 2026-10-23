@@ -1,0 +1,18 @@
+{
+  "name": "termux-app-store",
+  "version": "0.9.1",
+  "private": true,
+  "description": "Developer task runner for Termux App Store",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/djunekz/termux-app-store.git"
+  },
+  "scripts": {
+    "test": "python3 -m pytest",
+    "lint": "python3 -m ruff check . && python3 -m ruff format --check .",
+    "format": "python3 -m ruff check --fix . && python3 -m ruff format .",
+    "typecheck": "python3 -m mypy",
+    "check": "make check"
+  }
+}
