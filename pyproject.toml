@@ -60,6 +60,13 @@ include = ["termux_app_store*"]
 [tool.setuptools.package-data]
 termux_app_store = ["data/*.json", "data/build-package.sh"]
 
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short"
+
 [tool.mypy]
 python_version = "3.10"
 ignore_missing_imports = true
