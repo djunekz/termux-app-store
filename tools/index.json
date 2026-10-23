@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-10-23T03:54:18.679235+00:00",
-  "total": 88,
+  "generated_at": "2026-10-23T06:02:17.434859+00:00",
+  "total": 89,
   "packages": [
     {
       "package": "aichat",
@@ -1462,6 +1462,30 @@
       "depends": [
         "python",
         "ncurses"
+      ]
+    },
+    {
+      "package": "unmineable",
+      "version": "0.1.0",
+      "maintainer": "@termux-app-store",
+      "description": "Mining multiple coins cryptocurrency with simple setup and pool unmineable",
+      "homepage": "https://github.com/djunekz/unmineable",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/djunekz/unmineable/archive/refs/tags/v${TERMUX_PKG_VERSION}.tar.gz",
+      "sha256": "cdc2b594fb341b34ffe1ea9557de140366ddc3a66f394ddfa4c62c5ca3f149a7",
+      "recipe_sha256": "3b12d20559883b743e85265d7e7286f93d4270ac0953ef51f238d8361cdd5762",
+      "platform_independent": false,
+      "depends": [
+        "python",
+        "cmake",
+        "make",
+        "clang",
+        "libuv",
+        "openssl",
+        "build-essential"
       ]
     },
     {
