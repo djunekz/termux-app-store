@@ -69,7 +69,7 @@ CI will reject PRs that fail validation.
 
 ---
 
-## Development Setup
+## Setup
 1. Fork and clone the repository
 ```Sh
 git clone https://github.com/<your-username>/termux-app-store.git
@@ -134,7 +134,7 @@ New features and bug fixes must include tests.
 ## CI & Quality Gates
 All pull requests are automatically checked via GitHub Actions:
 - Linting packages
-- Ruff lint and format checks
+- Ruff lint and format checks (`ruff.toml`)
 - Mypy type checks
 - Pytest suite
 - Validating build.sh

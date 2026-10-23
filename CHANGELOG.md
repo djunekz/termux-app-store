@@ -14,12 +14,14 @@ and this project adheres to semantic versioning.
 - `ci/auto_update_packages.py` - packages that use a GitLab source, a floating branch tarball or the shared `djunekz/archive` repository are skipped, a package can opt out with `TERMUX_PKG_AUTO_UPDATE=false` in `build.sh`, and packages pinned to a commit (`0.0.0+<sha7>`) are only followed with `--include-commit-pinned`
 - `ACCESSIBILITY.md` - new accessibility statement for the CLI (`tas`) and the TUI: supported environments, what works today (every TUI action also available as a CLI command, keyboard shortcuts, light text on a dark background), known limitations (not tested with screen readers, single fixed dark theme, `NO_COLOR` not supported, `Ctrl+I` may behave like `Tab` in some terminals, few shortcuts) and how to report an accessibility barrier through issues, discussions or private email
 - Package `unmineable` v0.1.0 - Mining multiple coins cryptocurrency with simple setup and pool unmineable
-- `.github/workflows/python-quality.yml` - new workflow that runs on every push and pull request to `master`: `ruff check`, `ruff format --check`, `mypy` and the `pytest` suite through `make test`
+- `.github/workflows/ci.yml` - new workflow that runs on every push and pull request to `master`: `ruff check`, `ruff format --check`, `mypy` and the `pytest` suite through `make test`
 - `Makefile` - documented developer commands: `install`, `test`, `lint`, `format`, `typecheck`, `check` (lint, type check and tests together) and `clean`
 - `uv.lock` - dependency lockfile for reproducible installs (`uv sync --extra dev`)
 - `.gitignore` - ignores Python caches, build output, virtual environments, `.env`, coverage reports and editor files
 - `.env.example` - template listing the supported environment variables (`TERMUX_APP_STORE_HOME`, `TERMUX_APP_STORE_GITHUB_REPO`, `TERMUX_APP_STORE_INDEX_BRANCH`, `TERMUX_APP_STORE_INDEX_URL`, `TERMUX_APP_STORE_MODE`, `TERMUX_APP_STORE_BUILD_SH_SHA256`, `TERMUX_APP_STORE_ALLOW_UNVERIFIED_BUILD_SH`, `TERMUX_APP_STORE_ALLOW_UNVERIFIED_RECIPE`, `XDG_CACHE_HOME`, `PREFIX`)
-- `CONTRIBUTING.md` - new "Development Setup", "Code Style" and "Testing" sections, and the quality gates list now mentions Ruff, mypy and pytest
+- `ruff.toml` - Ruff lint and format configuration, moved out of `pyproject.toml`
+- `.python-version`, `Dockerfile`, `.dockerignore` and `tox.ini` - pinned Python runtime, container build and tox environments (`py312`, `lint`, `type`)
+- `CONTRIBUTING.md` - new "Setup", "Code Style" and "Testing" sections, and the quality gates list now mentions Ruff, mypy and pytest
 
 ### Changed
 - `build-package.sh` - dependency installation now retries up to 5 times with an increasing, randomised back-off and refreshes the apt index between attempts (`Acquire::Retries=5`); this covers the HTTP 429 "Too Many Requests" answers and the transient "Hashes of expected file" mismatches returned by the Termux mirror when many jobs hit it at once
@@ -31,7 +33,7 @@ and this project adheres to semantic versioning.
 - `guidebook.py` - "How to Install" has a new "Option 3 -- Signed apt repository" (`./tasctl install-repo`, then `pkg update`), and "How to Uninstall" shows how to remove the repository with `./tasctl uninstall-repo`; both are written in English and Indonesian
 - `guidebook.py` - the "Using tasctl" command list now includes `install-repo` and `uninstall-repo`, matching `tasctl help`
 - `guidebook.py` - the header comment lines are removed from the source; the script has no `#` comments apart from the shebang
-- `pyproject.toml` - new `[tool.ruff]` (lint and format), `[tool.mypy]` and `[tool.coverage.run]` configuration; `ruff` and `mypy` added to the `dev` extra
+- `pyproject.toml` - new `[tool.mypy]` and `[tool.coverage.run]` configuration; `ruff` and `mypy` added to the `dev` extra
 - Python sources and tests - import order fixed, unused f-string prefixes removed and the code formatted with `ruff format` (31 files); behaviour is unchanged and all 352 tests pass
 - `INSTALL.md` - "Running from Source" now installs the dev extra, runs `make test` and points to `.env.example` and `uv.lock`
 

@@ -1,0 +1,18 @@
+line-length = 120
+target-version = "py39"
+extend-exclude = ["packages", ".assets"]
+
+[lint]
+select = ["E4", "E7", "E9", "F", "W", "I"]
+ignore = ["E701", "E702", "E731", "E741"]
+
+[lint.per-file-ignores]
+"tests/*" = ["E402"]
+
+[lint.isort]
+known-first-party = ["termux_app_store", "tools"]
+
+[format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "lf"
