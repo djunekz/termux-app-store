@@ -41,6 +41,14 @@ dev = [
     "mypy>=1.10",
 ]
 
+[dependency-groups]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov",
+    "ruff>=0.6",
+    "mypy>=1.10",
+]
+
 [project.urls]
 Homepage = "https://github.com/djunekz/termux-app-store"
 Repository = "https://github.com/djunekz/termux-app-store"

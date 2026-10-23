@@ -373,6 +373,25 @@ termux-app-store/
 
 ---
 
+## Development and Testing
+
+```bash
+git clone https://github.com/djunekz/termux-app-store
+cd termux-app-store
+pip install -e ".[dev]"
+```
+
+| Command | What it does |
+|---|---|
+| `make test` or `npm test` or `pytest` | Run the test suite |
+| `make lint` | Ruff lint and format check |
+| `make typecheck` | Mypy type check |
+| `make check` | Lint, type check and tests together |
+
+Dependencies are pinned in `uv.lock` (`uv sync --extra dev`). See [CONTRIBUTING.md](CONTRIBUTING.md) for the full guide.
+
+---
+
 ## Contributing
 
 All contributions are welcome!
