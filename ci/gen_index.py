@@ -511,9 +511,9 @@ tasctl uninstall</code></pre>
         <div class="step-title">Fork &amp; Clone the repository</div>
         <div class="step-desc">Fork the official repo on GitHub, then clone it to your Termux environment.</div>
         <div class="code-block">
-          <pre><code>git clone https://github.com/YOUR_USERNAME/termux-app-store
+          <pre><code>git clone --depth 1 --single-branch --branch master https://github.com/YOUR_USERNAME/termux-app-store
 cd termux-app-store</code></pre>
-          <button class="copy-btn" onclick="copyCode(this,'git clone https://github.com/YOUR_USERNAME/termux-app-store\ncd termux-app-store')">copy</button>
+          <button class="copy-btn" onclick="copyCode(this,'git clone --depth 1 --single-branch --branch master https://github.com/YOUR_USERNAME/termux-app-store\ncd termux-app-store')">copy</button>
         </div>
         <div class="step-note">Replace <code>YOUR_USERNAME</code> with your GitHub username.</div>
       </div>
