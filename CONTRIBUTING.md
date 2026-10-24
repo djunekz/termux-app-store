@@ -74,7 +74,7 @@ CI will reject PRs that fail validation.
 ## Setup
 1. Fork and clone the repository
 ```Sh
-git clone https://github.com/<your-username>/termux-app-store.git
+git clone --depth 1 --single-branch --branch master https://github.com/<your-username>/termux-app-store.git
 cd termux-app-store
 ```
 2. Create a virtual environment and install development dependencies
