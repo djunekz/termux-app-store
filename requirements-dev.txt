@@ -1,5 +1,5 @@
 -e .
-pytest>=7.0
+pytest>=9.0.3
 pytest-cov
 ruff>=0.6
 mypy>=1.10

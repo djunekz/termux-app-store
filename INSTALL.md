@@ -9,7 +9,7 @@ on Termux. It applies to v0.9.1 and later.
 
 - Termux on Android (latest version recommended)
 - An internet connection
-- Python 3.9 or newer (installed with `pkg install python`)
+- Python 3.10 or newer (installed with `pkg install python`)
 - Textual 8.0.0 or newer (installed automatically by pip and by the installers)
 - One of these CPU architectures:
   - `aarch64` (recommended)

@@ -20,7 +20,6 @@ classifiers = [
     "Intended Audience :: End Users/Desktop",
     "Operating System :: POSIX :: Linux",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
@@ -28,14 +27,14 @@ classifiers = [
     "Topic :: Terminals",
     "Topic :: Utilities",
 ]
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 dependencies = [
     "textual>=8.0.0",
 ]
 
 [project.optional-dependencies]
 dev = [
-    "pytest>=7.0",
+    "pytest>=9.0.3",
     "pytest-cov",
     "ruff>=0.6",
     "mypy>=1.10",
@@ -43,7 +42,7 @@ dev = [
 
 [dependency-groups]
 dev = [
-    "pytest>=7.0",
+    "pytest>=9.0.3",
     "pytest-cov",
     "ruff>=0.6",
     "mypy>=1.10",
