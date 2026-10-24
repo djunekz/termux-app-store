@@ -135,7 +135,7 @@ curl -fsSL https://raw.githubusercontent.com/djunekz/termux-app-store/master/tas
 > Dengan git clone (untuk download semua file repository)
 
 ```bash
-git clone --single-branch --branch master https://github.com/djunekz/termux-app-store
+git clone --depth 1 --single-branch --branch master https://github.com/djunekz/termux-app-store
 cd termux-app-store
 bash install.sh
 ```
