@@ -12,7 +12,7 @@ Follow these steps to upload your tool or package to the Termux App Store reposi
 ## 2. Clone the Repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/termux-app-store.git
+git clone --depth 1 --single-branch --branch master https://github.com/YOUR_USERNAME/termux-app-store.git
 cd termux-app-store
 ```
 
