@@ -2,9 +2,9 @@ TERMUX_PKG_HOMEPAGE=https://github.com/djunekz/unmineable
 TERMUX_PKG_DESCRIPTION="Mining multiple coins cryptocurrency with simple setup and pool unmineable"
 TERMUX_PKG_LICENSE="MIT"
 TERMUX_PKG_MAINTAINER="@termux-app-store"
-TERMUX_PKG_VERSION=0.1.0
+TERMUX_PKG_VERSION=0.1.5
 TERMUX_PKG_SRCURL=https://github.com/djunekz/unmineable/archive/refs/tags/v${TERMUX_PKG_VERSION}.tar.gz
-TERMUX_PKG_SHA256=cdc2b594fb341b34ffe1ea9557de140366ddc3a66f394ddfa4c62c5ca3f149a7
+TERMUX_PKG_SHA256=b82b0be329003a53667fde8c22e1385963caf97446a03e07c06089883d35cb36
 TERMUX_PKG_DEPENDS="python, cmake, make, clang, libuv, openssl, build-essential"
 TERMUX_PKG_BUILD_IN_SRC=true
 

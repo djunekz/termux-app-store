@@ -53,6 +53,7 @@ and this project adheres to semantic versioning.
 - Package `uv` v0.13.4 → v0.13.5
 - Package `infoooze` v1.1.9 → v1.2.2
 - Package `pnpm` v12.14.0 → v12.15.0
+- Package `unmineable` v0.1.0 → v0.1.5
 
 ---
 
