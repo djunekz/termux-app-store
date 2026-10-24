@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-10-24T03:48:49.366726+00:00",
+  "generated_at": "2026-10-24T15:47:05.748851+00:00",
   "total": 89,
   "packages": [
     {
@@ -1466,7 +1466,7 @@
     },
     {
       "package": "unmineable",
-      "version": "0.1.0",
+      "version": "0.1.5",
       "maintainer": "@termux-app-store",
       "description": "Mining multiple coins cryptocurrency with simple setup and pool unmineable",
       "homepage": "https://github.com/djunekz/unmineable",
@@ -1475,8 +1475,8 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/unmineable/archive/refs/tags/v${TERMUX_PKG_VERSION}.tar.gz",
-      "sha256": "cdc2b594fb341b34ffe1ea9557de140366ddc3a66f394ddfa4c62c5ca3f149a7",
-      "recipe_sha256": "3b12d20559883b743e85265d7e7286f93d4270ac0953ef51f238d8361cdd5762",
+      "sha256": "b82b0be329003a53667fde8c22e1385963caf97446a03e07c06089883d35cb36",
+      "recipe_sha256": "c64faaac29a2bd80c41c7307eacb9038f23e239ca4fa1d87801100aa0e9cd29a",
       "platform_independent": false,
       "depends": [
         "python",
