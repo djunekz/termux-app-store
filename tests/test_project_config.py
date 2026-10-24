@@ -1,4 +1,3 @@
-import json
 import re
 from pathlib import Path
 
@@ -10,13 +9,8 @@ def read(name: str) -> str:
 
 
 class TestTestCommandWiring:
-    def test_package_json_test_script_runs_pytest(self):
-        scripts = json.loads(read("package.json"))["scripts"]
-        assert "pytest" in scripts["test"]
-
-    def test_package_json_coverage_script_uses_pytest_cov(self):
-        scripts = json.loads(read("package.json"))["scripts"]
-        assert "--cov" in scripts["test:cov"]
+    def test_pyproject_declares_pytest_dependency(self):
+        assert "pytest>=" in read("pyproject.toml")
 
     def test_makefile_test_target_runs_pytest(self):
         match = re.search(r"^test:\n((?:\t.*\n)+)", read("Makefile"), re.MULTILINE)

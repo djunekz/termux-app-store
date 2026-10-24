@@ -383,8 +383,8 @@ pip install -e ".[dev]"
 
 | Command | What it does |
 |---|---|
-| `make test` or `npm test` or `pytest` | Run the test suite |
-| `make coverage` or `npm run test:cov` | Run the test suite with a coverage report |
+| `make test` or `pytest` | Run the test suite |
+| `make coverage` | Run the test suite with a coverage report |
 | `make lint` | Ruff lint and format check |
 | `make typecheck` | Mypy type check |
 | `make check` | Lint, type check and tests together |
