@@ -390,7 +390,7 @@ pkg upgrade termux-app-store     # update to v{version}
 pkg uninstall termux-app-store   # remove
 termux-app-store                 # launch TUI
 termux-app-store list            # show all {total} packages
-termux-app-store install &lt;pkg&gt;  # install a package</code></pre>
+termux-app-store install &lt;pkg&gt;   # install a package</code></pre>
     <button class="copy-btn" onclick="copyCode(this,document.getElementById('usage-code').innerText)">copy</button>
   </div>
 </div>
@@ -452,10 +452,10 @@ termux-app-store install &lt;pkg&gt;  # install a package</code></pre>
       </div>
       <div class="install-option-desc">Clone the repository and run the install script manually. Useful for development or offline setups.</div>
       <div class="code-block">
-        <pre><code>git clone https://github.com/djunekz/termux-app-store
+        <pre><code>git clone --depth 1 --single-branch --branch master https://github.com/djunekz/termux-app-store
 cd termux-app-store
 bash install.sh</code></pre>
-        <button class="copy-btn" onclick="copyCode(this,'git clone https://github.com/djunekz/termux-app-store\ncd termux-app-store\nbash install.sh')">copy</button>
+        <button class="copy-btn" onclick="copyCode(this,'git clone --depth 1 --single-branch --branch master https://github.com/djunekz/termux-app-store\ncd termux-app-store\nbash install.sh')">copy</button>
       </div>
     </div>
 
