@@ -50,8 +50,14 @@ packages/<pkg-name>/build.sh
 ```
 or auto create build package
 ```text
-./teemux-build create <pkg-name>
+./termux-build create <pkg-name>
 ```
+or generate `build.sh` with the scaffold wizard. It detects the build method from the upstream repository, computes the SHA256 and writes `packages/<pkg-name>/build.sh`
+```Sh
+python3 pkg-scaffold.py <pkg-name>
+python3 pkg-scaffold.py --from https://github.com/<user>/<repo>
+```
+Review the generated file before submitting. See [HOW_TO_UPLOAD.md](HOW_TO_UPLOAD.md) for the full walkthrough.
 2. build.sh Requirements
 - Must follow Termux packaging standards
 - Must define:
