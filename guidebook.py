@@ -486,7 +486,7 @@ def content_install(L):
             "",
         ]
         lines += code_block(
-            f"git clone --single-branch --branch master {REPO_URL}",
+            f"git clone --depth 1 --single-branch --branch master {REPO_URL}",
             "cd termux-app-store",
             "bash install.sh",
             title="terminal",
@@ -562,7 +562,7 @@ def content_install(L):
             "",
         ]
         lines += code_block(
-            f"git clone --single-branch --branch master {REPO_URL}",
+            f"git clone --depth 1 --single-branch --branch master {REPO_URL}",
             "cd termux-app-store",
             "bash install.sh",
             title="terminal",
@@ -1175,7 +1175,7 @@ def content_upload(L):
                 [f"Open: {BCYN}{REPO_URL}{R}", "Click Fork -> Create fork", "Keep the repo name: termux-app-store"],
                 [],
             ),
-            ("Clone your fork", [], ["git clone https://github.com/USERNAME/termux-app-store", "cd termux-app-store"]),
+            ("Clone your fork", [], ["git clone --depth 1 --single-branch --branch master https://github.com/USERNAME/termux-app-store", "cd termux-app-store"]),
             ("Create a new branch", [], ["git checkout -b your-tool-name"]),
             (
                 "Create package folder",
@@ -1270,7 +1270,7 @@ def content_upload(L):
                 ],
                 [],
             ),
-            ("Clone fork kamu", [], ["git clone https://github.com/USERNAME/termux-app-store", "cd termux-app-store"]),
+            ("Clone fork kamu", [], ["git clone --depth 1 --single-branch --branch master https://github.com/USERNAME/termux-app-store", "cd termux-app-store"]),
             ("Buat branch baru", [], ["git checkout -b nama-tool-kamu"]),
             ("Buat folder package", [], ["mkdir -p packages/nama-tool-kamu", "nano packages/nama-tool-kamu/build.sh"]),
             (
