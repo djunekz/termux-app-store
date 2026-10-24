@@ -1,6 +1,6 @@
 PYTHON ?= python3
 
-.PHONY: install test coverage lint format typecheck check clean
+.PHONY: install test coverage lint format typecheck sync-build-script check clean
 
 install:
 	$(PYTHON) -m pip install -e ".[dev]"
@@ -21,6 +21,9 @@ format:
 
 typecheck:
 	$(PYTHON) -m mypy
+
+sync-build-script:
+	cp build-package.sh termux_app_store/data/build-package.sh
 
 check: lint typecheck test
 

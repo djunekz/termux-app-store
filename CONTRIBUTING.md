@@ -30,6 +30,8 @@ termux-build   # Core build tool
 tasctl         # CLI controller
 ```
 
+`build-package.sh` at the repository root is the source of truth. A copy lives in `termux_app_store/data/build-package.sh` and ships inside the pip package. After editing the root script run `make sync-build-script`; a test fails when the two copies differ.
+
 ---
 
 ## Contribution Principles
