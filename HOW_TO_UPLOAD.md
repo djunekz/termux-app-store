@@ -46,10 +46,14 @@ mkdir -p packages/example
 nano packages/example/build.sh
 ```
 
+> **Shortcut:** if you generate `build.sh` with `pkg-scaffold.py` in step 5,
+> it creates `packages/<package-name>/` for you, so you can skip this step.
+
 ## 5. Fill in build.sh
 
-- Use the `build.sh` template located in the `template/` folder
-- Or generate it with the command `./termux-build template`
+- Generate it automatically with `pkg-scaffold.py` (recommended, see below)
+- Or use the `build.sh` template located in the `template/` folder
+- Or generate a template with the command `./termux-build template`
 - The following metadata fields are required:
 
 ```bash
@@ -61,6 +65,50 @@ TERMUX_PKG_VERSION=
 TERMUX_PKG_SRCURL=
 TERMUX_PKG_SHA256=
 ```
+
+### Generate build.sh automatically with pkg-scaffold.py
+
+`pkg-scaffold.py` is an interactive wizard that writes `build.sh` for you. Run
+it from the repository root:
+
+```bash
+python3 pkg-scaffold.py <package-name>
+```
+
+Or pass the upstream repository URL so the wizard can prefill the answers:
+
+```bash
+python3 pkg-scaffold.py --from https://github.com/<user>/<repo>
+```
+
+The wizard asks you, step by step:
+
+1. **Source repository** (optional): a GitHub URL. If you give one, the
+   description, homepage, license, version and source URL are fetched for you.
+2. **Package information**: name, description, homepage, license, maintainer,
+   version and `SRCURL`.
+3. **SHA256**: computed automatically by downloading the source, or entered
+   manually.
+4. **Build method**: detected from the files in the upstream repository (for
+   example `Cargo.toml`, `go.mod`, `package.json` or `pyproject.toml`). Press
+   Enter to accept the detected method.
+5. **Entrypoint**: only asked for script-based methods (Python script, shell,
+   Perl, Lua, PHP).
+6. **Extra dependencies** (optional): added to `TERMUX_PKG_DEPENDS`.
+
+After a final review, confirm with `Write build.sh?` and the wizard creates
+`packages/<package-name>/build.sh` and makes it executable.
+
+Before you continue, check the result:
+
+- Set the maintainer to your own GitHub username with `@` (for example
+  `@yourname`)
+- If you chose **Other / manual**, edit `termux_step_make_install()`, because
+  the generated install step is only a placeholder
+- If you chose **Python script**, make sure the entrypoint file really exists
+  in the upstream repository, or pick a different build method such as `pip`
+- Fetching metadata and computing the SHA256 need an internet connection; you
+  can leave the URL blank and fill everything in by hand
 
 ## 6. Validate the Package
 
