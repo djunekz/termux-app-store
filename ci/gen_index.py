@@ -537,12 +537,18 @@ cd termux-app-store</code></pre>
     <div class="step">
       <div class="step-num">1</div>
       <div class="step-body">
-        <div class="step-title">Init with termux-build</div>
+        <div class="step-title">Init with termux-build or pkg-scaffold.py</div>
         <div class="step-desc">Run <code>./termux-build init</code> with your tool's repository URL to automatically scaffold the package.</div>
         <div class="code-block">
           <pre><code>./termux-build init &lt;url-your-repository&gt;</code></pre>
           <button class="copy-btn" onclick="copyCode(this,'./termux-build init &lt;url-your-repository&gt;')">copy</button>
         </div>
+        <div class="step-desc mt-4">Or use the <code>pkg-scaffold.py</code> wizard. It reads your repository, detects the build method, computes the SHA256 and writes <code>packages/&lt;your-tool-name&gt;/build.sh</code> for you.</div>
+        <div class="code-block">
+          <pre><code>python3 pkg-scaffold.py --from &lt;url-your-repository&gt;</code></pre>
+          <button class="copy-btn" onclick="copyCode(this,'python3 pkg-scaffold.py --from &lt;url-your-repository&gt;')">copy</button>
+        </div>
+        <div class="step-note">Run it from the repository root and review the generated <code>build.sh</code> before continuing.</div>
       </div>
     </div>
 
