@@ -22,10 +22,11 @@ ask for help.
 10. [Source Build Fails](#source-build-fails)
 11. [APT Repository and Signing Key Problems](#apt-repository-and-signing-key-problems)
 12. [Network Issues](#network-issues)
-13. [UI Issues](#ui-issues)
-14. [Moved Folder, Cache and Path Issues](#moved-folder-cache-and-path-issues)
-15. [Clean Reinstall](#clean-reinstall)
-16. [Reporting a Bug](#reporting-a-bug)
+13. [Git Clone Is Slow or Too Large](#git-clone-is-slow-or-too-large)
+14. [UI Issues](#ui-issues)
+15. [Moved Folder, Cache and Path Issues](#moved-folder-cache-and-path-issues)
+16. [Clean Reinstall](#clean-reinstall)
+17. [Reporting a Bug](#reporting-a-bug)
 
 ---
 
@@ -576,6 +577,97 @@ or downloads that stall or time out.
 Package metadata and downloads always need the network. The interface itself
 works offline, and cached `.deb` files that pass checksum verification can
 be reinstalled without a download.
+
+---
+
+## Git Clone Is Slow or Too Large
+
+### Symptom
+
+- `git clone` runs for a very long time or stalls at `Receiving objects`
+- The download is hundreds of MB for what looks like a small project
+- The clone fails with `RPC failed`, `early EOF` or `invalid index-pack output`
+- Termux runs out of storage while cloning
+
+### Cause
+
+A plain `git clone` downloads every branch and the full history. Besides
+`master`, the repository has a `gh-pages` branch that serves the published
+`.deb` files and the package index. Binary files compress poorly and every
+older version stays in the history, so that branch is large and keeps growing.
+You do not need it to read, run or change package recipes.
+
+### Solution
+
+Clone only the `master` branch and only its latest commit:
+
+```bash
+git clone --depth 1 --single-branch --branch master https://github.com/djunekz/termux-app-store
+cd termux-app-store
+```
+
+If you are contributing, clone your own fork the same way:
+
+```bash
+git clone --depth 1 --single-branch --branch master https://github.com/YOUR_USERNAME/termux-app-store
+```
+
+Creating branches, committing, pushing and opening a pull request all work
+normally from a shallow clone.
+
+If you need the commit history (`git log`, `git blame`) but not every old file
+up front, use a partial clone instead. File contents are downloaded only when
+they are needed:
+
+```bash
+git clone --filter=blob:none --single-branch --branch master https://github.com/djunekz/termux-app-store
+```
+
+You can also turn a shallow clone into a full one later:
+
+```bash
+git fetch --unshallow
+```
+
+### I already started a normal clone
+
+Git cannot resume an interrupted clone. Press `Ctrl+C`, delete the folder and
+clone again with the command above:
+
+```bash
+rm -rf termux-app-store
+```
+
+If the folder already contains work of yours that is not pushed, copy it
+somewhere safe first.
+
+### The clone keeps failing on a weak connection
+
+Stop git from giving up on slow transfers, and avoid HTTP/2 stream errors such
+as `curl 92`:
+
+```bash
+git config --global http.lowSpeedLimit 0
+git config --global http.lowSpeedTime 999999
+git config --global http.version HTTP/1.1
+```
+
+Also check that you have free space with `df -h $HOME`, and try a stable
+Wi-Fi connection instead of mobile data.
+
+### I only want to use or read the code
+
+You do not need git for that. Install the app with
+`pip install termux-app-store` (see [INSTALL.md](INSTALL.md)), or download a
+snapshot of `master` without any history:
+
+```bash
+curl -L -o termux-app-store.tar.gz https://github.com/djunekz/termux-app-store/archive/refs/heads/master.tar.gz
+tar -xzf termux-app-store.tar.gz
+```
+
+A snapshot is not a git repository, so use a clone if you plan to open a pull
+request.
 
 ---
 
