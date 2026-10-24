@@ -376,7 +376,7 @@ termux-app-store/
 ## Development and Testing
 
 ```bash
-git clone https://github.com/djunekz/termux-app-store
+git clone --depth 1 --single-branch --branch master https://github.com/djunekz/termux-app-store
 cd termux-app-store
 pip install -e ".[dev]"
 ```
