@@ -605,12 +605,18 @@ cd termux-app-store')">copy</button>
     <div class="step">
       <div class="step-num">1</div>
       <div class="step-body">
-        <div class="step-title">Init with termux-build</div>
+        <div class="step-title">Init with termux-build or pkg-scaffold.py</div>
         <div class="step-desc">Run <code>./termux-build init</code> with your tool's repository URL to automatically scaffold the package.</div>
         <div class="code-block">
           <pre><code>./termux-build init &lt;url-your-repository&gt;</code></pre>
           <button class="copy-btn" onclick="copyCode(this,'./termux-build init &lt;url-your-repository&gt;')">copy</button>
         </div>
+        <div class="step-desc mt-4">Or use the <code>pkg-scaffold.py</code> wizard. It reads your repository, detects the build method, computes the SHA256 and writes <code>packages/&lt;your-tool-name&gt;/build.sh</code> for you.</div>
+        <div class="code-block">
+          <pre><code>python3 pkg-scaffold.py --from &lt;url-your-repository&gt;</code></pre>
+          <button class="copy-btn" onclick="copyCode(this,'python3 pkg-scaffold.py --from &lt;url-your-repository&gt;')">copy</button>
+        </div>
+        <div class="step-note">Run it from the repository root and review the generated <code>build.sh</code> before continuing.</div>
       </div>
     </div>
 
@@ -777,14 +783,14 @@ pkg update')">copy</button>
   <div class="info-box">
     <p><strong style="color:var(--text)">Current version:</strong> <span style="color:var(--green)">v0.9.1</span></p>
     <p><strong style="color:var(--text)">Packages in index:</strong> <span style="color:var(--blue)">89</span></p>
-    <p><strong style="color:var(--text)">Last updated:</strong> <span style="color:var(--text-dim)">2026-10-24 08:20 UTC</span></p>
+    <p><strong style="color:var(--text)">Last updated:</strong> <span style="color:var(--text-dim)">2026-10-24 08:32 UTC</span></p>
     <p><strong style="color:var(--text)">Source:</strong> <a href="https://github.com/djunekz/termux-app-store">github.com/djunekz/termux-app-store</a></p>
   </div>
 </div>
 
 <footer>
   <span>Termux App Store &copy; <a href="https://github.com/djunekz">@djunekz</a></span>
-  <span>Last updated: 2026-10-24 08:20 UTC</span>
+  <span>Last updated: 2026-10-24 08:32 UTC</span>
 </footer>
 
 </div><!-- /wrap -->
