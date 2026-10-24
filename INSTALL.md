@@ -63,7 +63,7 @@ curl -fsSL https://raw.githubusercontent.com/djunekz/termux-app-store/master/tas
 Or, from a clone of the repository:
 
 ```bash
-git clone --single-branch --branch master https://github.com/djunekz/termux-app-store
+git clone --depth 1 --single-branch --branch master https://github.com/djunekz/termux-app-store
 cd termux-app-store
 ./tasctl install
 ```
@@ -79,7 +79,7 @@ backup folder named `.tas.bak.<timestamp>` before the new one is put in place.
 ## Option 3: install.sh
 
 ```bash
-git clone --single-branch --branch master https://github.com/djunekz/termux-app-store
+git clone --depth 1 --single-branch --branch master https://github.com/djunekz/termux-app-store
 cd termux-app-store
 bash install.sh
 ```
