@@ -22,10 +22,14 @@ class TestTestCommandWiring:
         assert match is not None
         assert "--cov" in match.group(1)
 
-    def test_pytest_ini_points_at_existing_directory(self):
-        match = re.search(r"^testpaths\s*=\s*(\S+)", read("pytest.ini"), re.MULTILINE)
+    def test_pytest_config_points_at_existing_directory(self):
+        match = re.search(r'^testpaths\s*=\s*\["([^"]+)"\]', read("pyproject.toml"), re.MULTILINE)
         assert match is not None
         assert (ROOT / match.group(1)).is_dir()
+
+    def test_pytest_config_lives_only_in_pyproject(self):
+        assert "[tool.pytest.ini_options]" in read("pyproject.toml")
+        assert not (ROOT / "pytest.ini").exists()
 
     def test_tox_runs_pytest(self):
         assert "commands = pytest" in read("tox.ini")

@@ -109,7 +109,8 @@ ROOT = Path(__file__).resolve().parent.parent
 def test_packaged_build_script_matches_repo_script():
     packaged = ROOT / "termux_app_store" / "data" / "build-package.sh"
     assert packaged.is_file()
-    assert packaged.read_bytes() == (ROOT / "build-package.sh").read_bytes()
+    source = (ROOT / "build-package.sh").read_bytes()
+    assert packaged.read_bytes() == source, "packaged copy is stale, run: make sync-build-script"
 
 
 def test_packaged_build_script_is_declared_for_the_wheel():

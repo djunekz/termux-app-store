@@ -6,7 +6,7 @@ on:
     paths:
       - 'tools/**'
       - 'tests/**'
-      - 'pytest.ini'
+      - 'pyproject.toml'
       - '.github/workflows/build.yml'
   pull_request:
     branches: [ master ]
