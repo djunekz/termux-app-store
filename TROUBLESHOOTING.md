@@ -206,7 +206,7 @@ or the TUI fails to start with a Textual-related error.
 
 ### Cause
 
-Termux App Store needs Python 3.9 or newer and Textual 8.0.0 or newer. A
+Termux App Store needs Python 3.10 or newer and Textual 8.0.0 or newer. A
 pip install pulls Textual in automatically. Running from a source checkout
 does not.
 

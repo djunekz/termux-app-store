@@ -89,7 +89,7 @@ uv sync --extra dev
 ```Sh
 cp .env.example .env
 ```
-Python 3.9 or newer is required.
+Python 3.10 or newer is required.
 
 ---
 
