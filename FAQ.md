@@ -310,6 +310,26 @@ reviews and testing. See [CONTRIBUTING.md](CONTRIBUTING.md) and
 
 Yes. Use `termux-app-store fix-install <package>` to build from source.
 
+### `git clone` takes very long or downloads hundreds of MB. What can I do?
+
+A plain `git clone` downloads every branch and the full history, including the
+`gh-pages` branch that holds the published `.deb` files and the package index.
+Older versions of those binaries stay in the history, so the download keeps
+growing. You do not need that branch to read or change package recipes, so
+clone only `master` with a shallow history:
+
+```bash
+git clone --depth 1 --single-branch --branch master https://github.com/djunekz/termux-app-store
+```
+
+If you are contributing, use your own fork's URL instead. Branches and pull
+requests work normally from a shallow clone. If you need the full commit
+history later, run `git fetch --unshallow`.
+
+You do not need to clone at all just to use the app: `pip install
+termux-app-store` is enough. For stalled or interrupted clones and other
+options, see [Git Clone Is Slow or Too Large](TROUBLESHOOTING.md#git-clone-is-slow-or-too-large).
+
 ### Is the TUI accessible?
 
 The CLI is recommended for screen readers and keyboard-only use, because every
