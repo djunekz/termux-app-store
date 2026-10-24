@@ -1,9 +1,4 @@
 #!/usr/bin/env python3
-"""
-Catatan pribadi:
-Generator index.json untuk termux-app-store fungsinya
-Scan semua packages/ dan parse build.sh untuk extract metadata
-"""
 
 import hashlib
 import json
@@ -22,9 +17,9 @@ class BuildShParser:
         try:
             with open(self.path, "r", encoding="utf-8") as f:
                 return f.read()
-        except Exception as e:  # pragma: no cover
-            print(f"[ERROR] Gagal membaca {self.path}: {e}")  # pragma: no cover
-            return ""  # pragma: no cover
+        except Exception as e:
+            print(f"[ERROR] Gagal membaca {self.path}: {e}")
+            return ""
 
     def _extract_var(self, var_name: str) -> Optional[str]:
         patterns = [rf'{var_name}="([^"]*)"', rf"{var_name}='([^']*)'", rf"{var_name}=([^\s\n]+)"]
@@ -66,8 +61,8 @@ class PackageIndexGenerator:
 
     def _get_package_dirs(self) -> List[Path]:
         if not self.packages_dir.exists():
-            print(f"[ERROR] Directory {self.packages_dir} tidak ditemukan!")  # pragma: no cover
-            return []  # pragma: no cover
+            print(f"[ERROR] Directory {self.packages_dir} tidak ditemukan!")
+            return []
 
         package_dirs = []
         for item in self.packages_dir.iterdir():
@@ -117,8 +112,8 @@ class PackageIndexGenerator:
         package_dirs = self._get_package_dirs()
 
         if not package_dirs:
-            print("[WARNING] Tidak ada package ditemukan!")  # pragma: no cover
-            return {"packages": [], "total": 0}  # pragma: no cover
+            print("[WARNING] Tidak ada package ditemukan!")
+            return {"packages": [], "total": 0}
 
         print(f"[*] Found {len(package_dirs)} packages")
 
@@ -127,9 +122,9 @@ class PackageIndexGenerator:
             try:
                 entry = self._create_package_entry(pkg_dir)
                 packages.append(entry)
-            except Exception as e:  # pragma: no cover
-                print(f"[ERROR] Failed to process {pkg_dir.name}: {e}")  # pragma: no cover
-                continue  # pragma: no cover
+            except Exception as e:
+                print(f"[ERROR] Failed to process {pkg_dir.name}: {e}")
+                continue
 
         packages.sort(key=lambda x: x["package"])
 
@@ -156,7 +151,8 @@ class PackageIndexGenerator:
             json.dump(data, f, indent=2, ensure_ascii=False)
 
         print("[✔] index.json generated successfully!")
-        print(f"    Total packages: {data['total']}")
+        total = data.get("total", len(data.get("packages", [])))
+        print(f"    Total packages: {total}")
         print(f"    Output: {self.output_file}")
 
     def run(self):
@@ -174,17 +170,17 @@ def main():
     if Path("packages").exists():
         packages_dir = "packages"
         output_file = "tools/index.json"
-    elif Path("../packages").exists():  # pragma: no cover
-        packages_dir = "../packages"  # pragma: no cover
-        output_file = "index.json"  # pragma: no cover
-    else:  # pragma: no cover
-        print("[ERROR] Cannot find packages directory!")  # pragma: no cover
-        print("Please run this script from project root or tools/ directory")  # pragma: no cover
-        return 1  # pragma: no cover
+    elif Path("../packages").exists():
+        packages_dir = "../packages"
+        output_file = "index.json"
+    else:
+        print("[ERROR] Cannot find packages directory!")
+        print("Please run this script from project root or tools/ directory")
+        return 1
     generator = PackageIndexGenerator(packages_dir, output_file)
     generator.run()
     return 0
 
 
-if __name__ == "__main__":  # pragma: no cover
-    sys.exit(main())  # pragma: no cover
+if __name__ == "__main__":
+    sys.exit(main())

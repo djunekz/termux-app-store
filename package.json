@@ -10,6 +10,7 @@
   },
   "scripts": {
     "test": "pytest",
+    "test:cov": "python3 -m pytest --cov=tools --cov=termux_app_store --cov-report=term-missing",
     "lint": "python3 -m ruff check . && python3 -m ruff format --check .",
     "format": "python3 -m ruff check --fix . && python3 -m ruff format .",
     "typecheck": "python3 -m mypy",

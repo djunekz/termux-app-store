@@ -1,130 +1,26 @@
+import hashlib
+import importlib.util
 import json
-import re
+import runpy
+from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Optional
 from unittest.mock import patch
 
+import pytest
 
-class BuildShParser:
-    def __init__(self, build_sh_path: str):
-        self.path = build_sh_path
-        self.content = self._read_file()
-
-    def _read_file(self) -> str:
-        try:
-            with open(self.path, "r", encoding="utf-8") as f:
-                return f.read()
-        except Exception as e:
-            print(f"[ERROR] Gagal membaca {self.path}: {e}")
-            return ""
-
-    def _extract_var(self, var_name: str) -> Optional[str]:
-        patterns = [rf'{var_name}="([^"]*)"', rf"{var_name}='([^']*)'", rf"{var_name}=([^\s\n]+)"]
-        for pattern in patterns:
-            match = re.search(pattern, self.content)
-            if match:
-                return match.group(1).strip()
-        return None
-
-    def parse(self) -> Dict:
-        data = {
-            "homepage": self._extract_var("TERMUX_PKG_HOMEPAGE") or "",
-            "description": self._extract_var("TERMUX_PKG_DESCRIPTION") or "",
-            "license": self._extract_var("TERMUX_PKG_LICENSE") or "",
-            "maintainer": self._extract_var("TERMUX_PKG_MAINTAINER") or "",
-            "version": self._extract_var("TERMUX_PKG_VERSION") or "",
-            "srcurl": self._extract_var("TERMUX_PKG_SRCURL") or "",
-            "sha256": self._extract_var("TERMUX_PKG_SHA256") or "",
-            "depends": self._parse_depends(),
-            "platform_independent": self._extract_var("TERMUX_PKG_PLATFORM_INDEPENDENT") == "true",
-        }
-        return data
-
-    def _parse_depends(self) -> List[str]:
-        depends_str = self._extract_var("TERMUX_PKG_DEPENDS")
-        if not depends_str:
-            return []
-        deps = [dep.strip() for dep in depends_str.split(",")]
-        return [dep for dep in deps if dep]
+BUILD_PATH = Path(__file__).resolve().parent.parent / "tools" / "build.py"
 
 
-class PackageIndexGenerator:
-    def __init__(self, packages_dir: str = "packages", output_file: str = "tools/index.json"):
-        self.packages_dir = Path(packages_dir)
-        self.output_file = Path(output_file)
-        self.repo_source = "https://github.com/djunekz/termux-app-store"
+def _import_build():
+    spec = importlib.util.spec_from_file_location("tas_build_under_test", str(BUILD_PATH))
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
 
-    def _get_package_dirs(self) -> List[Path]:
-        if not self.packages_dir.exists():
-            print(f"[ERROR] Directory {self.packages_dir} tidak ditemukan!")
-            return []
-        package_dirs = []
-        for item in self.packages_dir.iterdir():
-            if item.is_dir() and (item / "build.sh").exists():
-                package_dirs.append(item)
-        return sorted(package_dirs)
 
-    def _estimate_download_size(self, srcurl: str) -> str:
-        return "Unknown"
-
-    def _estimate_installed_size(self, package_name: str) -> str:
-        return "Unknown"
-
-    def _create_package_entry(self, package_dir: Path) -> Dict:
-        package_name = package_dir.name
-        build_sh_path = package_dir / "build.sh"
-        parser = BuildShParser(str(build_sh_path))
-        metadata = parser.parse()
-        entry = {
-            "package": package_name,
-            "version": metadata["version"],
-            "maintainer": metadata["maintainer"],
-            "description": metadata["description"],
-            "homepage": metadata["homepage"],
-            "license": metadata["license"],
-            "download_size": self._estimate_download_size(metadata["srcurl"]),
-            "installed_size": self._estimate_installed_size(package_name),
-            "source": self.repo_source,
-            "srcurl": metadata["srcurl"],
-            "sha256": metadata["sha256"],
-            "platform_independent": metadata["platform_independent"],
-        }
-        if metadata["depends"]:
-            entry["depends"] = metadata["depends"]
-        return entry
-
-    def generate(self) -> Dict:
-        package_dirs = self._get_package_dirs()
-        if not package_dirs:
-            return {"packages": [], "total": 0}
-        packages = []
-        for pkg_dir in package_dirs:
-            try:
-                entry = self._create_package_entry(pkg_dir)
-                packages.append(entry)
-            except Exception as e:
-                print(f"[ERROR] Failed to process {pkg_dir.name}: {e}")
-                continue
-        packages.sort(key=lambda x: x["package"])
-        from datetime import datetime, timezone
-
-        index_data = {
-            "version": "1.0",
-            "repository": self.repo_source,
-            "generated_at": datetime.now(timezone.utc).isoformat(),
-            "total": len(packages),
-            "packages": packages,
-        }
-        return index_data
-
-    def save(self, data: Dict):
-        self.output_file.parent.mkdir(parents=True, exist_ok=True)
-        with open(self.output_file, "w", encoding="utf-8") as f:
-            json.dump(data, f, indent=2, ensure_ascii=False)
-
-    def run(self):
-        data = self.generate()
-        self.save(data)
+_build = _import_build()
+BuildShParser = _build.BuildShParser
+PackageIndexGenerator = _build.PackageIndexGenerator
 
 
 def make_build_sh(pkg_dir: Path, fields: dict) -> Path:
@@ -448,16 +344,12 @@ class TestSave:
         content = output.read_text(encoding="utf-8")
         assert "Indonesia" in content
 
-
-import importlib.util as _ilu
-
-
-def _import_build():
-    build_path = Path(__file__).parent.parent / "tools" / "build.py"
-    spec = _ilu.spec_from_file_location("build_module", str(build_path))
-    mod = _ilu.module_from_spec(spec)
-    spec.loader.exec_module(mod)
-    return mod
+    def test_tolerates_data_without_total(self, tmp_path):
+        output = tmp_path / "index.json"
+        data = {"packages": [{"package": "a"}, {"package": "b"}]}
+        PackageIndexGenerator(output_file=str(output)).save(data)
+        saved = json.loads(output.read_text(encoding="utf-8"))
+        assert saved["packages"][1]["package"] == "b"
 
 
 class TestMainFunction:
@@ -495,3 +387,104 @@ class TestMainFunction:
         build = _import_build()
         result = build.main()
         assert result == 1
+
+    def test_main_writes_valid_index(self, tmp_path, monkeypatch):
+        bower = tmp_path / "packages" / "bower"
+        bower.mkdir(parents=True)
+        (bower / "build.sh").write_text('TERMUX_PKG_VERSION="1.8.12"\n')
+        (tmp_path / "tools").mkdir()
+        monkeypatch.chdir(tmp_path)
+
+        _import_build().main()
+        data = json.loads((tmp_path / "tools" / "index.json").read_text(encoding="utf-8"))
+        assert data["total"] == 1
+        assert data["packages"][0]["package"] == "bower"
+
+
+class TestPackageEntry:
+    def test_recipe_sha256_matches_file_bytes(self, tmp_path):
+        pkg_dir = make_build_sh(tmp_path / "demo", {"TERMUX_PKG_VERSION": "1.0"})
+        entry = PackageIndexGenerator(str(tmp_path))._create_package_entry(pkg_dir)
+        expected = hashlib.sha256((pkg_dir / "build.sh").read_bytes()).hexdigest()
+        assert entry["recipe_sha256"] == expected
+
+    def test_recipe_sha256_changes_when_recipe_changes(self, tmp_path):
+        gen = PackageIndexGenerator(str(tmp_path))
+        pkg_dir = make_build_sh(tmp_path / "demo", {"TERMUX_PKG_VERSION": "1.0"})
+        before = gen._create_package_entry(pkg_dir)["recipe_sha256"]
+        make_build_sh(tmp_path / "demo", {"TERMUX_PKG_VERSION": "2.0"})
+        after = gen._create_package_entry(pkg_dir)["recipe_sha256"]
+        assert before != after
+
+    def test_entry_uses_directory_name_and_version(self, tmp_path):
+        pkg_dir = make_build_sh(tmp_path / "bower", {"TERMUX_PKG_VERSION": "1.8.12"})
+        entry = PackageIndexGenerator(str(tmp_path))._create_package_entry(pkg_dir)
+        assert entry["package"] == "bower"
+        assert entry["version"] == "1.8.12"
+
+    def test_entry_omits_depends_when_none_declared(self, tmp_path):
+        pkg_dir = make_build_sh(tmp_path / "demo", {"TERMUX_PKG_VERSION": "1.0"})
+        entry = PackageIndexGenerator(str(tmp_path))._create_package_entry(pkg_dir)
+        assert "depends" not in entry
+
+    def test_entry_lists_depends_when_declared(self, tmp_path):
+        fields = {"TERMUX_PKG_VERSION": "1.0", "TERMUX_PKG_DEPENDS": "python, git"}
+        pkg_dir = make_build_sh(tmp_path / "demo", fields)
+        entry = PackageIndexGenerator(str(tmp_path))._create_package_entry(pkg_dir)
+        assert entry["depends"] == ["python", "git"]
+
+    def test_size_estimates_are_unknown(self, tmp_path):
+        gen = PackageIndexGenerator(str(tmp_path))
+        assert gen._estimate_download_size("https://example.com/a.tar.gz") == "Unknown"
+        assert gen._estimate_installed_size("demo") == "Unknown"
+
+    def test_timestamp_is_timezone_aware(self, tmp_path):
+        stamp = PackageIndexGenerator(str(tmp_path))._get_timestamp()
+        assert datetime.fromisoformat(stamp).tzinfo is not None
+
+
+class TestGenerateFailureIsolation:
+    def test_failing_package_is_skipped_and_others_kept(self, tmp_path):
+        make_build_sh(tmp_path / "alpha", {"TERMUX_PKG_VERSION": "1.0"})
+        make_build_sh(tmp_path / "beta", {"TERMUX_PKG_VERSION": "2.0"})
+        gen = PackageIndexGenerator(str(tmp_path))
+        original = gen._create_package_entry
+
+        def flaky(package_dir):
+            if package_dir.name == "alpha":
+                raise RuntimeError("boom")
+            return original(package_dir)
+
+        with patch.object(gen, "_create_package_entry", side_effect=flaky):
+            result = gen.generate()
+        assert [p["package"] for p in result["packages"]] == ["beta"]
+        assert result["total"] == 1
+
+    def test_all_packages_failing_yields_empty_index(self, tmp_path):
+        make_build_sh(tmp_path / "alpha", {"TERMUX_PKG_VERSION": "1.0"})
+        gen = PackageIndexGenerator(str(tmp_path))
+        with patch.object(gen, "_create_package_entry", side_effect=RuntimeError("boom")):
+            result = gen.generate()
+        assert result["total"] == 0
+        assert result["packages"] == []
+
+
+class TestScriptEntryPoint:
+    def test_exits_with_one_when_packages_missing(self, tmp_path, monkeypatch):
+        isolated = tmp_path / "a" / "b" / "c"
+        isolated.mkdir(parents=True)
+        monkeypatch.chdir(isolated)
+        with pytest.raises(SystemExit) as raised:
+            runpy.run_path(str(BUILD_PATH), run_name="__main__")
+        assert raised.value.code == 1
+
+    def test_exits_with_zero_and_writes_index(self, tmp_path, monkeypatch):
+        bower = tmp_path / "packages" / "bower"
+        bower.mkdir(parents=True)
+        (bower / "build.sh").write_text('TERMUX_PKG_VERSION="1.8.12"\n')
+        (tmp_path / "tools").mkdir()
+        monkeypatch.chdir(tmp_path)
+        with pytest.raises(SystemExit) as raised:
+            runpy.run_path(str(BUILD_PATH), run_name="__main__")
+        assert raised.value.code == 0
+        assert (tmp_path / "tools" / "index.json").is_file()

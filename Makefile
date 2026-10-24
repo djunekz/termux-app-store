@@ -1,12 +1,15 @@
 PYTHON ?= python3
 
-.PHONY: install test lint format typecheck check clean
+.PHONY: install test coverage lint format typecheck check clean
 
 install:
 	$(PYTHON) -m pip install -e ".[dev]"
 
 test:
 	$(PYTHON) -m pytest
+
+coverage:
+	$(PYTHON) -m pytest --cov=tools --cov=termux_app_store --cov-report=term-missing
 
 lint:
 	$(PYTHON) -m ruff check .
