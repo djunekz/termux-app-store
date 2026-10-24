@@ -219,7 +219,7 @@ app finds its files no matter where you run it from.
 For development or review you can run the project directly from a checkout:
 
 ```bash
-git clone https://github.com/djunekz/termux-app-store
+git clone --depth 1 --single-branch --branch master https://github.com/djunekz/termux-app-store
 cd termux-app-store
 pkg install python -y
 pip install --upgrade textual
