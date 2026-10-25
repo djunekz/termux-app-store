@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-10-24T15:47:05.748851+00:00",
+  "generated_at": "2026-10-25T01:00:02.508634+00:00",
   "total": 89,
   "packages": [
     {
@@ -1869,17 +1869,22 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/unmineable/archive/refs/tags/v${TERMUX_PKG_VERSION}.tar.gz",
       "sha256": "b82b0be329003a53667fde8c22e1385963caf97446a03e07c06089883d35cb36",
-      "recipe_sha256": "c64faaac29a2bd80c41c7307eacb9038f23e239ca4fa1d87801100aa0e9cd29a",
+      "recipe_sha256": "23e6bbe65d00fef4b299026be5d8c78f6cd992506dd1bd809f61d410779cbec4",
       "platform_independent": false,
       "depends": [
-        "python",
         "cmake",
         "make",
         "clang",
         "libuv",
         "openssl",
         "build-essential"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "cabf6df455e721eadb17965e3729cfd38c46aa607aed84f1925f905e0a3e2118",
+        "arm": "3f1104f087dd584c3ae99ef6e5dc69b419934367e61aaebda8ded9a7ca6e59d6",
+        "x86_64": "cb3d6f8c31ef6d10893cfb03f71108b1e3946eae2476b80ff1ac774dcfe4ae33",
+        "i686": "a3f5d79c4eb66a358c68eb2c2f0fbfff3a7952621cc1d05601cdf89f5ef8b28c"
+      }
     },
     {
       "package": "userfinder",

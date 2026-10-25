@@ -687,15 +687,15 @@ SHA256: 63afa684fc7e38953496b4fd0a323f8f5933d73e5c584906f098e0fcee2c4603
 Description: A terminal-based TUI file manager
 
 Package: unmineable
-Version: 0.1.0
+Version: 0.1.5
 Architecture: i686
 Maintainer: @termux-app-store
 Installed-Size: 
-Filename: pool/main/unmineable_0.1.0_i686.deb
-Size: 55680
-MD5sum: 536c8afe816a19a5877eb4d19d638999
-SHA1: f3c7766d3d60a780837a768f894b56deffe92bff
-SHA256: a73dc54d10edc572a26d8c081fa6ead0dcfeacfd16182baa72c1b4801ce0f854
+Filename: pool/main/unmineable_0.1.5_i686.deb
+Size: 59048
+MD5sum: 42a46c4b4a26b83c93dda9f0b496ac11
+SHA1: d922ef43b8a5efbfc5345947c76556a7ccd9e663
+SHA256: a3f5d79c4eb66a358c68eb2c2f0fbfff3a7952621cc1d05601cdf89f5ef8b28c
 Description: Mining multiple coins cryptocurrency with simple setup and pool unmineable
 
 Package: userfinder
@@ -757,4 +757,3 @@ MD5sum: bd2d2ab8bde4e3a2400195afacc06226
 SHA1: 8c464fbf94b392710d9db30906eb6c872137569b
 SHA256: bd2e90c781f46777b3c3f3767cc0206f04959571bbd78bf76e377a384ee5d02e
 Description: A posix script to find and watch youtube videos from the terminal. (Without API)
-
