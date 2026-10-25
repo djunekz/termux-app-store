@@ -5,7 +5,7 @@ TERMUX_PKG_MAINTAINER="@termux-app-store"
 TERMUX_PKG_VERSION=0.1.5
 TERMUX_PKG_SRCURL=https://github.com/djunekz/unmineable/archive/refs/tags/v${TERMUX_PKG_VERSION}.tar.gz
 TERMUX_PKG_SHA256=b82b0be329003a53667fde8c22e1385963caf97446a03e07c06089883d35cb36
-TERMUX_PKG_DEPENDS="python, cmake, make, clang, libuv, openssl, build-essential"
+TERMUX_PKG_DEPENDS="cmake, make, clang, libuv, openssl, build-essential"
 TERMUX_PKG_BUILD_IN_SRC=true
 
 termux_step_make_install() {
