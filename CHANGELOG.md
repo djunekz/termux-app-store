@@ -41,6 +41,7 @@ and this project adheres to semantic versioning.
 - `pyproject.toml` - new `[tool.mypy]` and `[tool.coverage.run]` configuration; `ruff` and `mypy` added to the `dev` extra
 - Python sources and tests - import order fixed, unused f-string prefixes removed and the code formatted with `ruff format` (31 files); behaviour is unchanged and all 352 tests pass
 - `INSTALL.md` - "Running from Source" now installs the dev extra, runs `make test` and points to `.env.example` and `uv.lock`
+- Package `unmineable` v0.1.5 - Updated metadata
 
 ### Fixed
 - `build-package.sh` - a failed `pkg install` of `TERMUX_PKG_DEPENDS` was only a warning, so the build carried on without the toolchain and died later with `cargo: command not found`, `go: command not found` or `npm: command not found`; the build now stops with a `FATAL` message naming the missing dependencies once all retries are used (workflow run #136: `aichat` v0.30.0, `brutespray` v2.7.2 and `pnpm` v12.14.0)
