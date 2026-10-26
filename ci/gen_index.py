@@ -58,6 +58,29 @@ for p in pkgs[:6]:
     )
 featured_cards = "\n".join(featured)
 
+# Build a complete searchable card collection for Discover, not only the six featured items.
+all_discover = []
+for p in pkgs:
+    raw_name = str(p.get("package", ""))
+    name = esc(raw_name)
+    ver = esc(p.get("version", ""))
+    desc = esc(p.get("description", "No description provided.") or "No description provided.")
+    deps = esc(package_text(p.get("depends")) or "No additional dependencies listed")
+    homepage = str(p.get("homepage", "") or "")
+    safe_home = esc(homepage) if homepage.startswith(("https://", "http://")) else ""
+    link = (
+        f'<a class="package-link" href="{safe_home}" target="_blank" rel="noopener noreferrer">Project homepage</a>'
+        if safe_home else '<span class="package-link muted">Homepage not listed</span>'
+    )
+    copy_arg = html_lib.escape(json.dumps(raw_name), quote=True)
+    all_discover.append(
+        f'<article class="package-card" data-search="{name.lower()} {ver.lower()} {desc.lower()} {deps.lower()}">'
+        f'<div class="package-card-top"><span class="package-name">{name}</span><span class="package-version">{ver}</span></div>'
+        f'<p>{desc}</p><div class="package-meta"><span>Dependencies: {deps}</span></div>'
+        f'<div class="package-card-actions"><button class="small-btn" type="button" onclick="copyText({copy_arg}, this)">Copy name</button>{link}</div></article>'
+    )
+all_discover_cards = "\n".join(all_discover)
+
 html = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -87,6 +110,7 @@ html = f"""<!DOCTYPE html>
   --cyan:#56d364;
 }}
 html{{scroll-behavior:smooth}}
+[hidden]{{display:none!important}}
 body{{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh}}
 
 /* NAV */
@@ -546,9 +570,11 @@ tasctl uninstall</code></pre>
 <!-- DISCOVER -->
 <div id="tab-discover" class="section">
   <div class="page-heading"><div class="eyebrow">EXPLORE THE CATALOG</div><h1>Find your next tool.</h1><p>Browse a curated starting point, then search the full catalog to find tools that fit your workflow.</p></div>
-  <div class="discover-toolbar"><input class="search-box" id="discoverSearch" type="search" placeholder="Search featured packages..." oninput="filterCards()"><span class="search-count" id="discoverCount">Featured packages</span></div>
+  <div class="discover-toolbar"><input class="search-box" id="discoverSearch" type="search" placeholder="Search all packages by name, description, version, or dependency..." aria-label="Search all packages" oninput="filterCards()"><button class="small-btn" id="discoverSearchButton" type="button" onclick="submitDiscoverSearch()">Search all</button><span class="search-count" id="discoverCount">{len(featured)} featured packages · {len(pkgs)} packages in catalog</span></div>
   <div class="package-grid" id="featuredGrid">{featured_cards}</div>
-  <div class="info-box"><p><strong>Looking for something specific?</strong> Open the Packages section to search the complete index, including descriptions, versions, and dependencies.</p><p>Package order follows the source index. Featured placement does not indicate popularity, endorsement, or security review.</p></div>
+  <div class="package-grid" id="allDiscoverGrid" hidden>{all_discover_cards}</div>
+  <p class="search-count" id="discoverNoResults" hidden>No packages match this search. Try another name or keyword.</p>
+  <div class="info-box" id="discoverInfo"><p><strong>Search the complete catalog.</strong> Results include every package in the source index, not just the featured selection. Press Enter or select Search all to open the full package index.</p><p>Featured placement does not indicate popularity, endorsement, or security review.</p></div>
   <div class="section-title">Explore by workflow</div>
   <div class="collection-grid">
     <button class="collection-card" onclick="searchPackages('python')"><span class="collection-kicker">01 / DEVELOPMENT</span><strong>Python and scripting</strong><span>Find packages mentioning Python, scripts, and automation.</span></button>
@@ -843,12 +869,54 @@ function toggleTheme() {{
 }}
 function searchPackages(query) {{
   showTab('packages', document.querySelector('[data-tab="packages"]'));
-  const input = document.getElementById('searchInput'); input.value = query; filterTable();
+  const input = document.getElementById('searchInput');
+  input.value = query;
+  filterTable();
 }}
 function filterCards() {{
-  const q = document.getElementById('discoverSearch').value.toLowerCase().trim(); let visible = 0;
-  document.querySelectorAll('#featuredGrid .package-card').forEach(card => {{ const match = card.dataset.search.includes(q); card.hidden = !match; if (match) visible++; }});
-  document.getElementById('discoverCount').textContent = visible + ' featured package' + (visible === 1 ? '' : 's');
+  const input = document.getElementById('discoverSearch');
+  const q = input.value.toLocaleLowerCase().trim();
+  const featuredGrid = document.getElementById('featuredGrid');
+  const allGrid = document.getElementById('allDiscoverGrid');
+  const info = document.getElementById('discoverInfo');
+  const noResults = document.getElementById('discoverNoResults');
+  const featuredCards = Array.from(featuredGrid.querySelectorAll('.package-card'));
+  const allCards = Array.from(allGrid.querySelectorAll('.package-card'));
+
+  if (!q) {{
+    featuredGrid.hidden = false;
+    allGrid.hidden = true;
+    info.hidden = false;
+    noResults.hidden = true;
+    document.getElementById('discoverCount').textContent = '{len(featured)} featured packages · {len(pkgs)} packages in catalog';
+    featuredCards.forEach(card => card.hidden = false);
+    allCards.forEach(card => card.hidden = false);
+    return;
+  }}
+
+  featuredGrid.hidden = true;
+  allGrid.hidden = false;
+  info.hidden = true;
+  let visible = 0;
+  allCards.forEach(card => {{
+    const haystack = (card.dataset.search || card.textContent).toLocaleLowerCase();
+    const match = haystack.includes(q);
+    card.hidden = !match;
+    if (match) visible++;
+  }});
+  document.getElementById('discoverCount').textContent = visible + ' of {len(pkgs)} packages match';
+  noResults.hidden = visible !== 0;
+}}
+function submitDiscoverSearch() {{
+  const input = document.getElementById('discoverSearch');
+  const query = input.value.trim();
+  if (!query) {{ input.focus(); return; }}
+  filterCards();
+  // Keep results visible in Discover while allowing Enter to open the complete package index.
+  showTab('packages', document.querySelector('[data-tab="packages"]'));
+  const packageInput = document.getElementById('searchInput');
+  packageInput.value = query;
+  filterTable();
 }}
 
 function copyCode(btn, text) {{
@@ -872,6 +940,16 @@ function filterTable() {{
   const countEl = document.getElementById('searchCount');
   countEl.textContent = q ? (visible + ' of ' + rows.length + ' packages match') : (rows.length + ' packages available');
 }}
+
+// Enter in Discover opens the complete catalog with the same query; Enter in Packages refreshes results.
+const discoverInput = document.getElementById('discoverSearch');
+if (discoverInput) discoverInput.addEventListener('keydown', event => {{
+  if (event.key === 'Enter') {{ event.preventDefault(); submitDiscoverSearch(); }}
+}});
+const packageInput = document.getElementById('searchInput');
+if (packageInput) packageInput.addEventListener('keydown', event => {{
+  if (event.key === 'Enter') {{ event.preventDefault(); filterTable(); }}
+}});
 
 // Handle nav onclick properly
 document.querySelectorAll('.nav-tab').forEach(tab => {{
