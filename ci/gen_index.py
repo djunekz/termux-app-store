@@ -1,6 +1,6 @@
+import html as html_lib
 import json
 import os
-import html as html_lib
 import re
 
 version = os.environ.get("VERSION", "0.0.0")
@@ -14,15 +14,18 @@ try:
 except (OSError, ValueError):
     pkgs = []
 
+
 def esc(value):
     text = str(value if value is not None else "")
     text = re.sub(r"[\U0001F000-\U0001FAFF\U00002600-\U000027BF\U0000FE0F]", "", text)
     return html_lib.escape(text, quote=True)
 
+
 def package_text(value):
     if isinstance(value, (list, tuple)):
         return ", ".join(str(x) for x in value)
     return str(value or "")
+
 
 rows = []
 for p in pkgs:
@@ -31,7 +34,9 @@ for p in pkgs:
     desc = esc(p.get("description", ""))
     dep = esc(package_text(p.get("depends"))) or "&mdash;"
     homepage = esc(p.get("homepage", ""))
-    rows.append(f'<tr data-search="{name.lower()} {ver.lower()} {desc.lower()} {dep.lower()}" data-package="{name}"><td>{name}</td><td>{ver}</td><td>{desc}</td><td>{dep}</td></tr>')
+    rows.append(
+        f'<tr data-search="{name.lower()} {ver.lower()} {desc.lower()} {dep.lower()}" data-package="{name}"><td>{name}</td><td>{ver}</td><td>{desc}</td><td>{dep}</td></tr>'
+    )
 pkg_rows = "\n".join(rows)
 
 featured = []
@@ -42,9 +47,15 @@ for p in pkgs[:6]:
     deps = esc(package_text(p.get("depends")) or "No additional dependencies listed")
     homepage = str(p.get("homepage", "") or "")
     safe_home = esc(homepage) if homepage.startswith(("https://", "http://")) else ""
-    link = f'<a class="package-link" href="{safe_home}" target="_blank" rel="noopener noreferrer">Project homepage</a>' if safe_home else '<span class="package-link muted">Homepage not listed</span>'
+    link = (
+        f'<a class="package-link" href="{safe_home}" target="_blank" rel="noopener noreferrer">Project homepage</a>'
+        if safe_home
+        else '<span class="package-link muted">Homepage not listed</span>'
+    )
     copy_arg = html_lib.escape(json.dumps(str(p.get("package", ""))), quote=True)
-    featured.append(f'<article class="package-card" data-search="{name.lower()} {ver.lower()} {desc.lower()} {deps.lower()}"><div class="package-card-top"><span class="package-name">{name}</span><span class="package-version">{ver}</span></div><p>{desc}</p><div class="package-meta"><span>Dependencies: {deps}</span></div><div class="package-card-actions"><button class="small-btn" type="button" onclick="copyText({copy_arg}, this)">Copy name</button>{link}</div></article>')
+    featured.append(
+        f'<article class="package-card" data-search="{name.lower()} {ver.lower()} {desc.lower()} {deps.lower()}"><div class="package-card-top"><span class="package-name">{name}</span><span class="package-version">{ver}</span></div><p>{desc}</p><div class="package-meta"><span>Dependencies: {deps}</span></div><div class="package-card-actions"><button class="small-btn" type="button" onclick="copyText({copy_arg}, this)">Copy name</button>{link}</div></article>'
+    )
 featured_cards = "\n".join(featured)
 
 html = f"""<!DOCTYPE html>
