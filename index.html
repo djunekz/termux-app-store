@@ -3,7 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Termux App Store</title>
+<title>Termux App Store | Package Discovery for Termux</title>
+<meta name="description" content="Explore Termux App Store packages, installation instructions, repository information, and contribution guides.">
+<meta name="theme-color" content="#0d1117">
+<meta property="og:title" content="Termux App Store">
+<meta property="og:description" content="Discover tools and packages for your Termux environment.">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -277,19 +281,40 @@ footer{
   footer{font-size:11px;flex-direction:column;gap:4px}
   #tab-install .section-title ~ .code-block{width:100%}
 }
+
+/* Extended discovery experience */
+:root{color-scheme:dark;--surface-raised:#1c232d;--accent-soft:rgba(88,166,255,.10)}
+.nav-inner{max-width:1180px;gap:12px}.nav-brand{font-size:15px;text-decoration:none;letter-spacing:.04em}.nav-brand span{color:var(--text-dim);font-weight:500}
+.nav-tab{padding:14px 11px;font-size:12px}.theme-toggle{border:1px solid var(--border);border-radius:7px;background:var(--bg2);color:var(--text-dim);padding:7px 10px;font-size:11px;cursor:pointer;white-space:nowrap}
+.wrap{max-width:1180px;padding-top:32px}.hero{text-align:left;padding:60px 0 48px;max-width:880px}.hero-logo{letter-spacing:.18em}.hero h1{font-size:clamp(34px,5vw,58px);letter-spacing:-.045em;max-width:760px}.hero-sub{font-size:16px;max-width:640px;line-height:1.8}.hero-badges{justify-content:flex-start}.hero-cta{justify-content:flex-start}.hero-version{margin-left:0}
+.page-heading{padding:30px 0 24px;max-width:760px}.page-heading .eyebrow{font-size:10px;letter-spacing:.18em;color:var(--green);font-weight:700;margin-bottom:12px}.page-heading h1{font-size:clamp(30px,4vw,46px);letter-spacing:-.04em;line-height:1.1;margin-bottom:14px}.page-heading p{color:var(--text-dim);font-size:15px;max-width:680px;line-height:1.8}
+.package-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:20px 0 28px}.package-card{background:linear-gradient(145deg,var(--bg2),var(--surface-raised));border:1px solid var(--border);border-radius:12px;padding:18px;display:flex;flex-direction:column;min-width:0;transition:transform .18s,border-color .18s}.package-card:hover{transform:translateY(-3px);border-color:#4b6178}.package-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:12px}.package-name{font-size:15px;font-weight:750;color:var(--green);overflow-wrap:anywhere}.package-version{font-size:10px;color:var(--yellow);border:1px solid var(--border);border-radius:5px;padding:3px 6px;white-space:nowrap}.package-card p{font-size:12px;color:var(--text-dim);line-height:1.75;overflow-wrap:anywhere;flex:1}.package-meta{font-size:10px;color:var(--text-dimmer);margin-top:14px;padding-top:10px;border-top:1px solid var(--border2);overflow-wrap:anywhere}.package-card-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:12px}.small-btn{background:var(--bg3);border:1px solid var(--border);border-radius:6px;color:var(--text);padding:6px 9px;font-size:10px;cursor:pointer}.package-link{font-size:11px}.muted{color:var(--text-dimmer)}
+.discover-toolbar{display:flex;gap:12px;align-items:center;margin:8px 0}.discover-toolbar .search-box{flex:1}.discover-toolbar .search-count{white-space:nowrap}.collection-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:16px 0}.collection-card{text-align:left;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:16px;cursor:pointer;color:var(--text);display:flex;flex-direction:column;gap:9px;min-height:150px;transition:border-color .18s,transform .18s}.collection-card:hover{border-color:var(--blue);transform:translateY(-2px)}.collection-kicker{font-size:9px;letter-spacing:.12em;color:var(--blue);font-weight:700}.collection-card strong{font-size:14px}.collection-card>span:last-child{font-size:11px;line-height:1.65;color:var(--text-dim)}
+.guide-list{display:grid;gap:12px;margin:12px 0 24px}.guide-card{display:grid;grid-template-columns:48px minmax(0,1fr);gap:16px;padding:22px;background:var(--bg2);border:1px solid var(--border);border-radius:11px}.guide-number{font-size:12px;color:var(--green);font-weight:700;letter-spacing:.08em;padding-top:3px}.guide-card h2{font-size:16px;margin-bottom:8px}.guide-card p{font-size:13px;line-height:1.8;color:var(--text-dim);max-width:760px}.text-button{display:inline-block;background:none;border:0;padding:10px 0 0;color:var(--blue);font-size:12px;cursor:pointer;text-decoration:none}.guide-code{display:inline-block;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:9px 12px;margin-top:12px;font:12px monospace;color:#7ee787}
+body.light-theme{--bg:#f6f8fa;--bg2:#ffffff;--bg3:#eef2f6;--border:#d0d7de;--border2:#eaeef2;--text:#1f2328;--text-dim:#59636e;--text-dimmer:#737d87;--blue:#0969da;--blue-light:#0550ae;--green:#1a7f37;--yellow:#9a6700;--purple:#8250df;--surface-raised:#f0f4f8;color-scheme:light}
+body.light-theme nav{background:rgba(246,248,250,.94)}body.light-theme .hero h1{color:var(--text)}body.light-theme .btn-primary{color:white}
+.section{animation:section-in .2s ease-out}@keyframes section-in{from{opacity:.45;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+:focus-visible{outline:2px solid var(--blue);outline-offset:3px}button,a,input{touch-action:manipulation}
+@media(max-width:900px){.package-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.collection-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.nav-inner{gap:6px}}
+@media(max-width:600px){.nav-inner{padding:0 10px;flex-wrap:wrap}.nav-brand{padding:9px 0;margin-right:4px}.nav-tabs{order:2;flex-basis:100%;width:100%}.nav-tab{padding:10px 11px}.theme-toggle{margin-left:auto}.wrap{padding:18px 14px 48px}.hero{padding:34px 0 28px}.hero h1{font-size:34px}.hero-sub{font-size:13px}.page-heading{padding:20px 0}.page-heading h1{font-size:32px}.package-grid{grid-template-columns:1fr}.collection-grid{grid-template-columns:1fr 1fr}.collection-card{padding:12px;min-height:140px}.discover-toolbar{align-items:stretch;flex-direction:column;gap:5px}.guide-card{grid-template-columns:30px minmax(0,1fr);gap:10px;padding:16px}.guide-card h2{font-size:14px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
 </style>
 </head>
 <body>
 
 <nav>
   <div class="nav-inner">
-    <div class="nav-brand">TAS <span>▸</span></div>
+    <a class="nav-brand" href="#home" onclick="showTab('home',this);return false">TAS <span>/ TERMUX APP STORE</span></a>
     <div class="nav-tabs">
-      <a class="nav-tab active" onclick="showTab('home',this)" href="#">Home</a>
-      <a class="nav-tab" onclick="showTab('install',this)" href="#">Install</a>
-      <a class="nav-tab" onclick="showTab('packages',this)" href="#">Packages</a>
-      <a class="nav-tab" onclick="showTab('contribute',this)" href="#">Contribute</a>
-      <a class="nav-tab" onclick="showTab('repo',this)" href="#">Repository</a>
+      <a class="nav-tab active" data-tab="home" onclick="showTab('home',this)" href="#home">Overview</a>
+      <a class="nav-tab" data-tab="discover" onclick="showTab('discover',this)" href="#discover">Discover</a>
+      <a class="nav-tab" data-tab="packages" onclick="showTab('packages',this)" href="#packages">Packages</a>
+      <a class="nav-tab" data-tab="install" onclick="showTab('install',this)" href="#install">Install</a>
+      <a class="nav-tab" data-tab="guides" onclick="showTab('guides',this)" href="#guides">Guides</a>
+      <a class="nav-tab" data-tab="contribute" onclick="showTab('contribute',this)" href="#contribute">Contribute</a>
+      <a class="nav-tab" data-tab="repo" onclick="showTab('repo',this)" href="#repo">Repository</a>
+      <button class="theme-toggle" type="button" onclick="toggleTheme()" aria-label="Toggle color theme">Theme</button>
     </div>
   </div>
 </nav>
@@ -301,7 +326,7 @@ footer{
   <div class="hero">
     <div class="hero-logo">◈  Termux Package Repository</div>
     <h1><span>Termux App Store</span></h1>
-    <p class="hero-sub">The offline-first, source-based TUI package manager for Termux<br>by <a href="https://github.com/djunekz">@djunekz</a></p>
+    <p class="hero-sub">A local-first package manager for Termux on Android. Browse, build, and install community tools through a native TUI & CLI, with SHA-256-verified binaries, source builds, and no root required. Transparency over magic.<br>by <a href="https://github.com/djunekz">@djunekz</a></p>
     <div class="hero-badges">
       <span class="badge green">v0.9.1</span>
       <span class="badge blue">89 packages</span>
@@ -460,6 +485,39 @@ tasctl uninstall</code></pre>
   </div>
 </div>
 
+<!-- DISCOVER -->
+<div id="tab-discover" class="section">
+  <div class="page-heading"><div class="eyebrow">EXPLORE THE CATALOG</div><h1>Find your next tool.</h1><p>Browse a curated starting point, then search the full catalog to find tools that fit your workflow.</p></div>
+  <div class="discover-toolbar"><input class="search-box" id="discoverSearch" type="search" placeholder="Search featured packages..." oninput="filterCards()"><span class="search-count" id="discoverCount">Featured packages</span></div>
+  <div class="package-grid" id="featuredGrid"><article class="package-card" data-search="aichat 0.30.0 all-in-one llm cli tool featuring shell assistant, chat-repl, rag, ai tools &amp; agents, with access to openai, claude, gemini, ollama, groq, and more. rust"><div class="package-card-top"><span class="package-name">aichat</span><span class="package-version">0.30.0</span></div><p>All-in-one LLM CLI tool featuring Shell Assistant, Chat-REPL, RAG, AI Tools &amp; Agents, with access to OpenAI, Claude, Gemini, Ollama, Groq, and more.</p><div class="package-meta"><span>Dependencies: rust</span></div><div class="package-card-actions"><button class="small-btn" type="button" onclick="copyText(&quot;aichat&quot;, this)">Copy name</button><a class="package-link" href="https://github.com/sigoden/aichat" target="_blank" rel="noopener noreferrer">Project homepage</a></div></article>
+<article class="package-card" data-search="ani-cli 5.1 a cli tool to browse and play anime nodejs, aria2, ffmpeg, fzf, grep, sed, wget"><div class="package-card-top"><span class="package-name">ani-cli</span><span class="package-version">5.1</span></div><p>A cli tool to browse and play anime</p><div class="package-meta"><span>Dependencies: nodejs, aria2, ffmpeg, fzf, grep, sed, wget</span></div><div class="package-card-actions"><button class="small-btn" type="button" onclick="copyText(&quot;ani-cli&quot;, this)">Copy name</button><a class="package-link" href="https://github.com/pystardust/ani-cli" target="_blank" rel="noopener noreferrer">Project homepage</a></div></article>
+<article class="package-card" data-search="aura 0.10.0 adaptive unified runtime assistant nodejs"><div class="package-card-top"><span class="package-name">aura</span><span class="package-version">0.10.0</span></div><p>Adaptive Unified Runtime Assistant</p><div class="package-meta"><span>Dependencies: nodejs</span></div><div class="package-card-actions"><button class="small-btn" type="button" onclick="copyText(&quot;aura&quot;, this)">Copy name</button><a class="package-link" href="https://github.com/djunekz/aura" target="_blank" rel="noopener noreferrer">Project homepage</a></div></article>
+<article class="package-card" data-search="auxscan 0.0.0+4551c2f vulnerability scanner to automate certain tasks python, python-pip, python-setuptools"><div class="package-card-top"><span class="package-name">auxscan</span><span class="package-version">0.0.0+4551c2f</span></div><p>Vulnerability Scanner to automate certain tasks</p><div class="package-meta"><span>Dependencies: python, python-pip, python-setuptools</span></div><div class="package-card-actions"><button class="small-btn" type="button" onclick="copyText(&quot;auxscan&quot;, this)">Copy name</button><a class="package-link" href="https://github.com/Gameye98/Auxscan" target="_blank" rel="noopener noreferrer">Project homepage</a></div></article>
+<article class="package-card" data-search="bashxt 3.0 basic command, code color, shortcut keyboar, etc information no additional dependencies listed"><div class="package-card-top"><span class="package-name">bashxt</span><span class="package-version">3.0</span></div><p>basic command, code color, shortcut keyboar, etc information</p><div class="package-meta"><span>Dependencies: No additional dependencies listed</span></div><div class="package-card-actions"><button class="small-btn" type="button" onclick="copyText(&quot;bashxt&quot;, this)">Copy name</button><a class="package-link" href="https://github.com/djunekz/bashxt" target="_blank" rel="noopener noreferrer">Project homepage</a></div></article>
+<article class="package-card" data-search="basic 1.2.0 simulator terminal learning basic command for beginner python"><div class="package-card-top"><span class="package-name">basic</span><span class="package-version">1.2.0</span></div><p>Simulator Terminal learning basic command for beginner</p><div class="package-meta"><span>Dependencies: python</span></div><div class="package-card-actions"><button class="small-btn" type="button" onclick="copyText(&quot;basic&quot;, this)">Copy name</button><a class="package-link" href="https://github.com/djunekz/basic" target="_blank" rel="noopener noreferrer">Project homepage</a></div></article></div>
+  <div class="info-box"><p><strong>Looking for something specific?</strong> Open the Packages section to search the complete index, including descriptions, versions, and dependencies.</p><p>Package order follows the source index. Featured placement does not indicate popularity, endorsement, or security review.</p></div>
+  <div class="section-title">Explore by workflow</div>
+  <div class="collection-grid">
+    <button class="collection-card" onclick="searchPackages('python')"><span class="collection-kicker">01 / DEVELOPMENT</span><strong>Python and scripting</strong><span>Find packages mentioning Python, scripts, and automation.</span></button>
+    <button class="collection-card" onclick="searchPackages('git')"><span class="collection-kicker">02 / WORKFLOW</span><strong>Version control</strong><span>Explore tools related to Git and source management.</span></button>
+    <button class="collection-card" onclick="searchPackages('network')"><span class="collection-kicker">03 / CONNECTIVITY</span><strong>Networking tools</strong><span>Search the catalog for networking utilities.</span></button>
+    <button class="collection-card" onclick="searchPackages('security')"><span class="collection-kicker">04 / SECURITY</span><strong>Security utilities</strong><span>Find relevant packages by their indexed descriptions.</span></button>
+  </div>
+</div>
+
+<!-- GUIDES -->
+<div id="tab-guides" class="section">
+  <div class="page-heading"><div class="eyebrow">DOCUMENTATION</div><h1>Get more from Termux.</h1><p>Practical starting points for setting up the repository, installing packages, and keeping your environment maintainable.</p></div>
+  <div class="guide-list">
+    <article class="guide-card"><div class="guide-number">01</div><div><h2>Before you begin</h2><p>Install Termux from a trusted source and open the app before running repository setup commands. Keep your installation source consistent to avoid signature and update conflicts.</p><button class="text-button" onclick="showTab('install',document.querySelector('[data-tab=install]'))">View installation methods</button></div></article>
+    <article class="guide-card"><div class="guide-number">02</div><div><h2>Set up the repository</h2><p>Use the recommended installation method in the Install section. Read each command before running it and verify that the repository setup completes without errors.</p><button class="text-button" onclick="showTab('repo',document.querySelector('[data-tab=repo]'))">Repository details</button></div></article>
+    <article class="guide-card"><div class="guide-number">03</div><div><h2>Search and install packages</h2><p>Use the package catalog to check the package name, version, description, and listed dependencies. Package names must match the repository index.</p><button class="text-button" onclick="showTab('packages',document.querySelector('[data-tab=packages]'))">Browse all packages</button></div></article>
+    <article class="guide-card"><div class="guide-number">04</div><div><h2>Keep packages updated</h2><p>Refresh package metadata before upgrading. If an installation fails, review the exact terminal output and confirm that your device architecture and repository configuration are supported.</p><div class="guide-code">pkg update && pkg upgrade</div></div></article>
+    <article class="guide-card"><div class="guide-number">05</div><div><h2>Report a problem</h2><p>Include the package name, version, device architecture, relevant command, and complete error output when opening an issue. Remove tokens, passwords, and other private information first.</p><a class="text-button" href="https://github.com/djunekz/termux-app-store/issues" target="_blank" rel="noopener noreferrer">Open project issues</a></div></article>
+  </div>
+  <div class="info-box"><p><strong>Security note:</strong> Only install software you trust. Review project sources and permissions where applicable, and avoid running commands copied from untrusted sources without understanding what they do.</p></div>
+</div>
+
 <!-- ═══════════════ PACKAGES ═══════════════ -->
 <div id="tab-packages" class="section">
   <div class="section-title">All Packages (89)</div>
@@ -470,95 +528,95 @@ tasctl uninstall</code></pre>
   <table id="pkgTable">
     <thead><tr><th>Package</th><th>Version</th><th>Description</th><th>Depends</th></tr></thead>
     <tbody>
-<tr><td>aichat</td><td>0.30.0</td><td>All-in-one LLM CLI tool featuring Shell Assistant, Chat-REPL, RAG, AI Tools & Agents, with access to OpenAI, Claude, Gemini, Ollama, Groq, and more.</td><td>rust</td></tr>
-<tr><td>ani-cli</td><td>5.1</td><td>A cli tool to browse and play anime</td><td>nodejs, aria2, ffmpeg, fzf, grep, sed, wget</td></tr>
-<tr><td>aura</td><td>0.10.0</td><td>Adaptive Unified Runtime Assistant</td><td>nodejs</td></tr>
-<tr><td>auxscan</td><td>0.0.0+4551c2f</td><td>Vulnerability Scanner to automate certain tasks</td><td>python, python-pip, python-setuptools</td></tr>
-<tr><td>bashxt</td><td>3.0</td><td>basic command, code color, shortcut keyboar, etc information</td><td>&mdash;</td></tr>
-<tr><td>basic</td><td>1.2.0</td><td>Simulator Terminal learning basic command for beginner</td><td>python</td></tr>
-<tr><td>baxter</td><td>1.2.4</td><td>Encrypt and decrypt files termux</td><td>nodejs</td></tr>
-<tr><td>bing-ip2hosts</td><td>1.0.5</td><td>bingip2hosts is a Bing.com web scraper that discovers websites by IP address</td><td>&mdash;</td></tr>
-<tr><td>binwalk</td><td>3.1.0</td><td>Firmware Analysis Tool</td><td>rust, pkg-config, fontconfig</td></tr>
-<tr><td>bit</td><td>1.1.2</td><td>Bit is a modern Git CLI</td><td>golang</td></tr>
-<tr><td>bower</td><td>1.8.12</td><td>A package manager for the web</td><td>nodejs</td></tr>
-<tr><td>broot</td><td>1.61.0</td><td>A new way to see and navigate directory trees : https://dystroy.org/broot</td><td>rust</td></tr>
-<tr><td>brutespray</td><td>2.7.2</td><td>Fast, multi-protocol credential brute-forcer. Parses Nmap, Nessus, and Nexpose output to automatically test default and custom credentials across 30+ protocols.</td><td>golang</td></tr>
-<tr><td>clickjacking-tester</td><td>0.0.0+d75d5fc</td><td>A python script designed to check if the website if vulnerable of clickjacking and create a poc</td><td>python, python-pip, python-setuptools</td></tr>
-<tr><td>cloudflair</td><td>0.0.0+13e3d80</td><td>🔎 Find origin servers of websites behind CloudFlare by using Internet-wide scan data from Censys.</td><td>python, python-pip, python-setuptools</td></tr>
-<tr><td>cmseek</td><td>1.1.3</td><td>CMS Detection and Exploitation suite - Scan WordPress, Joomla, Drupal and over 180 other CMSs</td><td>python, python-pip, python-setuptools</td></tr>
-<tr><td>cmsmap</td><td>0.0.0+59dd0e2</td><td>CMSmap is a python open source CMS scanner that automates the process of detecting security flaws of the most popular CMSs.</td><td>python, python-pip, python-setuptools</td></tr>
-<tr><td>commix</td><td>4.1</td><td>Automated All-in-One OS Command Injection Exploitation Tool</td><td>python, python-pip, python-setuptools</td></tr>
-<tr><td>crowbar</td><td>4.2</td><td>Crowbar is brute forcing tool that can be used during penetration tests. It is developed to support protocols that are not currently supported by thc-hydra and other popular brute forcing tools.</td><td>python, python-pip, python-setuptools</td></tr>
-<tr><td>cupp</td><td>0.0.0+b77f1ae</td><td>cupp — auto-packaged by termux-build-init</td><td>python, python-pip, python-setuptools</td></tr>
-<tr><td>cybertuz</td><td>1.0.2-2</td><td>Comprehensive Educational Learning Platform for Termux</td><td>nmap, python, whois, curl, dnsutils</td></tr>
-<tr><td>dalfox</td><td>3.2.4</td><td>🌙🦊 Dalfox is a powerful open-source XSS scanner and utility focused on automation.</td><td>rust</td></tr>
-<tr><td>djangohunter</td><td>0.0.0+a5a715e</td><td>djangohunter — auto-packaged by termux-build-init</td><td>python, python-pip, python-setuptools</td></tr>
-<tr><td>dnsmap</td><td>0.0.0+d2f89e0</td><td>fork of http://code.google.com/p/dnsmap/source/checkout</td><td>&mdash;</td></tr>
-<tr><td>dnsrecon</td><td>1.6.3</td><td>DNS Enumeration Script</td><td>python, python-pip, python-setuptools</td></tr>
-<tr><td>doona</td><td>0.0.0+7a4796c</td><td>Network based protocol fuzzer</td><td>perl</td></tr>
-<tr><td>dumpzilla</td><td>1.0.0</td><td>dumpzilla packaging for Kali Linux</td><td>python, python-pip, python-setuptools</td></tr>
-<tr><td>dust</td><td>1.2.6</td><td>A more intuitive version of du in rust</td><td>rust</td></tr>
-<tr><td>elpscrk</td><td>0.0.0+53caddb</td><td>An Intelligent wordlist generator based on user profiling, permutations, and statistics. (Named after the same tool in Mr.Robot series S01E01)</td><td>python, python-pip, python-setuptools, python-psutil</td></tr>
-<tr><td>encrypt</td><td>1.1</td><td>ELF binary for file python/python3 with build deb package</td><td>&mdash;</td></tr>
-<tr><td>eternal-scanner</td><td>2.2</td><td>An internet scanner for exploit CVE-2017-0144 (Eternal Blue) & CVE-2017-0145 (Eternal Romance)</td><td>python, python-pip, python-setuptools</td></tr>
-<tr><td>evilginx2</td><td>3.3.0</td><td>Standalone man-in-the-middle attack framework used for phishing login credentials along with session cookies, allowing for the bypass of 2-factor authentication</td><td>golang</td></tr>
-<tr><td>fbvid</td><td>0.0.0+3786551</td><td>Facebook Video Downloader (CLI) For Linux Systems Coded in PHP</td><td>php</td></tr>
-<tr><td>fd</td><td>10.5.0</td><td>A simple, fast and user-friendly alternative to 'find'</td><td>&mdash;</td></tr>
-<tr><td>fuckshitup</td><td>0.0.0+91e555c</td><td>php-cli vulnerability scanner</td><td>php</td></tr>
-<tr><td>get</td><td>0.0.0+14b0bc3</td><td>Get is a simple script to retrieve an ip from hostname or vice-versa .</td><td>&mdash;</td></tr>
-<tr><td>goblinwordgenerator</td><td>0.0.0+6afad56</td><td>Python wordlist generator</td><td>python, python-pip, python-setuptools</td></tr>
-<tr><td>gobuster</td><td>3.8.2</td><td>Directory/File, DNS and VHost busting tool written in Go</td><td>golang</td></tr>
-<tr><td>hash-buster</td><td>3.0</td><td>hash-buster — auto-packaged by termux-build-init</td><td>python, python-pip</td></tr>
-<tr><td>holehe</td><td>0.0.0+14da70f</td><td>holehe allows you to check if the mail is used on different sites like twitter, instagram and will retrieve information on sites with the forgotten password function.</td><td>python, python-pip, python-setuptools</td></tr>
-<tr><td>ht-wps-breaker</td><td>0.0.0+e218bdf</td><td>HT-WPS Breaker (High Touch WPS Breaker)</td><td>&mdash;</td></tr>
-<tr><td>hunner</td><td>0.0.0+5e46a45</td><td>Hacking framework</td><td>python, python-pip, python-setuptools</td></tr>
-<tr><td>impulse</td><td>1.0.0</td><td>Denial-of-Service ToolKit with multiple attack methods</td><td>python</td></tr>
-<tr><td>infoooze</td><td>1.2.2</td><td>A OSINT tool which helps you to quickly find information effectively.</td><td>nodejs</td></tr>
-<tr><td>instareporter</td><td>0.0.0+c8e1527</td><td>Instagram Mass Reporting Tool</td><td>python, python-pip, python-setuptools</td></tr>
-<tr><td>ip-tracker</td><td>0.0.0+728535e</td><td>Track anyone's IP just opening a link!</td><td>&mdash;</td></tr>
-<tr><td>ipgeolocation</td><td>2.0.4</td><td>Retrieve IP Geolocation information</td><td>python, python-pip, python-setuptools</td></tr>
-<tr><td>killchain</td><td>0.0.0+fef616f</td><td>killchain — auto-packaged by termux-build-init</td><td>python, python-pip, python-setuptools</td></tr>
-<tr><td>lalin</td><td>0.0.0+ab55979</td><td>this script automatically install any package for pentest with uptodate tools , and lazy command for run the tools like lazynmap , install another and update to new #actually for lazy people hahaha #and Lalin is remake the lazykali with fixed bugs , added new features and uptodate tools . It's compatible with the latest release of Kali (Rolling)</td><td>&mdash;</td></tr>
-<tr><td>lazymux</td><td>0.0.0+3b4e747</td><td>termux tool installer</td><td>python, python-core, python-pip, python-setuptools</td></tr>
-<tr><td>lux</td><td>0.24.1</td><td>Fast and simple video download library and CLI tool written in Go</td><td>&mdash;</td></tr>
-<tr><td>merlin</td><td>1.1.4</td><td>Analyst website vulnerabillity scanner</td><td>&mdash;</td></tr>
-<tr><td>myserver</td><td>1.0</td><td>myserver — auto-packaged by termux-build-init</td><td>php, python, python-pip, python-setuptools</td></tr>
-<tr><td>orchat</td><td>1.4.6</td><td>A powerful, feature-rich command-line interface for interacting with AI models through OpenRouter.</td><td>python, python-pip, python-setuptools</td></tr>
-<tr><td>padrelivio</td><td>1.0.0</td><td>ASCII art of Padre Livio Fanzaga</td><td>&mdash;</td></tr>
-<tr><td>parsero</td><td>0.0.0+e5b585a</td><td>Parsero | Robots.txt audit tool</td><td>python, python-pip, python-setuptools</td></tr>
-<tr><td>photon</td><td>1.3.0</td><td>Incredibly fast crawler designed for OSINT.</td><td>python, python-pip, python-setuptools</td></tr>
-<tr><td>pmcli</td><td>0.1.0</td><td>Terminal-based project manager CLI</td><td>rust, openssl, zlib</td></tr>
-<tr><td>pnpm</td><td>12.15.0</td><td>Fast, disk space efficient package manager</td><td>nodejs</td></tr>
-<tr><td>pymaker</td><td>1.0.0</td><td>Simple tool for create python script</td><td>python</td></tr>
-<tr><td>red-hawk</td><td>0.0.0+fa54e23</td><td>All in one tool for Information Gathering, Vulnerability Scanning and Crawling. A must have tool for all penetration testers</td><td>php</td></tr>
-<tr><td>ssrfmap</td><td>0.0.0+290e07d</td><td>Automatic SSRF fuzzer and exploitation tool</td><td>python, python-pip, python-setuptools</td></tr>
-<tr><td>sublist3r</td><td>1.1</td><td>Fast subdomains enumeration tool for penetration testers</td><td>python, python-pip, python-setuptools</td></tr>
-<tr><td>tdoc</td><td>2.3.0</td><td>TDOC - Diagnostic and repair utility for Termux environment</td><td>bash, coreutils, curl, git, gnupg, termux-tools</td></tr>
-<tr><td>tere</td><td>1.6.0</td><td>Terminal file explorer</td><td>rust</td></tr>
-<tr><td>termstyle</td><td>2.0.0</td><td>Simple tool for change color, command prompt, and cursor termux</td><td>python</td></tr>
-<tr><td>termux-ai</td><td>0.0.0+0dea995</td><td>Interactive AI tool for Termux with 10+ providers and 50+ image models ✨</td><td>&mdash;</td></tr>
-<tr><td>termux-fm</td><td>1.0.0</td><td>TUI file manager root for Termux</td><td>ncurses, libandroid-selinux, clang, make</td></tr>
-<tr><td>termux-sync</td><td>1.3.0</td><td>OpenSource Backup and restore your entire Termux environment across devices.</td><td>git, python, python-pip, python-setuptools</td></tr>
-<tr><td>termux-tui</td><td>2.9.5</td><td>A futuristic Jarvis-style terminal dashboard for Termux</td><td>python, python-pip, python-setuptools, python-yt-dlp</td></tr>
-<tr><td>termuxalpine</td><td>0.0.0+6c5d10c</td><td>Use TermuxAlpine.sh calling to install Alpine Linux in Termux on Android. This setup script will attempt to set Alpine Linux up in your Termux environment.</td><td>&mdash;</td></tr>
-<tr><td>termuxbackup</td><td>1.0.0</td><td>Termux TUI backup tool</td><td>ncurses, coreutils, findutils, grep, sed, gawk, tar, gzip, pigz</td></tr>
-<tr><td>the-eye</td><td>0.0.0+51cfb45</td><td>Simple security surveillance script for linux distributions.</td><td>golang</td></tr>
-<tr><td>ttyper</td><td>1.6.0</td><td>Terminal-based typing test.</td><td>rust</td></tr>
-<tr><td>tui-info</td><td>1.0.0</td><td>A TUI system information tool for Android/Termux</td><td>ncurses, gcc, make</td></tr>
-<tr><td>tui-notes</td><td>1.0.0</td><td>TUI note manager for Termux</td><td>ncurses, nano, gcc, make</td></tr>
-<tr><td>tuifimanager</td><td>5.2.6</td><td>A terminal-based TUI file manager</td><td>python</td></tr>
-<tr><td>tx</td><td>1.0.0</td><td>Advance Terminal Editor Ultimate</td><td>python, ncurses</td></tr>
-<tr><td>unmineable</td><td>0.1.5</td><td>Mining multiple coins cryptocurrency with simple setup and pool unmineable</td><td>cmake, make, clang, libuv, openssl, build-essential</td></tr>
-<tr><td>userfinder</td><td>0.0.0+a08a9a6</td><td>userfinder — auto-packaged by termux-build-init</td><td>&mdash;</td></tr>
-<tr><td>uv</td><td>0.13.5</td><td>An extremely fast Python package and project manager, written in Rust.</td><td>&mdash;</td></tr>
-<tr><td>viu</td><td>1.6.1</td><td>Terminal image viewer with native support for iTerm and Kitty</td><td>rust</td></tr>
-<tr><td>webshake</td><td>1.0.2</td><td>Scan vulnerabilities and analyze websites</td><td>&mdash;</td></tr>
-<tr><td>xeuledoc</td><td>0.0.0+8a500d1</td><td>Fetch information about a public Google document.</td><td>python, python-pip, python-setuptools</td></tr>
-<tr><td>xsstrike</td><td>3.1.6</td><td>Most advanced XSS scanner.</td><td>python, python-pip, python-setuptools</td></tr>
-<tr><td>ytfzf</td><td>2.6.2</td><td>A posix script to find and watch youtube videos from the terminal. (Without API)</td><td>imlib2, jack, jack2, libcaca, libid3tag, libsixel, libuchardet, luajit, mpv, openal-soft</td></tr>
-<tr><td>zora</td><td>2.0.0</td><td>The ultimate OSINT framework</td><td>python</td></tr>
-<tr><td>zorabuilder</td><td>1.0.0</td><td>Builder python standalone ELF</td><td>python, binutils-is-llvm</td></tr>
-<tr><td>zoracrypter</td><td>1.0.0</td><td>Encrypter Stealth Binary Builder</td><td>clang, python</td></tr>
+<tr data-search="aichat 0.30.0 all-in-one llm cli tool featuring shell assistant, chat-repl, rag, ai tools &amp; agents, with access to openai, claude, gemini, ollama, groq, and more. rust" data-package="aichat"><td>aichat</td><td>0.30.0</td><td>All-in-one LLM CLI tool featuring Shell Assistant, Chat-REPL, RAG, AI Tools &amp; Agents, with access to OpenAI, Claude, Gemini, Ollama, Groq, and more.</td><td>rust</td></tr>
+<tr data-search="ani-cli 5.1 a cli tool to browse and play anime nodejs, aria2, ffmpeg, fzf, grep, sed, wget" data-package="ani-cli"><td>ani-cli</td><td>5.1</td><td>A cli tool to browse and play anime</td><td>nodejs, aria2, ffmpeg, fzf, grep, sed, wget</td></tr>
+<tr data-search="aura 0.10.0 adaptive unified runtime assistant nodejs" data-package="aura"><td>aura</td><td>0.10.0</td><td>Adaptive Unified Runtime Assistant</td><td>nodejs</td></tr>
+<tr data-search="auxscan 0.0.0+4551c2f vulnerability scanner to automate certain tasks python, python-pip, python-setuptools" data-package="auxscan"><td>auxscan</td><td>0.0.0+4551c2f</td><td>Vulnerability Scanner to automate certain tasks</td><td>python, python-pip, python-setuptools</td></tr>
+<tr data-search="bashxt 3.0 basic command, code color, shortcut keyboar, etc information &mdash;" data-package="bashxt"><td>bashxt</td><td>3.0</td><td>basic command, code color, shortcut keyboar, etc information</td><td>&mdash;</td></tr>
+<tr data-search="basic 1.2.0 simulator terminal learning basic command for beginner python" data-package="basic"><td>basic</td><td>1.2.0</td><td>Simulator Terminal learning basic command for beginner</td><td>python</td></tr>
+<tr data-search="baxter 1.2.4 encrypt and decrypt files termux nodejs" data-package="baxter"><td>baxter</td><td>1.2.4</td><td>Encrypt and decrypt files termux</td><td>nodejs</td></tr>
+<tr data-search="bing-ip2hosts 1.0.5 bingip2hosts is a bing.com web scraper that discovers websites by ip address &mdash;" data-package="bing-ip2hosts"><td>bing-ip2hosts</td><td>1.0.5</td><td>bingip2hosts is a Bing.com web scraper that discovers websites by IP address</td><td>&mdash;</td></tr>
+<tr data-search="binwalk 3.1.0 firmware analysis tool rust, pkg-config, fontconfig" data-package="binwalk"><td>binwalk</td><td>3.1.0</td><td>Firmware Analysis Tool</td><td>rust, pkg-config, fontconfig</td></tr>
+<tr data-search="bit 1.1.2 bit is a modern git cli golang" data-package="bit"><td>bit</td><td>1.1.2</td><td>Bit is a modern Git CLI</td><td>golang</td></tr>
+<tr data-search="bower 1.8.12 a package manager for the web nodejs" data-package="bower"><td>bower</td><td>1.8.12</td><td>A package manager for the web</td><td>nodejs</td></tr>
+<tr data-search="broot 1.61.0 a new way to see and navigate directory trees : https://dystroy.org/broot rust" data-package="broot"><td>broot</td><td>1.61.0</td><td>A new way to see and navigate directory trees : https://dystroy.org/broot</td><td>rust</td></tr>
+<tr data-search="brutespray 2.7.2 fast, multi-protocol credential brute-forcer. parses nmap, nessus, and nexpose output to automatically test default and custom credentials across 30+ protocols. golang" data-package="brutespray"><td>brutespray</td><td>2.7.2</td><td>Fast, multi-protocol credential brute-forcer. Parses Nmap, Nessus, and Nexpose output to automatically test default and custom credentials across 30+ protocols.</td><td>golang</td></tr>
+<tr data-search="clickjacking-tester 0.0.0+d75d5fc a python script designed to check if the website if vulnerable of clickjacking and create a poc python, python-pip, python-setuptools" data-package="clickjacking-tester"><td>clickjacking-tester</td><td>0.0.0+d75d5fc</td><td>A python script designed to check if the website if vulnerable of clickjacking and create a poc</td><td>python, python-pip, python-setuptools</td></tr>
+<tr data-search="cloudflair 0.0.0+13e3d80  find origin servers of websites behind cloudflare by using internet-wide scan data from censys. python, python-pip, python-setuptools" data-package="cloudflair"><td>cloudflair</td><td>0.0.0+13e3d80</td><td> Find origin servers of websites behind CloudFlare by using Internet-wide scan data from Censys.</td><td>python, python-pip, python-setuptools</td></tr>
+<tr data-search="cmseek 1.1.3 cms detection and exploitation suite - scan wordpress, joomla, drupal and over 180 other cmss python, python-pip, python-setuptools" data-package="cmseek"><td>cmseek</td><td>1.1.3</td><td>CMS Detection and Exploitation suite - Scan WordPress, Joomla, Drupal and over 180 other CMSs</td><td>python, python-pip, python-setuptools</td></tr>
+<tr data-search="cmsmap 0.0.0+59dd0e2 cmsmap is a python open source cms scanner that automates the process of detecting security flaws of the most popular cmss. python, python-pip, python-setuptools" data-package="cmsmap"><td>cmsmap</td><td>0.0.0+59dd0e2</td><td>CMSmap is a python open source CMS scanner that automates the process of detecting security flaws of the most popular CMSs.</td><td>python, python-pip, python-setuptools</td></tr>
+<tr data-search="commix 4.1 automated all-in-one os command injection exploitation tool python, python-pip, python-setuptools" data-package="commix"><td>commix</td><td>4.1</td><td>Automated All-in-One OS Command Injection Exploitation Tool</td><td>python, python-pip, python-setuptools</td></tr>
+<tr data-search="crowbar 4.2 crowbar is brute forcing tool that can be used during penetration tests. it is developed to support protocols that are not currently supported by thc-hydra and other popular brute forcing tools. python, python-pip, python-setuptools" data-package="crowbar"><td>crowbar</td><td>4.2</td><td>Crowbar is brute forcing tool that can be used during penetration tests. It is developed to support protocols that are not currently supported by thc-hydra and other popular brute forcing tools.</td><td>python, python-pip, python-setuptools</td></tr>
+<tr data-search="cupp 0.0.0+b77f1ae cupp — auto-packaged by termux-build-init python, python-pip, python-setuptools" data-package="cupp"><td>cupp</td><td>0.0.0+b77f1ae</td><td>cupp — auto-packaged by termux-build-init</td><td>python, python-pip, python-setuptools</td></tr>
+<tr data-search="cybertuz 1.0.2-2 comprehensive educational learning platform for termux nmap, python, whois, curl, dnsutils" data-package="cybertuz"><td>cybertuz</td><td>1.0.2-2</td><td>Comprehensive Educational Learning Platform for Termux</td><td>nmap, python, whois, curl, dnsutils</td></tr>
+<tr data-search="dalfox 3.2.4  dalfox is a powerful open-source xss scanner and utility focused on automation. rust" data-package="dalfox"><td>dalfox</td><td>3.2.4</td><td> Dalfox is a powerful open-source XSS scanner and utility focused on automation.</td><td>rust</td></tr>
+<tr data-search="djangohunter 0.0.0+a5a715e djangohunter — auto-packaged by termux-build-init python, python-pip, python-setuptools" data-package="djangohunter"><td>djangohunter</td><td>0.0.0+a5a715e</td><td>djangohunter — auto-packaged by termux-build-init</td><td>python, python-pip, python-setuptools</td></tr>
+<tr data-search="dnsmap 0.0.0+d2f89e0 fork of http://code.google.com/p/dnsmap/source/checkout &mdash;" data-package="dnsmap"><td>dnsmap</td><td>0.0.0+d2f89e0</td><td>fork of http://code.google.com/p/dnsmap/source/checkout</td><td>&mdash;</td></tr>
+<tr data-search="dnsrecon 1.6.3 dns enumeration script python, python-pip, python-setuptools" data-package="dnsrecon"><td>dnsrecon</td><td>1.6.3</td><td>DNS Enumeration Script</td><td>python, python-pip, python-setuptools</td></tr>
+<tr data-search="doona 0.0.0+7a4796c network based protocol fuzzer perl" data-package="doona"><td>doona</td><td>0.0.0+7a4796c</td><td>Network based protocol fuzzer</td><td>perl</td></tr>
+<tr data-search="dumpzilla 1.0.0 dumpzilla packaging for kali linux python, python-pip, python-setuptools" data-package="dumpzilla"><td>dumpzilla</td><td>1.0.0</td><td>dumpzilla packaging for Kali Linux</td><td>python, python-pip, python-setuptools</td></tr>
+<tr data-search="dust 1.2.6 a more intuitive version of du in rust rust" data-package="dust"><td>dust</td><td>1.2.6</td><td>A more intuitive version of du in rust</td><td>rust</td></tr>
+<tr data-search="elpscrk 0.0.0+53caddb an intelligent wordlist generator based on user profiling, permutations, and statistics. (named after the same tool in mr.robot series s01e01) python, python-pip, python-setuptools, python-psutil" data-package="elpscrk"><td>elpscrk</td><td>0.0.0+53caddb</td><td>An Intelligent wordlist generator based on user profiling, permutations, and statistics. (Named after the same tool in Mr.Robot series S01E01)</td><td>python, python-pip, python-setuptools, python-psutil</td></tr>
+<tr data-search="encrypt 1.1 elf binary for file python/python3 with build deb package &mdash;" data-package="encrypt"><td>encrypt</td><td>1.1</td><td>ELF binary for file python/python3 with build deb package</td><td>&mdash;</td></tr>
+<tr data-search="eternal-scanner 2.2 an internet scanner for exploit cve-2017-0144 (eternal blue) &amp; cve-2017-0145 (eternal romance) python, python-pip, python-setuptools" data-package="eternal-scanner"><td>eternal-scanner</td><td>2.2</td><td>An internet scanner for exploit CVE-2017-0144 (Eternal Blue) &amp; CVE-2017-0145 (Eternal Romance)</td><td>python, python-pip, python-setuptools</td></tr>
+<tr data-search="evilginx2 3.3.0 standalone man-in-the-middle attack framework used for phishing login credentials along with session cookies, allowing for the bypass of 2-factor authentication golang" data-package="evilginx2"><td>evilginx2</td><td>3.3.0</td><td>Standalone man-in-the-middle attack framework used for phishing login credentials along with session cookies, allowing for the bypass of 2-factor authentication</td><td>golang</td></tr>
+<tr data-search="fbvid 0.0.0+3786551 facebook video downloader (cli) for linux systems coded in php php" data-package="fbvid"><td>fbvid</td><td>0.0.0+3786551</td><td>Facebook Video Downloader (CLI) For Linux Systems Coded in PHP</td><td>php</td></tr>
+<tr data-search="fd 10.5.0 a simple, fast and user-friendly alternative to &#x27;find&#x27; &mdash;" data-package="fd"><td>fd</td><td>10.5.0</td><td>A simple, fast and user-friendly alternative to &#x27;find&#x27;</td><td>&mdash;</td></tr>
+<tr data-search="fuckshitup 0.0.0+91e555c php-cli vulnerability scanner php" data-package="fuckshitup"><td>fuckshitup</td><td>0.0.0+91e555c</td><td>php-cli vulnerability scanner</td><td>php</td></tr>
+<tr data-search="get 0.0.0+14b0bc3 get is a simple script to retrieve an ip from hostname or vice-versa . &mdash;" data-package="get"><td>get</td><td>0.0.0+14b0bc3</td><td>Get is a simple script to retrieve an ip from hostname or vice-versa .</td><td>&mdash;</td></tr>
+<tr data-search="goblinwordgenerator 0.0.0+6afad56 python wordlist generator python, python-pip, python-setuptools" data-package="goblinwordgenerator"><td>goblinwordgenerator</td><td>0.0.0+6afad56</td><td>Python wordlist generator</td><td>python, python-pip, python-setuptools</td></tr>
+<tr data-search="gobuster 3.8.2 directory/file, dns and vhost busting tool written in go golang" data-package="gobuster"><td>gobuster</td><td>3.8.2</td><td>Directory/File, DNS and VHost busting tool written in Go</td><td>golang</td></tr>
+<tr data-search="hash-buster 3.0 hash-buster — auto-packaged by termux-build-init python, python-pip" data-package="hash-buster"><td>hash-buster</td><td>3.0</td><td>hash-buster — auto-packaged by termux-build-init</td><td>python, python-pip</td></tr>
+<tr data-search="holehe 0.0.0+14da70f holehe allows you to check if the mail is used on different sites like twitter, instagram and will retrieve information on sites with the forgotten password function. python, python-pip, python-setuptools" data-package="holehe"><td>holehe</td><td>0.0.0+14da70f</td><td>holehe allows you to check if the mail is used on different sites like twitter, instagram and will retrieve information on sites with the forgotten password function.</td><td>python, python-pip, python-setuptools</td></tr>
+<tr data-search="ht-wps-breaker 0.0.0+e218bdf ht-wps breaker (high touch wps breaker) &mdash;" data-package="ht-wps-breaker"><td>ht-wps-breaker</td><td>0.0.0+e218bdf</td><td>HT-WPS Breaker (High Touch WPS Breaker)</td><td>&mdash;</td></tr>
+<tr data-search="hunner 0.0.0+5e46a45 hacking framework python, python-pip, python-setuptools" data-package="hunner"><td>hunner</td><td>0.0.0+5e46a45</td><td>Hacking framework</td><td>python, python-pip, python-setuptools</td></tr>
+<tr data-search="impulse 1.0.0 denial-of-service toolkit with multiple attack methods python" data-package="impulse"><td>impulse</td><td>1.0.0</td><td>Denial-of-Service ToolKit with multiple attack methods</td><td>python</td></tr>
+<tr data-search="infoooze 1.2.2 a osint tool which helps you to quickly find information effectively. nodejs" data-package="infoooze"><td>infoooze</td><td>1.2.2</td><td>A OSINT tool which helps you to quickly find information effectively.</td><td>nodejs</td></tr>
+<tr data-search="instareporter 0.0.0+c8e1527 instagram mass reporting tool python, python-pip, python-setuptools" data-package="instareporter"><td>instareporter</td><td>0.0.0+c8e1527</td><td>Instagram Mass Reporting Tool</td><td>python, python-pip, python-setuptools</td></tr>
+<tr data-search="ip-tracker 0.0.0+728535e track anyone&#x27;s ip just opening a link! &mdash;" data-package="ip-tracker"><td>ip-tracker</td><td>0.0.0+728535e</td><td>Track anyone&#x27;s IP just opening a link!</td><td>&mdash;</td></tr>
+<tr data-search="ipgeolocation 2.0.4 retrieve ip geolocation information python, python-pip, python-setuptools" data-package="ipgeolocation"><td>ipgeolocation</td><td>2.0.4</td><td>Retrieve IP Geolocation information</td><td>python, python-pip, python-setuptools</td></tr>
+<tr data-search="killchain 0.0.0+fef616f killchain — auto-packaged by termux-build-init python, python-pip, python-setuptools" data-package="killchain"><td>killchain</td><td>0.0.0+fef616f</td><td>killchain — auto-packaged by termux-build-init</td><td>python, python-pip, python-setuptools</td></tr>
+<tr data-search="lalin 0.0.0+ab55979 this script automatically install any package for pentest with uptodate tools , and lazy command for run the tools like lazynmap , install another and update to new #actually for lazy people hahaha #and lalin is remake the lazykali with fixed bugs , added new features and uptodate tools . it&#x27;s compatible with the latest release of kali (rolling) &mdash;" data-package="lalin"><td>lalin</td><td>0.0.0+ab55979</td><td>this script automatically install any package for pentest with uptodate tools , and lazy command for run the tools like lazynmap , install another and update to new #actually for lazy people hahaha #and Lalin is remake the lazykali with fixed bugs , added new features and uptodate tools . It&#x27;s compatible with the latest release of Kali (Rolling)</td><td>&mdash;</td></tr>
+<tr data-search="lazymux 0.0.0+3b4e747 termux tool installer python, python-core, python-pip, python-setuptools" data-package="lazymux"><td>lazymux</td><td>0.0.0+3b4e747</td><td>termux tool installer</td><td>python, python-core, python-pip, python-setuptools</td></tr>
+<tr data-search="lux 0.24.1 fast and simple video download library and cli tool written in go &mdash;" data-package="lux"><td>lux</td><td>0.24.1</td><td>Fast and simple video download library and CLI tool written in Go</td><td>&mdash;</td></tr>
+<tr data-search="merlin 1.1.4 analyst website vulnerabillity scanner &mdash;" data-package="merlin"><td>merlin</td><td>1.1.4</td><td>Analyst website vulnerabillity scanner</td><td>&mdash;</td></tr>
+<tr data-search="myserver 1.0 myserver — auto-packaged by termux-build-init php, python, python-pip, python-setuptools" data-package="myserver"><td>myserver</td><td>1.0</td><td>myserver — auto-packaged by termux-build-init</td><td>php, python, python-pip, python-setuptools</td></tr>
+<tr data-search="orchat 1.4.6 a powerful, feature-rich command-line interface for interacting with ai models through openrouter. python, python-pip, python-setuptools" data-package="orchat"><td>orchat</td><td>1.4.6</td><td>A powerful, feature-rich command-line interface for interacting with AI models through OpenRouter.</td><td>python, python-pip, python-setuptools</td></tr>
+<tr data-search="padrelivio 1.0.0 ascii art of padre livio fanzaga &mdash;" data-package="padrelivio"><td>padrelivio</td><td>1.0.0</td><td>ASCII art of Padre Livio Fanzaga</td><td>&mdash;</td></tr>
+<tr data-search="parsero 0.0.0+e5b585a parsero | robots.txt audit tool python, python-pip, python-setuptools" data-package="parsero"><td>parsero</td><td>0.0.0+e5b585a</td><td>Parsero | Robots.txt audit tool</td><td>python, python-pip, python-setuptools</td></tr>
+<tr data-search="photon 1.3.0 incredibly fast crawler designed for osint. python, python-pip, python-setuptools" data-package="photon"><td>photon</td><td>1.3.0</td><td>Incredibly fast crawler designed for OSINT.</td><td>python, python-pip, python-setuptools</td></tr>
+<tr data-search="pmcli 0.1.0 terminal-based project manager cli rust, openssl, zlib" data-package="pmcli"><td>pmcli</td><td>0.1.0</td><td>Terminal-based project manager CLI</td><td>rust, openssl, zlib</td></tr>
+<tr data-search="pnpm 12.15.0 fast, disk space efficient package manager nodejs" data-package="pnpm"><td>pnpm</td><td>12.15.0</td><td>Fast, disk space efficient package manager</td><td>nodejs</td></tr>
+<tr data-search="pymaker 1.0.0 simple tool for create python script python" data-package="pymaker"><td>pymaker</td><td>1.0.0</td><td>Simple tool for create python script</td><td>python</td></tr>
+<tr data-search="red-hawk 0.0.0+fa54e23 all in one tool for information gathering, vulnerability scanning and crawling. a must have tool for all penetration testers php" data-package="red-hawk"><td>red-hawk</td><td>0.0.0+fa54e23</td><td>All in one tool for Information Gathering, Vulnerability Scanning and Crawling. A must have tool for all penetration testers</td><td>php</td></tr>
+<tr data-search="ssrfmap 0.0.0+290e07d automatic ssrf fuzzer and exploitation tool python, python-pip, python-setuptools" data-package="ssrfmap"><td>ssrfmap</td><td>0.0.0+290e07d</td><td>Automatic SSRF fuzzer and exploitation tool</td><td>python, python-pip, python-setuptools</td></tr>
+<tr data-search="sublist3r 1.1 fast subdomains enumeration tool for penetration testers python, python-pip, python-setuptools" data-package="sublist3r"><td>sublist3r</td><td>1.1</td><td>Fast subdomains enumeration tool for penetration testers</td><td>python, python-pip, python-setuptools</td></tr>
+<tr data-search="tdoc 2.3.0 tdoc - diagnostic and repair utility for termux environment bash, coreutils, curl, git, gnupg, termux-tools" data-package="tdoc"><td>tdoc</td><td>2.3.0</td><td>TDOC - Diagnostic and repair utility for Termux environment</td><td>bash, coreutils, curl, git, gnupg, termux-tools</td></tr>
+<tr data-search="tere 1.6.0 terminal file explorer rust" data-package="tere"><td>tere</td><td>1.6.0</td><td>Terminal file explorer</td><td>rust</td></tr>
+<tr data-search="termstyle 2.0.0 simple tool for change color, command prompt, and cursor termux python" data-package="termstyle"><td>termstyle</td><td>2.0.0</td><td>Simple tool for change color, command prompt, and cursor termux</td><td>python</td></tr>
+<tr data-search="termux-ai 0.0.0+0dea995 interactive ai tool for termux with 10+ providers and 50+ image models  &mdash;" data-package="termux-ai"><td>termux-ai</td><td>0.0.0+0dea995</td><td>Interactive AI tool for Termux with 10+ providers and 50+ image models </td><td>&mdash;</td></tr>
+<tr data-search="termux-fm 1.0.0 tui file manager root for termux ncurses, libandroid-selinux, clang, make" data-package="termux-fm"><td>termux-fm</td><td>1.0.0</td><td>TUI file manager root for Termux</td><td>ncurses, libandroid-selinux, clang, make</td></tr>
+<tr data-search="termux-sync 1.3.0 opensource backup and restore your entire termux environment across devices. git, python, python-pip, python-setuptools" data-package="termux-sync"><td>termux-sync</td><td>1.3.0</td><td>OpenSource Backup and restore your entire Termux environment across devices.</td><td>git, python, python-pip, python-setuptools</td></tr>
+<tr data-search="termux-tui 2.9.5 a futuristic jarvis-style terminal dashboard for termux python, python-pip, python-setuptools, python-yt-dlp" data-package="termux-tui"><td>termux-tui</td><td>2.9.5</td><td>A futuristic Jarvis-style terminal dashboard for Termux</td><td>python, python-pip, python-setuptools, python-yt-dlp</td></tr>
+<tr data-search="termuxalpine 0.0.0+6c5d10c use termuxalpine.sh calling to install alpine linux in termux on android. this setup script will attempt to set alpine linux up in your termux environment. &mdash;" data-package="termuxalpine"><td>termuxalpine</td><td>0.0.0+6c5d10c</td><td>Use TermuxAlpine.sh calling to install Alpine Linux in Termux on Android. This setup script will attempt to set Alpine Linux up in your Termux environment.</td><td>&mdash;</td></tr>
+<tr data-search="termuxbackup 1.0.0 termux tui backup tool ncurses, coreutils, findutils, grep, sed, gawk, tar, gzip, pigz" data-package="termuxbackup"><td>termuxbackup</td><td>1.0.0</td><td>Termux TUI backup tool</td><td>ncurses, coreutils, findutils, grep, sed, gawk, tar, gzip, pigz</td></tr>
+<tr data-search="the-eye 0.0.0+51cfb45 simple security surveillance script for linux distributions. golang" data-package="the-eye"><td>the-eye</td><td>0.0.0+51cfb45</td><td>Simple security surveillance script for linux distributions.</td><td>golang</td></tr>
+<tr data-search="ttyper 1.6.0 terminal-based typing test. rust" data-package="ttyper"><td>ttyper</td><td>1.6.0</td><td>Terminal-based typing test.</td><td>rust</td></tr>
+<tr data-search="tui-info 1.0.0 a tui system information tool for android/termux ncurses, gcc, make" data-package="tui-info"><td>tui-info</td><td>1.0.0</td><td>A TUI system information tool for Android/Termux</td><td>ncurses, gcc, make</td></tr>
+<tr data-search="tui-notes 1.0.0 tui note manager for termux ncurses, nano, gcc, make" data-package="tui-notes"><td>tui-notes</td><td>1.0.0</td><td>TUI note manager for Termux</td><td>ncurses, nano, gcc, make</td></tr>
+<tr data-search="tuifimanager 5.2.6 a terminal-based tui file manager python" data-package="tuifimanager"><td>tuifimanager</td><td>5.2.6</td><td>A terminal-based TUI file manager</td><td>python</td></tr>
+<tr data-search="tx 1.0.0 advance terminal editor ultimate python, ncurses" data-package="tx"><td>tx</td><td>1.0.0</td><td>Advance Terminal Editor Ultimate</td><td>python, ncurses</td></tr>
+<tr data-search="unmineable 0.1.5 mining multiple coins cryptocurrency with simple setup and pool unmineable cmake, make, clang, libuv, openssl, build-essential" data-package="unmineable"><td>unmineable</td><td>0.1.5</td><td>Mining multiple coins cryptocurrency with simple setup and pool unmineable</td><td>cmake, make, clang, libuv, openssl, build-essential</td></tr>
+<tr data-search="userfinder 0.0.0+a08a9a6 userfinder — auto-packaged by termux-build-init &mdash;" data-package="userfinder"><td>userfinder</td><td>0.0.0+a08a9a6</td><td>userfinder — auto-packaged by termux-build-init</td><td>&mdash;</td></tr>
+<tr data-search="uv 0.13.5 an extremely fast python package and project manager, written in rust. &mdash;" data-package="uv"><td>uv</td><td>0.13.5</td><td>An extremely fast Python package and project manager, written in Rust.</td><td>&mdash;</td></tr>
+<tr data-search="viu 1.6.1 terminal image viewer with native support for iterm and kitty rust" data-package="viu"><td>viu</td><td>1.6.1</td><td>Terminal image viewer with native support for iTerm and Kitty</td><td>rust</td></tr>
+<tr data-search="webshake 1.0.2 scan vulnerabilities and analyze websites &mdash;" data-package="webshake"><td>webshake</td><td>1.0.2</td><td>Scan vulnerabilities and analyze websites</td><td>&mdash;</td></tr>
+<tr data-search="xeuledoc 0.0.0+8a500d1 fetch information about a public google document. python, python-pip, python-setuptools" data-package="xeuledoc"><td>xeuledoc</td><td>0.0.0+8a500d1</td><td>Fetch information about a public Google document.</td><td>python, python-pip, python-setuptools</td></tr>
+<tr data-search="xsstrike 3.1.6 most advanced xss scanner. python, python-pip, python-setuptools" data-package="xsstrike"><td>xsstrike</td><td>3.1.6</td><td>Most advanced XSS scanner.</td><td>python, python-pip, python-setuptools</td></tr>
+<tr data-search="ytfzf 2.6.2 a posix script to find and watch youtube videos from the terminal. (without api) imlib2, jack, jack2, libcaca, libid3tag, libsixel, libuchardet, luajit, mpv, openal-soft" data-package="ytfzf"><td>ytfzf</td><td>2.6.2</td><td>A posix script to find and watch youtube videos from the terminal. (Without API)</td><td>imlib2, jack, jack2, libcaca, libid3tag, libsixel, libuchardet, luajit, mpv, openal-soft</td></tr>
+<tr data-search="zora 2.0.0 the ultimate osint framework python" data-package="zora"><td>zora</td><td>2.0.0</td><td>The ultimate OSINT framework</td><td>python</td></tr>
+<tr data-search="zorabuilder 1.0.0 builder python standalone elf python, binutils-is-llvm" data-package="zorabuilder"><td>zorabuilder</td><td>1.0.0</td><td>Builder python standalone ELF</td><td>python, binutils-is-llvm</td></tr>
+<tr data-search="zoracrypter 1.0.0 encrypter stealth binary builder clang, python" data-package="zoracrypter"><td>zoracrypter</td><td>1.0.0</td><td>Encrypter Stealth Binary Builder</td><td>clang, python</td></tr>
     </tbody>
   </table>
 </div>
@@ -783,26 +841,53 @@ pkg update')">copy</button>
   <div class="info-box">
     <p><strong style="color:var(--text)">Current version:</strong> <span style="color:var(--green)">v0.9.1</span></p>
     <p><strong style="color:var(--text)">Packages in index:</strong> <span style="color:var(--blue)">89</span></p>
-    <p><strong style="color:var(--text)">Last updated:</strong> <span style="color:var(--text-dim)">2026-10-26 03:51 UTC</span></p>
+    <p><strong style="color:var(--text)">Last updated:</strong> <span style="color:var(--text-dim)">2026-10-26 19:22 UTC</span></p>
     <p><strong style="color:var(--text)">Source:</strong> <a href="https://github.com/djunekz/termux-app-store">github.com/djunekz/termux-app-store</a></p>
   </div>
 </div>
 
 <footer>
   <span>Termux App Store &copy; <a href="https://github.com/djunekz">@djunekz</a></span>
-  <span>Last updated: 2026-10-26 03:51 UTC</span>
+  <span>Last updated: 2026-10-26 19:22 UTC</span>
 </footer>
 
 </div><!-- /wrap -->
 
 <script>
 function showTab(id, el) {
+  const target = document.getElementById('tab-' + id);
+  if (!target) return false;
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-  document.getElementById('tab-' + id).classList.add('active');
-  if (el) el.classList.add('active');
+  target.classList.add('active');
+  const active = el || document.querySelector('[data-tab="' + id + '"]');
+  if (active && active.classList.contains('nav-tab')) active.classList.add('active');
+  if (history.replaceState) history.replaceState(null, '', '#' + id);
   window.scrollTo({top:0,behavior:'smooth'});
   return false;
+}
+
+function copyText(text, btn) {
+  const done = () => { if (btn) { const old = btn.textContent; btn.textContent = 'Copied'; setTimeout(() => btn.textContent = old, 1400); } };
+  if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text).then(done).catch(() => fallbackCopy(text, done));
+  else fallbackCopy(text, done);
+}
+function fallbackCopy(text, callback) {
+  const field = document.createElement('textarea'); field.value = text; field.style.position = 'fixed'; field.style.opacity = '0'; document.body.appendChild(field); field.select();
+  try { document.execCommand('copy'); callback(); } catch (e) {} finally { field.remove(); }
+}
+function toggleTheme() {
+  const light = document.body.classList.toggle('light-theme');
+  try { localStorage.setItem('tas-theme', light ? 'light' : 'dark'); } catch (e) {}
+}
+function searchPackages(query) {
+  showTab('packages', document.querySelector('[data-tab="packages"]'));
+  const input = document.getElementById('searchInput'); input.value = query; filterTable();
+}
+function filterCards() {
+  const q = document.getElementById('discoverSearch').value.toLowerCase().trim(); let visible = 0;
+  document.querySelectorAll('#featuredGrid .package-card').forEach(card => { const match = card.dataset.search.includes(q); card.hidden = !match; if (match) visible++; });
+  document.getElementById('discoverCount').textContent = visible + ' featured package' + (visible === 1 ? '' : 's');
 }
 
 function copyCode(btn, text) {
@@ -814,28 +899,27 @@ function copyCode(btn, text) {
 }
 
 function filterTable() {
-  const q = document.getElementById('searchInput').value.toLowerCase();
+  const q = document.getElementById('searchInput').value.toLowerCase().trim();
   const rows = document.querySelectorAll('#pkgTable tbody tr');
   let visible = 0;
   rows.forEach(row => {
-    const name = row.cells[0]?.textContent.toLowerCase() || '';
-    const desc = row.cells[2]?.textContent.toLowerCase() || '';
-    const match = name.includes(q) || desc.includes(q);
+    const haystack = row.dataset.search || row.textContent.toLowerCase();
+    const match = haystack.includes(q);
     row.classList.toggle('hidden', !match);
     if (match) visible++;
   });
   const countEl = document.getElementById('searchCount');
-  if (q) {
-    countEl.textContent = visible + ' of ' + rows.length + ' packages match';
-  } else {
-    countEl.textContent = '';
-  }
+  countEl.textContent = q ? (visible + ' of ' + rows.length + ' packages match') : (rows.length + ' packages available');
 }
 
 // Handle nav onclick properly
 document.querySelectorAll('.nav-tab').forEach(tab => {
   tab.addEventListener('click', e => e.preventDefault());
 });
+try { if (localStorage.getItem('tas-theme') === 'light') document.body.classList.add('light-theme'); } catch (e) {}
+const initialTab = location.hash.replace('#', '');
+if (initialTab && document.getElementById('tab-' + initialTab)) showTab(initialTab, document.querySelector('[data-tab="' + initialTab + '"]'));
+if (document.getElementById('searchCount')) document.getElementById('searchCount').textContent = document.querySelectorAll('#pkgTable tbody tr').length + ' packages available';
 </script>
 </body>
 </html>
