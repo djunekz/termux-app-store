@@ -1,5 +1,7 @@
 import json
 import os
+import html as html_lib
+import re
 
 version = os.environ.get("VERSION", "0.0.0")
 total = os.environ.get("TOTAL", "0")
@@ -12,21 +14,49 @@ try:
 except (OSError, ValueError):
     pkgs = []
 
+def esc(value):
+    text = str(value if value is not None else "")
+    text = re.sub(r"[\U0001F000-\U0001FAFF\U00002600-\U000027BF\U0000FE0F]", "", text)
+    return html_lib.escape(text, quote=True)
+
+def package_text(value):
+    if isinstance(value, (list, tuple)):
+        return ", ".join(str(x) for x in value)
+    return str(value or "")
+
 rows = []
 for p in pkgs:
-    name = p.get("package", "")
-    ver = p.get("version", "")
-    desc = p.get("description", "").replace("<", "&lt;").replace(">", "&gt;")
-    dep = ", ".join(p.get("depends", [])) or "&mdash;"
-    rows.append(f"<tr><td>{name}</td><td>{ver}</td><td>{desc}</td><td>{dep}</td></tr>")
+    name = esc(p.get("package", ""))
+    ver = esc(p.get("version", ""))
+    desc = esc(p.get("description", ""))
+    dep = esc(package_text(p.get("depends"))) or "&mdash;"
+    homepage = esc(p.get("homepage", ""))
+    rows.append(f'<tr data-search="{name.lower()} {ver.lower()} {desc.lower()} {dep.lower()}" data-package="{name}"><td>{name}</td><td>{ver}</td><td>{desc}</td><td>{dep}</td></tr>')
 pkg_rows = "\n".join(rows)
+
+featured = []
+for p in pkgs[:6]:
+    name = esc(p.get("package", ""))
+    ver = esc(p.get("version", ""))
+    desc = esc(p.get("description", "No description provided."))
+    deps = esc(package_text(p.get("depends")) or "No additional dependencies listed")
+    homepage = str(p.get("homepage", "") or "")
+    safe_home = esc(homepage) if homepage.startswith(("https://", "http://")) else ""
+    link = f'<a class="package-link" href="{safe_home}" target="_blank" rel="noopener noreferrer">Project homepage</a>' if safe_home else '<span class="package-link muted">Homepage not listed</span>'
+    copy_arg = html_lib.escape(json.dumps(str(p.get("package", ""))), quote=True)
+    featured.append(f'<article class="package-card" data-search="{name.lower()} {ver.lower()} {desc.lower()} {deps.lower()}"><div class="package-card-top"><span class="package-name">{name}</span><span class="package-version">{ver}</span></div><p>{desc}</p><div class="package-meta"><span>Dependencies: {deps}</span></div><div class="package-card-actions"><button class="small-btn" type="button" onclick="copyText({copy_arg}, this)">Copy name</button>{link}</div></article>')
+featured_cards = "\n".join(featured)
 
 html = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Termux App Store</title>
+<title>Termux App Store | Package Discovery for Termux</title>
+<meta name="description" content="Explore Termux App Store packages, installation instructions, repository information, and contribution guides.">
+<meta name="theme-color" content="#0d1117">
+<meta property="og:title" content="Termux App Store">
+<meta property="og:description" content="Discover tools and packages for your Termux environment.">
 <style>
 *{{box-sizing:border-box;margin:0;padding:0}}
 :root{{
@@ -300,19 +330,40 @@ footer{{
   footer{{font-size:11px;flex-direction:column;gap:4px}}
   #tab-install .section-title ~ .code-block{{width:100%}}
 }}
+
+/* Extended discovery experience */
+:root{{color-scheme:dark;--surface-raised:#1c232d;--accent-soft:rgba(88,166,255,.10)}}
+.nav-inner{{max-width:1180px;gap:12px}}.nav-brand{{font-size:15px;text-decoration:none;letter-spacing:.04em}}.nav-brand span{{color:var(--text-dim);font-weight:500}}
+.nav-tab{{padding:14px 11px;font-size:12px}}.theme-toggle{{border:1px solid var(--border);border-radius:7px;background:var(--bg2);color:var(--text-dim);padding:7px 10px;font-size:11px;cursor:pointer;white-space:nowrap}}
+.wrap{{max-width:1180px;padding-top:32px}}.hero{{text-align:left;padding:60px 0 48px;max-width:880px}}.hero-logo{{letter-spacing:.18em}}.hero h1{{font-size:clamp(34px,5vw,58px);letter-spacing:-.045em;max-width:760px}}.hero-sub{{font-size:16px;max-width:640px;line-height:1.8}}.hero-badges{{justify-content:flex-start}}.hero-cta{{justify-content:flex-start}}.hero-version{{margin-left:0}}
+.page-heading{{padding:30px 0 24px;max-width:760px}}.page-heading .eyebrow{{font-size:10px;letter-spacing:.18em;color:var(--green);font-weight:700;margin-bottom:12px}}.page-heading h1{{font-size:clamp(30px,4vw,46px);letter-spacing:-.04em;line-height:1.1;margin-bottom:14px}}.page-heading p{{color:var(--text-dim);font-size:15px;max-width:680px;line-height:1.8}}
+.package-grid{{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:20px 0 28px}}.package-card{{background:linear-gradient(145deg,var(--bg2),var(--surface-raised));border:1px solid var(--border);border-radius:12px;padding:18px;display:flex;flex-direction:column;min-width:0;transition:transform .18s,border-color .18s}}.package-card:hover{{transform:translateY(-3px);border-color:#4b6178}}.package-card-top{{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:12px}}.package-name{{font-size:15px;font-weight:750;color:var(--green);overflow-wrap:anywhere}}.package-version{{font-size:10px;color:var(--yellow);border:1px solid var(--border);border-radius:5px;padding:3px 6px;white-space:nowrap}}.package-card p{{font-size:12px;color:var(--text-dim);line-height:1.75;overflow-wrap:anywhere;flex:1}}.package-meta{{font-size:10px;color:var(--text-dimmer);margin-top:14px;padding-top:10px;border-top:1px solid var(--border2);overflow-wrap:anywhere}}.package-card-actions{{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:12px}}.small-btn{{background:var(--bg3);border:1px solid var(--border);border-radius:6px;color:var(--text);padding:6px 9px;font-size:10px;cursor:pointer}}.package-link{{font-size:11px}}.muted{{color:var(--text-dimmer)}}
+.discover-toolbar{{display:flex;gap:12px;align-items:center;margin:8px 0}}.discover-toolbar .search-box{{flex:1}}.discover-toolbar .search-count{{white-space:nowrap}}.collection-grid{{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:16px 0}}.collection-card{{text-align:left;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:16px;cursor:pointer;color:var(--text);display:flex;flex-direction:column;gap:9px;min-height:150px;transition:border-color .18s,transform .18s}}.collection-card:hover{{border-color:var(--blue);transform:translateY(-2px)}}.collection-kicker{{font-size:9px;letter-spacing:.12em;color:var(--blue);font-weight:700}}.collection-card strong{{font-size:14px}}.collection-card>span:last-child{{font-size:11px;line-height:1.65;color:var(--text-dim)}}
+.guide-list{{display:grid;gap:12px;margin:12px 0 24px}}.guide-card{{display:grid;grid-template-columns:48px minmax(0,1fr);gap:16px;padding:22px;background:var(--bg2);border:1px solid var(--border);border-radius:11px}}.guide-number{{font-size:12px;color:var(--green);font-weight:700;letter-spacing:.08em;padding-top:3px}}.guide-card h2{{font-size:16px;margin-bottom:8px}}.guide-card p{{font-size:13px;line-height:1.8;color:var(--text-dim);max-width:760px}}.text-button{{display:inline-block;background:none;border:0;padding:10px 0 0;color:var(--blue);font-size:12px;cursor:pointer;text-decoration:none}}.guide-code{{display:inline-block;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:9px 12px;margin-top:12px;font:12px monospace;color:#7ee787}}
+body.light-theme{{--bg:#f6f8fa;--bg2:#ffffff;--bg3:#eef2f6;--border:#d0d7de;--border2:#eaeef2;--text:#1f2328;--text-dim:#59636e;--text-dimmer:#737d87;--blue:#0969da;--blue-light:#0550ae;--green:#1a7f37;--yellow:#9a6700;--purple:#8250df;--surface-raised:#f0f4f8;color-scheme:light}}
+body.light-theme nav{{background:rgba(246,248,250,.94)}}body.light-theme .hero h1{{color:var(--text)}}body.light-theme .btn-primary{{color:white}}
+.section{{animation:section-in .2s ease-out}}@keyframes section-in{{from{{opacity:.45;transform:translateY(4px)}}to{{opacity:1;transform:translateY(0)}}}}
+:focus-visible{{outline:2px solid var(--blue);outline-offset:3px}}button,a,input{{touch-action:manipulation}}
+@media(max-width:900px){{.package-grid{{grid-template-columns:repeat(2,minmax(0,1fr))}}.collection-grid{{grid-template-columns:repeat(2,minmax(0,1fr))}}.nav-inner{{gap:6px}}}}
+@media(max-width:600px){{.nav-inner{{padding:0 10px;flex-wrap:wrap}}.nav-brand{{padding:9px 0;margin-right:4px}}.nav-tabs{{order:2;flex-basis:100%;width:100%}}.nav-tab{{padding:10px 11px}}.theme-toggle{{margin-left:auto}}.wrap{{padding:18px 14px 48px}}.hero{{padding:34px 0 28px}}.hero h1{{font-size:34px}}.hero-sub{{font-size:13px}}.page-heading{{padding:20px 0}}.page-heading h1{{font-size:32px}}.package-grid{{grid-template-columns:1fr}}.collection-grid{{grid-template-columns:1fr 1fr}}.collection-card{{padding:12px;min-height:140px}}.discover-toolbar{{align-items:stretch;flex-direction:column;gap:5px}}.guide-card{{grid-template-columns:30px minmax(0,1fr);gap:10px;padding:16px}}.guide-card h2{{font-size:14px}}}}
+@media(prefers-reduced-motion:reduce){{*,*::before,*::after{{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}}}
+
 </style>
 </head>
 <body>
 
 <nav>
   <div class="nav-inner">
-    <div class="nav-brand">TAS <span>▸</span></div>
+    <a class="nav-brand" href="#home" onclick="showTab('home',this);return false">TAS <span>/ TERMUX APP STORE</span></a>
     <div class="nav-tabs">
-      <a class="nav-tab active" onclick="showTab('home',this)" href="#">Home</a>
-      <a class="nav-tab" onclick="showTab('install',this)" href="#">Install</a>
-      <a class="nav-tab" onclick="showTab('packages',this)" href="#">Packages</a>
-      <a class="nav-tab" onclick="showTab('contribute',this)" href="#">Contribute</a>
-      <a class="nav-tab" onclick="showTab('repo',this)" href="#">Repository</a>
+      <a class="nav-tab active" data-tab="home" onclick="showTab('home',this)" href="#home">Overview</a>
+      <a class="nav-tab" data-tab="discover" onclick="showTab('discover',this)" href="#discover">Discover</a>
+      <a class="nav-tab" data-tab="packages" onclick="showTab('packages',this)" href="#packages">Packages</a>
+      <a class="nav-tab" data-tab="install" onclick="showTab('install',this)" href="#install">Install</a>
+      <a class="nav-tab" data-tab="guides" onclick="showTab('guides',this)" href="#guides">Guides</a>
+      <a class="nav-tab" data-tab="contribute" onclick="showTab('contribute',this)" href="#contribute">Contribute</a>
+      <a class="nav-tab" data-tab="repo" onclick="showTab('repo',this)" href="#repo">Repository</a>
+      <button class="theme-toggle" type="button" onclick="toggleTheme()" aria-label="Toggle color theme">Theme</button>
     </div>
   </div>
 </nav>
@@ -324,7 +375,7 @@ footer{{
   <div class="hero">
     <div class="hero-logo">◈  Termux Package Repository</div>
     <h1><span>Termux App Store</span></h1>
-    <p class="hero-sub">The offline-first, source-based TUI package manager for Termux<br>by <a href="https://github.com/djunekz">@djunekz</a></p>
+    <p class="hero-sub">A local-first package manager for Termux on Android. Browse, build, and install community tools through a native TUI & CLI, with SHA-256-verified binaries, source builds, and no root required. Transparency over magic.<br>by <a href="https://github.com/djunekz">@djunekz</a></p>
     <div class="hero-badges">
       <span class="badge green">v{version}</span>
       <span class="badge blue">{total} packages</span>
@@ -479,6 +530,34 @@ tasctl uninstall</code></pre>
     <button class="copy-btn" onclick="copyCode(this,'pkg uninstall termux-app-store')">copy</button>
   </div>
   </div>
+</div>
+
+<!-- DISCOVER -->
+<div id="tab-discover" class="section">
+  <div class="page-heading"><div class="eyebrow">EXPLORE THE CATALOG</div><h1>Find your next tool.</h1><p>Browse a curated starting point, then search the full catalog to find tools that fit your workflow.</p></div>
+  <div class="discover-toolbar"><input class="search-box" id="discoverSearch" type="search" placeholder="Search featured packages..." oninput="filterCards()"><span class="search-count" id="discoverCount">Featured packages</span></div>
+  <div class="package-grid" id="featuredGrid">{featured_cards}</div>
+  <div class="info-box"><p><strong>Looking for something specific?</strong> Open the Packages section to search the complete index, including descriptions, versions, and dependencies.</p><p>Package order follows the source index. Featured placement does not indicate popularity, endorsement, or security review.</p></div>
+  <div class="section-title">Explore by workflow</div>
+  <div class="collection-grid">
+    <button class="collection-card" onclick="searchPackages('python')"><span class="collection-kicker">01 / DEVELOPMENT</span><strong>Python and scripting</strong><span>Find packages mentioning Python, scripts, and automation.</span></button>
+    <button class="collection-card" onclick="searchPackages('git')"><span class="collection-kicker">02 / WORKFLOW</span><strong>Version control</strong><span>Explore tools related to Git and source management.</span></button>
+    <button class="collection-card" onclick="searchPackages('network')"><span class="collection-kicker">03 / CONNECTIVITY</span><strong>Networking tools</strong><span>Search the catalog for networking utilities.</span></button>
+    <button class="collection-card" onclick="searchPackages('security')"><span class="collection-kicker">04 / SECURITY</span><strong>Security utilities</strong><span>Find relevant packages by their indexed descriptions.</span></button>
+  </div>
+</div>
+
+<!-- GUIDES -->
+<div id="tab-guides" class="section">
+  <div class="page-heading"><div class="eyebrow">DOCUMENTATION</div><h1>Get more from Termux.</h1><p>Practical starting points for setting up the repository, installing packages, and keeping your environment maintainable.</p></div>
+  <div class="guide-list">
+    <article class="guide-card"><div class="guide-number">01</div><div><h2>Before you begin</h2><p>Install Termux from a trusted source and open the app before running repository setup commands. Keep your installation source consistent to avoid signature and update conflicts.</p><button class="text-button" onclick="showTab('install',document.querySelector('[data-tab=install]'))">View installation methods</button></div></article>
+    <article class="guide-card"><div class="guide-number">02</div><div><h2>Set up the repository</h2><p>Use the recommended installation method in the Install section. Read each command before running it and verify that the repository setup completes without errors.</p><button class="text-button" onclick="showTab('repo',document.querySelector('[data-tab=repo]'))">Repository details</button></div></article>
+    <article class="guide-card"><div class="guide-number">03</div><div><h2>Search and install packages</h2><p>Use the package catalog to check the package name, version, description, and listed dependencies. Package names must match the repository index.</p><button class="text-button" onclick="showTab('packages',document.querySelector('[data-tab=packages]'))">Browse all packages</button></div></article>
+    <article class="guide-card"><div class="guide-number">04</div><div><h2>Keep packages updated</h2><p>Refresh package metadata before upgrading. If an installation fails, review the exact terminal output and confirm that your device architecture and repository configuration are supported.</p><div class="guide-code">pkg update && pkg upgrade</div></div></article>
+    <article class="guide-card"><div class="guide-number">05</div><div><h2>Report a problem</h2><p>Include the package name, version, device architecture, relevant command, and complete error output when opening an issue. Remove tokens, passwords, and other private information first.</p><a class="text-button" href="https://github.com/djunekz/termux-app-store/issues" target="_blank" rel="noopener noreferrer">Open project issues</a></div></article>
+  </div>
+  <div class="info-box"><p><strong>Security note:</strong> Only install software you trust. Review project sources and permissions where applicable, and avoid running commands copied from untrusted sources without understanding what they do.</p></div>
 </div>
 
 <!-- ═══════════════ PACKAGES ═══════════════ -->
@@ -726,12 +805,39 @@ pkg update</code></pre>
 
 <script>
 function showTab(id, el) {{
+  const target = document.getElementById('tab-' + id);
+  if (!target) return false;
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-  document.getElementById('tab-' + id).classList.add('active');
-  if (el) el.classList.add('active');
+  target.classList.add('active');
+  const active = el || document.querySelector('[data-tab="' + id + '"]');
+  if (active && active.classList.contains('nav-tab')) active.classList.add('active');
+  if (history.replaceState) history.replaceState(null, '', '#' + id);
   window.scrollTo({{top:0,behavior:'smooth'}});
   return false;
+}}
+
+function copyText(text, btn) {{
+  const done = () => {{ if (btn) {{ const old = btn.textContent; btn.textContent = 'Copied'; setTimeout(() => btn.textContent = old, 1400); }} }};
+  if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text).then(done).catch(() => fallbackCopy(text, done));
+  else fallbackCopy(text, done);
+}}
+function fallbackCopy(text, callback) {{
+  const field = document.createElement('textarea'); field.value = text; field.style.position = 'fixed'; field.style.opacity = '0'; document.body.appendChild(field); field.select();
+  try {{ document.execCommand('copy'); callback(); }} catch (e) {{}} finally {{ field.remove(); }}
+}}
+function toggleTheme() {{
+  const light = document.body.classList.toggle('light-theme');
+  try {{ localStorage.setItem('tas-theme', light ? 'light' : 'dark'); }} catch (e) {{}}
+}}
+function searchPackages(query) {{
+  showTab('packages', document.querySelector('[data-tab="packages"]'));
+  const input = document.getElementById('searchInput'); input.value = query; filterTable();
+}}
+function filterCards() {{
+  const q = document.getElementById('discoverSearch').value.toLowerCase().trim(); let visible = 0;
+  document.querySelectorAll('#featuredGrid .package-card').forEach(card => {{ const match = card.dataset.search.includes(q); card.hidden = !match; if (match) visible++; }});
+  document.getElementById('discoverCount').textContent = visible + ' featured package' + (visible === 1 ? '' : 's');
 }}
 
 function copyCode(btn, text) {{
@@ -743,28 +849,27 @@ function copyCode(btn, text) {{
 }}
 
 function filterTable() {{
-  const q = document.getElementById('searchInput').value.toLowerCase();
+  const q = document.getElementById('searchInput').value.toLowerCase().trim();
   const rows = document.querySelectorAll('#pkgTable tbody tr');
   let visible = 0;
   rows.forEach(row => {{
-    const name = row.cells[0]?.textContent.toLowerCase() || '';
-    const desc = row.cells[2]?.textContent.toLowerCase() || '';
-    const match = name.includes(q) || desc.includes(q);
+    const haystack = row.dataset.search || row.textContent.toLowerCase();
+    const match = haystack.includes(q);
     row.classList.toggle('hidden', !match);
     if (match) visible++;
   }});
   const countEl = document.getElementById('searchCount');
-  if (q) {{
-    countEl.textContent = visible + ' of ' + rows.length + ' packages match';
-  }} else {{
-    countEl.textContent = '';
-  }}
+  countEl.textContent = q ? (visible + ' of ' + rows.length + ' packages match') : (rows.length + ' packages available');
 }}
 
 // Handle nav onclick properly
 document.querySelectorAll('.nav-tab').forEach(tab => {{
   tab.addEventListener('click', e => e.preventDefault());
 }});
+try {{ if (localStorage.getItem('tas-theme') === 'light') document.body.classList.add('light-theme'); }} catch (e) {{}}
+const initialTab = location.hash.replace('#', '');
+if (initialTab && document.getElementById('tab-' + initialTab)) showTab(initialTab, document.querySelector('[data-tab="' + initialTab + '"]'));
+if (document.getElementById('searchCount')) document.getElementById('searchCount').textContent = document.querySelectorAll('#pkgTable tbody tr').length + ' packages available';
 </script>
 </body>
 </html>"""
