@@ -64,9 +64,7 @@ for p in pkgs:
     raw_name = str(p.get("package", ""))
     name = esc(raw_name)
     ver = esc(p.get("version", ""))
-    desc = esc(
-        p.get("description", "No description provided.") or "No description provided."
-    )
+    desc = esc(p.get("description", "No description provided.") or "No description provided.")
     deps = esc(package_text(p.get("depends")) or "No additional dependencies listed")
     homepage = str(p.get("homepage", "") or "")
     safe_home = esc(homepage) if homepage.startswith(("https://", "http://")) else ""
