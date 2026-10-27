@@ -64,13 +64,16 @@ for p in pkgs:
     raw_name = str(p.get("package", ""))
     name = esc(raw_name)
     ver = esc(p.get("version", ""))
-    desc = esc(p.get("description", "No description provided.") or "No description provided.")
+    desc = esc(
+        p.get("description", "No description provided.") or "No description provided."
+    )
     deps = esc(package_text(p.get("depends")) or "No additional dependencies listed")
     homepage = str(p.get("homepage", "") or "")
     safe_home = esc(homepage) if homepage.startswith(("https://", "http://")) else ""
     link = (
         f'<a class="package-link" href="{safe_home}" target="_blank" rel="noopener noreferrer">Project homepage</a>'
-        if safe_home else '<span class="package-link muted">Homepage not listed</span>'
+        if safe_home
+        else '<span class="package-link muted">Homepage not listed</span>'
     )
     copy_arg = html_lib.escape(json.dumps(raw_name), quote=True)
     all_discover.append(
