@@ -8,7 +8,7 @@ pythonpath = ["."]
 python_files = ["test_*.py"]
 python_classes = ["Test*"]
 python_functions = ["test_*"]
-addopts = "-v --tb=short"
+addopts = "-v --tb=short --maxfail=1"
 
 [tool.coverage.run]
 source = ["tools", "termux_app_store"]
