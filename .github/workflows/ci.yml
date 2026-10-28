@@ -17,35 +17,35 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
+        uses: actions/setup-python@v5
         with:
-          python-version: "3.15"
+          python-version: "3.12"
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install ruff
+          pip install -e ".[dev]"
 
       - name: Ruff lint
-        run: ruff check .
+        run: python -m ruff check .
 
       - name: Ruff format check
-        run: ruff format --check .
+        run: python -m ruff format --check .
 
   typecheck:
     name: Mypy type check
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
+        uses: actions/setup-python@v5
         with:
-          python-version: "3.15"
+          python-version: "3.12"
 
       - name: Install dependencies
         run: |
@@ -53,19 +53,19 @@ jobs:
           pip install -e ".[dev]"
 
       - name: Mypy
-        run: mypy
+        run: python -m mypy
 
   test:
     name: Pytest
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
+        uses: actions/setup-python@v5
         with:
-          python-version: "3.15"
+          python-version: "3.12"
 
       - name: Install dependencies
         run: |
