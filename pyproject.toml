@@ -2,6 +2,17 @@
 requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short"
+
+[tool.coverage.run]
+source = ["tools", "termux_app_store"]
+
 [project]
 name = "termux-app-store"
 version = "0.9.1"
@@ -67,14 +78,6 @@ include = ["termux_app_store*"]
 [tool.setuptools.package-data]
 termux_app_store = ["data/*.json", "data/build-package.sh"]
 
-[tool.pytest.ini_options]
-testpaths = ["tests"]
-pythonpath = ["."]
-python_files = ["test_*.py"]
-python_classes = ["Test*"]
-python_functions = ["test_*"]
-addopts = "-v --tb=short"
-
 [tool.mypy]
 python_version = "3.10"
 ignore_missing_imports = true
@@ -85,6 +88,3 @@ files = ["termux_app_store", "tools"]
 [[tool.mypy.overrides]]
 module = ["termux_app_store.*"]
 disable_error_code = ["no-redef", "union-attr", "var-annotated", "arg-type", "assignment", "misc", "annotation-unchecked"]
-
-[tool.coverage.run]
-source = ["tools", "termux_app_store"]
