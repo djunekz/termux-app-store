@@ -32,7 +32,7 @@ class TestTestCommandWiring:
         assert not (ROOT / "pytest.ini").exists()
 
     def test_tox_runs_pytest(self):
-        assert "commands = pytest" in read("tox.ini")
+        assert re.search(r"^commands\s*=\s*(python -m )?pytest\b", read("tox.ini"), re.MULTILINE)
 
     def test_ci_workflow_runs_pytest(self):
         assert "python -m pytest" in read(".github/workflows/ci.yml")
