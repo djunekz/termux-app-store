@@ -21,9 +21,8 @@ and this project adheres to semantic versioning.
 - `.env.example` - template listing the supported environment variables (`TERMUX_APP_STORE_HOME`, `TERMUX_APP_STORE_GITHUB_REPO`, `TERMUX_APP_STORE_INDEX_BRANCH`, `TERMUX_APP_STORE_INDEX_URL`, `TERMUX_APP_STORE_MODE`, `TERMUX_APP_STORE_BUILD_SH_SHA256`, `TERMUX_APP_STORE_ALLOW_UNVERIFIED_BUILD_SH`, `TERMUX_APP_STORE_ALLOW_UNVERIFIED_RECIPE`, `XDG_CACHE_HOME`, `PREFIX`)
 - `README.md` - new "Development and Testing" section with the test, lint, type check and combined commands
 - `requirements-dev.txt` and `[dependency-groups]` in `pyproject.toml` - development dependencies (pytest, pytest-cov, ruff, mypy) declared for pip and uv
-- `package.json` - private task runner manifest with `test`, `lint`, `format`, `typecheck` and `check` scripts that call the Python tools (`npm test` runs `pytest`); it has no dependencies
 - `.github/workflows/build-packages-debs.yml` - new `quality` job that runs ruff, mypy and pytest
-- `pyproject.toml` - `[tool.pytest.ini_options]` so the test command is defined in the build config as well as `pytest.ini`
+- `pyproject.toml` - `[tool.pytest.ini_options]` (`testpaths`, `addopts`) so the pytest configuration lives in the build config
 - `ruff.toml` - Ruff lint and format configuration, moved out of `pyproject.toml`
 - `.python-version`, `Dockerfile`, `.dockerignore` and `tox.ini` - pinned Python runtime, container build and tox environments (`py312`, `lint`, `type`)
 - `CONTRIBUTING.md` - new "Setup", "Code Style" and "Testing" sections, and the quality gates list now mentions Ruff, mypy and pytest
