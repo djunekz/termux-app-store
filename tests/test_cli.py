@@ -3,7 +3,6 @@ from unittest.mock import patch
 
 import pytest
 from _loader import load_cli
-
 from conftest import make_valid_root
 
 _cli = load_cli()
