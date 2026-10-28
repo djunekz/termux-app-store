@@ -2,9 +2,9 @@ TERMUX_PKG_HOMEPAGE=https://github.com/pnpm/pnpm
 TERMUX_PKG_DESCRIPTION="Fast, disk space efficient package manager"
 TERMUX_PKG_LICENSE="MIT"
 TERMUX_PKG_MAINTAINER="@termux-app-store"
-TERMUX_PKG_VERSION=12.15.0
+TERMUX_PKG_VERSION=12.16.1
 TERMUX_PKG_SRCURL=https://registry.npmjs.org/pnpm/-/pnpm-${TERMUX_PKG_VERSION}.tgz
-TERMUX_PKG_SHA256=f5173f6127cc505cdb36ec17719fe54a8511c6fd8560c7ceb4bf7c73e3b4458b
+TERMUX_PKG_SHA256=ca362a16f2e1c3cfa81d406f3242446179a0e4aea457ba3e9e6c39e6476aba65
 TERMUX_PKG_DEPENDS="nodejs"
 
 termux_step_make_install() {
