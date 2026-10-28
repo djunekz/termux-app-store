@@ -588,6 +588,18 @@ SHA1: 33b11ab3f4a3de75060a73e3effb92da2b7de35c
 SHA256: 4b05aec31992f4c3dde4de6665a0b46ccbbf3d5aa8009966ed9d00c08db2fd38
 Description: Fast, disk space efficient package manager
 
+Package: pnpm
+Version: 12.16.1
+Architecture: x86_64
+Maintainer: @termux-app-store
+Installed-Size: 
+Filename: pool/main/pnpm_12.16.1_x86_64.deb
+Size: 823204
+MD5sum: c9030ccd362eefc5f622affe074fe78a
+SHA1: 61eeeece5ac8400d35d174873376015afbb7e332
+SHA256: c0671819dd3d7f645bffa2d36025d8a4b58d9f59f5978e8d21d38cb6d0b3a0a1
+Description: Fast, disk space efficient package manager
+
 Package: pymaker
 Version: 1.0.0
 Architecture: x86_64
@@ -805,4 +817,3 @@ MD5sum: a85ce0d3018ff3bb36dbeb983c5dcc31
 SHA1: 6a030d232971ffe640d86a015214cabf764ce56f
 SHA256: f72fddd11265b2d7e5fb773ee884655e7d77c465773371e134d1a45a612a8eb5
 Description: A posix script to find and watch youtube videos from the terminal. (Without API)
-

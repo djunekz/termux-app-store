@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-10-27T04:41:57.601842+00:00",
+  "generated_at": "2026-10-28T18:25:37.551643+00:00",
   "total": 89,
   "packages": [
     {
@@ -1386,7 +1386,7 @@
     },
     {
       "package": "pnpm",
-      "version": "12.15.0",
+      "version": "12.16.1",
       "maintainer": "@termux-app-store",
       "description": "Fast, disk space efficient package manager",
       "homepage": "https://github.com/pnpm/pnpm",
@@ -1395,17 +1395,17 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://registry.npmjs.org/pnpm/-/pnpm-${TERMUX_PKG_VERSION}.tgz",
-      "sha256": "f5173f6127cc505cdb36ec17719fe54a8511c6fd8560c7ceb4bf7c73e3b4458b",
-      "recipe_sha256": "2ce90d1435e800c16b49394cd484d2f0162813419413e4a42bafb7c5ca7987e7",
+      "sha256": "ca362a16f2e1c3cfa81d406f3242446179a0e4aea457ba3e9e6c39e6476aba65",
+      "recipe_sha256": "ba10b0d06939743b2009d302266b7f2753d6b1f51cb1bf11baba167fbd5a7961",
       "platform_independent": false,
       "depends": [
         "nodejs"
       ],
       "sha256_by_arch": {
-        "aarch64": "53c93cf1c843145c0fd5b5e82e6123c91a54d2d257ffa285ee04ab6250c25be3",
-        "arm": "840d9bed387843242c8755abf6a3480d797c57143e06ce190ad1676a2a4e3115",
-        "x86_64": "4b05aec31992f4c3dde4de6665a0b46ccbbf3d5aa8009966ed9d00c08db2fd38",
-        "i686": "0c5311dfc95cf0a01da67a7e5526e6b2d537ba026fadb9fdf913a18a1700a289"
+        "aarch64": "2783c3e2ca9930ff962820ed53fb59c8d9d90299c8362d5d4317d8f1fe0ed9bf",
+        "arm": "7920eb1b5e2816e0fe602460d8781e65d511d17f8f4fc93b2e8022c9f94549d5",
+        "x86_64": "c0671819dd3d7f645bffa2d36025d8a4b58d9f59f5978e8d21d38cb6d0b3a0a1",
+        "i686": "7630adc50093babd9383f16e61b695dca8fd319e854272ba22413379d7dd7a6e"
       }
     },
     {
