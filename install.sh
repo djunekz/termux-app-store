@@ -7,6 +7,13 @@ readonly OFFICIAL_RELEASE_BASE="https://github.com/djunekz/termux-app-store/rele
 readonly OFFICIAL_URL="https://github.com/djunekz/termux-app-store"
 
 APP_NAME="termux-app-store"
+CURL_SEC=(--proto '=https' --tlsv1.2)
+ALLOW_NO_CHECKSUM="${TAS_ALLOW_NO_CHECKSUM:-0}"
+TMP_DIR=""
+STAGE_DIR=""
+BACKUP_DIR=""
+SWAPPED=0
+DONE=0
 INSTALL_DIR="$PREFIX/lib/.tas"
 BIN_DIR="$PREFIX/bin"
 
@@ -19,7 +26,7 @@ BGREEN=$'\033[92m'
 BYELLOW=$'\033[93m'
 BCYAN=$'\033[96m'
 
-die()  { printf "\n %s[✗]%s %s\n\n" "$BRED$B" "$R" "$*" >&2; exit 1; }
+die()  { printf "\n %s[✗]%s %b\n\n" "$BRED$B" "$R" "$*" >&2; exit 1; }
 info() { printf " %s[*]%s %s\n" "$BCYAN$B" "$R" "$*"; }
 ok()   { printf " %s[✓]%s %s\n" "$BGREEN$B" "$R" "$*"; }
 warn() { printf " %s[!]%s %s\n" "$BYELLOW$B" "$R" "$*"; }
@@ -36,31 +43,23 @@ verify_official_release() {
   info "Verifying official release source..."
 
   local api_full_name
-  api_full_name=$(curl -fsSL \
+  api_full_name=$(curl "${CURL_SEC[@]}" -fsSL --max-time 15 \
     -H "Accept: application/vnd.github+json" \
     "https://api.github.com/repos/$OFFICIAL_REPO" 2>/dev/null \
     | grep '"full_name"' \
     | head -1 \
     | sed 's/.*"full_name": *"\([^"]*\)".*/\1/' || true)
 
-  if [[ "$api_full_name" != "$OFFICIAL_REPO" ]]; then
-    printf "\n"
-    printf "%s╔══════════════════════════════════════════════════════════╗%s\n" "$BRED$B" "$R"
-    printf "%s║                                                          ║%s\n" "$BRED$B" "$R"
-    printf "%s║   ⚠  INSTALLATION BLOCKED — UNOFFICIAL SOURCE  ⚠         ║%s\n" "$BRED$B" "$R"
-    printf "%s║                                                          ║%s\n" "$BRED$B" "$R"
-    printf "%s║   This installer only works with the official project:   ║%s\n" "$BRED$B" "$R"
-    printf "%s║   github.com/djunekz/termux-app-store                    ║%s\n" "$BRED$B" "$R"
-    printf "%s║                                                          ║%s\n" "$BRED$B" "$R"
-    printf "%s║   Any fork or copy claiming to be the original is        ║%s\n" "$BRED$B" "$R"
-    printf "%s║   NOT the official Termux App Store by @djunekz.         ║%s\n" "$BRED$B" "$R"
-    printf "%s║                                                          ║%s\n" "$BRED$B" "$R"
-    printf "%s║   Always install from the official source:               ║%s\n" "$BRED$B" "$R"
-    printf "%s║                                                          ║%s\n" "$BRED$B" "$R"
-    printf "%s╚══════════════════════════════════════════════════════════╝%s\n" "$BRED$B" "$R"
-    printf "%sCopy this text for installing termux-app-store:%s\n\n" "$BRED$B" "$R"
-    printf "%s curl -fsSL https://raw.githubusercontent.com/djunekz/termux-app-store/master/install.sh | bash %s\n" "$BGRREN$B" "$R"
-    printf "\n"
+  if [[ -z "$api_full_name" ]]; then
+    warn "Could not reach GitHub API (offline or rate-limited) — continuing"
+    return 0
+  fi
+
+  if [[ "${api_full_name,,}" != "${OFFICIAL_REPO,,}" ]]; then
+    printf "\n%s INSTALLATION BLOCKED — UNOFFICIAL SOURCE%s\n" "$BRED$B" "$R"
+    printf "  Expected : %s\n  Got      : %s\n\n" "$OFFICIAL_REPO" "$api_full_name"
+    printf "%sInstall from the official source:%s\n\n" "$BRED$B" "$R"
+    printf "%s curl -fsSL https://raw.githubusercontent.com/djunekz/termux-app-store/master/install.sh | bash %s\n\n" "$BGREEN$B" "$R"
     exit 1
   fi
 
@@ -117,11 +116,22 @@ check_existing() {
   esac
 }
 
-cleanup() {
-  info "Cleaning previous installation..."
+cleanup_tmp() {
+  [[ -n "$TMP_DIR" && -d "$TMP_DIR" ]] && rm -rf "$TMP_DIR"
+  return 0
+}
+
+rollback() {
+  [[ "$SWAPPED" == "1" && "$DONE" != "1" && -n "$BACKUP_DIR" ]] || return 0
+  warn "Rolling back to previous installation..."
   rm -rf "$INSTALL_DIR"
-  rm -f  "$BIN_DIR/$APP_NAME"
-  rm -f  "$BIN_DIR/tasctl"
+  rm -f  "$BIN_DIR/$APP_NAME" "$BIN_DIR/tasctl"
+  [[ -d "$BACKUP_DIR/lib"     ]] && mv "$BACKUP_DIR/lib" "$INSTALL_DIR"
+  [[ -f "$BACKUP_DIR/app"     ]] && mv "$BACKUP_DIR/app" "$BIN_DIR/$APP_NAME"
+  if [[ -e "$BACKUP_DIR/tasctl" || -L "$BACKUP_DIR/tasctl" ]]; then
+    mv "$BACKUP_DIR/tasctl" "$BIN_DIR/tasctl"
+  fi
+  return 0
 }
 
 download_release() {
@@ -129,7 +139,7 @@ download_release() {
 
   info "Fetching latest release tag..."
   local tag
-  tag=$(curl -fsSL \
+  tag=$(curl "${CURL_SEC[@]}" -fsSL --max-time 20 \
     -H "Accept: application/vnd.github+json" \
     "$OFFICIAL_API" 2>/dev/null \
     | grep '"tag_name"' \
@@ -137,6 +147,7 @@ download_release() {
     | sed 's/.*"tag_name": *"\([^"]*\)".*/\1/' || true)
 
   [[ -n "$tag" ]] || die "Cannot fetch release info — check your internet connection"
+  [[ "$tag" =~ ^[A-Za-z0-9._-]+$ ]] || die "Unexpected release tag format: $tag"
   VERSION="${tag#v}"
   TAG="$tag"
   ok "Latest release: ${B}$TAG${R}"
@@ -145,37 +156,57 @@ download_release() {
   local url="${OFFICIAL_RELEASE_BASE}/${TAG}/${archive}"
   local sha256_url="${url}.sha256"
 
-  local tmp_dir; tmp_dir=$(mktemp -d)
-  local tmp_archive="$tmp_dir/$archive"
+  TMP_DIR=$(mktemp -d)
+  local tmp_archive="$TMP_DIR/$archive"
+  STAGE_DIR="$TMP_DIR/stage"
 
   info "Downloading ${B}$archive${R}..."
   info "From: ${DIM}$url${R}"
-  curl -fL --progress-bar --retry 3 --retry-delay 2 \
+  curl "${CURL_SEC[@]}" -fL --progress-bar --retry 3 --retry-delay 2 \
     "$url" -o "$tmp_archive" \
-    || { rm -rf "$tmp_dir"; die "Download failed"; }
+    || die "Download failed (your existing installation was not touched)"
   ok "Download complete"
 
   info "Verifying SHA256 checksum..."
   local expected actual
-  expected=$(curl -fsSL "$sha256_url" 2>/dev/null | awk '{print $1}' || true)
+  expected=$(curl "${CURL_SEC[@]}" -fsSL --max-time 20 "$sha256_url" 2>/dev/null \
+    | awk '{print $1}' | head -1 || true)
 
-  if [[ -n "$expected" ]]; then
+  if [[ "$expected" =~ ^[A-Fa-f0-9]{64}$ ]]; then
     actual=$(sha256sum "$tmp_archive" | awk '{print $1}')
-    if [[ "$actual" != "$expected" ]]; then
-      rm -rf "$tmp_dir"
-      die "SHA256 mismatch — file may be corrupted or tampered\n  Expected : $expected\n  Got      : $actual"
+    if [[ "${actual,,}" != "${expected,,}" ]]; then
+      die "SHA256 mismatch — file may be corrupted or tampered\n  Expected : $expected\n  Got      : $actual\n  (your existing installation was not touched)"
     fi
     ok "Checksum verified"
+  elif [[ "$ALLOW_NO_CHECKSUM" == "1" ]]; then
+    warn "No valid SHA256 published — continuing because --insecure-skip-checksum was given"
   else
-    warn "SHA256 not available — skipping checksum verification"
+    die "No valid SHA256 checksum found at:\n  $sha256_url\n  Refusing to install an unverified archive.\n  (override at your own risk: --insecure-skip-checksum)"
   fi
 
   info "Extracting archive..."
-  mkdir -p "$INSTALL_DIR"
-  tar -xzf "$tmp_archive" -C "$INSTALL_DIR" \
-    || { rm -rf "$tmp_dir"; die "Extraction failed"; }
-  rm -rf "$tmp_dir"
-  ok "Extracted to $INSTALL_DIR"
+  mkdir -p "$STAGE_DIR"
+  tar -xzf "$tmp_archive" -C "$STAGE_DIR" || die "Extraction failed"
+  [[ -f "$STAGE_DIR/termux_app_store/main.py" ]] \
+    || die "Archive layout unexpected (termux_app_store/main.py missing)"
+  ok "Extracted and staged"
+}
+
+swap_install() {
+  info "Replacing installation..."
+  BACKUP_DIR="$TMP_DIR/backup"
+  mkdir -p "$BACKUP_DIR"
+
+  [[ -d "$INSTALL_DIR" ]] && mv "$INSTALL_DIR" "$BACKUP_DIR/lib"
+  [[ -f "$BIN_DIR/$APP_NAME" ]] && mv "$BIN_DIR/$APP_NAME" "$BACKUP_DIR/app"
+  if [[ -e "$BIN_DIR/tasctl" || -L "$BIN_DIR/tasctl" ]]; then
+    mv "$BIN_DIR/tasctl" "$BACKUP_DIR/tasctl"
+  fi
+  SWAPPED=1
+
+  mkdir -p "$(dirname "$INSTALL_DIR")"
+  mv "$STAGE_DIR" "$INSTALL_DIR"
+  ok "Installed to $INSTALL_DIR"
 }
 
 install_python_deps() {
@@ -249,22 +280,48 @@ show_done() {
   printf "  tasctl doctor    %s→ Diagnose environment%s\n\n" "$DIM" "$R"
 }
 
+usage() {
+  cat <<EOF
+Usage: install.sh [options]
+
+Options:
+  --insecure-skip-checksum   Continue if no valid .sha256 is published (NOT recommended)
+  -h, --help                 Show this help
+
+Via pipe:  curl -fsSL <url>/install.sh | bash -s -- --insecure-skip-checksum
+EOF
+}
+
+parse_args() {
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      --insecure-skip-checksum) ALLOW_NO_CHECKSUM=1 ;;
+      -h|--help) usage; exit 0 ;;
+      *) die "Unknown option: $1" ;;
+    esac
+    shift
+  done
+}
+
 main() {
+  parse_args "$@"
   show_banner
   check_termux
   verify_official_release
   detect_arch
   check_existing
   printf "\n"
-  cleanup
   download_release
   install_python_deps
+  swap_install
   write_sentinel
   create_launcher
   setup_tasctl
+  DONE=1
   show_done
 }
 
+trap 'rc=$?; rollback; cleanup_tmp; exit $rc' EXIT
 trap 'printf "\n"; die "Installation failed at line $LINENO"' ERR
 
 main "$@"
