@@ -8,8 +8,7 @@
 
 [![CI](https://github.com/djunekz/termux-app-store/actions/workflows/build.yml/badge.svg)](https://github.com/djunekz/termux-app-store/actions)
 [![Auto Update Packages](https://github.com/djunekz/termux-app-store/actions/workflows/auto-update-packages.yml/badge.svg)](https://github.com/djunekz/termux-app-store/actions/workflows/auto-update-packages.yml)
-[![CodeQL Advanced](https://github.com/djunekz/termux-app-store/actions/workflows/codeql.yml/badge.svg)](https://github.com/djunekz/termux-app-store/actions/workflows/codeql.yml)
-[![Codecov](https://codecov.io/github/djunekz/termux-app-store/branch/master/graph/badge.svg?token=357W4EP8G0)](https://codecov.io/github/djunekz/termux-app-store)<br>
+[![CodeQL Advanced](https://github.com/djunekz/termux-app-store/actions/workflows/codeql.yml/badge.svg)](https://github.com/djunekz/termux-app-store/actions/workflows/codeql.yml)<br>
 [![PyPI](https://img.shields.io/pypi/v/termux-app-store?style=flat&logo=pypi&color=3fb950&label=pypi)](https://pypi.org/project/termux-app-store/)
 [![Version](https://badgen.net/github/release/djunekz/termux-app-store?icon=github&color=3fb950&label=release)](https://github.com/djunekz/termux-app-store/releases)
 [![Downloads](https://img.shields.io/github/downloads/djunekz/termux-app-store/total?style=flat&logo=github&color=3fb950&logoColor=white)](https://github.com/djunekz/termux-app-store)<br>
@@ -18,7 +17,8 @@
 [![Forks](https://badgen.net/github/forks/djunekz/termux-app-store?icon=github&label=forks)](https://github.com/djunekz/termux-app-store/network)<br>
 [![Issues](https://img.shields.io/badge/issues-open-3fb950?style=flat&logo=github&logoColor=white)](https://github.com/djunekz/termux-app-store/issues)
 [![PRs](https://img.shields.io/github/issues-pr/djunekz/termux-app-store?style=flat&logo=git&logoColor=white&color=3fb950)](https://github.com/djunekz/termux-app-store/pulls)
-[![Community Ready](https://img.shields.io/badge/Community-Ready-3fb950?style=flat&logo=github)](https://github.com/djunekz/termux-app-store)
+[![Community Ready](https://img.shields.io/badge/Community-Ready-3fb950?style=flat&logo=github)](https://github.com/djunekz/termux-app-store)<br>
+[![Codecov](https://codecov.io/github/djunekz/termux-app-store/branch/master/graph/badge.svg?token=357W4EP8G0)](https://codecov.io/github/djunekz/termux-app-store)
 [![RepoGrade](https://www.repo-grade.com/api/badge/djunekz/termux-app-store)](https://www.repo-grade.com/report/djunekz/termux-app-store)
 
 > **Local-first • Checksum-verified • Source-based • Termux-native • Android Terminal**
