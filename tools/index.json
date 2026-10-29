@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-10-29T04:54:50.505842+00:00",
-  "total": 89,
+  "generated_at": "2026-10-29T05:48:07.121188+00:00",
+  "total": 88,
   "packages": [
     {
       "package": "aichat",
@@ -493,26 +493,6 @@
       "platform_independent": false,
       "depends": [
         "perl"
-      ]
-    },
-    {
-      "package": "dumpzilla",
-      "version": "1.0.0",
-      "maintainer": "@termux-app-store",
-      "description": "dumpzilla packaging for Kali Linux",
-      "homepage": "https://gitlab.com/groups/kalilinux/packages",
-      "license": "UNKNOWN",
-      "download_size": "Unknown",
-      "installed_size": "Unknown",
-      "source": "https://github.com/djunekz/termux-app-store",
-      "srcurl": "https://gitlab.com/kalilinux/packages/dumpzilla/-/archive/kali/master/dumpzilla-kali/master.tar.gz",
-      "sha256": "ba9d8d93a49603eccbcc6b85dda7a2f38e0f4e47d59bdede0760f2f6177b4d3d",
-      "recipe_sha256": "0c75306500a60d8fbeb02acf96378d2656ca57885b6df2e236f38ff51d627422",
-      "platform_independent": false,
-      "depends": [
-        "python",
-        "python-pip",
-        "python-setuptools"
       ]
     },
     {
