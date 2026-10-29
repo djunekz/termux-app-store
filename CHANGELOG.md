@@ -55,6 +55,9 @@ and this project adheres to semantic versioning.
 - Package `pnpm` v12.14.0 → v12.16.1
 - Package `unmineable` v0.1.0 → v0.1.5
 
+### Removed
+- Package `dumpzilla` - Removed
+
 ---
 
 ## [v0.9.1] - 2026-10-21
