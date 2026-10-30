@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-10-30T05:26:03.465064+00:00",
+  "generated_at": "2026-10-30T11:17:10.132992+00:00",
   "total": 88,
   "packages": [
     {
@@ -1249,7 +1249,7 @@
     },
     {
       "package": "termux-sync",
-      "version": "1.3.0",
+      "version": "1.3.5",
       "maintainer": "@termux-app-store",
       "description": "OpenSource Backup and restore your entire Termux environment across devices.",
       "homepage": "https://github.com/djunekz/termux-sync",
@@ -1258,8 +1258,8 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/termux-sync/archive/refs/tags/v${TERMUX_PKG_VERSION}.tar.gz",
-      "sha256": "26c2bbab666787d2f56694ccd418910d35a4cc6e53c8d9dd3f601ed6f575a029",
-      "recipe_sha256": "9887ccdbd959093a3289c2afbc1298b26a0dcc85ebec84b92112b10315241c09",
+      "sha256": "cc690be7b2be536445f069da8c3f583394c886a7a90865c44300459ef209c3ce",
+      "recipe_sha256": "998a823ea70b898125bd10fead8213bd3140f4ca03e0277851bc1f3cf61fc9c6",
       "platform_independent": false,
       "depends": [
         "git",
