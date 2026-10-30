@@ -36,7 +36,7 @@ jobs:
       - name: Configure Git
         run: |
           git config user.name "Termux App Store"
-          git config user.email "258516621+termux-app-store@users.noreply.github.com"
+          git config user.email "258522831+termuxappstore@users.noreply.github.com"
           git remote set-url origin https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/djunekz/termux-app-store.git
 
       - name: Detect changed packages
