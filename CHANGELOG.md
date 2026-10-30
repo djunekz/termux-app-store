@@ -54,6 +54,7 @@ and this project adheres to semantic versioning.
 - Package `infoooze` v1.1.9 → v1.2.2
 - Package `pnpm` v12.14.0 → v12.16.1
 - Package `unmineable` v0.1.0 → v0.1.5
+- Package `pmcli` v0.1.0 → v0.2.5
 
 ### Removed
 - Package `dumpzilla` - Removed
