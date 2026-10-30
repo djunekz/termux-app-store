@@ -234,7 +234,7 @@ jobs:
       - name: Commit and push to gh-pages
         run: |
           cd gh-pages
-          git config user.email "258516621+termux-app-store@users.noreply.github.com"
+          git config user.email "258522831+termuxappstore@users.noreply.github.com"
           git config user.name "Termux App Store"
           git add -A
           VERSION="${{ steps.meta.outputs.version }}"
