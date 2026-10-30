@@ -697,15 +697,15 @@ SHA256: df105f153e545d9f5a87f486b78d9c55a45220b5b9720c46ad897f065fc4b9db
 Description: Incredibly fast crawler designed for OSINT.
 
 Package: pmcli
-Version: 0.1.0
+Version: 0.2.5
 Architecture: aarch64
 Maintainer: Djunekz <gab288.gab288@passinbox.com>
 Installed-Size: 
-Filename: pool/main/pmcli_0.1.0_aarch64.deb
-Size: 889152
-MD5sum: 8af2971d7d1bad675283353efa69196f
-SHA1: c125283721ddf5cf64847ffc85ce5e99c225d7aa
-SHA256: bacc4781057d92cad7afdbaa59aef97c82254eb4635601b074aa424cb09b86b4
+Filename: pool/main/pmcli_0.2.5_aarch64.deb
+Size: 973364
+MD5sum: f7522aebbb663fc8b411f28826b0b4c2
+SHA1: 0b84a8849d8825bce4deaa5b4b859d98ce2143f0
+SHA256: cf016eb0663190c89f58c0ad5b6adbbf3ec3fe83bed74b16f7c3838edd5ad709
 Description: Terminal-based project manager CLI
 
 Package: pnpm
@@ -1094,4 +1094,3 @@ MD5sum: 685b6a0768687c0e612a458894dc55cf
 SHA1: 7626725d13ee0b030e6df72c827639e5f2bd5170
 SHA256: c155c16a1159b573622be828e4bad235096e130e19c2ccb6e37397fd450d06a1
 Description: Encrypter Stealth Binary Builder
-
