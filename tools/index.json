@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-10-30T04:54:42.060391+00:00",
+  "generated_at": "2026-10-30T05:26:03.465064+00:00",
   "total": 88,
   "packages": [
     {
@@ -1040,7 +1040,7 @@
     },
     {
       "package": "pmcli",
-      "version": "0.1.0",
+      "version": "0.2.5",
       "maintainer": "Djunekz <gab288.gab288@passinbox.com>",
       "description": "Terminal-based project manager CLI",
       "homepage": "https://github.com/djunekz/pmcli",
@@ -1049,8 +1049,8 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/pmcli/archive/refs/tags/v${TERMUX_PKG_VERSION}.tar.gz",
-      "sha256": "b2e24af39111a75eacfdd195950423108c6c01b5caeed923a904b835a572dc53",
-      "recipe_sha256": "34acc2e0d5ebafe37157b2406ca9c0867702bc00cd4bb4d96f2ce2ed994e3e2d",
+      "sha256": "3727d34028be004377ccde30260af1b021b960db42ee43964f350cc39d904f79",
+      "recipe_sha256": "d095d52e5976d3834cbb5711f04463389d5e961affe17ed60b84022bb6fb3ab1",
       "platform_independent": false,
       "depends": [
         "rust",
