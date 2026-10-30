@@ -49,7 +49,7 @@ and this project adheres to semantic versioning.
 - `packages/pnpm` - `termux_step_make_install()` now creates `$TERMUX_PREFIX/lib/node_modules` before copying, so it no longer fails with `cp: cannot create directory '.../lib/node_modules/pnpm': No such file or directory` when the directory does not exist yet
 
 ### Update
-- Package `termux-sync` v1.2.8 → v1.3.0
+- Package `termux-sync` v1.2.8 → v1.3.5
 - Package `uv` v0.13.4 → v0.13.6
 - Package `infoooze` v1.1.9 → v1.2.2
 - Package `pnpm` v12.14.0 → v12.16.1
