@@ -133,15 +133,15 @@ SHA256: 0cfc0dd8b75ef4b36a2edbd486712ad448c2a83e9f704f9fcd71da3df2c0f12b
 Description: A package manager for the web
 
 Package: broot
-Version: 1.61.0
+Version: 1.62.0
 Architecture: aarch64
 Maintainer: @termux-app-store
 Installed-Size: 
-Filename: pool/main/broot_1.61.0_aarch64.deb
-Size: 4424952
-MD5sum: 5483b84249b3fbf1f6fad8bbcf8a9366
-SHA1: ade095006f5d0892ac4b86233d2b2334f0f77f41
-SHA256: 03aca7f0484823453a652c45921ba2d1958df554e30e11dce7a442a914207085
+Filename: pool/main/broot_1.62.0_aarch64.deb
+Size: 4429760
+MD5sum: a3644aca956030b0be5a96b9e09c219a
+SHA1: c472f6c8a2b6bb365766d9ce094df45b1aa771cb
+SHA256: c591ce800174f5f1558e67366e022635e08cd415321c72c0867116e08b8ecb33
 Description: A new way to see and navigate directory trees : https://dystroy.org/broot
 
 Package: brutespray
@@ -1094,4 +1094,3 @@ MD5sum: 0c07070c6fa1b3416202888f7f45b207
 SHA1: aa8c740dfb5fc0cb1e0bb5adba2e186b47368d49
 SHA256: 9f2136bb79a2a5324f1725fddf02c83d4867841cbc193d9d6f31f3f11ec89a07
 Description: Encrypter Stealth Binary Builder
-

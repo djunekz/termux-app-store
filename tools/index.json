@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-11-01T05:00:00.951147+00:00",
+  "generated_at": "2026-11-01T17:53:57.706445+00:00",
   "total": 88,
   "packages": [
     {
@@ -265,7 +265,7 @@
     },
     {
       "package": "broot",
-      "version": "1.61.0",
+      "version": "1.62.0",
       "maintainer": "@termux-app-store",
       "description": "A new way to see and navigate directory trees : https://dystroy.org/broot",
       "homepage": "https://github.com/Canop/broot",
@@ -273,15 +273,15 @@
       "download_size": "Unknown",
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
-      "srcurl": "https://github.com/Canop/broot/archive/refs/tags/v1.61.0.tar.gz",
-      "sha256": "458f1be5d78fe3b062618e9b1dbc32cf53171b0ca0769b3f32dfae65e753c264",
-      "recipe_sha256": "6cbca33ef01390544d6186d5ffa3dc3d439711d75e43c06cc784582a75b53dc6",
+      "srcurl": "https://github.com/Canop/broot/archive/refs/tags/v1.62.0.tar.gz",
+      "sha256": "7c3445a6eef45fe67fe2e1f4e0e1f9dca796237d6303615e31b07798cc1716ba",
+      "recipe_sha256": "ffd238fb51cf179204336b19651787fcb2876a92802fe4c1ef84df3e62904836",
       "platform_independent": false,
       "depends": [
         "rust"
       ],
       "sha256_by_arch": {
-        "aarch64": "03aca7f0484823453a652c45921ba2d1958df554e30e11dce7a442a914207085"
+        "aarch64": "c591ce800174f5f1558e67366e022635e08cd415321c72c0867116e08b8ecb33"
       }
     },
     {
