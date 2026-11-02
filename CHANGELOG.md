@@ -41,6 +41,38 @@ and this project adheres to semantic versioning.
 - Python sources and tests - import order fixed, unused f-string prefixes removed and the code formatted with `ruff format` (31 files); behaviour is unchanged and all 352 tests pass
 - `INSTALL.md` - "Running from Source" now installs the dev extra, runs `make test` and points to `.env.example` and `uv.lock`
 - Package `unmineable` v0.1.5 - Updated metadata
+- Package `auxscan` v0.0.0+4551c2f - Updated metadata
+- Package `clickjacking-tester` v0.0.0+d75d5fc - Updated metadata
+- Package `cloudflair` v0.0.0+13e3d80 - Updated metadata
+- Package `cmseek` v1.1.3 - Updated metadata
+- Package `cmsmap` v0.0.0+59dd0e2 - Updated metadata
+- Package `commix` v4.1 - Updated metadata
+- Package `crowbar` v4.2 - Updated metadata
+- Package `cupp` v0.0.0+b77f1ae - Updated metadata
+- Package `djangohunter` v0.0.0+a5a715e - Updated metadata
+- Package `dnsrecon` v1.6.3 - Updated metadata
+- Package `elpscrk` v0.0.0+53caddb - Updated metadata
+- Package `eternal-scanner` v2.2 - Updated metadata
+- Package `goblinwordgenerator` v0.0.0+6afad56 - Updated metadata
+- Package `holehe` v0.0.0+14da70f - Updated metadata
+- Package `hunner` v0.0.0+5e46a45 - Updated metadata
+- Package `instareporter` v0.0.0+c8e1527 - Updated metadata
+- Package `ipgeolocation` v2.0.4 - Updated metadata
+- Package `killchain` v0.0.0+fef616f - Updated metadata
+- Package `lazymux` v0.0.0+3b4e747 - Updated metadata
+- Package `myserver` v1.0 - Updated metadata
+- Package `orchat` v1.4.6 - Updated metadata
+- Package `parsero` v0.0.0+e5b585a - Updated metadata
+- Package `photon` v1.3.0 - Updated metadata
+- Package `ssrfmap` v0.0.0+290e07d - Updated metadata
+- Package `sublist3r` v1.1 - Updated metadata
+- Package `termux-sync` v1.3.5 - Updated metadata
+- Package `termux-tui` v2.9.5 - Updated metadata
+- Package `tui-info` v1.0.0 - Updated metadata
+- Package `tui-notes` v1.0.0 - Updated metadata
+- Package `xeuledoc` v0.0.0+8a500d1 - Updated metadata
+- Package `xsstrike` v3.1.6 - Updated metadata
+- Package `zorabuilder` v1.0.0 - Updated metadata
 
 ### Fixed
 - `build-package.sh` - a failed `pkg install` of `TERMUX_PKG_DEPENDS` was only a warning, so the build carried on without the toolchain and died later with `cargo: command not found`, `go: command not found` or `npm: command not found`; the build now stops with a `FATAL` message naming the missing dependencies once all retries are used (workflow run #136: `aichat` v0.30.0, `brutespray` v2.7.2 and `pnpm` v12.14.0)
