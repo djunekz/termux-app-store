@@ -56,6 +56,7 @@ and this project adheres to semantic versioning.
 - Package `unmineable` v0.1.0 → v0.1.5
 - Package `pmcli` v0.1.0 → v0.2.5
 - Package `broot` v1.61.0 → v1.62.0
+- Package `dust` v1.2.6 → v1.2.7
 
 ### Removed
 - Package `dumpzilla` - Removed
