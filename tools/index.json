@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-11-01T17:53:57.706445+00:00",
+  "generated_at": "2026-11-02T05:39:03.396200+00:00",
   "total": 88,
   "packages": [
     {
@@ -632,7 +632,7 @@
     },
     {
       "package": "dust",
-      "version": "1.2.6",
+      "version": "1.2.7",
       "maintainer": "@termux-app-store",
       "description": "A more intuitive version of du in rust",
       "homepage": "https://github.com/bootandy/dust",
@@ -640,15 +640,15 @@
       "download_size": "Unknown",
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
-      "srcurl": "https://github.com/bootandy/dust/archive/refs/tags/v1.2.6.tar.gz",
-      "sha256": "9dd1ec7576d43574e6f48342cb96a5087338b4c308460a848f5895f72ddc3bc9",
-      "recipe_sha256": "d899a8b393a7ed0b748be682da307b30e1f95d88e2bd40834519b4732a689a52",
+      "srcurl": "https://github.com/bootandy/dust/archive/refs/tags/v1.2.7.tar.gz",
+      "sha256": "923a2eed637d2ea5f4ad5f820b6f87cc6e0081cfa4bc5ed1fe09278dd74db963",
+      "recipe_sha256": "b9aa93c0b3c3bf24dcc66ae0800155badaf84fc57e5d99c64a7a1e4bf27c6e93",
       "platform_independent": false,
       "depends": [
         "rust"
       ],
       "sha256_by_arch": {
-        "aarch64": "6f3a30f858b5e72737e9c0098cd5550c33769062608c773c80ac3cf47a5e6358"
+        "aarch64": "0c6ac0ffd91fd793596bc128b81ad14d41ef4b723d03e443c407cb47d722fab4"
       }
     },
     {

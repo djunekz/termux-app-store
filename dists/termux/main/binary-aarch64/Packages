@@ -325,15 +325,15 @@ SHA256: de82da37be819e35af85015520cd771d3c1d2b75bb6cc76b387b00969d40e1a2
 Description: dumpzilla packaging for Kali Linux
 
 Package: dust
-Version: 1.2.6
+Version: 1.2.7
 Architecture: aarch64
 Maintainer: @termux-app-store
 Installed-Size: 
-Filename: pool/main/dust_1.2.6_aarch64.deb
-Size: 769456
-MD5sum: 7c0ee9fa2a18deff8a00f716b0ca0bc1
-SHA1: 08431e80d8c5358e15cbcfa23003ad43350cba28
-SHA256: 6f3a30f858b5e72737e9c0098cd5550c33769062608c773c80ac3cf47a5e6358
+Filename: pool/main/dust_1.2.7_aarch64.deb
+Size: 768960
+MD5sum: 35bb25acd5b26a44458a4df5b5c3eb8a
+SHA1: 3ff53cfb735cac112b84ce9d6a117039b82ef5ae
+SHA256: 0c6ac0ffd91fd793596bc128b81ad14d41ef4b723d03e443c407cb47d722fab4
 Description: A more intuitive version of du in rust
 
 Package: elpscrk
@@ -1094,4 +1094,3 @@ MD5sum: 0c07070c6fa1b3416202888f7f45b207
 SHA1: aa8c740dfb5fc0cb1e0bb5adba2e186b47368d49
 SHA256: 9f2136bb79a2a5324f1725fddf02c83d4867841cbc193d9d6f31f3f11ec89a07
 Description: Encrypter Stealth Binary Builder
-
