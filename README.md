@@ -7,6 +7,7 @@
 > Read in: 🇮🇩 **[Bahasa Indonesia](README.id.md)** | 🇹🇭 **[ภาษาไทย](README.th.md)** | 🇯🇵 **[日本語](README.jp.md)** | 🇨🇳 **[中文](README.ch.md)** | 🇻🇳 **[Tiếng Việt](README.vi.md)** | 🇮🇳 **[हिन्दी](README.in.md)**
 
 [![CI](https://github.com/djunekz/termux-app-store/actions/workflows/build.yml/badge.svg)](https://github.com/djunekz/termux-app-store/actions)
+[![Build Termux Repository](https://github.com/djunekz/termux-app-store/actions/workflows/build-termux-repo.yml/badge.svg?branch=master)](https://github.com/djunekz/termux-app-store/actions/workflows/build-termux-repo.yml)
 [![Auto Update Packages](https://github.com/djunekz/termux-app-store/actions/workflows/auto-update-packages.yml/badge.svg)](https://github.com/djunekz/termux-app-store/actions/workflows/auto-update-packages.yml)
 [![CodeQL Advanced](https://github.com/djunekz/termux-app-store/actions/workflows/codeql.yml/badge.svg)](https://github.com/djunekz/termux-app-store/actions/workflows/codeql.yml)<br>
 [![PyPI](https://img.shields.io/pypi/v/termux-app-store?style=flat&logo=pypi&color=3fb950&label=pypi)](https://pypi.org/project/termux-app-store/)
