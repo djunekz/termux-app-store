@@ -5,5 +5,5 @@ TERMUX_PKG_MAINTAINER="@termux-app-store"
 TERMUX_PKG_VERSION=1.0.0
 TERMUX_PKG_SRCURL=https://github.com/djunekz/archive/releases/download/v${TERMUX_PKG_VERSION}/zorabuilder
 TERMUX_PKG_SHA256=e455fd0af70ad3985f83dbfccb45af92036fa67cf1bfb09c713de0333be01918
-TERMUX_PKG_DEPENDS="python, binutils-is-llvm"
+TERMUX_PKG_DEPENDS="python, binutils"
 TERMUX_PKG_BUILD_IN_SRC=true

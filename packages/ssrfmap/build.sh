@@ -6,7 +6,7 @@ TERMUX_PKG_VERSION=0.0.0+290e07d
 TERMUX_PKG_SRCURL=https://github.com/swisskyrepo/SSRFmap/archive/290e07d75c52d68e021b6d0b4200c2a41ea20365.tar.gz
 TERMUX_PKG_SHA256=f4d01953a07d64b5ad8e96aefb22d984518c2a43f5ecd71efbd034194660bfff
 
-TERMUX_PKG_DEPENDS="python, python-pip, python-setuptools"
+TERMUX_PKG_DEPENDS="python, python-pip"
 TERMUX_PKG_BUILD_IN_SRC=true
 
 termux_step_make_install() {

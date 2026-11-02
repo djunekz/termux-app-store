@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-11-02T05:39:03.396200+00:00",
+  "generated_at": "2026-11-02T17:26:16.118935+00:00",
   "total": 88,
   "packages": [
     {
@@ -76,12 +76,11 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/Gameye98/Auxscan/archive/4551c2f418070217a33297bdd981d6fddf1a6492.tar.gz",
       "sha256": "44c08fa9d4e2d1b2d8bb5bac1118f5915ff801b58d93716214172d859144e11f",
-      "recipe_sha256": "78ebf132b93987a733bd491da329a2c57b515a549f90530a37aa31b58834cc4a",
+      "recipe_sha256": "74e0fd2106eb76cbc6f87cac206a6b3d989f7804830604e9f28a4f4cf02b39fa",
       "platform_independent": false,
       "depends": [
         "python",
-        "python-pip",
-        "python-setuptools"
+        "python-pip"
       ]
     },
     {
@@ -254,12 +253,11 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/D4Vinci/Clickjacking-Tester/archive/d75d5fcc62cef0031db9493b30911cd70c9bd606.tar.gz",
       "sha256": "295aac00657fc24152d67a8c9c3766b24381de5f696f18631aa5b4ce6086336b",
-      "recipe_sha256": "8c086d14cc0c1eef6c0d31c4b4cd92419181202d21812f4924d660a3b5bcbd97",
+      "recipe_sha256": "c6ada0021c2989d3dd7579fcc4a4c107abaa2168ac7d460e84aaa2bfab33d839",
       "platform_independent": false,
       "depends": [
         "python",
-        "python-pip",
-        "python-setuptools"
+        "python-pip"
       ]
     },
     {
@@ -274,12 +272,11 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/christophetd/CloudFlair/archive/13e3d806e6e730412a2f73b46f34d8a5677b163c.tar.gz",
       "sha256": "1b17f9ce64f0af6fecdbede5c3621052537d720137cdd97b5aeed115a535e7dc",
-      "recipe_sha256": "862b25f5d5ce7538b5946e3cd590720181a6392868e79491c344e4b235a72cbb",
+      "recipe_sha256": "7ae58ab1e73e33463691aea4582f9d723c651f390bd54975fc76ca7eefb94248",
       "platform_independent": false,
       "depends": [
         "python",
-        "python-pip",
-        "python-setuptools"
+        "python-pip"
       ]
     },
     {
@@ -294,12 +291,11 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/Tuhinshubhra/CMSeeK/archive/refs/tags/v.1.1.3.tar.gz",
       "sha256": "2e7562c7d9e131cc0a3623922df92fbfd98dd8e8e6b0321002c4fd5e06531249",
-      "recipe_sha256": "2bfb229082acf37cc373daefdb130734c485522f7c3a04d486100f4db0f79ae7",
+      "recipe_sha256": "06e33ff4ba9db08febbdc515608f9f2529cae95d5fd41760d46b09c3e07e1749",
       "platform_independent": false,
       "depends": [
         "python",
-        "python-pip",
-        "python-setuptools"
+        "python-pip"
       ]
     },
     {
@@ -314,12 +310,11 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/Dionach/CMSmap/archive/59dd0e2b3b0c751c6da2b0565374ab83c736b0e6.tar.gz",
       "sha256": "37644d93c791528c83f069a8c9fee78ebba0527ef1cf35b5752aa5037561fbc2",
-      "recipe_sha256": "dd9b3a291fc62c4addba37416ea5def00b3d6c784b2e3d7928295106642e2f79",
+      "recipe_sha256": "9b5f577828c6282a22df70284f7440097070d006316c928a00fbfc742e9634d8",
       "platform_independent": false,
       "depends": [
         "python",
-        "python-pip",
-        "python-setuptools"
+        "python-pip"
       ]
     },
     {
@@ -334,12 +329,11 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/commixproject/commix/archive/refs/tags/v4.1.tar.gz",
       "sha256": "d71e6a98231c2eb434eb9cc1b835523ad5618578309e2f835c40d767f2af79de",
-      "recipe_sha256": "3a570e6300bb90d59d231fdc0868569e4206125b661ba9184c83825803350f51",
+      "recipe_sha256": "1e755df02af5489b3091106cd71effd6d7cf12095e82d10d72a4b7308682176b",
       "platform_independent": false,
       "depends": [
         "python",
-        "python-pip",
-        "python-setuptools"
+        "python-pip"
       ]
     },
     {
@@ -354,12 +348,11 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/galkan/crowbar/archive/refs/tags/v4.2.tar.gz",
       "sha256": "b65cd4c39e50a4311d075f9c219b2ebb7ba06a48f8e4e5cb0082d48412bcb23d",
-      "recipe_sha256": "a51bc470882edb6a7ac93e9515446319e6247d4cf6c48e2d73af436e3f34af9c",
+      "recipe_sha256": "8a26779a719603e4a1c6a1348ec5f5677ef20458750085a2ab5f8126c105b499",
       "platform_independent": false,
       "depends": [
         "python",
-        "python-pip",
-        "python-setuptools"
+        "python-pip"
       ]
     },
     {
@@ -374,12 +367,11 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/Mebus/cupp/archive/b77f1ae66c10ab2d0fa09c67017949fb5ba187aa.tar.gz",
       "sha256": "2b88e3df1af6df952dfe6b08d151fe017f527388e35dd44940b4e6bcfc16d918",
-      "recipe_sha256": "44d71ffd4f3f24bc1c48e6ce94ac6326f72765f7a30535fe60122c6c2bce77c1",
+      "recipe_sha256": "3111f19bcb60a9021b1f0d81908afba6bea0b7837fc2fb8bb3cfa2cdac488444",
       "platform_independent": false,
       "depends": [
         "python",
-        "python-pip",
-        "python-setuptools"
+        "python-pip"
       ]
     },
     {
@@ -434,12 +426,11 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/6IX7ine/djangohunter/archive/a5a715ee393f463dddf48d1b893eaaede241c58a.tar.gz",
       "sha256": "1d753e468b7acb3c856079a0316c6c001cf23e36d57134caadb33dbf81ee7ada",
-      "recipe_sha256": "ae8e499762d9a5724ff953737d8a1b2d13b170dba5cbd497825698eb233739e9",
+      "recipe_sha256": "59db48e0226593f1f4d27990b9a6d1b395a684017f7f6207420ac4426e5b698e",
       "platform_independent": false,
       "depends": [
         "python",
-        "python-pip",
-        "python-setuptools"
+        "python-pip"
       ]
     },
     {
@@ -469,12 +460,11 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/darkoperator/dnsrecon/archive/refs/tags/1.6.3.tar.gz",
       "sha256": "7f7e230bb3fae959ff37ac19d1c1deea25089ac6a1bbbbf3b4e26e78ed96bd7a",
-      "recipe_sha256": "50ce12dabb8992a8e7bf5406f2d10fd6f0f7ba55a5f32925acd2bcf9ae9b6949",
+      "recipe_sha256": "fcbbcf5e08882566705e853d9c4e4adc04dfd2171eb6e3141a7fce8d0cca184a",
       "platform_independent": false,
       "depends": [
         "python",
-        "python-pip",
-        "python-setuptools"
+        "python-pip"
       ]
     },
     {
@@ -525,12 +515,11 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/D4Vinci/elpscrk/archive/53caddb29512e7c7f06768ef6c9669788ee08e2b.tar.gz",
       "sha256": "42661eb304d50b8b8036d74b187d790940fc70568abe74b80fc4597454ef634a",
-      "recipe_sha256": "1a5e7a5fc7fd4d98959fbcbaba67f458f05e38d88d76e1e6da0aac947310c774",
+      "recipe_sha256": "767da5b1d728a02d04c36a8565aade9488ece3d430d27987f576293f15515f7a",
       "platform_independent": false,
       "depends": [
         "python",
         "python-pip",
-        "python-setuptools",
         "python-psutil"
       ]
     },
@@ -561,12 +550,11 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/peterpt/eternal_scanner/archive/refs/tags/2.2.tar.gz",
       "sha256": "104bf52263192824556afbe5aa061b888310dd8de2afc0ee520d456595db884b",
-      "recipe_sha256": "d5aa69b514bf70f33902f5abefe6a482a6fbde606b37cec24c765fe0562bb793",
+      "recipe_sha256": "31e6cdb23ea5796265b543609d4402af77d8649126fb968283163454c662ab3c",
       "platform_independent": false,
       "depends": [
         "python",
-        "python-pip",
-        "python-setuptools"
+        "python-pip"
       ]
     },
     {
@@ -665,12 +653,11 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/UndeadSec/GoblinWordGenerator/archive/6afad5658e7bda00441428efeb0ae35cc4397302.tar.gz",
       "sha256": "f5a51887f2551e533bc3ab495bf95d9d4b1d16394cb8a5298e8389d7cd192e61",
-      "recipe_sha256": "2f28028efabe142311936e065347f31bd79e299125a490742529a7847e68ea79",
+      "recipe_sha256": "5bbadc49fa7ccd57ec67ed329a2598bd732371cfb01e72f7d227a570c10a156a",
       "platform_independent": false,
       "depends": [
         "python",
-        "python-pip",
-        "python-setuptools"
+        "python-pip"
       ]
     },
     {
@@ -722,12 +709,11 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/megadose/holehe/archive/14da70f588538936b20d238783c5e28a0772a2b3.tar.gz",
       "sha256": "4a69a7c7d5e65bc66f0bf990b3fdeae258074665359f7b6c3b3c12965ed69891",
-      "recipe_sha256": "418d3291ce9d1c883c22659721078fa07f00df858b48081d52ed31614d9372e4",
+      "recipe_sha256": "1a1d3e6b7e72a773151d6595454884233453095d362e607f816d1a7d622dcfbc",
       "platform_independent": false,
       "depends": [
         "python",
-        "python-pip",
-        "python-setuptools"
+        "python-pip"
       ]
     },
     {
@@ -757,12 +743,11 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/b3-v3r/Hunner/archive/5e46a4532469df816e0a4329671cb76fb1300d74.tar.gz",
       "sha256": "e6f6ebfae6e0c442fb4d6c489c72b9d446fc2e87d08e9acc5a6a3b5d5151c278",
-      "recipe_sha256": "0aea33eb8a15c515fe0e13d678c6e0744be888edba2d0093afe27a244884259c",
+      "recipe_sha256": "76ab549252da7c9bc86b83103122a0c5d3a8827896e01071befdc2afeec46a5b",
       "platform_independent": false,
       "depends": [
         "python",
-        "python-pip",
-        "python-setuptools"
+        "python-pip"
       ]
     },
     {
@@ -813,12 +798,11 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/muneebwanee/InstaReporter/archive/c8e15277c0481f2cefa339b03818c412c0ab3186.tar.gz",
       "sha256": "d0f3a77fd24ff76e72d3274104d4993f687fbc6f4117754e6ce1ff121372921f",
-      "recipe_sha256": "37c3f06313bca93861a817278821be76f36f2b6c5db4778b264415450e5dd915",
+      "recipe_sha256": "a34d7d8d95414223a4a6ba674ecf7db3d2730219dd3c91437a05f6a5d3272f4f",
       "platform_independent": false,
       "depends": [
         "python",
-        "python-pip",
-        "python-setuptools"
+        "python-pip"
       ]
     },
     {
@@ -848,12 +832,11 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/maldevel/IPGeoLocation/archive/refs/tags/2.0.4.tar.gz",
       "sha256": "fabc086113f89f9e8fe1ed7fbfec776780d43df63c67401c48b8f36948fa9ecb",
-      "recipe_sha256": "5d4ed0545e2ae13f281d9b9d4a0986df7d704de347d2ff7dd2ab75e8c722cbde",
+      "recipe_sha256": "ce6e53d9a71490a671b77725b0a583ab4e72345289d456151527a6b8afedd2f5",
       "platform_independent": false,
       "depends": [
         "python",
-        "python-pip",
-        "python-setuptools"
+        "python-pip"
       ]
     },
     {
@@ -868,12 +851,11 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/ruped24/killchain/archive/fef616f66ae18b9855cdd7f58a586551fcd3cdcb.tar.gz",
       "sha256": "c6b0bd9887ca2bb9ded7084ec7a3e907d5625c272de1df6db92789461323c609",
-      "recipe_sha256": "4eb5634f585fa16d97a78b05a39fa154a322d769362de274746ea30674bc5190",
+      "recipe_sha256": "eefafe6ea3b53e5d95f19b6da148df8bc2f5051839fd838ccf07097f0d620135",
       "platform_independent": false,
       "depends": [
         "python",
-        "python-pip",
-        "python-setuptools"
+        "python-pip"
       ]
     },
     {
@@ -903,13 +885,11 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/Gameye98/Lazymux/archive/3b4e747e1bdd10f1240f78018ac8ee6fff6d0379.tar.gz",
       "sha256": "d30e4ee4e6490b2e6fa288a03f3120426d6bdea53c0f7a04f7d7ec7815e8a5e0",
-      "recipe_sha256": "f915bc730d30a9323a4e5517c2eaba567a40a1851a81f3e5af66d43ac9ecb53c",
+      "recipe_sha256": "46f6a578048341866a3233a21ce3829340baa683f6e987f73ec18093884a916a",
       "platform_independent": false,
       "depends": [
         "python",
-        "python-core",
-        "python-pip",
-        "python-setuptools"
+        "python-pip"
       ]
     },
     {
@@ -954,13 +934,12 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/Rajkumrdusad/MyServer/archive/refs/tags/v1.0.tar.gz",
       "sha256": "5203c0be0eb9e689c93e45c700555c2dfe4623a3eca17a230a4a404a87f4253a",
-      "recipe_sha256": "a000b898ad0851bb06d8742c4d4d5d828125d72e6d4bd30d69289720802f866b",
+      "recipe_sha256": "dbab24a7a26797981e13292af1f5dce876d348c7c52146854a9b324af4c0f508",
       "platform_independent": false,
       "depends": [
         "php",
         "python",
-        "python-pip",
-        "python-setuptools"
+        "python-pip"
       ]
     },
     {
@@ -975,12 +954,11 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/oop7/OrChat/archive/refs/tags/v1.4.6.tar.gz",
       "sha256": "fbe070754e2d66c3f724e496241975f0cd4e209c7c590cca395c38cabd3b65ae",
-      "recipe_sha256": "38ee97a5b570048ce1c90dae660b763e7d39d3c851ed91f454f44d7dc0dd70b1",
+      "recipe_sha256": "faeb6c9d72a4fe96b903be640b7e0016204a638fcf1b1e652bbc2021b75e4d38",
       "platform_independent": false,
       "depends": [
         "python",
-        "python-pip",
-        "python-setuptools"
+        "python-pip"
       ]
     },
     {
@@ -1010,12 +988,11 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/behindthefirewalls/Parsero/archive/e5b585a19b79426975a825cafa4cc8a353cd267e.tar.gz",
       "sha256": "1780ddf21a5e51ef192529e108be10d516df7ad3a6822676b49abe36415259ef",
-      "recipe_sha256": "e78f4982ab81ef19007ac617935a36c462dd08415f2d469c716938dc382e7b2e",
+      "recipe_sha256": "afe6d47dee843cb2dc975b6ab50c65044677d553d1416704693b30415111931f",
       "platform_independent": false,
       "depends": [
         "python",
-        "python-pip",
-        "python-setuptools"
+        "python-pip"
       ]
     },
     {
@@ -1030,12 +1007,11 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/s0md3v/Photon/archive/refs/tags/v1.3.0.tar.gz",
       "sha256": "99a8bc0f52b46a37acd8e0877ea4231ea7b3d9f8b603c90c6641837117d7666f",
-      "recipe_sha256": "5510ab710d41abe1c0c5b84423c1b9b0c11288cbd198960a7c0b580fe34ef03e",
+      "recipe_sha256": "4b0b45da2a5eacebe06c51fae1fd563f0e0714d6ccc9465e358b35712995635f",
       "platform_independent": false,
       "depends": [
         "python",
-        "python-pip",
-        "python-setuptools"
+        "python-pip"
       ]
     },
     {
@@ -1124,12 +1100,11 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/swisskyrepo/SSRFmap/archive/290e07d75c52d68e021b6d0b4200c2a41ea20365.tar.gz",
       "sha256": "f4d01953a07d64b5ad8e96aefb22d984518c2a43f5ecd71efbd034194660bfff",
-      "recipe_sha256": "173ed2f63ab8da8a20cfb208919a690d91fe9a3dc04dd770a368eaa6348e4a00",
+      "recipe_sha256": "c1408b0ae5135976034ecb0342e96437fbdc84d06e6563741f52345dd6e5cad9",
       "platform_independent": false,
       "depends": [
         "python",
-        "python-pip",
-        "python-setuptools"
+        "python-pip"
       ]
     },
     {
@@ -1144,12 +1119,11 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/aboul3la/Sublist3r/archive/refs/tags/1.1.tar.gz",
       "sha256": "7bb915954bb0db9a8f0a3be2a38bc77e932174be5e8d02c7d5dd4bc56ec30195",
-      "recipe_sha256": "5199f40b4a0c333a6934e30b55d83af22515322ccac070bedd1875de5e1fe342",
+      "recipe_sha256": "ce39b52f85631bb1e2d2b7ec7bd2e25abc3ff1a4de01e31f4e0645e1551460f6",
       "platform_independent": false,
       "depends": [
         "python",
-        "python-pip",
-        "python-setuptools"
+        "python-pip"
       ]
     },
     {
@@ -1259,13 +1233,12 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/termux-sync/archive/refs/tags/v${TERMUX_PKG_VERSION}.tar.gz",
       "sha256": "cc690be7b2be536445f069da8c3f583394c886a7a90865c44300459ef209c3ce",
-      "recipe_sha256": "998a823ea70b898125bd10fead8213bd3140f4ca03e0277851bc1f3cf61fc9c6",
+      "recipe_sha256": "8f3ecf0cc21463dd19da6ec0b9163d763820967cc52179ae9b7412f0555f4a15",
       "platform_independent": false,
       "depends": [
         "git",
         "python",
-        "python-pip",
-        "python-setuptools"
+        "python-pip"
       ]
     },
     {
@@ -1280,12 +1253,11 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/opsonusdh/Termux-TUI/archive/refs/tags/v${TERMUX_PKG_VERSION}.zip",
       "sha256": "ae189b47863f724ccddf8ea77de7707a1840a94d613658d5c90b988c13b4adba",
-      "recipe_sha256": "a001f0e00037f9bb58683e7b8dc23bdcf95d242b0c2433298dcb24b52084435e",
+      "recipe_sha256": "2cb682ba344a79f788d02d9c380a7a1062cf825f728e41ad150b790836e0576d",
       "platform_independent": false,
       "depends": [
         "python",
         "python-pip",
-        "python-setuptools",
         "python-yt-dlp"
       ]
     },
@@ -1378,11 +1350,11 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/enrilinux/tui-info/archive/refs/tags/1.0.0.tar.gz",
       "sha256": "093866eb613a800427995ba02cb8637a9df3f2a5aff256236f38a8664e0c2a1d",
-      "recipe_sha256": "1c91e5fb62a3b31b07391eebc662d0beac1d7e798df6b47f469c4d173479019f",
+      "recipe_sha256": "c604a031d642671b3ce5d4369424ab0a7abb55780c049b0321c39d119472be09",
       "platform_independent": false,
       "depends": [
         "ncurses",
-        "gcc",
+        "clang",
         "make"
       ]
     },
@@ -1398,12 +1370,12 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/enrilinux/tui-notes/archive/refs/tags/1.0.0.tar.gz",
       "sha256": "4591bc692ab043aba3f458e050e1aed8a569ca50f82f61e7660cd43254413108",
-      "recipe_sha256": "146b4cdadfada597a737cdd48b32db60412952b9ccc90a3be6968eb23b8032ae",
+      "recipe_sha256": "506fd20b001ca4648ae687e82cdf06046e5cae234fc00a18229504ed426fc9e4",
       "platform_independent": false,
       "depends": [
         "ncurses",
         "nano",
-        "gcc",
+        "clang",
         "make"
       ]
     },
@@ -1542,12 +1514,11 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/Malfrats/xeuledoc/archive/8a500d1cd385d79b33a0defc7cfa8d10832b364b.tar.gz",
       "sha256": "a35c3d5b6b29eb588491d9abeae9f15d3a7248ef22df119eb5a46e0cfb131a24",
-      "recipe_sha256": "f3638baee264825714add0815ef9290f0ec22086b74336eee0921fd1c487f7f7",
+      "recipe_sha256": "0f6ab6b30fa07f6ac4b476cb359afb5c489dc3c23cb084386b7eaa5919b829aa",
       "platform_independent": false,
       "depends": [
         "python",
-        "python-pip",
-        "python-setuptools"
+        "python-pip"
       ]
     },
     {
@@ -1562,12 +1533,11 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/s0md3v/XSStrike/archive/refs/tags/3.1.6.tar.gz",
       "sha256": "d8c6c2f4dbcee5836d552cc193cad4b6dfa6c9a9471680d5d2f2b3d278b021f2",
-      "recipe_sha256": "7bb49850aa9b44f7af6f1ece629cf56b820858a7a54ed969e2452eb1b6a796ca",
+      "recipe_sha256": "465fbff8fdcc719d34770912d79b04536c4df40fa912c7f20c1e38cf36301cf5",
       "platform_independent": false,
       "depends": [
         "python",
-        "python-pip",
-        "python-setuptools"
+        "python-pip"
       ]
     },
     {
@@ -1627,11 +1597,11 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/archive/releases/download/v${TERMUX_PKG_VERSION}/zorabuilder",
       "sha256": "e455fd0af70ad3985f83dbfccb45af92036fa67cf1bfb09c713de0333be01918",
-      "recipe_sha256": "32ea2b1b53a5da0cd6a32102ca4756d5614263c82216063997487d6284766539",
+      "recipe_sha256": "32e9b37f034a7956a8d1955679a8508bc594e70c30ecb7e297e2b2f81327c42d",
       "platform_independent": false,
       "depends": [
         "python",
-        "binutils-is-llvm"
+        "binutils"
       ]
     },
     {

@@ -134,8 +134,7 @@ map_python_dep() {
         ninja)          echo "pkg:ninja" ;;
         automake)       echo "pkg:automake" ;;
         autoconf)       echo "pkg:autoconf" ;;
-        python-setuptools) echo "pkg:python-setuptools" ;;
-        python-wheel)   echo "pkg:python-wheel" ;;
+        python-wheel)   echo "pip:wheel" ;;
         python-psutil)  echo "pkg:python-psutil" ;;
         python-pip)     echo "pkg:python-pip" ;;
         openssl)        echo "pkg:openssl" ;;
@@ -1420,7 +1419,7 @@ fi
 case "$INSTALL_METHOD" in
     pip|python-script)
         ALL_DEPS="$DEPS_DECLARED $DEPS_IMPORTS ${DEPS_SHELL_PKGS:-}"
-        PKG_ONLY_DEPS=$(pkg_deps "pkg:python pkg:python-pip pkg:python-setuptools $ALL_DEPS")
+        PKG_ONLY_DEPS=$(pkg_deps "pkg:python pkg:python-pip $ALL_DEPS")
         PIP_ONLY_DEPS=$(pip_deps "$ALL_DEPS") ;;
     cargo)      ALL_DEPS="rust" ;;
     go)         ALL_DEPS="golang" ;;

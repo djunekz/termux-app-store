@@ -6,7 +6,7 @@ TERMUX_PKG_VERSION=1.6.3
 TERMUX_PKG_SRCURL=https://github.com/darkoperator/dnsrecon/archive/refs/tags/1.6.3.tar.gz
 TERMUX_PKG_SHA256=7f7e230bb3fae959ff37ac19d1c1deea25089ac6a1bbbbf3b4e26e78ed96bd7a
 
-TERMUX_PKG_DEPENDS="python, python-pip, python-setuptools"
+TERMUX_PKG_DEPENDS="python, python-pip"
 TERMUX_PKG_BUILD_IN_SRC=true
 
 termux_step_make_install() {

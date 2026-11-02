@@ -6,7 +6,7 @@ TERMUX_PKG_VERSION=2.0.4
 TERMUX_PKG_SRCURL=https://github.com/maldevel/IPGeoLocation/archive/refs/tags/2.0.4.tar.gz
 TERMUX_PKG_SHA256=fabc086113f89f9e8fe1ed7fbfec776780d43df63c67401c48b8f36948fa9ecb
 
-TERMUX_PKG_DEPENDS="python, python-pip, python-setuptools"
+TERMUX_PKG_DEPENDS="python, python-pip"
 TERMUX_PKG_BUILD_IN_SRC=true
 
 termux_step_make_install() {

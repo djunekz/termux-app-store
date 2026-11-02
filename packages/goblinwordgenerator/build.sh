@@ -6,7 +6,7 @@ TERMUX_PKG_VERSION=0.0.0+6afad56
 TERMUX_PKG_SRCURL=https://github.com/UndeadSec/GoblinWordGenerator/archive/6afad5658e7bda00441428efeb0ae35cc4397302.tar.gz
 TERMUX_PKG_SHA256=f5a51887f2551e533bc3ab495bf95d9d4b1d16394cb8a5298e8389d7cd192e61
 
-TERMUX_PKG_DEPENDS="python, python-pip, python-setuptools"
+TERMUX_PKG_DEPENDS="python, python-pip"
 TERMUX_PKG_BUILD_IN_SRC=true
 
 termux_step_make_install() {

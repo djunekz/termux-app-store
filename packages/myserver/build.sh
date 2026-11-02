@@ -6,7 +6,7 @@ TERMUX_PKG_VERSION=1.0
 TERMUX_PKG_SRCURL=https://github.com/Rajkumrdusad/MyServer/archive/refs/tags/v1.0.tar.gz
 TERMUX_PKG_SHA256=5203c0be0eb9e689c93e45c700555c2dfe4623a3eca17a230a4a404a87f4253a
 
-TERMUX_PKG_DEPENDS="php, python, python-pip, python-setuptools"
+TERMUX_PKG_DEPENDS="php, python, python-pip"
 TERMUX_PKG_BUILD_IN_SRC=true
 
 termux_step_make_install() {

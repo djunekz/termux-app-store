@@ -6,7 +6,7 @@ TERMUX_PKG_VERSION=0.0.0+3b4e747
 TERMUX_PKG_SRCURL=https://github.com/Gameye98/Lazymux/archive/3b4e747e1bdd10f1240f78018ac8ee6fff6d0379.tar.gz
 TERMUX_PKG_SHA256=d30e4ee4e6490b2e6fa288a03f3120426d6bdea53c0f7a04f7d7ec7815e8a5e0
 
-TERMUX_PKG_DEPENDS="python, python-core, python-pip, python-setuptools"
+TERMUX_PKG_DEPENDS="python, python-pip"
 TERMUX_PKG_BUILD_IN_SRC=true
 
 termux_step_make_install() {

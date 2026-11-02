@@ -62,7 +62,6 @@ FORBIDDEN_PATTERNS = [
 KNOWN_PKG_DEPS = {
     "python",
     "python-pip",
-    "python-setuptools",
     "python-wheel",
     "nodejs",
     "npm",

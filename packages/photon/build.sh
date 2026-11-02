@@ -6,7 +6,7 @@ TERMUX_PKG_VERSION=1.3.0
 TERMUX_PKG_SRCURL=https://github.com/s0md3v/Photon/archive/refs/tags/v1.3.0.tar.gz
 TERMUX_PKG_SHA256=99a8bc0f52b46a37acd8e0877ea4231ea7b3d9f8b603c90c6641837117d7666f
 
-TERMUX_PKG_DEPENDS="python, python-pip, python-setuptools"
+TERMUX_PKG_DEPENDS="python, python-pip"
 TERMUX_PKG_BUILD_IN_SRC=true
 
 termux_step_make_install() {

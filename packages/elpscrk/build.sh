@@ -6,7 +6,7 @@ TERMUX_PKG_VERSION=0.0.0+53caddb
 TERMUX_PKG_SRCURL=https://github.com/D4Vinci/elpscrk/archive/53caddb29512e7c7f06768ef6c9669788ee08e2b.tar.gz
 TERMUX_PKG_SHA256=42661eb304d50b8b8036d74b187d790940fc70568abe74b80fc4597454ef634a
 
-TERMUX_PKG_DEPENDS="python, python-pip, python-setuptools, python-psutil"
+TERMUX_PKG_DEPENDS="python, python-pip, python-psutil"
 TERMUX_PKG_BUILD_IN_SRC=true
 
 termux_step_make_install() {

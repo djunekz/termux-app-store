@@ -5,7 +5,7 @@ TERMUX_PKG_MAINTAINER="@enrilinux"
 TERMUX_PKG_VERSION=1.0.0
 TERMUX_PKG_SRCURL=https://github.com/enrilinux/tui-notes/archive/refs/tags/1.0.0.tar.gz
 TERMUX_PKG_SHA256=4591bc692ab043aba3f458e050e1aed8a569ca50f82f61e7660cd43254413108
-TERMUX_PKG_DEPENDS="ncurses, nano, gcc, make"
+TERMUX_PKG_DEPENDS="ncurses, nano, clang, make"
 
 termux_step_make() {
     if [[ ! -f Makefile && ! -f makefile ]]; then

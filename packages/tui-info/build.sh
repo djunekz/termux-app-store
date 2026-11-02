@@ -5,7 +5,7 @@ TERMUX_PKG_MAINTAINER="@enrilinux"
 TERMUX_PKG_VERSION=1.0.0
 TERMUX_PKG_SRCURL=https://github.com/enrilinux/tui-info/archive/refs/tags/1.0.0.tar.gz
 TERMUX_PKG_SHA256=093866eb613a800427995ba02cb8637a9df3f2a5aff256236f38a8664e0c2a1d
-TERMUX_PKG_DEPENDS="ncurses, gcc, make"
+TERMUX_PKG_DEPENDS="ncurses, clang, make"
 
 
 

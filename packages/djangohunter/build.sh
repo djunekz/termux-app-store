@@ -6,7 +6,7 @@ TERMUX_PKG_VERSION=0.0.0+a5a715e
 TERMUX_PKG_SRCURL=https://github.com/6IX7ine/djangohunter/archive/a5a715ee393f463dddf48d1b893eaaede241c58a.tar.gz
 TERMUX_PKG_SHA256=1d753e468b7acb3c856079a0316c6c001cf23e36d57134caadb33dbf81ee7ada
 
-TERMUX_PKG_DEPENDS="python, python-pip, python-setuptools"
+TERMUX_PKG_DEPENDS="python, python-pip"
 TERMUX_PKG_BUILD_IN_SRC=true
 
 termux_step_make_install() {

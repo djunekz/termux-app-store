@@ -6,7 +6,7 @@ TERMUX_PKG_VERSION=0.0.0+8a500d1
 TERMUX_PKG_SRCURL=https://github.com/Malfrats/xeuledoc/archive/8a500d1cd385d79b33a0defc7cfa8d10832b364b.tar.gz
 TERMUX_PKG_SHA256=a35c3d5b6b29eb588491d9abeae9f15d3a7248ef22df119eb5a46e0cfb131a24
 
-TERMUX_PKG_DEPENDS="python, python-pip, python-setuptools"
+TERMUX_PKG_DEPENDS="python, python-pip"
 TERMUX_PKG_BUILD_IN_SRC=true
 
 termux_step_make_install() {

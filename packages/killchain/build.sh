@@ -6,7 +6,7 @@ TERMUX_PKG_VERSION=0.0.0+fef616f
 TERMUX_PKG_SRCURL=https://github.com/ruped24/killchain/archive/fef616f66ae18b9855cdd7f58a586551fcd3cdcb.tar.gz
 TERMUX_PKG_SHA256=c6b0bd9887ca2bb9ded7084ec7a3e907d5625c272de1df6db92789461323c609
 
-TERMUX_PKG_DEPENDS="python, python-pip, python-setuptools"
+TERMUX_PKG_DEPENDS="python, python-pip"
 TERMUX_PKG_BUILD_IN_SRC=true
 
 termux_step_make_install() {

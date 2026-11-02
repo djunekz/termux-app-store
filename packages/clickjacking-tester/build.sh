@@ -6,7 +6,7 @@ TERMUX_PKG_VERSION=0.0.0+d75d5fc
 TERMUX_PKG_SRCURL=https://github.com/D4Vinci/Clickjacking-Tester/archive/d75d5fcc62cef0031db9493b30911cd70c9bd606.tar.gz
 TERMUX_PKG_SHA256=295aac00657fc24152d67a8c9c3766b24381de5f696f18631aa5b4ce6086336b
 
-TERMUX_PKG_DEPENDS="python, python-pip, python-setuptools"
+TERMUX_PKG_DEPENDS="python, python-pip"
 TERMUX_PKG_BUILD_IN_SRC=true
 
 termux_step_make_install() {

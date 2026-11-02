@@ -6,7 +6,7 @@ TERMUX_PKG_VERSION=4.2
 TERMUX_PKG_SRCURL=https://github.com/galkan/crowbar/archive/refs/tags/v4.2.tar.gz
 TERMUX_PKG_SHA256=b65cd4c39e50a4311d075f9c219b2ebb7ba06a48f8e4e5cb0082d48412bcb23d
 
-TERMUX_PKG_DEPENDS="python, python-pip, python-setuptools"
+TERMUX_PKG_DEPENDS="python, python-pip"
 TERMUX_PKG_BUILD_IN_SRC=true
 
 termux_step_make_install() {

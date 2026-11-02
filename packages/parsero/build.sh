@@ -6,7 +6,7 @@ TERMUX_PKG_VERSION=0.0.0+e5b585a
 TERMUX_PKG_SRCURL=https://github.com/behindthefirewalls/Parsero/archive/e5b585a19b79426975a825cafa4cc8a353cd267e.tar.gz
 TERMUX_PKG_SHA256=1780ddf21a5e51ef192529e108be10d516df7ad3a6822676b49abe36415259ef
 
-TERMUX_PKG_DEPENDS="python, python-pip, python-setuptools"
+TERMUX_PKG_DEPENDS="python, python-pip"
 TERMUX_PKG_BUILD_IN_SRC=true
 
 termux_step_make_install() {

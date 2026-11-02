@@ -6,7 +6,7 @@ TERMUX_PKG_VERSION=2.2
 TERMUX_PKG_SRCURL=https://github.com/peterpt/eternal_scanner/archive/refs/tags/2.2.tar.gz
 TERMUX_PKG_SHA256=104bf52263192824556afbe5aa061b888310dd8de2afc0ee520d456595db884b
 
-TERMUX_PKG_DEPENDS="python, python-pip, python-setuptools"
+TERMUX_PKG_DEPENDS="python, python-pip"
 TERMUX_PKG_BUILD_IN_SRC=true
 
 termux_step_make_install() {

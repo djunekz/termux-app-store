@@ -6,7 +6,7 @@ TERMUX_PKG_VERSION=0.0.0+b77f1ae
 TERMUX_PKG_SRCURL=https://github.com/Mebus/cupp/archive/b77f1ae66c10ab2d0fa09c67017949fb5ba187aa.tar.gz
 TERMUX_PKG_SHA256=2b88e3df1af6df952dfe6b08d151fe017f527388e35dd44940b4e6bcfc16d918
 
-TERMUX_PKG_DEPENDS="python, python-pip, python-setuptools"
+TERMUX_PKG_DEPENDS="python, python-pip"
 TERMUX_PKG_BUILD_IN_SRC=true
 
 termux_step_make_install() {

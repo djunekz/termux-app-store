@@ -6,7 +6,7 @@ TERMUX_PKG_VERSION=0.0.0+59dd0e2
 TERMUX_PKG_SRCURL=https://github.com/Dionach/CMSmap/archive/59dd0e2b3b0c751c6da2b0565374ab83c736b0e6.tar.gz
 TERMUX_PKG_SHA256=37644d93c791528c83f069a8c9fee78ebba0527ef1cf35b5752aa5037561fbc2
 
-TERMUX_PKG_DEPENDS="python, python-pip, python-setuptools"
+TERMUX_PKG_DEPENDS="python, python-pip"
 TERMUX_PKG_BUILD_IN_SRC=true
 
 termux_step_make_install() {

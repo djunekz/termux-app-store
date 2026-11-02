@@ -6,7 +6,7 @@ TERMUX_PKG_VERSION=0.0.0+13e3d80
 TERMUX_PKG_SRCURL=https://github.com/christophetd/CloudFlair/archive/13e3d806e6e730412a2f73b46f34d8a5677b163c.tar.gz
 TERMUX_PKG_SHA256=1b17f9ce64f0af6fecdbede5c3621052537d720137cdd97b5aeed115a535e7dc
 
-TERMUX_PKG_DEPENDS="python, python-pip, python-setuptools"
+TERMUX_PKG_DEPENDS="python, python-pip"
 TERMUX_PKG_BUILD_IN_SRC=true
 
 termux_step_make_install() {

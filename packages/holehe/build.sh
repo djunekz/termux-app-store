@@ -6,7 +6,7 @@ TERMUX_PKG_VERSION=0.0.0+14da70f
 TERMUX_PKG_SRCURL=https://github.com/megadose/holehe/archive/14da70f588538936b20d238783c5e28a0772a2b3.tar.gz
 TERMUX_PKG_SHA256=4a69a7c7d5e65bc66f0bf990b3fdeae258074665359f7b6c3b3c12965ed69891
 
-TERMUX_PKG_DEPENDS="python, python-pip, python-setuptools"
+TERMUX_PKG_DEPENDS="python, python-pip"
 TERMUX_PKG_BUILD_IN_SRC=true
 
 termux_step_make_install() {

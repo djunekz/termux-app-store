@@ -6,7 +6,7 @@ TERMUX_PKG_VERSION=1.1.3
 TERMUX_PKG_SRCURL=https://github.com/Tuhinshubhra/CMSeeK/archive/refs/tags/v.1.1.3.tar.gz
 TERMUX_PKG_SHA256=2e7562c7d9e131cc0a3623922df92fbfd98dd8e8e6b0321002c4fd5e06531249
 
-TERMUX_PKG_DEPENDS="python, python-pip, python-setuptools"
+TERMUX_PKG_DEPENDS="python, python-pip"
 TERMUX_PKG_BUILD_IN_SRC=true
 
 termux_step_make_install() {

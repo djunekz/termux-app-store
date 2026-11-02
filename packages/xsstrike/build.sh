@@ -6,7 +6,7 @@ TERMUX_PKG_VERSION=3.1.6
 TERMUX_PKG_SRCURL=https://github.com/s0md3v/XSStrike/archive/refs/tags/3.1.6.tar.gz
 TERMUX_PKG_SHA256=d8c6c2f4dbcee5836d552cc193cad4b6dfa6c9a9471680d5d2f2b3d278b021f2
 
-TERMUX_PKG_DEPENDS="python, python-pip, python-setuptools"
+TERMUX_PKG_DEPENDS="python, python-pip"
 TERMUX_PKG_BUILD_IN_SRC=true
 
 termux_step_make_install() {

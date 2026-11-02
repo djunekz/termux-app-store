@@ -6,7 +6,7 @@ TERMUX_PKG_VERSION=1.4.6
 TERMUX_PKG_SRCURL=https://github.com/oop7/OrChat/archive/refs/tags/v1.4.6.tar.gz
 TERMUX_PKG_SHA256=fbe070754e2d66c3f724e496241975f0cd4e209c7c590cca395c38cabd3b65ae
 
-TERMUX_PKG_DEPENDS="python, python-pip, python-setuptools"
+TERMUX_PKG_DEPENDS="python, python-pip"
 TERMUX_PKG_BUILD_IN_SRC=true
 
 termux_step_make_install() {

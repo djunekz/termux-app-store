@@ -6,7 +6,7 @@ TERMUX_PKG_VERSION=4.1
 TERMUX_PKG_SRCURL=https://github.com/commixproject/commix/archive/refs/tags/v4.1.tar.gz
 TERMUX_PKG_SHA256=d71e6a98231c2eb434eb9cc1b835523ad5618578309e2f835c40d767f2af79de
 
-TERMUX_PKG_DEPENDS="python, python-pip, python-setuptools"
+TERMUX_PKG_DEPENDS="python, python-pip"
 TERMUX_PKG_BUILD_IN_SRC=true
 
 termux_step_make_install() {

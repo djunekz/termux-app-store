@@ -6,7 +6,7 @@ TERMUX_PKG_VERSION=0.0.0+5e46a45
 TERMUX_PKG_SRCURL=https://github.com/b3-v3r/Hunner/archive/5e46a4532469df816e0a4329671cb76fb1300d74.tar.gz
 TERMUX_PKG_SHA256=e6f6ebfae6e0c442fb4d6c489c72b9d446fc2e87d08e9acc5a6a3b5d5151c278
 
-TERMUX_PKG_DEPENDS="python, python-pip, python-setuptools"
+TERMUX_PKG_DEPENDS="python, python-pip"
 TERMUX_PKG_BUILD_IN_SRC=true
 
 termux_step_make_install() {

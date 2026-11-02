@@ -6,7 +6,7 @@ TERMUX_PKG_VERSION=0.0.0+4551c2f
 TERMUX_PKG_SRCURL=https://github.com/Gameye98/Auxscan/archive/4551c2f418070217a33297bdd981d6fddf1a6492.tar.gz
 TERMUX_PKG_SHA256=44c08fa9d4e2d1b2d8bb5bac1118f5915ff801b58d93716214172d859144e11f
 
-TERMUX_PKG_DEPENDS="python, python-pip, python-setuptools"
+TERMUX_PKG_DEPENDS="python, python-pip"
 TERMUX_PKG_BUILD_IN_SRC=true
 
 termux_step_make_install() {

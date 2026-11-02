@@ -6,7 +6,7 @@ TERMUX_PKG_VERSION=0.0.0+c8e1527
 TERMUX_PKG_SRCURL=https://github.com/muneebwanee/InstaReporter/archive/c8e15277c0481f2cefa339b03818c412c0ab3186.tar.gz
 TERMUX_PKG_SHA256=d0f3a77fd24ff76e72d3274104d4993f687fbc6f4117754e6ce1ff121372921f
 
-TERMUX_PKG_DEPENDS="python, python-pip, python-setuptools"
+TERMUX_PKG_DEPENDS="python, python-pip"
 TERMUX_PKG_BUILD_IN_SRC=true
 
 termux_step_make_install() {
