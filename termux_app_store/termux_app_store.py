@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 import asyncio
 import json
+import os
 import re
+import shlex
 import subprocess
 import sys
+import time
 import urllib.request
 from pathlib import Path
 
@@ -30,6 +33,7 @@ _ver_tuple = _store.ver_tuple
 is_safe_pkg_name = _store.is_safe_pkg_name
 has_store_fingerprint = _store.has_store_fingerprint
 is_valid_root = _store.is_valid_root
+format_size = _store.format_size
 
 try:
     from termux_app_store.fast_install import FastInstaller
@@ -39,12 +43,26 @@ except ImportError:
     _BINARY_CACHE_AVAILABLE = False
 
 try:
-    from termux_app_store.fast_install import cache_info, check_mirrors, clear_deb_cache, fast_install
+    from termux_app_store.fast_install import (
+        cache_info,
+        check_mirrors,
+        clear_deb_cache,
+        fast_install,
+        get_arch,
+        get_remote_deb_size,
+    )
 
     _FAST_INSTALL_AVAILABLE = True
 except ImportError:
     try:
-        from fast_install import cache_info, check_mirrors, clear_deb_cache, fast_install
+        from fast_install import (
+            cache_info,
+            check_mirrors,
+            clear_deb_cache,
+            fast_install,
+            get_arch,
+            get_remote_deb_size,
+        )
 
         _FAST_INSTALL_AVAILABLE = True
     except ImportError:
@@ -63,6 +81,7 @@ try:
         ListItem,
         ListView,
         ProgressBar,
+        Select,
         Static,
     )
 
@@ -80,38 +99,58 @@ try:
             self.total = total
             self._eta_seconds: float = 0.0
             self._start_time: float = 0.0
-            self._last_pct: float = 0.0
+            self._samples: list = []
 
         def on_mount(self):
             def _tick():
-                if self._eta_seconds > 0 and self.get_remaining() > 0:
+                if 0 < self.progress < self.total:
                     self.refresh()
 
             self.set_interval(1.0, _tick)
 
+        def watch_progress(self, value: float):
+            now = time.monotonic()
+            self._samples.append((now, float(value)))
+            while len(self._samples) > 2 and now - self._samples[0][0] > 30.0:
+                self._samples.pop(0)
+
         def set_eta(self, seconds: float):
+            now = time.monotonic()
             self._eta_seconds = max(0.0, seconds)
-            self._start_time = __import__("time").monotonic()
-            self._last_pct = self.progress
+            self._start_time = now
+            if self._eta_seconds <= 0:
+                self._samples = [(now, float(self.progress))]
+
+        def _estimate_from_samples(self, now: float) -> float:
+            if len(self._samples) < 2:
+                return 0.0
+            first_time, first_pct = self._samples[0]
+            last_time, last_pct = self._samples[-1]
+            span = last_time - first_time
+            if span < 3.0 or last_pct - first_pct < 2.0 or last_pct >= self.total:
+                return 0.0
+            rate = (last_pct - first_pct) / span
+            return max(0.0, (self.total - last_pct) / rate - (now - last_time))
 
         def get_remaining(self) -> float:
-            if self._eta_seconds <= 0:
-                return 0.0
-            elapsed = __import__("time").monotonic() - self._start_time
-            return max(0.0, self._eta_seconds - elapsed)
+            now = time.monotonic()
+            if self._eta_seconds > 0:
+                left = self._eta_seconds - (now - self._start_time)
+                if left > 0:
+                    return left
+            return self._estimate_from_samples(now)
 
         def render(self):
             pct = min(100, max(0, int(self.progress / self.total * 100)))
             remaining = self.get_remaining()
 
             if remaining > 0 and pct < 100:
-                mins = int(remaining) // 60
-                secs = int(remaining) % 60
-                eta_str = f"{mins:02d}:{secs:02d}"
+                total_secs = int(remaining + 0.5)
+                eta_str = f"{total_secs // 60:02d}:{total_secs % 60:02d}"
             else:
                 eta_str = "--:--"
 
-            suffix = f" {pct:3d}% {eta_str}"
+            suffix = f" {pct:3d}% ETA {eta_str}"
             width = self.size.width - len(suffix)
             if width < 1:
                 width = 1
@@ -136,7 +175,7 @@ except ImportError:
             pass
 
     Header = Input = ListView = ListItem = Label = _Stub
-    Static = Button = ProgressBar = SimpleProgressBar = _Stub
+    Static = Button = ProgressBar = SimpleProgressBar = Select = _Stub
     Horizontal = Vertical = VerticalScroll = _Stub
 
 ANSI_ESCAPE = re.compile(r"\x1b\[[0-9;]*[mGKHf]")
@@ -227,6 +266,7 @@ def load_packages_from_local(packages_dir: Path) -> list:
             "version": "?",
             "depends": [],
             "maintainer": "-",
+            "license": "-",
         }
         with build.open(errors="ignore") as f:
             for line in f:
@@ -239,6 +279,8 @@ def load_packages_from_local(packages_dir: Path) -> list:
                     data["depends"] = [d.strip() for d in deps_str.split(",") if d.strip()]
                 elif line.startswith("TERMUX_PKG_MAINTAINER="):
                     data["maintainer"] = line.split("=", 1)[1].strip().strip('"')
+                elif line.startswith("TERMUX_PKG_LICENSE="):
+                    data["license"] = line.split("=", 1)[1].strip().strip('"') or "-"
         pkgs.append(data)
     return pkgs
 
@@ -258,6 +300,10 @@ def normalize_pkg(raw: dict) -> dict:
         result["sha256"] = raw["sha256"]
     if "sha256_by_arch" in raw:
         result["sha256_by_arch"] = raw["sha256_by_arch"]
+    result["license"] = raw.get("license") or "-"
+    result["download_size"] = raw.get("download_size") or "-"
+    if raw.get("homepage"):
+        result["homepage"] = raw["homepage"]
     return result
 
 
@@ -287,6 +333,34 @@ def get_app_root() -> Path:
 
 def get_packages_dir() -> Path:
     return get_app_root() / "packages"
+
+
+def get_package_executables(name: str) -> list:
+    prefix = Path(os.environ.get("PREFIX", "/data/data/com.termux/files/usr"))
+    bin_dir = prefix / "bin"
+    try:
+        out = subprocess.check_output(["dpkg-query", "-L", name], stderr=subprocess.DEVNULL, text=True)
+    except Exception:
+        return []
+    found = set()
+    for line in out.splitlines():
+        path = Path(line.strip())
+        if path.parent == bin_dir and path.is_file() and os.access(path, os.X_OK):
+            found.add(path.name)
+    ordered = sorted(found)
+    if name in found:
+        ordered.remove(name)
+        ordered.insert(0, name)
+    return ordered
+
+
+def size_text_from_index(pkg: dict):
+    raw = pkg.get("download_size")
+    if isinstance(raw, (int, float)) and raw > 0:
+        return format_size(raw)
+    if isinstance(raw, str) and raw.strip().lower() not in ("", "-", "unknown", "n/a"):
+        return raw.strip()
+    return None
 
 
 class PackageItem(ListItem):
@@ -364,6 +438,92 @@ class ConfirmUninstall(_ModalScreen):
             self.dismiss(False)
         elif event.button.id == "btn-confirm-uninstall":
             self.dismiss(True)
+
+
+class RunScreen(_ModalScreen):
+    DEFAULT_CSS = """
+    RunScreen {
+        align: center middle;
+    }
+    #run-dialog {
+        width: 60;
+        height: auto;
+        border: heavy #50fa7b;
+        background: #282a36;
+        padding: 1 2;
+    }
+    #run-title {
+        text-align: center;
+        color: #50fa7b;
+        text-style: bold;
+        margin-bottom: 1;
+    }
+    #run-cmd, #run-exe {
+        margin-bottom: 1;
+    }
+    #run-args {
+        margin-bottom: 1;
+    }
+    #run-btns {
+        align: center middle;
+        height: auto;
+    }
+    #run-cancel {
+        margin-right: 2;
+        background: #44475a;
+        color: #f8f8f2;
+    }
+    #run-cancel:hover { background: #6272a4; }
+    """
+
+    BINDINGS = [("escape", "cancel", "Cancel")]
+
+    def __init__(self, package_name: str, executables: list):
+        super().__init__()
+        self.package_name = package_name
+        self.executables = executables
+
+    def compose(self) -> ComposeResult:
+        with Vertical(id="run-dialog"):
+            yield Static(f"Open  {self.package_name}", id="run-title")
+            if len(self.executables) > 1:
+                yield Select(
+                    [(e, e) for e in self.executables],
+                    value=self.executables[0],
+                    allow_blank=False,
+                    id="run-exe",
+                )
+            else:
+                yield Static(f"Command: [b]{self.executables[0]}[/b]", id="run-cmd")
+            yield Input(placeholder="Arguments (optional)", id="run-args")
+            with Horizontal(id="run-btns"):
+                yield Button("Cancel", id="run-cancel")
+                yield Button("Run", id="run-go", variant="success")
+
+    def on_mount(self) -> None:
+        self.query_one("#run-args", Input).focus()
+
+    def _submit(self) -> None:
+        exe = self.executables[0]
+        if len(self.executables) > 1:
+            chosen = self.query_one("#run-exe", Select).value
+            if isinstance(chosen, str):
+                exe = chosen
+        self.dismiss((exe, self.query_one("#run-args", Input).value))
+
+    def action_cancel(self) -> None:
+        self.dismiss(None)
+
+    def on_input_submitted(self, event) -> None:
+        event.stop()
+        self._submit()
+
+    def on_button_pressed(self, event) -> None:
+        event.stop()
+        if event.button.id == "run-cancel":
+            self.dismiss(None)
+        elif event.button.id == "run-go":
+            self._submit()
 
 
 class AboutScreen(_ModalScreen):
@@ -576,7 +736,7 @@ class ContactScreen(_ModalScreen):
 class TermuxAppStore(App):
     BINDINGS = [
         ("ctrl+r", "refresh", "Refresh packages"),
-        ("ctrl+i", "install_selected", "Install selected"),
+        ("ctrl+i", "install_selected", "Install / Open / Update"),
         ("ctrl+q", "quit", "Quit"),
     ]
 
@@ -628,6 +788,8 @@ class TermuxAppStore(App):
         self.current_item = None
         self.installing = False
         self.log_buffer = []
+        self.size_cache = {}
+        self.size_pending = set()
         self.worker_queue = asyncio.Queue()
 
         self.set_interval(0.1, self.consume_worker_queue)
@@ -708,7 +870,12 @@ class TermuxAppStore(App):
         self.install_btn.disabled = False
         self.uninstall_btn.disabled = False
         self.status_cache.clear()
-        self.refresh_list()
+        self.refresh_list(preserve_selection=True)
+        self.refresh_current_preview()
+
+    def refresh_current_preview(self):
+        if self.current_item:
+            self.show_preview(self.current_item, reset_log=False)
 
     def _build_from_source_with_progress(self, name: str) -> bool:
         app_root = get_app_root()
@@ -814,7 +981,7 @@ class TermuxAppStore(App):
                 yield self.progress
 
                 with Horizontal(id="btn-row"):
-                    self.install_btn = Button("Install / Update", id="install")
+                    self.install_btn = Button("Install", id="install")
                     yield self.install_btn
 
                     self.uninstall_btn = Button("Uninstall", id="uninstall")
@@ -857,6 +1024,8 @@ class TermuxAppStore(App):
                     self.show_preview(first)
 
     def on_input_changed(self, message):
+        if getattr(getattr(message, "input", None), "id", "search") != "search":
+            return
         self.search_query = message.value.lower().strip()
         self.refresh_list()
 
@@ -880,7 +1049,8 @@ class TermuxAppStore(App):
         self.status_cache[name] = status
         return status
 
-    def show_preview(self, item: PackageItem):
+    def show_preview(self, item: PackageItem, reset_log=None):
+        previous = self.current_item.pkg.get("name") if self.current_item else None
         self.current_item = item
         p = item.pkg
 
@@ -903,27 +1073,118 @@ class TermuxAppStore(App):
         else:
             deps_str = "\n".join(f"• {d.strip()}" for d in deps.split(",") if d.strip()) if deps != "-" else "-"
 
+        size_text = size_text_from_index(p) or self.size_cache.get(p["name"])
+        if size_text is None:
+            size_text = "checking..."
+            self.request_size(p)
+
         self.info.update(
             f"[b]{p['name']}[/b]  {badge}\n\n"
             f"{ver_line}\n"
-            f"Maintainer : {p['maintainer']}\n\n"
+            f"Maintainer : {p['maintainer']}\n"
+            f"License    : {p.get('license', '-')}\n"
+            f"Size       : {size_text}\n\n"
             f"[b]Dependencies[/b]\n{deps_str}\n\n"
             f"{p['desc']}"
         )
 
-        self.log_buffer.clear()
-        self.log_view.update("")
-        self.progress.progress = 0
+        if reset_log is None:
+            reset_log = previous != p["name"]
+        if reset_log:
+            self.log_buffer.clear()
+            self.log_view.update("")
+            self.progress.progress = 0
 
         is_installed = status in ("INSTALLED", "UPDATE")
         self.uninstall_btn.display = is_installed
+        self.apply_primary_button(status)
+
+    def apply_primary_button(self, status: str):
+        label, variant = {
+            "INSTALLED": ("Open", "success"),
+            "UPDATE": ("Update", "warning"),
+        }.get(status, ("Install", "primary"))
+        self.install_btn.label = label
+        self.install_btn.variant = variant
+
+    def request_size(self, pkg: dict):
+        name = pkg["name"]
+        if name in self.size_pending or not _FAST_INSTALL_AVAILABLE:
+            if not _FAST_INSTALL_AVAILABLE:
+                self.size_cache[name] = "Unknown"
+            return
+        self.size_pending.add(name)
+        self.run_worker(self._load_size(name, str(pkg["version"])), exclusive=False)
+
+    async def _load_size(self, name: str, version: str):
+        text = "Unknown"
+        try:
+            size = await asyncio.to_thread(get_remote_deb_size, name, version, get_arch())
+            if size:
+                text = format_size(size)
+        except Exception:
+            pass
+        self.size_pending.discard(name)
+        self.size_cache[name] = text
+        if self.current_item and self.current_item.pkg.get("name") == name:
+            self.show_preview(self.current_item, reset_log=False)
+
+    async def trigger_primary(self):
+        if not self.current_item:
+            return
+        pkg = self.current_item.pkg
+        status = self.get_status(pkg["name"], pkg["version"])
+        if status == "INSTALLED":
+            await self.open_package(pkg["name"])
+        else:
+            await self.worker_queue.put(("install", pkg["name"]))
+
+    async def open_package(self, name: str):
+        executables = await asyncio.to_thread(get_package_executables, name)
+        if not executables:
+            self.status_bar.update(f"{name} has no command to run.")
+            return
+
+        def handle(result) -> None:
+            if result:
+                self.call_later(self.run_external, result[0], result[1])
+
+        self.push_screen(RunScreen(name, executables), handle)
+
+    def run_external(self, exe: str, args: str):
+        try:
+            argv = [exe, *shlex.split(args)]
+        except ValueError as e:
+            self.status_bar.update(f"Invalid arguments: {e}")
+            return
+        code = None
+        try:
+            with self.suspend():
+                sys.stdout.write("\033[2J\033[H")
+                sys.stdout.flush()
+                try:
+                    code = subprocess.call(argv)
+                except KeyboardInterrupt:
+                    code = 130
+                except OSError as e:
+                    print(f"Cannot run {exe}: {e}")
+                    code = 127
+                print(f"\n[{exe} exited with code {code}]  Press Enter to return...", end="", flush=True)
+                try:
+                    input()
+                except (EOFError, KeyboardInterrupt):
+                    pass
+        except Exception as e:
+            self.status_bar.update(f"Cannot open {exe}: {e}")
+            return
+        self.status_bar.update(f"{exe} exited with code {code}")
 
     async def on_button_pressed(self, event):
         if self.installing:
             return
 
         if event.button.id == "install" and self.current_item:
-            await self.worker_queue.put(("install", self.current_item.pkg["name"]))
+            await self.trigger_primary()
 
         elif event.button.id == "uninstall" and self.current_item:
             name = self.current_item.pkg["name"]
@@ -1002,7 +1263,8 @@ class TermuxAppStore(App):
         def _finalize_install():
             self.install_btn.disabled = False
             self.uninstall_btn.disabled = False
-            self.refresh_list()
+            self.refresh_list(preserve_selection=True)
+            self.refresh_current_preview()
 
         self.call_from_thread(_finalize_install)
 
@@ -1043,7 +1305,8 @@ class TermuxAppStore(App):
         def _finalize_uninstall():
             self.install_btn.disabled = False
             self.uninstall_btn.disabled = False
-            self.refresh_list()
+            self.refresh_list(preserve_selection=True)
+            self.refresh_current_preview()
 
         self.call_from_thread(_finalize_uninstall)
 
@@ -1095,9 +1358,9 @@ class TermuxAppStore(App):
     def action_contact(self):  # pragma: no cover
         self.push_screen(ContactScreen())
 
-    def action_install_selected(self):  # pragma: no cover
+    async def action_install_selected(self):  # pragma: no cover
         if self.current_item and not self.installing:
-            self.worker_queue.put_nowait(("install", self.current_item.pkg["name"]))
+            await self.trigger_primary()
 
     def action_clear_log(self):  # pragma: no cover
         self.log_buffer.clear()
@@ -1116,7 +1379,7 @@ class TermuxAppStore(App):
     def action_open_homepage(self):  # pragma: no cover
         if self.current_item:
             pkg = self.current_item.pkg
-            url = pkg.get("url") or f"https://github.com/search?q={pkg['name']}"
+            url = pkg.get("url") or pkg.get("homepage") or f"https://github.com/search?q={pkg['name']}"
             try:
                 subprocess.Popen(["termux-open-url", url], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
                 self.status_bar.update(f"Opening: {url}")
@@ -1172,8 +1435,8 @@ class TermuxAppStore(App):
             self.action_contact,
         )
         yield SystemCommand(
-            "Install selected package",
-            "Install or update the currently highlighted package",
+            "Install / Open / Update selected package",
+            "Install, update, or open the currently highlighted package",
             self.action_install_selected,
         )
         yield SystemCommand(

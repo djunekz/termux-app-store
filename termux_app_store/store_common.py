@@ -5,7 +5,10 @@ import re
 import shutil
 import subprocess
 import sys
+import tempfile
+import time
 import urllib.request
+from collections import deque
 from pathlib import Path
 from typing import Callable, Optional
 
@@ -54,6 +57,91 @@ def _cache_dir() -> Path:
 
 CACHE_FILE = _cache_dir() / "path.json"
 INDEX_CACHE_FILE = _cache_dir() / "index.json"
+
+
+def format_size(num) -> str:
+    try:
+        value = float(num)
+    except (TypeError, ValueError):
+        return "Unknown"
+    if value < 0:
+        return "Unknown"
+    if value < 1024:
+        return f"{int(value)} B"
+    for unit in ("KB", "MB", "GB"):
+        value /= 1024
+        if value < 1024 or unit == "GB":
+            return f"{value:.1f} {unit}"
+    return "Unknown"
+
+
+class RateTracker:
+    def __init__(self, window: float = 4.0, alpha: float = 0.3):
+        self.window = window
+        self.alpha = alpha
+        self._samples: deque = deque()
+        self._ema = 0.0
+
+    def add(self, done: float, now: Optional[float] = None) -> None:
+        now = time.monotonic() if now is None else now
+        self._samples.append((now, done))
+        while len(self._samples) > 2 and now - self._samples[0][0] > self.window:
+            self._samples.popleft()
+        first_time, first_done = self._samples[0]
+        span = now - first_time
+        if span >= 0.4 and done > first_done:
+            instant = (done - first_done) / span
+            self._ema = instant if self._ema <= 0 else self._ema + self.alpha * (instant - self._ema)
+
+    @property
+    def rate(self) -> float:
+        return self._ema
+
+    def remaining(self, total: float, done: float, fallback_rate: float = 0.0) -> float:
+        rate = self._ema if self._ema > 0 else fallback_rate
+        if rate <= 0 or total <= done:
+            return 0.0
+        return (total - done) / rate
+
+
+class SpeedStats:
+    def __init__(self, path: Path):
+        self.path = path
+
+    def _read(self) -> dict:
+        try:
+            data = json.loads(self.path.read_text(encoding="utf-8"))
+        except Exception:
+            return {}
+        return data if isinstance(data, dict) else {}
+
+    def get(self, key: str, default: float) -> float:
+        value = self._read().get(key)
+        if isinstance(value, (int, float)) and value > 0:
+            return float(value)
+        return default
+
+    def update(self, key: str, value: float, alpha: float = 0.4) -> None:
+        if not isinstance(value, (int, float)) or value <= 0:
+            return
+        data = self._read()
+        old = data.get(key)
+        if isinstance(old, (int, float)) and old > 0:
+            value = old + alpha * (value - old)
+        data[key] = round(float(value), 4)
+        tmp_name = None
+        try:
+            self.path.parent.mkdir(parents=True, exist_ok=True)
+            fd, tmp_name = tempfile.mkstemp(dir=str(self.path.parent), suffix=".tmp")
+            with os.fdopen(fd, "w", encoding="utf-8") as handle:
+                json.dump(data, handle)
+            os.replace(tmp_name, self.path)
+        except Exception:
+            if tmp_name:
+                try:
+                    os.unlink(tmp_name)
+                except OSError:
+                    pass
 
 
 def _silent(kind: str, message: str) -> None:

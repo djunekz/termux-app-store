@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import hashlib
 import json
+import math
 import os
 import re
 import shutil
@@ -32,6 +33,8 @@ CACHE_BASE = Path(os.environ.get("XDG_CACHE_HOME", Path.home() / ".cache")) / "t
 DEB_CACHE_DIR = CACHE_BASE / "debs"
 MIRROR_CACHE = CACHE_BASE / "best-mirror.json"
 INDEX_CACHE = CACHE_BASE / "index.json"
+SIZE_CACHE = CACHE_BASE / "sizes.json"
+SPEED_STATS = _common.SpeedStats(CACHE_BASE / "speed.json")
 
 MIRROR_TTL = 86400  # 24 hours
 DEB_TTL = 604800  # 7 days
@@ -40,6 +43,10 @@ INDEX_TTL = 3600  # 1 hours
 MIRRORS = _common.MIRRORS
 
 DEB_PATH_PATTERN = "pool/main/{pkg}_{version}_{arch}.deb"
+
+DEFAULT_DOWNLOAD_BPS = 300 * 1024
+INSTALL_BASE_SECONDS = 2.0
+DEFAULT_INSTALL_SECONDS_PER_MB = 1.0
 
 SHA256_SIDECAR_URL = (
     f"https://raw.githubusercontent.com/{GITHUB_REPO}/gh-pages/pool/main/{{pkg}}_{{version}}_{{arch}}.deb.sha256"
@@ -155,6 +162,55 @@ def get_best_mirror(force: bool = False) -> dict:
         pass
 
     return best
+
+
+def estimate_install_seconds(size_bytes: float) -> float:
+    per_mb = SPEED_STATS.get("install_spm", DEFAULT_INSTALL_SECONDS_PER_MB)
+    return INSTALL_BASE_SECONDS + (max(size_bytes, 0) / 1048576) * per_mb
+
+
+def _learn_install_speed(size_bytes: float, elapsed: float) -> None:
+    size_mb = size_bytes / 1048576
+    if size_mb < 0.05 or elapsed <= INSTALL_BASE_SECONDS:
+        return
+    SPEED_STATS.update("install_spm", max(0.05, (elapsed - INSTALL_BASE_SECONDS) / size_mb))
+
+
+def get_remote_deb_size(pkg: str, version: str, arch: str, timeout: int = 6) -> Optional[int]:
+    if not _valid_ident(pkg, version, arch):
+        return None
+    key = f"{pkg}_{version}_{arch}"
+    cache: dict = {}
+    try:
+        loaded = json.loads(SIZE_CACHE.read_text(encoding="utf-8"))
+        if isinstance(loaded, dict):
+            cache = loaded
+    except Exception:
+        pass
+    known = cache.get(key)
+    if isinstance(known, int) and known > 0:
+        return known
+
+    deb_path = DEB_PATH_PATTERN.format(pkg=pkg, version=version, arch=arch)
+    best = get_best_mirror()
+    bases = [best["base_url"]] + [m["base_url"] for m in MIRRORS if m["base_url"] != best["base_url"]]
+    for base in bases:
+        try:
+            req = urllib.request.Request(
+                f"{base}/{deb_path}", method="HEAD", headers={"User-Agent": "termux-app-store"}
+            )
+            with urllib.request.urlopen(req, timeout=timeout) as resp:
+                length = int(resp.headers.get("Content-Length", 0))
+        except Exception:
+            continue
+        if length > 0:
+            cache[key] = length
+            try:
+                SIZE_CACHE.write_text(json.dumps(cache), encoding="utf-8")
+            except Exception:
+                pass
+            return length
+    return None
 
 
 def get_index(log_fn: Optional[Callable] = None) -> list:
@@ -287,6 +343,7 @@ def download_deb(
     _progress(5)
 
     tmp = dest.with_suffix(".tmp")
+    fallback_bps = SPEED_STATS.get("download_bps", DEFAULT_DOWNLOAD_BPS)
 
     for url in urls:
         try:
@@ -294,10 +351,13 @@ def download_deb(
             with urllib.request.urlopen(req, timeout=30) as resp:
                 total = int(resp.headers.get("Content-Length", 0))
                 downloaded = 0
-                dl_start = time.time()
+                dl_start = time.monotonic()
+                tracker = _common.RateTracker()
+                last_emit = 0.0
+                install_est = estimate_install_seconds(total)
 
                 if total > 0:
-                    _eta(total / (200 * 1024))
+                    _eta(total / fallback_bps + install_est)
 
                 with open(tmp, "wb") as f:
                     while True:
@@ -307,21 +367,22 @@ def download_deb(
                         f.write(chunk)
                         downloaded += len(chunk)
                         if total > 0:
-                            pct = 5 + int(downloaded * 75 / total)
-                            _progress(pct)
-                            elapsed = time.time() - dl_start
-                            if elapsed > 0.5 and downloaded > 0:
-                                speed = downloaded / elapsed
-                                remaining_bytes = total - downloaded
-                                install_est = total / (500 * 1024)
-                                _eta(remaining_bytes / speed + install_est)
+                            now = time.monotonic()
+                            tracker.add(downloaded, now)
+                            _progress(5 + int(downloaded * 75 / total))
+                            if now - last_emit >= 0.5:
+                                last_emit = now
+                                _eta(tracker.remaining(total, downloaded, fallback_bps) + install_est)
+
+            elapsed = time.monotonic() - dl_start
+            if downloaded > 131072 and elapsed > 0.5:
+                SPEED_STATS.update("download_bps", downloaded / elapsed)
 
             tmp.rename(dest)
             size_kb = dest.stat().st_size // 1024
             _log(f"Downloaded {size_kb}KB")
             _progress(80)
-            file_size = dest.stat().st_size
-            _eta(file_size / (500 * 1024))
+            _eta(estimate_install_seconds(dest.stat().st_size))
             return True
 
         except urllib.error.HTTPError as e:
@@ -339,7 +400,12 @@ def download_deb(
     return False
 
 
-def install_deb(deb_path: Path, log_fn: Optional[Callable] = None, progress_fn: Optional[Callable] = None) -> bool:
+def install_deb(
+    deb_path: Path,
+    log_fn: Optional[Callable] = None,
+    progress_fn: Optional[Callable] = None,
+    eta_fn: Optional[Callable] = None,
+) -> bool:
     def _log(msg):
         if log_fn:
             log_fn(msg)
@@ -348,8 +414,29 @@ def install_deb(deb_path: Path, log_fn: Optional[Callable] = None, progress_fn: 
         if progress_fn:
             progress_fn(pct)
 
+    def _eta(seconds):
+        if eta_fn:
+            eta_fn(seconds)
+
+    try:
+        size = deb_path.stat().st_size
+    except OSError:
+        size = 0
+    estimate = estimate_install_seconds(size)
+    started = time.monotonic()
+    stop = threading.Event()
+
+    def _tick():
+        while not stop.wait(0.5):
+            elapsed = time.monotonic() - started
+            _progress(85 + int(13 * (1 - math.exp(-1.6 * elapsed / estimate))))
+            _eta(max(estimate - elapsed, 1.0))
+
     _log("Installing with dpkg...")
     _progress(85)
+    _eta(estimate)
+    ticker = threading.Thread(target=_tick, daemon=True)
+    ticker.start()
 
     try:
         proc = subprocess.Popen(
@@ -364,26 +451,31 @@ def install_deb(deb_path: Path, log_fn: Optional[Callable] = None, progress_fn: 
         proc.wait()
 
         if proc.returncode == 0:
+            stop.set()
+            _learn_install_speed(size, time.monotonic() - started)
+            _eta(0)
             _progress(100)
             return True
-        else:
-            _log("Fixing dependencies...")
-            fix = subprocess.run(
-                ["apt-get", "install", "-f", "-y"],
-                stdout=subprocess.DEVNULL,
-                stderr=subprocess.DEVNULL,
-            )
-            if fix.returncode != 0:
-                return False
-            retry = subprocess.run(
-                ["dpkg", "-i", str(deb_path)],
-                stdout=subprocess.DEVNULL,
-                stderr=subprocess.DEVNULL,
-            )
-            if retry.returncode == 0:
-                _progress(100)
-                return True
+
+        _log("Fixing dependencies...")
+        fix = subprocess.run(
+            ["apt-get", "install", "-f", "-y"],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+        if fix.returncode != 0:
             return False
+        retry = subprocess.run(
+            ["dpkg", "-i", str(deb_path)],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+        if retry.returncode == 0:
+            stop.set()
+            _eta(0)
+            _progress(100)
+            return True
+        return False
 
     except FileNotFoundError:
         _log("dpkg not found, trying apt...")
@@ -392,6 +484,8 @@ def install_deb(deb_path: Path, log_fn: Optional[Callable] = None, progress_fn: 
             capture_output=True,
         )
         return result.returncode == 0
+    finally:
+        stop.set()
 
 
 def fast_install(
@@ -465,9 +559,8 @@ def fast_install(
         elapsed = time.time() - start_time
         _log(f"✓ Cache HIT (checksum verified) — {cached.name} ({elapsed:.1f}s)")
         _progress(80)
-        _eta(cached.stat().st_size / (500 * 1024))
 
-        ok = install_deb(cached, log_fn=log_fn, progress_fn=_progress)
+        ok = install_deb(cached, log_fn=log_fn, progress_fn=_progress, eta_fn=eta_fn)
         if ok:
             elapsed = time.time() - start_time
             _log(f"✔ Installed from cache in {elapsed:.1f}s!")
@@ -503,7 +596,7 @@ def fast_install(
             else:
                 _log("✓ Checksum OK")
                 save_deb_cache(deb_dest, pkg_name, version, arch)
-                ok = install_deb(deb_dest, log_fn=log_fn, progress_fn=_progress)
+                ok = install_deb(deb_dest, log_fn=log_fn, progress_fn=_progress, eta_fn=eta_fn)
                 if ok:
                     elapsed = time.time() - start_time
                     _log(f"✔ Installed in {elapsed:.1f}s!")

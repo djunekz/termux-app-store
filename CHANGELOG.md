@@ -26,6 +26,13 @@ and this project adheres to semantic versioning.
 - `ruff.toml` - Ruff lint and format configuration, moved out of `pyproject.toml`
 - `.python-version`, `Dockerfile`, `.dockerignore` and `tox.ini` - pinned Python runtime, container build and tox environments (`py312`, `lint`, `type`)
 - `CONTRIBUTING.md` - new "Setup", "Code Style" and "Testing" sections, and the quality gates list now mentions Ruff, mypy and pytest
+- `termux_app_store/termux_app_store.py` - the main button of the package detail panel now follows the package status: `Install` when the package is not installed, `Update` when a newer version exists and `Open` when the installed version is current; the button also changes colour (blue, yellow, green) and `Ctrl+I` triggers the same action
+- `termux_app_store/termux_app_store.py` - `Open` runs the installed tool from the TUI: the commands of the package are read with `dpkg -L` from `$PREFIX/bin` (the command named like the package comes first), a dialog (`RunScreen`) lets you choose the command when there are several and type optional arguments, the TUI is suspended while the command runs and comes back after Enter with the exit code shown in the status bar; a package without a command (for example a library) shows a message instead
+- `termux_app_store/termux_app_store.py` - the detail panel now shows `License` and `Size`; `Size` comes from `download_size` in the index and, because every entry in `index.json` is still `Unknown`, falls back to the real size of the `.deb` read from the mirror with a HEAD request in the background (shown as `checking...` until it arrives)
+- `termux_app_store/fast_install.py` - `get_remote_deb_size()` reads the `.deb` size from the mirrors and caches it in `~/.cache/termux-app-store/sizes.json`; `estimate_install_seconds()` predicts the installation time from the file size and the speed learned from earlier installs, stored in `speed.json`
+- `termux_app_store/store_common.py` - shared helpers `format_size()`, `RateTracker` (speed measured over a sliding 4 second window and smoothed) and `SpeedStats` (small JSON file that remembers the download and install speed between runs, written atomically)
+- `tests/test_eta_and_sizes.py` and `tests/test_tui_actions.py` - 36 new tests: size formatting, speed tracking and its persistence, the simulated download and `dpkg` ETA, the remote size lookup, and the TUI button labels, the license and size lines, the `Open` dialog, running a command with arguments and finding the executables of a package; the suite now has 413 tests
+- `README.md`, `README.id.md`, `README.th.md`, `README.jp.md`, `README.ch.md` and `README.vi.md` - new centred badge block with 42 badges in six rows: workflows (CI, CLI, CodeQL, Lint, .deb build, index, publish), releases (PyPI version and downloads, Python versions, GitHub release and downloads), quality (Codecov, RepoGrade, Ruff, mypy, pytest, security policy), project (package count read live from `tools/index.json`, platform, architectures, Textual, TUI and CLI, SHA256 verified, no root), community (license, stars, forks, watchers, contributors, issues, pull requests) and activity (last commit, commit activity, languages, code and repository size, code of conduct)
 
 ### Changed
 - `build-package.sh` - dependency installation now retries up to 5 times with an increasing, randomised back-off and refreshes the apt index between attempts (`Acquire::Retries=5`); this covers the HTTP 429 "Too Many Requests" answers and the transient "Hashes of expected file" mismatches returned by the Termux mirror when many jobs hit it at once
@@ -41,48 +48,28 @@ and this project adheres to semantic versioning.
 - Python sources and tests - import order fixed, unused f-string prefixes removed and the code formatted with `ruff format` (31 files); behaviour is unchanged and all 352 tests pass
 - `INSTALL.md` - "Running from Source" now installs the dev extra, runs `make test` and points to `.env.example` and `uv.lock`
 - Package `unmineable` v0.1.5 - Updated metadata
-- Package `auxscan` v0.0.0+4551c2f - Updated metadata
-- Package `clickjacking-tester` v0.0.0+d75d5fc - Updated metadata
-- Package `cloudflair` v0.0.0+13e3d80 - Updated metadata
-- Package `cmseek` v1.1.3 - Updated metadata
-- Package `cmsmap` v0.0.0+59dd0e2 - Updated metadata
-- Package `commix` v4.1 - Updated metadata
-- Package `crowbar` v4.2 - Updated metadata
-- Package `cupp` v0.0.0+b77f1ae - Updated metadata
-- Package `djangohunter` v0.0.0+a5a715e - Updated metadata
-- Package `dnsrecon` v1.6.3 - Updated metadata
-- Package `elpscrk` v0.0.0+53caddb - Updated metadata
-- Package `eternal-scanner` v2.2 - Updated metadata
-- Package `goblinwordgenerator` v0.0.0+6afad56 - Updated metadata
-- Package `holehe` v0.0.0+14da70f - Updated metadata
-- Package `hunner` v0.0.0+5e46a45 - Updated metadata
-- Package `instareporter` v0.0.0+c8e1527 - Updated metadata
-- Package `ipgeolocation` v2.0.4 - Updated metadata
-- Package `killchain` v0.0.0+fef616f - Updated metadata
-- Package `lazymux` v0.0.0+3b4e747 - Updated metadata
-- Package `myserver` v1.0 - Updated metadata
-- Package `orchat` v1.4.6 - Updated metadata
-- Package `parsero` v0.0.0+e5b585a - Updated metadata
-- Package `photon` v1.3.0 - Updated metadata
-- Package `ssrfmap` v0.0.0+290e07d - Updated metadata
-- Package `sublist3r` v1.1 - Updated metadata
-- Package `termux-sync` v1.3.5 - Updated metadata
-- Package `termux-tui` v2.9.5 - Updated metadata
-- Package `tui-info` v1.0.0 - Updated metadata
-- Package `tui-notes` v1.0.0 - Updated metadata
-- Package `xeuledoc` v0.0.0+8a500d1 - Updated metadata
-- Package `xsstrike` v3.1.6 - Updated metadata
-- Package `zorabuilder` v1.0.0 - Updated metadata
+- `termux_app_store/fast_install.py` - the download ETA is now computed from the speed measured while downloading (sliding window, smoothed) instead of a fixed 200 KB/s guess, starts from the speed of the last download and adds the estimated installation time; it is refreshed every 0.5 seconds
+- `termux_app_store/fast_install.py` - `install_deb()` accepts an optional `eta_fn`, reports an estimate instead of a fixed 500 KB/s guess, moves the progress from 85 to 98 percent while `dpkg` runs instead of jumping, and learns the real installation speed for the next run
+- `termux_app_store/termux_app_store.py` - the progress bar label is now `ETA mm:ss`; when no explicit estimate is given (for example a build from source) the ETA is derived from how fast the percentage has been moving, and it is only shown once the rate is meaningful
+- `termux_app_store/termux_app_store.py` - after an install or uninstall the list keeps the selected package and the log stays visible, instead of jumping back to the first package and clearing the log
+- `termux_app_store/termux_app_store.py` - package data now keeps `license`, `download_size` and `homepage` from the index, and the local `build.sh` loader reads `TERMUX_PKG_LICENSE`
+- `tools/index.json` and `termux_app_store/data/index.json` - regenerated with `tools/build.py` so `depends` and `recipe_sha256` match the corrected recipes; the packaged copy also catches up for `broot`, `dust`, `pmcli` and `termux-sync`
+- `build-tester.py` and `tools/termux-build-init.sh` - no longer list or add `python-setuptools` as a Termux package (`python-wheel` is installed with pip)
 
 ### Fixed
 - `build-package.sh` - a failed `pkg install` of `TERMUX_PKG_DEPENDS` was only a warning, so the build carried on without the toolchain and died later with `cargo: command not found`, `go: command not found` or `npm: command not found`; the build now stops with a `FATAL` message naming the missing dependencies once all retries are used (workflow run #136: `aichat` v0.30.0, `brutespray` v2.7.2 and `pnpm` v12.14.0)
 - `.github/workflows/build-packages-debs.yml` - a dependency that still could not be installed after the retries was only a warning (`could not install dependency`); the job now exits with status 1 right there
 - `packages/dalfox` - `dalfox` v3.2.4 is a Rust project (`Cargo.toml`, no Go sources), but the recipe still built it as a Go program and failed with `malformed import path "*.go": invalid char '*'`; it now depends on `rust` and installs with `cargo install --locked --path . --root "$TERMUX_PREFIX"` (workflow run #136)
 - `packages/pnpm` - `termux_step_make_install()` now creates `$TERMUX_PREFIX/lib/node_modules` before copying, so it no longer fails with `cp: cannot create directory '.../lib/node_modules/pnpm': No such file or directory` when the directory does not exist yet
+- `packages/*` - 29 recipes declared `python-setuptools` in `TERMUX_PKG_DEPENDS`, a package that does not exist in the Termux repository, so `pkg install` failed 5 times and the job ended with `could not install dependency: python-setuptools`; the dependency is removed from `auxscan`, `clickjacking-tester`, `cloudflair`, `cmseek`, `cmsmap`, `commix`, `crowbar`, `cupp`, `djangohunter`, `dnsrecon`, `elpscrk`, `eternal-scanner`, `goblinwordgenerator`, `holehe`, `hunner`, `instareporter`, `ipgeolocation`, `killchain`, `lazymux`, `myserver`, `orchat`, `parsero`, `photon`, `ssrfmap`, `sublist3r`, `termux-sync`, `termux-tui`, `xeuledoc` and `xsstrike`; `setuptools` is still installed with pip by each recipe
+- `packages/lazymux`, `packages/tui-info`, `packages/tui-notes` and `packages/zorabuilder` - other dependency names that do not exist in Termux: `python-core` is removed, `gcc` is replaced by `clang` and `binutils-is-llvm` by `binutils`
+- `packages/sublist3r` - the pip line contained `argparse;python_version`, where the `;` ran `python_version` as a separate shell command; it now installs `argparse`, `dnspython` and `requests`
+- `.github/workflows/build-packages-debs.yml` - `unmineable` v0.1.5 failed to install `cmake` because the Termux mirror picked inside termux-docker (`mirror.textcord.xyz`) answered HTTP 429 and apt reported the repository as not signed; the job now writes `sources.list` with an official mirror and moves to the next one (`packages-cf.termux.dev`, `packages.termux.dev`, `grimler.se`) on every retry, clearing the apt lists each time
+- `termux_app_store/termux_app_store.py` - `Open homepage` used a `url` field that never existed in the index and always fell back to a GitHub search; it now opens the `homepage` of the package
 
 ### Update
 - Package `termux-sync` v1.2.8 → v1.3.5
-- Package `uv` v0.13.4 → v0.13.7
+- Package `uv` v0.13.4 → v0.13.6
 - Package `infoooze` v1.1.9 → v1.2.2
 - Package `pnpm` v12.14.0 → v12.16.1
 - Package `unmineable` v0.1.0 → v0.1.5
