@@ -988,15 +988,15 @@ SHA256: dc0db49ac5535a43a8d43bc5ae4066bac8e99d75803d8f7e8060798f32f7e251
 Description: userfinder — auto-packaged by termux-build-init
 
 Package: uv
-Version: 0.13.6
+Version: 0.13.7
 Architecture: aarch64
 Maintainer: @termux-app-store
 Installed-Size: 
-Filename: pool/main/uv_0.13.6_aarch64.deb
-Size: 10972440
-MD5sum: 4791499475e49764f8bb4123601aff8b
-SHA1: 81ca8a90df767afcfe62d0821853c83fd43d00a7
-SHA256: 8b72e936e54ea7fc89e3e010aeffae38c6b067b9bad852095b2e4b215b7a92e8
+Filename: pool/main/uv_0.13.7_aarch64.deb
+Size: 10930744
+MD5sum: cb60788a5aa73820716ad78cecdce551
+SHA1: 3a964103d648d86ad4af3e1c5b738b36ca6a361b
+SHA256: 799ffb31756db7807c649d26a3a38e7db6e208666f86bccd317d51369add6105
 Description: An extremely fast Python package and project manager, written in Rust.
 
 Package: viu
@@ -1094,4 +1094,3 @@ MD5sum: e2e967d754f874ca09ac48415cbddbf2
 SHA1: 83d175cb6d7222ed4218e0d27f87213b20c28d35
 SHA256: 4793e88fe3c7f1d0ae75f992ea538129c84872e26c13f3ed589023b73e6266f4
 Description: Encrypter Stealth Binary Builder
-
