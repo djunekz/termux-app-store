@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-11-03T06:18:49.032975+00:00",
+  "generated_at": "2026-11-02T17:31:01.213383+00:00",
   "total": 88,
   "packages": [
     {
@@ -22,7 +22,7 @@
         "rust"
       ],
       "sha256_by_arch": {
-        "aarch64": "1f61768398c9d1b7168c45a0d8efa87240707476730bd0ef98bdafbb1004d310"
+        "aarch64": "818949f7c2890adaa82158b132532447c7a1d2ecadd1c0a825d0d7230e7c79c4"
       }
     },
     {
@@ -49,10 +49,10 @@
         "wget"
       ],
       "sha256_by_arch": {
-        "aarch64": "20f30eedaa3bfaafbf61ceed1a5d614c3665edfd109d3328d4d5e96cf8a94fa5",
-        "arm": "a4be66acc38a06355f82b55a5bd4579536dad17b11a53b945476da8e281bf1ce",
-        "x86_64": "5603cba0c3640e3e63908b0118efe0ddfc4b02c31ecc67ffc8547ccfe01626b4",
-        "i686": "631593f8826c9927a02c329f5a59204d74f4e6a997aa29f559e391bccc4e48e0"
+        "aarch64": "4ab84c8f317cc2549223c1a092864b2ca9604e4d37a9527a8a631a607732d63c",
+        "arm": "1907ec6ec4f2ff7f17aaf1e3cac856f0c39b368f6aa1a2a885bd6e5f99d41b33",
+        "x86_64": "ca3d7b916fa6a75663f1a8b36d65877dea31888d7952bf379f9a16a15e7256b8",
+        "i686": "33a4471bdff208eb0cb24b2fab01d2b4f75630e6d717cc0725d22edca71744f1"
       }
     },
     {
@@ -73,10 +73,10 @@
         "nodejs"
       ],
       "sha256_by_arch": {
-        "aarch64": "7f8f24490d0a34c4491a786064be972dccd91e0f887148b0cae6a9ed3d515d51",
-        "arm": "59a1561d0ad3f99e766f6458fca8d465320ef461f3a630f8162eb724be74e4c0",
-        "x86_64": "6dabe654438ccaf045db8a7cd63262c42f0cbdef6b2f15386f53be843d1fb490",
-        "i686": "862ef56793cffa3d29d54e9a31a8ba8759a28fc8c717a5f90eb8fde3d4f2acfd"
+        "aarch64": "fb4334ecba34daffec92c28efb79e44694eb5c61df4658e648d69cf5d606764c",
+        "arm": "47c1d6fca5c360d89fc11bc0c6eb3b41776f4bad29551e1a5b36f4ce98fe109f",
+        "x86_64": "af1f5f0402f2cdcd7353b59e49874721be1007ac32ac21a197bcc82a89111771",
+        "i686": "bd59fc7d3188d38e2076515e769a5eda2ba6e681842b8892c0fa3f8fb2c28a10"
       }
     },
     {
@@ -98,10 +98,10 @@
         "python-pip"
       ],
       "sha256_by_arch": {
-        "aarch64": "a74711069b4eb118cd78a6d7cf9678a4f8c52da9d94d4999df74066cc33b9b2f",
-        "arm": "02eaaab693fec06bacabb6f4e234bc3f9e0855767d4392c3a0c6226811a60158",
-        "x86_64": "a588c11c19a6bfb77c1e93d993cb1c6c45d80a851e6c1c04acc7e63bc9eac601",
-        "i686": "d20da106c14b578832d37a8b4d7751e60cdced75a79ca72a674b1384ccb89080"
+        "aarch64": "e6bdc92b7496a2b12b4e487fa4c8018dda6887226b3e79c50bddc229de9dd3ab",
+        "arm": "dd4cf6bb78f0b8eaad6eafbfb0c37ef4b024e0aa03dddefb043688ce97abbbb3",
+        "x86_64": "84c6bdcf1f936de53ece8408836eeca410caa42bf9d6c5fe98e3b35665402057",
+        "i686": "f5a949f599b082fd0abd5ccf1dc807a008e51cabf31115971e44804f52e3a864"
       }
     },
     {
@@ -119,10 +119,10 @@
       "recipe_sha256": "02ba21c331a37b60bb6d0d2cd279d0026ee6b8f7018a384a6fc3a0391cace5ab",
       "platform_independent": false,
       "sha256_by_arch": {
-        "aarch64": "b38b43d6894c84a0d8a124dd648f7e5f62e42ef6e570a7367d1dc8da976a13d2",
-        "arm": "6fbf11d59574a26cdafcff8d2e3917318dde6c8df8e90ea45b264f3ea3373537",
-        "x86_64": "5f475ff48809c525912d66e05a1dbf322f36a05544d564302b7982307d51384b",
-        "i686": "634fe556119e9279271272d62a56092968963a34981a93fddd01589197598c98"
+        "aarch64": "67a8d7fc6a1ef43a0956470f25bcddc92f5a4bd55c6bd7718c0f48bad6566d2c",
+        "arm": "fe36d7788fa536522f664326f88a5dadf38c6ea8ff62d7b6ae3ac91505822bcc",
+        "x86_64": "334148d7f81f2349fee4aa913cbc4072259056e50e97ad7bb363374f7a017833",
+        "i686": "33777b058a624c0c9b16054422a382b2d979c72c27be5f40ef4dddb4915edf9c"
       }
     },
     {
@@ -143,10 +143,10 @@
         "python"
       ],
       "sha256_by_arch": {
-        "aarch64": "5c313fdf3d51737d51ad682d7a131244f1813027ad2ee244b05fdcc5303ab6a4",
-        "arm": "972eaae9545c6898f636223f5e96d82fc241df9eb1a4784c213f2a9636458bad",
-        "x86_64": "3ef4be848b4047e95b974bc89cbb97c65aeb913854423b1ab4c980c6d744db14",
-        "i686": "5d56c7557de071c99df6f0d2cba58d3b5f508e4cf152b02af7c8736ac685d6c4"
+        "aarch64": "74528952c3098df0a64290765b78f5655adc7fe4150086de6339f3544e19fe46",
+        "arm": "fc869722433cf2bb6d0aa775a2774d664ed37b41c21e06b8daf1303be5da82b5",
+        "x86_64": "771d0f4a9395e9b7f6deb6b395832ec19e3de4d14a1ca39a2645bb8622533424",
+        "i686": "1fd8702dcb22a7b75c385f55a1591b333aecbb15b3da25a6b0cc98b7f775f401"
       }
     },
     {
@@ -167,10 +167,10 @@
         "nodejs"
       ],
       "sha256_by_arch": {
-        "aarch64": "f8aabd9d8049d6dcafaf27c3b79ab1164ea95d943b12b06eec8d4961660b81e2",
-        "arm": "a5c2787b3ddc176e941db0686481985e0a6e555dd53f5cb37994df0e9055db0a",
-        "x86_64": "5b8aff10b91d9e5e77d580036b380fa6b62711dc66880ed3a721e60983f686da",
-        "i686": "bc21c759a06b20b7f07c96db43d7d6af100c99ff753cd5564763e25f5908c288"
+        "aarch64": "2a56787f1888d994989d7585a6d8f5dab6447dd5dd22ecf6e65fe6e36e02f579",
+        "arm": "3f5924cc3c88ad853bb11a7ad8ba422ecadb8b3bacb22c2ef8fe28b797d1934d",
+        "x86_64": "0e6720f1e7016b0be3110d343954c4c1c14b81a53f80353c26af815160fc0b82",
+        "i686": "2d02fb3233165331474d8071bf2bd022c39d5bdd7c0af40d594cb8125248a1b1"
       }
     },
     {
@@ -188,10 +188,10 @@
       "recipe_sha256": "a7c2eda1decad9e6274c7017f509347408feac85e3a6815e2b4c4e5b245364e8",
       "platform_independent": false,
       "sha256_by_arch": {
-        "aarch64": "04044646a5389c236c6a384f2f266051bd3d26da4a2aa246da22779441030726",
-        "arm": "c3149ef0bd50cbea825e6c2fccc7a7766cbcd248ef0853dc5882038fcbfd964e",
-        "x86_64": "bf7935f7a06051e8194e09a537cbd2ca70d4508dd29cb671c94ddc2c1be593f7",
-        "i686": "9a1ee514e996d73b0108a933ea05035435a31cf45bba8babf5b51cb2d1b9a8d7"
+        "aarch64": "a0ea3d3c6e9fe2c82b0303695e5d8a598faedee549a3b2347fdbecc635be7fc0",
+        "arm": "e0786bd351128af28d21fd70c5e31a153c35f4ce47752afb8c1d48f4bec08fc8",
+        "x86_64": "5a9acc5ba3fa0a9f46bed427877bb5396ccafff3cb450f7cc0cef7bcc29e697a",
+        "i686": "32289ca6ba325cebe56c9b9fbe779ccd98cd963c66d472f4f88ff825ab8a8e60"
       }
     },
     {
@@ -214,7 +214,7 @@
         "fontconfig"
       ],
       "sha256_by_arch": {
-        "aarch64": "2bb4307a22842d640b567301be74cebdb286c28fc92c70ddf9015efbf095b067"
+        "aarch64": "f3b12af962a1e473b96bce27b02bf697b62af79b0498fcbee45da0ab626d4649"
       }
     },
     {
@@ -235,7 +235,7 @@
         "golang"
       ],
       "sha256_by_arch": {
-        "aarch64": "4a7298724e2726c078bff2af23110c6658cdc329a13d49dbd526b718dfaa9a4f"
+        "aarch64": "4014f39e6f1489eadfa89c5aa7a9f92307206db7849ca490b5545696562d0d15"
       }
     },
     {
@@ -256,10 +256,10 @@
         "nodejs"
       ],
       "sha256_by_arch": {
-        "aarch64": "55371fa148b99ed0e68ca35d7a67371b6dac5fcac886abab84328ce97e760c11",
-        "arm": "4a03bebcac47aba45645b887662a11f237985dd4b75671c1ff412cfc412ecd09",
-        "x86_64": "52b062ee72885287a6e42edee4c8c01771e99667a13aa8da7ea5bdf312b47e15",
-        "i686": "ea7f63020847acd825c215203fdf914e106975dd2d33b4e366076b00e78669be"
+        "aarch64": "edf5d78b891e595ecc7612e31147222a1e5646879c4aae35f173d46c2556712f",
+        "arm": "3fde497fdac1946c1799303e48c530544ace9249dc689cfb041bad537a753c6e",
+        "x86_64": "b86b72dbd50d8cdb50460397c2edf0176fdb8b4a0ab8b89299ba8b807eed896d",
+        "i686": "8ad52e3550747baeef10f46562e80c4da7f1f2b6e30ba4754c149bb0b88e0843"
       }
     },
     {
@@ -280,7 +280,7 @@
         "rust"
       ],
       "sha256_by_arch": {
-        "aarch64": "705f9563220ecee9400dc0db2530227e4731d04707c8a4ee3efaba0bc006c941"
+        "aarch64": "36c26e8cd3bfc2531f6aafa828c2b2abd2266b3706e5207f179ac671e3100982"
       }
     },
     {
@@ -301,7 +301,7 @@
         "golang"
       ],
       "sha256_by_arch": {
-        "aarch64": "db1eab58d780844265c075d9e75b237e8a4720b17480117323756ca4e29c2abc"
+        "aarch64": "8c8105eaab232dfdadd8b613674b8e81b7da76a22d062ea43297b842ee6f1e0d"
       }
     },
     {
@@ -323,10 +323,10 @@
         "python-pip"
       ],
       "sha256_by_arch": {
-        "aarch64": "c2acc9033188a6e22578a9edfdd9f135386dc5d91ad35b4624d39e22e253cfb1",
-        "arm": "46b50ae0cec0331e65f8f818d3cef2361788d700ecd15fe572f59709ecdb5440",
-        "x86_64": "42f682657f530f5db1743a06e29c979946d6c544e8e0876ccea0872a4d9e652a",
-        "i686": "b590ab2b2599e21cd768cec04f11da6ef05c8a9079fba1953ea8d45b12d1f9a2"
+        "aarch64": "68e8fc6931770992263fb19632bef872323dfbd302905aeca59f4738199cfd66",
+        "arm": "a1b8818a9f528965c0dc1af4798822197c8e65bcb6e5d23dd78f0b169c6e1150",
+        "x86_64": "97109a117f8e8877551cbe5042727e690ef2beadabba8757eb92a476944b13eb",
+        "i686": "f0113e32b8b203bc99cea3af822f241367b501f493b1848d4975196a9575eb6b"
       }
     },
     {
@@ -348,10 +348,10 @@
         "python-pip"
       ],
       "sha256_by_arch": {
-        "aarch64": "8a00404e9e202a6606e9008da1d7b19fe3746d6f42a7b163f01fdb16a76b5a57",
-        "arm": "d6d123d8c62bf755dfa13b2a1424695bb3c71967063776f1830c708a255bc763",
-        "x86_64": "4a0b44eb226aded954ae60416f5805b367a182f30d73caa501654d6fa8005830",
-        "i686": "9c6f17136f2d96c71c2dbc4dac2019ef1daf9aaa4eb6b80630095f3388d83e52"
+        "aarch64": "15d8f6d3a88341c47752813ea6efba684df259c0de0bda4f1084bf4242c052e7",
+        "arm": "1e920d12fd9ef936283f90598bc7defe59d9d93b087f82875c3f5f70cc753dea",
+        "x86_64": "56c2f55974a87bff32525cd5249c9b56569200a0d194a60a834c10665aed857b",
+        "i686": "84fa82cf54a88c86876fbc5783ca54ea63ff68a396940e4f52e144a807753cd0"
       }
     },
     {
@@ -373,10 +373,10 @@
         "python-pip"
       ],
       "sha256_by_arch": {
-        "aarch64": "9017a7c184705e9a2b117c21d57ecc8c35d577d05178999c05f2d471932fa31a",
-        "arm": "b979cb5c316eb03ca7ca265b98439efdfb21ceb20552d5a8b71365f71b1696dc",
-        "x86_64": "5bd03e21d56a4a91eae029241ef7c37e62cc488b07e025ee0380d25cea744d03",
-        "i686": "635958843ba6d6491d2b174ff44e23c1c5decfc99f8c4fb358caea511a2d2da4"
+        "aarch64": "028b25d83d59cfa967cd42dc3d73f565438761200e05dc8504bdb8a1bfa748be",
+        "arm": "89efb468575dbd03edd0757db058854bf620a5b0307b58b845f6d4601f4d259b",
+        "x86_64": "9c96d5920fe034bce2c46e7fe19b0701a6c036617251f06c25fd72101e32a1d2",
+        "i686": "86429b46daa687fd3b7c3be5cecfa1cbc7b9b594243624480afec98d43934603"
       }
     },
     {
@@ -398,10 +398,10 @@
         "python-pip"
       ],
       "sha256_by_arch": {
-        "aarch64": "de9fb78702f0060c624bc3ca805d8236e4a1f5cf19f57af6e20c050a01d53da8",
-        "arm": "17700f99cef231169fedb9a0fccf8b9746a74e5ac19b7438f350d10072390456",
-        "x86_64": "d12d8d1ec7c93890ab78cca6afd9004d4428a993d0b680035d98fdf6c39ce142",
-        "i686": "8052a2f2b8654ab61378bc5efe4c927013a7a74fa35a226a62d060ce2167d3a6"
+        "aarch64": "0382247fa35d7cfe3cb0958bf4c853e32318f8bc9de2e3785dbb9a02686a6ec6",
+        "arm": "2cbb3e86d922c02c725bfea25669a4098bc8c6fc0bf0779baec523e249fa64dc",
+        "x86_64": "b5cd6f22162014ff206834876cd5dcdf764289c5dd2870d53fb9ca799b33580c",
+        "i686": "9f89c7b93a3e5cc7f5503afcb7fe4168920051e5a8e62fe47f2e740970cf8762"
       }
     },
     {
@@ -423,10 +423,10 @@
         "python-pip"
       ],
       "sha256_by_arch": {
-        "aarch64": "bc7be42661830bf52bc5fd7da016f5857409f98c22794b7731a152f8a87ae396",
-        "arm": "bcd80b9e6b3bd50b2b8bb7d647999f22892f2d18c44b53b0cfc0864ce247ad81",
-        "x86_64": "454296d3988c1629652f0eda02271bc7be91e4f4f245224ae545120943e59352",
-        "i686": "2dba93f264ea1ddb88e6f0ec858f96165bb926e588a15526f2e2b2a4e14c0fdc"
+        "aarch64": "27962474e96b8cd675aedfde64a003140c5d9126a631731a95838e88fd14bf51",
+        "arm": "ae15a11831a8cf04999124f4e3c94780d55c1aa2f25213b62ec8518e2bd50a64",
+        "x86_64": "cef4d5810663ec47c0b1431c90afd67d59c4070325bd5a4b3836af257c1b98ff",
+        "i686": "589f91bd4ec99b6d9b3a872164e8378cfa4ebd28ff5c4e23e8735b32af559c46"
       }
     },
     {
@@ -448,10 +448,10 @@
         "python-pip"
       ],
       "sha256_by_arch": {
-        "aarch64": "7493fb595fb61d279384c6d8851fab2a4640ef84763356da5e871036b4f78f2b",
-        "arm": "2aaeaff35d83679411f6a926ca431bc01756a37076b7eb089dc71036e57e7473",
-        "x86_64": "df976ce14e28403362bde4761be9881ab64c3b3ad473aac7d72ed4f31a7c3112",
-        "i686": "c58d028bf44be6b32912ed7193059c4a9392c4ae974374bc5d2823daacec8df4"
+        "aarch64": "71c0e732913fd8918bcdb28980836169f015c83a8fc2f41980b2f2182c202800",
+        "arm": "a49c340ccc8c6cd78f97508a3772e3ba17c6c6a06e38af485457f310009088fd",
+        "x86_64": "f89998e57668d6d3ff3333bd815fc38bd4811146dc55159747f7880389860631",
+        "i686": "31549ee0f05c6ddbd79dba516bb9e0bf0978b331a6b8ce6e34b7b2d7593ad6e7"
       }
     },
     {
@@ -473,10 +473,10 @@
         "python-pip"
       ],
       "sha256_by_arch": {
-        "aarch64": "b2cd1ddb75cdf097e3543a1ee29d541d0cae583124eb856cfb935c928613dd96",
-        "arm": "8f9c15377b5d64d2385b6b37e9f56522456a74094daf450d0fd5cda3280d26e2",
-        "x86_64": "80f22ba6bcb266437f062028ce8ae412f995089d2b3882d232d04ef2b54736e3",
-        "i686": "2bfbd0588604104cb7762f66a0a67a149343412e3f3ea4f8ca474cb48ce492b0"
+        "aarch64": "c321d9d291e58384bef3cddb8dd5edffa8c7017ab6adee9cc911ea9c9a16f498",
+        "arm": "904e4e7f17061e44e16475fec1798ac85babd097310e1db80779d7a24c79ac0f",
+        "x86_64": "3141ccfacd2a57dbe476d2bc4ffe2258fccea4a01da93058d9ad07b2b18cba56",
+        "i686": "0e184f9480706cc9c4a36e44ebc1d2659347c1ded17ac0862dcd61ae692dd334"
       }
     },
     {
@@ -501,10 +501,10 @@
         "dnsutils"
       ],
       "sha256_by_arch": {
-        "aarch64": "1789afc4bea7315075a3cc74359aaeb44de35806a7cb2f996a4098758ac116f4",
-        "arm": "e7ef7c66a870317fa7a2128b1510f81a1ad68d02d9ba2e1480c9414aecf32cc2",
-        "x86_64": "3ff04840017c6efa8f5bdf3150656d9d8a3ba1b1e3d26e00d9e9d902d7dd8902",
-        "i686": "efe2d94a3b9c7d8dd41c8ca7977c35683a6c3dabed335cc19bf7cd55adbc9957"
+        "aarch64": "aa6779aeb2ca9e2d256c1186384a95b252ba383b5ca66aa7d55c734843a4a516",
+        "arm": "504b68e4fc30551492188b6770dc02192ce6491041a30ccab28bda290de2d554",
+        "x86_64": "8af3d7c49f66942bc461e20aa362de38cc013498f117b265cfc214151be24bfc",
+        "i686": "5e010bb8044d2d3d83ebf531f74fcfe41bac9006a0e832490bbd24a61192ac02"
       }
     },
     {
@@ -525,7 +525,7 @@
         "rust"
       ],
       "sha256_by_arch": {
-        "aarch64": "07cfaabe78c243e2d74a9073d52e54a262fc20c0b36f602d83ba0ca167c64479"
+        "aarch64": "5a29a46eb0711c0dff0f35312724450d51fd30d0d77029f049062d70152a487b"
       }
     },
     {
@@ -547,10 +547,10 @@
         "python-pip"
       ],
       "sha256_by_arch": {
-        "aarch64": "4593968dedc18040eb583e79224f0a23bffd060441ebd94011cabdbf3f898ee3",
-        "arm": "f1dda9c4056a1e68e637966043c8c6849b872d1ca1321d6bf67c9f5482ba3629",
-        "x86_64": "c08f15a1d2627e88a30ee2915830f2fca61ccd5c8fd82b3e27cafd7c4df5765d",
-        "i686": "8a37e0ec96dd758cb269ac6a155acc2af85fd94dc7117136bad279722b70d93b"
+        "aarch64": "c9b5863c63aa84bf1edb2ff1cedba1c0a763552172f6e35f3c2629982b8019af",
+        "arm": "58631d223c74de8b42c49e2f5ef0a7331a2ff9e066d26e5345b3673fe9a860c8",
+        "x86_64": "496c33493ddc94a5d2fea710f45aba3ee7c95699b4b4261ec9dcd097986cffc6",
+        "i686": "792287d396a6fcda6763ecfad74faed23ddff6ed712fb57dc49084982aeb9a81"
       }
     },
     {
@@ -568,7 +568,7 @@
       "recipe_sha256": "46f35d3264b328498d282a75f090f353777345664d8b72fb3da7ca6a3f525698",
       "platform_independent": false,
       "sha256_by_arch": {
-        "aarch64": "8ae24f8e24fce5ee8e23e9d9690bc83e3d7127296e836eaa1c348aa5b95589a1"
+        "aarch64": "ff4fd3c02509de07335234986d68f239234caae707209af83fe737247e3728e4"
       }
     },
     {
@@ -590,10 +590,10 @@
         "python-pip"
       ],
       "sha256_by_arch": {
-        "aarch64": "1d8ad9cc1af2eee20e3e3543eb68434fbd87b9ceb71a2b0735a0c7673500836e",
-        "arm": "0f689d8a222d37c5324cf778ac456f3924cbbc51c79f3b224a705df409dda5cb",
-        "x86_64": "9037206daa2082fa74dc4610970dc44d51e1554ce40c3d7f57996a4cf4efb02b",
-        "i686": "fe82a21a3523a1062c1b6b29a399cffda7b8970bef66c70adc640a6da99a50dc"
+        "aarch64": "1a6714c14f7df8ce7e84d6ead7a7df34bbd2d6af5ae4391f58f93e6d63a0959d",
+        "arm": "c376a56f3e9a97268f220ed5fb38559b64b86d64c5b145fc0c909ce6ecd6106a",
+        "x86_64": "3d99519e99af8b1b6891e2cece891d5000fded2092ef4c28624c0d450e7fc811",
+        "i686": "87118fd87d82afc9414bdb6b844eccd2b6ba4222349d8af0cb4777f6d950d062"
       }
     },
     {
@@ -614,10 +614,10 @@
         "perl"
       ],
       "sha256_by_arch": {
-        "aarch64": "cbab97df7f5aa21e9d7eefc247e7e103443020d0c2c1bb6cc3ccd8b2b9f6f5a4",
-        "arm": "57ae04ebcf85fc589d84f1ab226bf335c261d8234724bb5924d352eee2911bd3",
-        "x86_64": "da5e3e0e221afb7c649ad3a75456487ff362c028b8f14d6ff51e1809b2c3c29c",
-        "i686": "f0e9bbe9192ea5083d26d1c22c6777a175e4b6553b47e8ee76d9ad465cbbda25"
+        "aarch64": "3695372711f0c7ac1a08d00c7c3f3fefd4dc747d11b773e40a78feb2d65a826f",
+        "arm": "b24eaac8f284c12f0f0883cef3b2062399527569c2f2c2984c38a8d537d0e20d",
+        "x86_64": "4e776ce721a644770d96f63f64bd2defb3c108a179564cb734c2ce09a4f0142b",
+        "i686": "cd60f3d4d4a78d0c45f8840b7930ccde15610440a76c65d58c8ecdb6298ab0c7"
       }
     },
     {
@@ -638,7 +638,7 @@
         "rust"
       ],
       "sha256_by_arch": {
-        "aarch64": "b8feb216d14af04b0e5b51797d7267f1cb1ed0d2f9c0790d9bc8815e39aeeab7"
+        "aarch64": "dd505922112f65c7b5e343596232b26a1096dc559cd1f5ddf6d6905b65c5c4db"
       }
     },
     {
@@ -661,10 +661,10 @@
         "python-psutil"
       ],
       "sha256_by_arch": {
-        "aarch64": "87dabf2b75261feec4594cf34c5d5a018816be19064a0088932bf88c8fa4c29d",
-        "arm": "ab534ebc0ca2d2ea83bde254295b8df976a2cc19c36a884aba49753ff2d1f8b2",
-        "x86_64": "f42fd6ce6bcac22c7764021bf01f572c2597d3cf4f7c189368a662bb8ad291ea",
-        "i686": "20e7262db412b14764d3cfc6224d4d38209381a63fc0ed94dbf82a61bb658b25"
+        "aarch64": "4be05c28c1d5b500891a793c24a1a25908cfb2b8c584f69d2a84c803f20a499b",
+        "arm": "b07f4b6855eec1790383a7fb64d7912e6e71bbf3e209dbb996fddeee8c9b1411",
+        "x86_64": "974eb4ea593a5bfc5f5a27c159e079576ccccfb076a7fe94bdc5a9cf702623ae",
+        "i686": "7ce40e85e326aa2e511a24fbdd9b7f42843e1b83650ea7c849836af65313d3cc"
       }
     },
     {
@@ -682,7 +682,7 @@
       "recipe_sha256": "71ed10a7b474a6f3cd99734652ea56fe1e039e75e33110985d2648d461467d52",
       "platform_independent": false,
       "sha256_by_arch": {
-        "aarch64": "733f50b7713bbba8ee1bcc807e198e0a40de938fd4e59867eacb87928273bce0"
+        "aarch64": "2211f18d0994dad18e2bc5a36640ca652b3e490fa61d47b9b7df887c3f727f27"
       }
     },
     {
@@ -704,10 +704,10 @@
         "python-pip"
       ],
       "sha256_by_arch": {
-        "aarch64": "771a5408cec23cb09a942e34cc626f669732cd4c0f8b773406ba6f8904f65e20",
-        "arm": "265f8ba681b454521dacf9ad7fef7f8a5e4241cf59df9af86fc85f3c363dac4d",
-        "x86_64": "a9ce59a50845477b0d967316adc56a719bba5017dfe2c2ee3740dd95e29b9663",
-        "i686": "88f7f41266a64e42d9347cdec45da7826767cf5a63e8e5e5d33bd54281484d05"
+        "aarch64": "f2915ad5605e7b6a3a7199ccbb5bb04acaee6e43a5212050619e21f70570a66e",
+        "arm": "6aa838ac0d4df75b34c3eb2b226632386edee1615cf61299b7ca00a76161213f",
+        "x86_64": "addc9dc41aec8e3a29d2313a55394b030fe8792e1c70ca23419e64009268c8a3",
+        "i686": "b42609f397a805686cbfeb554f3d88e07cad17be2099e79fede3f27235075498"
       }
     },
     {
@@ -728,7 +728,7 @@
         "golang"
       ],
       "sha256_by_arch": {
-        "aarch64": "0841386310ecf196ecc99a98ed09180314dc7cdbcf580f06cb9919c2582e17d5"
+        "aarch64": "36d2064e6cdddcd7839efd90ea6e232ce681df271a6cd5a5355d3f4c66778dd3"
       }
     },
     {
@@ -749,10 +749,10 @@
         "php"
       ],
       "sha256_by_arch": {
-        "aarch64": "64519f4d1b4ed8425ca23bb4c6ea62cecf186e59b2deee6ecbe8bf50e22f8a48",
-        "arm": "f94baf574deb9af379623a319509818fa9e27f8d727394ecf8b4987892875970",
-        "x86_64": "d0c90ad6106cc6260fb818cffa05bba9d4422f40fce5721689f23c189ca17dd8",
-        "i686": "407637dcc55b4244716a5395ed9f3125c3c4a96115a583fa001cb5ea666ed391"
+        "aarch64": "eb516a7410d56bd5db20136b9a9dfd2339de699cc6069002a91dceee0842237e",
+        "arm": "782a97f592e9891c008f125346bfbfbf1411b16c5d013c1ea458d495a858b22e",
+        "x86_64": "f31cc4c0ae714a23da10f680e978a8e2485271856535a877d3fb383144654d4b",
+        "i686": "8bce62e6ad090b78c6a6fc3049311936e651116b760ff009d8a4e05ba6523247"
       }
     },
     {
@@ -770,7 +770,7 @@
       "recipe_sha256": "81b77eb2541560c01f1e72a75e7518eb88cf02124aad4bfe8e615fd7687054b3",
       "platform_independent": false,
       "sha256_by_arch": {
-        "aarch64": "fee6567a145f69d615508106889e696fb14b9f273b2881a4ff182e30288626bf"
+        "aarch64": "4514445410904ebbc9d7679ecabcc4f2c709642e13977b17b9e68c2a6f88135c"
       }
     },
     {
@@ -791,10 +791,10 @@
         "php"
       ],
       "sha256_by_arch": {
-        "aarch64": "a86206a532b769cffdb1f09c1b261a9bf1225aaa0b3862a5cf21e26e12f7c56a",
-        "arm": "868b8bfa747ca445e9cd65c145e58340f00363d3f047730885d68a6b989b01dd",
-        "x86_64": "0313ad46d24b8a467e67d29d419042b52fcb4e4d2b45f07681cfef043d8c266b",
-        "i686": "226b4a003f7d6166f564ade8c1e0fbf0a6d561b3927e368d6cb76d085cb4400b"
+        "aarch64": "8e897ca7b4db5963f90683b1d6a88e3b78f7b31dd6774e969c98ff67b6f575c0",
+        "arm": "968e4d083985be55df4428ecca6804554daf1046d9388627744c0e7cffbc4b8f",
+        "x86_64": "ac5e7f23d4c3324ec664a4c0636844edd88ae97ce25910f0e3c8a7c3b8b570de",
+        "i686": "cbe85834e089b98a3f91e0f78a794b0b05f38a6d6cd88996b692bf226dc2240b"
       }
     },
     {
@@ -812,10 +812,10 @@
       "recipe_sha256": "c1df8490f2bab50c308e006f42254fe383332180f0764eaead18e7213fb4664a",
       "platform_independent": false,
       "sha256_by_arch": {
-        "aarch64": "8c8bb6f52e09c8d0f291131aa9e11e5ed0a1546a99ed4d5244805c1604c02fc6",
-        "arm": "e34a8582043b3c6889a5a7a6bc175556a96ad68ac7a61811c2006297efc2e37b",
-        "x86_64": "cdfb5a1f25d540769ade593ba5e0fd0a54600bc5de48f57514321f8b5ec4a227",
-        "i686": "090aecd23be311e7ab2ce24758e6212d2117ad1292104470ff579a115b25841e"
+        "aarch64": "71fcbe6d6e3d217245f9ed6315c8bb758bbaccadaa69c86bb456d560b68b18c4",
+        "arm": "8cf93e42c9e85f1fd82ec8052067be51f199cd9aece398adce88404f307c881e",
+        "x86_64": "6d03b78091024c0c228dfca8a2bf29cc25648717a4f3f0800dd517f500b4d75f",
+        "i686": "f5dfe0e6671f37a88e3a04156afa8eb0b9601ca2c6cff6658a9edc90ea9075ed"
       }
     },
     {
@@ -837,10 +837,10 @@
         "python-pip"
       ],
       "sha256_by_arch": {
-        "aarch64": "7b7ac87ed42effad705cb3a78fde27bea96a9552e858527e1a888e4a6b09506c",
-        "arm": "df65bc837245992daa018b79f89db239165d85716801b33e9484895ade1b3818",
-        "x86_64": "87ee1f9e19230e1c30af5bbf1c54b9b3eaa092f7e5c778072fcac251703bafd5",
-        "i686": "6c88124ee9fcb58f2f72831c9d723113f920ae58bf2d533d6b1f8b2152ca407d"
+        "aarch64": "55ca30413cd25f79027974c0370b5f0594c202c6692e48f7e7c28596fa4073a7",
+        "arm": "6ad5818b29d9ec965d22364064898f907d6839722f2617235ad68f9ae57a6c41",
+        "x86_64": "04e3f44397b6ef1b653bed88d2f1a65dfc7508841e9fdb376cc2a06a93b965af",
+        "i686": "7d2c40e73687b65243b32712719bf7542baabaf142b018e421183afeb933b380"
       }
     },
     {
@@ -861,7 +861,7 @@
         "golang"
       ],
       "sha256_by_arch": {
-        "aarch64": "2ff69249e9e1c8869f0e8252344242fd97fc8d1d80033d5ebd33ffb88c1cb18e"
+        "aarch64": "baa0d5b4b322d388a4089b7f999f4f7099c7d49f8414ce75f89943b0112d1a9b"
       }
     },
     {
@@ -883,10 +883,10 @@
         "python-pip"
       ],
       "sha256_by_arch": {
-        "aarch64": "37d889f864c5cda1730aa2afa4ed1d264bf0897fe65014c5fc9eb6d369829be9",
-        "arm": "ab587b5f5026f2eb9865aa4f2e0176a159d0e95ab6b21b412e3e2c6ec20271b4",
-        "x86_64": "78b432ee1e5f3e71eda82b299d7636292fa657c5370b3aedf8a11129f6130dcc",
-        "i686": "95527e912f10299537ed953aa473638d8949d918ef4fdcd656be7b10361f3859"
+        "aarch64": "80b9c3bb9a51d5eb469f6cec1b148b9dc0a24fb51876c9e6fc157c22ad6d4eeb",
+        "arm": "51dc758808132311c206fc4f66ed6607a1b321a2bc41311436930d5de405d617",
+        "x86_64": "f9b7bc703023ca7464371869abea4f17a55b1356f90db49674a5fe0719f04e70",
+        "i686": "0e4c4c5abf6c81222af41dc191f898a220fd8d7f9ea8c7344cfe3afc796d9b3d"
       }
     },
     {
@@ -908,10 +908,10 @@
         "python-pip"
       ],
       "sha256_by_arch": {
-        "aarch64": "bab5de788db0696bfb3ee722bb6d30d59af28c86267deb83df047518f15c18c8",
-        "arm": "0ef55d25551fb4fcfdef8f3afaeee43ea2e515994936e96ffc69504e5c284bda",
-        "x86_64": "e7bf6d15b23cd56f6dae8d69648be86f8886ee91499d33696d8981a3ae3e7057",
-        "i686": "e646537dbe3f428054d63e1793e3207c3555d9d3e7d58856db182c14032c6f92"
+        "aarch64": "d1d57e85f70bbae4595d64f6d90474ffafeeccb69bf14d74c4dc57dbaa40fb5d",
+        "arm": "b9dfcd48f945800f6d9202c21b235e0aebe4e0583ef2416b31bc71bee007cb52",
+        "x86_64": "e5b112d703c8f69b925e1d80b83a9cbec5dd8915a8d80457b931e0df5a023386",
+        "i686": "ab2daea49c9d07b1fb9aaab72f60b00ae017573e0fcb77549042943a1f72c309"
       }
     },
     {
@@ -929,10 +929,10 @@
       "recipe_sha256": "12a6f9598509a4e23a077fa7dcb07b95ed5a969618a70ef476d440836f79018f",
       "platform_independent": false,
       "sha256_by_arch": {
-        "aarch64": "bce89df1b934315830f4640a10ed6201b3e0e46611c4d13498da238e303bed23",
-        "arm": "6273002bdc21a1eb5d32bae17582bb08eb7c907e71baccfec6f2770255c093d0",
-        "x86_64": "2cf93e300571b53fdda19c0ea56bd6199ba1c4d55cced6d70ead70ccf1655cd3",
-        "i686": "ba0601686b7e870d88c29dd91f21b13e78151bd4ed911c5172d8c563001004c7"
+        "aarch64": "ccb5f6374a2f9aab22087d5629711ea2e5017bbc7af0d61d6d22c06a52a1c2e0",
+        "arm": "c79a47b5d6f6ce356f2e0d92ed87d4c675e6c94e510d62c020a2715ffe19616f",
+        "x86_64": "d52c54c7cf4ee1db8699cdf7335bb91518da99a75375b7819808d3d587651ddd",
+        "i686": "0af82b914db74ff61004db29a7aba1fa8d65e0183cebe03b51ea13d612745a6d"
       }
     },
     {
@@ -954,10 +954,10 @@
         "python-pip"
       ],
       "sha256_by_arch": {
-        "aarch64": "ddfa81351715df89311b05bad387626159a3b8f47c28504a9fdc89a02d51e67e",
-        "arm": "88e882fc6b5c10fc1b278cc7875291ecebc30ad203e109b02a9f62b52c2df5db",
-        "x86_64": "e3a2d81daad141ad3b2250a88600239e2618b33745bd0be329222b39dca1777f",
-        "i686": "d8cb01bf48b769c576572851505a3f9708ca208649b08db1c7ae91f1361d290a"
+        "aarch64": "0ea54d2b1086fbc1a2544cb82ae0c850a6da8f2be42c42237ebb102ce239c91b",
+        "arm": "adb1d4bf01de2f892b44a6a813cf30467d7b669d553896a2c606d4b4d2af8acc",
+        "x86_64": "3d4996c6662fc11ebe72ff6e6027058c246662ac7c31c1bf2b271a70f3ac9a6f",
+        "i686": "40cdd8ae0b29de41fae545d2e7f91a8e5ee209902ceb13cf321e38e537f33ce6"
       }
     },
     {
@@ -978,10 +978,10 @@
         "python"
       ],
       "sha256_by_arch": {
-        "aarch64": "9b3a31926e6b203dc29b545b98802c89335b219ffe386cefae690f147dc93e65",
-        "arm": "d1673aa751a009dc309d88b846ffbf3930049e929b5f8b57e8d72ab4af82e7b6",
-        "x86_64": "baeb8bdd2324159d6f383578d1c08e9558fb434c84d7b218fbe3a0f25a9ba2af",
-        "i686": "3e6f591491b4303b2918aaf317da111263c8776d151af13f3f8e6024dc952caf"
+        "aarch64": "d5b746e19ba19b2147bbf9b9fe483b88713f8247d92e764cf043fd2eb5dafe19",
+        "arm": "4526d91afb5bd7085509a6fdbbe8b4e86feed6132d4cd5bde7ebd64d52cc6c33",
+        "x86_64": "69fc7f07e38f620a63876deeb847a68b59c918411c1f3afa2ae391f38bee1c6c",
+        "i686": "76872aca81cd0470b16cc7d294bfa1c63224fab259b85bf2eb6e2565722a0e1a"
       }
     },
     {
@@ -1002,10 +1002,10 @@
         "nodejs"
       ],
       "sha256_by_arch": {
-        "aarch64": "4b689307bb946c78826dba3a91316bb73fac2833d9d1044c5b2cd450b639e7a6",
-        "arm": "4dc9049ca7e509210128b8996019745f93622f2bcebcf187d45ce0699a633375",
-        "x86_64": "d9113bf19d994b92874fd8293a75cbc1945dae8567892a85eded0967f3f71e13",
-        "i686": "bd5bbfb002148ed0eebefd8ef114b346aad0dccad6d3fc4a9ad3bbe19df21d50"
+        "aarch64": "52bbcb3cd3f7913dfaf5bc67cdca3ed1aa91e1f637da7bba6c66d5df379389f2",
+        "arm": "c7e4af7d41e193cddb266c31d55f6c5995480637f8f9daf9b5cb80e84d26e20a",
+        "x86_64": "619cf91448dc390b9e1d9c8bc9010796773906ff2da0c58ef3e6d1666d1266d5",
+        "i686": "f7810b75af6b8e197715d37d7dc47b1f2e801374fd0048fcf4370ca0e41f4008"
       }
     },
     {
@@ -1027,10 +1027,10 @@
         "python-pip"
       ],
       "sha256_by_arch": {
-        "aarch64": "d4d40af0c23884328c5bb8b079540a8aa3d95439f1007ee8caf55a192b15148b",
-        "arm": "897b651a9657a63e9a1c775d9a730fcef632cf98da55cf9a1bf7cac9c1ec66b6",
-        "x86_64": "b9e05eb8d46b1d10b37427f95ccc1a984eeda12f0c726ce5819f6bc2518887a3",
-        "i686": "c1178331053d500186bdf25e0ef39ca4a5e7dd7e8ce68db4a7c724a88ecaf327"
+        "aarch64": "87ff4e12dea003fd13cc0b15566af2a892d5e589abff4887f1b4008e00c295ab",
+        "arm": "7d604a5e2b0a48f57b787e49b29e4dac7aeab419926c925402907faa96934854",
+        "x86_64": "5efdfc5c4697a0d7c2878127abddb00cbebeeb18d580e55f03814e12875ffd8c",
+        "i686": "3f88db7415ddd65470ec1c0a602027f56b67d635a338eb9b2722d78e2e453ca6"
       }
     },
     {
@@ -1048,10 +1048,10 @@
       "recipe_sha256": "f3b0a19b26adde71ba622b6b14e5c34e0307c5da6006a860b32b07fc9b46cde9",
       "platform_independent": false,
       "sha256_by_arch": {
-        "aarch64": "be5d5ce1cf5d44d31a414c5d4b2b01d0132df5a05126d54394a77149215a8aa7",
-        "arm": "7ba2c82e63cb52ac827136ea5e82d2dcde8ba543d073a5f93f2e7bda6c5be11c",
-        "x86_64": "9f70546c14b4ce18d2d53e30a64b2680c3316dec3b6e91ce0b1efc8d64ea4f1d",
-        "i686": "7fdbaa5a04cafe0a432e0f3544230900734179c1b21b7853a2508b02c5073858"
+        "aarch64": "dee9417f2fa76ce3d47a73b81747d1f18283a5a1abf25462e6ed1ce6a16b1673",
+        "arm": "6f29d5ba0be30eecae978d7a3a43dcacf4cafcd8c7822e22d6c92b6d58395ca3",
+        "x86_64": "00c3926688bf6ed18681654192197b611531198e6304d1e877e2ef4cabff6d68",
+        "i686": "4bfd11d9e47ffd83b467c29dc7b63ebf2437c29e9b94ee5745c6a8de2f2bddd0"
       }
     },
     {
@@ -1073,10 +1073,10 @@
         "python-pip"
       ],
       "sha256_by_arch": {
-        "aarch64": "56fd7ce85dff08d14a7d42af1f788fa6529b1b7faedca33e16f2154a32daf28f",
-        "arm": "4c50d912780a2fc4a8d371767953f09d38b3fe5bcbf2f5076f6cb9b5b4389ccc",
-        "x86_64": "bf90ad7668943afb8bcc8c595fc5533aa2129bfc27e5c006659552bbdcf34c0e",
-        "i686": "6ce2915026710a1f27a884c8baf3012f431242f39fec2acf7584a43478c217c7"
+        "aarch64": "b2ca337f4ec4fe24a892d4655ae49d458d6e3792f56627f0092e2a3cefa69040",
+        "arm": "1b602e630c841213b937777da2021118dfb2f6922d06ad0e3bbf7d58a70cdc5c",
+        "x86_64": "958c276ed2b969673f1807f582420bafd2fa0717bc9fbbd8e14c70e2f9dbea21",
+        "i686": "62132e93e5afcb9a0666628cfd4a3cc3ea5d9c20b8eaf65a055775d783a5bf3c"
       }
     },
     {
@@ -1098,10 +1098,10 @@
         "python-pip"
       ],
       "sha256_by_arch": {
-        "aarch64": "1f21b5c22d32ccd50f7e99f104e2c9bfc2df4fa652b5ccd4ef919aee9ff909f5",
-        "arm": "8e8f47eec65cc6becab0e23f9c2d82acdcd52f6322f7903e8ac0cfa47540d13a",
-        "x86_64": "c403bb3321508f325368e7bb7cb62a183df713559769094a67f7b8eee131ae51",
-        "i686": "5d3c77e47f475774345e1a493c38699f13584c1d81d7d5494e8e849b66235405"
+        "aarch64": "dad710682a00ed315a7ba1873421a70b536b8a0222317b5fd240bf6769c5358e",
+        "arm": "510ab518773fcb25af6b8d46f972a8fb18d45b388656b8236d2a13d097cd1680",
+        "x86_64": "e3aa48b7bfbec6730b9e2b8296388353ff26c13ca3f417c409584b37e6da5631",
+        "i686": "1b6805b27f185dfd3556ff13aff75820e267275d5673816f766344215caf121f"
       }
     },
     {
@@ -1119,10 +1119,10 @@
       "recipe_sha256": "76982b8be754a46afd5b73c1366deb1536d326878c1b389707d04ab110b7ad82",
       "platform_independent": false,
       "sha256_by_arch": {
-        "aarch64": "896b8b536ef0950eca3bf01bd1540fbd39ec2946556c57c466068ff5daba4b9e",
-        "arm": "8f496b455bf8a8f8603c0b782bd7ea7404b04db95f1b7452fac4f3e0011b1ad2",
-        "x86_64": "7e8f7c06b423b17d21ca5155577c9006f9542e3992cfc4d8ad1f54318c55f16a",
-        "i686": "c89bacd121bde79d553747a6bedee919e6f5c7f1d32c65036733b2bddd66852d"
+        "aarch64": "1a1733373d22fa9d687435c0da47472325ea7cff2b360e586ef6d386a832eabd",
+        "arm": "fca7f7a433c6504a9659a247850af2f531c038968d797a09221bc75189f1de59",
+        "x86_64": "7f7b3b9a5e34bdd124cd2920702af141b8f65e8c5637106f6247535dc65c9c49",
+        "i686": "1215cea7c19fd6cb50af62a4b6b70aa7293291a1cfe83e0702dcdb4d7ddf6f97"
       }
     },
     {
@@ -1144,10 +1144,10 @@
         "python-pip"
       ],
       "sha256_by_arch": {
-        "aarch64": "7f2a2914af4df9e1c9356ce18b381c61780a1c7b445ce088bd0e4bb616ec1e64",
-        "arm": "4e97bbc6ee751611809e2785fe8bbe0ca033de4b7484c1464d622c53381c678e",
-        "x86_64": "bf3cc0052337247ed1c392788631398fb1ad7890f77c5bcd2eac4752353e2d71",
-        "i686": "498cd86993cef9f1664ee04769ebf6e0517722004775af3fe8e63b34f536dfdb"
+        "aarch64": "5654edac945b44b42bb6ca089b551809118f2043e5ec50e430eb3cb464ee428c",
+        "arm": "dc9591f42e36d079f7710abbda9426b50ac3d545fdf1ccc5f71de62ad69c8dfe",
+        "x86_64": "8095df656ab26e516a5962d80214f173782c1b291db6af4f2930db8c93ede82b",
+        "i686": "863b885e31811ebfa8c5a85457d432725b9d489f897629ea84be44a22ad4bd9b"
       }
     },
     {
@@ -1165,7 +1165,7 @@
       "recipe_sha256": "8df25e3c38390e0ba591c53cac3f7074b8d00ad19fa205b08a2e399c6ad3e0db",
       "platform_independent": false,
       "sha256_by_arch": {
-        "aarch64": "d36e6b841ddbf7f630b3236eec2f77a7589a5a5873d13bdc8a47008968dea07c"
+        "aarch64": "f7995e50703a2794f9f00c9e3696a441c9d4299fa6ac0e661af2772bbfeff5b7"
       }
     },
     {
@@ -1183,10 +1183,10 @@
       "recipe_sha256": "5bd592ca47d3998b76dbab651a528543eb30b8e0500c4fb1a90850edca854d11",
       "platform_independent": false,
       "sha256_by_arch": {
-        "aarch64": "4511fb851b0243698cbc030373fd7da7045bba969a870b5ea60a2c6578c3318e",
-        "arm": "7ec8abb8017f35e524560388f272638169bfdc89aded24a6f764d2facea9f097",
-        "x86_64": "834e0665ee715d366f5047aa10ec11406b1f5ac07a52b32dbe55c197804b9668",
-        "i686": "e291f9abfa2f39ea1fc0bd3e2ef0e46a47407af9a749d55032ef40853df00d33"
+        "aarch64": "f2209355d8da8dfcc72bd6580480ac61114afdc04b8fe2d91a9f84c11b2f5fb9",
+        "arm": "025c8b60fb7fa9c2b5140630830cb7fcb8acb8f1951af298f0381df051086ac3",
+        "x86_64": "a3b84e21685f0e0b7f57bd2ad674864df22753ab096c1584c967a1f6871e31c5",
+        "i686": "48067aa23deb3698567414e67ae4822f66cf6f33d693e52e11d6515526a99ff9"
       }
     },
     {
@@ -1209,10 +1209,10 @@
         "python-pip"
       ],
       "sha256_by_arch": {
-        "aarch64": "4837e54601229acfe239ffcbeae1f1250cab29b90a653dddc420b226a2b164a3",
-        "arm": "b14eb08c31eab40756441fa14cf8ffff147299e4ab379b860151e9e5d89c835d",
-        "x86_64": "65d566672e24d7c9f308517f4e9bb83ee78118e68075c6d6174b3a3bd4566ead",
-        "i686": "a51f8d2f43fffcc5332f0346ea8afd2a6c929ca0b5efb155961bc0a335ed0fb3"
+        "aarch64": "6aaf887947e80649185a5a9e865ad0d8747f2506e404e35661fa37ef0159cc18",
+        "arm": "c23f7e0b990bb45db8ac9d90ed63b254439a68d14b509468857792d5811ca7f9",
+        "x86_64": "5f8ed0c6e56f4bd96f37d2c43efa277910741b8a4354f597c230f085b5e9f944",
+        "i686": "876ec5c46bd0e886a790ecada1ba39ce036c725bfab92b8da9a7db77ad4d486a"
       }
     },
     {
@@ -1234,10 +1234,10 @@
         "python-pip"
       ],
       "sha256_by_arch": {
-        "aarch64": "e392c49bfb16eaf79910ea25e93aed4889949e30e21dbc0a7e82c82d399f8de2",
-        "arm": "1c150e705f7443cf32b8817c06e4cb5ad257c7ca729ee4193766f7e70a804e72",
-        "x86_64": "15f9baa0f054614dd79c02a3affbf05360eeb107d899677f751f56ed6e935dea",
-        "i686": "97793fc6b9695aef344c305733626449cdf1112a87a0e478dd7dea480af5d4b3"
+        "aarch64": "fddd57703de8c04138e6689ef8db6fcfd30a2ff07316e03978277cd64fd3abae",
+        "arm": "b75548082efc3fcd9bf4c556ce6a6164fc0f9200628be8811c246781edcc3a34",
+        "x86_64": "f88b9edab9743bd458976434f25d6d50cef5c9acc5daa468b30c0a6d57d8f1b7",
+        "i686": "f934a2da9f136141c41201a98f29bb542a6070b2ee924fd32d03dcd0bce554e8"
       }
     },
     {
@@ -1255,10 +1255,10 @@
       "recipe_sha256": "ab16f2c2f4cdcb0fee2f8ab9847205e5c624fec229626202000c9ce38db3b8dd",
       "platform_independent": true,
       "sha256_by_arch": {
-        "aarch64": "cc9709e639ea93251fe92982548d24f056d39177949f8ab2456e8de0467333c6",
-        "arm": "ec3344276618f31fae8cfb05d7a282314e9405a3b25e1561f4c7198094535a7c",
-        "x86_64": "c1dbe4324155776ee35a3a9e9154a85db58c1d1b5af822dcf082577275ed2c0b",
-        "i686": "a2e0d07a60f3dd474273d5699330fa036793ec2de708c72ac85fe0523fb13ada"
+        "aarch64": "8647c78e98a3c4f3f133e0fc7491aad41f04454abfaf309dd549c4017796e911",
+        "arm": "fb4a38363c6498e200934b8d4e656ef513c039654168c6985b7b882a220ca885",
+        "x86_64": "bcfcfd94ac65304570a0560daac2c273f623cf39132ae33b99cfff94257ebfa5",
+        "i686": "a471fef42552b14ae45a9366b1f273f38ec570cb0cd6395287de2f7010e56f54"
       }
     },
     {
@@ -1280,10 +1280,10 @@
         "python-pip"
       ],
       "sha256_by_arch": {
-        "aarch64": "6f0a2549cb9228595d602abc3094659110391859b4f463bca014b08ad9813f55",
-        "arm": "04aba0eec223397dfab60da250affa780b7d259230de95bfa4909dc339e9462c",
-        "x86_64": "1beb427a9c7be84b6f662bf827dd6b6c106a63b4da51f0d65cef65a978e7bea2",
-        "i686": "c6db34e5cc2ae8af27c0c3c7f637092b2a27c466a269119847035e1b24884514"
+        "aarch64": "d2c42b1288f503c1e8dff8aecac8aa863906e1feafafe1d50d2c92bfb1ab8d8a",
+        "arm": "aae192bfd78ab4e3509846b5a6cd9cc571cface79d14218d3b2488e16ad00f70",
+        "x86_64": "9179fad19f7275d0cc45d3f1438580b97667803fd8644aef8fc23685e2ea86f5",
+        "i686": "c2587cf47282a069a8a176bb0ae54df79a6a2aa4863dbca1730f70607d6acdc3"
       }
     },
     {
@@ -1305,10 +1305,10 @@
         "python-pip"
       ],
       "sha256_by_arch": {
-        "aarch64": "fd28f78c13e8dc52276453bd4afa4b3e90d3b3600d8057852c51b0fb49805b29",
-        "arm": "78b026c2834b211f69221db19bd48914261a623196f16f0b471f85dd5a939041",
-        "x86_64": "41a3ecb7ab2f6e79d353cc7e5d8c441f0f83d4510b3042202007d2b4ffedce8a",
-        "i686": "2293af0bd08abb983f9e7855d44e1194c688b5e68d4b38e8c50d24b1df5d0134"
+        "aarch64": "4fe1c3c4048800725674c35be7d8eff0f0f2c6c03a2b8a9319ba0a6f79f0a52f",
+        "arm": "20f6c760f29ec59d884589a04a58c50de74f8df5c618cc5987c8ec68f8504543",
+        "x86_64": "b1c37ee5e91934b5844f8843559cec81416699f2e92b5a20bfae99871ab83bc6",
+        "i686": "1f29c7794663478e2f23de043bf4cb5bd189a791c49ba78f9316ffe588fb095d"
       }
     },
     {
@@ -1331,7 +1331,7 @@
         "zlib"
       ],
       "sha256_by_arch": {
-        "aarch64": "34dcc31775beed48d638099ca04726c61db2a2c8dbb7168e64bad07faccb2cc5"
+        "aarch64": "c14db08efe0eaaab4ca99db66614484191afd156644522aed0f3d4f5993a13e7"
       }
     },
     {
@@ -1352,10 +1352,10 @@
         "nodejs"
       ],
       "sha256_by_arch": {
-        "aarch64": "85b4423772bb702f9d9ded5c1e974fddd527521109ed36e62398473f920bb6d8",
-        "arm": "8b47675cba4ff46bb998416bb1913fbb90e4fa8194f53f628c51bd7d2dd1a187",
-        "x86_64": "2d03294aa4d685e6c70cf0735e31adaeea074f20b78d035e202e2f500e81f840",
-        "i686": "6ba1e3ee94443f403fc5628b63f60ceb93d73d6f81425fc5c03d76f2d20a7a8c"
+        "aarch64": "294c656eac7ea72eca1f384b4c847463890eb6d7e246869047704d294a8999a8",
+        "arm": "aa32fb733266cdabbd8fa5874a0c546c8bc33228fbdb8cd1c6c9c7dc4ae4b97e",
+        "x86_64": "6698f97c735339eb2f6da0b9a1623d87822699cda70a3bdbd9986aee2f0b028c",
+        "i686": "ea28185c8bfc6cd9160695824247d1db88ea08fcc11a477e279af85654327ada"
       }
     },
     {
@@ -1376,10 +1376,10 @@
         "python"
       ],
       "sha256_by_arch": {
-        "aarch64": "571722ec2e1e1000ddb116201bb78441d76ea661755cc27760abc39e04944ffb",
-        "arm": "9dceeb988865bc55d317115999c49642a3028b69fd2bf38edbb128c6729da769",
-        "x86_64": "837fb1940303ec85f098e299875d290e064520d0bc22508a0508e5cc5fb72fb7",
-        "i686": "34012518fe7a560782b6b0c334549b6d2183e9b669373d116419d51e874aa8b8"
+        "aarch64": "b9dfdb4810f7531bde6f47b6a028219a4c56410aa5a776adcbacf84a91cdad90",
+        "arm": "827e58701c3e2db5cdaca874ab5265cebaca124383528371ca8e21f2bfb79c99",
+        "x86_64": "a50a30da4dcb2d645887b8486b50a53b2997e7d3a278dd67fa2fdc7ef8aa9ef4",
+        "i686": "5570c6299646df660b20f6b28a2289f34584bc0f587ba5fd280f83138c5e8a77"
       }
     },
     {
@@ -1400,10 +1400,10 @@
         "php"
       ],
       "sha256_by_arch": {
-        "aarch64": "4b1963a60a169a0136ddb0932a619cf77099a61888742bf9b7e7e084338a63f0",
-        "arm": "374118ad81fdfca50e0502947680343b6aea1022d235cf282cc987b82eb8749d",
-        "x86_64": "3f4ba6c72d8774f455b04afe0944db70d456ed4e1119887532daca5090cc4a65",
-        "i686": "34a227691cae9d9ddd44fd8dc4eaea14c1042e87cbe40ddae51856e8f4ca1f8d"
+        "aarch64": "5528249273a99c2e372c10d8fc2b107153858b4bcd8d6033a8d7e7710a026d10",
+        "arm": "6a31be481e7c0541e1f5f0f544e37618bab1d350c0cee6170576fe3974d784ad",
+        "x86_64": "f17ca8d6d64f9f0d4f13918154c33052d8717adb83ca293fc42786d9bed7a0b4",
+        "i686": "78458e45f073cb59984320dc4f60137d8ec297fb7321c27cd808f3e83b221c6f"
       }
     },
     {
@@ -1425,10 +1425,10 @@
         "python-pip"
       ],
       "sha256_by_arch": {
-        "aarch64": "fe6a220e97b76e459611878ff15bcd77cfe88994037edc97f96df92d67dc8b01",
-        "arm": "71ca15f5f4750de46602038c3faa2413752a17896a1237f7c9dbb2e484f36ac5",
-        "x86_64": "d208d844567f93f7886520823652339be21e803cf309c3f29775436807ee54ab",
-        "i686": "06748fb980745a0206fa7b42fb50ccff9de098522fc79f10daf33aa20cc26997"
+        "aarch64": "fc2caad2ae76460f0605e0d8cae22f37405a0ec971c85b1c91d662f02c2b6226",
+        "arm": "844a6d2bbfd348bcc59ce4a36af0246d84f515b0ab2f47776dfb47b25a36226d",
+        "x86_64": "5fe44189e60a0987ed8cfd939995d4f4a680993391281e85ccce8b24cd053389",
+        "i686": "309fdc458fcc5ef918c4bb55beba1753a8f3947e6226ce71720b35c9df796b9a"
       }
     },
     {
@@ -1450,10 +1450,10 @@
         "python-pip"
       ],
       "sha256_by_arch": {
-        "aarch64": "c7cd99d820c038c96a43c41cbfed15bd6c80924f6ab379b86dfefbe6a0e029dc",
-        "arm": "a9cb47cf5091b96cb3b5be45420bfe154ae0331fa6f63d26626dccb395ebfe1d",
-        "x86_64": "af7b225e1f877a8ab6028424f1f0fd2b562ab56ddf816a77af032abdf4b848ef",
-        "i686": "b1a70f0b2d221e9c71d51b4e009b9d34d667bb46a25b7bd1fcc6e0fda32794bd"
+        "aarch64": "d56a60121a47f5dc639b6f4e2977deea802dbd606538bb8656c2b78ef0210757",
+        "arm": "41df5e4c11623d6daf0ed7d3b1ad6f647b8f154b1a375c5c55975e205b6c79a7",
+        "x86_64": "6b2e3cfb0bb84c1902b1de3867dbe1709689ecb3108c771f0c1ef961bdc258c3",
+        "i686": "ec81cd8496884a6263c2ec9d06b7c42e2ba39a3ae1627e1449ebf017f047e990"
       }
     },
     {
@@ -1479,10 +1479,10 @@
         "termux-tools"
       ],
       "sha256_by_arch": {
-        "aarch64": "7c178d42825cf5ff4e2fd465d988598eca0d84f768a4a2347fb3fe24dadcab75",
-        "arm": "b7f9fe8135c48d7706e7bfe98eb9dd1bb840834de5f6929242dd3272616998df",
-        "x86_64": "7efdb4629c507d3422800e16c597c0df206a0aa8e85a8d181997c13fc5c1688b",
-        "i686": "89e62273f0022798cb7523d357a64dc4a59d084c50bc389b41b99d6c8fa686c9"
+        "aarch64": "bd12f30054561f8bd0fcb287cce228db87f3cb110709fc9118b595e3cbc91199",
+        "arm": "37e16da18bedb07627fbe9a7d8101defa284d84d1fec4d02a12f1d1df7ce291a",
+        "x86_64": "875317b4c5e6f9f5bb99fe16aecd981bc630c428f378fe76cf53c79a383f2ec2",
+        "i686": "6fa6a79e43eea1c83d256b8651b8e376f9e916dd6372484677302173d7ef8557"
       }
     },
     {
@@ -1503,7 +1503,7 @@
         "rust"
       ],
       "sha256_by_arch": {
-        "aarch64": "4fbf04004f1ae8ae294e3a3e39493baacbfeccd2422b4fb8c370ae7df0b969ed"
+        "aarch64": "a6bbf8ef1ee5e80583046cf66ccf860c502cd6d9b213864a925cc258046e99b5"
       }
     },
     {
@@ -1524,7 +1524,7 @@
         "python"
       ],
       "sha256_by_arch": {
-        "aarch64": "312cac7788d8eb6783fe73a775678403de3304effbe07293a3f5ee80649e4dff"
+        "aarch64": "cb769189b5d7f59770af2a88f5a8a8d38fd891fcb3ad570c743cbfc4002aa310"
       }
     },
     {
@@ -1542,10 +1542,10 @@
       "recipe_sha256": "372c1c1c5ec87aa2788c0229f797c5fa84b0f66f11ebb33295739346445afa79",
       "platform_independent": false,
       "sha256_by_arch": {
-        "aarch64": "a45495f1d49874b746acf34916799c8a8ec99685335ea24f553c58fb5ae08862",
-        "arm": "8ed40cab7bae0e826ac75beb21eae3c942d33193cbea9e7a4c99f36b8764807b",
-        "x86_64": "d70f1936fbf71b3fcbbfe02642828596dd6a6062f887a9f35761e4fb1ed70602",
-        "i686": "0cfe548525db39ddc4afc148b4063bc1f0b5cec37ee15632cd2dcefd7af98d43"
+        "aarch64": "2bda9b96a2bbcdfb013090bcb6c21cd587c8a7679624e1fe37c67b1bcaa2dcc9",
+        "arm": "832e38818f6c44bc1d4e14aa82341e4e77f73402a8974e319ada0e41e87d5094",
+        "x86_64": "561fa2cc365c1579455fd2ce47f0eab2fed234d523ce210208fe4b76c5fbba43",
+        "i686": "596023893a4242046f25df6b1f5845d1061097bb97181b3adfc414ad01d1f48e"
       }
     },
     {
@@ -1569,7 +1569,7 @@
         "make"
       ],
       "sha256_by_arch": {
-        "aarch64": "950afa3cf09ce5820188a7f97b900ca100e70c835f1de0aaec8731799071c6c7"
+        "aarch64": "3cdf418b2b1a6e3330548d77916ecce5c6c6a5d854b6337eb6c8ccb45b56f044"
       }
     },
     {
@@ -1592,10 +1592,10 @@
         "python-pip"
       ],
       "sha256_by_arch": {
-        "aarch64": "9dc8cc655d11e84b7ce9279b8099471c1f6c1c217bf1c5fec78f471ecc253157",
-        "arm": "51d208ff1b1dd50659f98a64b251b436a66fa5524b509eb746089e1b35880d7a",
-        "x86_64": "cbf6ce4a684ba682f86d6d41b29f9b6ea7523516761f244fbb8712c584ff6783",
-        "i686": "7b516911947be0182d1e75643fd94f75f8501d425b30bfcbadb308664c4590e4"
+        "aarch64": "ddf33c6ee60fdc81205d24032749b69e5159937785db757a8b68ffa37df8264d",
+        "arm": "3e91e29624b440795d1c7818ee9ba3aafbfa288dfc2cb19b0c574bb8bc5b9ba0",
+        "x86_64": "9470bff2d7838e7dfe20b37101999de4f01ff42b9930dd045a1ec8d818bb0637",
+        "i686": "d2e37f602e4503ec0dc27e4108df1798297f57135317dd178a9e144bdd11f455"
       }
     },
     {
@@ -1618,10 +1618,10 @@
         "python-yt-dlp"
       ],
       "sha256_by_arch": {
-        "aarch64": "0ce553894587106f77e5ad09d326548d45f67fa0560d5295956e5b0b73d36579",
-        "arm": "52449dd661823d0537fee65cb983428d40b46cba4840f6d94fa0e0f9a6005427",
-        "x86_64": "69fccc623c4306f3501b1b1d9af69ff774d4e9dc54682b688cd5214954904ee0",
-        "i686": "446abb2cc412664d61663e46008136d86b51c6487e52f9dc5bb0db4b2dd33d01"
+        "aarch64": "1b81c2164cc19c0583d9d4b85e25a8209a1ac83aa586c76fc1085626bbbea649",
+        "arm": "1bb04e5aaff0dc0afbe68a309702c3d7d9af0b08f673749fd695fa85ca3604c4",
+        "x86_64": "5601c1e7ba9a12eaf25ba682861a93cff458138803d6a0e507890d24cd06901e",
+        "i686": "bbcd2f9da0468a4743457d570c1ab2e0c3d2a95f2fa0e10c0e348b25ea6961aa"
       }
     },
     {
@@ -1639,10 +1639,10 @@
       "recipe_sha256": "b3a4bd2121220956b9135df512694c78afd0edba99d0f3180d6f026765ac5a8a",
       "platform_independent": false,
       "sha256_by_arch": {
-        "aarch64": "1c77e0c99fb16edc02731b3c753e24d68fcf07d65fe037d97039081afff2848b",
-        "arm": "b3df618b9b536b119ca085499bda3a4b64759ce8bded21b540aef8a9af05a5a5",
-        "x86_64": "b16072f10140f36cb1c7f509967cb656907b49321a2a869fd8c780e02d2169d4",
-        "i686": "e1af92c86494c15f22f02115b2efb94960f40d78b0f10163d0ca893d251c96b0"
+        "aarch64": "c4aaa07ac68dc3eada241c0ec973062f281aff79122dc6b90b37759060756508",
+        "arm": "af14c1a2f5c3c15f866886e3a2b17806f757749a0106fd59d6d6d83fe7961029",
+        "x86_64": "91c8b35540a244966ec8798644a2c630709e7c8225a6fb905e0fdba1c0a82ebb",
+        "i686": "62f32da3df36c0d486e49d9e6a1b7e786e70a85c60ca2872a993418d2bbad14d"
       }
     },
     {
@@ -1671,7 +1671,7 @@
         "pigz"
       ],
       "sha256_by_arch": {
-        "aarch64": "16f5a3ae08c9d320d28ae70eba02e8bd84b201fc0a1feccee98ed7ff08a80b1b"
+        "aarch64": "a716fdd852bf982b1c402bb9f44074c398dde335f9beb443a8288c8736b0a188"
       }
     },
     {
@@ -1692,7 +1692,7 @@
         "golang"
       ],
       "sha256_by_arch": {
-        "aarch64": "117a973c20efbe84662855e0299eeb4d77aad69ca422ce5bda2f3de22710fa7d"
+        "aarch64": "98035f9b07fd8adc5997a7c0239a790057df03bd3f8fdc2ae12a51735759a5c3"
       }
     },
     {
@@ -1713,7 +1713,7 @@
         "rust"
       ],
       "sha256_by_arch": {
-        "aarch64": "06b2e390d7b556bc894803f92401dc95936ca95bd044709b10172f0dc9c07afa"
+        "aarch64": "e79f4b76fdfd96b6c50f5dee3366e0768fc0495b4e95576e40d858950005e2ae"
       }
     },
     {
@@ -1736,7 +1736,7 @@
         "make"
       ],
       "sha256_by_arch": {
-        "aarch64": "e076e2c5956299bc52f6665898849b661dcf9d7ee32107adc510f892f424bfd0"
+        "aarch64": "0b99c4fdfe195b1a9016e4d6743f5c1687da9589161bf24f853018bcd8292797"
       }
     },
     {
@@ -1760,7 +1760,7 @@
         "make"
       ],
       "sha256_by_arch": {
-        "aarch64": "1bcf52c1f2a71bf01959e0e738825508e4a25c81e2f660904af4dc4793cc36e7"
+        "aarch64": "46ced27a2d285ac07ee92135b9a457465882964e10a1e44fef981b77075c33b6"
       }
     },
     {
@@ -1781,10 +1781,10 @@
         "python"
       ],
       "sha256_by_arch": {
-        "aarch64": "2b22ce5730c0bac34d30045a62d73f8fbb835566ce5e4cf4894c62eb652b3837",
-        "arm": "fb08649ebd274d650b7188acccdc920927d244cdb551ac27c3a3495ac08de170",
-        "x86_64": "b3b929e1cf0f3649088b29a35188007b8ce983b9282322ac4b5a59add5b39e1a",
-        "i686": "9ac9bc8a030b9703944f1aa59f041c74625e2abab8081b4c4af5b48f8c96d9d0"
+        "aarch64": "c8a860bb1798ecbe227d21aa1b0c9d38145a2f854c393e1ec54abf195bce5b9e",
+        "arm": "027dca0cd0fdd2e41ce74a13a06e4cb9a9a6ed4c682d300cde8d388892488007",
+        "x86_64": "97cb391ebf33e8a6ad634d3229cba7e43bcf3c77fde45d98c2434b089c6eccb6",
+        "i686": "6d9cff23bf07a3257dca078680d47831d8f2963e6d61a8bfc1b4893f090ef099"
       }
     },
     {
@@ -1806,7 +1806,7 @@
         "ncurses"
       ],
       "sha256_by_arch": {
-        "aarch64": "d30706d668f9fa704afbe8852726e47d4ea8c28cc6163f00fc6e34dacf761a8b"
+        "aarch64": "81b43a22214255a4780db295df28d842f3697deb7936221bd81735301cf1f8d1"
       }
     },
     {
@@ -1832,10 +1832,10 @@
         "build-essential"
       ],
       "sha256_by_arch": {
-        "aarch64": "a1f932627d09e966cf05f1d5310b4e0086dda91a1fa6fcef6719937103191b82",
-        "arm": "f632796444c0405b66b35224c26a5317563198bd42b514a1666a998e364e29fd",
-        "x86_64": "e2d7053ff3c833071d5564b8bf73b8b13710838c7187c9b4d233cee5b4d7634a",
-        "i686": "b49f1f20f3603c9408a4336cbf5023a8ca213784e17dd4c9ce21d546af2f94f6"
+        "aarch64": "d7f8e62e1718f54b1b6bd11fef77f15e0efd7e518131cb409cc23b24d89df64c",
+        "arm": "99f2dbeee57baaf12d08a1333394076b73c8447db1895a2bf18fc8d74a583aeb",
+        "x86_64": "1b0fd4f6dc5007843b9bdd94947916caa718e86d70cddba97655c03ed3346c27",
+        "i686": "2b24aa7ce7ebcc91433a9561364f8a2d20f8ddfaa98853e75f1057f6c5534aac"
       }
     },
     {
@@ -1853,15 +1853,15 @@
       "recipe_sha256": "b2109465b85f5f7528ff971f393c4c825a1e4266101866b69829afdc462ad510",
       "platform_independent": false,
       "sha256_by_arch": {
-        "aarch64": "dc0db49ac5535a43a8d43bc5ae4066bac8e99d75803d8f7e8060798f32f7e251",
-        "arm": "a9bbd41596011e679ae766f063ea64e065e1941915414deba6f8abcd27fc52ce",
-        "x86_64": "a4805a38daac607734c8d5b726deee34dadbae48522d39f09f644a992787f276",
-        "i686": "a2bbe182384d53ba709538c54ad7f65d93ad8d344643d2c6f302412db6491e09"
+        "aarch64": "440b25094bc82b3688f0fff0a6cabd200dfb688b9c3f1f277773e21b9c2d1ab3",
+        "arm": "25de332f3433113cb6b2f9de216699ce551335dc1e73b0cae6732e248fdf7211",
+        "x86_64": "e5ae8554a4ca6dcbac6c9b8ed77d31d8cb7aad219ea8f2445c4b17eadfa54f11",
+        "i686": "517fa3fcfed0fd951a9e0c144d9d029d2556f10e741db87a3fc1dcccb9a81dd6"
       }
     },
     {
       "package": "uv",
-      "version": "0.13.7",
+      "version": "0.13.6",
       "maintainer": "@termux-app-store",
       "description": "An extremely fast Python package and project manager, written in Rust.",
       "homepage": "https://github.com/astral-sh/uv",
@@ -1870,11 +1870,11 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/astral-sh/uv/releases/download/${TERMUX_PKG_VERSION}/uv-aarch64-unknown-linux-musl.tar.gz",
-      "sha256": "2d3ec076a0c4c0e8250bb6418c44080828b544f1a3be0b6e46adf9fb6923de45",
-      "recipe_sha256": "c5e9e12ad0e55a27ca12c3995465365cae0e731770262c4e5813071ac7c948ce",
+      "sha256": "819692e404d23e5aae6bc44c0e260f1f5492fd1910ab4693b2c650f926dbe800",
+      "recipe_sha256": "7da4415720450d6336099c7426daf45a06ceb69ee7612ec967edee0a3eadb202",
       "platform_independent": false,
       "sha256_by_arch": {
-        "aarch64": "799ffb31756db7807c649d26a3a38e7db6e208666f86bccd317d51369add6105"
+        "aarch64": "97bc302a252cafc19de14a11d6f7202183867a4901b3c64ed7a9ef14e7eec085"
       }
     },
     {
@@ -1895,7 +1895,7 @@
         "rust"
       ],
       "sha256_by_arch": {
-        "aarch64": "f2e996bae95c12baae02b75aa3d8bf59775e8328572970601d044f3de1d5b643"
+        "aarch64": "dd805dafafdbeeeca1598c28b9e8dcba2febb87423a19d7fee9ac00b324a0cc1"
       }
     },
     {
@@ -1913,10 +1913,10 @@
       "recipe_sha256": "1ca1179147b36711f7e0740cfa142b1f0238946d0c605e7bfc49074776a7dd6d",
       "platform_independent": false,
       "sha256_by_arch": {
-        "aarch64": "5f4096b92727da0b9815a565368242a52524004e396080a3aba7a1e7d1eb65d8",
-        "arm": "b590a935778a0f54e356576b9114927285fc66551253c4bcb82c16097ebdb990",
-        "x86_64": "47a263a8dca0e35bd53f25cb0bcb7d11b95331e13ae7e97fd2465797a07b34c3",
-        "i686": "1185a83a793b6b0c49efc00a7f093ff44779039498246c945e2cca3540eb97bf"
+        "aarch64": "b5b935855b13103fd520e35f00ab17bf02f1f8b371895e017f412007c5c1fef1",
+        "arm": "437a723cf17c57e1116f22f6bfde4d308586edadf14d71331f0af9f3f38619c8",
+        "x86_64": "86fcac832aab50bf435c95224c9e883825bd615e0a6f460975ea3bfc8fff29cd",
+        "i686": "f0d15f5914f36eff4b54137bd7f5ca02d8e6a358fc8263de02de86416fdc826a"
       }
     },
     {
@@ -1938,10 +1938,10 @@
         "python-pip"
       ],
       "sha256_by_arch": {
-        "aarch64": "72874d1d389e700cac77ce7a580a0de0ccd5b5aacef89665874e52c1f55f5fbf",
-        "arm": "d54f49f0c9da4694ce3a7afb322adff40a289822677246fc9cb2013684c0466d",
-        "x86_64": "9ceb5ff443cb6b8cf8807b18daf0ac376cbbae71f70d93fdfd4bf0b5c9b485b2",
-        "i686": "e29942da73bccef8a24c4465c25471eabde9f516d03ac919a4bed0090aba6be3"
+        "aarch64": "56be4715b15b64375dfe0f6ac1897002b3273112706bf9f55b34b010bd19e2ec",
+        "arm": "4337d9900f3b8dd72aa58a9f19f687e31f898ec43c861502fe69ebf1846e7ac8",
+        "x86_64": "41ccd0f1bae93e22cfa5c195050f0c95a71297a3c3f75910ed3f7df095c7f330",
+        "i686": "bdf621ffe92518a8d1269c66478a7db842e0e78405275890933c8710e1cfdd55"
       }
     },
     {
@@ -1963,10 +1963,10 @@
         "python-pip"
       ],
       "sha256_by_arch": {
-        "aarch64": "76c7fe7f17c800b795e3cc58022806c454fe76e06d681d03fa2d27367dff9d43",
-        "arm": "659c40ce6a2f6a186abe91817206bf6247701ea225e3a0dd20323e98bc8f0a3a",
-        "x86_64": "3942a01f19447f8c0932fcfe8216384adeee68b2cab983ab9165d842ee445bf7",
-        "i686": "57d9409ed650616095441fee6fa1427f8de9c67aab0e1a7587fe9975ad658068"
+        "aarch64": "9572b53f698f3e10182dee9fb453e1df2305858fe5676941c662c573c8d4aa07",
+        "arm": "8fc6309f778eb1a3e3493536e31d8a719e1288741fc86a01787a27a0f04ed85d",
+        "x86_64": "a6c9de5e611b4deedc396e1eb773fbdd628801c5e934dca21425143f60f3a42c",
+        "i686": "ff8e2ed97d5131b44ea705f9ccb65e1be50df46a8cafa171a0a5c4e4b1b7e70f"
       }
     },
     {
@@ -1996,10 +1996,10 @@
         "openal-soft"
       ],
       "sha256_by_arch": {
-        "aarch64": "879497f118ce5350bfef74705da383487edc21cedbf88c00c2ddb11addf42651",
-        "arm": "c5099ab1b99c9b2535eac2dd4953c64062a346489a20619175eb587bf783aa4e",
-        "x86_64": "502f76c2a78979c20c057d538fefedbffa28689e1af7e69000b4a449e3979153",
-        "i686": "dcbaff8e582df88c28d9abd17be1cf141c806221d1d9a9e900a53510c2b303a4"
+        "aarch64": "03195fb3547c52dfb14cb31db0256e09ba5d018d904d1532d1efb11919b921d9",
+        "arm": "696e9c34f46a1ab292174c6f4feb1c25d33aae548742bf40b988c396b15af8ea",
+        "x86_64": "3736b3573c52e61a78af9cc97de7adab089909f85b0937fc92a4e7f1a8e11570",
+        "i686": "e4f0a01581fe99517d162558d4cb76e86f58254c1994aedb41787894c3feddfb"
       }
     },
     {
@@ -2020,7 +2020,7 @@
         "python"
       ],
       "sha256_by_arch": {
-        "aarch64": "59860939a01e4a3b6857bd3909d420dae849a96959e1a5e319d888be12775489"
+        "aarch64": "6cfb579db2dfccfae280f028442cda98566a903998f5540e540cc878da6de478"
       }
     },
     {
@@ -2042,7 +2042,7 @@
         "binutils"
       ],
       "sha256_by_arch": {
-        "aarch64": "56d10a5151265ecf34b0a2d99da14ea7a4b53a6e602c3770817626df31495f7e"
+        "aarch64": "a718173a41778be84fc6a21300b97c944457d231cbf98d6d9194987292e34f27"
       }
     },
     {
@@ -2064,7 +2064,7 @@
         "python"
       ],
       "sha256_by_arch": {
-        "aarch64": "4793e88fe3c7f1d0ae75f992ea538129c84872e26c13f3ed589023b73e6266f4"
+        "aarch64": "44b64cf34b522a89dd6f607a313fd055f6de0f910fd6afde8f330de1576263ca"
       }
     }
   ]
