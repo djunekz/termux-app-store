@@ -302,11 +302,23 @@ jobs:
                 exit 1
               fi
 
+              MIRRORS=(
+                "https://packages-cf.termux.dev/apt/termux-main"
+                "https://packages.termux.dev/apt/termux-main"
+                "https://grimler.se/termux/termux-main"
+              )
+              use_mirror() {
+                local m="${MIRRORS[$(( $1 % ${#MIRRORS[@]} ))]}"
+                echo "deb $m stable main" > "$PREFIX/etc/apt/sources.list" 2>/dev/null || true
+                rm -rf "${PREFIX:?}/var/lib/apt/lists/"* 2>/dev/null || true
+                echo "=== Using mirror $m ==="
+              }
+
               echo "=== Updating pkg ==="
               for attempt in 1 2 3 4 5; do
+                use_mirror $(( attempt - 1 ))
                 pkg update -y -o Acquire::Retries=5 -o Dpkg::Options::="--force-confnew" && break
                 echo "WARNING: pkg update attempt $attempt failed"
-                rm -rf "${PREFIX:?}/var/lib/apt/lists/"* 2>/dev/null || true
                 sleep $(( attempt * 15 + RANDOM % 10 ))
               done
 
@@ -323,8 +335,8 @@ jobs:
                       break
                     fi
                     echo "WARNING: attempt $attempt to install $dep failed"
-                    rm -rf "${PREFIX:?}/var/lib/apt/lists/"* 2>/dev/null || true
                     sleep $(( attempt * 20 + RANDOM % 15 ))
+                    use_mirror $attempt
                     pkg update -y -o Acquire::Retries=5 >/dev/null 2>&1 || true
                   done
                   if [[ "$dep_ok" != true ]]; then
