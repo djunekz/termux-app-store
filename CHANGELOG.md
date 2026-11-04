@@ -9,7 +9,7 @@ and this project adheres to semantic versioning.
 
 ### Added
 - `ci/setup_commit_signing.sh` - turns on SSH commit signing for a job from the `BOT_SIGNING_KEY` secret: it writes the key with owner-only permissions, checks that it can really sign (an encrypted or invalid key is rejected instead of breaking the job), and sets `gpg.format ssh`, `user.signingkey` and `commit.gpgsign` globally so commits in other checkouts such as `gh-pages` are signed too; without the secret it only prints a notice and the commits stay unsigned as before
-- `tests/test_commit_signing.py` - 25 tests that create a real key, run the script, make a commit and confirm GitHub-style verification passes, cover a missing, invalid, encrypted and newline-less key, and check that every workflow that runs `git commit` sets up signing first with a matching condition
+- `tests/test_commit_signing.py` - 22 tests that create a real key, run the script, make a commit and confirm GitHub-style verification passes, cover a missing, invalid, encrypted and newline-less key, and check that every workflow that runs `git commit` sets up signing first with a matching condition
 
 ### Changed
 - `.github/workflows/auto-release.yml`, `auto-update-packages.yml`, `build-packages-debs.yml`, `build-termux-repo.yml`, `repin-floating-sources.yml`, `update_index.yml` and `update_log.yml` - a `Set up commit signing` step runs before the step that commits, so commits made by the bot can show as Verified on GitHub once `BOT_SIGNING_KEY` holds a private key whose public half is registered as a Signing Key on the `termuxappstore` account; the repository signing key of the APT repository is not used for commits
