@@ -17,6 +17,10 @@ and this project adheres to semantic versioning.
 ### Fixed
 - `.github/workflows/auto-release.yml`, `auto-update-packages.yml`, `build-packages-debs.yml`, `build-termux-repo.yml`, `repin-floating-sources.yml` and `update_log.yml` - the `Set up commit signing` step was missing, so `tests/test_commit_signing.py::test_every_workflow_that_commits_sets_up_signing_first` failed and the `Pytest` job in CI went red; the step now runs `bash ci/setup_commit_signing.sh` with `BOT_SIGNING_KEY` before the first step that runs `git commit`, with the same `if` condition as that commit step (`update_index.yml` already had it)
 
+### Update
+- Package `fd` v10.5.0 → v10.5.1
+- Package `merlin` v1.1.4 → v1.1.5
+
 ---
 
 ## [v0.10.2] - 2026-11-04
