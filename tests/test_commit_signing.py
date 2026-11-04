@@ -5,7 +5,6 @@ import subprocess
 from pathlib import Path
 
 import pytest
-import yaml
 
 ROOT = Path(__file__).resolve().parent.parent
 SCRIPT = ROOT / "ci" / "setup_commit_signing.sh"
@@ -149,36 +148,75 @@ def test_key_without_trailing_newline_still_works(tmp_path, home):
     assert "Commit signing enabled" in result.stdout
 
 
-def _steps(path: Path):
-    data = yaml.safe_load(path.read_text(encoding="utf-8"))
-    for job in data["jobs"].values():
-        yield job.get("steps", [])
+JOB_START = re.compile(r"^  [A-Za-z0-9_-]+:\s*$")
+STEP_START = re.compile(r"^      - ")
+SETUP_CALL = "bash ci/setup_commit_signing.sh"
 
 
-def _commits(step: dict) -> bool:
-    return "git commit" in str(step.get("run", ""))
+def _jobs(path: Path) -> list:
+    jobs: list = []
+    inside = False
+    steps = None
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if line.startswith("jobs:"):
+            inside = True
+            continue
+        if not inside:
+            continue
+        if JOB_START.match(line):
+            steps = []
+            jobs.append(steps)
+        elif steps is not None and STEP_START.match(line):
+            steps.append([line])
+        elif steps:
+            steps[-1].append(line)
+    return [["\n".join(step) for step in job] for job in jobs]
 
 
-@pytest.mark.parametrize("path", WORKFLOWS, ids=[p.name for p in WORKFLOWS])
+def _commits(step: str) -> bool:
+    return "git commit" in step
+
+
+def _condition(step: str):
+    match = re.search(r"(?m)^        if: (.+)$", step)
+    return match.group(1) if match else None
+
+
+def _committing_workflows() -> list:
+    return [p for p in WORKFLOWS if any(_commits(step) for job in _jobs(p) for step in job)]
+
+
+def test_all_expected_workflows_are_detected_as_committing():
+    assert {p.name for p in _committing_workflows()} >= {
+        "auto-release.yml",
+        "auto-update-packages.yml",
+        "build-packages-debs.yml",
+        "build-termux-repo.yml",
+        "repin-floating-sources.yml",
+        "update_index.yml",
+        "update_log.yml",
+    }
+
+
+@pytest.mark.parametrize("path", _committing_workflows(), ids=lambda p: p.name)
 def test_every_workflow_that_commits_sets_up_signing_first(path):
-    for steps in _steps(path):
+    for steps in _jobs(path):
         committing = [i for i, step in enumerate(steps) if _commits(step)]
         if not committing:
             continue
-        setup = [i for i, step in enumerate(steps) if "ci/setup_commit_signing.sh" in str(step.get("run", ""))]
+        setup = [i for i, step in enumerate(steps) if SETUP_CALL in step]
         assert setup, f"{path.name} commits without setting up signing"
         assert setup[0] < committing[0]
-        step = steps[setup[0]]
-        assert step["env"] == {"BOT_SIGNING_KEY": "${{ secrets.BOT_SIGNING_KEY }}"}
+        assert "BOT_SIGNING_KEY: ${{ secrets.BOT_SIGNING_KEY }}" in steps[setup[0]]
 
 
-def test_signing_step_condition_matches_the_commit_step_condition():
-    for path in WORKFLOWS:
-        for steps in _steps(path):
-            for i, step in enumerate(steps):
-                if "ci/setup_commit_signing.sh" in str(step.get("run", "")):
-                    following = next(s for s in steps[i + 1 :] if _commits(s))
-                    assert step.get("if") == following.get("if")
+@pytest.mark.parametrize("path", _committing_workflows(), ids=lambda p: p.name)
+def test_signing_step_condition_matches_the_commit_step_condition(path):
+    for steps in _jobs(path):
+        for i, step in enumerate(steps):
+            if SETUP_CALL in step:
+                following = next(s for s in steps[i + 1 :] if _commits(s))
+                assert _condition(step) == _condition(following)
 
 
 def test_script_never_prints_the_key():
