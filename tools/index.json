@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-11-04T05:24:47.417105+00:00",
+  "generated_at": "2026-11-04T19:42:06.243400+00:00",
   "total": 88,
   "packages": [
     {
@@ -595,7 +595,7 @@
     },
     {
       "package": "fd",
-      "version": "10.5.0",
+      "version": "10.5.1",
       "maintainer": "@termux-app-store",
       "description": "A simple, fast and user-friendly alternative to 'find'",
       "homepage": "https://github.com/sharkdp/fd",
@@ -604,8 +604,8 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/sharkdp/fd/releases/download/v${TERMUX_PKG_VERSION}/fd-v${TERMUX_PKG_VERSION}-aarch64-unknown-linux-musl.tar.gz",
-      "sha256": "d76c4317f7d5dba69f8a2a15856c90c777e7f0dd4e85f0de8c76de6992c374d4",
-      "recipe_sha256": "81b77eb2541560c01f1e72a75e7518eb88cf02124aad4bfe8e615fd7687054b3",
+      "sha256": "64c20b9b154c9d4b36d4b7df3521de771c499c4768b4b5b045ef6b01532117be",
+      "recipe_sha256": "dfe002313d56af3be2b609fffd9f773d75458608094b6f3db133fc2d7145b828",
       "platform_independent": false
     },
     {
@@ -909,7 +909,7 @@
     },
     {
       "package": "merlin",
-      "version": "1.1.4",
+      "version": "1.1.5",
       "maintainer": "@termux-app-store",
       "description": "Analyst website vulnerabillity scanner",
       "homepage": "https://github.com/djunekz/merlin",
@@ -918,8 +918,8 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/merlin/archive/refs/tags/${TERMUX_PKG_VERSION}.tar.gz",
-      "sha256": "96c68eb45e03ac6f5b9ebb42b037d943d3df3c44ab58a9746fa1e63400b1cb72",
-      "recipe_sha256": "5bd592ca47d3998b76dbab651a528543eb30b8e0500c4fb1a90850edca854d11",
+      "sha256": "b0aad1281ba139f39b81be912237fc2f76e586bf5f0b89a7bac2918baeddbb00",
+      "recipe_sha256": "726be907bf86672de143167a90e3862ef1378baf26e4c4d734ac8a6248ad951a",
       "platform_independent": false
     },
     {
