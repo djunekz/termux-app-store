@@ -18,7 +18,7 @@ Because it lives in a terminal, how accessible it is also depends on your termin
 - Every action the TUI offers is also available as a non-interactive CLI command, so nothing requires the full-screen interface.
 - CLI output is plain text that can be piped, copied, searched and read by a terminal-aware screen reader or a braille display more easily than a full-screen interface.
 - The TUI uses light text on a dark background and does not use sound.
-- The TUI can be operated with a keyboard: `Ctrl+R` refreshes packages, `Ctrl+I` installs the selected package and `Ctrl+Q` quits.
+- The TUI can be operated with a keyboard: `Ctrl+R` refreshes packages, `Ctrl+I` installs, updates or opens the selected package, `Ctrl+X` cancels the running install, `F4` shows the activity history, `F5` opens a bug report and `Ctrl+Q` quits.
 - Text size follows your terminal and Termux font size setting, so you can enlarge it without changing the app.
 - Documentation is available in several languages (see the `README.*.md` files).
 

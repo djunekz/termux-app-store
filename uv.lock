@@ -754,7 +754,7 @@ wheels = [
 
 [[package]]
 name = "termux-app-store"
-version = "0.9.1"
+version = "0.10.2"
 source = { editable = "." }
 dependencies = [
     { name = "textual" },

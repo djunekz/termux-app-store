@@ -45,11 +45,22 @@ The application may store the following **locally** on your device:
 - Temporary files
 - Logs related to build output
 - Binary executables
+- Activity history (installs, updates, removals and launches), settings, and the package size and speed caches used for the ETA, in `~/.cache/termux-app-store`
 
 All stored data:
 - Remains on your device
 - Is not transmitted to the project maintainers
 - Can be removed by deleting the application directory
+
+---
+
+## Bug Reports From the App
+
+The **Report an issue** action only opens a web page in your browser. The form is
+pre-filled with the package, the app, Python, Textual, Termux and Android versions,
+the architecture and the last log lines. The app sends nothing itself: you can read
+and edit everything before you decide to submit it. Remove tokens and private paths
+from the log first.
 
 ---
 

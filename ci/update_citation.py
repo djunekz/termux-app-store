@@ -5,16 +5,16 @@ Keep CITATION.cff in step with a release.
 
 Sets `version` and `date-released` in CITATION.cff from a release tag. The
 release date is read from the matching heading in CHANGELOG.md
-(`## [v0.9.1] - 2026-10-21`), so the citation always agrees with the
+(`## [v0.10.2] - 2026-11-04`), so the citation always agrees with the
 changelog; when the heading has no date, today's date (UTC) is used.
 
 Only those two top-level lines are touched. Nothing else in the file changes
 and no YAML library is needed.
 
 Usage:
-  python ci/update_citation.py --version v0.9.2            # write the file
-  python ci/update_citation.py --version v0.9.2 --check    # exit 1 if stale
-  python ci/update_citation.py --version v0.9.2 --only-if-newer
+  python ci/update_citation.py --version v0.10.3            # write the file
+  python ci/update_citation.py --version v0.10.3 --check    # exit 1 if stale
+  python ci/update_citation.py --version v0.10.3 --only-if-newer
 
 Options:
   --version V        Release tag or version (a leading "v" is removed).

@@ -209,6 +209,17 @@ termux-app-store
 tas
 ```
 
+| Tombol / tombol keyboard | Fungsi |
+|---|---|
+| **Install / Update / Open** (`Ctrl+I`) | Tombol utama mengikuti paket: Install jika belum terpasang, Update jika ada versi baru, Open jika sudah terpasang dan terbaru. Open menjalankan tool (pilih command, isi argumen) dan kembali ke TUI setelah kamu menekan Enter |
+| **Shortcut** (dialog Open) | Membuat skrip Termux:Widget di `~/.shortcuts` yang menjalankan tool dengan argumenmu |
+| **Upgrade all** (banner update) | Banner menampilkan jumlah paket terpasang yang punya versi baru dan memasukkan semuanya ke antrean |
+| **Cancel** (`Ctrl+X`) | Menghentikan download atau build source yang berjalan di titik aman berikutnya |
+| `F4` | Riwayat aktivitas: install, update, hapus, dan jalankan |
+| `F5` | Laporkan masalah: membuka form bug report yang sudah terisi |
+| `Ctrl+R` / `Ctrl+Q` | Refresh paket / keluar |
+| `Ctrl+P` | Command palette, termasuk menyalakan atau mematikan notifikasi (butuh Termux:API) |
+
 ### CLI — Perintah Langsung
 
 ```bash

@@ -197,6 +197,17 @@ termux-app-store
 tas
 ```
 
+| Key / button | What it does |
+|---|---|
+| **Install / Update / Open** (`Ctrl+I`) | The main button follows the package: Install when it is not installed, Update when a newer version exists, Open when it is installed and current. Open runs the tool (choose the command, add arguments) and returns to the TUI after you press Enter |
+| **Shortcut** (Open dialog) | Creates a Termux:Widget script in `~/.shortcuts` that runs the tool with your arguments |
+| **Upgrade all** (update banner) | The banner shows how many installed packages have a newer version and queues all of them |
+| **Cancel** (`Ctrl+X`) | Stops a running download or source build at the next safe point |
+| `F4` | Activity history: installs, updates, removals and launches |
+| `F5` | Report an issue: opens the bug report form already filled in |
+| `Ctrl+R` / `Ctrl+Q` | Refresh packages / quit |
+| `Ctrl+P` | Command palette, including notifications on or off (needs Termux:API) |
+
 ### CLI — Direct Commands
 
 ```bash

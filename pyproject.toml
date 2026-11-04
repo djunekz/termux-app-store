@@ -15,7 +15,7 @@ source = ["tools", "termux_app_store"]
 
 [project]
 name = "termux-app-store"
-version = "0.9.1"
+version = "0.10.2"
 description = "A local-first TUI and CLI package manager built natively for Termux"
 readme = "README.md"
 license = "MIT"

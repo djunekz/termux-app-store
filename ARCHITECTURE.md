@@ -53,7 +53,8 @@ Termux App Store is designed with the following goals:
   - List rendering
   - Preview panel
   - Logs
-  - Progress bar
+  - Progress bar with a live ETA
+  - Update banner, activity history and the Open dialog
   - User interaction (keyboard / touch)
 
 **No business logic is embedded in UI rendering.**
@@ -67,6 +68,8 @@ Responsible for:
 - Async task scheduling
 - Worker queue
 - Install locking
+- Cancellation of a running install (shared cancel event)
+- Activity history and settings (small JSON files in the cache directory)
 - UI updates from threads
 
 Uses:
@@ -161,6 +164,8 @@ The UI **never executes build logic directly**.
 - Thread → UI communication via:
   - `call_from_thread()`
 - Only one install allowed at a time
+- A cancel event is shared with the worker thread: downloads check it on every chunk and
+  builds are stopped together with the processes they started; `dpkg` is never interrupted
 
 This avoids:
 - UI freezes

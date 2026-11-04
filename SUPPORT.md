@@ -4,7 +4,7 @@ Welcome to the **Termux App Store** support guide.
 
 This document explains where to get help, how to report a problem, and what
 information to include so that maintainers and the community can respond
-quickly. It applies to v0.9.1 and later.
+quickly. It applies to v0.10.2 and later.
 
 ---
 

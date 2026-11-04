@@ -1,7 +1,7 @@
 # Frequently Asked Questions (FAQ)
 
 This document answers common questions about **Termux App Store**. It applies
-to v0.9.1 and later.
+to v0.10.2 and later.
 
 Quick navigation: [General](#general) | [Installing the App](#installing-the-app)
 | [Installing Packages](#installing-packages) | [Security and Trust](#security-and-trust)
@@ -187,8 +187,39 @@ for 24 hours. Run `termux-app-store mirrors` to see their status.
 ### Why does an install seem to freeze?
 
 Common reasons are a slow network, a large download or a compile step in
-progress. Check the log panel for activity before cancelling. If it is really
-stuck, see [TROUBLESHOOTING.md](TROUBLESHOOTING.md).
+progress. Check the log panel for activity before cancelling. In the TUI the **Cancel**
+button (or `Ctrl+X`) stops a download or a build from source at the next safe
+point; a `dpkg` step that has already started is never interrupted. If it is
+really stuck, see [TROUBLESHOOTING.md](TROUBLESHOOTING.md).
+
+### How do I run a tool after installing it?
+
+In the TUI the main button of an installed, up-to-date package says **Open**. It
+lets you pick the command (when the package has several), type optional arguments
+and run it. The TUI pauses until you press Enter and then comes back. The
+**Shortcut** button in the same dialog creates a Termux:Widget script in
+`~/.shortcuts` so you can start the tool from your home screen.
+
+### How do I report a bug from the TUI?
+
+Press `F5`, or choose **Report an issue** in the command palette. The bug report
+form opens in your browser with the package, the versions, the architecture and
+the last log lines already filled in. Nothing is sent until you press submit in
+the browser, so read it first and remove tokens and private paths.
+
+### Where does the TUI keep its history and settings?
+
+In `~/.cache/termux-app-store`: `history.json` (installs, updates, removals and
+launches, the last 300 entries), `settings.json` (for example the notification
+switch), and `sizes.json` and `speed.json` (package sizes and the download and
+install speed that make the ETA more accurate). Everything stays on your device.
+Press `F4` to read the history.
+
+### Can I get a notification when an install finishes?
+
+Yes, for installs and removals that take 8 seconds or more. Install Termux:API
+(`pkg install termux-api` and the Termux:API app). The setting can be switched in
+the command palette with **Toggle notifications**.
 
 ### Does it modify my system?
 

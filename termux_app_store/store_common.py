@@ -3,9 +3,11 @@ import json
 import os
 import re
 import shutil
+import signal
 import subprocess
 import sys
 import tempfile
+import threading
 import time
 import urllib.request
 from collections import deque
@@ -104,19 +106,38 @@ class RateTracker:
         return (total - done) / rate
 
 
+def write_json_atomic(path: Path, data) -> bool:
+    tmp_name = None
+    try:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        fd, tmp_name = tempfile.mkstemp(dir=str(path.parent), suffix=".tmp")
+        with os.fdopen(fd, "w", encoding="utf-8") as handle:
+            json.dump(data, handle)
+        os.replace(tmp_name, path)
+        return True
+    except Exception:
+        if tmp_name:
+            try:
+                os.unlink(tmp_name)
+            except OSError:
+                pass
+        return False
+
+
+def read_json(path: Path, expected: type):
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        return expected()
+    return data if isinstance(data, expected) else expected()
+
+
 class SpeedStats:
     def __init__(self, path: Path):
         self.path = path
 
-    def _read(self) -> dict:
-        try:
-            data = json.loads(self.path.read_text(encoding="utf-8"))
-        except Exception:
-            return {}
-        return data if isinstance(data, dict) else {}
-
     def get(self, key: str, default: float) -> float:
-        value = self._read().get(key)
+        value = read_json(self.path, dict).get(key)
         if isinstance(value, (int, float)) and value > 0:
             return float(value)
         return default
@@ -124,24 +145,125 @@ class SpeedStats:
     def update(self, key: str, value: float, alpha: float = 0.4) -> None:
         if not isinstance(value, (int, float)) or value <= 0:
             return
-        data = self._read()
+        data = read_json(self.path, dict)
         old = data.get(key)
         if isinstance(old, (int, float)) and old > 0:
             value = old + alpha * (value - old)
         data[key] = round(float(value), 4)
-        tmp_name = None
+        write_json_atomic(self.path, data)
+
+
+class Settings:
+    def __init__(self, path: Path, defaults: Optional[dict] = None):
+        self.path = path
+        self.defaults = dict(defaults or {})
+
+    def get(self, key: str, default=None):
+        data = read_json(self.path, dict)
+        if key in data:
+            return data[key]
+        return self.defaults.get(key, default)
+
+    def set(self, key: str, value) -> None:
+        data = read_json(self.path, dict)
+        data[key] = value
+        write_json_atomic(self.path, data)
+
+
+class ActivityLog:
+    def __init__(self, path: Path, limit: int = 300):
+        self.path = path
+        self.limit = limit
+
+    def add(
+        self,
+        action: str,
+        package: str,
+        version: str = "",
+        result: str = "ok",
+        seconds: float = 0.0,
+        detail: str = "",
+        now: Optional[float] = None,
+    ) -> None:
+        entries = read_json(self.path, list)
+        entries.append(
+            {
+                "time": time.time() if now is None else now,
+                "action": action,
+                "package": package,
+                "version": version,
+                "result": result,
+                "seconds": round(float(seconds), 1),
+                "detail": detail[-1500:],
+            }
+        )
+        write_json_atomic(self.path, entries[-self.limit :])
+
+    def recent(self, limit: int = 50, package: Optional[str] = None) -> list:
+        entries = [e for e in read_json(self.path, list) if isinstance(e, dict)]
+        if package is not None:
+            entries = [e for e in entries if e.get("package") == package]
+        return list(reversed(entries[-limit:])) if limit > 0 else []
+
+    def last_for(self, package: str) -> Optional[dict]:
+        found = self.recent(1, package)
+        return found[0] if found else None
+
+
+def format_ago(then: float, now: Optional[float] = None) -> str:
+    delta = (time.time() if now is None else now) - then
+    if delta < 0:
+        delta = 0
+    if delta < 60:
+        return "just now"
+    if delta < 3600:
+        return f"{int(delta // 60)}m ago"
+    if delta < 86400:
+        return f"{int(delta // 3600)}h ago"
+    if delta < 86400 * 30:
+        return f"{int(delta // 86400)}d ago"
+    return f"{int(delta // (86400 * 30))}mo ago"
+
+
+class InstallCancelled(Exception):
+    pass
+
+
+def terminate_process_tree(proc, grace: float = 5.0) -> None:
+    try:
+        own_group = os.getpgid(0)
+        group = os.getpgid(proc.pid)
+    except OSError:
+        return
+    try:
+        if group == own_group:
+            proc.terminate()
+        else:
+            os.killpg(group, signal.SIGTERM)
+    except OSError:
+        return
+    try:
+        proc.wait(timeout=grace)
+    except subprocess.TimeoutExpired:
         try:
-            self.path.parent.mkdir(parents=True, exist_ok=True)
-            fd, tmp_name = tempfile.mkstemp(dir=str(self.path.parent), suffix=".tmp")
-            with os.fdopen(fd, "w", encoding="utf-8") as handle:
-                json.dump(data, handle)
-            os.replace(tmp_name, self.path)
-        except Exception:
-            if tmp_name:
-                try:
-                    os.unlink(tmp_name)
-                except OSError:
-                    pass
+            if group == own_group:
+                proc.kill()
+            else:
+                os.killpg(group, signal.SIGKILL)
+        except OSError:
+            pass
+
+
+def watch_cancel(proc, cancel) -> threading.Thread:
+    def _run():
+        while proc.poll() is None:
+            if cancel.wait(0.5):
+                terminate_process_tree(proc)
+                return
+
+    thread = threading.Thread(target=_run, daemon=True)
+    thread.start()
+    return thread
 
 
 def _silent(kind: str, message: str) -> None:

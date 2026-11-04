@@ -347,6 +347,7 @@ def content_about(L):
             ("v0.4.5", "Jul 2026", "Security hardening: SHA256 checks, name validation"),
             ("v0.8.5", "Oct 2026", "Shared store_common module, checksum-gated cache"),
             ("v0.9.1", "Oct 2026", "Signed apt repository (signed-by), key pinning"),
+            ("v0.10.2", "Nov 2026", "TUI: Open button, cancel, history, bug report"),
         ]
         for ver, date, desc in timeline:
             lines.append(f"  {BCYN}{B}{ver:<8}{R}  {DIM}{date}{R}  {desc}")
@@ -421,6 +422,7 @@ def content_about(L):
             ("v0.4.5", "Jul 2026", "Penguatan keamanan: cek SHA256, validasi nama"),
             ("v0.8.5", "Okt 2026", "Modul store_common bersama, cache wajib checksum"),
             ("v0.9.1", "Okt 2026", "Repository apt bertanda tangan (signed-by), key pinning"),
+            ("v0.10.2", "Nov 2026", "TUI: tombol Open, batal install, riwayat, lapor bug"),
         ]
         for ver, date, desc in timeline:
             lines.append(f"  {BCYN}{B}{ver:<8}{R}  {DIM}{date}{R}  {desc}")
@@ -697,7 +699,11 @@ def content_usage(L):
                 f"{BCYN}Up / Down{R}   -- navigate package list",
                 f"{BCYN}Enter{R}       -- view detail / install",
                 f"{BCYN}Ctrl+R{R}      -- refresh packages",
-                f"{BCYN}Ctrl+I{R}      -- install selected package",
+                f"{BCYN}Ctrl+I{R}      -- Install, Update or Open the selected package",
+                f"{BCYN}Ctrl+X{R}      -- cancel the running install",
+                f"{BCYN}F4{R}          -- activity history",
+                f"{BCYN}F5{R}          -- report an issue",
+                f"{BCYN}Ctrl+P{R}      -- command palette",
                 f"{BCYN}Ctrl+Q{R}      -- quit",
                 "Touchscreen fully supported",
             ]
@@ -708,6 +714,20 @@ def content_usage(L):
             f"  {DIM}install, use Enter or the CLI command instead.{R}",
             "",
         ]
+        lines += subsection("TUI -- Buttons and Features")
+        lines += bullet(
+            [
+                f"{B}Install / Update / Open{R}\nThe main button follows the package: Install if it is\nnot installed, Update if a newer version exists, Open\nif it is installed and current.",
+                f"{B}Open{R}\nRuns the installed tool. Pick the command (when there\nare several), add arguments, press Run. The TUI pauses\nuntil you press Enter, then comes back.",
+                f"{B}Shortcut{R}\nIn the Open dialog: creates a Termux:Widget script in\n~/.shortcuts that runs the tool with your arguments.",
+                f"{B}Update banner{R}\nShows how many installed packages have a newer version.\nUpgrade all queues each of them once.",
+                f"{B}Cancel{R}\nStops a download or a source build at the next safe\npoint. dpkg is never interrupted once it has started.",
+                f"{B}History (F4){R}\nInstalls, updates, removals and launches with time,\nresult and duration. Stored in ~/.cache/termux-app-store.",
+                f"{B}Report an issue (F5){R}\nOpens the bug report form in your browser with the\npackage, versions and last log lines already filled in.\nRead it before you send; remove private paths.",
+                f"{B}Notifications{R}\nInstalls that take 8 seconds or more can notify you\n(needs: pkg install termux-api). Toggle in the palette.",
+            ]
+        )
+        lines += [""]
         lines += subsection("CLI -- Command Line")
         lines += code_block(
             "termux-app-store list                  # all packages",
@@ -768,7 +788,11 @@ def content_usage(L):
                 f"{BCYN}Atas / Bawah{R}   -- pindah package",
                 f"{BCYN}Enter{R}          -- lihat detail / install",
                 f"{BCYN}Ctrl+R{R}         -- refresh package",
-                f"{BCYN}Ctrl+I{R}         -- install package terpilih",
+                f"{BCYN}Ctrl+I{R}         -- Install, Update atau Open package terpilih",
+                f"{BCYN}Ctrl+X{R}         -- batalkan install yang berjalan",
+                f"{BCYN}F4{R}             -- riwayat aktivitas",
+                f"{BCYN}F5{R}             -- laporkan masalah",
+                f"{BCYN}Ctrl+P{R}         -- command palette",
                 f"{BCYN}Ctrl+Q{R}         -- keluar",
                 "Touchscreen didukung penuh",
             ]
@@ -779,6 +803,20 @@ def content_usage(L):
             f"  {DIM}menginstall, pakai Enter atau perintah CLI.{R}",
             "",
         ]
+        lines += subsection("TUI -- Tombol dan Fitur")
+        lines += bullet(
+            [
+                f"{B}Install / Update / Open{R}\nTombol utama mengikuti package: Install jika belum\nterpasang, Update jika ada versi baru, Open jika sudah\nterpasang dan terbaru.",
+                f"{B}Open{R}\nMenjalankan tool yang terpasang. Pilih command (jika ada\nbeberapa), isi argumen, tekan Run. TUI berhenti sementara\nsampai kamu menekan Enter, lalu kembali.",
+                f"{B}Shortcut{R}\nDi dialog Open: membuat skrip Termux:Widget di\n~/.shortcuts yang menjalankan tool dengan argumenmu.",
+                f"{B}Banner update{R}\nMenampilkan jumlah package terpasang yang punya versi\nbaru. Upgrade all memasukkan semuanya ke antrean sekali.",
+                f"{B}Cancel{R}\nMenghentikan download atau build source di titik aman\nberikutnya. dpkg tidak pernah dihentikan setelah mulai.",
+                f"{B}Riwayat (F4){R}\nInstall, update, hapus, dan jalankan lengkap dengan waktu,\nhasil, dan durasi. Tersimpan di ~/.cache/termux-app-store.",
+                f"{B}Lapor masalah (F5){R}\nMembuka form bug report di browser dengan package,\nversi, dan baris log terakhir sudah terisi. Baca dulu\nsebelum dikirim; hapus path pribadi.",
+                f"{B}Notifikasi{R}\nInstall yang memakan 8 detik atau lebih bisa memberi\nnotifikasi (butuh: pkg install termux-api). Matikan lewat palette.",
+            ]
+        )
+        lines += [""]
         lines += subsection("CLI -- Command Line")
         lines += code_block(
             "termux-app-store list                  # semua package",
@@ -1750,6 +1788,16 @@ def content_troubleshoot(L):
                 ["termux-app-store mirrors", "termux-app-store cache clear", "termux-app-store fix-install <pkg>"],
             ),
             (
+                "HTTP 429 Too Many Requests",
+                "A mirror is rate limiting you. The app tries the other mirrors by itself. Wait a minute, check the mirrors and retry.",
+                ["termux-app-store mirrors", "termux-app-store install <pkg>"],
+            ),
+            (
+                "An install is stuck or too slow",
+                "In the TUI press Ctrl+X (Cancel). A download stops within a moment and a source build is stopped with everything it started. It cannot stop dpkg once that has begun. Then test the mirrors and retry.",
+                ["termux-app-store mirrors"],
+            ),
+            (
                 "SHA256 mismatch",
                 "Usually a corrupted or stale download. Clear the cache and retry. If it repeats, report it (privately if you suspect tampering).",
                 ["termux-app-store cache clear", "termux-app-store update"],
@@ -1813,6 +1861,16 @@ def content_troubleshoot(L):
                 "Fast install gagal",
                 "Tes mirror, bersihkan cache, lalu coba lagi. Pilihan terakhir: build dari source.",
                 ["termux-app-store mirrors", "termux-app-store cache clear", "termux-app-store fix-install <pkg>"],
+            ),
+            (
+                "HTTP 429 Too Many Requests",
+                "Mirror membatasi permintaanmu. Aplikasi mencoba mirror lain sendiri. Tunggu semenit, cek mirror, lalu coba lagi.",
+                ["termux-app-store mirrors", "termux-app-store install <pkg>"],
+            ),
+            (
+                "Install macet atau terlalu lambat",
+                "Di TUI tekan Ctrl+X (Cancel). Download berhenti sebentar kemudian dan build source dihentikan bersama semua proses yang dijalankannya. dpkg tidak bisa dihentikan setelah mulai. Lalu tes mirror dan coba lagi.",
+                ["termux-app-store mirrors"],
             ),
             (
                 "SHA256 mismatch",
@@ -1883,6 +1941,7 @@ def content_help(L):
             [
                 "The exact command and the full error message",
                 "How you installed (pip or tasctl) and whether you use TUI or CLI",
+                "In the TUI press F5: it opens a bug report with these details filled in",
                 "Your Termux and Android versions",
                 "Remove tokens and private paths from logs before posting",
             ]
@@ -1941,6 +2000,7 @@ def content_help(L):
             [
                 "Perintah persisnya dan pesan error lengkap",
                 "Cara install (pip atau tasctl) dan apakah memakai TUI atau CLI",
+                "Di TUI tekan F5: bug report terbuka dengan detail ini sudah terisi",
                 "Versi Termux dan Android kamu",
                 "Hapus token dan path pribadi dari log sebelum dikirim",
             ]

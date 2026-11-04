@@ -7,6 +7,10 @@ and this project adheres to semantic versioning.
 
 ## [Unreleased]
 
+---
+
+## [v0.10.2] - 2026-11-04
+
 ### Added
 - `.github/workflows/auto-update-packages.yml` - new workflow that checks every package against its upstream every 12 hours (00:00 and 12:00 UTC) and can also be run manually for all packages or a list of packages; manual inputs are `packages`, `dry_run`, `mode` (`push` or `pull-request`) and `include_commit_pinned`; the run publishes a summary, commits the result with the repository bot identity and, in `pull-request` mode, keeps a single rolling `auto-update/packages` PR instead of opening a new one every run
 - `ci/auto_update_packages.py` - upstream checker used by the workflow: reads the latest GitHub Release (or the highest stable tag) for GitHub sources and the `latest` dist-tag for npm sources, never downgrades, rewrites `TERMUX_PKG_VERSION`, `TERMUX_PKG_SRCURL` and `TERMUX_PKG_SHA256` in `build.sh` keeping the original quote style, and computes the SHA256 from the file downloaded from the new URL; a package whose new URL cannot be downloaded is reported and left unchanged
@@ -33,6 +37,18 @@ and this project adheres to semantic versioning.
 - `termux_app_store/store_common.py` - shared helpers `format_size()`, `RateTracker` (speed measured over a sliding 4 second window and smoothed) and `SpeedStats` (small JSON file that remembers the download and install speed between runs, written atomically)
 - `tests/test_eta_and_sizes.py` and `tests/test_tui_actions.py` - 36 new tests: size formatting, speed tracking and its persistence, the simulated download and `dpkg` ETA, the remote size lookup, and the TUI button labels, the license and size lines, the `Open` dialog, running a command with arguments and finding the executables of a package; the suite now has 413 tests
 - `README.md`, `README.id.md`, `README.th.md`, `README.jp.md`, `README.ch.md` and `README.vi.md` - new centred badge block with 42 badges in six rows: workflows (CI, CLI, CodeQL, Lint, .deb build, index, publish), releases (PyPI version and downloads, Python versions, GitHub release and downloads), quality (Codecov, RepoGrade, Ruff, mypy, pytest, security policy), project (package count read live from `tools/index.json`, platform, architectures, Textual, TUI and CLI, SHA256 verified, no root), community (license, stars, forks, watchers, contributors, issues, pull requests) and activity (last commit, commit activity, languages, code and repository size, code of conduct)
+- `termux_app_store/termux_app_store.py` - update banner under the title bar: when installed packages have a newer version it shows how many and the first names (`1 update available: ani-cli`) with an `Upgrade all` button (queues every outdated package once); it disappears when everything is current and refreshes after every install, update and removal
+- `termux_app_store/termux_app_store.py` - `Cancel` button (also `Ctrl+X`) while a package is installing: a download stops at the next chunk and its partial file is removed, a build from source is stopped together with all the processes it started, queued installs are dropped, and `dpkg` is never interrupted once it has started; a cancelled install does not fall back to building from source
+- `termux_app_store/termux_app_store.py` - activity history (`F4` or the command palette): installs, updates, removals and launches with the time, the result (done, failed or cancelled) and how long they took, kept in `~/.cache/termux-app-store/history.json` (last 300 entries); the detail panel also shows a `Last` line such as `installed 2h ago`
+- `termux_app_store/termux_app_store.py` - `Report an issue` (`F5` or the command palette) opens the existing bug report form in the browser already filled with the package and version, the app, Python, Textual, Termux and Android versions, the architecture and the last log lines (the log of the last failed install is used when the screen log is empty); the text is trimmed to stay within the length GitHub accepts and you can review it before sending
+- `termux_app_store/termux_app_store.py` - completion notifications through Termux:API for installs and removals that took 8 seconds or more (title, result and a short vibration), switched on and off with `Toggle notifications` in the command palette; nothing happens when `termux-notification` is not installed
+- `termux_app_store/termux_app_store.py` - `Shortcut` button in the `Open` dialog creates a Termux:Widget script in `~/.shortcuts` that runs the chosen command with the typed arguments and waits for Enter before closing the window; a file of the same name that was not created by the store is never overwritten
+- `termux_app_store/store_common.py` - `ActivityLog`, `Settings`, `format_ago()`, `InstallCancelled`, `terminate_process_tree()` and `watch_cancel()`, plus `write_json_atomic()` and `read_json()` shared with `SpeedStats`
+- `tests/test_tui_actions.py` and `tests/test_cancel_and_state.py` - 62 more tests for the banner, cancelling, history, issue links, notifications and shortcuts, and for stopping downloads and builds; the suite now has 475 tests
+- `guidebook.py` - the "About" timeline has a v0.10.2 line and the "Using termux-app-store" topic lists the new TUI keys (`Ctrl+X`, `F4`, `F5`, `Ctrl+P`) and a new "TUI -- Buttons and Features" section (Install / Update / Open, Open, Shortcut, update banner, Cancel, history, report an issue, notifications); the troubleshooting topic has entries for `HTTP 429 Too Many Requests` and for an install that is stuck or too slow, and "Getting Help" mentions `F5`; all in English and Indonesian
+- `README.md` and `README.id.md` - a table of the TUI buttons and keys under "TUI" (the other translations of the README do not have it yet)
+- `FAQ.md` - new answers for running a tool after installing it, reporting a bug from the TUI, where the TUI keeps its history and settings, and notifications when an install finishes
+- `PRIVACY.md` - the history, settings and size and speed caches are listed as local data, and a new section explains that `Report an issue` only opens a pre-filled page in the browser and sends nothing by itself
 
 ### Changed
 - `build-package.sh` - dependency installation now retries up to 5 times with an increasing, randomised back-off and refreshes the apt index between attempts (`Acquire::Retries=5`); this covers the HTTP 429 "Too Many Requests" answers and the transient "Hashes of expected file" mismatches returned by the Termux mirror when many jobs hit it at once
@@ -55,6 +71,15 @@ and this project adheres to semantic versioning.
 - `termux_app_store/termux_app_store.py` - package data now keeps `license`, `download_size` and `homepage` from the index, and the local `build.sh` loader reads `TERMUX_PKG_LICENSE`
 - `tools/index.json` and `termux_app_store/data/index.json` - regenerated with `tools/build.py` so `depends` and `recipe_sha256` match the corrected recipes; the packaged copy also catches up for `broot`, `dust`, `pmcli` and `termux-sync`
 - `build-tester.py` and `tools/termux-build-init.sh` - no longer list or add `python-setuptools` as a Termux package (`python-wheel` is installed with pip)
+- `termux_app_store/fast_install.py` - `fast_install()`, `download_deb()`, `install_deb()` and `_fallback_build_from_source()` accept an optional `cancel` event; the build script now runs in its own session when a cancel event is given so it can be stopped as a whole
+- `termux_app_store/termux_app_store.py` - the status of every package is read with one `dpkg-query` call in the background instead of one call per package, which keeps the update banner fast on a phone
+- `termux_app_store/termux_app_store.py` - `Open` dialog returns the chosen action together with the command, and `run_external()` takes the package name so launches are recorded in the history
+- `termux_app_store/__init__.py`, `pyproject.toml`, `uv.lock` and `CITATION.cff` - the version is raised from 0.9.1 to 0.10.2 and `date-released` in `CITATION.cff` is 2026-11-04, matching this heading
+- `INSTALL.md`, `FAQ.md`, `TROUBLESHOOTING.md` and `SUPPORT.md` - now state that they apply to v0.10.2 and later
+- `TROUBLESHOOTING.md` and `ACCESSIBILITY.md` - the list of TUI keyboard shortcuts now includes `Ctrl+X`, `F4` and `F5`, and `Ctrl+I` is described as install, update or open
+- `FAQ.md` - the answer about an install that seems to freeze explains the `Cancel` button and that `dpkg` is never interrupted
+- `ARCHITECTURE.md` - the UI layer, the application core and the concurrency model describe the update banner, the history, the open dialog and the shared cancel event
+- `ci/update_citation.py` - the examples in its help text use v0.10.2 and v0.10.3
 
 ### Fixed
 - `build-package.sh` - a failed `pkg install` of `TERMUX_PKG_DEPENDS` was only a warning, so the build carried on without the toolchain and died later with `cargo: command not found`, `go: command not found` or `npm: command not found`; the build now stops with a `FATAL` message naming the missing dependencies once all retries are used (workflow run #136: `aichat` v0.30.0, `brutespray` v2.7.2 and `pnpm` v12.14.0)
@@ -66,10 +91,11 @@ and this project adheres to semantic versioning.
 - `packages/sublist3r` - the pip line contained `argparse;python_version`, where the `;` ran `python_version` as a separate shell command; it now installs `argparse`, `dnspython` and `requests`
 - `.github/workflows/build-packages-debs.yml` - `unmineable` v0.1.5 failed to install `cmake` because the Termux mirror picked inside termux-docker (`mirror.textcord.xyz`) answered HTTP 429 and apt reported the repository as not signed; the job now writes `sources.list` with an official mirror and moves to the next one (`packages-cf.termux.dev`, `packages.termux.dev`, `grimler.se`) on every retry, clearing the apt lists each time
 - `termux_app_store/termux_app_store.py` - `Open homepage` used a `url` field that never existed in the index and always fell back to a GitHub search; it now opens the `homepage` of the package
+- `termux_app_store/termux_app_store.py` - the package list was rebuilt before the old entries were removed, so the selected row could point at the wrong package after the list changed, and `Show installed packages` left a search text behind that emptied the list on the next refresh; the list is now refreshed in a worker that waits for the old entries to go, and rapid typing in the search box cancels the previous refresh
 
 ### Update
 - Package `termux-sync` v1.2.8 → v1.3.5
-- Package `uv` v0.13.4 → v0.13.6
+- Package `uv` v0.13.4 → v0.13.7
 - Package `infoooze` v1.1.9 → v1.2.2
 - Package `pnpm` v12.14.0 → v12.16.1
 - Package `unmineable` v0.1.0 → v0.1.5

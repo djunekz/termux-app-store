@@ -1,7 +1,7 @@
 # Installation Guide
 
 This document explains how to install, update and remove **Termux App Store**
-on Termux. It applies to v0.9.1 and later.
+on Termux. It applies to v0.10.2 and later.
 
 ---
 

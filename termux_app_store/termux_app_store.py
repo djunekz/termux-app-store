@@ -4,9 +4,12 @@ import json
 import os
 import re
 import shlex
+import shutil
 import subprocess
 import sys
+import threading
 import time
+import urllib.parse
 import urllib.request
 from pathlib import Path
 
@@ -34,6 +37,18 @@ is_safe_pkg_name = _store.is_safe_pkg_name
 has_store_fingerprint = _store.has_store_fingerprint
 is_valid_root = _store.is_valid_root
 format_size = _store.format_size
+format_ago = _store.format_ago
+
+DATA_DIR = _store.CACHE_FILE.parent
+ACTIVITY = _store.ActivityLog(DATA_DIR / "history.json")
+SETTINGS = _store.Settings(
+    DATA_DIR / "settings.json",
+    {"notify": True, "vibrate": True},
+)
+NOTIFY_MIN_SECONDS = 8
+ACTION_WORDS = {"install": "installed", "update": "updated", "uninstall": "uninstalled", "open": "opened"}
+ARCH_CHOICES = {"aarch64": "aarch64", "arm": "armv7l", "x86_64": "x86_64"}
+SHORTCUT_MARK = "Press Enter to close..."
 
 try:
     from termux_app_store.fast_install import FastInstaller
@@ -285,6 +300,31 @@ def load_packages_from_local(packages_dir: Path) -> list:
     return pkgs
 
 
+def compute_status(installed, store_version: str) -> str:
+    if installed is None:
+        return "NOT INSTALLED"
+    if _ver_tuple(installed) >= _ver_tuple(store_version):
+        return "INSTALLED"
+    return "UPDATE"
+
+
+def get_installed_versions() -> dict:
+    try:
+        out = subprocess.check_output(
+            ["dpkg-query", "-W", "-f=${Package}\t${Status}\t${Version}\n"],
+            stderr=subprocess.DEVNULL,
+            text=True,
+        )
+    except Exception:
+        return {}
+    result = {}
+    for line in out.splitlines():
+        parts = line.split("\t")
+        if len(parts) == 3 and parts[1].split()[-1:] == ["installed"] and parts[2].strip():
+            result[parts[0]] = parts[2].strip()
+    return result
+
+
 def normalize_pkg(raw: dict) -> dict:
     deps = raw.get("depends", [])
     if isinstance(deps, str):
@@ -361,6 +401,134 @@ def size_text_from_index(pkg: dict):
     if isinstance(raw, str) and raw.strip().lower() not in ("", "-", "unknown", "n/a"):
         return raw.strip()
     return None
+
+
+def collect_environment() -> dict:
+    try:
+        import importlib.metadata as metadata
+
+        app_version = metadata.version("termux-app-store")
+    except Exception:
+        app_version = "unknown"
+    try:
+        from textual import __version__ as textual_version
+    except Exception:
+        textual_version = "unknown"
+    try:
+        android = subprocess.check_output(
+            ["getprop", "ro.build.version.release"], stderr=subprocess.DEVNULL, text=True, timeout=3
+        ).strip()
+    except Exception:
+        android = ""
+    arch = get_arch() if _FAST_INSTALL_AVAILABLE else os.uname().machine
+    return {
+        "app_version": app_version,
+        "termux_version": os.environ.get("TERMUX_VERSION", ""),
+        "android": android,
+        "arch": arch,
+        "python": f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}",
+        "textual": textual_version,
+    }
+
+
+def build_issue_url(env: dict, package: str, version: str, log_lines: list, max_len: int = 7000) -> str:
+    base = f"https://github.com/{GITHUB_REPO}/issues/new"
+    subject = f"{package} {version}".strip() if package else "TUI"
+    header = (
+        f"python {env.get('python', '?')}, textual {env.get('textual', '?')}, termux {env.get('termux_version') or '?'}"
+    )
+    steps = "1. Open Termux App Store"
+    if package:
+        steps += f'\n2. Select package "{package}"\n3. Press Install / Update / Open'
+
+    def make(lines: list) -> str:
+        logs = "```\n" + "\n".join([header, *lines]) + "\n```"
+        params = {
+            "template": "bug_report.yml",
+            "title": f"[BUG] {subject}",
+            "description": f"Problem with {subject}",
+            "package_feature": package or "TUI",
+            "termux_version": "Other",
+            "android_version": env.get("android", ""),
+            "architecture": ARCH_CHOICES.get(env.get("arch", ""), "Other"),
+            "app_version": env.get("app_version", ""),
+            "reproduction_steps": steps,
+            "logs": logs,
+        }
+        params = {k: v for k, v in params.items() if v}
+        return base + "?" + urllib.parse.urlencode(params, quote_via=urllib.parse.quote)
+
+    lines = [line[:200] for line in log_lines[-30:]]
+    url = make(lines)
+    while len(url) > max_len and lines:
+        lines = lines[len(lines) // 4 + 1 :]
+        url = make(lines)
+    return url
+
+
+def notify_done(title: str, content: str, vibrate: bool = True) -> bool:
+    notifier = shutil.which("termux-notification")
+    if not notifier:
+        return False
+    try:
+        subprocess.Popen(
+            [notifier, "--title", title, "--content", content, "--id", "termux-app-store"],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+        buzz = shutil.which("termux-vibrate") if vibrate else None
+        if buzz:
+            subprocess.Popen([buzz, "-d", "150"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    except OSError:
+        return False
+    return True
+
+
+def shortcut_name(exe: str, args: str) -> str:
+    base = re.sub(r"[^A-Za-z0-9._+-]+", "-", exe).strip("-") or "tool"
+    extra = re.sub(r"[^A-Za-z0-9._+-]+", "-", args).strip("-")[:30]
+    return f"{base}-{extra}" if extra else base
+
+
+def create_shortcut(exe: str, args: str, directory=None):
+    try:
+        argv = [exe, *shlex.split(args)]
+    except ValueError as e:
+        return False, f"Invalid arguments: {e}"
+    folder = (
+        Path(directory) if directory else Path(os.environ.get("TERMUX_SHORTCUTS_DIR") or Path.home() / ".shortcuts")
+    )
+    path = folder / shortcut_name(exe, args)
+    prefix = Path(os.environ.get("PREFIX", "/data/data/com.termux/files/usr"))
+    body = "\n".join(
+        [
+            f"#!{prefix}/bin/bash",
+            shlex.join(argv),
+            "code=$?",
+            f"printf '\\n[%s exited with code %s]  {SHORTCUT_MARK}' {shlex.quote(exe)} \"$code\"",
+            "read -r _",
+            'exit "$code"',
+            "",
+        ]
+    )
+    try:
+        if path.exists() and SHORTCUT_MARK not in path.read_text(encoding="utf-8", errors="ignore"):
+            return False, f"A different shortcut named {path.name} already exists"
+        folder.mkdir(parents=True, exist_ok=True)
+        path.write_text(body, encoding="utf-8")
+        path.chmod(0o755)
+    except OSError as e:
+        return False, f"Cannot write shortcut: {e}"
+    return True, str(path)
+
+
+def history_line(entry: dict, now=None) -> str:
+    mark = {"ok": "✔", "failed": "✗", "cancelled": "⊘"}.get(entry.get("result", ""), "•")
+    seconds = entry.get("seconds") or 0
+    took = f"  {seconds:g}s" if seconds else ""
+    version = f" {entry['version']}" if entry.get("version") else ""
+    when = format_ago(entry.get("time", 0), now)
+    return f"{when:>8}  {mark} {entry.get('action', '?'):<9} {entry.get('package', '?')}{version}{took}"
 
 
 class PackageItem(ListItem):
@@ -473,6 +641,9 @@ class RunScreen(_ModalScreen):
         background: #44475a;
         color: #f8f8f2;
     }
+    #run-shortcut {
+        margin-right: 2;
+    }
     #run-cancel:hover { background: #6272a4; }
     """
 
@@ -498,18 +669,19 @@ class RunScreen(_ModalScreen):
             yield Input(placeholder="Arguments (optional)", id="run-args")
             with Horizontal(id="run-btns"):
                 yield Button("Cancel", id="run-cancel")
+                yield Button("Shortcut", id="run-shortcut", variant="primary")
                 yield Button("Run", id="run-go", variant="success")
 
     def on_mount(self) -> None:
         self.query_one("#run-args", Input).focus()
 
-    def _submit(self) -> None:
+    def _submit(self, mode: str = "run") -> None:
         exe = self.executables[0]
         if len(self.executables) > 1:
             chosen = self.query_one("#run-exe", Select).value
             if isinstance(chosen, str):
                 exe = chosen
-        self.dismiss((exe, self.query_one("#run-args", Input).value))
+        self.dismiss((mode, exe, self.query_one("#run-args", Input).value))
 
     def action_cancel(self) -> None:
         self.dismiss(None)
@@ -523,7 +695,62 @@ class RunScreen(_ModalScreen):
         if event.button.id == "run-cancel":
             self.dismiss(None)
         elif event.button.id == "run-go":
-            self._submit()
+            self._submit("run")
+        elif event.button.id == "run-shortcut":
+            self._submit("shortcut")
+
+
+class HistoryScreen(_ModalScreen):
+    DEFAULT_CSS = """
+    HistoryScreen {
+        align: center middle;
+    }
+    #history-dialog {
+        width: 90%;
+        max-width: 90;
+        height: 80%;
+        border: heavy #8be9fd;
+        background: #282a36;
+        padding: 1 2;
+    }
+    #history-title {
+        text-align: center;
+        color: #8be9fd;
+        text-style: bold;
+        margin-bottom: 1;
+    }
+    #history-scroll {
+        height: 1fr;
+    }
+    #history-btns {
+        align: center middle;
+        height: auto;
+        margin-top: 1;
+    }
+    """
+
+    BINDINGS = [("escape", "close", "Close")]
+
+    def __init__(self, entries: list, title: str = "Activity history"):
+        super().__init__()
+        self.entries = entries
+        self.heading = title
+
+    def compose(self) -> ComposeResult:
+        text = "\n".join(history_line(e) for e in self.entries) or "No activity yet."
+        with Vertical(id="history-dialog"):
+            yield Static(self.heading, id="history-title")
+            with VerticalScroll(id="history-scroll"):
+                yield Static(text, id="history-body", markup=False)
+            with Horizontal(id="history-btns"):
+                yield Button("Close", id="history-close")
+
+    def action_close(self) -> None:
+        self.dismiss(None)
+
+    def on_button_pressed(self, event) -> None:
+        event.stop()
+        self.dismiss(None)
 
 
 class AboutScreen(_ModalScreen):
@@ -737,6 +964,9 @@ class TermuxAppStore(App):
     BINDINGS = [
         ("ctrl+r", "refresh", "Refresh packages"),
         ("ctrl+i", "install_selected", "Install / Open / Update"),
+        ("ctrl+x", "cancel_install", "Cancel install"),
+        ("f4", "show_history", "History"),
+        ("f5", "report_issue", "Report issue"),
         ("ctrl+q", "quit", "Quit"),
     ]
 
@@ -779,6 +1009,10 @@ class TermuxAppStore(App):
     #uninstall:hover { background: #ff6e6e; }
     #uninstall:disabled { background: #44475a; color: #6272a4; }
     #status-bar { height: 1; content-align: left middle; color: #6272a4; padding-left: 1; }
+    #update-banner { height: 3; display: none; background: #44475a; padding: 0 1; }
+    #banner-text { width: 1fr; height: 3; content-align: left middle; color: #f1fa8c; }
+    #banner-upgrade { margin-right: 1; }
+    #cancel-install { margin-left: 1; display: none; }
     """
 
     async def on_mount(self):  # pragma: no cover
@@ -790,6 +1024,10 @@ class TermuxAppStore(App):
         self.log_buffer = []
         self.size_cache = {}
         self.size_pending = set()
+        self.queued_names = set()
+        self.cancel_event = threading.Event()
+        self.cancellable = False
+        self.statuses_ready = False
         self.worker_queue = asyncio.Queue()
 
         self.set_interval(0.1, self.consume_worker_queue)
@@ -798,6 +1036,7 @@ class TermuxAppStore(App):
         self.refresh_list()
 
         self.run_worker(self._fetch_online_worker(), exclusive=False)
+        self.invalidate_statuses()
 
         self.binary_installer = FastInstaller() if _BINARY_CACHE_AVAILABLE else None
 
@@ -815,7 +1054,7 @@ class TermuxAppStore(App):
                 return
 
             self.packages = new_packages
-            self.status_cache.clear()
+            self.invalidate_statuses()
             self.refresh_list(preserve_selection=True)
         except Exception:
             pass
@@ -825,8 +1064,14 @@ class TermuxAppStore(App):
             return
 
         self.installing = True
+        self.cancellable = True
+        self.cancel_event.clear()
+        self.queued_names.discard(name)
+        action = "update" if get_installed_version(name) else "install"
+        started = time.monotonic()
         self.install_btn.disabled = True
         self.uninstall_btn.disabled = True
+        self.cancel_btn.display = True
 
         self.log_buffer.clear()
         self.update_log(f"Starting installation: {name}\n")
@@ -850,28 +1095,108 @@ class TermuxAppStore(App):
                     self.update_log,
                     _progress,
                     _eta,
+                    self.cancel_event,
                 )
 
-            if not success:
+            if not success and not self.cancel_event.is_set():
                 self.update_log("Building from source...\n")
                 success = await asyncio.to_thread(self._build_from_source_with_progress, name)
 
         except Exception as e:
             self.update_log(f"❌ Error: {e}\n")
 
+        cancelled = self.cancel_event.is_set() and not success
+        elapsed = time.monotonic() - started
+
         if success:
             self.progress.progress = 100
             self.progress.set_eta(0)
             self.update_log(f"\n✅ {name} installed successfully!")
+        elif cancelled:
+            self.progress.set_eta(0)
+            self.update_log(f"\n⊘ Installation of {name} cancelled")
         else:
             self.update_log(f"\n❌ Failed to install {name}")
 
+        result = "ok" if success else ("cancelled" if cancelled else "failed")
+        self.record_activity(action, name, result, elapsed, "" if success else "\n".join(self.log_buffer[-15:]))
+        if not cancelled:
+            verb = {"install": "installed", "update": "updated"}[action]
+            self.finish_notice(f"{name} {verb}" if success else f"{name} failed", elapsed)
+
         self.installing = False
+        self.cancellable = False
+        self.cancel_btn.display = False
         self.install_btn.disabled = False
         self.uninstall_btn.disabled = False
-        self.status_cache.clear()
+        self.invalidate_statuses()
         self.refresh_list(preserve_selection=True)
         self.refresh_current_preview()
+
+    def find_package(self, name: str):
+        return next((p for p in self.packages if p["name"] == name), None)
+
+    def record_activity(self, action: str, name: str, result: str, seconds: float = 0.0, detail: str = ""):
+        pkg = self.find_package(name)
+        ACTIVITY.add(action, name, pkg["version"] if pkg else "", result, seconds, detail)
+
+    def finish_notice(self, content: str, seconds: float):
+        if seconds >= NOTIFY_MIN_SECONDS and SETTINGS.get("notify", True):
+            notify_done("Termux App Store", content, bool(SETTINGS.get("vibrate", True)))
+
+    def invalidate_statuses(self):
+        self.status_cache.clear()
+        self.statuses_ready = False
+        self.run_worker(self._refresh_statuses(), exclusive=True, group="statuses")
+
+    async def _refresh_statuses(self):
+        installed = await asyncio.to_thread(get_installed_versions)
+        self.apply_installed_map(installed)
+
+    def apply_installed_map(self, installed: dict):
+        self.status_cache.clear()
+        for pkg in self.packages:
+            self.status_cache[pkg["name"]] = compute_status(installed.get(pkg["name"]), pkg["version"])
+        self.statuses_ready = True
+        self.update_banner()
+        self.refresh_current_preview()
+
+    def names_with_status(self, status: str) -> list:
+        return [p["name"] for p in self.packages if self.status_cache.get(p["name"]) == status]
+
+    def update_banner(self):
+        names = self.names_with_status("UPDATE") if self.statuses_ready else []
+        if not names:
+            self.banner.display = False
+            return
+        shown = ", ".join(names[:3]) + (" ..." if len(names) > 3 else "")
+        plural = "s" if len(names) != 1 else ""
+        self.banner_text.update(f"⬆ {len(names)} update{plural} available: {shown}")
+        self.banner.display = True
+
+    def visible_packages(self) -> list:
+        q = self.search_query
+        return [pkg for pkg in self.packages if q == "" or q in pkg["name"].lower() or q in pkg["desc"].lower()]
+
+    def request_cancel(self):
+        if not self.installing:
+            self.status_bar.update("Nothing to cancel.")
+            return
+        if not self.cancellable:
+            self.status_bar.update("This operation cannot be cancelled.")
+            return
+        self.cancel_event.set()
+        dropped = 0
+        while not self.worker_queue.empty():
+            try:
+                self.worker_queue.get_nowait()
+            except asyncio.QueueEmpty:
+                break
+            dropped += 1
+        self.queued_names.clear()
+        self.update_log("Cancel requested — stopping at the next safe point")
+        if dropped:
+            self.update_log(f"{dropped} queued task(s) removed")
 
     def refresh_current_preview(self):
         if self.current_item:
@@ -919,7 +1244,9 @@ class TermuxAppStore(App):
             cwd=str(app_root),
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
+            start_new_session=True,
         )
+        _store.watch_cancel(proc, self.cancel_event)
 
         for line in iter(proc.stdout.readline, b""):
             clean = strip_ansi(line.decode(errors="ignore").rstrip())
@@ -932,6 +1259,9 @@ class TermuxAppStore(App):
                     break
 
         proc.wait()
+        if self.cancel_event.is_set():
+            self.update_log("Build cancelled")
+            return False
         _set_progress(95)
         return proc.returncode == 0
 
@@ -961,6 +1291,11 @@ class TermuxAppStore(App):
     def compose(self) -> ComposeResult:  # pragma: no cover
         yield Header()
 
+        with Horizontal(id="update-banner") as self.banner:
+            self.banner_text = Static("", id="banner-text")
+            yield self.banner_text
+            yield Button("Upgrade all", id="banner-upgrade", variant="warning")
+
         with Horizontal(id="body"):
             with Vertical(id="left"):
                 self.search_input = Input(placeholder="Search package...", id="search")
@@ -988,6 +1323,10 @@ class TermuxAppStore(App):
                     self.uninstall_btn.display = False
                     yield self.uninstall_btn
 
+                    self.cancel_btn = Button("Cancel", id="cancel-install", variant="error")
+                    self.cancel_btn.display = False
+                    yield self.cancel_btn
+
         self.status_bar = Static("", id="status-bar")
         yield self.status_bar
         yield Static("Official Developer @djunekz | Termux App Store", id="footer")
@@ -1000,28 +1339,29 @@ class TermuxAppStore(App):
         current_name = None
         if preserve_selection and self.current_item:
             current_name = self.current_item.pkg.get("name")
+        self.run_worker(
+            self._apply_list(self.visible_packages(), current_name),
+            exclusive=True,
+            group="list",
+        )
 
-        self.list_view.clear()
-        q = self.search_query
+    async def _apply_list(self, visible: list, current_name):
+        await self.list_view.clear()
+        if not visible:
+            self.current_item = None
+            self.info.update("No packages match the current search.")
+            return
 
-        restored = False
-        for pkg in self.packages:
-            if q == "" or q in pkg["name"].lower() or q in pkg["desc"].lower():
-                self.list_view.append(PackageItem(pkg))
+        await self.list_view.extend([PackageItem(pkg) for pkg in visible])
+        names = [pkg["name"] for pkg in visible]
+        if current_name in names:
+            self.list_view.index = names.index(current_name)
+            return
 
-        if self.list_view.children:
-            if current_name:
-                for i, child in enumerate(self.list_view.children):
-                    if hasattr(child, "pkg") and child.pkg.get("name") == current_name:
-                        self.list_view.index = i
-                        restored = True
-                        break
-
-            if not restored:
-                self.list_view.index = 0
-                first = self.list_view.query(PackageItem).first(PackageItem)
-                if first:
-                    self.show_preview(first)
+        self.list_view.index = 0
+        first = self.list_view.query(PackageItem).first(PackageItem)
+        if first:
+            self.show_preview(first)
 
     def on_input_changed(self, message):
         if getattr(getattr(message, "input", None), "id", "search") != "search":
@@ -1037,15 +1377,7 @@ class TermuxAppStore(App):
         if name in self.status_cache:
             return self.status_cache[name]
 
-        installed = get_installed_version(name)
-
-        if installed is None:
-            status = "NOT INSTALLED"
-        elif _ver_tuple(installed) >= _ver_tuple(store_version):
-            status = "INSTALLED"
-        else:
-            status = "UPDATE"
-
+        status = compute_status(get_installed_version(name), store_version)
         self.status_cache[name] = status
         return status
 
@@ -1083,7 +1415,8 @@ class TermuxAppStore(App):
             f"{ver_line}\n"
             f"Maintainer : {p['maintainer']}\n"
             f"License    : {p.get('license', '-')}\n"
-            f"Size       : {size_text}\n\n"
+            f"Size       : {size_text}\n"
+            f"{self.activity_line(p['name'])}\n\n"
             f"[b]Dependencies[/b]\n{deps_str}\n\n"
             f"{p['desc']}"
         )
@@ -1098,6 +1431,14 @@ class TermuxAppStore(App):
         is_installed = status in ("INSTALLED", "UPDATE")
         self.uninstall_btn.display = is_installed
         self.apply_primary_button(status)
+
+    def activity_line(self, name: str) -> str:
+        last = ACTIVITY.last_for(name)
+        if not last:
+            return "Last       : -"
+        word = ACTION_WORDS.get(last.get("action", ""), last.get("action", "?"))
+        suffix = {"failed": " (failed)", "cancelled": " (cancelled)"}.get(last.get("result", ""), "")
+        return f"Last       : {word} {format_ago(last.get('time', 0))}{suffix}"
 
     def apply_primary_button(self, status: str):
         label, variant = {
@@ -1136,7 +1477,8 @@ class TermuxAppStore(App):
         status = self.get_status(pkg["name"], pkg["version"])
         if status == "INSTALLED":
             await self.open_package(pkg["name"])
-        else:
+        elif pkg["name"] not in self.queued_names:
+            self.queued_names.add(pkg["name"])
             await self.worker_queue.put(("install", pkg["name"]))
 
     async def open_package(self, name: str):
@@ -1146,12 +1488,24 @@ class TermuxAppStore(App):
             return
 
         def handle(result) -> None:
-            if result:
-                self.call_later(self.run_external, result[0], result[1])
+            if not result:
+                return
+            mode, exe, args = result
+            if mode == "shortcut":
+                self.call_later(self.add_shortcut, exe, args)
+            else:
+                self.call_later(self.run_external, exe, args, name)
 
         self.push_screen(RunScreen(name, executables), handle)
 
-    def run_external(self, exe: str, args: str):
+    def add_shortcut(self, exe: str, args: str):
+        ok, message = create_shortcut(exe, args)
+        if ok:
+            self.status_bar.update(f"Shortcut saved: {message}  (add the Termux:Widget to your home screen)")
+        else:
+            self.status_bar.update(message)
+
+    def run_external(self, exe: str, args: str, package=None):
         try:
             argv = [exe, *shlex.split(args)]
         except ValueError as e:
@@ -1177,9 +1531,18 @@ class TermuxAppStore(App):
         except Exception as e:
             self.status_bar.update(f"Cannot open {exe}: {e}")
             return
+        self.record_activity("open", package or exe, "ok" if code == 0 else "failed", 0.0, f"exit {code}")
         self.status_bar.update(f"{exe} exited with code {code}")
 
     async def on_button_pressed(self, event):
+        button_id = event.button.id
+        if button_id == "banner-upgrade":
+            self.action_update_all()
+            return
+        if button_id == "cancel-install":
+            self.request_cancel()
+            return
+
         if self.installing:
             return
 
@@ -1201,6 +1564,7 @@ class TermuxAppStore(App):
         if self.installing or self.worker_queue.empty():
             return
         action, name = await self.worker_queue.get()
+        self.queued_names.discard(name)
         if action == "install":
             await self.run_install(name)
         elif action == "uninstall":
@@ -1273,6 +1637,7 @@ class TermuxAppStore(App):
         self.call_from_thread(lambda: setattr(self.install_btn, "disabled", True))
         self.call_from_thread(lambda: setattr(self.uninstall_btn, "disabled", True))
         self.log_buffer.clear()
+        started = time.monotonic()
         self.call_from_thread(lambda: self.update_log(f"Uninstalling {name}...\n"))
 
         try:
@@ -1298,6 +1663,13 @@ class TermuxAppStore(App):
         else:
             self.call_from_thread(lambda: self.update_log(f"\n✗ Uninstall failed (exit code {proc.returncode})"))
 
+        elapsed = time.monotonic() - started
+        ok = proc.returncode == 0
+        self.record_activity(
+            "uninstall", name, "ok" if ok else "failed", elapsed, "" if ok else "\n".join(self.log_buffer[-15:])
+        )
+        self.finish_notice(f"{name} uninstalled" if ok else f"{name} could not be uninstalled", elapsed)
+
         self.installing = False
         self.status_cache.clear()
         self.load_packages(online=False)
@@ -1305,6 +1677,7 @@ class TermuxAppStore(App):
         def _finalize_uninstall():
             self.install_btn.disabled = False
             self.uninstall_btn.disabled = False
+            self.invalidate_statuses()
             self.refresh_list(preserve_selection=True)
             self.refresh_current_preview()
 
@@ -1347,6 +1720,7 @@ class TermuxAppStore(App):
 
     def action_refresh(self):  # pragma: no cover
         self.status_bar.update("🔄 Refreshing package list...")
+        self.refresh_list(preserve_selection=True)
         self.run_worker(self._fetch_online_worker(), exclusive=False)
 
     def action_focus_search(self):  # pragma: no cover
@@ -1387,25 +1761,59 @@ class TermuxAppStore(App):
                 self.status_bar.update(f"URL: {url}")
 
     def action_show_installed(self):  # pragma: no cover
-        self.search_query = "__installed__"
+        installed = get_installed_versions()
         self.list_view.clear()
         for pkg in self.packages:
-            installed = get_installed_version(pkg["name"])
-            if installed is not None:
+            if pkg["name"] in installed:
                 self.list_view.append(PackageItem(pkg))
-        self.status_bar.update("Showing installed packages only. Press Ctrl+F to reset.")
+        self.status_bar.update("Showing installed packages only. Press Ctrl+R to show all packages.")
 
-    def action_update_all(self):  # pragma: no cover
-        updates = []
-        for pkg in self.packages:
-            installed = get_installed_version(pkg["name"])
-            if installed and _ver_tuple(installed) < _ver_tuple(pkg["version"]):
-                updates.append(pkg["name"])
+    def action_cancel_install(self):
+        self.request_cancel()
+
+    def action_show_history(self):
+        self.push_screen(HistoryScreen(ACTIVITY.recent(80)))
+
+    def action_report_issue(self):
+        package = version = ""
+        lines = list(self.log_buffer)
+        if self.current_item:
+            package = self.current_item.pkg["name"]
+            version = str(self.current_item.pkg["version"])
+            if not lines:
+                last = ACTIVITY.last_for(package)
+                if last and last.get("detail"):
+                    lines = last["detail"].splitlines()
+        url = build_issue_url(collect_environment(), package, version, lines)
+        try:
+            subprocess.Popen(["termux-open-url", url], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            self.status_bar.update("Opening the bug report form in your browser...")
+        except OSError:
+            self.status_bar.update("Cannot open the browser (termux-open-url not found).")
+
+    def action_toggle_notify(self):
+        enabled = not SETTINGS.get("notify", True)
+        SETTINGS.set("notify", enabled)
+        message = f"Completion notifications: {'ON' if enabled else 'OFF'}"
+        if enabled and not shutil.which("termux-notification"):
+            message += "  (needs Termux:API: pkg install termux-api)"
+        self.status_bar.update(message)
+
+    def action_update_all(self):
+        if self.statuses_ready:
+            updates = self.names_with_status("UPDATE")
+        else:
+            installed = get_installed_versions()
+            updates = [
+                p["name"] for p in self.packages if compute_status(installed.get(p["name"]), p["version"]) == "UPDATE"
+            ]
+        updates = [n for n in updates if n not in self.queued_names]
         if not updates:
             self.status_bar.update("✔ All packages are up to date.")
             return
         self.status_bar.update(f"Queuing {len(updates)} update(s)...")
         for name in updates:
+            self.queued_names.add(name)
             self.worker_queue.put_nowait(("install", name))
 
     def get_system_commands(self, screen):  # pragma: no cover
@@ -1463,6 +1871,26 @@ class TermuxAppStore(App):
             "Clear log",
             "Clear the install/uninstall log output",
             self.action_clear_log,
+        )
+        yield SystemCommand(
+            "Report an issue",
+            "Open a pre-filled bug report with your environment and the latest log",
+            self.action_report_issue,
+        )
+        yield SystemCommand(
+            "Activity history",
+            "Show recent installs, updates, removals and launches",
+            self.action_show_history,
+        )
+        yield SystemCommand(
+            "Cancel install",
+            "Stop the running download or build at the next safe point",
+            self.action_cancel_install,
+        )
+        yield SystemCommand(
+            "Toggle notifications",
+            "Turn completion notifications (Termux:API) on or off",
+            self.action_toggle_notify,
         )
         yield SystemCommand(
             "Quit",

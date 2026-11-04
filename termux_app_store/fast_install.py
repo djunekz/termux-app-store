@@ -313,6 +313,7 @@ def download_deb(
     log_fn: Optional[Callable] = None,
     progress_fn: Optional[Callable] = None,
     eta_fn: Optional[Callable] = None,
+    cancel: Optional[threading.Event] = None,
 ) -> bool:
     def _log(msg):
         if log_fn:
@@ -366,6 +367,8 @@ def download_deb(
                             break
                         f.write(chunk)
                         downloaded += len(chunk)
+                        if cancel is not None and cancel.is_set():
+                            raise _common.InstallCancelled()
                         if total > 0:
                             now = time.monotonic()
                             tracker.add(downloaded, now)
@@ -385,6 +388,9 @@ def download_deb(
             _eta(estimate_install_seconds(dest.stat().st_size))
             return True
 
+        except _common.InstallCancelled:
+            _log("Download cancelled")
+            return False
         except urllib.error.HTTPError as e:
             if e.code == 404:
                 continue
@@ -405,6 +411,7 @@ def install_deb(
     log_fn: Optional[Callable] = None,
     progress_fn: Optional[Callable] = None,
     eta_fn: Optional[Callable] = None,
+    cancel: Optional[threading.Event] = None,
 ) -> bool:
     def _log(msg):
         if log_fn:
@@ -417,6 +424,10 @@ def install_deb(
     def _eta(seconds):
         if eta_fn:
             eta_fn(seconds)
+
+    if cancel is not None and cancel.is_set():
+        _log("Installation cancelled before dpkg started")
+        return False
 
     try:
         size = deb_path.stat().st_size
@@ -493,9 +504,16 @@ def fast_install(
     log_fn: Optional[Callable] = None,
     progress_fn: Optional[Callable] = None,
     eta_fn: Optional[Callable] = None,
+    cancel: Optional[threading.Event] = None,
 ) -> bool:
 
     _current_pct = [0]
+
+    def _cancelled() -> bool:
+        if cancel is not None and cancel.is_set():
+            _log("✗ Installation cancelled")
+            return True
+        return False
 
     def _log(msg):
         if log_fn:
@@ -550,7 +568,9 @@ def fast_install(
         _log("Falling back to build from source...")
         _log("(This will take longer)")
         _log("")
-        return _fallback_build_from_source(pkg_name, log_fn=log_fn, progress_fn=_progress)
+        if _cancelled():
+            return False
+        return _fallback_build_from_source(pkg_name, log_fn=log_fn, progress_fn=_progress, cancel=cancel)
 
     _log("Checking local cache...")
     cached = get_cached_deb(pkg_name, version, arch, sha256=deb_sha256)
@@ -560,7 +580,9 @@ def fast_install(
         _log(f"✓ Cache HIT (checksum verified) — {cached.name} ({elapsed:.1f}s)")
         _progress(80)
 
-        ok = install_deb(cached, log_fn=log_fn, progress_fn=_progress, eta_fn=eta_fn)
+        ok = install_deb(cached, log_fn=log_fn, progress_fn=_progress, eta_fn=eta_fn, cancel=cancel)
+        if not ok and cancel is not None and cancel.is_set():
+            return False
         if ok:
             elapsed = time.time() - start_time
             _log(f"✔ Installed from cache in {elapsed:.1f}s!")
@@ -584,7 +606,12 @@ def fast_install(
             log_fn=log_fn,
             progress_fn=_progress,
             eta_fn=eta_fn,
+            cancel=cancel,
         )
+
+        if cancel is not None and cancel.is_set():
+            _log("✗ Installation cancelled")
+            return False
 
         if downloaded:
             _log("Verifying checksum...")
@@ -596,7 +623,9 @@ def fast_install(
             else:
                 _log("✓ Checksum OK")
                 save_deb_cache(deb_dest, pkg_name, version, arch)
-                ok = install_deb(deb_dest, log_fn=log_fn, progress_fn=_progress, eta_fn=eta_fn)
+                ok = install_deb(deb_dest, log_fn=log_fn, progress_fn=_progress, eta_fn=eta_fn, cancel=cancel)
+                if not ok and cancel is not None and cancel.is_set():
+                    return False
                 if ok:
                     elapsed = time.time() - start_time
                     _log(f"✔ Installed in {elapsed:.1f}s!")
@@ -609,11 +638,14 @@ def fast_install(
     _log("Falling back to build from source...")
     _log("(This will take longer)")
     _log("")
-    return _fallback_build_from_source(pkg_name, log_fn=log_fn, progress_fn=_progress)
+    return _fallback_build_from_source(pkg_name, log_fn=log_fn, progress_fn=_progress, cancel=cancel)
 
 
 def _fallback_build_from_source(
-    pkg_name: str, log_fn: Optional[Callable] = None, progress_fn: Optional[Callable] = None
+    pkg_name: str,
+    log_fn: Optional[Callable] = None,
+    progress_fn: Optional[Callable] = None,
+    cancel: Optional[threading.Event] = None,
 ) -> bool:
     def _log(msg):
         if log_fn:
@@ -688,7 +720,10 @@ def _fallback_build_from_source(
         cwd=str(app_root),
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
+        start_new_session=cancel is not None,
     )
+    if cancel is not None:
+        _common.watch_cancel(proc, cancel)
 
     ANSI = re.compile(r"\x1b\[[0-9;]*[mGKHf]")
 
@@ -698,6 +733,9 @@ def _fallback_build_from_source(
             _log(clean)
 
     proc.wait()
+    if cancel is not None and cancel.is_set():
+        _log("✗ Build cancelled")
+        return False
     _progress(100 if proc.returncode == 0 else 0)
     return proc.returncode == 0
 

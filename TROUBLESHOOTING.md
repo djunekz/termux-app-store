@@ -1,7 +1,7 @@
 # Troubleshooting
 
 This document helps you diagnose and fix common problems when using
-**Termux App Store**. It applies to v0.9.1 and later.
+**Termux App Store**. It applies to v0.10.2 and later.
 
 If your problem is not listed here, see [SUPPORT.md](SUPPORT.md) for how to
 ask for help.
@@ -700,8 +700,9 @@ request.
   termux-app-store install <package>
   ```
 
-Keyboard shortcuts in the TUI: `Ctrl+R` refresh, `Ctrl+I` install selected,
-`Ctrl+Q` quit. In many terminals `Ctrl+I` is the same key as `Tab`, so it may
+Keyboard shortcuts in the TUI: `Ctrl+R` refresh, `Ctrl+I` install, update or open
+the selected package, `Ctrl+X` cancel the running install, `F4` activity history,
+`F5` report an issue, `Ctrl+Q` quit. In many terminals `Ctrl+I` is the same key as `Tab`, so it may
 not work as install. Use the Termux extra keys row for `Ctrl`, `Tab` and
 arrow keys. See [ACCESSIBILITY.md](ACCESSIBILITY.md) for more.
 
