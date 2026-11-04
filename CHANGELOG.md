@@ -7,6 +7,13 @@ and this project adheres to semantic versioning.
 
 ## [Unreleased]
 
+### Added
+- `ci/setup_commit_signing.sh` - turns on SSH commit signing for a job from the `BOT_SIGNING_KEY` secret: it writes the key with owner-only permissions, checks that it can really sign (an encrypted or invalid key is rejected instead of breaking the job), and sets `gpg.format ssh`, `user.signingkey` and `commit.gpgsign` globally so commits in other checkouts such as `gh-pages` are signed too; without the secret it only prints a notice and the commits stay unsigned as before
+- `tests/test_commit_signing.py` - 25 tests that create a real key, run the script, make a commit and confirm GitHub-style verification passes, cover a missing, invalid, encrypted and newline-less key, and check that every workflow that runs `git commit` sets up signing first with a matching condition
+
+### Changed
+- `.github/workflows/auto-release.yml`, `auto-update-packages.yml`, `build-packages-debs.yml`, `build-termux-repo.yml`, `repin-floating-sources.yml`, `update_index.yml` and `update_log.yml` - a `Set up commit signing` step runs before the step that commits, so commits made by the bot can show as Verified on GitHub once `BOT_SIGNING_KEY` holds a private key whose public half is registered as a Signing Key on the `termuxappstore` account; the repository signing key of the APT repository is not used for commits
+
 ---
 
 ## [v0.10.2] - 2026-11-04
@@ -95,7 +102,7 @@ and this project adheres to semantic versioning.
 
 ### Update
 - Package `termux-sync` v1.2.8 → v1.3.5
-- Package `uv` v0.13.4 → v0.13.7
+- Package `uv` v0.13.4 → v0.13.6
 - Package `infoooze` v1.1.9 → v1.2.2
 - Package `pnpm` v12.14.0 → v12.16.1
 - Package `unmineable` v0.1.0 → v0.1.5

@@ -85,6 +85,12 @@ jobs:
             echo "No package version or recipe changes detected"
           fi
 
+      - name: Set up commit signing
+        if: steps.check_changes.outputs.changed == 'true'
+        env:
+          BOT_SIGNING_KEY: ${{ secrets.BOT_SIGNING_KEY }}
+        run: bash ci/setup_commit_signing.sh
+
       - name: Commit and push changes
         if: steps.check_changes.outputs.changed == 'true'
         env:
