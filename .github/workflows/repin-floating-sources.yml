@@ -53,6 +53,12 @@ jobs:
             git diff --name-only -- packages/
           fi
 
+      - name: Set up commit signing
+        if: steps.check.outputs.changed == 'true'
+        env:
+          BOT_SIGNING_KEY: ${{ secrets.BOT_SIGNING_KEY }}
+        run: bash ci/setup_commit_signing.sh
+
       - name: Create branch and push
         if: steps.check.outputs.changed == 'true'
         id: push

@@ -96,6 +96,12 @@ jobs:
             cat "$OUT_DIR/summary.md" >> "$GITHUB_STEP_SUMMARY"
           fi
 
+      - name: Set up commit signing
+        if: steps.update.outputs.changed == 'true'
+        env:
+          BOT_SIGNING_KEY: ${{ secrets.BOT_SIGNING_KEY }}
+        run: bash ci/setup_commit_signing.sh
+
       - name: Commit changes
         if: steps.update.outputs.changed == 'true'
         env:

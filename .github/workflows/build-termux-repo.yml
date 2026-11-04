@@ -231,6 +231,11 @@ jobs:
           UPDATED="$UPDATED" python3 ci/gen_index.py > gh-pages/index.html
           echo "index.html generated ($(wc -c < gh-pages/index.html) bytes)"
 
+      - name: Set up commit signing
+        env:
+          BOT_SIGNING_KEY: ${{ secrets.BOT_SIGNING_KEY }}
+        run: bash ci/setup_commit_signing.sh
+
       - name: Commit and push to gh-pages
         run: |
           cd gh-pages

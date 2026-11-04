@@ -229,6 +229,12 @@ jobs:
 
           rm -f "$ADDED_FILE" "$UPDATED_FILE" "$META_FILE" "$REMOVED_FILE"
 
+      - name: Set up commit signing
+        if: steps.detect.outputs.has_changes == 'true'
+        env:
+          BOT_SIGNING_KEY: ${{ secrets.BOT_SIGNING_KEY }}
+        run: bash ci/setup_commit_signing.sh
+
       - name: Commit and push
         if: steps.detect.outputs.has_changes == 'true'
         shell: bash

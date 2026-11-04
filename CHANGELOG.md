@@ -14,6 +14,9 @@ and this project adheres to semantic versioning.
 ### Changed
 - `.github/workflows/auto-release.yml`, `auto-update-packages.yml`, `build-packages-debs.yml`, `build-termux-repo.yml`, `repin-floating-sources.yml`, `update_index.yml` and `update_log.yml` - a `Set up commit signing` step runs before the step that commits, so commits made by the bot can show as Verified on GitHub once `BOT_SIGNING_KEY` holds a private key whose public half is registered as a Signing Key on the `termuxappstore` account; the repository signing key of the APT repository is not used for commits
 
+### Fixed
+- `.github/workflows/auto-release.yml`, `auto-update-packages.yml`, `build-packages-debs.yml`, `build-termux-repo.yml`, `repin-floating-sources.yml` and `update_log.yml` - the `Set up commit signing` step was missing, so `tests/test_commit_signing.py::test_every_workflow_that_commits_sets_up_signing_first` failed and the `Pytest` job in CI went red; the step now runs `bash ci/setup_commit_signing.sh` with `BOT_SIGNING_KEY` before the first step that runs `git commit`, with the same `if` condition as that commit step (`update_index.yml` already had it)
+
 ---
 
 ## [v0.10.2] - 2026-11-04

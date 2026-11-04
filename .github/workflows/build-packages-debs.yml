@@ -622,6 +622,11 @@ jobs:
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
         run: bash ci/sign_release.sh gh-pages
 
+      - name: Set up commit signing
+        env:
+          BOT_SIGNING_KEY: ${{ secrets.BOT_SIGNING_KEY }}
+        run: bash ci/setup_commit_signing.sh
+
       - name: Commit and push
         run: |
           cd gh-pages
