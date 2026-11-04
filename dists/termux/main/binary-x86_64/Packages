@@ -468,6 +468,18 @@ SHA1: e52e7474ae2c4f33089720b349dcda331f9aca9b
 SHA256: a3b84e21685f0e0b7f57bd2ad674864df22753ab096c1584c967a1f6871e31c5
 Description: Analyst website vulnerabillity scanner
 
+Package: merlin
+Version: 1.1.5
+Architecture: x86_64
+Maintainer: @termux-app-store
+Installed-Size: 
+Filename: pool/main/merlin_1.1.5_x86_64.deb
+Size: 212950
+MD5sum: 23c1acc51fdd27fdaaab07493dd664ea
+SHA1: d71275dd2c85bf77c0d5c4d531112ccfc4bf77e8
+SHA256: 947893a3d4b1ec9bc8e4216b5c6f601d1bf76e442e09c73380be035dc91096a8
+Description: Analyst website vulnerabillity scanner
+
 Package: mining
 Version: 1.0.4
 Architecture: x86_64
@@ -757,4 +769,3 @@ MD5sum: 65014487070265b301887362e41421e8
 SHA1: b5250b79ce66fc43c7e89f15be0fe067fd17975f
 SHA256: 3736b3573c52e61a78af9cc97de7adab089909f85b0937fc92a4e7f1a8e11570
 Description: A posix script to find and watch youtube videos from the terminal. (Without API)
-

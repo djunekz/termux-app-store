@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-11-02T17:31:01.213383+00:00",
+  "generated_at": "2026-11-04T19:42:06.243400+00:00",
   "total": 88,
   "packages": [
     {
@@ -757,7 +757,7 @@
     },
     {
       "package": "fd",
-      "version": "10.5.0",
+      "version": "10.5.1",
       "maintainer": "@termux-app-store",
       "description": "A simple, fast and user-friendly alternative to 'find'",
       "homepage": "https://github.com/sharkdp/fd",
@@ -766,11 +766,11 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/sharkdp/fd/releases/download/v${TERMUX_PKG_VERSION}/fd-v${TERMUX_PKG_VERSION}-aarch64-unknown-linux-musl.tar.gz",
-      "sha256": "d76c4317f7d5dba69f8a2a15856c90c777e7f0dd4e85f0de8c76de6992c374d4",
-      "recipe_sha256": "81b77eb2541560c01f1e72a75e7518eb88cf02124aad4bfe8e615fd7687054b3",
+      "sha256": "64c20b9b154c9d4b36d4b7df3521de771c499c4768b4b5b045ef6b01532117be",
+      "recipe_sha256": "dfe002313d56af3be2b609fffd9f773d75458608094b6f3db133fc2d7145b828",
       "platform_independent": false,
       "sha256_by_arch": {
-        "aarch64": "4514445410904ebbc9d7679ecabcc4f2c709642e13977b17b9e68c2a6f88135c"
+        "aarch64": "27a7258adfdbd4d38ad27590761009026011a3a728dca4117a95ef9773ea70cc"
       }
     },
     {
@@ -1170,7 +1170,7 @@
     },
     {
       "package": "merlin",
-      "version": "1.1.4",
+      "version": "1.1.5",
       "maintainer": "@termux-app-store",
       "description": "Analyst website vulnerabillity scanner",
       "homepage": "https://github.com/djunekz/merlin",
@@ -1179,14 +1179,14 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/merlin/archive/refs/tags/${TERMUX_PKG_VERSION}.tar.gz",
-      "sha256": "96c68eb45e03ac6f5b9ebb42b037d943d3df3c44ab58a9746fa1e63400b1cb72",
-      "recipe_sha256": "5bd592ca47d3998b76dbab651a528543eb30b8e0500c4fb1a90850edca854d11",
+      "sha256": "b0aad1281ba139f39b81be912237fc2f76e586bf5f0b89a7bac2918baeddbb00",
+      "recipe_sha256": "726be907bf86672de143167a90e3862ef1378baf26e4c4d734ac8a6248ad951a",
       "platform_independent": false,
       "sha256_by_arch": {
-        "aarch64": "f2209355d8da8dfcc72bd6580480ac61114afdc04b8fe2d91a9f84c11b2f5fb9",
-        "arm": "025c8b60fb7fa9c2b5140630830cb7fcb8acb8f1951af298f0381df051086ac3",
-        "x86_64": "a3b84e21685f0e0b7f57bd2ad674864df22753ab096c1584c967a1f6871e31c5",
-        "i686": "48067aa23deb3698567414e67ae4822f66cf6f33d693e52e11d6515526a99ff9"
+        "aarch64": "04797d9877f428ef003679f48913388940c20434e7ce06ee59116d80d476628d",
+        "arm": "f4350151586dd00539c6b09d8f5e5d233b29f520354f2aa5567b2ce5a689dbde",
+        "x86_64": "947893a3d4b1ec9bc8e4216b5c6f601d1bf76e442e09c73380be035dc91096a8",
+        "i686": "7cebb105be7b47256a03de58b40c0b2423110555715d419fbdad7d41545baa29"
       }
     },
     {
@@ -1861,7 +1861,7 @@
     },
     {
       "package": "uv",
-      "version": "0.13.6",
+      "version": "0.13.7",
       "maintainer": "@termux-app-store",
       "description": "An extremely fast Python package and project manager, written in Rust.",
       "homepage": "https://github.com/astral-sh/uv",
@@ -1870,12 +1870,9 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/astral-sh/uv/releases/download/${TERMUX_PKG_VERSION}/uv-aarch64-unknown-linux-musl.tar.gz",
-      "sha256": "819692e404d23e5aae6bc44c0e260f1f5492fd1910ab4693b2c650f926dbe800",
-      "recipe_sha256": "7da4415720450d6336099c7426daf45a06ceb69ee7612ec967edee0a3eadb202",
-      "platform_independent": false,
-      "sha256_by_arch": {
-        "aarch64": "97bc302a252cafc19de14a11d6f7202183867a4901b3c64ed7a9ef14e7eec085"
-      }
+      "sha256": "2d3ec076a0c4c0e8250bb6418c44080828b544f1a3be0b6e46adf9fb6923de45",
+      "recipe_sha256": "c5e9e12ad0e55a27ca12c3995465365cae0e731770262c4e5813071ac7c948ce",
+      "platform_independent": false
     },
     {
       "package": "viu",
