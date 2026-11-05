@@ -124,8 +124,7 @@ def repo_is_configured() -> bool:
     if not os.path.exists(p["keyring"]):
         return False
     return any(
-        REPO_URL in ln and "signed-by=" in ln and "trusted=yes" not in ln
-        for ln in _active_lines(p["sources_file"])
+        REPO_URL in ln and "signed-by=" in ln and "trusted=yes" not in ln for ln in _active_lines(p["sources_file"])
     )
 
 
