@@ -7,6 +7,10 @@ and this project adheres to semantic versioning.
 
 ## [Unreleased]
 
+---
+
+## [v0.10.3] - 2026-11-06
+
 ### Added
 - `termux_app_store/repo_setup.py` - adds the signed APT repository (`https://djunekz.github.io/termux-app-store termux main`) the first time `termux-app-store` or `tas` runs, so a `pip install` user only has to run `pkg update` to see the mirror; pip cannot run code at install time, so this is done on first run; the key is downloaded over HTTPS and must match the pinned fingerprint, the entry always uses `signed-by` (never `trusted=yes`), an old `trusted=yes` entry is replaced, nothing is written when the key cannot be verified, a failed download is retried at most every 6 hours and never blocks or breaks the command; it only runs inside Termux and is turned off with `TAS_NO_AUTO_REPO=1` or by `uninstall-repo`
 - `termux-app-store install-repo` and `termux-app-store uninstall-repo` - CLI commands that add or remove the APT repository and key; `uninstall-repo` also stops the automatic re-adding
