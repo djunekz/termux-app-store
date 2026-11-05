@@ -250,6 +250,15 @@ setup_tasctl() {
   fi
 }
 
+setup_apt_repo() {
+  info "Adding signed apt repository (pkg update will list it)..."
+  if [[ -x "$INSTALL_DIR/tasctl" ]] && "$INSTALL_DIR/tasctl" install-repo --no-update; then
+    ok "Apt repository added — run: pkg update"
+  else
+    warn "Could not add the apt repository (not fatal). Retry later: termux-app-store install-repo"
+  fi
+}
+
 write_sentinel() {
   cat > "$INSTALL_DIR/.installed" << EOF
 version=${VERSION}
@@ -274,6 +283,8 @@ show_done() {
   printf "  Installed : %s%s/%s%s\n"     "$DIM" "$BIN_DIR" "$APP_NAME" "$R"
   printf "\n%sRun:%s\n" "$BCYAN$B" "$R"
   printf "  %s%s%s\n" "$B" "$APP_NAME" "$R"
+  printf "\n%sThen activate the apt repository:%s\n" "$BCYAN$B" "$R"
+  printf "  pkg update\n"
   printf "\n%sManage with tasctl:%s\n" "$BCYAN$B" "$R"
   printf "  tasctl update    %s→ Update to latest release%s\n" "$DIM" "$R"
   printf "  tasctl uninstall %s→ Remove%s\n" "$DIM" "$R"
@@ -317,6 +328,7 @@ main() {
   write_sentinel
   create_launcher
   setup_tasctl
+  setup_apt_repo
   DONE=1
   show_done
 }

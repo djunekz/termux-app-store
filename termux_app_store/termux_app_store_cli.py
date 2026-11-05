@@ -1126,6 +1126,10 @@ def cmd_help():
   {CYAN}cache info{R}                  Show local .deb cache info
   {CYAN}cache clear{R}                 Clear local .deb cache
 
+{B}APT REPOSITORY:{R}
+  {CYAN}install-repo{R}                Add the signed apt repository {DIM}(pkg update shows it){R}
+  {CYAN}uninstall-repo{R}              Remove the apt repository and key
+
 {B}INFO:{R}
   {CYAN}version{R} {DIM}| -v{R}                Show app version
   {CYAN}help{R}    {DIM}| -h | --help{R}       Show this help message
@@ -1141,6 +1145,25 @@ def cmd_help():
   {DIM}termux-app-store cache info{R}
   {DIM}termux-app-store -l{R}
 """)
+
+
+def cmd_repo(action: str):
+    from termux_app_store import repo_setup
+
+    if action == "install-repo":
+        ok, msg = repo_setup.add_repo()
+        if not ok:
+            print(f"{RED}[!] {msg}{R}")
+            sys.exit(1)
+        print(f"{GREEN}[+] Apt repository added:{R} {repo_setup.REPO_URL}")
+        print(f"    Run {CYAN}pkg update{R} to activate it.")
+    else:
+        removed = repo_setup.remove_repo()
+        for path in removed:
+            print(f"{GREEN}[+] Removed {path}{R}")
+        if not removed:
+            print(f"{YELLOW}[!] Repository was not installed.{R}")
+        print(f"    Run {CYAN}pkg update{R} to apply. Automatic re-adding is now disabled.")
 
 
 CMD_ALIASES = {
@@ -1169,6 +1192,8 @@ CMD_ALIASES = {
     "-m": "mirrors",
     "cache": "cache",
     "-c": "cache",
+    "install-repo": "install-repo",
+    "uninstall-repo": "uninstall-repo",
     "help": "help",
     "-h": "help",
     "--help": "help",
@@ -1292,6 +1317,10 @@ def run_cli():
 
     if cmd == "version":
         cmd_version()
+        return
+
+    if cmd in ("install-repo", "uninstall-repo"):
+        cmd_repo(cmd)
         return
 
     APP_ROOT = resolve_app_root()

@@ -18,7 +18,24 @@ except ModuleNotFoundError:
     from termux_app_store import run_tui  # type: ignore
 
 
+_REPO_CMDS = {"install-repo", "uninstall-repo", "repo"}
+
+
+def _auto_repo():
+    if len(sys.argv) > 1 and sys.argv[1] in _REPO_CMDS | {"help", "-h", "--help", "version", "-v"}:
+        return
+    try:
+        try:
+            from termux_app_store.repo_setup import ensure_repo
+        except ModuleNotFoundError:
+            from repo_setup import ensure_repo  # type: ignore
+        ensure_repo()
+    except Exception:
+        pass
+
+
 def main():
+    _auto_repo()
     if len(sys.argv) > 1:
         run_cli()
     else:
@@ -26,6 +43,7 @@ def main():
 
 
 def tas():
+    _auto_repo()
     if len(sys.argv) > 1:
         run_cli()
     else:

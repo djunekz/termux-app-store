@@ -18,6 +18,7 @@ PKG_KEYRING_FILE="${PKG_KEYRING_DIR}/termux-app-store.gpg"
 PKG_REPO_ENTRY="deb [signed-by=${PKG_KEYRING_FILE}] ${PKG_REPO_URL} termux main"
 PKG_SOURCES_DIR="${PREFIX}/etc/apt/sources.list.d"
 PKG_SOURCES_FILE="${PKG_SOURCES_DIR}/tas.list"
+PKG_OPTOUT_FILE="${PREFIX}/etc/apt/.tas-no-auto-repo"
 PKG_KEY_FPRS="${TAS_KEY_FPR:-D39134A177717A5BEBEEAE7105D70CDBB6D80295}"
 
 R=$'\033[0m'
@@ -284,6 +285,7 @@ add_pkg_repo() {
   install_pkg_key
 
   printf "%s\n" "$PKG_REPO_ENTRY" > "$PKG_SOURCES_FILE"
+  rm -f "$PKG_OPTOUT_FILE" "${PREFIX}/etc/apt/.tas-repo-retry"
   ok "Repository added: $PKG_SOURCES_FILE"
 }
 
@@ -298,6 +300,7 @@ remove_pkg_repo() {
       warn "File not found: $f"
     fi
   done
+  printf "uninstall-repo was run\n" > "$PKG_OPTOUT_FILE"
 }
 
 install_app_source() {
@@ -615,6 +618,10 @@ case "$cmd" in
     banner
     header "Add Repository"
     add_pkg_repo
+    if [[ "$flag" == "--no-update" ]]; then
+      printf "\n%s  ✔ Repository added. Run: pkg update%s\n\n" "$GREEN$B" "$R"
+      exit 0
+    fi
     step "Running pkg update..."
     if pkg update; then
       printf "\n%s  ✔ Repository added. Run: pkg install <package>%s\n\n" "$GREEN$B" "$R"

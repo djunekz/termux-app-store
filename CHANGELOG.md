@@ -8,10 +8,17 @@ and this project adheres to semantic versioning.
 ## [Unreleased]
 
 ### Added
+- `termux_app_store/repo_setup.py` - adds the signed APT repository (`https://djunekz.github.io/termux-app-store termux main`) the first time `termux-app-store` or `tas` runs, so a `pip install` user only has to run `pkg update` to see the mirror; pip cannot run code at install time, so this is done on first run; the key is downloaded over HTTPS and must match the pinned fingerprint, the entry always uses `signed-by` (never `trusted=yes`), an old `trusted=yes` entry is replaced, nothing is written when the key cannot be verified, a failed download is retried at most every 6 hours and never blocks or breaks the command; it only runs inside Termux and is turned off with `TAS_NO_AUTO_REPO=1` or by `uninstall-repo`
+- `termux-app-store install-repo` and `termux-app-store uninstall-repo` - CLI commands that add or remove the APT repository and key; `uninstall-repo` also stops the automatic re-adding
+- `tests/test_repo_setup.py` - 8 tests for the automatic repository setup: signed entry, running twice, wrong fingerprint, opt-out by environment variable and by `uninstall-repo`, replacing a legacy `trusted=yes` entry, offline retry limit and non-Termux no-op
 - `ci/setup_commit_signing.sh` - turns on SSH commit signing for a job from the `BOT_SIGNING_KEY` secret: it writes the key with owner-only permissions, checks that it can really sign (an encrypted or invalid key is rejected instead of breaking the job), and sets `gpg.format ssh`, `user.signingkey` and `commit.gpgsign` globally so commits in other checkouts such as `gh-pages` are signed too; without the secret it only prints a notice and the commits stay unsigned as before
 - `tests/test_commit_signing.py` - 22 tests that create a real key, run the script, make a commit and confirm GitHub-style verification passes, cover a missing, invalid, encrypted and newline-less key, and check that every workflow that runs `git commit` sets up signing first with a matching condition
 
 ### Changed
+- `install.sh` - after installing, adds the signed APT repository through `tasctl install-repo --no-update`, so `pkg update` lists the mirror right away; if this step fails only a warning is shown and the installation continues
+- `tasctl` - `install-repo` accepts `--no-update` to add the repository without running `pkg update`; `install-repo` removes the opt-out marker and `uninstall-repo` creates it (`$PREFIX/etc/apt/.tas-no-auto-repo`)
+- `termux_app_store/main.py` - runs the automatic repository setup before every command except `help`, `version`, `install-repo` and `uninstall-repo`
+- `tests/test_cli.py` - the alias count is now 30 and the valid targets include `install-repo` and `uninstall-repo`
 - `.github/workflows/auto-release.yml`, `auto-update-packages.yml`, `build-packages-debs.yml`, `build-termux-repo.yml`, `repin-floating-sources.yml`, `update_index.yml` and `update_log.yml` - a `Set up commit signing` step runs before the step that commits, so commits made by the bot can show as Verified on GitHub once `BOT_SIGNING_KEY` holds a private key whose public half is registered as a Signing Key on the `termuxappstore` account; the repository signing key of the APT repository is not used for commits
 
 ### Fixed
