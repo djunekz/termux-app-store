@@ -20,6 +20,7 @@ and this project adheres to semantic versioning.
 ### Update
 - Package `fd` v10.5.0 → v10.5.1
 - Package `merlin` v1.1.4 → v1.1.5
+- Package `aura` v0.10.0 → v0.11.0
 
 ---
 
