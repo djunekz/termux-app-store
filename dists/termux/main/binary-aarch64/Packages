@@ -23,15 +23,15 @@ SHA256: 4ab84c8f317cc2549223c1a092864b2ca9604e4d37a9527a8a631a607732d63c
 Description: A cli tool to browse and play anime
 
 Package: aura
-Version: 0.10.0
+Version: 0.11.0
 Architecture: aarch64
 Maintainer: @termux-app-store
 Installed-Size: 
-Filename: pool/main/aura_0.10.0_aarch64.deb
-Size: 2078616
-MD5sum: 7f73b74f2b44671340d9826882c35dbd
-SHA1: 978e73a4b050ed3229fe1f8cbbfa3cef01e27273
-SHA256: fb4334ecba34daffec92c28efb79e44694eb5c61df4658e648d69cf5d606764c
+Filename: pool/main/aura_0.11.0_aarch64.deb
+Size: 664068
+MD5sum: c1a046214b30b09524c6bf5d1e4ff5cf
+SHA1: e695b9f17244d5396d3161189e32412bdaa7d262
+SHA256: a0df0187b903fb0d49768364ebf6c453745709db63004ad95fc2226a97527b5b
 Description: Adaptive Unified Runtime Assistant
 
 Package: auxscan
@@ -1094,4 +1094,3 @@ MD5sum: 12b555787527ffbb761e838e5ca873d2
 SHA1: 449666f88dd71a4b757523b59b575253d7f29eff
 SHA256: 44b64cf34b522a89dd6f607a313fd055f6de0f910fd6afde8f330de1576263ca
 Description: Encrypter Stealth Binary Builder
-

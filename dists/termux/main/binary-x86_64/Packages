@@ -22,6 +22,18 @@ SHA1: 9b559ed7383eb2c161895255d25e46560c7234f4
 SHA256: af1f5f0402f2cdcd7353b59e49874721be1007ac32ac21a197bcc82a89111771
 Description: Adaptive Unified Runtime Assistant
 
+Package: aura
+Version: 0.11.0
+Architecture: x86_64
+Maintainer: @termux-app-store
+Installed-Size: 
+Filename: pool/main/aura_0.11.0_x86_64.deb
+Size: 684122
+MD5sum: 9c712dbfb868cc9b556e80e1fdac6d8d
+SHA1: ebe6b565575a4e7b10b879b49c6cb2ef2cb4b9c3
+SHA256: b357d244e3007adae50bbe1e4c6cf5a426be1018347e1689ce47b09d862cd787
+Description: Adaptive Unified Runtime Assistant
+
 Package: auxscan
 Version: 0.0.0+4551c2f
 Architecture: x86_64
@@ -769,4 +781,3 @@ MD5sum: 65014487070265b301887362e41421e8
 SHA1: b5250b79ce66fc43c7e89f15be0fe067fd17975f
 SHA256: 3736b3573c52e61a78af9cc97de7adab089909f85b0937fc92a4e7f1a8e11570
 Description: A posix script to find and watch youtube videos from the terminal. (Without API)
-

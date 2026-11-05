@@ -11,15 +11,15 @@ SHA256: 33a4471bdff208eb0cb24b2fab01d2b4f75630e6d717cc0725d22edca71744f1
 Description: A cli tool to browse and play anime
 
 Package: aura
-Version: 0.10.0
+Version: 0.11.0
 Architecture: i686
 Maintainer: @termux-app-store
 Installed-Size: 
-Filename: pool/main/aura_0.10.0_i686.deb
-Size: 2227546
-MD5sum: 877a1508042e81b63261a93c218f3fb1
-SHA1: 7d8d40d622946385b8155385a7aca434f5bd410d
-SHA256: bd59fc7d3188d38e2076515e769a5eda2ba6e681842b8892c0fa3f8fb2c28a10
+Filename: pool/main/aura_0.11.0_i686.deb
+Size: 684072
+MD5sum: d5d0c4fd9ace547c4a279ac70e7ae69e
+SHA1: 33861a0fcecee2af8037b0533d7bf21113a688a8
+SHA256: daa7e27cb8368c82fa2f77eb2ade5baa0ae34735318fe03e84614c64085a5147
 Description: Adaptive Unified Runtime Assistant
 
 Package: auxscan
@@ -757,4 +757,3 @@ MD5sum: 6c2d469023204b887bb8839d3e406f2c
 SHA1: 0c05f03e9752f30fa14b80ff2898da7fb8d9b46b
 SHA256: e4f0a01581fe99517d162558d4cb76e86f58254c1994aedb41787894c3feddfb
 Description: A posix script to find and watch youtube videos from the terminal. (Without API)
-

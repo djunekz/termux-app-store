@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-11-04T19:42:06.243400+00:00",
+  "generated_at": "2026-11-05T09:32:32.735207+00:00",
   "total": 88,
   "packages": [
     {
@@ -57,7 +57,7 @@
     },
     {
       "package": "aura",
-      "version": "0.10.0",
+      "version": "0.11.0",
       "maintainer": "@termux-app-store",
       "description": "Adaptive Unified Runtime Assistant",
       "homepage": "https://github.com/djunekz/aura",
@@ -66,17 +66,17 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/aura/archive/refs/tags/v${TERMUX_PKG_VERSION}.zip",
-      "sha256": "f9cfa5f137ad035f35faace06f00eb61d368e39c24a12521da1ff1bac235d630",
-      "recipe_sha256": "f775b861ac14fce5f60fc514b1cdaf99e21f5714358ce3015cc9d1c6a74a0464",
+      "sha256": "8fc2fa3b596a3148ab222e6d6edc96f53bad82ea92f0d266858eb42792abdd9a",
+      "recipe_sha256": "a79459ca780ae1e462f616ae7a0f01bf6d5cee783175ad0154fbdd759f08ab37",
       "platform_independent": false,
       "depends": [
         "nodejs"
       ],
       "sha256_by_arch": {
-        "aarch64": "fb4334ecba34daffec92c28efb79e44694eb5c61df4658e648d69cf5d606764c",
-        "arm": "47c1d6fca5c360d89fc11bc0c6eb3b41776f4bad29551e1a5b36f4ce98fe109f",
-        "x86_64": "af1f5f0402f2cdcd7353b59e49874721be1007ac32ac21a197bcc82a89111771",
-        "i686": "bd59fc7d3188d38e2076515e769a5eda2ba6e681842b8892c0fa3f8fb2c28a10"
+        "aarch64": "a0df0187b903fb0d49768364ebf6c453745709db63004ad95fc2226a97527b5b",
+        "arm": "4f4b1e83024befea09dd35e23d44b7b987c7e575edece61c9f6e2360b885d618",
+        "x86_64": "b357d244e3007adae50bbe1e4c6cf5a426be1018347e1689ce47b09d862cd787",
+        "i686": "daa7e27cb8368c82fa2f77eb2ade5baa0ae34735318fe03e84614c64085a5147"
       }
     },
     {
