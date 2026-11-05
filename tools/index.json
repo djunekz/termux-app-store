@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-11-05T05:44:13.535786+00:00",
+  "generated_at": "2026-11-05T09:32:32.735207+00:00",
   "total": 88,
   "packages": [
     {
@@ -48,7 +48,7 @@
     },
     {
       "package": "aura",
-      "version": "0.10.0",
+      "version": "0.11.0",
       "maintainer": "@termux-app-store",
       "description": "Adaptive Unified Runtime Assistant",
       "homepage": "https://github.com/djunekz/aura",
@@ -57,8 +57,8 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/aura/archive/refs/tags/v${TERMUX_PKG_VERSION}.zip",
-      "sha256": "f9cfa5f137ad035f35faace06f00eb61d368e39c24a12521da1ff1bac235d630",
-      "recipe_sha256": "f775b861ac14fce5f60fc514b1cdaf99e21f5714358ce3015cc9d1c6a74a0464",
+      "sha256": "8fc2fa3b596a3148ab222e6d6edc96f53bad82ea92f0d266858eb42792abdd9a",
+      "recipe_sha256": "a79459ca780ae1e462f616ae7a0f01bf6d5cee783175ad0154fbdd759f08ab37",
       "platform_independent": false,
       "depends": [
         "nodejs"
