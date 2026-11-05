@@ -7,6 +7,9 @@ and this project adheres to semantic versioning.
 
 ## [Unreleased]
 
+### Changed
+- `.github/workflows/auto-update-packages.yml`, `repin-floating-sources.yml` and `auto-release.yml` (`Sync CITATION.cff` job) - checkout, push and `gh pr create` now use a short-lived token from the GitHub App (`actions/create-github-app-token` with the `APP_ID` and `APP_PRIVATE_KEY` secrets) instead of the `PAT_TOKEN` personal access token; commit signing with `BOT_SIGNING_KEY` is unchanged, and the app must be installed on the repository with Contents and Pull requests set to Read and write
+
 ---
 
 ## [v0.10.3] - 2026-11-06

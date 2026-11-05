@@ -19,11 +19,18 @@ jobs:
     if: github.repository == 'djunekz/termux-app-store'
 
     steps:
+      - name: Create GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+
       - name: Checkout repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           fetch-depth: 0
-          token: ${{ secrets.PAT_TOKEN }}
+          token: ${{ steps.app-token.outputs.token }}
 
       - name: Setup Python
         uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
@@ -32,7 +39,7 @@ jobs:
 
       - name: Run re-pin tool
         env:
-          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
           PACKAGES_INPUT: ${{ github.event.inputs.packages }}
         run: |
           if [[ -n "$PACKAGES_INPUT" ]] && ! [[ "$PACKAGES_INPUT" =~ ^[A-Za-z0-9._+,\ -]*$ ]]; then
@@ -68,7 +75,7 @@ jobs:
 
           git config user.name "Termux App Store"
           git config user.email "258522831+termuxappstore@users.noreply.github.com"
-          git remote set-url origin "https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}.git"
+          git remote set-url origin "https://x-access-token:${{ steps.app-token.outputs.token }}@github.com/${{ github.repository }}.git"
 
           git checkout -b "$BRANCH"
           git add packages/
@@ -78,7 +85,7 @@ jobs:
       - name: Open PR for review
         if: steps.check.outputs.changed == 'true'
         env:
-          GH_TOKEN: ${{ secrets.PAT_TOKEN }}
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
         run: |
           gh pr create \
             --title "fix(srcurl): re-pin floating branch sources" \

@@ -44,11 +44,18 @@ jobs:
     if: github.repository == 'djunekz/termux-app-store'
 
     steps:
+      - name: Create GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+
       - name: Checkout repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           fetch-depth: 0
-          token: ${{ secrets.PAT_TOKEN }}
+          token: ${{ steps.app-token.outputs.token }}
           ref: ${{ github.ref_name }}
 
       - name: Setup Python
@@ -68,7 +75,7 @@ jobs:
       - name: Check upstream and update build.sh + CHANGELOG
         id: update
         env:
-          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
           PACKAGES_INPUT: ${{ github.event.inputs.packages }}
           DRY_RUN: ${{ github.event.inputs.dry_run }}
           INCLUDE_COMMIT_PINNED: ${{ github.event.inputs.include_commit_pinned }}
@@ -105,7 +112,7 @@ jobs:
       - name: Commit changes
         if: steps.update.outputs.changed == 'true'
         env:
-          GH_TOKEN: ${{ secrets.PAT_TOKEN }}
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
           REF_NAME: ${{ github.ref_name }}
           OUT_DIR: ${{ runner.temp }}/auto-update
           MODE: ${{ github.event.inputs.mode || 'push' }}
