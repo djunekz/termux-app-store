@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-11-06T05:41:23.578381+00:00",
+  "generated_at": "2026-11-07T04:10:54.264924+00:00",
   "total": 88,
   "packages": [
     {
@@ -1036,7 +1036,7 @@
     },
     {
       "package": "pnpm",
-      "version": "12.16.1",
+      "version": "12.18.0",
       "maintainer": "@termux-app-store",
       "description": "Fast, disk space efficient package manager",
       "homepage": "https://github.com/pnpm/pnpm",
@@ -1045,8 +1045,8 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://registry.npmjs.org/pnpm/-/pnpm-${TERMUX_PKG_VERSION}.tgz",
-      "sha256": "ca362a16f2e1c3cfa81d406f3242446179a0e4aea457ba3e9e6c39e6476aba65",
-      "recipe_sha256": "ba10b0d06939743b2009d302266b7f2753d6b1f51cb1bf11baba167fbd5a7961",
+      "sha256": "29d1d7d99bf6ec6d0a3dbb0ec5656f0d16e997e8be676ca45c581d11cb71f753",
+      "recipe_sha256": "514c99f01eaddc5a81438f8eb8dbc2313b6f02f8893babd19b33475ffd463b03",
       "platform_independent": false,
       "depends": [
         "nodejs"
