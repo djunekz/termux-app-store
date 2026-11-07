@@ -541,15 +541,15 @@ SHA256: 1f29c7794663478e2f23de043bf4cb5bd189a791c49ba78f9316ffe588fb095d
 Description: Incredibly fast crawler designed for OSINT.
 
 Package: pnpm
-Version: 12.16.1
+Version: 12.18.0
 Architecture: i686
 Maintainer: @termux-app-store
 Installed-Size: 
-Filename: pool/main/pnpm_12.16.1_i686.deb
-Size: 823132
-MD5sum: f607b56d83779549dd866edcea9dd72e
-SHA1: d7168a2b7b7a88ab707983e2d5b00fb7e5bf528b
-SHA256: ea28185c8bfc6cd9160695824247d1db88ea08fcc11a477e279af85654327ada
+Filename: pool/main/pnpm_12.18.0_i686.deb
+Size: 830798
+MD5sum: f88c1de897e9393680f8956e33d293eb
+SHA1: 1ba227332878eed911324dc2a2b90ff161293719
+SHA256: 25dc3bb78438e4e197d08c2d0cce133f1129e54e3e654cb3c706020f5c8681aa
 Description: Fast, disk space efficient package manager
 
 Package: pymaker
@@ -757,4 +757,3 @@ MD5sum: 6c2d469023204b887bb8839d3e406f2c
 SHA1: 0c05f03e9752f30fa14b80ff2898da7fb8d9b46b
 SHA256: e4f0a01581fe99517d162558d4cb76e86f58254c1994aedb41787894c3feddfb
 Description: A posix script to find and watch youtube videos from the terminal. (Without API)
-

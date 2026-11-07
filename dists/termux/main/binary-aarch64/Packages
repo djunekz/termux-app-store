@@ -709,15 +709,15 @@ SHA256: c14db08efe0eaaab4ca99db66614484191afd156644522aed0f3d4f5993a13e7
 Description: Terminal-based project manager CLI
 
 Package: pnpm
-Version: 12.16.1
+Version: 12.18.0
 Architecture: aarch64
 Maintainer: @termux-app-store
 Installed-Size: 
-Filename: pool/main/pnpm_12.16.1_aarch64.deb
-Size: 803800
-MD5sum: dbb3c32875c118b862e08412ff35d3bd
-SHA1: f146cbe2a4330343a68367c7a3c2f25385871f18
-SHA256: 294c656eac7ea72eca1f384b4c847463890eb6d7e246869047704d294a8999a8
+Filename: pool/main/pnpm_12.18.0_aarch64.deb
+Size: 811060
+MD5sum: 741a82a671c7b0abdba3133aaa603f5e
+SHA1: b04c57192069f66914c5d933c7a6117614fbcc92
+SHA256: b4d7482826e7b2477754c80f6979b1e3dece48d34348947f292b565cebee6744
 Description: Fast, disk space efficient package manager
 
 Package: pymaker
@@ -1094,4 +1094,3 @@ MD5sum: 12b555787527ffbb761e838e5ca873d2
 SHA1: 449666f88dd71a4b757523b59b575253d7f29eff
 SHA256: 44b64cf34b522a89dd6f607a313fd055f6de0f910fd6afde8f330de1576263ca
 Description: Encrypter Stealth Binary Builder
-
