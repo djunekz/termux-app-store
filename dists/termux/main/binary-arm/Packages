@@ -632,10 +632,10 @@ Installed-Size: 392
 Depends: python, python-pip
 Homepage: https://github.com/djunekz/termux-app-store
 Filename: pool/main/termux-app-store_0.10.3_arm.deb
-Size: 63554
-MD5sum: 0bd45969fde3fee50b4ad54a3b6e4afc
-SHA1: 8d9fa5b3483cf426ba5fb7ef526b35a95fb74b5c
-SHA256: 9985b27229d62e25f807b20b19360cad16719b62c073b4db04c17ba26bdaad84
+Size: 63550
+MD5sum: 435a41c51ade5e46599e5ba54230d5d6
+SHA1: 26f32176d5b13b2777aff9703742f7a1f9b65ce4
+SHA256: b6ebc51d945de9024898f7654e1cc90ffa01824dd1c124dc51b861f79ed53d5d
 Description: The first offline-first, source-based TUI package manager for Termux
 
 Package: termux-sync
@@ -757,3 +757,4 @@ MD5sum: fc64737ed7e8cfa9175a4e0ec0dd24f2
 SHA1: 3e28049288540e80ebbfd631ef2d0401253aaac8
 SHA256: 696e9c34f46a1ab292174c6f4feb1c25d33aae548742bf40b988c396b15af8ea
 Description: A posix script to find and watch youtube videos from the terminal. (Without API)
+
