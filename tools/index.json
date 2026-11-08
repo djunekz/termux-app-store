@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-11-08T05:05:39.010179+00:00",
+  "generated_at": "2026-11-08T17:52:47.614978+00:00",
   "total": 88,
   "packages": [
     {
@@ -509,7 +509,7 @@
     },
     {
       "package": "dalfox",
-      "version": "3.2.4",
+      "version": "3.3.0",
       "maintainer": "@termux-app-store",
       "description": "🌙🦊 Dalfox is a powerful open-source XSS scanner and utility focused on automation.",
       "homepage": "https://dalfox.hahwul.com",
@@ -517,15 +517,15 @@
       "download_size": "Unknown",
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
-      "srcurl": "https://github.com/hahwul/dalfox/archive/refs/tags/v3.2.4.tar.gz",
-      "sha256": "d86cae222a4db6c8a335013c980d0c6d672b3abee8cfb44da6ce1b489e4d3a9b",
-      "recipe_sha256": "7c91c43af5104b310a79e126aab43c6d98a838841458d9b49b63dfb1d6687dcd",
+      "srcurl": "https://github.com/hahwul/dalfox/archive/refs/tags/v3.3.0.tar.gz",
+      "sha256": "9613d8266b7fa7348829590caed0af567ba7cd0137075add913d8037066dd9dd",
+      "recipe_sha256": "741a2ad95a8f3120b09a04d23cc7ea212d41eb648d8d7a98ad54d16e2b3290ab",
       "platform_independent": false,
       "depends": [
         "rust"
       ],
       "sha256_by_arch": {
-        "aarch64": "d17f0f4c15851e222e1b147bc67c02eb7a51ed053784d8354c6bf0ff9ff97509"
+        "aarch64": "2699e28d65f7084391047424707e7ded5f6276e68bcdc136f818902b5d97007f"
       }
     },
     {

@@ -253,15 +253,15 @@ SHA256: acb4c04b7dfedadb35c593ea089c6148cc0b664bdff300684446530b3c07cfd1
 Description: Comprehensive Educational Learning Platform for Termux
 
 Package: dalfox
-Version: 3.2.4
+Version: 3.3.0
 Architecture: aarch64
 Maintainer: @termux-app-store
 Installed-Size: 
-Filename: pool/main/dalfox_3.2.4_aarch64.deb
-Size: 4048720
-MD5sum: f2e986645eabf01e62656e8f1ff3eff6
-SHA1: 452a99d91d29341aba55485406030649ed70da6d
-SHA256: d17f0f4c15851e222e1b147bc67c02eb7a51ed053784d8354c6bf0ff9ff97509
+Filename: pool/main/dalfox_3.3.0_aarch64.deb
+Size: 4450560
+MD5sum: 60d07a03e473b99d46e948a77da076c3
+SHA1: ebc7c873522fbdbf40cbacf0e462ea5b1976b369
+SHA256: 2699e28d65f7084391047424707e7ded5f6276e68bcdc136f818902b5d97007f
 Description: 🌙🦊 Dalfox is a powerful open-source XSS scanner and utility focused on automation.
 
 Package: djangohunter
@@ -1094,4 +1094,3 @@ MD5sum: 0c07070c6fa1b3416202888f7f45b207
 SHA1: aa8c740dfb5fc0cb1e0bb5adba2e186b47368d49
 SHA256: 9f2136bb79a2a5324f1725fddf02c83d4867841cbc193d9d6f31f3f11ec89a07
 Description: Encrypter Stealth Binary Builder
-
