@@ -13,6 +13,7 @@ and this project adheres to semantic versioning.
 ### Update
 - Package `pnpm` v12.16.1 → v12.18.0
 - Package `fd` v10.5.1 → v10.5.2
+- Package `dalfox` v3.2.4 → v3.3.0
 
 ---
 
