@@ -7,6 +7,10 @@ and this project adheres to semantic versioning.
 
 ## [Unreleased]
 
+---
+
+## [v0.11.5] - 2026-11-12
+
 ### Changed
 - `termux_app_store/doctor.py` and `termux_app_store/guidebook.py` - `doctor.py` and `guidebook.py` moved into the package so `pip install` ships them; the files in the project root are now thin wrappers, so `python doctor.py`, `python guidebook.py` and the release tarball keep working, and the doctor now also looks for the project one level above the package
 - `termux_app_store/main.py` - `doctor` and `guide` no longer trigger the automatic repository setup, so the doctor reports the real repository state
