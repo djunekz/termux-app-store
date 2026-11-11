@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-11-11T10:23:04.015905+00:00",
+  "generated_at": "2026-11-11T10:32:25.628979+00:00",
   "total": 89,
   "packages": [
     {
@@ -934,7 +934,7 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/miflasher/archive/refs/tags/v${TERMUX_PKG_VERSION}.tar.gz",
       "sha256": "acd4d7af7b302fdec83a3d6e13f9f009c99b22be8b7872f7755dd39f400a84eb",
-      "recipe_sha256": "c03d753b3bd81c46ea77a8195ccc7392b18f186074f7f16a3d1cb878cec2f781",
+      "recipe_sha256": "38a1ebc313c93bfbf85e9e0f6a63c137d1d7188f0669929186e9759c7989de62",
       "platform_independent": false,
       "depends": [
         "brotli",
@@ -942,8 +942,7 @@
         "liblz4",
         "termux-api",
         "zlib",
-        "zstd",
-        "termux-adb"
+        "zstd"
       ]
     },
     {
