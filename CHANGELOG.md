@@ -11,6 +11,7 @@ and this project adheres to semantic versioning.
 - `.github/workflows/auto-update-packages.yml`, `repin-floating-sources.yml` and `auto-release.yml` - commits are now created through the GitHub API with the GitHub App token (`ci/api_commit.py`) instead of `git commit` and `git push`, so both author and committer are the app bot (`termuxappstore[bot]`) and GitHub signs the commit itself (Verified without `BOT_SIGNING_KEY`); the `Set up commit signing` step is removed from these three workflows, file modes such as the executable bit are kept, and a branch that moved on the same files makes the job stop instead of overwriting them
 - `.github/workflows/auto-update-packages.yml` - the default save mode is now `pull-request` (scheduled runs too), so results go into the rolling `auto-update/packages` PR instead of being pushed straight to the branch; `push` can still be chosen for a manual run
 - `.github/workflows/auto-update-packages.yml`, `repin-floating-sources.yml` and `auto-release.yml` (`Sync CITATION.cff` job) - checkout, push and `gh pr create` now use a short-lived token from the GitHub App (`actions/create-github-app-token` with the `APP_ID` and `APP_PRIVATE_KEY` secrets) instead of the `PAT_TOKEN` personal access token; commit signing with `BOT_SIGNING_KEY` is unchanged, and the app must be installed on the repository with Contents and Pull requests set to Read and write
+- Package `miflasher` v2.0.4 - Updated metadata
 
 ### Update
 - Package `pnpm` v12.16.1 → v12.18.0
