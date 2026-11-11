@@ -210,36 +210,31 @@ jobs:
           REF_NAME: ${{ github.ref_name }}
         run: python3 ci/update_citation.py --version "$REF_NAME" --only-if-newer
 
-      - name: Set up commit signing
-        if: steps.citation.outputs.changed == 'true'
-        env:
-          BOT_SIGNING_KEY: ${{ secrets.BOT_SIGNING_KEY }}
-        run: bash ci/setup_commit_signing.sh
-
       - name: Commit and push
         if: steps.citation.outputs.changed == 'true'
         env:
           REF_NAME: ${{ github.ref_name }}
           BRANCH: ${{ github.event.repository.default_branch }}
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
         run: |
           set -euo pipefail
 
-          git config user.name "Termux App Store"
-          git config user.email "258522831+termuxappstore@users.noreply.github.com"
-
-          git add CITATION.cff
-          if git diff --staged --quiet; then
-            echo "Nothing to commit"
-            exit 0
-          fi
-          git commit -m "docs: update CITATION.cff for ${REF_NAME}"
+          printf 'docs: update CITATION.cff for %s\n' "$REF_NAME" > "$RUNNER_TEMP/commit-message.txt"
 
           for attempt in 1 2 3; do
-            if git push origin "HEAD:${BRANCH}"; then
+            if python3 ci/api_commit.py --repo "$GITHUB_REPOSITORY" --branch "$BRANCH" \
+              --message-file "$RUNNER_TEMP/commit-message.txt" -- CITATION.cff; then
+              exit 0
+            else
+              RC=$?
+            fi
+            if [ "$RC" -eq 2 ]; then
               exit 0
             fi
-            echo "Push failed (attempt ${attempt}), rebasing and retrying..."
-            git pull --rebase origin "${BRANCH}"
+            if [ "$RC" -ne 3 ]; then
+              break
+            fi
+            echo "Branch moved (attempt ${attempt}), retrying..."
             sleep $((attempt * 5))
           done
 

@@ -60,27 +60,19 @@ jobs:
             git diff --name-only -- packages/
           fi
 
-      - name: Set up commit signing
-        if: steps.check.outputs.changed == 'true'
-        env:
-          BOT_SIGNING_KEY: ${{ secrets.BOT_SIGNING_KEY }}
-        run: bash ci/setup_commit_signing.sh
-
-      - name: Create branch and push
+      - name: Create branch and commit
         if: steps.check.outputs.changed == 'true'
         id: push
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
         run: |
+          set -euo pipefail
           BRANCH="repin/floating-sources-$(date +%s)"
           echo "branch=$BRANCH" >> "$GITHUB_OUTPUT"
 
-          git config user.name "Termux App Store"
-          git config user.email "258522831+termuxappstore@users.noreply.github.com"
-          git remote set-url origin "https://x-access-token:${{ steps.app-token.outputs.token }}@github.com/${{ github.repository }}.git"
-
-          git checkout -b "$BRANCH"
-          git add packages/
-          git commit -m "fix(srcurl): re-pin floating branch sources to tag/commit SHA"
-          git push -u origin "$BRANCH"
+          printf '%s\n' "fix(srcurl): re-pin floating branch sources to tag/commit SHA" > "$RUNNER_TEMP/commit-message.txt"
+          python3 ci/api_commit.py --repo "$GITHUB_REPOSITORY" --branch "$BRANCH" \
+            --message-file "$RUNNER_TEMP/commit-message.txt" --reset-branch -- packages/
 
       - name: Open PR for review
         if: steps.check.outputs.changed == 'true'

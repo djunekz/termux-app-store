@@ -188,14 +188,24 @@ def _committing_workflows() -> list:
 
 def test_all_expected_workflows_are_detected_as_committing():
     assert {p.name for p in _committing_workflows()} >= {
-        "auto-release.yml",
-        "auto-update-packages.yml",
         "build-packages-debs.yml",
         "build-termux-repo.yml",
-        "repin-floating-sources.yml",
         "update_index.yml",
         "update_log.yml",
     }
+
+
+API_COMMIT_WORKFLOWS = ("auto-release.yml", "auto-update-packages.yml", "repin-floating-sources.yml")
+
+
+@pytest.mark.parametrize("name", API_COMMIT_WORKFLOWS)
+def test_api_commit_workflows_do_not_use_git_commit_or_a_personal_token(name):
+    text = (ROOT / ".github" / "workflows" / name).read_text(encoding="utf-8")
+    assert "python3 ci/api_commit.py" in text
+    assert "git commit" not in text
+    assert "git push" not in text
+    assert "PAT_TOKEN" not in text
+    assert "GH_TOKEN: ${{ steps.app-token.outputs.token }}" in text
 
 
 @pytest.mark.parametrize("path", _committing_workflows(), ids=lambda p: p.name)

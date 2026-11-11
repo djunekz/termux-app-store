@@ -8,6 +8,8 @@ and this project adheres to semantic versioning.
 ## [Unreleased]
 
 ### Changed
+- `.github/workflows/auto-update-packages.yml`, `repin-floating-sources.yml` and `auto-release.yml` - commits are now created through the GitHub API with the GitHub App token (`ci/api_commit.py`) instead of `git commit` and `git push`, so both author and committer are the app bot (`termuxappstore[bot]`) and GitHub signs the commit itself (Verified without `BOT_SIGNING_KEY`); the `Set up commit signing` step is removed from these three workflows, file modes such as the executable bit are kept, and a branch that moved on the same files makes the job stop instead of overwriting them
+- `.github/workflows/auto-update-packages.yml` - the default save mode is now `pull-request` (scheduled runs too), so results go into the rolling `auto-update/packages` PR instead of being pushed straight to the branch; `push` can still be chosen for a manual run
 - `.github/workflows/auto-update-packages.yml`, `repin-floating-sources.yml` and `auto-release.yml` (`Sync CITATION.cff` job) - checkout, push and `gh pr create` now use a short-lived token from the GitHub App (`actions/create-github-app-token` with the `APP_ID` and `APP_PRIVATE_KEY` secrets) instead of the `PAT_TOKEN` personal access token; commit signing with `BOT_SIGNING_KEY` is unchanged, and the app must be installed on the repository with Contents and Pull requests set to Read and write
 
 ### Update
@@ -20,6 +22,8 @@ and this project adheres to semantic versioning.
 ## [v0.10.3] - 2026-11-06
 
 ### Added
+- `ci/api_commit.py` - creates one commit from the changed files of the working tree through the Git Data API (blobs, tree, commit, then a fast-forward update of the branch, or a forced reset for a rolling PR branch); it sets no author or committer so GitHub attributes and signs the commit as the app, keeps file modes, refuses symlinks, and exits with 2 (nothing to commit), 3 (branch moved, retry), 4 (same files changed upstream) or 5 (unsupported file)
+- `tests/test_api_commit.py` - 12 tests for `ci/api_commit.py` with a fake API and a real temporary git repository: modified, deleted and new files, executable mode, symlink refusal, reset and create of a PR branch, upstream changes on other and on the same files, diverged branch, fast-forward rejection and API errors
 - `termux_app_store/repo_setup.py` - adds the signed APT repository (`https://djunekz.github.io/termux-app-store termux main`) the first time `termux-app-store` or `tas` runs, so a `pip install` user only has to run `pkg update` to see the mirror; pip cannot run code at install time, so this is done on first run; the key is downloaded over HTTPS and must match the pinned fingerprint, the entry always uses `signed-by` (never `trusted=yes`), an old `trusted=yes` entry is replaced, nothing is written when the key cannot be verified, a failed download is retried at most every 6 hours and never blocks or breaks the command; it only runs inside Termux and is turned off with `TAS_NO_AUTO_REPO=1` or by `uninstall-repo`
 - `termux-app-store install-repo` and `termux-app-store uninstall-repo` - CLI commands that add or remove the APT repository and key; `uninstall-repo` also stops the automatic re-adding
 - `tests/test_repo_setup.py` - 8 tests for the automatic repository setup: signed entry, running twice, wrong fingerprint, opt-out by environment variable and by `uninstall-repo`, replacing a legacy `trusted=yes` entry, offline retry limit and non-Termux no-op
