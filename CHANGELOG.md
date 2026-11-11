@@ -17,6 +17,9 @@ and this project adheres to semantic versioning.
 - Package `fd` v10.5.1 → v10.5.2
 - Package `dalfox` v3.2.4 → v3.3.0
 
+### Added
+- Package `miflasher` v2.0.4 - A lightweight CLI tool to flash and manage Xiaomi firmware packages (Fastboot/ROM) easily and safely
+
 ---
 
 ## [v0.10.3] - 2026-11-06
