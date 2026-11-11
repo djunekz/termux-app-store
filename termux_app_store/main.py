@@ -18,7 +18,7 @@ except ModuleNotFoundError:
     from termux_app_store import run_tui  # type: ignore
 
 
-_REPO_CMDS = {"install-repo", "uninstall-repo", "repo"}
+_REPO_CMDS = {"install-repo", "uninstall-repo", "repo", "doctor", "guide", "guidebook"}
 
 
 def _auto_repo():

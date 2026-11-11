@@ -164,13 +164,15 @@ class TestCmdAliases:
             "cache",
             "install-repo",
             "uninstall-repo",
+            "doctor",
+            "guide",
             "help",
         }
         for alias, target in CMD_ALIASES.items():
             assert target in valid, f"'{alias}' → unknown target '{target}'"
 
     def test_total_alias_count(self):
-        assert len(CMD_ALIASES) == 30
+        assert len(CMD_ALIASES) == 35
 
     @pytest.mark.parametrize(
         "alias,target",
