@@ -7,6 +7,9 @@ and this project adheres to semantic versioning.
 
 ## [Unreleased]
 
+### Update
+- Package `brutespray` v2.7.2 → v2.7.3
+
 ---
 
 ## [v0.11.5] - 2026-11-12
