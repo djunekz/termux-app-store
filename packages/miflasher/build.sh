@@ -5,7 +5,7 @@ TERMUX_PKG_MAINTAINER="@termux-app-store"
 TERMUX_PKG_VERSION=2.0.4
 TERMUX_PKG_SRCURL=https://github.com/djunekz/miflasher/archive/refs/tags/v${TERMUX_PKG_VERSION}.tar.gz
 TERMUX_PKG_SHA256=acd4d7af7b302fdec83a3d6e13f9f009c99b22be8b7872f7755dd39f400a84eb
-TERMUX_PKG_DEPENDS="brotli, libc++, liblz4, termux-api, zlib, zstd, termux-adb"
+TERMUX_PKG_DEPENDS="brotli, libc++, liblz4, termux-api, zlib, zstd"
 TERMUX_PKG_BUILD_IN_SRC=true
 
 termux_step_make_install() {
