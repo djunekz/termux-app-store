@@ -26,7 +26,7 @@ def work(tmp_path, monkeypatch):
     sh(tmp_path, "git", "config", "user.name", "t")
     (tmp_path / "packages" / "one").mkdir(parents=True)
     (tmp_path / "packages" / "one" / "build.sh").write_text("v=1\n")
-    os.chmod(tmp_path / "packages" / "one" / "build.sh", 0o755)
+    os.chmod(tmp_path / "packages" / "one" / "build.sh", 0o700)
     (tmp_path / "packages" / "two").mkdir(parents=True)
     (tmp_path / "packages" / "two" / "build.sh").write_text("v=1\n")
     (tmp_path / "CHANGELOG.md").write_text("# c\n")
@@ -115,7 +115,7 @@ def test_new_executable_file_gets_executable_mode(work, monkeypatch):
     new = work / "packages" / "three"
     new.mkdir()
     (new / "build.sh").write_text("v=1\n")
-    os.chmod(new / "build.sh", 0o755)
+    os.chmod(new / "build.sh", 0o700)
     fake = FakeApi(local_head(work))
     assert invoke(monkeypatch, fake) == 0
     entry = fake.find("POST", "/git/trees")[0][2]["tree"][0]
