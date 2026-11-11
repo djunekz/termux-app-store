@@ -13,9 +13,8 @@ termux_step_make_install() {
     mkdir -p "$libdir"
     cp -r . "$libdir/"
 
-    find "$libdir" -type d | while read -r _dir; do
-        ls "$_dir"/*.py &>/dev/null 2>&1 && [ ! -f "$_dir/__init__.py" ] && \
-            touch "$_dir/__init__.py"
+    find "$libdir" -name "*.py" -exec dirname {} \; | sort -u | while read -r _dir; do
+        [ ! -f "$_dir/__init__.py" ] && touch "$_dir/__init__.py"
     done
 
     cat > "$TERMUX_PREFIX/bin/miflasher" <<'WRAPPER'
