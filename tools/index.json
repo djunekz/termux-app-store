@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-11-08T17:52:47.614978+00:00",
-  "total": 88,
+  "generated_at": "2026-11-11T10:32:25.628979+00:00",
+  "total": 89,
   "packages": [
     {
       "package": "aichat",
@@ -1188,6 +1188,29 @@
         "x86_64": "947893a3d4b1ec9bc8e4216b5c6f601d1bf76e442e09c73380be035dc91096a8",
         "i686": "7cebb105be7b47256a03de58b40c0b2423110555715d419fbdad7d41545baa29"
       }
+    },
+    {
+      "package": "miflasher",
+      "version": "2.0.4",
+      "maintainer": "@termux-app-store",
+      "description": "A lightweight CLI tool to flash and manage Xiaomi firmware packages (Fastboot/ROM) easily and safely",
+      "homepage": "https://github.com/djunekz/miflasher",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/djunekz/miflasher/archive/refs/tags/v${TERMUX_PKG_VERSION}.tar.gz",
+      "sha256": "acd4d7af7b302fdec83a3d6e13f9f009c99b22be8b7872f7755dd39f400a84eb",
+      "recipe_sha256": "38a1ebc313c93bfbf85e9e0f6a63c137d1d7188f0669929186e9759c7989de62",
+      "platform_independent": false,
+      "depends": [
+        "brotli",
+        "libc++",
+        "liblz4",
+        "termux-api",
+        "zlib",
+        "zstd"
+      ]
     },
     {
       "package": "myserver",
