@@ -12,8 +12,6 @@ import time
 import urllib.parse
 import urllib.request
 from pathlib import Path
-import doctor
-import guidebook
 
 try:
     from . import store_common as _store

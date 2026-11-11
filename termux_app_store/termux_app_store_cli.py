@@ -1173,15 +1173,27 @@ def cmd_help():
 """)
 
 
+def _import_sibling(name: str):
+    import importlib
+
+    for prefix in ("termux_app_store.", ""):
+        try:
+            return importlib.import_module(prefix + name)
+        except ModuleNotFoundError as exc:
+            if exc.name not in (prefix + name, "termux_app_store"):
+                raise
+    raise ImportError(f"cannot import module '{name}'")
+
+
 def cmd_doctor(extra: list):
-    from termux_app_store import doctor
+    doctor = _import_sibling("doctor")
 
     sys.argv = ["doctor", *extra]
     doctor.run()
 
 
 def cmd_guide(extra: list):
-    from termux_app_store import guidebook
+    guidebook = _import_sibling("guidebook")
 
     lang = None
     if "--lang" in extra:
@@ -1194,7 +1206,7 @@ def cmd_guide(extra: list):
 
 
 def cmd_repo(action: str):
-    from termux_app_store import repo_setup
+    repo_setup = _import_sibling("repo_setup")
 
     if action == "install-repo":
         ok, msg = repo_setup.add_repo()
