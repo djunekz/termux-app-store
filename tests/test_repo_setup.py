@@ -1,6 +1,7 @@
 import hashlib
 import os
 import time
+from pathlib import Path
 
 import pytest
 
@@ -30,7 +31,7 @@ def test_ensure_repo_adds_signed_entry(termux):
     msgs = []
     assert repo_setup.ensure_repo(msgs.append) is True
     p = repo_setup.paths()
-    line = open(p["sources_file"]).read().strip()
+    line = Path(p["sources_file"]).read_text().strip()
     assert line == f"deb [signed-by={p['keyring']}] {repo_setup.REPO_URL} termux main"
     assert "trusted=yes" not in line
     assert os.path.exists(p["keyring"])
@@ -66,9 +67,10 @@ def test_remove_repo_disables_auto_readd(termux):
 def test_legacy_trusted_yes_entry_is_replaced(termux):
     p = repo_setup.paths()
     os.makedirs(p["sources_dir"])
-    open(p["sources_file"], "w").write(f"deb [trusted=yes] {repo_setup.REPO_URL} termux main\n")
+    Path(p["sources_file"]).write_text(f"deb [trusted=yes] {repo_setup.REPO_URL} termux main\n")
     assert repo_setup.ensure_repo(lambda m: None) is True
-    assert "trusted=yes" not in open(p["sources_file"]).read()
+    content = Path(p["sources_file"]).read_text()
+    assert "trusted=yes" not in content
 
 
 def test_download_failure_never_raises_and_backs_off(termux, monkeypatch):
