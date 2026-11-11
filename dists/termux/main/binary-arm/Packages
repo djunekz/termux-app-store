@@ -468,6 +468,18 @@ SHA1: ae3579d8fbc78cf1a04180c1f7059c95ef9654c6
 SHA256: f4350151586dd00539c6b09d8f5e5d233b29f520354f2aa5567b2ce5a689dbde
 Description: Analyst website vulnerabillity scanner
 
+Package: miflasher
+Version: 2.0.4
+Architecture: arm
+Maintainer: @termux-app-store
+Installed-Size: 
+Filename: pool/main/miflasher_2.0.4_arm.deb
+Size: 58762
+MD5sum: 259dfb416c2f86e66563d03668139e35
+SHA1: bceca1ffaeedc03653a19206b7f36ad9091f55db
+SHA256: 1c9eb5cab361eb4e80a2a908700dd8444bc6670f3ff43914464615bf47c80648
+Description: A lightweight CLI tool to flash and manage Xiaomi firmware packages (Fastboot/ROM) easily and safely
+
 Package: mining
 Version: 1.0.4
 Architecture: arm
@@ -757,4 +769,3 @@ MD5sum: 15452a6c3cc3d679c7f0f41c450b5d12
 SHA1: 79b3c2c3c3e7f627b8428b8e2cb2d05a358eda09
 SHA256: 4a1172303844b9e640a953c2c43006daf3c3b077adbd196b56fcae2833a188b7
 Description: A posix script to find and watch youtube videos from the terminal. (Without API)
-

@@ -624,6 +624,18 @@ SHA1: 9a6e0969b5e995c9a382794397f15e35a96235e8
 SHA256: 04797d9877f428ef003679f48913388940c20434e7ce06ee59116d80d476628d
 Description: Analyst website vulnerabillity scanner
 
+Package: miflasher
+Version: 2.0.4
+Architecture: aarch64
+Maintainer: @termux-app-store
+Installed-Size: 
+Filename: pool/main/miflasher_2.0.4_aarch64.deb
+Size: 57540
+MD5sum: 20c7f1ef7f5a89c3493c465c539e742e
+SHA1: a27a9abae8c82a0e38506cf930ec4160e3856f10
+SHA256: 47ca6b16c93a6b842faf13ccf4110f418d55d992b1da6368ecf1de01e1276bf5
+Description: A lightweight CLI tool to flash and manage Xiaomi firmware packages (Fastboot/ROM) easily and safely
+
 Package: mining
 Version: 1.0.4
 Architecture: aarch64
@@ -1094,4 +1106,3 @@ MD5sum: 0c07070c6fa1b3416202888f7f45b207
 SHA1: aa8c740dfb5fc0cb1e0bb5adba2e186b47368d49
 SHA256: 9f2136bb79a2a5324f1725fddf02c83d4867841cbc193d9d6f31f3f11ec89a07
 Description: Encrypter Stealth Binary Builder
-

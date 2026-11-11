@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-11-11T10:32:25.628979+00:00",
+  "generated_at": "2026-11-11T10:38:39.575329+00:00",
   "total": 89,
   "packages": [
     {
@@ -1201,7 +1201,7 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/miflasher/archive/refs/tags/v${TERMUX_PKG_VERSION}.tar.gz",
       "sha256": "acd4d7af7b302fdec83a3d6e13f9f009c99b22be8b7872f7755dd39f400a84eb",
-      "recipe_sha256": "38a1ebc313c93bfbf85e9e0f6a63c137d1d7188f0669929186e9759c7989de62",
+      "recipe_sha256": "19c804297a568a978bb3090a6c58b96cb35437eae6a528e38845708399d0909e",
       "platform_independent": false,
       "depends": [
         "brotli",
@@ -1210,7 +1210,13 @@
         "termux-api",
         "zlib",
         "zstd"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "47ca6b16c93a6b842faf13ccf4110f418d55d992b1da6368ecf1de01e1276bf5",
+        "arm": "1c9eb5cab361eb4e80a2a908700dd8444bc6670f3ff43914464615bf47c80648",
+        "x86_64": "4275f24ffcf496b2619568fe3bbd7f0aec4d657dfdab2ee0a2425a18d43b1484",
+        "i686": "a37717e44fda7ca507a697e7baf31189576c76c07d96dd6873dfe530228870b8"
+      }
     },
     {
       "package": "myserver",
