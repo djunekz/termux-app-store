@@ -234,17 +234,6 @@ termux-app-store help                     # Full help
 
 ---
 
-## Package Status Badges
-
-| Badge | Description |
-|---|---|
-| **NEW** | Newly added package (< 7 days) |
-| **UPDATE** | A newer version is available |
-| **INSTALLED** | Installed version is up-to-date |
-| **UNSUPPORTED** | Dependency not available in Termux |
-
----
-
 ## How Fast Install Works (v0.4.0+)
 
 ```
