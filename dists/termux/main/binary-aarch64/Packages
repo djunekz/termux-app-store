@@ -145,15 +145,15 @@ SHA256: c591ce800174f5f1558e67366e022635e08cd415321c72c0867116e08b8ecb33
 Description: A new way to see and navigate directory trees : https://dystroy.org/broot
 
 Package: brutespray
-Version: 2.7.2
+Version: 2.7.3
 Architecture: aarch64
 Maintainer: @termux-app-store
 Installed-Size: 
-Filename: pool/main/brutespray_2.7.2_aarch64.deb
-Size: 12113088
-MD5sum: 35443c7c3c9e4f8910e38d3144ea0d15
-SHA1: 5f4fd52e022049fc6a18db340e492cd91e23b16b
-SHA256: 7cc6b212ada3d20b747d574b8c5600ee21d15ed956bbfce1db36cc57a0dfee79
+Filename: pool/main/brutespray_2.7.3_aarch64.deb
+Size: 12134288
+MD5sum: 9ec931f4c2f06cf93a4e2d2ccb9c5b62
+SHA1: a5eb26b9bc99bd9a42d956481a9cff82dfff17e3
+SHA256: d16b51bf6964c22ffbbd7079b8c1e04a5d7d5f28bc32414ce60665de2412016c
 Description: Fast, multi-protocol credential brute-forcer. Parses Nmap, Nessus, and Nexpose output to automatically test default and custom credentials across 30+ protocols.
 
 Package: clickjacking-tester
@@ -1106,4 +1106,3 @@ MD5sum: 0c07070c6fa1b3416202888f7f45b207
 SHA1: aa8c740dfb5fc0cb1e0bb5adba2e186b47368d49
 SHA256: 9f2136bb79a2a5324f1725fddf02c83d4867841cbc193d9d6f31f3f11ec89a07
 Description: Encrypter Stealth Binary Builder
-

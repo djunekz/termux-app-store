@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-11-12T06:21:09.616047+00:00",
+  "generated_at": "2026-11-12T07:39:31.118573+00:00",
   "total": 89,
   "packages": [
     {
@@ -294,12 +294,15 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/x90skysn3k/brutespray/archive/refs/tags/v2.7.3.tar.gz",
-      "sha256": "64f792ee6a81f46901ccca9753f007b733b6cea288cbed427b27b9ee5d445ee0",
-      "recipe_sha256": "edc0fa52e82b52d8eafdd5a10e0d72aa20f475549b3a260c1e37b623277d7032",
+      "sha256": "2efb6faa7b580cf0d2fce3a5519759529254717bc9014ffc13d251e3ef839167",
+      "recipe_sha256": "ac689289ee15edcb1006648caa10fe08e4c059a5495608972f184f142b6c73c3",
       "platform_independent": false,
       "depends": [
         "golang"
-      ]
+      ],
+      "sha256_by_arch": {
+        "aarch64": "d16b51bf6964c22ffbbd7079b8c1e04a5d7d5f28bc32414ce60665de2412016c"
+      }
     },
     {
       "package": "clickjacking-tester",
