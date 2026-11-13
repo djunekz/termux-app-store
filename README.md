@@ -63,7 +63,7 @@
 
 ---
 
-## What is Termux App Store?
+# What is Termux App Store?
 
 **Termux App Store** (`termux-app-store`) is a **TUI (Terminal User Interface)** and **CLI package manager** built with Python ([Textual](https://github.com/Textualize/textual)) that lets Termux users on Android **browse, install, and manage tools/packages** directly on-device — no account, no telemetry, no root required. Package metadata and downloads use the network.
 
@@ -83,7 +83,7 @@ It works as an **alternative package manager for Termux**, letting you install c
 
 ---
 
-## Who Is It For?
+# Who Is It For?
 
 | User | Use Case |
 |---|---|
@@ -139,7 +139,7 @@ It works as an **alternative package manager for Termux**, letting you install c
 
 ---
 
-## Quick Install and Uninstall
+# Quick Install and Uninstall
 
 > Available on **[PyPI](https://pypi.org/project/termux-app-store/)** — searchable and indexed, easy to discover.
 
@@ -184,7 +184,7 @@ pip uninstall termux-app-store
 
 ---
 
-## Usage
+# Usage
 
 ### TUI — Interactive Interface
 
@@ -227,14 +227,14 @@ termux-app-store help                     # Full help
 
 ---
 
-## Features
+# Features
 
 | **Package Browser (TUI)** Browse packages from the `packages/` folder interactively with keyboard & touchscreen navigation.<br>**Fast Install Engine** Downloads pre-built `.deb` from mirror pool — GitHub Pages, Cloudflare CDN, jsDelivr — with automatic fallback.<br>**Binary Cache** Local `.deb` cache with 7-day TTL; cached files are re-verified against a per-arch SHA256 before every install. Cached packages install instantly.<br>**Smart Build Validator** Detects unsupported Termux dependencies with automatic status badges. | **Real-time Search & Filter** Search packages by name or description — `search`/`find` CLI commands included.<br>**Multi-package Install/Uninstall** Install or remove several packages in one command with a summary output.<br>**One-Click Manage** Install / update / uninstall Termux App Store itself via `./tasctl`.<br>**Privacy-First** No account, no tracking, no telemetry. Works from local data when already available; fetching metadata and packages needs the network. |
 |---|---|
 
 ---
 
-## How Fast Install Works (v0.4.0+)
+# How Fast Install Works (v0.4.0+)
 
 ```
 termux-app-store install <package>
@@ -259,7 +259,7 @@ termux-app-store install <package>
 
 ---
 
-## Adding a Package
+# Adding a Package
 
 Every package in Termux App Store is defined by a single `build.sh` file — similar to how PKGBUILD works in Arch Linux, but adapted for Termux on Android.
 
@@ -298,7 +298,7 @@ cd termux-app-store
 
 ---
 
-## termux-build — Build & Validation Tool
+# termux-build — Build & Validation Tool
 
 `termux-build` is a validation and reviewer helper tool — not an auto-upload or auto-publish tool.
 
@@ -319,7 +319,7 @@ cd termux-app-store
 
 ---
 
-## tasctl — Termux App Store Controller
+# tasctl — Termux App Store Controller
 
 `tasctl` is the controller for the termux-app-store system.
 
@@ -334,7 +334,7 @@ cd termux-app-store
 
 ---
 
-## guidebook — All Information About Termux App Store
+# guidebook — All Information About Termux App Store
 
 ```bash
 python guidebook.py
@@ -345,7 +345,7 @@ python guidebook.py
 
 ---
 
-## How to Distribute Your Package to the Termux Community
+# How to Distribute Your Package to the Termux Community
 
 ```bash
 # 1. Fork this repo
@@ -364,7 +364,7 @@ mkdir packages/your-tool-name
 
 ---
 
-## Architecture
+# Architecture
 
 ```
 termux-app-store/
@@ -393,7 +393,7 @@ termux-app-store/
 
 ---
 
-## Security & Privacy
+# Security & Privacy
 
 | **Security** | **Privacy** |
 |---|---|
@@ -407,7 +407,7 @@ termux-app-store/
 
 ---
 
-## Development and Testing
+# Development and Testing
 
 ```bash
 git clone --depth 1 --single-branch --branch master https://github.com/djunekz/termux-app-store
@@ -427,7 +427,7 @@ Dependencies are pinned in `uv.lock` (`uv sync --extra dev`). See [CONTRIBUTING.
 
 ---
 
-## Contributing
+# Contributing
 
 All contributions are welcome!
 
@@ -444,7 +444,7 @@ All contributions are welcome!
 
 ---
 
-## Help & Documentation
+# Help & Documentation
 
 | Document | Description |
 |---|---|
@@ -457,7 +457,7 @@ All contributions are welcome!
 
 ---
 
-## Philosophy
+# Philosophy
 
 > *"Local first. Control over convenience. Transparency over magic."*
 
@@ -470,13 +470,13 @@ Termux App Store is built for users who want to:
 
 ---
 
-## License
+# License
 
 This project is licensed under the **MIT License** — see [LICENSE](LICENSE) for details.
 
 ---
 
-## Maintainer
+# Maintainer
 
 **Djunekz** — Independent developer and maintainer of Termux App Store
 
@@ -484,7 +484,7 @@ This project is licensed under the **MIT License** — see [LICENSE](LICENSE) fo
 
 ---
 
-## Support This Project
+# Support This Project
 
 If Termux App Store has been useful to you:
 
@@ -496,7 +496,7 @@ If Termux App Store has been useful to you:
 
 ---
 
-## Star History
+# Star History
 
 <a href="https://www.star-history.com/?repos=djunekz%2Ftermux-app-store&type=date&legend=bottom-right">
  <picture>
@@ -508,7 +508,7 @@ If Termux App Store has been useful to you:
 
 ---
 
-## Related Projects & Keywords
+# Related Projects & Keywords
 
 > This project is independently developed and is **not affiliated with** the official [Termux](https://github.com/termux/termux-app) project.
 
