@@ -1084,15 +1084,15 @@ SHA256: 1ecfade82a05408e632b0dade6baf6696e4003787a85859fff2f7ee292e928f1
 Description: The ultimate OSINT framework
 
 Package: zorabuilder
-Version: 1.0.0
+Version: 2.0.0
 Architecture: aarch64
 Maintainer: @termux-app-store
 Installed-Size: 
-Filename: pool/main/zorabuilder_1.0.0_aarch64.deb
-Size: 4825924
-MD5sum: 868bf2e749d2fa468fc5f231ece3269b
-SHA1: 8d79c1fb73b4e41917bcb3be0fce8f8364baf859
-SHA256: e1f00b234a4603d316a3e7887b411a67b2074dce1db32cd61bb9bb43e1774af4
+Filename: pool/main/zorabuilder_2.0.0_aarch64.deb
+Size: 2413928
+MD5sum: da693ef514eda67b9aa7148b16aac745
+SHA1: ea583c4639b231b5428abd4a51c12efaefaa7f16
+SHA256: 066b7365c03b3269b45e17ab3d3e73939924223fbe0490feac273d26b3aac8d1
 Description: Builder python standalone ELF
 
 Package: zoracrypter
@@ -1106,4 +1106,3 @@ MD5sum: 0c07070c6fa1b3416202888f7f45b207
 SHA1: aa8c740dfb5fc0cb1e0bb5adba2e186b47368d49
 SHA256: 9f2136bb79a2a5324f1725fddf02c83d4867841cbc193d9d6f31f3f11ec89a07
 Description: Encrypter Stealth Binary Builder
-

@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-11-12T07:39:31.118573+00:00",
+  "generated_at": "2026-11-13T09:08:41.391786+00:00",
   "total": 89,
   "packages": [
     {
@@ -1890,7 +1890,7 @@
     },
     {
       "package": "uv",
-      "version": "0.13.7",
+      "version": "0.13.8",
       "maintainer": "@termux-app-store",
       "description": "An extremely fast Python package and project manager, written in Rust.",
       "homepage": "https://github.com/astral-sh/uv",
@@ -1899,12 +1899,9 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/astral-sh/uv/releases/download/${TERMUX_PKG_VERSION}/uv-aarch64-unknown-linux-musl.tar.gz",
-      "sha256": "2d3ec076a0c4c0e8250bb6418c44080828b544f1a3be0b6e46adf9fb6923de45",
-      "recipe_sha256": "c5e9e12ad0e55a27ca12c3995465365cae0e731770262c4e5813071ac7c948ce",
-      "platform_independent": false,
-      "sha256_by_arch": {
-        "aarch64": "799ffb31756db7807c649d26a3a38e7db6e208666f86bccd317d51369add6105"
-      }
+      "sha256": "0c6f8593fcf1eadfc60e663b685c408267559d7c5d61c689bbb9f3a7e369ba32",
+      "recipe_sha256": "7a2356b78e530bd996fb65ae9e737adcfe2c9936bf0c9894d1804b658adec90a",
+      "platform_independent": false
     },
     {
       "package": "viu",
@@ -2054,7 +2051,7 @@
     },
     {
       "package": "zorabuilder",
-      "version": "1.0.0",
+      "version": "2.0.0",
       "maintainer": "@termux-app-store",
       "description": "Builder python standalone ELF",
       "homepage": "https://github.com/djunekz/termux-app-store",
@@ -2063,15 +2060,15 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/archive/releases/download/v${TERMUX_PKG_VERSION}/zorabuilder",
-      "sha256": "e455fd0af70ad3985f83dbfccb45af92036fa67cf1bfb09c713de0333be01918",
-      "recipe_sha256": "32e9b37f034a7956a8d1955679a8508bc594e70c30ecb7e297e2b2f81327c42d",
+      "sha256": "5e2d3004b819cb0cbab257656663ef684b7f19ef0578c1c8b99ea18f16dbfaa7",
+      "recipe_sha256": "c2c8978329915cf76121b56f0faf96170b9fd0fad000bfc48918d26f39669d35",
       "platform_independent": false,
       "depends": [
         "python",
         "binutils"
       ],
       "sha256_by_arch": {
-        "aarch64": "e1f00b234a4603d316a3e7887b411a67b2074dce1db32cd61bb9bb43e1774af4"
+        "aarch64": "066b7365c03b3269b45e17ab3d3e73939924223fbe0490feac273d26b3aac8d1"
       }
     },
     {
