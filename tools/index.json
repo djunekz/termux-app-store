@@ -1901,7 +1901,10 @@
       "srcurl": "https://github.com/astral-sh/uv/releases/download/${TERMUX_PKG_VERSION}/uv-aarch64-unknown-linux-musl.tar.gz",
       "sha256": "0c6f8593fcf1eadfc60e663b685c408267559d7c5d61c689bbb9f3a7e369ba32",
       "recipe_sha256": "7a2356b78e530bd996fb65ae9e737adcfe2c9936bf0c9894d1804b658adec90a",
-      "platform_independent": false
+      "platform_independent": false,
+      "sha256_by_arch": {
+        "aarch64": "dc886c0c7fde3911bac544b4877aa9f369a8baacf3a64e0f0b8dfac1a904b683"
+      }
     },
     {
       "package": "viu",

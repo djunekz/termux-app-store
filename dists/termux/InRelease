@@ -8,38 +8,38 @@ Codename: termux
 Components: main
 Architectures: aarch64 arm x86_64 i686
 Description: Official Termux repository by @djunekz
-Date: Fri, 13 Nov 2026 09:12:54 UTC
+Date: Fri, 13 Nov 2026 11:15:54 UTC
 MD5Sum:
- 42dd045edf638fffe624301e173a7091 37367 main/binary-aarch64/Packages
- 4eb9409b6942ec92327eeef686390c99 14052 main/binary-aarch64/Packages.gz
+ 4973942dccd37fb1773ab949f7c9a27a 37367 main/binary-aarch64/Packages
+ 98db785154d6a1b98c94315c94b87b29 14050 main/binary-aarch64/Packages.gz
  c38c1713b8ed5dc3f06bd2c997ae4bd4 25806 main/binary-arm/Packages
- 8df9141f003464c1668ae9a1b72ffad2 10015 main/binary-arm/Packages.gz
+ 4aad4ebdd1297303e6426ad1085e58db 10015 main/binary-arm/Packages.gz
  6ce00026394a396da6d7578ef8334c7d 27299 main/binary-x86_64/Packages
- 31c3243c43d77d19bf7923131644c2e5 10419 main/binary-x86_64/Packages.gz
+ d04e7690135a27ecece0efca9d18d628 10419 main/binary-x86_64/Packages.gz
  382ce9d38a007f81dd2ba122f4d6c020 25934 main/binary-i686/Packages
- 1daf6ecbe85e67e919994bf93026f278 10030 main/binary-i686/Packages.gz
+ 26a45a64f33d49a53698f11375fb013a 10030 main/binary-i686/Packages.gz
 SHA256:
- 4e7980dee5605c2fbc2f9b2e1f8c09b3c859643c1824fc040b9cf1533ccbcea7 37367 main/binary-aarch64/Packages
- f281fb0a89c2f56b75486a8fbfd04b4264f31d9c4588766fab794908342a6ba5 14052 main/binary-aarch64/Packages.gz
+ 02129a63fee3b638118d3a01e9083039fd28ee5d3664b5958bb7eed378a6cf8e 37367 main/binary-aarch64/Packages
+ 70e9ab5bab3a5180a0e1e5a9320732eea832162470c790a066bba78f4d1bb011 14050 main/binary-aarch64/Packages.gz
  c551dbdc807cce8d6a2b2dc6d89146c8e6da3d7347818bb8bfe12540cec26875 25806 main/binary-arm/Packages
- f6f7519430ab407821928631b6cc9a0683862311e348c37edcef614cc3d9c94d 10015 main/binary-arm/Packages.gz
+ 31fd2f4b87500d9f4681218f2918dc1ea7b1684c921540d5a17ffa71a5bf8a49 10015 main/binary-arm/Packages.gz
  1ea4b819770f0f88853e26edddb3fad0cc4a5447d1a337f58816ca1a22218c02 27299 main/binary-x86_64/Packages
- 291586f0cfbaa94ad15a66393694354ad959decf210bc0e68d1d1a8e0cae1664 10419 main/binary-x86_64/Packages.gz
+ 51c25f4d7aa25b1dc1c2acf82b95421f2841293c832d8ce61e6e600ac4d2b4a4 10419 main/binary-x86_64/Packages.gz
  c94a60aff56fc0d53870551194681efa30ba7b078bbb36c63b6ec48b33ed18b4 25934 main/binary-i686/Packages
- 17781633b5ea0aaf96320fc7afcb081430bd1be22a529e6f8b2a69cc920398d7 10030 main/binary-i686/Packages.gz
+ 398bd95b00d99b1c389615476179a85e0c219d4e717b9096c1d2967b329d67c3 10030 main/binary-i686/Packages.gz
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCAAdFiEE05E0oXdxelvr7q5xBdcM27bYApUFAmr21JYACgkQBdcM27bY
-ApVyMA//VVNUmqVQ1B0pc/fWQNsScH5cJded4wPYq8yZkj46RL64W0rre/WhTKao
-3OX7Ig7LE1f6mSwIKZCxKQVcjZXLiu/+PUvETOP8eekBiBNh7HvXnwhmNiBv3Rm1
-+4VNki9jVBb1xuM8zPpF2tc0zfI/FMztBYotqMk1hDxOKyzB7E97TJ5162sjaBqI
-3RPhAjDkGXMM3drR7vFibSPlC65dh49kvRB1iUGSAr/n5j5Nfzb+C4NM5tI3Zs4r
-atGypi+LANJIOi30yZuapCTeK/OS1IX3/6Jci/8EeL6Y5BwR2gu3iFw9k4J10GCa
-8k2BB4aJheitvlbvkj6YReun2MXaC954fMlWcGaaSEnbrI6bLzlMfGXHyFl5/CTG
-jGUlbxeCl0wZByctN0YQ8y7XBrlh1jhqSNYWJCVABBSTwPULcNjl0Xr55vy6OkO1
-2h7H2Ua1eNJrJYuTRvK+G0UOiCqGoTHQ9DYNjdxsSwKJ21YLVhe0EoETSllE6ANp
-MIaG8ng9Rnczz+ipVgFUSzNzY5CO0AQohXUPMvcknAOJaxSEzDRq3RrzwBscgtYb
-pDTwalGzF2qGVethXRvpLHI1GsPgfb49hO3+hWfrvEFLf2fA5aWx9EIkL1GO7/Dn
-B/HaESZ0pZfZj9sZAINOX9h5/8evafwBoXpl/tIlm8fr0IK5XJQ=
-=edGe
+iQIzBAEBCAAdFiEE05E0oXdxelvr7q5xBdcM27bYApUFAmr28WoACgkQBdcM27bY
+ApWOEw//VdnGBdjzoQwyLibN0T8pJkw4dPYts9B38OOV4mBX4L//zt8nj222aRg/
+YLAlfdPryYOrC95WsqUgORft8ihkrv2zQb5BEskWHrH+43PzBU1CnIBwXKr9Y65E
+ygXfL4d6V7YL7SpdCZRVfSlX4GbizJLfK2GIM/NKubpcCWSRwAE4UNSCDYSnA2Dq
+2wpjaAfjHSEQgJ5jtMGo6Fl0HIJ8f0yMdLfN4CUH7FJKkAfR5c04zTN02SkJhfYr
+OLGmB3xNMsxynoiWXHSOQ4a0D8p3vOi9Gd21a1gzVJUnZLHrhdUfu73lw43Fibwv
+2UotCwvIX7TzFZc58+WFutk/fjGBIyOQVUrCkzcJ/0GFEE3oB+6lASI6/dSGVH9m
+H+CyhvuMaXI/peGjf/7h2PTWnOP44i3r7yyU88fhKBLqNHdReIcXzSwuQOoEIuqW
+/7SaYBhRX6h/sk9zOzU8cAODEn8g124N6Xwy9gxha+u9MY0Zwbc9jpKjqEckEd/0
+E0l5YQKXd1V6aMGFrJ9ZophNj1Rf8pHupWLcp5W8+NHavxh7+IZvJk7q7F5hJGg5
+VMNfN3TkNtw5yn4rVEItMLbKhkkcT36fpbi1q7Yv3D/Vgg2khpHeu0+upZgEEbml
+yJt1dNystHg4PCItBzV/P5iNbKuXIva9X83VII1KYqL1D0gR8hU=
+=VEjs
 -----END PGP SIGNATURE-----
