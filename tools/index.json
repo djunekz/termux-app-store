@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-11-13T09:08:41.391786+00:00",
+  "generated_at": "2026-11-14T01:11:51.278256+00:00",
   "total": 89,
   "packages": [
     {
@@ -151,7 +151,7 @@
     },
     {
       "package": "baxter",
-      "version": "1.2.4",
+      "version": "1.4.0",
       "maintainer": "@djunekz",
       "description": "Encrypt and decrypt files termux",
       "homepage": "https://github.com/djunekz/baxter",
@@ -160,17 +160,14 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/baxter/releases/download/v${TERMUX_PKG_VERSION}/baxter-v${TERMUX_PKG_VERSION}.tar.gz",
-      "sha256": "7fac8356d81197218f44e60e0212e12ad63ca55462f9a563b541a589319e3227",
-      "recipe_sha256": "8344447e8cc0bac11f71b296ce1759d2299d5cb2c74a42a60fbf43285c29f5c4",
+      "sha256": "9afaf26be0c206b15c04225f128a85717c665b66305cef5a2b0dc765863b79f0",
+      "recipe_sha256": "701f763b4ad62a2916002a3014eb2f680ef693c49a78abd7e87bef05c550d52d",
       "platform_independent": false,
       "depends": [
         "nodejs"
       ],
       "sha256_by_arch": {
-        "aarch64": "77278ae34dbec0cb21307077aea9e9c933d93350220b649a4b0fcc212b5e671d",
-        "arm": "22ac1d9da1a2be6688d8c03f49ff974b04cae87bdec7cfbeeda746a8ccfad940",
-        "x86_64": "40f73ac05c71e8136db636174fb453cff3e4ec1b7bafd2e9fc76063c268577fb",
-        "i686": "36ea2a4de14fac6f7dffa756a1959dfa055ebb6a7d95e26a1adaa6c2f0e2bc65"
+        "aarch64": "81c314df493440061fa20de5f900949234149f1dea55e21626a41232e34e9678"
       }
     },
     {
@@ -1603,7 +1600,7 @@
     },
     {
       "package": "termux-sync",
-      "version": "1.3.5",
+      "version": "1.3.6",
       "maintainer": "@termux-app-store",
       "description": "OpenSource Backup and restore your entire Termux environment across devices.",
       "homepage": "https://github.com/djunekz/termux-sync",
@@ -1612,20 +1609,14 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/termux-sync/archive/refs/tags/v${TERMUX_PKG_VERSION}.tar.gz",
-      "sha256": "cc690be7b2be536445f069da8c3f583394c886a7a90865c44300459ef209c3ce",
-      "recipe_sha256": "8f3ecf0cc21463dd19da6ec0b9163d763820967cc52179ae9b7412f0555f4a15",
+      "sha256": "e475417d49de4039711c8e30d8b39999a599b0c739bf8e83ea5b3fbf754ebef6",
+      "recipe_sha256": "075c10c70ef34b8f28f662061f59381f9517107e12a7831df273aba5831a8059",
       "platform_independent": false,
       "depends": [
         "git",
         "python",
         "python-pip"
-      ],
-      "sha256_by_arch": {
-        "aarch64": "e5611720acbb3b0ca98c8dab6a76b28980f889c2dade3655389410deedbe241a",
-        "arm": "b425d78f83ef3623ca5c2333e7aa7f5851b96c0d5ef342a5f96db451fa5eca42",
-        "x86_64": "8c7c98da1b4e681cb77488e09f2da20b437c03088993182a439b131df4787cfb",
-        "i686": "0a89aa51092c0c67e76bc90f4509531e8580bdf673c803d8216e2bb169af26cd"
-      }
+      ]
     },
     {
       "package": "termux-tui",

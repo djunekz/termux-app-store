@@ -73,15 +73,15 @@ SHA256: fe8ecbd08acf578696d78e735fa98bf8c99b264c9a29be6ba4be935fd06d0cf5
 Description: Simulator Terminal learning basic command for beginner
 
 Package: baxter
-Version: 1.2.4
+Version: 1.4.0
 Architecture: aarch64
 Maintainer: @djunekz
 Installed-Size: 
-Filename: pool/main/baxter_1.2.4_aarch64.deb
-Size: 2576
-MD5sum: da73afc33c166406f03c69b639f9d502
-SHA1: 476cb7af5254eda4c133c94143c7c907d183b06d
-SHA256: 77278ae34dbec0cb21307077aea9e9c933d93350220b649a4b0fcc212b5e671d
+Filename: pool/main/baxter_1.4.0_aarch64.deb
+Size: 15740
+MD5sum: e14af2ff692a47cad11fc42aa3d39b9f
+SHA1: 0f115dbefdc466a3b7b4f20135580d91073a3bc2
+SHA256: 81c314df493440061fa20de5f900949234149f1dea55e21626a41232e34e9678
 Description: Encrypt and decrypt files termux
 
 Package: bing-ip2hosts
@@ -1106,4 +1106,3 @@ MD5sum: 0c07070c6fa1b3416202888f7f45b207
 SHA1: aa8c740dfb5fc0cb1e0bb5adba2e186b47368d49
 SHA256: 9f2136bb79a2a5324f1725fddf02c83d4867841cbc193d9d6f31f3f11ec89a07
 Description: Encrypter Stealth Binary Builder
-
