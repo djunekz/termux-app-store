@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-11-13T19:36:16.791176+00:00",
+  "generated_at": "2026-11-14T01:11:51.278256+00:00",
   "total": 89,
   "packages": [
     {
@@ -118,7 +118,7 @@
     },
     {
       "package": "baxter",
-      "version": "1.2.4",
+      "version": "1.4.0",
       "maintainer": "@djunekz",
       "description": "Encrypt and decrypt files termux",
       "homepage": "https://github.com/djunekz/baxter",
@@ -127,8 +127,8 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/baxter/releases/download/v${TERMUX_PKG_VERSION}/baxter-v${TERMUX_PKG_VERSION}.tar.gz",
-      "sha256": "7fac8356d81197218f44e60e0212e12ad63ca55462f9a563b541a589319e3227",
-      "recipe_sha256": "8344447e8cc0bac11f71b296ce1759d2299d5cb2c74a42a60fbf43285c29f5c4",
+      "sha256": "9afaf26be0c206b15c04225f128a85717c665b66305cef5a2b0dc765863b79f0",
+      "recipe_sha256": "701f763b4ad62a2916002a3014eb2f680ef693c49a78abd7e87bef05c550d52d",
       "platform_independent": false,
       "depends": [
         "nodejs"
