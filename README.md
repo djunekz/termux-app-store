@@ -122,7 +122,7 @@ It works as an **alternative package manager for Termux**, letting you install c
 
 | List menu | Menu about | Menu how to upload |
 |:---:|:---:|:---:|
-| <img src="https://github.com/user-attachments/assets/aee9da66-1307-4f0e-a23f-33970419ea2b" width="400" alt="List menu"/> | <img src="https://github.com/user-attachments/assets/18c1cdca-9895-4181-b0eb-78f0066f17f0" width="400" alt="Menu about"/> | <img src="https://github.com/user-attachments/assets/c167b7c0-62c1-49a6-a282-eed1b8c27766" width="400" alt="Menu how to upload"/> |
+| <img src="https://github.com/user-attachments/assets/aee9da66-1307-4f0e-a23f-33970419ea2b" width="400" alt="List menu"/> | <img src="https://github.com/user-attachments/assets/18c1cdca-9895-4181-b0eb-78f0066f17f0" width="400" alt="Menu about"/> | <img src="https://github.com/user-attachments/assets/c167b7c0-62c1-49a6-a282-eed1b8c27766" width="420" alt="Menu how to upload"/> |
 | GuideBook main menu | Information termux-app-store | Guide how to upload |
 
 > GuideBook is a information, run: `python guidebook.py`
