@@ -2,9 +2,9 @@ TERMUX_PKG_HOMEPAGE=https://pkg.go.dev/github.com/x90skysn3k/brutespray/v2
 TERMUX_PKG_DESCRIPTION="Fast, multi-protocol credential brute-forcer. Parses Nmap, Nessus, and Nexpose output to automatically test default and custom credentials across 30+ protocols."
 TERMUX_PKG_LICENSE="MIT"
 TERMUX_PKG_MAINTAINER="@termux-app-store"
-TERMUX_PKG_VERSION=2.7.5
-TERMUX_PKG_SRCURL=https://github.com/x90skysn3k/brutespray/archive/refs/tags/v2.7.5.tar.gz
-TERMUX_PKG_SHA256=f16d073279211820b995fda2dd0ff467a5bd0a1fab500dddccfa6a14015b6b52
+TERMUX_PKG_VERSION=2.7.6
+TERMUX_PKG_SRCURL=https://github.com/x90skysn3k/brutespray/archive/refs/tags/v2.7.6.tar.gz
+TERMUX_PKG_SHA256=3541e1fd691a429989747556b37c354e45aeeb6776fb14ce825e6db90b958191
 
 TERMUX_PKG_DEPENDS="golang"
 

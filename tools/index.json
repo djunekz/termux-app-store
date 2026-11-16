@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-11-16T05:27:53.906724+00:00",
+  "generated_at": "2026-11-16T21:55:01.034386+00:00",
   "total": 89,
   "packages": [
     {
@@ -225,7 +225,7 @@
     },
     {
       "package": "brutespray",
-      "version": "2.7.5",
+      "version": "2.7.6",
       "maintainer": "@termux-app-store",
       "description": "Fast, multi-protocol credential brute-forcer. Parses Nmap, Nessus, and Nexpose output to automatically test default and custom credentials across 30+ protocols.",
       "homepage": "https://pkg.go.dev/github.com/x90skysn3k/brutespray/v2",
@@ -233,9 +233,9 @@
       "download_size": "Unknown",
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
-      "srcurl": "https://github.com/x90skysn3k/brutespray/archive/refs/tags/v2.7.5.tar.gz",
-      "sha256": "f16d073279211820b995fda2dd0ff467a5bd0a1fab500dddccfa6a14015b6b52",
-      "recipe_sha256": "0cd5968253a12a630de17237a1dc2dc321f0634c92399aad94c060cb1962c60e",
+      "srcurl": "https://github.com/x90skysn3k/brutespray/archive/refs/tags/v2.7.6.tar.gz",
+      "sha256": "3541e1fd691a429989747556b37c354e45aeeb6776fb14ce825e6db90b958191",
+      "recipe_sha256": "8f0305b63674975be90cb0777a45eba57001b5b1bf76b770f4f4dbe2c335b5d5",
       "platform_independent": false,
       "depends": [
         "golang"
