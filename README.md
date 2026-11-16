@@ -109,22 +109,14 @@ It works as an **alternative package manager for Termux**, letting you install c
 
 ---
 
-<H1>CLI Interface</H1>
+<H1>CLI Interface and Other Tools Support</H1>
 
-| Other tools support and `termux-app-store` CLI view Interface |
-|:---:|
-| https://github.com/user-attachments/assets/71c097b2-01a8-4c1c-9ffd-c26f29ee6ae6 |
+| Other Tools Support CLI view Interface | Guidebook |
+|:---:| :---: |
+| https://github.com/user-attachments/assets/71c097b2-01a8-4c1c-9ffd-c26f29ee6ae6 | https://github.com/user-attachments/assets/b668a890-835f-4467-820a-988b1810c902 |
 
-> Tools support: `tasctl`, `termux-build`, `doctor.py`, `pkg-scaffold.py`, `build-package.sh`
----
 
-<H1>GuideBook</H1>
-
-| List menu, about, how to upload |
-|:---:|
-| https://github.com/user-attachments/assets/b668a890-835f-4467-820a-988b1810c902 |
-
-> GuideBook is a information, run: `python guidebook.py`
+CLI Interface and tools support: `tasctl`, `termux-build`, `doctor.py`, `pkg-scaffold.py`, `build-package.sh`, `guidebook.py`
 
 ---
 
