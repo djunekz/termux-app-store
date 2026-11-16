@@ -102,7 +102,7 @@ It works as an **alternative package manager for Termux**, letting you install c
 
 | TUI Main Interface | TUI Install Interface | Menu Palette |
 |:---:|:---:|:---:|
-| <img src="https://github.com/djunekz/termux-app-store/blob/master/.assets/0main.jpg" width="400" alt="TUI Main Interface"/> | <img src="https://github.com/djunekz/termux-app-store/blob/master/.assets/1install.jpg" width="400" alt="TUI Install Interface"/> | <img src="https://github.com/djunekz/termux-app-store/blob/master/.assets/2pallete.jpg" width="400" alt="Menu Palette Interface"/> |
+| <img src="https://github.com/user-attachments/assets/fb9395f1-f943-44c5-b88f-be18e480fd26" width="400" alt="TUI Main Interface"/> | <img src="https://github.com/user-attachments/assets/a0ee7a15-95d2-4743-9f7e-90cd9e3388f7" width="400" alt="TUI Install Interface"/> | <img src="https://github.com/user-attachments/assets/ad760153-983f-4113-a465-2b682cb26b67" width="400" alt="Menu Palette Interface"/> |
 | TUI main menu | Package install process | Command palette |
 
 > TUI User-friendly with full **touchscreen** support
@@ -122,7 +122,7 @@ It works as an **alternative package manager for Termux**, letting you install c
 
 | List menu | Menu about | Menu how to upload |
 |:---:|:---:|:---:|
-| <img src="https://github.com/djunekz/termux-app-store/blob/master/.assets/0guide-menu.png" width="400" alt="List menu"/> | <img src="https://github.com/djunekz/termux-app-store/blob/master/.assets/0guide-about.png" width="400" alt="Menu about"/> | <img src="https://github.com/djunekz/termux-app-store/blob/master/.assets/0guide-upload.png" width="400" alt="Menu how to upload"/> |
+| <img src="https://github.com/user-attachments/assets/aee9da66-1307-4f0e-a23f-33970419ea2b" width="400" alt="List menu"/> | <img src="https://github.com/user-attachments/assets/18c1cdca-9895-4181-b0eb-78f0066f17f0" width="400" alt="Menu about"/> | <img src="https://github.com/user-attachments/assets/c167b7c0-62c1-49a6-a282-eed1b8c27766" width="400" alt="Menu how to upload"/> |
 | GuideBook main menu | Information termux-app-store | Guide how to upload |
 
 > GuideBook is a information, run: `python guidebook.py`
