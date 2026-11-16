@@ -17,6 +17,7 @@ and this project adheres to semantic versioning.
 
 ### Changed
 - `README.md` - update assets
+- `README.id.md`, `README.th.md`, `README.jp.md`, `README.ch.md`, `README.vi.md` and `README.in.md` - all translations now follow the current `README.md` (same sections, install and usage tables, fast install flow, architecture, security, development and testing, contributing, help and documentation) instead of the older shorter versions; the images and videos now use the same GitHub-hosted `user-attachments` URLs as `README.md`, so the translated READMEs no longer depend on the `.assets` folder
 - Package `brutespray` v2.7.3 - Updated metadata
 
 ---

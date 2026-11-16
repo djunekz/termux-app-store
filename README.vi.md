@@ -1,8 +1,10 @@
-![[Termux App Store — TUI Package Manager](.assets/00.jpeg)](https://github.com/djunekz/termux-app-store/raw/master/.assets/00.jpeg)
+![[Termux App Store — TUI Package Manager for Termux](https://github.com/user-attachments/assets/758d85c8-5654-422e-b345-ee6db5c27b1f)](https://github.com/user-attachments/assets/758d85c8-5654-422e-b345-ee6db5c27b1f)
 
 # [Termux App Store — TUI & CLI Package Manager cho Termux](https://djunekz.github.io/termux-app-store/)
 
-**Package manager TUI và CLI ưu tiên chạy cục bộ, được xây dựng riêng cho Termux trên Android, cài nhị phân có xác minh checksum và có phương án dự phòng build từ source.**
+**Package manager TUI và CLI ưu tiên cục bộ, xây dựng native cho Termux trên Android, với cài đặt binary được xác minh checksum và phương án dự phòng build từ source.**
+
+> Đọc bằng: 🇬🇧 **[English](README.md)** | 🇮🇩 **[Bahasa Indonesia](README.id.md)** | 🇹🇭 **[ภาษาไทย](README.th.md)** | 🇯🇵 **[日本語](README.jp.md)** | 🇨🇳 **[中文](README.ch.md)** | 🇮🇳 **[हिन्दी](README.in.md)**
 
 <div align="center">
 
@@ -56,35 +58,81 @@
 
 </div>
 
-
 > **Ưu tiên cục bộ • Xác minh checksum • Dựa trên source • Native Termux • Android Terminal**
-> Cài đặt và quản lý gói Termux — nhị phân dựng sẵn hoặc build từ source — không root, không tài khoản, không theo dõi.
-
-> Đọc bằng ngôn ngữ khác: 🇬🇧 **[English](README.md)** | 🇮🇩 **[Bahasa Indonesia](README.id.md)** | 🇹🇭 **[ภาษาไทย](README.th.md)** | 🇯🇵 **[日本語](README.jp.md)** | 🇨🇳 **[中文](README.ch.md)** | 🇮🇳 **[हिन्दी](README.in.md)**
+> Cài đặt và quản lý gói Termux — binary dựng sẵn hoặc build từ source — không cần root, không cần tài khoản, không telemetry.
 
 ---
 
-## Termux App Store là gì?
+# Termux App Store là gì?
 
-**Termux App Store** là **package manager TUI & CLI** được xây dựng bằng Python ([Textual](https://github.com/Textualize/textual)), cho phép người dùng Termux trên Android **duyệt, cài đặt và quản lý công cụ/gói** trực tiếp trên thiết bị — không cần tài khoản, không có telemetry, không cần root. Việc lấy metadata và tải xuống cần mạng.
+**Termux App Store** (`termux-app-store`) là một **TUI (Terminal User Interface)** và **CLI package manager** được xây dựng bằng Python ([Textual](https://github.com/Textualize/textual)), cho phép người dùng Termux trên Android **duyệt, cài đặt và quản lý công cụ/gói** ngay trên thiết bị — không cần tài khoản, không telemetry, không cần root. Metadata gói và việc tải xuống cần dùng mạng.
 
-Từ **v0.4.0**, thêm **engine cài đặt nhanh**: tải xuống các file `.deb` nhị phân dựng sẵn từ nhóm mirror (GitHub Pages, Cloudflare CDN, jsDelivr), với bộ nhớ đệm `.deb` cục bộ (TTL 7 ngày) . Mọi file `.deb`, kể cả trong cache, phải khớp SHA256 theo kiến trúc, nếu không sẽ bị từ chối. SHA256 dùng để phát hiện file hỏng hoặc không khớp, không phải chữ ký của nhà phát hành. Vẫn có thể dùng `fix-install` để build từ source khi cần kiểm soát đầy đủ.
+Bắt đầu từ **v0.4.0**, Termux App Store hỗ trợ **fast install engine**: các gói được tải về dưới dạng binary `.deb` dựng sẵn từ mirror pool (GitHub Pages, Cloudflare CDN, jsDelivr), với bộ nhớ đệm `.deb` cục bộ (TTL 7 ngày). Mọi tệp `.deb`, kể cả từ bộ nhớ đệm, đều phải khớp SHA256 theo từng kiến trúc, nếu không sẽ bị từ chối. SHA256 phát hiện tệp hỏng hoặc không khớp; đây không phải chữ ký của nhà phát hành. Vẫn có thể build từ source qua `fix-install`.
+
+Đây là một **package manager thay thế cho Termux**, cho phép bạn cài đặt công cụ cộng đồng bằng các script `build.sh` — có tinh thần tương tự AUR (Arch User Repository) nhưng được thiết kế riêng cho Termux trên Android.
+
+> **Khác gì so với `termux-packages` hoặc TUR (Termux User Repository)?**
+>
+> - `termux-packages` là repo chính thức của Termux — do nhóm phát triển cốt lõi duy trì, cần duyệt PR và chỉ nhận các công cụ được dùng rộng rãi.
+> - TUR là phần mở rộng được tuyển chọn, vẫn cần người đóng góp review.
+> - **Termux App Store** hoàn toàn do cộng đồng điều hành: ai cũng có thể gửi `build.sh`, gói được phân phối dưới dạng `.deb` dựng sẵn hoặc build từ source, và không có cổng phê duyệt tập trung. Hãy xem nó như một lớp gói cá nhân + cộng đồng đặt trên Termux.
 
 > [!IMPORTANT]
-> Termux App Store **không phải là trình cài đặt tự động ẩn**.
-> Tất cả các cài đặt — nhị phân hay source — đều chạy **cục bộ, minh bạch và hoàn toàn do người dùng kiểm soát**.
+> Termux App Store **không phải trình tự động cài đặt ẩn**.
+> Mọi lượt cài đặt — binary hay source — đều chạy **cục bộ, minh bạch và hoàn toàn dưới sự kiểm soát của người dùng**.
 
 ---
 
-## Ảnh chụp màn hình
+# Dành cho ai?
 
-| TUI chính | TUI cài đặt | Command Palette |
-|---|---|---|
-| [![TUI Main](.assets/0main.jpg)](https://github.com/djunekz/termux-app-store/blob/master/.assets/0main.jpg) | [![TUI Install](.assets/1install.jpg)](https://github.com/djunekz/termux-app-store/blob/master/.assets/1install.jpg) | [![Menu Palette](.assets/2pallete.jpg)](https://github.com/djunekz/termux-app-store/blob/master/.assets/2pallete.jpg) |
+| Người dùng | Trường hợp sử dụng |
+|---|---|
+| Người dùng Termux | Cài binary nhanh hoặc toàn quyền kiểm soát build từ source |
+| Nhà phát triển | Phân phối công cụ qua `.deb` dựng sẵn hoặc đóng gói source |
+| Người review & kiểm toán | Xem xét và xác thực script build |
+| Người duy trì | Quản lý nhiều gói Termux cùng lúc |
 
 ---
 
-## Cài đặt và gỡ cài đặt nhanh
+<div align="center">
+<img src="https://github.com/user-attachments/assets/b03419bc-8efe-4ed0-9b61-fea5153e9f53" width="100%" alt="Termux App Store — Main View"/>
+
+<br/><br/>
+<H1>Giao diện TUI</H1>
+
+| Giao diện chính TUI | Giao diện cài đặt TUI | Menu Palette |
+|:---:|:---:|:---:|
+| <img src="https://github.com/user-attachments/assets/fb9395f1-f943-44c5-b88f-be18e480fd26" width="400" alt="TUI Main Interface"/> | <img src="https://github.com/user-attachments/assets/a0ee7a15-95d2-4743-9f7e-90cd9e3388f7" width="400" alt="TUI Install Interface"/> | <img src="https://github.com/user-attachments/assets/ad760153-983f-4113-a465-2b682cb26b67" width="400" alt="Menu Palette Interface"/> |
+| Menu chính của TUI | Quá trình cài đặt gói | Command palette |
+
+> TUI thân thiện với người dùng, hỗ trợ đầy đủ **màn hình cảm ứng**
+
+---
+
+<H1>Giao diện CLI và các công cụ hỗ trợ khác</H1>
+
+| Giao diện CLI và các công cụ hỗ trợ khác | Guidebook |
+|:---:| :---: |
+| https://github.com/user-attachments/assets/71c097b2-01a8-4c1c-9ffd-c26f29ee6ae6 | https://github.com/user-attachments/assets/b668a890-835f-4467-820a-988b1810c902 |
+
+
+Giao diện CLI và công cụ hỗ trợ: `tasctl`, `termux-build`, `doctor.py`, `pkg-scaffold.py`, `build-package.sh`, `guidebook.py`
+
+---
+
+<H1>Quay màn hình</H1>
+
+| Quay `termux-app-store` TUI, CLI và các công cụ khác `tasctl`, `termux-build`, `guidebook.py` |
+|:---:|
+| <img src="https://github.com/user-attachments/assets/152c757f-d2a3-4f31-8174-2b857a3aad51" width="100%" alt="termux-app-store"/> | termux-app-store
+
+</div>
+
+---
+
+# Cài đặt và gỡ cài đặt nhanh
+
+> Có trên **[PyPI](https://pypi.org/project/termux-app-store/)** — có thể tìm kiếm và đã được lập chỉ mục, dễ tìm thấy.
 
 ### Tùy chọn 1 (Khuyến nghị)
 
@@ -95,86 +143,121 @@ pip install termux-app-store
 
 ### Tùy chọn 2 (Thủ công)
 
+> Đơn giản (khuyến nghị nếu bộ nhớ hạn chế)
+
 ```bash
 curl -fsSL https://raw.githubusercontent.com/djunekz/termux-app-store/master/tasctl | bash -s install
 ```
 
-Sau khi cài đặt:
+> Dùng git clone (tải toàn bộ repository)
 
 ```bash
-termux-app-store    # Mở TUI tương tác
-tas                 # Lệnh viết tắt
-termux-app-store -h # Hiển thị trợ giúp CLI
+git clone --depth 1 --single-branch --branch master https://github.com/djunekz/termux-app-store
+cd termux-app-store
+bash install.sh
+```
+
+Sau khi cài đặt, chạy:
+
+```bash
+termux-app-store        # Open interactive TUI
+termux-app-store -h     # Show CLI help
+tas                     # Shorthand for termux-app-store
 ```
 
 ### Gỡ cài đặt
 
 ```bash
 pip uninstall termux-app-store
+# or
+./tasctl uninstall
 ```
 
 ---
 
-## Sử dụng
+# Sử dụng
 
 ### TUI — Giao diện tương tác
 
 ```bash
 termux-app-store
-# hoặc viết tắt:
+# or shorthand:
 tas
 ```
+
+| Phím / nút | Chức năng |
+|---|---|
+| **Install / Update / Open** (`Ctrl+I`) | Nút chính thay đổi theo gói: Install khi chưa cài, Update khi có phiên bản mới hơn, Open khi đã cài và là bản mới nhất. Open chạy công cụ (chọn lệnh, thêm đối số) rồi quay lại TUI sau khi bạn nhấn Enter |
+| **Shortcut** (hộp thoại Open) | Tạo script Termux:Widget trong `~/.shortcuts` để chạy công cụ với các đối số của bạn |
+| **Upgrade all** (banner cập nhật) | Banner hiển thị số gói đã cài có phiên bản mới hơn và đưa tất cả vào hàng đợi |
+| **Cancel** (`Ctrl+X`) | Dừng quá trình tải xuống hoặc build source đang chạy tại điểm an toàn tiếp theo |
+| `F4` | Lịch sử hoạt động: cài đặt, cập nhật, gỡ bỏ và khởi chạy |
+| `F5` | Báo cáo sự cố: mở biểu mẫu báo lỗi đã điền sẵn |
+| `Ctrl+R` / `Ctrl+Q` | Làm mới danh sách gói / thoát |
+| `Ctrl+P` | Command palette, gồm bật hoặc tắt thông báo (cần Termux:API) |
 
 ### CLI — Lệnh trực tiếp
 
 ```bash
-termux-app-store list                     # Liệt kê tất cả gói
-termux-app-store show <gói>               # Xem chi tiết gói
-termux-app-store install <gói>            # Cài đặt nhanh (file .deb dựng sẵn)
-termux-app-store install pkg1 pkg2 pkg3   # Cài nhiều gói cùng lúc
-termux-app-store fix-install <gói>        # Bắt buộc build từ source
-termux-app-store search <từ khóa>         # Tìm kiếm gói
-termux-app-store update                   # Kiểm tra bản cập nhật
-termux-app-store upgrade                  # Nâng cấp tất cả gói
-termux-app-store mirrors                  # Kiểm tra trạng thái mirror
-termux-app-store cache info               # Thông tin bộ nhớ đệm
-termux-app-store cache clear              # Xóa bộ nhớ đệm
-termux-app-store version                  # Kiểm tra phiên bản mới nhất
-termux-app-store help                     # Trợ giúp đầy đủ
+termux-app-store list                     # List all packages
+termux-app-store show <package>           # Show package details
+termux-app-store install <package>        # Fast install (pre-built .deb)
+termux-app-store install pkg1 pkg2 pkg3   # Multi-package install
+termux-app-store fix-install <package>    # Force source build (bypass fast install)
+termux-app-store search <query>           # Search packages by name or description
+termux-app-store update                   # Check for available updates
+termux-app-store upgrade                  # Upgrade all packages
+termux-app-store upgrade <package>        # Upgrade a specific package
+termux-app-store uninstall <package>      # Uninstall a package
+termux-app-store mirrors                  # Check mirror status
+termux-app-store cache info               # Show binary cache info
+termux-app-store cache clear              # Clear binary cache
+termux-app-store version                  # Check latest version
+termux-app-store help                     # Full help
 ```
 
 ---
 
-## Cách hoạt động của Fast Install (v0.4.0+)
+# Tính năng
 
-Từ v0.4.0, cài đặt mặc định tải xuống file `.deb` nhị phân dựng sẵn:
-
-1. Kiểm tra bộ nhớ đệm `.deb` cục bộ (TTL 7 ngày)
-2. Nếu không có cache, thử mirror theo thứ tự: GitHub Pages → Cloudflare CDN → jsDelivr CDN → raw GitHub
-3. Xác minh SHA256 theo kiến trúc (`sha256_by_arch`)
-4. Lưu cache cục bộ và cài đặt bằng `dpkg -i`
-
-> Nếu cài đặt nhanh thất bại, dùng `fix-install <gói>` để build toàn bộ từ source qua `build-package.sh`.
-
----
-
-## Huy hiệu trạng thái gói
-
-| Huy hiệu | Mô tả |
+| **Package Browser (TUI)** Duyệt các gói trong thư mục `packages/` một cách tương tác bằng bàn phím & màn hình cảm ứng.<br>**Fast Install Engine** Tải `.deb` dựng sẵn từ mirror pool — GitHub Pages, Cloudflare CDN, jsDelivr — với cơ chế dự phòng tự động.<br>**Binary Cache** Bộ nhớ đệm `.deb` cục bộ với TTL 7 ngày; tệp trong cache được xác minh lại SHA256 theo từng kiến trúc trước mỗi lần cài đặt. Gói đã cache được cài ngay lập tức.<br>**Smart Build Validator** Phát hiện các dependency Termux không được hỗ trợ với huy hiệu trạng thái tự động. | **Tìm kiếm & lọc thời gian thực** Tìm gói theo tên hoặc mô tả — có sẵn lệnh CLI `search`/`find`.<br>**Cài đặt/Gỡ nhiều gói** Cài hoặc gỡ nhiều gói bằng một lệnh, kèm tóm tắt kết quả.<br>**Quản lý một chạm** Cài đặt / cập nhật / gỡ chính Termux App Store qua `./tasctl`.<br>**Ưu tiên quyền riêng tư** Không tài khoản, không theo dõi, không telemetry. Hoạt động từ dữ liệu cục bộ khi đã có; việc tải metadata và gói cần mạng. |
 |---|---|
-| **NEW** | Gói mới thêm (trong 7 ngày) |
-| **UPDATE** | Có phiên bản mới |
-| **INSTALLED** | Đã cài và là bản mới nhất |
-| **UNSUPPORTED** | Dependency không có sẵn trong Termux |
 
 ---
 
-## Thêm gói mới
-
-Mỗi gói được định nghĩa bởi một file `build.sh` duy nhất:
+# Fast Install hoạt động như thế nào (v0.4.0+)
 
 ```
-packages/<tên-công-cụ>/build.sh
+termux-app-store install <package>
+        │
+        ▼
+  Check local .deb cache (TTL 7 days)
+        │ cache HIT          │ cache MISS
+        ▼                    ▼
+  Verify SHA256        Probe the mirrors, use the fastest:
+  (per arch)           1. Cloudflare CDN
+        │              2. GitHub Pages
+        ▼              3. jsDelivr CDN
+  dpkg -i                    │
+                             ▼
+                       Download .deb
+                       Verify SHA256 (index sha256_by_arch, else the published .deb.sha256)
+                       Cache locally
+                       dpkg -i
+```
+
+> Nếu fast install thất bại, hãy dùng `fix-install <package>` để buộc build source đầy đủ qua `build-package.sh`.
+
+---
+
+# Thêm gói mới
+
+Mỗi gói trong Termux App Store được định nghĩa bởi một tệp `build.sh` duy nhất — tương tự cách PKGBUILD hoạt động trong Arch Linux, nhưng được điều chỉnh cho Termux trên Android.
+
+Mỗi gói **phải** có tệp `build.sh`:
+
+```
+packages/<tool-name>/build.sh
 ```
 
 ### Template `build.sh` tối thiểu
@@ -183,69 +266,245 @@ packages/<tên-công-cụ>/build.sh
 TERMUX_PKG_HOMEPAGE=""
 TERMUX_PKG_DESCRIPTION=""
 TERMUX_PKG_LICENSE=""
-TERMUX_PKG_MAINTAINER="@tên-github-của-bạn"
+TERMUX_PKG_MAINTAINER="@your-github-username"
 TERMUX_PKG_VERSION=""
 TERMUX_PKG_SRCURL=""
 TERMUX_PKG_SHA256=""
 ```
 
+> [!NOTE]
+> Xem template đầy đủ tại `template/build.sh` hoặc chạy: `./termux-build template`
+
+### Thêm gói bằng termux-build
+
 ```bash
 cd termux-app-store
-./termux-build create tên-công-cụ
-# hoặc tự động tạo từ GitHub URL:
+./termux-build create your-tool-name
+# or auto-create from a GitHub URL:
 ./termux-build init https://github.com/user/repo
 ```
 
+> [!NOTE]
+> Khi đặt tên, không dùng khoảng trắng — hãy dùng `-`. Ví dụ: `my-tool-name`
+
 ---
 
-## Công cụ hỗ trợ
+# termux-build — Công cụ Build & Xác thực
 
-### termux-build
+`termux-build` là công cụ hỗ trợ xác thực và review — không phải công cụ tự động upload hay tự động publish.
 
 ```bash
-./termux-build create <gói>       # Tạo gói để phân phối
-./termux-build init <url>         # Tự động tạo từ GitHub URL
-./termux-build lint <gói>         # Kiểm tra build script
-./termux-build doctor             # Chẩn đoán môi trường
-./termux-build template           # Tạo template build.sh
+./termux-build create <package>      # Create package for distribution
+./termux-build init <url-repo>       # Auto-create and build package from GitHub URL
+./termux-build lint <package>        # Lint a build script
+./termux-build check-pr <package>    # Check PR readiness
+./termux-build doctor                # Diagnose environment
+./termux-build suggest <package>     # Get improvement suggestions
+./termux-build explain <package>     # Detailed package explanation
+./termux-build template              # Generate build.sh template
+./termux-build guide                 # Contribution guide
 ```
 
-### tasctl
+> [!NOTE]
+> `termux-build` **chỉ đọc và xác thực** — không sửa đổi tệp và không upload lên GitHub.
+
+---
+
+# tasctl — Bộ điều khiển Termux App Store
+
+`tasctl` là bộ điều khiển của hệ thống termux-app-store.
 
 ```bash
-./tasctl install       # Cài Termux App Store
-./tasctl update        # Cập nhật phiên bản mới nhất
-./tasctl uninstall     # Gỡ Termux App Store
-./tasctl doctor        # Chẩn đoán môi trường
-./tasctl self-update   # Tự cập nhật tasctl
+./tasctl install       # Install Termux App Store (latest)
+./tasctl update        # Update to latest version
+./tasctl uninstall     # Remove Termux App Store
+./tasctl doctor        # Diagnose environment
+./tasctl self-update   # Update tasctl itself
+./tasctl help          # Show help
 ```
 
 ---
 
-## Bảo mật & Quyền riêng tư
+# guidebook — Toàn bộ thông tin về Termux App Store
 
-- Không cần quyền bổ sung, không có dịch vụ chạy nền
-- Không cần tài khoản, không đăng ký
-- Không phân tích, không theo dõi, không telemetry
-- Bắt buộc SHA256 cho mọi `.deb` (tải xuống và cache)
-- Thiết kế ưu tiên cục bộ (cần mạng cho metadata và tải xuống)
+```bash
+python guidebook.py
+```
 
-> Chi tiết: [SECURITY.md](SECURITY.md) | [PRIVACY.md](PRIVACY.md) | [BINARY_DISCLAIMER.md](BINARY_DISCLAIMER.md)
-
----
-
-## Giấy phép
-
-**Giấy phép MIT** — xem [LICENSE](LICENSE) để biết chi tiết.
+> [!NOTE]
+> guidebook hiện hỗ trợ hai ngôn ngữ: tiếng Anh và tiếng Indonesia.
 
 ---
 
-## Người duy trì
+# Cách phân phối gói của bạn đến cộng đồng Termux
 
-**Djunekz** — Nhà phát triển độc lập
+```bash
+# 1. Fork this repo
+# 2. Add your package folder:
+mkdir packages/your-tool-name
+# 3. Create build.sh from the template or with termux-build:
+./termux-build create your-tool-name
+# or from a GitHub URL:
+./termux-build init https://github.com/you/your-repo
+# 4. Validate with termux-build:
+./termux-build lint packages/your-tool-name
+# 5. Submit a Pull Request
+```
+
+> Hướng dẫn đầy đủ: [HOW_TO_UPLOAD.md](HOW_TO_UPLOAD.md)
+
+---
+
+# Kiến trúc
+
+```
+termux-app-store/
+├── packages/              # All packages directory
+│   └── <tool-name>/
+│       └── build.sh       # Metadata & build script
+├── template/
+│   └── build.sh           # Package template
+├── core/
+│   ├── binary_core.py     # BinaryCache — local .deb cache + mirror download
+│   ├── mirrors.py         # MirrorManager — mirror pool registry
+│   ├── package.py         # Package dataclass
+│   └── validator.py       # PackageValidator
+├── utils/
+│   └── installer.py       # install_from_binary / install_from_source helpers
+├── tools/
+│   └── mirrors.json       # Mirror registry
+├── fast_install.py        # Fast install engine (.deb download + cache + SHA256 verify)
+├── store_common.py        # Shared logic: mirrors, app root, recipe and script verification
+├── tasctl                 # TAS installer/updater/uninstaller
+├── termux-build           # Validation & review tool
+└── install.sh             # Main installer
+```
+
+> Chi tiết đầy đủ: [ARCHITECTURE.md](ARCHITECTURE.md)
+
+---
+
+# Bảo mật & Quyền riêng tư
+
+| **Bảo mật** | **Quyền riêng tư** |
+|---|---|
+| Không cần quyền bổ sung | Không cần tài khoản hay đăng ký |
+| Không mở cổng mạng nào | Không phân tích hay theo dõi |
+| Không có dịch vụ chạy nền | Không có telemetry dưới bất kỳ hình thức nào |
+| Build chỉ chạy khi người dùng ra lệnh rõ ràng | Ưu tiên cục bộ; mạng dùng cho metadata và tải xuống |
+| Bắt buộc SHA256 cho mọi `.deb` (tải xuống và cache) | Nguồn binary minh bạch và có thể kiểm toán |
+
+> Chi tiết đầy đủ: [SECURITY.md](SECURITY.md) | [PRIVACY.md](PRIVACY.md) | [DISCLAIMER.md](DISCLAIMER.md) | [BINARY_DISCLAIMER.md](BINARY_DISCLAIMER.md)
+
+---
+
+# Phát triển và Kiểm thử
+
+```bash
+git clone --depth 1 --single-branch --branch master https://github.com/djunekz/termux-app-store
+cd termux-app-store
+pip install -e ".[dev]"
+```
+
+| Lệnh | Chức năng |
+|---|---|
+| `make test` hoặc `pytest` | Chạy bộ kiểm thử |
+| `make coverage` | Chạy bộ kiểm thử kèm báo cáo coverage |
+| `make lint` | Kiểm tra lint và định dạng bằng Ruff |
+| `make typecheck` | Kiểm tra kiểu bằng Mypy |
+| `make check` | Chạy lint, kiểm tra kiểu và kiểm thử cùng lúc |
+
+Các dependency được ghim trong `uv.lock` (`uv sync --extra dev`). Xem [CONTRIBUTING.md](CONTRIBUTING.md) để có hướng dẫn đầy đủ.
+
+---
+
+# Đóng góp
+
+Mọi đóng góp đều được chào đón!
+
+| Cách đóng góp | Mô tả |
+|---|---|
+| Thêm gói | Gửi một gói công cụ mới |
+| Báo lỗi | Mở issue trên GitHub |
+| Gửi PR | Cải thiện mã nguồn hoặc tài liệu |
+| Review PR | Giúp xác thực đóng góp của người khác |
+| Kiểm toán bảo mật | Xem xét tính bảo mật của script build |
+| Cải thiện tài liệu | Làm rõ hoặc dịch tài liệu |
+
+> Hướng dẫn đầy đủ: [CONTRIBUTING.md](CONTRIBUTING.md)
+
+---
+
+# Trợ giúp & Tài liệu
+
+| Tài liệu | Mô tả |
+|---|---|
+| [FAQ](FAQ.md) | Câu hỏi thường gặp |
+| [TROUBLESHOOTING](TROUBLESHOOTING.md) | Giải pháp cho các sự cố thường gặp |
+| [HOW TO UPLOAD](HOW_TO_UPLOAD.md) | Cách upload công cụ của bạn |
+| [CONTRIBUTING](CONTRIBUTING.md) | Hướng dẫn đóng góp |
+| [SUPPORT](SUPPORT.md) | Cách nhận hỗ trợ |
+| [BINARY_DISCLAIMER](BINARY_DISCLAIMER.md) | Lưu ý về phân phối binary |
+
+---
+
+# Triết lý
+
+> *"Ưu tiên cục bộ. Kiểm soát hơn tiện lợi. Minh bạch hơn phép màu."*
+
+Termux App Store được xây dựng cho những người dùng muốn:
+
+- Hiểu rõ những gì chạy trên thiết bị của mình
+- Kiểm soát trực tiếp việc build và source
+- Tránh bị phụ thuộc vào nhà cung cấp
+- Chia sẻ công cụ một cách cởi mở với cộng đồng Termux
+
+---
+
+# Giấy phép
+
+Dự án này được cấp phép theo **MIT License** — xem [LICENSE](LICENSE) để biết chi tiết.
+
+---
+
+# Người duy trì
+
+**Djunekz** — Nhà phát triển độc lập và người duy trì Termux App Store
 
 [![GitHub](https://img.shields.io/badge/GitHub-djunekz-3fb950?style=for-the-badge&logo=github)](https://github.com/djunekz)
 
 ---
 
-**© Termux App Store — Được tạo ra cho mọi người, bởi cộng đồng.**
+# Ủng hộ dự án này
+
+Nếu Termux App Store hữu ích với bạn:
+
+- **Gắn sao** repo này — giúp người khác khám phá
+- **Chia sẻ** trong cộng đồng Termux & Android
+- **Báo lỗi** qua Issues
+- **Gửi PR** cho bất kỳ cải tiến nào
+- **Tài trợ**: https://saweria.co/redHh
+
+---
+
+# Lịch sử sao
+
+<a href="https://www.star-history.com/?repos=djunekz%2Ftermux-app-store&type=date&legend=bottom-right">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=djunekz/termux-app-store&type=date&theme=dark&legend=bottom-right&sealed_token=yxIBRg8O6CfVP9fzApqsHovR51Bu-9FS0C01LYEOvVBkXHNNIe-JOGKtHOqIq1X_KzE" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=djunekz/termux-app-store&type=date&legend=bottom-right&sealed_token=yxIBRg8O6CfVP9fzApqsHovR51Bu-9FS0C01LYEOvVBkXHNNIe-JOGKtHOqIq1X_KzE" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=djunekz/termux-app-store&type=date&legend=bottom-right&sealed_token=yxIBRg8O6CfVP9fzApqsHovR51Bu-9FS0C01LYEOvVBkXHNNIe-JOGKtHOqIq1X_KzE" />
+ </picture>
+</a>
+
+---
+
+# Dự án liên quan & Từ khóa
+
+> Dự án này được phát triển độc lập và **không liên kết với** dự án [Termux](https://github.com/termux/termux-app) chính thức.
+
+**Từ khóa tìm kiếm:** termux app store · termux package manager · termux tui · termux cli · termux tools · android terminal package manager · termux custom packages · termux source build · termux binary install · termux deb installer · termux alternative · termux community packages · termux offline installer · termux-app-store djunekz · install packages termux android · alternative to termux-packages · alternative to TUR termux · how to distribute package termux · termux community repo · termux build from source android · create termux package · custom repo termux · tas command termux
+
+---
+
+**© Termux App Store — Được xây dựng cho mọi người, bởi cộng đồng.**
