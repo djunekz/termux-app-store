@@ -16,6 +16,7 @@ and this project adheres to semantic versioning.
 - Package `pnpm` v12.18.0 → v12.21.0
 
 ### Changed
+- `README.md` - update assets
 - Package `brutespray` v2.7.3 - Updated metadata
 
 ---
