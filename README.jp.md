@@ -1,8 +1,10 @@
-![[Termux App Store — TUI パッケージマネージャー](.assets/00.jpeg)](https://github.com/djunekz/termux-app-store/raw/master/.assets/00.jpeg)
+![[Termux App Store — TUI Package Manager for Termux](https://github.com/user-attachments/assets/758d85c8-5654-422e-b345-ee6db5c27b1f)](https://github.com/user-attachments/assets/758d85c8-5654-422e-b345-ee6db5c27b1f)
 
-# [Termux App Store — TUI & CLI パッケージマネージャー](https://djunekz.github.io/termux-app-store/)
+# [Termux App Store — Termux 向け TUI & CLI パッケージマネージャー](https://djunekz.github.io/termux-app-store/)
 
-**Android の Termux 向けに作られた、ローカルファーストの TUI & CLI パッケージマネージャー。チェックサム検証付きバイナリインストールとソースビルドのフォールバックに対応。**
+**Android 上の Termux 向けにネイティブで構築された、ローカルファーストの TUI / CLI パッケージマネージャー。チェックサム検証付きのバイナリインストールとソースビルドのフォールバックに対応。**
+
+> 他の言語: 🇬🇧 **[English](README.md)** | 🇮🇩 **[Bahasa Indonesia](README.id.md)** | 🇹🇭 **[ภาษาไทย](README.th.md)** | 🇨🇳 **[中文](README.ch.md)** | 🇻🇳 **[Tiếng Việt](README.vi.md)** | 🇮🇳 **[हिन्दी](README.in.md)**
 
 <div align="center">
 
@@ -56,35 +58,81 @@
 
 </div>
 
-
 > **ローカルファースト • チェックサム検証 • ソースベース • Termux ネイティブ • Android ターミナル**
-> ルート不要、アカウント不要、テレメトリなしで Termux パッケージを管理。
-
-> 他の言語で読む: 🇬🇧 **[English](README.md)** | 🇮🇩 **[Bahasa Indonesia](README.id.md)** | 🇹🇭 **[ภาษาไทย](README.th.md)** | 🇨🇳 **[中文](README.ch.md)** | 🇻🇳 **[Tiếng Việt](README.vi.md)** | 🇮🇳 **[हिन्दी](README.in.md)**
+> Termux パッケージのインストールと管理 — ビルド済みバイナリまたはソースビルド — root 不要、アカウント不要、テレメトリなし。
 
 ---
 
-## Termux App Store とは？
+# Termux App Store とは？
 
-**Termux App Store** は Python ([Textual](https://github.com/Textualize/textual)) で作られた **TUI & CLI パッケージマネージャー**です。Android の Termux ユーザーがツールやパッケージをデバイス上で直接**ブラウズ、インストール、管理**できます — アカウント不要、テレメトリなし、ルート不要。パッケージ情報とダウンロードにはネットワークを使用します。
+**Termux App Store**（`termux-app-store`）は、Python（[Textual](https://github.com/Textualize/textual)）で作られた **TUI（Terminal User Interface）** と **CLI パッケージマネージャー**です。Android の Termux ユーザーが、端末上で直接 **ツール／パッケージを閲覧・インストール・管理**できます。アカウント、テレメトリ、root は不要です。パッケージのメタデータとダウンロードにはネットワークを使用します。
 
-**v0.4.0** からは **ファストインストールエンジン**を搭載: ミラープール（GitHub Pages、Cloudflare CDN、jsDelivr）からビルド済み `.deb` バイナリをダウンロードし、ローカルキャッシュ（TTL 7日）に対応します。キャッシュを含むすべての `.deb` はアーキテクチャ別 SHA256 と一致しなければ拒否されます。SHA256 は破損や不一致の検出用であり、発行元の署名ではありません。完全制御が必要な場合は `fix-install` でソースビルドも利用可能。
+**v0.4.0** 以降、Termux App Store は **ファストインストールエンジン**に対応しています。パッケージはミラープール（GitHub Pages、Cloudflare CDN、jsDelivr）からビルド済み `.deb` バイナリとしてダウンロードされ、ローカルの `.deb` キャッシュ（TTL 7 日）が使われます。キャッシュ済みのものを含むすべての `.deb` はアーキテクチャごとの SHA256 と一致する必要があり、一致しない場合は拒否されます。SHA256 は破損や不一致の検出に使うもので、発行元の署名ではありません。ソースビルドは `fix-install` で引き続き利用できます。
+
+**Termux 向けの代替パッケージマネージャー**として動作し、`build.sh` スクリプトを使ってコミュニティ製ツールをインストールできます。AUR（Arch User Repository）と発想は似ていますが、Android 上の Termux 専用に設計されています。
+
+> **`termux-packages` や TUR（Termux User Repository）との違いは？**
+>
+> - `termux-packages` は Termux の公式リポジトリです。コアチームが管理し、PR の承認が必要で、広く使われているツールのみを受け付けます。
+> - TUR は厳選された拡張で、こちらもコントリビューターのレビューが必要です。
+> - **Termux App Store** は完全にコミュニティ主導です。誰でも `build.sh` を投稿でき、パッケージはビルド済み `.deb` またはソースビルドとして配布され、中央の承認ゲートはありません。Termux の上に重ねる、個人 + コミュニティのパッケージ層と考えてください。
 
 > [!IMPORTANT]
 > Termux App Store は **隠れた自動インストーラーではありません**。
-> すべてのインストールはユーザーの明示的なコマンドにより**ローカルかつ透明に**実行されます。
+> すべてのインストール（バイナリでもソースでも）は **ローカルで、透明性を保ち、ユーザーの完全な管理下で**実行されます。
 
 ---
 
-## スクリーンショット
+# 対象ユーザー
 
-| TUI メイン | TUI インストール | コマンドパレット |
-|---|---|---|
-| [![TUI Main](.assets/0main.jpg)](https://github.com/djunekz/termux-app-store/blob/master/.assets/0main.jpg) | [![TUI Install](.assets/1install.jpg)](https://github.com/djunekz/termux-app-store/blob/master/.assets/1install.jpg) | [![Menu Palette](.assets/2pallete.jpg)](https://github.com/djunekz/termux-app-store/blob/master/.assets/2pallete.jpg) |
+| ユーザー | ユースケース |
+|---|---|
+| Termux ユーザー | 高速なバイナリインストール、またはソースビルドの完全な制御 |
+| 開発者 | ビルド済み `.deb` やソースパッケージでツールを配布 |
+| レビュアー・監査者 | ビルドスクリプトのレビューと検証 |
+| メンテナー | 複数の Termux パッケージを一括管理 |
 
 ---
 
-## インストールと削除
+<div align="center">
+<img src="https://github.com/user-attachments/assets/b03419bc-8efe-4ed0-9b61-fea5153e9f53" width="100%" alt="Termux App Store — Main View"/>
+
+<br/><br/>
+<H1>TUI インターフェース</H1>
+
+| TUI メイン画面 | TUI インストール画面 | メニューパレット |
+|:---:|:---:|:---:|
+| <img src="https://github.com/user-attachments/assets/fb9395f1-f943-44c5-b88f-be18e480fd26" width="400" alt="TUI Main Interface"/> | <img src="https://github.com/user-attachments/assets/a0ee7a15-95d2-4743-9f7e-90cd9e3388f7" width="400" alt="TUI Install Interface"/> | <img src="https://github.com/user-attachments/assets/ad760153-983f-4113-a465-2b682cb26b67" width="400" alt="Menu Palette Interface"/> |
+| TUI メインメニュー | パッケージのインストール処理 | コマンドパレット |
+
+> TUI は **タッチスクリーン**に完全対応した使いやすい設計です
+
+---
+
+<H1>CLI インターフェースとその他のツール対応</H1>
+
+| その他のツール対応の CLI 表示 | Guidebook |
+|:---:| :---: |
+| https://github.com/user-attachments/assets/71c097b2-01a8-4c1c-9ffd-c26f29ee6ae6 | https://github.com/user-attachments/assets/b668a890-835f-4467-820a-988b1810c902 |
+
+
+CLI インターフェースと対応ツール: `tasctl`, `termux-build`, `doctor.py`, `pkg-scaffold.py`, `build-package.sh`, `guidebook.py`
+
+---
+
+<H1>画面録画</H1>
+
+| `termux-app-store` の TUI、CLI、その他のツール `tasctl`, `termux-build`, `guidebook.py` の録画 |
+|:---:|
+| <img src="https://github.com/user-attachments/assets/152c757f-d2a3-4f31-8174-2b857a3aad51" width="100%" alt="termux-app-store"/> | termux-app-store
+
+</div>
+
+---
+
+# クイックインストールとアンインストール
+
+> **[PyPI](https://pypi.org/project/termux-app-store/)** で公開中 — 検索でき、見つけやすくなっています。
 
 ### オプション 1（推奨）
 
@@ -95,86 +143,121 @@ pip install termux-app-store
 
 ### オプション 2（手動）
 
+> 簡単な方法（メモリが限られている場合に推奨）
+
 ```bash
 curl -fsSL https://raw.githubusercontent.com/djunekz/termux-app-store/master/tasctl | bash -s install
 ```
 
-インストール後:
+> git clone を使う方法（リポジトリ全体をダウンロード）
 
 ```bash
-termux-app-store    # インタラクティブ TUI を開く
-tas                 # ショートハンドコマンド
-termux-app-store -h # CLI ヘルプ表示
+git clone --depth 1 --single-branch --branch master https://github.com/djunekz/termux-app-store
+cd termux-app-store
+bash install.sh
+```
+
+インストール後に実行:
+
+```bash
+termux-app-store        # Open interactive TUI
+termux-app-store -h     # Show CLI help
+tas                     # Shorthand for termux-app-store
 ```
 
 ### アンインストール
 
 ```bash
 pip uninstall termux-app-store
+# or
+./tasctl uninstall
 ```
 
 ---
 
-## 使い方
+# 使い方
 
 ### TUI — インタラクティブインターフェース
 
 ```bash
 termux-app-store
-# またはショートハンド:
+# or shorthand:
 tas
 ```
+
+| キー / ボタン | 機能 |
+|---|---|
+| **Install / Update / Open**（`Ctrl+I`） | メインボタンはパッケージの状態に応じて変わります。未インストールなら Install、新しいバージョンがあれば Update、インストール済みで最新なら Open。Open はツールを実行し（コマンドの選択、引数の追加が可能）、Enter を押すと TUI に戻ります |
+| **Shortcut**（Open ダイアログ） | 引数付きでツールを実行する Termux:Widget スクリプトを `~/.shortcuts` に作成します |
+| **Upgrade all**（更新バナー） | バナーに更新可能なインストール済みパッケージの数が表示され、すべてをキューに追加します |
+| **Cancel**（`Ctrl+X`） | 実行中のダウンロードまたはソースビルドを次の安全なタイミングで停止します |
+| `F4` | アクティビティ履歴: インストール、更新、削除、起動 |
+| `F5` | 問題を報告: 入力済みのバグ報告フォームを開きます |
+| `Ctrl+R` / `Ctrl+Q` | パッケージの更新 / 終了 |
+| `Ctrl+P` | コマンドパレット（通知のオン/オフを含む。Termux:API が必要） |
 
 ### CLI — 直接コマンド
 
 ```bash
-termux-app-store list                     # パッケージ一覧表示
-termux-app-store show <パッケージ>         # パッケージ詳細表示
-termux-app-store install <パッケージ>      # ファストインストール（.deb ビルド済み）
-termux-app-store install pkg1 pkg2 pkg3   # 複数パッケージ同時インストール
-termux-app-store fix-install <パッケージ>  # ソースビルドを強制実行
-termux-app-store search <キーワード>       # パッケージ検索
-termux-app-store update                   # アップデート確認
-termux-app-store upgrade                  # 全パッケージアップグレード
-termux-app-store mirrors                  # ミラー状態確認
-termux-app-store cache info               # キャッシュ情報表示
-termux-app-store cache clear              # キャッシュ削除
-termux-app-store version                  # バージョン確認
-termux-app-store help                     # ヘルプ表示
+termux-app-store list                     # List all packages
+termux-app-store show <package>           # Show package details
+termux-app-store install <package>        # Fast install (pre-built .deb)
+termux-app-store install pkg1 pkg2 pkg3   # Multi-package install
+termux-app-store fix-install <package>    # Force source build (bypass fast install)
+termux-app-store search <query>           # Search packages by name or description
+termux-app-store update                   # Check for available updates
+termux-app-store upgrade                  # Upgrade all packages
+termux-app-store upgrade <package>        # Upgrade a specific package
+termux-app-store uninstall <package>      # Uninstall a package
+termux-app-store mirrors                  # Check mirror status
+termux-app-store cache info               # Show binary cache info
+termux-app-store cache clear              # Clear binary cache
+termux-app-store version                  # Check latest version
+termux-app-store help                     # Full help
 ```
 
 ---
 
-## ファストインストールの仕組み（v0.4.0+）
+# 機能
 
-v0.4.0 から、インストールはデフォルトで `.deb` ビルド済みバイナリのダウンロードになります：
-
-1. ローカル `.deb` キャッシュ（7日TTL）を確認
-2. キャッシュミスの場合はミラープールを順番に試行: GitHub Pages → Cloudflare CDN → jsDelivr CDN → raw GitHub
-3. アーキテクチャ別 SHA256 で検証（`sha256_by_arch`）
-4. ローカルにキャッシュして `dpkg -i` で展開
-
-> ファストインストールが失敗した場合は `fix-install <パッケージ>` で `build-package.sh` によるフルソースビルドが可能。
-
----
-
-## パッケージのステータスバッジ
-
-| バッジ | 説明 |
+| **パッケージブラウザ（TUI）** `packages/` フォルダのパッケージを、キーボードとタッチ操作でインタラクティブに閲覧できます。<br>**ファストインストールエンジン** ミラープール（GitHub Pages、Cloudflare CDN、jsDelivr）からビルド済み `.deb` をダウンロードし、自動でフォールバックします。<br>**バイナリキャッシュ** TTL 7 日のローカル `.deb` キャッシュ。キャッシュ済みファイルもインストールのたびにアーキテクチャごとの SHA256 で再検証されます。キャッシュ済みパッケージは即座にインストールされます。<br>**スマートビルドバリデーター** 未対応の Termux 依存関係を検出し、ステータスバッジを自動表示します。 | **リアルタイム検索とフィルター** 名前や説明でパッケージを検索できます。`search`/`find` CLI コマンドも利用可能です。<br>**複数パッケージのインストール/削除** 1 つのコマンドで複数のパッケージをインストール・削除し、結果をまとめて表示します。<br>**ワンクリック管理** Termux App Store 自体のインストール / 更新 / 削除を `./tasctl` で行えます。<br>**プライバシー重視** アカウント、トラッキング、テレメトリなし。ローカルデータがあればそれで動作し、メタデータやパッケージの取得にはネットワークが必要です。 |
 |---|---|
-| **NEW** | 新規追加パッケージ（7日以内） |
-| **UPDATE** | 新バージョンあり |
-| **INSTALLED** | インストール済み・最新 |
-| **UNSUPPORTED** | Termux で依存関係が利用不可 |
 
 ---
 
-## パッケージの追加方法
-
-各パッケージは単一の `build.sh` ファイルで定義されます:
+# ファストインストールの仕組み（v0.4.0+）
 
 ```
-packages/<ツール名>/build.sh
+termux-app-store install <package>
+        │
+        ▼
+  Check local .deb cache (TTL 7 days)
+        │ cache HIT          │ cache MISS
+        ▼                    ▼
+  Verify SHA256        Probe the mirrors, use the fastest:
+  (per arch)           1. Cloudflare CDN
+        │              2. GitHub Pages
+        ▼              3. jsDelivr CDN
+  dpkg -i                    │
+                             ▼
+                       Download .deb
+                       Verify SHA256 (index sha256_by_arch, else the published .deb.sha256)
+                       Cache locally
+                       dpkg -i
+```
+
+> ファストインストールが失敗した場合は、`fix-install <package>` で `build-package.sh` による完全なソースビルドを強制できます。
+
+---
+
+# パッケージの追加
+
+Termux App Store のすべてのパッケージは、1 つの `build.sh` ファイルで定義されます。Arch Linux の PKGBUILD に似ていますが、Android 上の Termux 向けに調整されています。
+
+すべてのパッケージには `build.sh` ファイルが**必須**です:
+
+```
+packages/<tool-name>/build.sh
 ```
 
 ### 最小 `build.sh` テンプレート
@@ -183,76 +266,245 @@ packages/<ツール名>/build.sh
 TERMUX_PKG_HOMEPAGE=""
 TERMUX_PKG_DESCRIPTION=""
 TERMUX_PKG_LICENSE=""
-TERMUX_PKG_MAINTAINER="@あなたのGitHubユーザー名"
+TERMUX_PKG_MAINTAINER="@your-github-username"
 TERMUX_PKG_VERSION=""
 TERMUX_PKG_SRCURL=""
 TERMUX_PKG_SHA256=""
 ```
 
+> [!NOTE]
+> 完全なテンプレートは `template/build.sh` を参照するか、`./termux-build template` を実行してください
+
+### termux-build でパッケージを追加する
+
 ```bash
 cd termux-app-store
-./termux-build create ツール名
-# または GitHub URL から自動作成:
+./termux-build create your-tool-name
+# or auto-create from a GitHub URL:
 ./termux-build init https://github.com/user/repo
 ```
 
+> [!NOTE]
+> 名前にスペースは使わず、`-` を使ってください。例: `my-tool-name`
+
 ---
 
-## 補助ツール
+# termux-build — ビルドと検証ツール
 
-### termux-build
+`termux-build` は検証とレビューを補助するツールであり、自動アップロードや自動公開のツールではありません。
 
 ```bash
-./termux-build create <パッケージ>     # 配布用パッケージ作成
-./termux-build init <url>             # GitHub URL から自動作成
-./termux-build lint <パッケージ>       # ビルドスクリプト検証
-./termux-build check-pr <パッケージ>   # PR 準備状態確認
-./termux-build doctor                 # 環境診断
-./termux-build template               # build.sh テンプレート生成
+./termux-build create <package>      # Create package for distribution
+./termux-build init <url-repo>       # Auto-create and build package from GitHub URL
+./termux-build lint <package>        # Lint a build script
+./termux-build check-pr <package>    # Check PR readiness
+./termux-build doctor                # Diagnose environment
+./termux-build suggest <package>     # Get improvement suggestions
+./termux-build explain <package>     # Detailed package explanation
+./termux-build template              # Generate build.sh template
+./termux-build guide                 # Contribution guide
 ```
 
-### tasctl
+> [!NOTE]
+> `termux-build` は **読み取りと検証のみ**を行います。ファイルの変更や GitHub へのアップロードは行いません。
+
+---
+
+# tasctl — Termux App Store コントローラー
+
+`tasctl` は termux-app-store システムのコントローラーです。
 
 ```bash
-./tasctl install       # Termux App Store をインストール
-./tasctl update        # 最新版にアップデート
-./tasctl uninstall     # Termux App Store を削除
-./tasctl doctor        # 環境診断
-./tasctl self-update   # tasctl 自体を更新
+./tasctl install       # Install Termux App Store (latest)
+./tasctl update        # Update to latest version
+./tasctl uninstall     # Remove Termux App Store
+./tasctl doctor        # Diagnose environment
+./tasctl self-update   # Update tasctl itself
+./tasctl help          # Show help
 ```
 
 ---
 
-## セキュリティとプライバシー
+# guidebook — Termux App Store のすべての情報
 
-- 追加権限不要・バックグラウンドサービスなし
-- アカウント・登録不要
-- 分析・トラッキング・テレメトリ一切なし
-- すべての `.deb`（ダウンロードとキャッシュ）に SHA256 を必須化
-- ローカルファースト設計（メタデータとダウンロードにはネットワークを使用）
+```bash
+python guidebook.py
+```
 
-> 詳細: [SECURITY.md](SECURITY.md) | [PRIVACY.md](PRIVACY.md) | [BINARY_DISCLAIMER.md](BINARY_DISCLAIMER.md)
-
----
-
-## コントリビューション
-
-すべての貢献を歓迎します！詳細は [CONTRIBUTING.md](CONTRIBUTING.md) をご覧ください。
+> [!NOTE]
+> guidebook は現在、英語とインドネシア語の 2 言語に対応しています。
 
 ---
 
-## ライセンス
+# パッケージを Termux コミュニティに配布する方法
 
-**MIT ライセンス** — 詳細は [LICENSE](LICENSE) を参照してください。
+```bash
+# 1. Fork this repo
+# 2. Add your package folder:
+mkdir packages/your-tool-name
+# 3. Create build.sh from the template or with termux-build:
+./termux-build create your-tool-name
+# or from a GitHub URL:
+./termux-build init https://github.com/you/your-repo
+# 4. Validate with termux-build:
+./termux-build lint packages/your-tool-name
+# 5. Submit a Pull Request
+```
+
+> 詳細ガイド: [HOW_TO_UPLOAD.md](HOW_TO_UPLOAD.md)
 
 ---
 
-## メンテナー
+# アーキテクチャ
 
-**Djunekz** — 独立開発者
+```
+termux-app-store/
+├── packages/              # All packages directory
+│   └── <tool-name>/
+│       └── build.sh       # Metadata & build script
+├── template/
+│   └── build.sh           # Package template
+├── core/
+│   ├── binary_core.py     # BinaryCache — local .deb cache + mirror download
+│   ├── mirrors.py         # MirrorManager — mirror pool registry
+│   ├── package.py         # Package dataclass
+│   └── validator.py       # PackageValidator
+├── utils/
+│   └── installer.py       # install_from_binary / install_from_source helpers
+├── tools/
+│   └── mirrors.json       # Mirror registry
+├── fast_install.py        # Fast install engine (.deb download + cache + SHA256 verify)
+├── store_common.py        # Shared logic: mirrors, app root, recipe and script verification
+├── tasctl                 # TAS installer/updater/uninstaller
+├── termux-build           # Validation & review tool
+└── install.sh             # Main installer
+```
+
+> 詳細: [ARCHITECTURE.md](ARCHITECTURE.md)
+
+---
+
+# セキュリティとプライバシー
+
+| **セキュリティ** | **プライバシー** |
+|---|---|
+| 追加の権限は不要 | アカウントや登録は不要 |
+| ネットワークポートを開かない | 分析やトラッキングなし |
+| バックグラウンドサービスなし | いかなるテレメトリもなし |
+| ビルドはユーザーが明示的に実行したときのみ動作 | ローカルファースト。ネットワークはメタデータとダウンロードに使用 |
+| すべての `.deb`（ダウンロードとキャッシュ）に SHA256 が必須 | バイナリの出所は透明で監査可能 |
+
+> 詳細: [SECURITY.md](SECURITY.md) | [PRIVACY.md](PRIVACY.md) | [DISCLAIMER.md](DISCLAIMER.md) | [BINARY_DISCLAIMER.md](BINARY_DISCLAIMER.md)
+
+---
+
+# 開発とテスト
+
+```bash
+git clone --depth 1 --single-branch --branch master https://github.com/djunekz/termux-app-store
+cd termux-app-store
+pip install -e ".[dev]"
+```
+
+| コマンド | 機能 |
+|---|---|
+| `make test` または `pytest` | テストスイートを実行 |
+| `make coverage` | カバレッジレポート付きでテストスイートを実行 |
+| `make lint` | Ruff による lint とフォーマットのチェック |
+| `make typecheck` | Mypy による型チェック |
+| `make check` | lint、型チェック、テストをまとめて実行 |
+
+依存関係は `uv.lock` で固定されています（`uv sync --extra dev`）。詳しいガイドは [CONTRIBUTING.md](CONTRIBUTING.md) を参照してください。
+
+---
+
+# コントリビューション
+
+あらゆる貢献を歓迎します！
+
+| 貢献の方法 | 説明 |
+|---|---|
+| パッケージの追加 | 新しいツールパッケージを提出 |
+| バグの報告 | GitHub で issue を作成 |
+| PR の送信 | コードやドキュメントの改善 |
+| PR のレビュー | 他の人の貢献の検証を手伝う |
+| セキュリティ監査 | ビルドスクリプトのセキュリティを確認 |
+| ドキュメントの改善 | ドキュメントの明確化や翻訳 |
+
+> 詳細ガイド: [CONTRIBUTING.md](CONTRIBUTING.md)
+
+---
+
+# ヘルプとドキュメント
+
+| ドキュメント | 説明 |
+|---|---|
+| [FAQ](FAQ.md) | よくある質問 |
+| [TROUBLESHOOTING](TROUBLESHOOTING.md) | よくある問題の解決方法 |
+| [HOW TO UPLOAD](HOW_TO_UPLOAD.md) | ツールのアップロード方法 |
+| [CONTRIBUTING](CONTRIBUTING.md) | コントリビューションガイド |
+| [SUPPORT](SUPPORT.md) | サポートの受け方 |
+| [BINARY_DISCLAIMER](BINARY_DISCLAIMER.md) | バイナリ配布に関する注意 |
+
+---
+
+# 理念
+
+> *「ローカルファースト。利便性よりコントロール。魔法より透明性。」*
+
+Termux App Store は、次のようなユーザーのために作られています:
+
+- 自分のデバイスで何が動いているかを完全に理解したい
+- ビルドとソースを直接コントロールしたい
+- ベンダーロックインを避けたい
+- ツールを Termux コミュニティとオープンに共有したい
+
+---
+
+# ライセンス
+
+このプロジェクトは **MIT License** のもとで公開されています。詳細は [LICENSE](LICENSE) を参照してください。
+
+---
+
+# メンテナー
+
+**Djunekz** — Termux App Store の個人開発者・メンテナー
 
 [![GitHub](https://img.shields.io/badge/GitHub-djunekz-3fb950?style=for-the-badge&logo=github)](https://github.com/djunekz)
 
 ---
 
-**© Termux App Store — コミュニティのために、コミュニティによって作られました。**
+# このプロジェクトを支援する
+
+Termux App Store が役に立ったら:
+
+- このリポジトリに **Star** を付ける — 他の人が見つけやすくなります
+- Termux・Android のコミュニティで **共有**する
+- Issues で **バグを報告**する
+- あらゆる改善の **PR を送る**
+- **スポンサー**: https://saweria.co/redHh
+
+---
+
+# スター履歴
+
+<a href="https://www.star-history.com/?repos=djunekz%2Ftermux-app-store&type=date&legend=bottom-right">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=djunekz/termux-app-store&type=date&theme=dark&legend=bottom-right&sealed_token=yxIBRg8O6CfVP9fzApqsHovR51Bu-9FS0C01LYEOvVBkXHNNIe-JOGKtHOqIq1X_KzE" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=djunekz/termux-app-store&type=date&legend=bottom-right&sealed_token=yxIBRg8O6CfVP9fzApqsHovR51Bu-9FS0C01LYEOvVBkXHNNIe-JOGKtHOqIq1X_KzE" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=djunekz/termux-app-store&type=date&legend=bottom-right&sealed_token=yxIBRg8O6CfVP9fzApqsHovR51Bu-9FS0C01LYEOvVBkXHNNIe-JOGKtHOqIq1X_KzE" />
+ </picture>
+</a>
+
+---
+
+# 関連プロジェクトとキーワード
+
+> このプロジェクトは独立して開発されており、公式の [Termux](https://github.com/termux/termux-app) プロジェクトとは**無関係**です。
+
+**検索キーワード:** termux app store · termux package manager · termux tui · termux cli · termux tools · android terminal package manager · termux custom packages · termux source build · termux binary install · termux deb installer · termux alternative · termux community packages · termux offline installer · termux-app-store djunekz · install packages termux android · alternative to termux-packages · alternative to TUR termux · how to distribute package termux · termux community repo · termux build from source android · create termux package · custom repo termux · tas command termux
+
+---
+
+**© Termux App Store — みんなのために、コミュニティが作っています。**
