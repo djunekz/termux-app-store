@@ -1,8 +1,10 @@
-![[Termux App Store — TUI Package Manager](.assets/00.jpeg)](https://github.com/djunekz/termux-app-store/raw/master/.assets/00.jpeg)
+![[Termux App Store — TUI Package Manager for Termux](https://github.com/user-attachments/assets/758d85c8-5654-422e-b345-ee6db5c27b1f)](https://github.com/user-attachments/assets/758d85c8-5654-422e-b345-ee6db5c27b1f)
 
 # [Termux App Store — Termux के लिए TUI & CLI Package Manager](https://djunekz.github.io/termux-app-store/)
 
-**Android पर Termux के लिए बनाया गया लोकल-फ़र्स्ट TUI और CLI पैकेज मैनेजर, चेकसम-वेरिफ़ाइड बाइनरी इंस्टॉल और सोर्स-बिल्ड फ़ॉलबैक के साथ।**
+**Android पर Termux के लिए नेटिव रूप से बना लोकल-फ़र्स्ट TUI और CLI package manager, जिसमें चेकसम-वेरिफ़ाइड बाइनरी इंस्टॉल और सोर्स-बिल्ड फ़ॉलबैक है।**
+
+> इन भाषाओं में पढ़ें: 🇬🇧 **[English](README.md)** | 🇮🇩 **[Bahasa Indonesia](README.id.md)** | 🇹🇭 **[ภาษาไทย](README.th.md)** | 🇯🇵 **[日本語](README.jp.md)** | 🇨🇳 **[中文](README.ch.md)** | 🇻🇳 **[Tiếng Việt](README.vi.md)**
 
 <div align="center">
 
@@ -56,35 +58,81 @@
 
 </div>
 
-
-> **लोकल-फ़र्स्ट • चेकसम-वेरिफ़ाइड • सोर्स-आधारित • Termux-नेटिव • Android Terminal**
-> Termux पैकेज इंस्टॉल करें और प्रबंधित करें — बिना root, बिना account, बिना tracking के।
-
-> अन्य भाषाओं में पढ़ें: 🇬🇧 **[English](README.md)** | 🇮🇩 **[Bahasa Indonesia](README.id.md)** | 🇹🇭 **[ภาษาไทย](README.th.md)** | 🇯🇵 **[日本語](README.jp.md)** | 🇨🇳 **[中文](README.ch.md)** | 🇻🇳 **[Tiếng Việt](README.vi.md)**
+> **लोकल-फ़र्स्ट • चेकसम-वेरिफ़ाइड • सोर्स-आधारित • Termux-नेटिव • Android टर्मिनल**
+> Termux पैकेज इंस्टॉल और मैनेज करें — प्री-बिल्ट बाइनरी या सोर्स बिल्ड — बिना root, बिना अकाउंट, बिना टेलीमेट्री।
 
 ---
 
-## Termux App Store क्या है?
+# Termux App Store क्या है?
 
-**Termux App Store** Python ([Textual](https://github.com/Textualize/textual)) से बना एक **TUI & CLI पैकेज मैनेजर** है जो Android पर Termux उपयोगकर्ताओं को सीधे डिवाइस पर **टूल्स/पैकेज ब्राउज़ करने, इंस्टॉल करने और प्रबंधित करने** की सुविधा देता है — बिना account, बिना telemetry, बिना root। पैकेज मेटाडेटा और डाउनलोड के लिए नेटवर्क का उपयोग होता है।
+**Termux App Store** (`termux-app-store`) एक **TUI (Terminal User Interface)** और **CLI package manager** है जो Python ([Textual](https://github.com/Textualize/textual)) से बना है। यह Android पर Termux उपयोगकर्ताओं को सीधे डिवाइस पर **टूल/पैकेज ब्राउज़, इंस्टॉल और मैनेज** करने देता है — बिना अकाउंट, बिना टेलीमेट्री, बिना root। पैकेज मेटाडेटा और डाउनलोड के लिए नेटवर्क का उपयोग होता है।
 
-**v0.4.0** से **फ़ास्ट इंस्टॉल इंजन** जोड़ा गया है: मिरर पूल (GitHub Pages, Cloudflare CDN, jsDelivr) से पहले से बने `.deb` बाइनरी फ़ाइलें डाउनलोड होती हैं, लोकल `.deb` कैश (TTL 7 दिन) के साथ। कैश सहित हर `.deb` का आर्किटेक्चर-वाइज SHA256 से मेल खाना ज़रूरी है, वरना उसे अस्वीकार कर दिया जाता है। SHA256 फ़ाइल के खराब या बेमेल होने का पता लगाता है; यह प्रकाशक का हस्ताक्षर नहीं है। पूर्ण नियंत्रण के लिए `fix-install` से सोर्स बिल्ड भी उपलब्ध है।
+**v0.4.0** से Termux App Store में **फ़ास्ट इंस्टॉल इंजन** है: पैकेज मिरर पूल (GitHub Pages, Cloudflare CDN, jsDelivr) से प्री-बिल्ट `.deb` बाइनरी के रूप में डाउनलोड होते हैं, और लोकल `.deb` कैश (TTL 7 दिन) इस्तेमाल होता है। कैश वाली फ़ाइलों सहित हर `.deb` का प्रति-आर्किटेक्चर SHA256 से मेल खाना ज़रूरी है, वरना वह अस्वीकार कर दी जाती है। SHA256 खराब या बेमेल फ़ाइलों का पता लगाता है; यह पब्लिशर का सिग्नेचर नहीं है। सोर्स बिल्ड `fix-install` से अब भी उपलब्ध हैं।
+
+यह **Termux के लिए एक वैकल्पिक package manager** की तरह काम करता है, जिससे आप `build.sh` स्क्रिप्ट के ज़रिए कम्युनिटी टूल इंस्टॉल कर सकते हैं — भावना में AUR (Arch User Repository) जैसा, लेकिन Android पर Termux के लिए ख़ास तौर पर डिज़ाइन किया गया।
+
+> **यह `termux-packages` या TUR (Termux User Repository) से कैसे अलग है?**
+>
+> - `termux-packages` Termux का आधिकारिक रेपो है — कोर टीम द्वारा मेंटेन किया जाता है, PR की मंज़ूरी चाहिए, और केवल व्यापक रूप से इस्तेमाल होने वाले टूल स्वीकार किए जाते हैं।
+> - TUR एक क्यूरेटेड एक्सटेंशन है, जिसमें अब भी कंट्रीब्यूटर रिव्यू ज़रूरी है।
+> - **Termux App Store** पूरी तरह कम्युनिटी-संचालित है: कोई भी `build.sh` सबमिट कर सकता है, पैकेज प्री-बिल्ट `.deb` या सोर्स बिल्ड के रूप में वितरित होते हैं, और कोई केंद्रीय अनुमोदन गेट नहीं है। इसे Termux के ऊपर एक निजी + कम्युनिटी पैकेज लेयर समझें।
 
 > [!IMPORTANT]
 > Termux App Store **कोई छिपा हुआ ऑटो-इंस्टॉलर नहीं है**।
-> सभी इंस्टॉलेशन — बाइनरी या सोर्स — **लोकल, पारदर्शी और पूरी तरह उपयोगकर्ता के नियंत्रण में** चलते हैं।
+> सभी इंस्टॉल — बाइनरी हों या सोर्स — **लोकल, पारदर्शी और उपयोगकर्ता के पूर्ण नियंत्रण में** चलते हैं।
 
 ---
 
-## स्क्रीनशॉट
+# यह किसके लिए है?
 
-| TUI मुख्य | TUI इंस्टॉल | Command Palette |
-|---|---|---|
-| [![TUI Main](.assets/0main.jpg)](https://github.com/djunekz/termux-app-store/blob/master/.assets/0main.jpg) | [![TUI Install](.assets/1install.jpg)](https://github.com/djunekz/termux-app-store/blob/master/.assets/1install.jpg) | [![Menu Palette](.assets/2pallete.jpg)](https://github.com/djunekz/termux-app-store/blob/master/.assets/2pallete.jpg) |
+| उपयोगकर्ता | उपयोग का मामला |
+|---|---|
+| Termux उपयोगकर्ता | तेज़ बाइनरी इंस्टॉल या सोर्स बिल्ड पर पूरा नियंत्रण |
+| डेवलपर | प्री-बिल्ट `.deb` या सोर्स पैकेजिंग से टूल वितरित करना |
+| रिव्यूअर और ऑडिटर | बिल्ड स्क्रिप्ट की समीक्षा और सत्यापन |
+| मेंटेनर | एक साथ कई Termux पैकेज मैनेज करना |
 
 ---
 
-## इंस्टॉल और अनइंस्टॉल
+<div align="center">
+<img src="https://github.com/user-attachments/assets/b03419bc-8efe-4ed0-9b61-fea5153e9f53" width="100%" alt="Termux App Store — Main View"/>
+
+<br/><br/>
+<H1>TUI इंटरफ़ेस</H1>
+
+| TUI मुख्य इंटरफ़ेस | TUI इंस्टॉल इंटरफ़ेस | मेनू पैलेट |
+|:---:|:---:|:---:|
+| <img src="https://github.com/user-attachments/assets/fb9395f1-f943-44c5-b88f-be18e480fd26" width="400" alt="TUI Main Interface"/> | <img src="https://github.com/user-attachments/assets/a0ee7a15-95d2-4743-9f7e-90cd9e3388f7" width="400" alt="TUI Install Interface"/> | <img src="https://github.com/user-attachments/assets/ad760153-983f-4113-a465-2b682cb26b67" width="400" alt="Menu Palette Interface"/> |
+| TUI मुख्य मेनू | पैकेज इंस्टॉल प्रक्रिया | कमांड पैलेट |
+
+> TUI उपयोगकर्ता-अनुकूल है और पूर्ण **टचस्क्रीन** सपोर्ट के साथ आता है
+
+---
+
+<H1>CLI इंटरफ़ेस और अन्य टूल्स का सपोर्ट</H1>
+
+| अन्य टूल्स सपोर्ट वाला CLI व्यू | Guidebook |
+|:---:| :---: |
+| https://github.com/user-attachments/assets/71c097b2-01a8-4c1c-9ffd-c26f29ee6ae6 | https://github.com/user-attachments/assets/b668a890-835f-4467-820a-988b1810c902 |
+
+
+CLI इंटरफ़ेस और टूल्स सपोर्ट: `tasctl`, `termux-build`, `doctor.py`, `pkg-scaffold.py`, `build-package.sh`, `guidebook.py`
+
+---
+
+<H1>स्क्रीन रिकॉर्डिंग</H1>
+
+| `termux-app-store` TUI, CLI और अन्य टूल `tasctl`, `termux-build`, `guidebook.py` की रिकॉर्डिंग |
+|:---:|
+| <img src="https://github.com/user-attachments/assets/152c757f-d2a3-4f31-8174-2b857a3aad51" width="100%" alt="termux-app-store"/> | termux-app-store
+
+</div>
+
+---
+
+# त्वरित इंस्टॉल और अनइंस्टॉल
+
+> **[PyPI](https://pypi.org/project/termux-app-store/)** पर उपलब्ध — खोजने योग्य और इंडेक्स्ड, आसानी से मिल जाता है।
 
 ### विकल्प 1 (अनुशंसित)
 
@@ -95,86 +143,121 @@ pip install termux-app-store
 
 ### विकल्प 2 (मैन्युअल)
 
+> आसान तरीका (मेमोरी सीमित हो तो अनुशंसित)
+
 ```bash
 curl -fsSL https://raw.githubusercontent.com/djunekz/termux-app-store/master/tasctl | bash -s install
 ```
 
-इंस्टॉल के बाद चलाएं:
+> git clone के साथ (पूरा रिपॉज़िटरी डाउनलोड होता है)
 
 ```bash
-termux-app-store    # इंटरेक्टिव TUI खोलें
-tas                 # शॉर्टहैंड कमांड
-termux-app-store -h # CLI सहायता दिखाएं
+git clone --depth 1 --single-branch --branch master https://github.com/djunekz/termux-app-store
+cd termux-app-store
+bash install.sh
+```
+
+इंस्टॉल के बाद चलाएँ:
+
+```bash
+termux-app-store        # Open interactive TUI
+termux-app-store -h     # Show CLI help
+tas                     # Shorthand for termux-app-store
 ```
 
 ### अनइंस्टॉल
 
 ```bash
 pip uninstall termux-app-store
+# or
+./tasctl uninstall
 ```
 
 ---
 
-## उपयोग
+# उपयोग
 
 ### TUI — इंटरेक्टिव इंटरफ़ेस
 
 ```bash
 termux-app-store
-# या शॉर्टहैंड:
+# or shorthand:
 tas
 ```
+
+| कुंजी / बटन | क्या करता है |
+|---|---|
+| **Install / Update / Open** (`Ctrl+I`) | मुख्य बटन पैकेज की स्थिति के अनुसार बदलता है: इंस्टॉल न होने पर Install, नया वर्शन होने पर Update, इंस्टॉल और अप-टू-डेट होने पर Open। Open टूल चलाता है (कमांड चुनें, आर्गुमेंट जोड़ें) और Enter दबाने के बाद TUI में लौट आता है |
+| **Shortcut** (Open डायलॉग) | `~/.shortcuts` में एक Termux:Widget स्क्रिप्ट बनाता है जो आपके आर्गुमेंट के साथ टूल चलाती है |
+| **Upgrade all** (अपडेट बैनर) | बैनर दिखाता है कि कितने इंस्टॉल्ड पैकेजों का नया वर्शन उपलब्ध है और उन सभी को कतार में डाल देता है |
+| **Cancel** (`Ctrl+X`) | चल रहे डाउनलोड या सोर्स बिल्ड को अगले सुरक्षित बिंदु पर रोक देता है |
+| `F4` | गतिविधि इतिहास: इंस्टॉल, अपडेट, हटाना और लॉन्च |
+| `F5` | समस्या रिपोर्ट करें: पहले से भरा हुआ बग रिपोर्ट फ़ॉर्म खोलता है |
+| `Ctrl+R` / `Ctrl+Q` | पैकेज रीफ़्रेश करें / बाहर निकलें |
+| `Ctrl+P` | कमांड पैलेट, जिसमें नोटिफ़िकेशन चालू/बंद करना भी शामिल है (Termux:API चाहिए) |
 
 ### CLI — सीधे कमांड
 
 ```bash
-termux-app-store list                     # सभी पैकेज सूचीबद्ध करें
-termux-app-store show <पैकेज>             # पैकेज विवरण दिखाएं
-termux-app-store install <पैकेज>          # फ़ास्ट इंस्टॉल (पहले से बना .deb)
-termux-app-store install pkg1 pkg2 pkg3   # कई पैकेज एक साथ इंस्टॉल करें
-termux-app-store fix-install <पैकेज>      # सोर्स बिल्ड को मजबूर करें
-termux-app-store search <कीवर्ड>          # पैकेज खोजें
-termux-app-store update                   # उपलब्ध अपडेट जांचें
-termux-app-store upgrade                  # सभी पैकेज अपग्रेड करें
-termux-app-store mirrors                  # मिरर स्थिति जांचें
-termux-app-store cache info               # कैश जानकारी देखें
-termux-app-store cache clear              # कैश साफ़ करें
-termux-app-store version                  # नवीनतम संस्करण जांचें
-termux-app-store help                     # पूरी सहायता
+termux-app-store list                     # List all packages
+termux-app-store show <package>           # Show package details
+termux-app-store install <package>        # Fast install (pre-built .deb)
+termux-app-store install pkg1 pkg2 pkg3   # Multi-package install
+termux-app-store fix-install <package>    # Force source build (bypass fast install)
+termux-app-store search <query>           # Search packages by name or description
+termux-app-store update                   # Check for available updates
+termux-app-store upgrade                  # Upgrade all packages
+termux-app-store upgrade <package>        # Upgrade a specific package
+termux-app-store uninstall <package>      # Uninstall a package
+termux-app-store mirrors                  # Check mirror status
+termux-app-store cache info               # Show binary cache info
+termux-app-store cache clear              # Clear binary cache
+termux-app-store version                  # Check latest version
+termux-app-store help                     # Full help
 ```
 
 ---
 
-## फ़ास्ट इंस्टॉल कैसे काम करता है (v0.4.0+)
+# विशेषताएँ
 
-v0.4.0 से, इंस्टॉलेशन डिफ़ॉल्ट रूप से पहले से बने `.deb` बाइनरी डाउनलोड करती है:
-
-1. लोकल `.deb` कैश जांचें (TTL 7 दिन)
-2. कैश मिस होने पर मिरर क्रम से आज़माएं: GitHub Pages → Cloudflare CDN → jsDelivr CDN → raw GitHub
-3. आर्किटेक्चर-वाइज SHA256 वेरिफ़िकेशन (`sha256_by_arch`)
-4. लोकल में कैश करें और `dpkg -i` से इंस्टॉल करें
-
-> फ़ास्ट इंस्टॉल विफल होने पर, `build-package.sh` के ज़रिए पूरा सोर्स बिल्ड करने के लिए `fix-install <पैकेज>` इस्तेमाल करें।
-
----
-
-## पैकेज स्टेटस बैज
-
-| बैज | विवरण |
+| **Package Browser (TUI)** कीबोर्ड और टचस्क्रीन नेविगेशन के साथ `packages/` फ़ोल्डर के पैकेज इंटरैक्टिव रूप से ब्राउज़ करें।<br>**Fast Install Engine** मिरर पूल — GitHub Pages, Cloudflare CDN, jsDelivr — से प्री-बिल्ट `.deb` डाउनलोड करता है, ऑटोमैटिक फ़ॉलबैक के साथ।<br>**Binary Cache** 7 दिन के TTL वाला लोकल `.deb` कैश; कैश की फ़ाइलें हर इंस्टॉल से पहले प्रति-आर्किटेक्चर SHA256 से दोबारा जाँची जाती हैं। कैश किए गए पैकेज तुरंत इंस्टॉल होते हैं।<br>**Smart Build Validator** असमर्थित Termux डिपेंडेंसी का पता लगाता है और अपने-आप स्टेटस बैज दिखाता है। | **रियल-टाइम सर्च और फ़िल्टर** नाम या विवरण से पैकेज खोजें — `search`/`find` CLI कमांड भी शामिल हैं।<br>**मल्टी-पैकेज इंस्टॉल/अनइंस्टॉल** एक ही कमांड से कई पैकेज इंस्टॉल या हटाएँ, सारांश आउटपुट के साथ।<br>**वन-क्लिक मैनेजमेंट** `./tasctl` से Termux App Store को ख़ुद इंस्टॉल / अपडेट / अनइंस्टॉल करें।<br>**प्राइवेसी-फ़र्स्ट** कोई अकाउंट नहीं, कोई ट्रैकिंग नहीं, कोई टेलीमेट्री नहीं। डेटा पहले से मौजूद हो तो लोकल डेटा से काम करता है; मेटाडेटा और पैकेज लाने के लिए नेटवर्क चाहिए। |
 |---|---|
-| **NEW** | नया जोड़ा गया पैकेज (7 दिनों के अंदर) |
-| **UPDATE** | नया संस्करण उपलब्ध है |
-| **INSTALLED** | इंस्टॉल है और अप-टू-डेट है |
-| **UNSUPPORTED** | Termux में dependency उपलब्ध नहीं |
 
 ---
 
-## पैकेज जोड़ना
-
-हर पैकेज एक `build.sh` फ़ाइल से परिभाषित होता है:
+# फ़ास्ट इंस्टॉल कैसे काम करता है (v0.4.0+)
 
 ```
-packages/<टूल-का-नाम>/build.sh
+termux-app-store install <package>
+        │
+        ▼
+  Check local .deb cache (TTL 7 days)
+        │ cache HIT          │ cache MISS
+        ▼                    ▼
+  Verify SHA256        Probe the mirrors, use the fastest:
+  (per arch)           1. Cloudflare CDN
+        │              2. GitHub Pages
+        ▼              3. jsDelivr CDN
+  dpkg -i                    │
+                             ▼
+                       Download .deb
+                       Verify SHA256 (index sha256_by_arch, else the published .deb.sha256)
+                       Cache locally
+                       dpkg -i
+```
+
+> अगर फ़ास्ट इंस्टॉल विफल हो, तो `build-package.sh` से पूरा सोर्स बिल्ड ज़बरदस्ती चलाने के लिए `fix-install <package>` का उपयोग करें।
+
+---
+
+# पैकेज जोड़ना
+
+Termux App Store का हर पैकेज एक अकेली `build.sh` फ़ाइल से परिभाषित होता है — Arch Linux के PKGBUILD जैसा, लेकिन Android पर Termux के लिए अनुकूलित।
+
+हर पैकेज में `build.sh` फ़ाइल **होनी ही चाहिए**:
+
+```
+packages/<tool-name>/build.sh
 ```
 
 ### न्यूनतम `build.sh` टेम्पलेट
@@ -183,69 +266,245 @@ packages/<टूल-का-नाम>/build.sh
 TERMUX_PKG_HOMEPAGE=""
 TERMUX_PKG_DESCRIPTION=""
 TERMUX_PKG_LICENSE=""
-TERMUX_PKG_MAINTAINER="@आपका-github-username"
+TERMUX_PKG_MAINTAINER="@your-github-username"
 TERMUX_PKG_VERSION=""
 TERMUX_PKG_SRCURL=""
 TERMUX_PKG_SHA256=""
 ```
 
+> [!NOTE]
+> पूरा टेम्पलेट `template/build.sh` में देखें या चलाएँ: `./termux-build template`
+
+### termux-build से पैकेज जोड़ना
+
 ```bash
 cd termux-app-store
-./termux-build create आपके-टूल-का-नाम
-# या GitHub URL से ऑटो-क्रिएट करें:
+./termux-build create your-tool-name
+# or auto-create from a GitHub URL:
 ./termux-build init https://github.com/user/repo
 ```
 
+> [!NOTE]
+> नाम रखते समय स्पेस का उपयोग न करें — `-` का उपयोग करें। उदाहरण: `my-tool-name`
+
 ---
 
-## सहायक टूल्स
+# termux-build — बिल्ड और वैलिडेशन टूल
 
-### termux-build
+`termux-build` एक वैलिडेशन और रिव्यूअर सहायक टूल है — ऑटो-अपलोड या ऑटो-पब्लिश टूल नहीं।
 
 ```bash
-./termux-build create <पैकेज>      # वितरण के लिए पैकेज बनाएं
-./termux-build init <url>           # GitHub URL से ऑटो-क्रिएट करें
-./termux-build lint <पैकेज>        # बिल्ड स्क्रिप्ट की जांच करें
-./termux-build doctor               # पर्यावरण डायग्नोज़ करें
-./termux-build template             # build.sh टेम्पलेट जनरेट करें
+./termux-build create <package>      # Create package for distribution
+./termux-build init <url-repo>       # Auto-create and build package from GitHub URL
+./termux-build lint <package>        # Lint a build script
+./termux-build check-pr <package>    # Check PR readiness
+./termux-build doctor                # Diagnose environment
+./termux-build suggest <package>     # Get improvement suggestions
+./termux-build explain <package>     # Detailed package explanation
+./termux-build template              # Generate build.sh template
+./termux-build guide                 # Contribution guide
 ```
 
-### tasctl
+> [!NOTE]
+> `termux-build` **केवल पढ़ता और वैलिडेट करता है** — यह फ़ाइलें नहीं बदलता और GitHub पर अपलोड नहीं करता।
+
+---
+
+# tasctl — Termux App Store कंट्रोलर
+
+`tasctl` termux-app-store सिस्टम का कंट्रोलर है।
 
 ```bash
-./tasctl install       # Termux App Store इंस्टॉल करें
-./tasctl update        # नवीनतम संस्करण में अपडेट करें
-./tasctl uninstall     # Termux App Store हटाएं
-./tasctl doctor        # पर्यावरण डायग्नोज़ करें
-./tasctl self-update   # tasctl खुद को अपडेट करे
+./tasctl install       # Install Termux App Store (latest)
+./tasctl update        # Update to latest version
+./tasctl uninstall     # Remove Termux App Store
+./tasctl doctor        # Diagnose environment
+./tasctl self-update   # Update tasctl itself
+./tasctl help          # Show help
 ```
 
 ---
 
-## सुरक्षा और गोपनीयता
+# guidebook — Termux App Store की पूरी जानकारी
 
-- अतिरिक्त अनुमति की ज़रूरत नहीं, कोई बैकग्राउंड सर्विस नहीं
-- कोई account नहीं, कोई registration नहीं
-- कोई analytics, tracking या telemetry नहीं
-- हर `.deb` (डाउनलोड और कैश) के लिए SHA256 अनिवार्य
-- लोकल-फ़र्स्ट डिज़ाइन (मेटाडेटा और डाउनलोड के लिए नेटवर्क का उपयोग)
+```bash
+python guidebook.py
+```
 
-> विवरण: [SECURITY.md](SECURITY.md) | [PRIVACY.md](PRIVACY.md) | [BINARY_DISCLAIMER.md](BINARY_DISCLAIMER.md)
-
----
-
-## लाइसेंस
-
-**MIT लाइसेंस** — विवरण के लिए [LICENSE](LICENSE) देखें।
+> [!NOTE]
+> guidebook फ़िलहाल दो भाषाओं को सपोर्ट करता है: अंग्रेज़ी और इंडोनेशियाई।
 
 ---
 
-## अनुरक्षक
+# अपना पैकेज Termux कम्युनिटी तक कैसे पहुँचाएँ
 
-**Djunekz** — स्वतंत्र डेवलपर
+```bash
+# 1. Fork this repo
+# 2. Add your package folder:
+mkdir packages/your-tool-name
+# 3. Create build.sh from the template or with termux-build:
+./termux-build create your-tool-name
+# or from a GitHub URL:
+./termux-build init https://github.com/you/your-repo
+# 4. Validate with termux-build:
+./termux-build lint packages/your-tool-name
+# 5. Submit a Pull Request
+```
+
+> पूरी गाइड: [HOW_TO_UPLOAD.md](HOW_TO_UPLOAD.md)
+
+---
+
+# आर्किटेक्चर
+
+```
+termux-app-store/
+├── packages/              # All packages directory
+│   └── <tool-name>/
+│       └── build.sh       # Metadata & build script
+├── template/
+│   └── build.sh           # Package template
+├── core/
+│   ├── binary_core.py     # BinaryCache — local .deb cache + mirror download
+│   ├── mirrors.py         # MirrorManager — mirror pool registry
+│   ├── package.py         # Package dataclass
+│   └── validator.py       # PackageValidator
+├── utils/
+│   └── installer.py       # install_from_binary / install_from_source helpers
+├── tools/
+│   └── mirrors.json       # Mirror registry
+├── fast_install.py        # Fast install engine (.deb download + cache + SHA256 verify)
+├── store_common.py        # Shared logic: mirrors, app root, recipe and script verification
+├── tasctl                 # TAS installer/updater/uninstaller
+├── termux-build           # Validation & review tool
+└── install.sh             # Main installer
+```
+
+> पूरा विवरण: [ARCHITECTURE.md](ARCHITECTURE.md)
+
+---
+
+# सुरक्षा और गोपनीयता
+
+| **सुरक्षा** | **गोपनीयता** |
+|---|---|
+| किसी अतिरिक्त अनुमति की ज़रूरत नहीं | अकाउंट या रजिस्ट्रेशन नहीं |
+| कोई नेटवर्क पोर्ट नहीं खुलता | कोई एनालिटिक्स या ट्रैकिंग नहीं |
+| कोई बैकग्राउंड सर्विस नहीं चलती | किसी भी तरह की टेलीमेट्री नहीं |
+| बिल्ड केवल उपयोगकर्ता के स्पष्ट आदेश पर चलते हैं | लोकल-फ़र्स्ट; नेटवर्क मेटाडेटा और डाउनलोड के लिए इस्तेमाल होता है |
+| हर `.deb` (डाउनलोड और कैश) के लिए SHA256 अनिवार्य | बाइनरी का स्रोत पारदर्शी और ऑडिट योग्य है |
+
+> पूरा विवरण: [SECURITY.md](SECURITY.md) | [PRIVACY.md](PRIVACY.md) | [DISCLAIMER.md](DISCLAIMER.md) | [BINARY_DISCLAIMER.md](BINARY_DISCLAIMER.md)
+
+---
+
+# डेवलपमेंट और टेस्टिंग
+
+```bash
+git clone --depth 1 --single-branch --branch master https://github.com/djunekz/termux-app-store
+cd termux-app-store
+pip install -e ".[dev]"
+```
+
+| कमांड | क्या करता है |
+|---|---|
+| `make test` या `pytest` | टेस्ट सूट चलाएँ |
+| `make coverage` | कवरेज रिपोर्ट के साथ टेस्ट सूट चलाएँ |
+| `make lint` | Ruff लिंट और फ़ॉर्मैट जाँच |
+| `make typecheck` | Mypy टाइप जाँच |
+| `make check` | लिंट, टाइप जाँच और टेस्ट एक साथ |
+
+डिपेंडेंसी `uv.lock` में पिन की गई हैं (`uv sync --extra dev`)। पूरी गाइड के लिए [CONTRIBUTING.md](CONTRIBUTING.md) देखें।
+
+---
+
+# योगदान
+
+सभी योगदानों का स्वागत है!
+
+| योगदान का तरीका | विवरण |
+|---|---|
+| पैकेज जोड़ें | नया टूल पैकेज सबमिट करें |
+| बग रिपोर्ट करें | GitHub पर issue खोलें |
+| PR भेजें | कोड या दस्तावेज़ीकरण में सुधार |
+| PR रिव्यू करें | दूसरों के योगदान को वैलिडेट करने में मदद करें |
+| सुरक्षा ऑडिट | बिल्ड स्क्रिप्ट की सुरक्षा की समीक्षा करें |
+| दस्तावेज़ सुधारें | दस्तावेज़ों को स्पष्ट करें या अनुवाद करें |
+
+> पूरी गाइड: [CONTRIBUTING.md](CONTRIBUTING.md)
+
+---
+
+# सहायता और दस्तावेज़ीकरण
+
+| दस्तावेज़ | विवरण |
+|---|---|
+| [FAQ](FAQ.md) | अक्सर पूछे जाने वाले प्रश्न |
+| [TROUBLESHOOTING](TROUBLESHOOTING.md) | आम समस्याओं के समाधान |
+| [HOW TO UPLOAD](HOW_TO_UPLOAD.md) | अपना टूल कैसे अपलोड करें |
+| [CONTRIBUTING](CONTRIBUTING.md) | योगदान गाइड |
+| [SUPPORT](SUPPORT.md) | सहायता कैसे पाएँ |
+| [BINARY_DISCLAIMER](BINARY_DISCLAIMER.md) | बाइनरी वितरण पर नोट्स |
+
+---
+
+# दर्शन
+
+> *"लोकल फ़र्स्ट। सुविधा से ऊपर नियंत्रण। जादू से ऊपर पारदर्शिता।"*
+
+Termux App Store उन उपयोगकर्ताओं के लिए बनाया गया है जो:
+
+- पूरी तरह समझना चाहते हैं कि उनके डिवाइस पर क्या चल रहा है
+- बिल्ड और सोर्स को सीधे नियंत्रित करना चाहते हैं
+- वेंडर लॉक-इन से बचना चाहते हैं
+- टूल्स को Termux कम्युनिटी के साथ खुले रूप से साझा करना चाहते हैं
+
+---
+
+# लाइसेंस
+
+यह प्रोजेक्ट **MIT License** के तहत लाइसेंस प्राप्त है — विवरण के लिए [LICENSE](LICENSE) देखें।
+
+---
+
+# अनुरक्षक
+
+**Djunekz** — Termux App Store के स्वतंत्र डेवलपर और अनुरक्षक
 
 [![GitHub](https://img.shields.io/badge/GitHub-djunekz-3fb950?style=for-the-badge&logo=github)](https://github.com/djunekz)
 
 ---
 
-**© Termux App Store — सभी के लिए बनाया गया, समुदाय द्वारा।**
+# इस प्रोजेक्ट का समर्थन करें
+
+अगर Termux App Store आपके काम आया है:
+
+- इस रेपो को **Star** करें — दूसरों को इसे खोजने में मदद मिलती है
+- Termux और Android कम्युनिटी में इसे **शेयर** करें
+- Issues के ज़रिए **बग रिपोर्ट** करें
+- किसी भी सुधार के लिए **PR भेजें**
+- **स्पॉन्सर**: https://saweria.co/redHh
+
+---
+
+# स्टार इतिहास
+
+<a href="https://www.star-history.com/?repos=djunekz%2Ftermux-app-store&type=date&legend=bottom-right">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=djunekz/termux-app-store&type=date&theme=dark&legend=bottom-right&sealed_token=yxIBRg8O6CfVP9fzApqsHovR51Bu-9FS0C01LYEOvVBkXHNNIe-JOGKtHOqIq1X_KzE" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=djunekz/termux-app-store&type=date&legend=bottom-right&sealed_token=yxIBRg8O6CfVP9fzApqsHovR51Bu-9FS0C01LYEOvVBkXHNNIe-JOGKtHOqIq1X_KzE" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=djunekz/termux-app-store&type=date&legend=bottom-right&sealed_token=yxIBRg8O6CfVP9fzApqsHovR51Bu-9FS0C01LYEOvVBkXHNNIe-JOGKtHOqIq1X_KzE" />
+ </picture>
+</a>
+
+---
+
+# संबंधित प्रोजेक्ट और कीवर्ड
+
+> यह प्रोजेक्ट स्वतंत्र रूप से विकसित किया गया है और आधिकारिक [Termux](https://github.com/termux/termux-app) प्रोजेक्ट से **संबद्ध नहीं** है।
+
+**खोज शब्द:** termux app store · termux package manager · termux tui · termux cli · termux tools · android terminal package manager · termux custom packages · termux source build · termux binary install · termux deb installer · termux alternative · termux community packages · termux offline installer · termux-app-store djunekz · install packages termux android · alternative to termux-packages · alternative to TUR termux · how to distribute package termux · termux community repo · termux build from source android · create termux package · custom repo termux · tas command termux
+
+---
+
+**© Termux App Store — सबके लिए, कम्युनिटी द्वारा बनाया गया।**
