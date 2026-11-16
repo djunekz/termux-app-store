@@ -1,4 +1,4 @@
-![[Termux App Store — TUI Package Manager for Termux](https://github.com/djunekz/termux-app-store/blob/master/.assets/00.jpeg)](https://github.com/djunekz/termux-app-store/raw/master/.assets/00.jpeg)
+![[Termux App Store — TUI Package Manager for Termux](https://github.com/user-attachments/assets/758d85c8-5654-422e-b345-ee6db5c27b1f)](https://github.com/user-attachments/assets/758d85c8-5654-422e-b345-ee6db5c27b1f)
 
 # [Termux App Store — TUI & CLI Package Manager for Termux](https://djunekz.github.io/termux-app-store/)
 
@@ -95,7 +95,7 @@ It works as an **alternative package manager for Termux**, letting you install c
 ---
 
 <div align="center">
-<img src="https://github.com/djunekz/termux-app-store/blob/master/.assets/0.jpeg" width="100%" alt="Termux App Store — Main View"/>
+<img src="https://github.com/user-attachments/assets/b03419bc-8efe-4ed0-9b61-fea5153e9f53" width="100%" alt="Termux App Store — Main View"/>
 
 <br/><br/>
 <H1>TUI Interface</H1>
@@ -124,7 +124,7 @@ CLI Interface and tools support: `tasctl`, `termux-build`, `doctor.py`, `pkg-sca
 
 | Record `termux-app-store` TUI, CLI, Other tool `tasctl`, `termux-build`, `guidebook.py` |
 |:---:|
-| <img src="https://github.com/djunekz/termux-app-store/blob/master/.assets/demo.gif" width="100%" alt="termux-app-store"/> | termux-app-store
+| <img src="https://github.com/user-attachments/assets/152c757f-d2a3-4f31-8174-2b857a3aad51" width="100%" alt="termux-app-store"/> | termux-app-store
 
 </div>
 
