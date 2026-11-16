@@ -111,19 +111,18 @@ It works as an **alternative package manager for Termux**, letting you install c
 
 <H1>CLI Interface</H1>
 
-| Other tools support | CLI Install Interface | CLI View Interface |
-|:---:|:---:|:---:|
-| <img src="https://github.com/djunekz/termux-app-store/blob/master/.assets/0tas-and-termux-build.jpg" width="400" alt="Other tools support"/> | <img src="https://github.com/djunekz/termux-app-store/blob/master/.assets/0cli-install.jpg" width="400" alt="CLI Install Interface"/> | <img src="https://github.com/djunekz/termux-app-store/blob/master/.assets/0cli-view.jpg" width="400" alt="CLI View Interface"/> |
-| tasctl and termux-build | Package install process | CLI help, list and show |
+| Other tools support and `termux-app-store` CLI view Interface |
+|:---:|
+| https://github.com/user-attachments/assets/71c097b2-01a8-4c1c-9ffd-c26f29ee6ae6 |
 
+> Tools support: `tasctl`, `termux-build`, `doctor.py`, `pkg-scaffold.py`, `build-package.sh`
 ---
 
 <H1>GuideBook</H1>
 
-| List menu | Menu about | Menu how to upload |
-|:---:|:---:|:---:|
-| <img src="https://github.com/user-attachments/assets/aee9da66-1307-4f0e-a23f-33970419ea2b" width="400" alt="List menu"/> | <img src="https://github.com/user-attachments/assets/18c1cdca-9895-4181-b0eb-78f0066f17f0" width="400" alt="Menu about"/> | <img src="https://github.com/user-attachments/assets/c167b7c0-62c1-49a6-a282-eed1b8c27766" width="420" alt="Menu how to upload"/> |
-| GuideBook main menu | Information termux-app-store | Guide how to upload |
+| List menu, about, how to upload |
+|:---:|
+| https://github.com/user-attachments/assets/b668a890-835f-4467-820a-988b1810c902 |
 
 > GuideBook is a information, run: `python guidebook.py`
 
