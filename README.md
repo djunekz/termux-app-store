@@ -124,7 +124,7 @@ CLI Interface and tools support: `tasctl`, `termux-build`, `doctor.py`, `pkg-sca
 
 | Record `termux-app-store` TUI, CLI, Other tool `tasctl`, `termux-build`, `guidebook.py` |
 |:---:|
-| <img src="https://github.com/user-attachments/assets/152c757f-d2a3-4f31-8174-2b857a3aad51" width="100%" alt="termux-app-store"/> | termux-app-store
+| <img src="https://github.com/user-attachments/assets/00a1a921-1c39-48eb-836c-978c9aa969a9" width="100%" alt="termux-app-store"/> | termux-app-store
 
 </div>
 
