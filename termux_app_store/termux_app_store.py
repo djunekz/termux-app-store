@@ -1754,6 +1754,9 @@ class TermuxAppStore(App):
         if self.current_item:
             pkg = self.current_item.pkg
             url = pkg.get("url") or pkg.get("homepage") or f"https://github.com/search?q={pkg['name']}"
+            if not str(url).startswith(("https://", "http://")):
+                self.status_bar.update("Refusing to open a non-HTTP link")
+                return
             try:
                 subprocess.Popen(["termux-open-url", url], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
                 self.status_bar.update(f"Opening: {url}")
