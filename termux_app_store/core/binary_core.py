@@ -1,5 +1,6 @@
 import hashlib
 import logging
+import re
 import time
 import urllib.error
 import urllib.request
@@ -10,6 +11,14 @@ from .mirrors import MirrorManager
 
 logger = logging.getLogger(__name__)
 
+_SAFE_COMPONENT = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._+~:-]*$")
+_VALID_ARCHES = {"aarch64", "arm", "x86_64", "i686"}
+_MAX_DEB_BYTES = 512 * 1024 * 1024
+
+
+def _valid_target(pkg_name: str, version: str, arch: str) -> bool:
+    return bool(_SAFE_COMPONENT.match(pkg_name) and _SAFE_COMPONENT.match(version)) and arch in _VALID_ARCHES
+
 
 def _verify_sha256(path: Path, expected: str) -> bool:
     h = hashlib.sha256()
@@ -17,7 +26,7 @@ def _verify_sha256(path: Path, expected: str) -> bool:
         with open(path, "rb") as f:
             while chunk := f.read(65536):
                 h.update(chunk)
-        return h.hexdigest() == expected
+        return h.hexdigest() == expected.strip().lower()
     except Exception:
         return False
 
@@ -39,6 +48,8 @@ class BinaryCache:
         return Path(cache_path).expanduser()
 
     def get_cache_path(self, pkg_name: str, version: str, arch: str) -> Path:
+        if not _valid_target(pkg_name, version, arch):
+            raise ValueError(f"unsafe package identifier: {pkg_name!r} {version!r} {arch!r}")
         filename = f"{pkg_name}_{version}_{arch}.deb"
         return self.cache_dir / filename
 
@@ -61,6 +72,13 @@ class BinaryCache:
             logger.error(f"Refusing to download {pkg_name}-{version} ({arch}): no SHA256 provided for verification")
             return None
 
+        if not _valid_target(pkg_name, version, arch):
+            logger.error(f"Refusing unsafe package identifier: {pkg_name!r} {version!r} {arch!r}")
+            return None
+        if not mirror_url.startswith("https://"):
+            logger.error(f"Refusing non-HTTPS mirror: {mirror_url}")
+            return None
+
         cache_path = self.get_cache_path(pkg_name, version, arch)
         url = f"{mirror_url.rstrip('/')}/pool/main/{pkg_name}_{version}_{arch}.deb"
         tmp_path = cache_path.with_suffix(".tmp")
@@ -69,7 +87,11 @@ class BinaryCache:
             req = urllib.request.Request(url, headers={"User-Agent": "termux-app-store"})
             with urllib.request.urlopen(req, timeout=60) as resp:
                 with open(tmp_path, "wb") as f:
+                    total = 0
                     while chunk := resp.read(65536):
+                        total += len(chunk)
+                        if total > _MAX_DEB_BYTES:
+                            raise ValueError("download exceeds the maximum allowed size")
                         f.write(chunk)
 
             if not _verify_sha256(tmp_path, sha256):
@@ -77,7 +99,7 @@ class BinaryCache:
                 logger.error(f"SHA256 mismatch for {pkg_name}-{version}")
                 return None
 
-            tmp_path.rename(cache_path)
+            tmp_path.replace(cache_path)
             logger.info(f"Cached: {pkg_name} {version} ({arch})")
             return cache_path
 
@@ -101,6 +123,10 @@ class BinaryCache:
         sha256: str = "",
     ) -> Optional[Path]:
         if not self.enabled:
+            return None
+
+        if not _valid_target(pkg_name, version, arch):
+            logger.error(f"Refusing unsafe package identifier: {pkg_name!r} {version!r} {arch!r}")
             return None
 
         if not sha256:
