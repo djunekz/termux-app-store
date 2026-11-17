@@ -19,6 +19,28 @@ and this project adheres to semantic versioning.
 - `README.md` - update assets
 - `README.id.md`, `README.th.md`, `README.jp.md`, `README.ch.md`, `README.vi.md` and `README.in.md` - all translations now follow the current `README.md` (same sections, install and usage tables, fast install flow, architecture, security, development and testing, contributing, help and documentation) instead of the older shorter versions; the images and videos now use the same GitHub-hosted `user-attachments` URLs as `README.md`, so the translated READMEs no longer depend on the `.assets` folder
 - Package `brutespray` v2.7.3 - Updated metadata
+- `.github/workflows/ci.yml`, `codeql.yml`, `build-packages-debs.yml`, `auto-update-packages.yml`, `repin-floating-sources.yml` and `auto-release.yml` - every remaining action reference (`checkout`, `setup-python`, `cache`, `create-github-app-token`, `codeql-action`) is now pinned to a full commit SHA
+- `.github/workflows/` - `persist-credentials: false` added to 16 checkouts that never push, so the token is no longer left in `.git/config`
+- `.github/dependabot.yml` - added a 7 day cooldown for GitHub Actions updates
+- `.github/workflows/build-packages-debs.yml` - `apt-get update` runs before installing the publish tools, and the build summary is written through a single quoted redirect
+- `build-tester.py` - `.deb` is accepted as a SRCURL extension, SRCURL checks require `http://` or `https://`, files are read as UTF-8, and `--json` exits with 0 on warnings like the normal mode does
+
+### Security
+- `pkg-scaffold.py` - description, license, maintainer, homepage, SRCURL and dependencies from GitHub metadata or user input are now quoted safely before they are written to `build.sh`, so values containing `"`, `$(...)` or backticks can no longer break the file or run commands when it is sourced; entrypoint and URL values are validated and the SHA256 download only accepts `http(s)` URLs
+- `termux_app_store/doctor.py` - dependency names read from a `build.sh` and file paths are shell-quoted before `pkg info` and `bash -n` run, which closes a command injection when diagnosing an untrusted package
+- `termux_app_store/core/binary_core.py` - package name, version and architecture are validated before they become a cache file name or URL, mirrors must use `https://`, downloads are capped at 512 MiB, and SHA256 comparison ignores letter case
+- `termux_app_store/fast_install.py` and `termux_app_store/termux_app_store_cli.py` - `.deb` downloads are capped at 512 MiB, and the CLI no longer reads an unbounded response into memory
+- `termux_app_store/termux_app_store.py` - the homepage action only opens `http://` and `https://` links
+- `.github/workflows/auto-release.yml` - the tag name and version are passed through environment variables instead of being expanded into the script, the changelog entry is matched with `awk -v`, and the workflow token defaults to read-only
+- `.github/workflows/pr-checker.yml` - values read from a PR's `build.sh` are stripped of backslashes, backticks and control characters before they reach the report comment, package names are restricted by regex, and `curl` is limited to HTTP(S) with a redirect, size and time cap
+- `.github/workflows/lint-checker.yml`, `build-termux-repo.yml` and `build-packages-debs.yml` - step outputs and the repository token are passed through environment variables instead of being expanded into shell scripts
+- `.github/workflows/build-packages-debs.yml` - package URLs must start with `http://` or `https://`, and `curl` receives them after `--` with protocol, redirect and time limits
+
+### Fixed
+- `pkg-scaffold.py` - an existing `packages/<name>/build.sh` is no longer overwritten without confirmation, the file is written as UTF-8, release tags are URL-encoded in the generated SRCURL, and the generated Python install step no longer aborts under `set -euo pipefail` when the last scanned folder has no `.py` file
+- `build-tester.py` - `--json` output is valid again because the network check messages go to stderr, and the two `mypy` errors are fixed
+- `termux_app_store/utils/installer.py` - the result of `apt-get install -f -y` is returned after a failed `dpkg -i`, and `build-package.sh` is also looked up in the packaged `data` folder so source builds work after `pip install`
+- `tests/test_audit_fixes.py` - new tests for the safe `build.sh` quoting, entrypoint and URL validation, and the binary cache identifier, mirror and SHA256 checks
 
 ---
 

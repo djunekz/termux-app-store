@@ -6,9 +6,7 @@ on:
       - "v*.*.*"
 
 permissions:
-  contents: write
-  id-token: write
-  attestations: write
+  contents: read
 
 jobs:
   build:
@@ -21,6 +19,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7
         with:
           fetch-depth: 0
+          persist-credentials: false
 
       - name: Set up Python
         uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0  # v7
@@ -47,8 +46,9 @@ jobs:
         run: rm -f dist/*.tar.gz
 
       - name: Build full release archive
+        env:
+          VERSION: ${{ github.ref_name }}
         run: |
-          VERSION="${{ github.ref_name }}"
           ARCHIVE="termux-app-store-${VERSION}.tar.gz"
           tar -czf "$ARCHIVE" \
             tools/ \
@@ -136,6 +136,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7
         with:
           fetch-depth: 0
+          persist-credentials: false
 
       - name: Download build artifacts
         uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333  # v8
@@ -149,12 +150,12 @@ jobs:
 
       - name: Extract changelog entry
         id: changelog
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
         run: |
-          VERSION="${{ steps.version.outputs.version }}"
-
           echo "Looking for changelog entry: [${VERSION}]"
 
-          awk "/^## \[${VERSION}\]/{found=1; next} found && /^## \[/{exit} found{print}" \
+          awk -v ver="$VERSION" 'index($0, "## [" ver "]") == 1 {found=1; next} found && /^## \[/ {exit} found {print}' \
             CHANGELOG.md \
             | sed '/./,$!d' \
             | sed -e :a -e '/^\s*$/{$d;N;ba}' \
@@ -193,7 +194,7 @@ jobs:
     steps:
       - name: Create GitHub App token
         id: app-token
-        uses: actions/create-github-app-token@v3
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510
         with:
           client-id: ${{ secrets.APP_ID }}
           private-key: ${{ secrets.APP_PRIVATE_KEY }}

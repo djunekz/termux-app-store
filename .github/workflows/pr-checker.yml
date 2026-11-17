@@ -33,7 +33,7 @@ jobs:
         shell: bash
         run: |
           PKGS=$(git diff "$PR_BASE_SHA"...HEAD --name-only \
-            | awk -F/ '/^packages\/[^/]+\/build\.sh$/ {print $2}' \
+            | awk -F/ '/^packages\/[A-Za-z0-9][A-Za-z0-9._+-]*\/build\.sh$/ {print $2}' \
             | sort -u)
 
           DELIM="EOF_$(openssl rand -hex 16)"
@@ -82,7 +82,7 @@ jobs:
             get_var() {
               local var_name="$1"
               local result
-              result=$(grep -E "^${var_name}=" "$BUILD_SH" 2>/dev/null | head -n1 | cut -d= -f2- | sed "s/^['\"]//;s/['\"]$//" | tr -d "'" 2>/dev/null || echo "")
+              result=$(grep -E "^${var_name}=" "$BUILD_SH" 2>/dev/null | head -n1 | cut -d= -f2- | sed "s/^['\"]//;s/['\"]$//" | tr -d "'" | tr -d '\\`\r' | tr -d '\000-\010\013\014\016-\037' 2>/dev/null || echo "")
               echo "$result"
             }
 
@@ -150,11 +150,11 @@ jobs:
               fi
             fi
 
-            if [[ -n "$SRCURL" && -n "$SHA256" ]]; then
+            if [[ "$SRCURL" =~ ^https?:// && -n "$SHA256" ]]; then
               REPORT+="- 🔍 **Verifying SHA256...**\n"
               TMP="$(mktemp)"
 
-              if timeout 60 curl -fsSL "$SRCURL" -o "$TMP" 2>/dev/null; then
+              if timeout 60 curl -fsSL --proto '=http,https' --proto-redir '=http,https' --max-redirs 5 --max-filesize 209715200 -o "$TMP" -- "$SRCURL" 2>/dev/null; then
                 CALC=$(sha256sum "$TMP" 2>/dev/null | awk '{print $1}')
                 FILE_SIZE=$(ls -lh "$TMP" 2>/dev/null | awk '{print $5}')
 
@@ -169,7 +169,7 @@ jobs:
                   REPORT+="  - ✅ **SHA256 verified successfully**\n"
                 fi
               else
-                HTTP_CODE=$(curl -fsSL -o /dev/null -w "%{http_code}" "$SRCURL" 2>/dev/null || echo "000")
+                HTTP_CODE=$(curl -fsSL --proto '=http,https' --proto-redir '=http,https' --max-redirs 5 --max-time 30 -o /dev/null -w "%{http_code}" -- "$SRCURL" 2>/dev/null || echo "000")
                 REPORT+="  - ❌ **Failed to download source**\n"
                 REPORT+="    - URL: \`$SRCURL\`\n"
                 REPORT+="    - HTTP Status: \`$HTTP_CODE\`\n"

@@ -11,6 +11,7 @@ import shutil
 import sys
 import textwrap
 import urllib.error
+import urllib.parse
 import urllib.request
 from pathlib import Path
 
@@ -65,6 +66,8 @@ BUILD_METHODS = [
 ]
 
 VERSION_RE = re.compile(r"^\d[\w.\-+]*$")
+ENTRYPOINT_RE = re.compile(r"^[A-Za-z0-9._][A-Za-z0-9._/+@-]*$")
+VERSION_PLACEHOLDER = "${TERMUX_PKG_VERSION}"
 
 
 def TW():
@@ -338,7 +341,27 @@ def validate_version(val):
 def validate_url(val):
     if not (val.startswith("http://") or val.startswith("https://")):
         return "URL must start with http:// or https://"
+    if re.search(r"[\s\"'`\\]", val):
+        return "URL must not contain spaces, quotes, backticks or backslashes."
+    if "$" in val.replace(VERSION_PLACEHOLDER, ""):
+        return "URL may only use $ as ${TERMUX_PKG_VERSION}."
     return None
+
+
+def validate_entrypoint(val):
+    if not ENTRYPOINT_RE.match(val) or ".." in val.split("/") or len(val) > 200:
+        return "Entrypoint may only contain letters, numbers and . _ / + @ - (no spaces, no '..')."
+    return None
+
+
+def shell_value(val, force_quote=False, allow_placeholder=False):
+    val = re.sub(r"[\x00-\x1f\x7f]+", " ", str(val)).strip()
+    probe = val.replace(VERSION_PLACEHOLDER, "") if allow_placeholder else val
+    if not re.search(r"[\"$`\\]", probe):
+        if force_quote or re.search(r"[^A-Za-z0-9._/:@%+=,~?#-]", probe):
+            return f'"{val}"'
+        return val
+    return "'" + val.replace("'", "'\\''") + "'"
 
 
 def validate_sha256(val):
@@ -400,7 +423,7 @@ def fetch_github_meta(repo_url):
             tag = rel.get("tag_name", "")
             if tag:
                 result["version"] = tag.lstrip("v")
-                result["srcurl"] = f"{repo_url}/archive/refs/tags/{tag}.tar.gz"
+                result["srcurl"] = f"{repo_url}/archive/refs/tags/{urllib.parse.quote(tag, safe='/')}.tar.gz"
                 ok(f"Latest release: {tag}")
                 return result
         except Exception:
@@ -414,7 +437,7 @@ def fetch_github_meta(repo_url):
                 tag = tags[0].get("name", "")
                 if tag:
                     result["version"] = tag.lstrip("v")
-                    result["srcurl"] = f"{repo_url}/archive/refs/tags/{tag}.tar.gz"
+                    result["srcurl"] = f"{repo_url}/archive/refs/tags/{urllib.parse.quote(tag, safe='/')}.tar.gz"
                     ok(f"No release found, using latest tag: {tag}")
                     return result
         except Exception:
@@ -445,6 +468,9 @@ def fetch_github_meta(repo_url):
 
 
 def compute_sha256_from_url(url):
+    if not url.startswith(("http://", "https://")):
+        warn("Refusing to download a non-HTTP URL.")
+        return None
     log("Downloading to compute SHA256...")
     info(url)
     try:
@@ -482,7 +508,7 @@ termux_step_make_install() {{
 
     find "$libdir" -type d | while read -r _dir; do
         ls "$_dir"/*.py &>/dev/null 2>&1 && [ ! -f "$_dir/__init__.py" ] && \\
-            touch "$_dir/__init__.py"
+            touch "$_dir/__init__.py" || true
     done
 
     cat > "$TERMUX_PREFIX/bin/{pkg}" <<\'WRAPPER\'
@@ -732,6 +758,10 @@ def build_sh_content(data):
     pkg = data["name"]
     method = data["method"]
     entrypoint = data.get("entrypoint", f"{pkg}.py")
+    if validate_entrypoint(entrypoint):
+        raise ValueError(f"unsafe entrypoint: {entrypoint!r}")
+    if validate_pkg_name(pkg):
+        raise ValueError(f"invalid package name: {pkg!r}")
 
     template = INSTALL_TEMPLATES.get(method, INSTALL_TEMPLATES["unknown"])
     install_fn = template.format(pkg=pkg, entrypoint=entrypoint)
@@ -746,16 +776,16 @@ def build_sh_content(data):
         all_deps = extra_dep
 
     lines = []
-    lines.append(f"TERMUX_PKG_HOMEPAGE={data['homepage']}")
-    lines.append(f'TERMUX_PKG_DESCRIPTION="{data["description"]}"')
-    lines.append(f'TERMUX_PKG_LICENSE="{data["license"]}"')
-    lines.append(f'TERMUX_PKG_MAINTAINER="{data["maintainer"]}"')
-    lines.append(f"TERMUX_PKG_VERSION={data['version']}")
-    lines.append(f"TERMUX_PKG_SRCURL={data['srcurl']}")
-    lines.append(f"TERMUX_PKG_SHA256={data['sha256']}")
+    lines.append(f"TERMUX_PKG_HOMEPAGE={shell_value(data['homepage'])}")
+    lines.append(f"TERMUX_PKG_DESCRIPTION={shell_value(data['description'], force_quote=True)}")
+    lines.append(f"TERMUX_PKG_LICENSE={shell_value(data['license'], force_quote=True)}")
+    lines.append(f"TERMUX_PKG_MAINTAINER={shell_value(data['maintainer'], force_quote=True)}")
+    lines.append(f"TERMUX_PKG_VERSION={shell_value(data['version'])}")
+    lines.append(f"TERMUX_PKG_SRCURL={shell_value(data['srcurl'], allow_placeholder=True)}")
+    lines.append(f"TERMUX_PKG_SHA256={shell_value(data['sha256'])}")
 
     if all_deps:
-        lines.append(f'TERMUX_PKG_DEPENDS="{all_deps}"')
+        lines.append(f"TERMUX_PKG_DEPENDS={shell_value(all_deps, force_quote=True)}")
 
     if method in ("python-script", "pip", "shell", "npm", "ruby", "perl", "lua", "php", "unknown"):
         lines.append("TERMUX_PKG_BUILD_IN_SRC=true")
@@ -989,6 +1019,7 @@ def main():
             entrypoint = ask(
                 "Main entrypoint file",
                 default=_default_entry,
+                validator=validate_entrypoint,
                 hint="filename relative to source root that starts the program",
             )
             if _root_names is None or entrypoint in _root_names:
@@ -1074,10 +1105,16 @@ def main():
     pkg_dir = packages_dir / pkg_name
     build_sh = pkg_dir / "build.sh"
 
-    pkg_dir.mkdir(parents=True, exist_ok=True)
-    content = build_sh_content(data)
+    if build_sh.exists() and not ask_yn(f"{build_sh} already exists. Overwrite it?", default_yes=False):
+        blank()
+        warn("Aborted. Existing build.sh was left untouched.")
+        blank()
+        sys.exit(0)
 
-    build_sh.write_text(content)
+    content = build_sh_content(data)
+    pkg_dir.mkdir(parents=True, exist_ok=True)
+
+    build_sh.write_text(content, encoding="utf-8")
     build_sh.chmod(0o755)
 
     blank()
