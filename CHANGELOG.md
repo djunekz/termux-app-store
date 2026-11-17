@@ -9,7 +9,7 @@ and this project adheres to semantic versioning.
 
 ### Update
 - Package `brutespray` v2.7.2 → v2.7.6
-- Package `uv` v0.13.7 → v0.13.8
+- Package `uv` v0.13.7 → v0.13.9
 - Package `zorabuilder` v1.0.0 → v2.0.0
 - Package `termux-sync` v1.3.5 → v1.3.6
 - Package `baxter` v1.2.4 → v1.4.0
