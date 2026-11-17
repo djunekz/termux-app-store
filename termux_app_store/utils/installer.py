@@ -21,12 +21,12 @@ async def install_from_binary(binary_path: Path, package: Package) -> bool:
         else:
             logger.error(f"dpkg install failed:\n{result.stderr}")
             # Try to fix broken dependencies
-            subprocess.run(
+            fix = subprocess.run(
                 ["apt-get", "install", "-f", "-y"],
                 stdout=subprocess.DEVNULL,
                 stderr=subprocess.DEVNULL,
             )
-            return result.returncode == 0
+            return fix.returncode == 0
 
     except FileNotFoundError:
         logger.error("dpkg command not found")
@@ -39,7 +39,10 @@ async def install_from_binary(binary_path: Path, package: Package) -> bool:
 async def install_from_source(package: Package) -> bool:
     logger.info(f"Building {package.name} from source...")
 
-    build_sh = Path(__file__).parent.parent.parent / "build-package.sh"
+    package_root = Path(__file__).resolve().parent.parent
+    build_sh = package_root.parent / "build-package.sh"
+    if not build_sh.exists():
+        build_sh = package_root / "data" / "build-package.sh"
 
     if not build_sh.exists():
         logger.error("build-package.sh not found!")
