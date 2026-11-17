@@ -28,6 +28,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
 
       - name: Set up Python
         uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
@@ -58,6 +60,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           fetch-depth: 2
+          persist-credentials: false
 
       - name: Detect packages to build
         id: detect
@@ -103,14 +106,14 @@ jobs:
           MATRIX_ITEMS=""
           for pkg in $PKGS; do
             [[ -f "packages/$pkg/build.sh" ]] || continue
-            VERSION=$(grep 'TERMUX_PKG_VERSION=' "packages/$pkg/build.sh" | head -1 | cut -d= -f2 | tr -d "\"'" 2>/dev/null || echo "unknown")
-            SHA256=$(grep 'TERMUX_PKG_SHA256=' "packages/$pkg/build.sh" | head -1 | cut -d= -f2 | tr -d "\"'" 2>/dev/null || echo "")
+            VERSION=$(grep 'TERMUX_PKG_VERSION=' "packages/$pkg/build.sh" | head -1 | cut -d= -f2- | tr -d "\"'" 2>/dev/null || echo "unknown")
+            SHA256=$(grep 'TERMUX_PKG_SHA256=' "packages/$pkg/build.sh" | head -1 | cut -d= -f2- | tr -d "\"'" 2>/dev/null || echo "")
             SHA256="${SHA256,,}"
             [[ "$SHA256" =~ ^[0-9a-f]{64}$ ]] || SHA256=""
             RECIPE=$(sha256sum "packages/$pkg/build.sh" | cut -d' ' -f1)
             SRCURL=$(grep 'TERMUX_PKG_SRCURL=' "packages/$pkg/build.sh" | head -1 | cut -d= -f2- | tr -d "\"'" | sed "s|\${TERMUX_PKG_VERSION}|$VERSION|g" 2>/dev/null || echo "")
             VERSION_RE='^[A-Za-z0-9][A-Za-z0-9.+~:-]*$'
-            URL_RE='^[A-Za-z0-9:/._~%@+=?&,#-]*$'
+            URL_RE='^(https?://[A-Za-z0-9:/._~%@+=?&,#-]*)?$'
             PKG_RE='^[A-Za-z0-9][A-Za-z0-9._+-]*$'
             if [[ ! "$pkg" =~ $PKG_RE || ! "$VERSION" =~ $VERSION_RE || ! "$SRCURL" =~ $URL_RE ]]; then
               echo "ERROR: unsafe or malformed metadata in packages/$pkg/build.sh"
@@ -137,11 +140,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
 
       - name: Check binary cache
         id: cache
         if: github.event.inputs.force != 'true'
-        uses: actions/cache@v6
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
         with:
           path: output/
           key: pkg-${{ matrix.package }}-${{ matrix.version }}-${{ matrix.recipe }}-${{ matrix.sha256 }}
@@ -161,7 +166,7 @@ jobs:
 
           echo "=== Downloading prebuilt .deb ==="
           echo "URL: $SRCURL"
-          curl -fsSL "$SRCURL" -o "source.deb" || {
+          curl -fsSL --proto '=http,https' --proto-redir '=http,https' --max-redirs 5 --max-time 900 --retry 3 -o "source.deb" -- "$SRCURL" || {
             echo "ERROR: Download failed"
             exit 1
           }
@@ -454,9 +459,11 @@ jobs:
       needs.build-deb.result != 'cancelled'
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
 
       - name: Install tools
-        run: sudo apt-get install -y -qq dpkg-dev python3 gnupg gpgv
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq dpkg-dev python3 gnupg gpgv
 
       - name: Download all artifacts
         uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
@@ -473,11 +480,13 @@ jobs:
         continue-on-error: true
 
       - name: Initialize gh-pages if missing
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           if [[ ! -d "gh-pages/.git" ]]; then
             mkdir -p gh-pages && cd gh-pages
             git init
-            git remote add origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
+            git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
             git checkout --orphan gh-pages
           fi
           mkdir -p gh-pages/pool/main
@@ -641,10 +650,12 @@ jobs:
       - name: Summary
         run: |
           COUNT=$(ls gh-pages/pool/main/*.deb 2>/dev/null | wc -l || echo 0)
-          echo "## Build Summary" >> $GITHUB_STEP_SUMMARY
-          echo "**$COUNT** .deb files in pool" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "Built natively inside **termux-docker aarch64** — binaries compatible with Termux on Android." >> $GITHUB_STEP_SUMMARY
+          {
+            echo "## Build Summary"
+            echo "**$COUNT** .deb files in pool"
+            echo ""
+            echo "Built natively inside **termux-docker aarch64** — binaries compatible with Termux on Android."
+          } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Fail the run if any package build failed
         if: always() && needs.build-deb.result != 'success'

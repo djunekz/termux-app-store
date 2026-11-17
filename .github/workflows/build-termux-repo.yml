@@ -22,6 +22,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
 
       - name: Install tools
         run: sudo apt-get install -y -qq dpkg-dev gnupg gpgv
@@ -48,8 +50,9 @@ jobs:
           echo "Version: $VERSION  |  Packages in index: $TOTAL"
 
       - name: Build termux-app-store .deb for all architectures
+        env:
+          VERSION: ${{ steps.meta.outputs.version }}
         run: |
-          VERSION="${{ steps.meta.outputs.version }}"
           mkdir -p output
 
           LAUNCHER_B64="IyEvZGF0YS9kYXRhL2NvbS50ZXJtdXgvZmlsZXMvdXNyL2Jpbi9weXRob24zCmltcG9ydCBzeXMKc3lzLnBhdGguaW5zZXJ0KDAsICIvZGF0YS9kYXRhL2NvbS50ZXJtdXgvZmlsZXMvdXNyL2xpYi9weXRob24zL2Rpc3QtcGFja2FnZXMiKQpmcm9tIHRlcm11eF9hcHBfc3RvcmUubWFpbiBpbXBvcnQgbWFpbgptYWluKCkK"
@@ -237,13 +240,14 @@ jobs:
         run: bash ci/setup_commit_signing.sh
 
       - name: Commit and push to gh-pages
+        env:
+          VERSION: ${{ steps.meta.outputs.version }}
+          TOTAL: ${{ steps.meta.outputs.total }}
         run: |
           cd gh-pages
           git config user.email "258522831+termuxappstore@users.noreply.github.com"
           git config user.name "Termux App Store"
           git add -A
-          VERSION="${{ steps.meta.outputs.version }}"
-          TOTAL="${{ steps.meta.outputs.total }}"
           MSG="repo: termux-app-store v${VERSION}, ${TOTAL} pkgs in index [$(date -u +%Y-%m-%dT%H:%M:%SZ)]"
           if git rev-parse HEAD >/dev/null 2>&1; then
             if git diff --staged --quiet; then
