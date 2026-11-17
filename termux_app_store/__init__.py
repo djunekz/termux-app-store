@@ -19,13 +19,13 @@ def run_cli(*args, **kwargs):
 """
 termux-app-store
 ~~~~~~~~~~~~~~~~
-The first offline-first, source-based TUI package manager built natively for Termux.
+The first local-first, source-based TUI package manager built natively for Termux.
 
 :copyright: (c) 2026 djunekz
 :license: MIT, see LICENSE for more details.
 """
 
-__version__ = "0.11.5"
+__version__ = "0.12.6"
 __author__ = "djunekz"
 __license__ = "MIT"
 __all__ = [

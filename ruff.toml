@@ -1,6 +1,6 @@
 line-length = 120
 target-version = "py310"
-extend-exclude = ["packages", ".assets"]
+extend-exclude = ["packages"]
 
 [lint]
 select = ["E4", "E7", "E9", "F", "W", "I"]
