@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-11-02T17:26:16.118935+00:00",
-  "total": 88,
+  "generated_at": "2026-11-17T21:25:49.054987+00:00",
+  "total": 89,
   "packages": [
     {
       "package": "aichat",
@@ -48,7 +48,7 @@
     },
     {
       "package": "aura",
-      "version": "0.10.0",
+      "version": "0.11.0",
       "maintainer": "@termux-app-store",
       "description": "Adaptive Unified Runtime Assistant",
       "homepage": "https://github.com/djunekz/aura",
@@ -57,8 +57,8 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/aura/archive/refs/tags/v${TERMUX_PKG_VERSION}.zip",
-      "sha256": "f9cfa5f137ad035f35faace06f00eb61d368e39c24a12521da1ff1bac235d630",
-      "recipe_sha256": "f775b861ac14fce5f60fc514b1cdaf99e21f5714358ce3015cc9d1c6a74a0464",
+      "sha256": "8fc2fa3b596a3148ab222e6d6edc96f53bad82ea92f0d266858eb42792abdd9a",
+      "recipe_sha256": "a79459ca780ae1e462f616ae7a0f01bf6d5cee783175ad0154fbdd759f08ab37",
       "platform_independent": false,
       "depends": [
         "nodejs"
@@ -118,7 +118,7 @@
     },
     {
       "package": "baxter",
-      "version": "1.2.4",
+      "version": "1.4.0",
       "maintainer": "@djunekz",
       "description": "Encrypt and decrypt files termux",
       "homepage": "https://github.com/djunekz/baxter",
@@ -127,8 +127,8 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/baxter/releases/download/v${TERMUX_PKG_VERSION}/baxter-v${TERMUX_PKG_VERSION}.tar.gz",
-      "sha256": "7fac8356d81197218f44e60e0212e12ad63ca55462f9a563b541a589319e3227",
-      "recipe_sha256": "8344447e8cc0bac11f71b296ce1759d2299d5cb2c74a42a60fbf43285c29f5c4",
+      "sha256": "9afaf26be0c206b15c04225f128a85717c665b66305cef5a2b0dc765863b79f0",
+      "recipe_sha256": "701f763b4ad62a2916002a3014eb2f680ef693c49a78abd7e87bef05c550d52d",
       "platform_independent": false,
       "depends": [
         "nodejs"
@@ -225,7 +225,7 @@
     },
     {
       "package": "brutespray",
-      "version": "2.7.2",
+      "version": "2.7.6",
       "maintainer": "@termux-app-store",
       "description": "Fast, multi-protocol credential brute-forcer. Parses Nmap, Nessus, and Nexpose output to automatically test default and custom credentials across 30+ protocols.",
       "homepage": "https://pkg.go.dev/github.com/x90skysn3k/brutespray/v2",
@@ -233,9 +233,9 @@
       "download_size": "Unknown",
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
-      "srcurl": "https://github.com/x90skysn3k/brutespray/archive/refs/tags/v2.7.2.tar.gz",
-      "sha256": "551f8a4fe270a86cae63cc78a1cc4a79d0939b84710b1d507fcb7a4fa06b8b8a",
-      "recipe_sha256": "63a82716e6245baebcc6910c01a2f3c3930712c62f49ad46296b575a60abf7cb",
+      "srcurl": "https://github.com/x90skysn3k/brutespray/archive/refs/tags/v2.7.6.tar.gz",
+      "sha256": "3541e1fd691a429989747556b37c354e45aeeb6776fb14ce825e6db90b958191",
+      "recipe_sha256": "8f0305b63674975be90cb0777a45eba57001b5b1bf76b770f4f4dbe2c335b5d5",
       "platform_independent": false,
       "depends": [
         "golang"
@@ -398,7 +398,7 @@
     },
     {
       "package": "dalfox",
-      "version": "3.2.4",
+      "version": "3.3.0",
       "maintainer": "@termux-app-store",
       "description": "🌙🦊 Dalfox is a powerful open-source XSS scanner and utility focused on automation.",
       "homepage": "https://dalfox.hahwul.com",
@@ -406,9 +406,9 @@
       "download_size": "Unknown",
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
-      "srcurl": "https://github.com/hahwul/dalfox/archive/refs/tags/v3.2.4.tar.gz",
-      "sha256": "d86cae222a4db6c8a335013c980d0c6d672b3abee8cfb44da6ce1b489e4d3a9b",
-      "recipe_sha256": "7c91c43af5104b310a79e126aab43c6d98a838841458d9b49b63dfb1d6687dcd",
+      "srcurl": "https://github.com/hahwul/dalfox/archive/refs/tags/v3.3.0.tar.gz",
+      "sha256": "9613d8266b7fa7348829590caed0af567ba7cd0137075add913d8037066dd9dd",
+      "recipe_sha256": "741a2ad95a8f3120b09a04d23cc7ea212d41eb648d8d7a98ad54d16e2b3290ab",
       "platform_independent": false,
       "depends": [
         "rust"
@@ -595,7 +595,7 @@
     },
     {
       "package": "fd",
-      "version": "10.5.0",
+      "version": "10.5.2",
       "maintainer": "@termux-app-store",
       "description": "A simple, fast and user-friendly alternative to 'find'",
       "homepage": "https://github.com/sharkdp/fd",
@@ -604,8 +604,8 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/sharkdp/fd/releases/download/v${TERMUX_PKG_VERSION}/fd-v${TERMUX_PKG_VERSION}-aarch64-unknown-linux-musl.tar.gz",
-      "sha256": "d76c4317f7d5dba69f8a2a15856c90c777e7f0dd4e85f0de8c76de6992c374d4",
-      "recipe_sha256": "81b77eb2541560c01f1e72a75e7518eb88cf02124aad4bfe8e615fd7687054b3",
+      "sha256": "63ea52cb31586e6d98efa2f06d73d542f16c7d0c4af0f07b579aaf9714cf907a",
+      "recipe_sha256": "9829a5403867cdf2a1247af399ab2df682736b86ce3e2021c7fe398d1542becb",
       "platform_independent": false
     },
     {
@@ -909,7 +909,7 @@
     },
     {
       "package": "merlin",
-      "version": "1.1.4",
+      "version": "1.1.5",
       "maintainer": "@termux-app-store",
       "description": "Analyst website vulnerabillity scanner",
       "homepage": "https://github.com/djunekz/merlin",
@@ -918,9 +918,32 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/merlin/archive/refs/tags/${TERMUX_PKG_VERSION}.tar.gz",
-      "sha256": "96c68eb45e03ac6f5b9ebb42b037d943d3df3c44ab58a9746fa1e63400b1cb72",
-      "recipe_sha256": "5bd592ca47d3998b76dbab651a528543eb30b8e0500c4fb1a90850edca854d11",
+      "sha256": "b0aad1281ba139f39b81be912237fc2f76e586bf5f0b89a7bac2918baeddbb00",
+      "recipe_sha256": "726be907bf86672de143167a90e3862ef1378baf26e4c4d734ac8a6248ad951a",
       "platform_independent": false
+    },
+    {
+      "package": "miflasher",
+      "version": "2.0.4",
+      "maintainer": "@termux-app-store",
+      "description": "A lightweight CLI tool to flash and manage Xiaomi firmware packages (Fastboot/ROM) easily and safely",
+      "homepage": "https://github.com/djunekz/miflasher",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/djunekz/miflasher/archive/refs/tags/v${TERMUX_PKG_VERSION}.tar.gz",
+      "sha256": "acd4d7af7b302fdec83a3d6e13f9f009c99b22be8b7872f7755dd39f400a84eb",
+      "recipe_sha256": "19c804297a568a978bb3090a6c58b96cb35437eae6a528e38845708399d0909e",
+      "platform_independent": false,
+      "depends": [
+        "brotli",
+        "libc++",
+        "liblz4",
+        "termux-api",
+        "zlib",
+        "zstd"
+      ]
     },
     {
       "package": "myserver",
@@ -1036,7 +1059,7 @@
     },
     {
       "package": "pnpm",
-      "version": "12.16.1",
+      "version": "12.21.0",
       "maintainer": "@termux-app-store",
       "description": "Fast, disk space efficient package manager",
       "homepage": "https://github.com/pnpm/pnpm",
@@ -1045,8 +1068,8 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://registry.npmjs.org/pnpm/-/pnpm-${TERMUX_PKG_VERSION}.tgz",
-      "sha256": "ca362a16f2e1c3cfa81d406f3242446179a0e4aea457ba3e9e6c39e6476aba65",
-      "recipe_sha256": "ba10b0d06939743b2009d302266b7f2753d6b1f51cb1bf11baba167fbd5a7961",
+      "sha256": "0791469382b579869c51827759876616bc3eae5296d8fa880bbc3c9c1e8cf6f7",
+      "recipe_sha256": "fd2555ef9c54751ac8b4add0d40561bc05bfaefc0e7bd8032395a7c6e7a0db1f",
       "platform_independent": false,
       "depends": [
         "nodejs"
@@ -1223,7 +1246,7 @@
     },
     {
       "package": "termux-sync",
-      "version": "1.3.5",
+      "version": "1.3.6",
       "maintainer": "@termux-app-store",
       "description": "OpenSource Backup and restore your entire Termux environment across devices.",
       "homepage": "https://github.com/djunekz/termux-sync",
@@ -1232,8 +1255,8 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/termux-sync/archive/refs/tags/v${TERMUX_PKG_VERSION}.tar.gz",
-      "sha256": "cc690be7b2be536445f069da8c3f583394c886a7a90865c44300459ef209c3ce",
-      "recipe_sha256": "8f3ecf0cc21463dd19da6ec0b9163d763820967cc52179ae9b7412f0555f4a15",
+      "sha256": "e475417d49de4039711c8e30d8b39999a599b0c739bf8e83ea5b3fbf754ebef6",
+      "recipe_sha256": "075c10c70ef34b8f28f662061f59381f9517107e12a7831df273aba5831a8059",
       "platform_independent": false,
       "depends": [
         "git",
@@ -1456,7 +1479,7 @@
     },
     {
       "package": "uv",
-      "version": "0.13.6",
+      "version": "0.13.9",
       "maintainer": "@termux-app-store",
       "description": "An extremely fast Python package and project manager, written in Rust.",
       "homepage": "https://github.com/astral-sh/uv",
@@ -1465,8 +1488,8 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/astral-sh/uv/releases/download/${TERMUX_PKG_VERSION}/uv-aarch64-unknown-linux-musl.tar.gz",
-      "sha256": "819692e404d23e5aae6bc44c0e260f1f5492fd1910ab4693b2c650f926dbe800",
-      "recipe_sha256": "7da4415720450d6336099c7426daf45a06ceb69ee7612ec967edee0a3eadb202",
+      "sha256": "37fbb7c5bc66cf99c12aa881949d216181e201dec449772c4329e56487d61179",
+      "recipe_sha256": "c4ad423031c632336dfc6c8c04f6cb3e8cfe41343c9a40cb8a21597f37d56a4b",
       "platform_independent": false
     },
     {
@@ -1587,7 +1610,7 @@
     },
     {
       "package": "zorabuilder",
-      "version": "1.0.0",
+      "version": "2.0.0",
       "maintainer": "@termux-app-store",
       "description": "Builder python standalone ELF",
       "homepage": "https://github.com/djunekz/termux-app-store",
@@ -1596,8 +1619,8 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/archive/releases/download/v${TERMUX_PKG_VERSION}/zorabuilder",
-      "sha256": "e455fd0af70ad3985f83dbfccb45af92036fa67cf1bfb09c713de0333be01918",
-      "recipe_sha256": "32e9b37f034a7956a8d1955679a8508bc594e70c30ecb7e297e2b2f81327c42d",
+      "sha256": "5e2d3004b819cb0cbab257656663ef684b7f19ef0578c1c8b99ea18f16dbfaa7",
+      "recipe_sha256": "c2c8978329915cf76121b56f0faf96170b9fd0fad000bfc48918d26f39669d35",
       "platform_independent": false,
       "depends": [
         "python",
