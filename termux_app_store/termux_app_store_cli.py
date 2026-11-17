@@ -446,6 +446,8 @@ def _direct_deb_install(name: str, version: str, pkg_info: Optional[dict] = None
 
     import tempfile
 
+    max_deb_bytes = 512 * 1024 * 1024
+
     _log(f"  Trying direct .deb download: {fname}")
 
     for mirror in MIRRORS:
@@ -453,7 +455,7 @@ def _direct_deb_install(name: str, version: str, pkg_info: Optional[dict] = None
         try:
             req = urllib.request.Request(url, headers={"User-Agent": "termux-app-store-cli"})
             with urllib.request.urlopen(req, timeout=30) as resp:
-                deb_bytes = resp.read()
+                deb_bytes = resp.read(max_deb_bytes + 1)
         except urllib.error.HTTPError as e:
             if e.code == 404:
                 continue
@@ -464,6 +466,10 @@ def _direct_deb_install(name: str, version: str, pkg_info: Optional[dict] = None
             continue
 
         if not deb_bytes:
+            continue
+
+        if len(deb_bytes) > max_deb_bytes:
+            _log(f"  ✗ {mirror['name']} sent a file larger than the allowed size — skipping")
             continue
 
         actual_sha = hashlib.sha256(deb_bytes).hexdigest()

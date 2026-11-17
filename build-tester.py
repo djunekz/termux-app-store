@@ -2,6 +2,7 @@
 # Termux App Store -- Build Tester (Dry-run)
 # github.com/djunekz/termux-app-store
 
+import contextlib
 import hashlib
 import json
 import os
@@ -289,7 +290,7 @@ class Issue:
 
 def parse_build_sh(path: Path) -> dict:
     values = {}
-    lines = path.read_text(errors="replace").splitlines()
+    lines = path.read_text(encoding="utf-8", errors="replace").splitlines()
 
     for raw_line in lines:
         line = raw_line.strip()
@@ -313,7 +314,7 @@ def parse_build_sh(path: Path) -> dict:
 
 
 def get_all_lines(path: Path) -> list:
-    return path.read_text(errors="replace").splitlines()
+    return path.read_text(encoding="utf-8", errors="replace").splitlines()
 
 
 def test_file_exists(build_sh: Path) -> list:
@@ -482,14 +483,14 @@ def test_srcurl(values: dict) -> list:
                 hint="Ensure variable is defined before SRCURL in build.sh",
             )
         )
-    ext_ok = any(src.endswith(e) for e in (".tar.gz", ".tar.bz2", ".tar.xz", ".tgz", ".zip", ".tar.zst"))
+    ext_ok = any(src.endswith(e) for e in (".tar.gz", ".tar.bz2", ".tar.xz", ".tgz", ".zip", ".tar.zst", ".deb"))
     if not ext_ok:
         issues.append(
             Issue(
                 WARN,
                 "SRCURL",
                 "SRCURL does not end with a recognised archive extension",
-                hint="Expected: .tar.gz / .zip / .tar.bz2 / .tar.xz / .tar.zst",
+                hint="Expected: .tar.gz / .zip / .tar.bz2 / .tar.xz / .tar.zst / .deb",
             )
         )
     else:
@@ -694,7 +695,7 @@ def test_wrapper_script(lines: list, values: dict) -> list:
 
 def test_url_reachable(values: dict) -> list:
     src = values.get("TERMUX_PKG_SRCURL", "")
-    if not src or not src.startswith("http"):
+    if not src or not src.startswith(("http://", "https://")):
         return [Issue(SKIP, "Network", "SRCURL not a network URL")]
     if "${" in src:
         return [Issue(SKIP, "Network", "SRCURL contains unexpanded variable, skipping network test")]
@@ -738,7 +739,7 @@ def test_sha256_deep(values: dict) -> list:
     src = values.get("TERMUX_PKG_SRCURL", "")
     expected = values.get("TERMUX_PKG_SHA256", "")
 
-    if not src or not src.startswith("http"):
+    if not src or not src.startswith(("http://", "https://")):
         return [Issue(SKIP, "SHA256 verify", "No network URL to verify")]
     if "${" in src:
         return [Issue(SKIP, "SHA256 verify", "URL has unexpanded variable")]
@@ -910,7 +911,7 @@ def print_result(result: PackageResult, verbose=True):
         blank()
         return
 
-    categories = {}
+    categories: dict[str, list] = {}
     for issue in result.issues:
         categories.setdefault(issue.category, []).append(issue)
 
@@ -969,7 +970,7 @@ def print_multi_summary(results: list):
     blank()
 
 
-def find_packages_dir() -> Path:
+def find_packages_dir() -> Path | None:
     candidates = [
         Path("packages"),
         Path(__file__).parent / "packages",
@@ -1060,11 +1061,12 @@ def main():
             kv("Mode", ("deep (download + SHA256)" if mode_deep else "standard"))
             blank()
 
-        result = run_tests(pkg_name, build_sh, deep=mode_deep, check_deps=mode_deps)
+        with contextlib.redirect_stdout(sys.stderr if mode_json else sys.stdout):
+            result = run_tests(pkg_name, build_sh, deep=mode_deep, check_deps=mode_deps)
 
         if mode_json:
             print(json.dumps(result.to_dict(), indent=2))
-            sys.exit(0 if result.verdict == PASS else 1)
+            sys.exit(0 if result.verdict != FAIL else 1)
 
         print_result(result, verbose=not mode_brief)
         blank()
@@ -1093,7 +1095,8 @@ def main():
     all_results = []
     for pkg_name in pkgs:
         build_sh = find_build_sh(pkg_name)
-        result = run_tests(pkg_name, build_sh, deep=False, check_deps=mode_deps)
+        with contextlib.redirect_stdout(sys.stderr if mode_json else sys.stdout):
+            result = run_tests(pkg_name, build_sh, deep=False, check_deps=mode_deps)
         all_results.append(result)
 
         if mode_json:

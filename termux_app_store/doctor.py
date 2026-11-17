@@ -460,7 +460,9 @@ def chk_tas_version():
         return Check("TAS version", PASS, f"v{ver}", category="TAS")
     except Exception:
         pass
-    out, rc = _sh(f"{BIN_TAS} --version 2>/dev/null || {BIN_TAS} version 2>/dev/null")
+    out, rc = _sh(
+        f"{shlex.quote(str(BIN_TAS))} --version 2>/dev/null || {shlex.quote(str(BIN_TAS))} version 2>/dev/null"
+    )
     if rc == 0 and out:
         return Check("TAS version", PASS, out.strip(), category="TAS")
     return Check("TAS version", INFO, "could not determine", category="TAS")
@@ -819,7 +821,7 @@ def chk_build_sh_scan():
         if not bsh.read_text(errors="replace").strip():
             broken.append(f"{pkg_dir.name}:empty")
             continue
-        _, rc = _sh(f"bash -n {bsh} 2>/dev/null")
+        _, rc = _sh(f"bash -n {shlex.quote(str(bsh))} 2>/dev/null")
         if rc != 0:
             broken.append(f"{pkg_dir.name}:syntax")
 
@@ -1015,7 +1017,7 @@ def diagnose_build_sh(pkg_name: str) -> list:
     lines = content.splitlines()
     results.append(Check("build.sh not empty", PASS, f"{len(lines)} lines", category="build.sh"))
 
-    out, rc = _sh(f"bash -n '{build_sh}' 2>&1")
+    out, rc = _sh(f"bash -n {shlex.quote(str(build_sh))} 2>&1")
     if rc != 0:
         m = re.search(r"line (\d+)", out)
         lineno = f" (line {m.group(1)})" if m else ""
@@ -1187,7 +1189,7 @@ def diagnose_build_sh(pkg_name: str) -> list:
         dep_str = vals.get("TERMUX_PKG_DEPENDS", "")
         if dep_str:
             for dep in [d.strip().split()[0] for d in dep_str.split(",") if d.strip()]:
-                out, rc = _sh(f"pkg info {dep} 2>/dev/null | head -1")
+                out, rc = _sh(f"pkg info {shlex.quote(dep)} 2>/dev/null | head -1")
                 if rc == 0 and out:
                     results.append(Check(f"dep: {dep}", PASS, out[:40], category="build.sh"))
                 else:
