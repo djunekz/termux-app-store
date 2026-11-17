@@ -47,6 +47,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
+          persist-credentials: false
 
       - name: Find changed build.sh files
         id: files
@@ -289,12 +290,17 @@ jobs:
           echo "Overall status: $OVERALL_STATUS (0=pass, 1=fail)"
 
       - name: Save PR metadata
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          OVERALL_STATUS: ${{ steps.status.outputs.overall_status }}
+          LINT_DETAILS: ${{ steps.lint.outputs.lint_details }}
+          VALIDATION_DETAILS: ${{ steps.validate.outputs.validation_details }}
         run: |
           mkdir -p /tmp/pr-report
-          echo "${{ github.event.pull_request.number }}" > /tmp/pr-report/pr_number.txt
-          echo "${{ steps.status.outputs.overall_status }}" > /tmp/pr-report/overall_status.txt
-          printf '%s' "${{ steps.lint.outputs.lint_details }}" > /tmp/pr-report/lint_details.txt
-          printf '%s' "${{ steps.validate.outputs.validation_details }}" > /tmp/pr-report/validation_details.txt
+          printf '%s\n' "$PR_NUMBER" > /tmp/pr-report/pr_number.txt
+          printf '%s\n' "$OVERALL_STATUS" > /tmp/pr-report/overall_status.txt
+          printf '%s' "$LINT_DETAILS" > /tmp/pr-report/lint_details.txt
+          printf '%s' "$VALIDATION_DETAILS" > /tmp/pr-report/validation_details.txt
 
       - name: Upload report artifact
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
