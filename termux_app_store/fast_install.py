@@ -62,6 +62,9 @@ CACHE_BASE.mkdir(parents=True, exist_ok=True)
 DEB_CACHE_DIR.mkdir(parents=True, exist_ok=True)
 
 
+MAX_DEB_BYTES = 512 * 1024 * 1024
+
+
 def _valid_ident(pkg: str, version: str, arch: str) -> bool:
     return bool(
         isinstance(pkg, str)
@@ -367,6 +370,8 @@ def download_deb(
                             break
                         f.write(chunk)
                         downloaded += len(chunk)
+                        if downloaded > MAX_DEB_BYTES:
+                            raise ValueError("download exceeds the maximum allowed size")
                         if cancel is not None and cancel.is_set():
                             raise _common.InstallCancelled()
                         if total > 0:
