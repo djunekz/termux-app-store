@@ -7,6 +7,9 @@ and this project adheres to semantic versioning.
 
 ## [Unreleased]
 
+### Removed
+- Package `cloudflair` - Removed
+
 ---
 
 ## [v0.12.6] - 2026-11-18
