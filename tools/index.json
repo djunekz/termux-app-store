@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-11-18T06:30:30.725316+00:00",
-  "total": 89,
+  "generated_at": "2026-11-18T11:18:45.008051+00:00",
+  "total": 88,
   "packages": [
     {
       "package": "aichat",
@@ -254,25 +254,6 @@
       "srcurl": "https://github.com/D4Vinci/Clickjacking-Tester/archive/d75d5fcc62cef0031db9493b30911cd70c9bd606.tar.gz",
       "sha256": "295aac00657fc24152d67a8c9c3766b24381de5f696f18631aa5b4ce6086336b",
       "recipe_sha256": "c6ada0021c2989d3dd7579fcc4a4c107abaa2168ac7d460e84aaa2bfab33d839",
-      "platform_independent": false,
-      "depends": [
-        "python",
-        "python-pip"
-      ]
-    },
-    {
-      "package": "cloudflair",
-      "version": "0.0.0+13e3d80",
-      "maintainer": "@termux-app-store",
-      "description": "🔎 Find origin servers of websites behind CloudFlare by using Internet-wide scan data from Censys.",
-      "homepage": "https://blog.christophetd.fr/bypassing-cloudflare-using-internet-wide-scan-data/",
-      "license": "UNKNOWN",
-      "download_size": "Unknown",
-      "installed_size": "Unknown",
-      "source": "https://github.com/djunekz/termux-app-store",
-      "srcurl": "https://github.com/christophetd/CloudFlair/archive/13e3d806e6e730412a2f73b46f34d8a5677b163c.tar.gz",
-      "sha256": "1b17f9ce64f0af6fecdbede5c3621052537d720137cdd97b5aeed115a535e7dc",
-      "recipe_sha256": "7ae58ab1e73e33463691aea4582f9d723c651f390bd54975fc76ca7eefb94248",
       "platform_independent": false,
       "depends": [
         "python",
