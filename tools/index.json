@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-11-18T11:22:40.250802+00:00",
-  "total": 87,
+  "generated_at": "2026-11-18T17:09:39.716161+00:00",
+  "total": 88,
   "packages": [
     {
       "package": "aichat",
@@ -852,6 +852,25 @@
       "depends": [
         "python",
         "python-pip"
+      ]
+    },
+    {
+      "package": "leaf",
+      "version": "1.29.3",
+      "maintainer": "@termux-app-store",
+      "description": "Terminal Markdown previewer — GUI-like experience.",
+      "homepage": "https://leaf.rivolink.mg",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/RivoLink/leaf/archive/refs/tags/${TERMUX_PKG_VERSION}.tar.gz",
+      "sha256": "6d7343042c072f0065d4357666aa3530a3fce03d79cea7378fe20e816e2b5240",
+      "recipe_sha256": "46e12ae5bae157ed08bcd0ab6a3f85da1455eee7681e4cac8a4974edec461e23",
+      "platform_independent": false,
+      "depends": [
+        "rust",
+        "bash"
       ]
     },
     {
