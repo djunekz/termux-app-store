@@ -71,7 +71,7 @@ VERSION_PLACEHOLDER = "${TERMUX_PKG_VERSION}"
 
 
 def TW():
-    return shutil.get_terminal_size((72, 24)).columns
+    return max(shutil.get_terminal_size((72, 24)).columns, 40)
 
 
 def W():
@@ -383,18 +383,22 @@ def _http_get(url, timeout=TIMEOUT):
         return None
 
 
-def fetch_github_meta(repo_url):
-    m = re.match(r"https://github\.com/([^/]+)/([^/\s]+?)(?:\.git)?$", repo_url)
-    if not m:
-        return {}
+def _version_from_tag(tag):
+    m = re.search(r"\d[\w.\-+]*", tag)
+    return m.group(0) if m else tag.lstrip("vV")
 
-    owner, repo = m.group(1), m.group(2)
+
+def fetch_github_meta(repo_url):
+    owner, repo = _repo_parts(repo_url)
+    if not owner:
+        return {}
+    repo_url = f"https://github.com/{owner}/{repo}"
     log(f"Fetching GitHub metadata for {owner}/{repo}...")
 
     api = f"https://api.github.com/repos/{owner}/{repo}"
     body = _http_get(api)
     if not body:
-        warn("Could not reach GitHub API (offline?).")
+        warn("Could not reach GitHub API (offline or rate limited).")
         return {}
 
     try:
@@ -406,7 +410,7 @@ def fetch_github_meta(repo_url):
     result["name"] = re.sub(r"[^a-z0-9\-]", "-", data.get("name", repo).lower()).strip("-")
     result["description"] = data.get("description") or ""
     result["homepage"] = data.get("homepage") or repo_url
-    if not result["homepage"] or result["homepage"] == "null":
+    if not str(result["homepage"]).startswith(("http://", "https://")) or validate_url(result["homepage"]):
         result["homepage"] = repo_url
 
     lic = data.get("license") or {}
@@ -422,7 +426,7 @@ def fetch_github_meta(repo_url):
             rel = json.loads(rel_body)
             tag = rel.get("tag_name", "")
             if tag:
-                result["version"] = tag.lstrip("v")
+                result["version"] = _version_from_tag(tag)
                 result["srcurl"] = f"{repo_url}/archive/refs/tags/{urllib.parse.quote(tag, safe='/')}.tar.gz"
                 ok(f"Latest release: {tag}")
                 return result
@@ -436,7 +440,7 @@ def fetch_github_meta(repo_url):
             if isinstance(tags, list) and tags:
                 tag = tags[0].get("name", "")
                 if tag:
-                    result["version"] = tag.lstrip("v")
+                    result["version"] = _version_from_tag(tag)
                     result["srcurl"] = f"{repo_url}/archive/refs/tags/{urllib.parse.quote(tag, safe='/')}.tar.gz"
                     ok(f"No release found, using latest tag: {tag}")
                     return result
@@ -506,14 +510,18 @@ termux_step_make_install() {{
     mkdir -p "$libdir"
     cp -r . "$libdir/"
 
-    find "$libdir" -type d | while read -r _dir; do
-        ls "$_dir"/*.py &>/dev/null 2>&1 && [ ! -f "$_dir/__init__.py" ] && \\
-            touch "$_dir/__init__.py" || true
-    done
+    if [ -f requirements.txt ]; then
+        pip install --no-cache-dir --disable-pip-version-check --target "$libdir/.pydeps" -r requirements.txt \\
+            || sed 's/[[:space:]]*#.*//' requirements.txt | grep -vE '^[[:space:]]*(-|$)' | while read -r _req; do
+                pip install --no-cache-dir --disable-pip-version-check --target "$libdir/.pydeps" "$_req" \\
+                    || pip show "${{_req%%[<>=!~;[ ]*}}" > /dev/null 2>&1 \\
+                    || {{ echo "Missing Python dependency: $_req" >&2; exit 1; }}
+            done
+    fi
 
     cat > "$TERMUX_PREFIX/bin/{pkg}" <<\'WRAPPER\'
 #!/data/data/com.termux/files/usr/bin/bash
-cd "/data/data/com.termux/files/usr/lib/{pkg}" || exit 1
+export PYTHONPATH="/data/data/com.termux/files/usr/lib/{pkg}/.pydeps:/data/data/com.termux/files/usr/lib/{pkg}${{PYTHONPATH:+:$PYTHONPATH}}"
 exec python3 "/data/data/com.termux/files/usr/lib/{pkg}/{entrypoint}" "$@"
 WRAPPER
     chmod 0755 "$TERMUX_PREFIX/bin/{pkg}"
@@ -521,9 +529,8 @@ WRAPPER
     "pip": """\
 termux_step_make_install() {{
     pip install --quiet setuptools wheel --break-system-packages 2>/dev/null || true
-    pip install . --prefix="$TERMUX_PREFIX" --no-deps --break-system-packages 2>/dev/null \\
-        || pip install . --prefix="$TERMUX_PREFIX" --no-deps --no-build-isolation \\
-               --break-system-packages
+    pip install . --prefix="$TERMUX_PREFIX" --break-system-packages \\
+        || pip install . --prefix="$TERMUX_PREFIX" --no-build-isolation --break-system-packages
 }}""",
     "shell": """\
 termux_step_make_install() {{
@@ -540,7 +547,7 @@ WRAPPER
 }}""",
     "npm": """\
 termux_step_make_install() {{
-    npm install --prefix "$TERMUX_PREFIX" -g .
+    npm install --prefix "$TERMUX_PREFIX" -g --install-links .
 }}""",
     "cargo": """\
 termux_step_make_install() {{
@@ -568,8 +575,13 @@ TERMUX_PKG_EXTRA_CONFIGURE_ARGS="
 "''',
     "ruby": """\
 termux_step_make_install() {{
-    ls *.gemspec 2>/dev/null && gem build *.gemspec && gem install --local *.gem --no-document \\
-        || {{ mkdir -p "$TERMUX_PREFIX/lib/{pkg}"; cp -r . "$TERMUX_PREFIX/lib/{pkg}/"; }}
+    if ls ./*.gemspec > /dev/null 2>&1; then
+        gem build ./*.gemspec
+        gem install --local ./*.gem --no-document
+    else
+        mkdir -p "$TERMUX_PREFIX/lib/{pkg}"
+        cp -r . "$TERMUX_PREFIX/lib/{pkg}/"
+    fi
 }}""",
     "perl": """\
 termux_step_make_install() {{
@@ -584,21 +596,29 @@ WRAPPER
 }}""",
     "lua": """\
 termux_step_make_install() {{
-    install -Dm755 "{entrypoint}" "$TERMUX_PREFIX/bin/{pkg}"
+    local libdir="$TERMUX_PREFIX/lib/{pkg}"
+    mkdir -p "$libdir"
+    cp -r . "$libdir/"
+    chmod 0755 "$libdir/{entrypoint}"
+    cat > "$TERMUX_PREFIX/bin/{pkg}" <<\'WRAPPER\'
+#!/data/data/com.termux/files/usr/bin/bash
+export LUA_PATH="/data/data/com.termux/files/usr/lib/{pkg}/?.lua;/data/data/com.termux/files/usr/lib/{pkg}/?/init.lua;;"
+exec lua "/data/data/com.termux/files/usr/lib/{pkg}/{entrypoint}" "$@"
+WRAPPER
+    chmod 0755 "$TERMUX_PREFIX/bin/{pkg}"
 }}""",
     "php": """\
 termux_step_make_install() {{
     mkdir -p "$TERMUX_PREFIX/lib/{pkg}"
     cp -r . "$TERMUX_PREFIX/lib/{pkg}/"
     cat > "$TERMUX_PREFIX/bin/{pkg}" <<\'WRAPPER\'
-#!/usr/bin/env bash
+#!/data/data/com.termux/files/usr/bin/bash
 exec php "/data/data/com.termux/files/usr/lib/{pkg}/{entrypoint}" "$@"
 WRAPPER
     chmod 0755 "$TERMUX_PREFIX/bin/{pkg}"
 }}""",
     "unknown": """\
 termux_step_make_install() {{
-    # TODO: implement install steps
     echo "Placeholder -- edit this function"
     mkdir -p "$TERMUX_PREFIX/lib/{pkg}"
     cp -r . "$TERMUX_PREFIX/lib/{pkg}/"
@@ -688,6 +708,7 @@ def _sniff_shebang(repo_url, branch, path):
 
 def detect_entrypoints(repo_url, branch, files):
     found = []
+    sniffed = 0
     for f in files:
         name = f["path"]
         ext = os.path.splitext(name)[1].lower()
@@ -701,6 +722,9 @@ def detect_entrypoints(repo_url, branch, files):
                 ("LICENSE", "README", "MAKEFILE", "DOCKERFILE", "CHANGELOG", "AUTHORS", "CODEOWNERS")
             )
         ):
+            if sniffed >= 25:
+                continue
+            sniffed += 1
             m = _sniff_shebang(repo_url, branch, name)
             if m:
                 found.append((name, m))
@@ -768,12 +792,12 @@ def build_sh_content(data):
 
     base_dep = DEPENDS_FOR_METHOD.get(method, "")
     extra_dep = data.get("depends", "").strip()
-    if base_dep and extra_dep:
-        all_deps = f"{base_dep}, {extra_dep}"
-    elif base_dep:
-        all_deps = base_dep
-    else:
-        all_deps = extra_dep
+    dep_list = []
+    for item in f"{base_dep},{extra_dep}".split(","):
+        item = item.strip()
+        if item and item not in dep_list:
+            dep_list.append(item)
+    all_deps = ", ".join(dep_list)
 
     lines = []
     lines.append(f"TERMUX_PKG_HOMEPAGE={shell_value(data['homepage'])}")
@@ -810,6 +834,10 @@ def find_packages_dir():
 
 def main():
     args = sys.argv[1:]
+
+    if "-h" in args or "--help" in args:
+        print("Usage: pkg-scaffold.py [package-name | --from <github-url>]")
+        return
 
     banner()
 

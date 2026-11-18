@@ -4,7 +4,7 @@
 # Developer: Djunekz
 # https://github.com/djunekz/termux-app-store
 
-set -euo pipefail
+set -Eeuo pipefail
 
 R="\033[0m"
 BOLD="\033[1m"
@@ -85,6 +85,404 @@ _fatal()    { printf "\n ${BG_RED}${BLACK}${BOLD} FATAL ${R} ${BRED}${BOLD}%s${R
 _detail()   { printf "${GRAY}%-14s${R} ${DIM}%s${R}\n" "$1" "$2"; }
 _badge()    { printf "${GRAY}%-12s${R} ${BOLD}${WHITE}%s${R}\n" "$1" "$2"; }
 
+_ORIG_ARGS=("$@")
+_STAGE_MARKER=""
+_FINAL_DEPS=()
+
+_on_error() {
+  local rc="$1" line="$2" cmd="$3"
+  printf "\n ${BG_RED}${BLACK}${BOLD} ERROR ${R} ${BRED}line %s: %s (exit %s)${R}\n" "$line" "$cmd" "$rc" >&2
+}
+trap '_on_error "$?" "$LINENO" "$BASH_COMMAND"' ERR
+
+_add_dep() {
+  local d="$1" x
+  d="${d#"${d%%[![:space:]]*}"}"
+  d="${d%"${d##*[![:space:]]}"}"
+  [[ -z "$d" ]] && return 0
+  for x in "${_FINAL_DEPS[@]:-}"; do
+    [[ "$x" == "$d" ]] && return 0
+  done
+  _FINAL_DEPS+=("$d")
+  return 0
+}
+
+_add_dep_list() {
+  local item
+  while IFS= read -r item || [[ -n "$item" ]]; do
+    _add_dep "$item"
+  done < <(printf '%s\n' "$1" | tr ',' '\n')
+  return 0
+}
+
+_is_build_only_dep() {
+  local n="${1%%[ (]*}"
+  case "$n" in
+    rust|cargo|golang|cmake|make|clang|build-essential|binutils|pkg-config|automake|autoconf|libtool|ninja|nasm|yasm|gcc) return 0 ;;
+  esac
+  return 1
+}
+
+_stage_tree() {
+  local src="$1" dst="$WORK_DIR/pkg$1" real
+  [[ -e "$src" || -L "$src" ]] || return 0
+  mkdir -p "$(dirname "$dst")"
+  rm -rf "$dst"
+  if [[ -L "$src" && -d "$src" ]]; then
+    real="$(readlink -f "$src")"
+    mkdir -p "$dst"
+    cp -a "$real"/. "$dst"/
+  else
+    cp -a "$src" "$dst"
+  fi
+}
+
+_stage_new_bins() {
+  local f
+  [[ -n "$_STAGE_MARKER" && -d "$PREFIX/bin" ]] || return 0
+  while IFS= read -r f; do
+    [[ -z "$f" ]] && continue
+    if [[ -e "$WORK_DIR/pkg$f" || -L "$WORK_DIR/pkg$f" ]]; then
+      continue
+    fi
+    _stage_tree "$f"
+    _detail "Staged new bin:" "$f"
+  done < <(find "$PREFIX/bin" -maxdepth 1 \( -type f -o -type l \) -newer "$_STAGE_MARKER" 2>/dev/null || true)
+  return 0
+}
+
+_stage_node_modules() {
+  local nm="$PREFIX/lib/node_modules" e s name
+  [[ -d "$nm" ]] || return 0
+  local -a found=()
+  while IFS= read -r e; do
+    [[ -n "$e" ]] && found+=("$e")
+  done < <(find "$nm" -mindepth 1 -maxdepth 1 -newer "${_STAGE_MARKER:-$nm}" 2>/dev/null || true)
+  for name in "$PACKAGE" "$PKG_NAME_ORIGINAL"; do
+    [[ -e "$nm/$name" || -L "$nm/$name" ]] && found+=("$nm/$name")
+  done
+  for e in "${found[@]:-}"; do
+    [[ -z "$e" ]] && continue
+    name="$(basename "$e")"
+    case "$name" in
+      npm|corepack|.bin|.package-lock.json) continue ;;
+      @*)
+        while IFS= read -r s; do
+          [[ -z "$s" ]] && continue
+          _stage_tree "$s"
+          _ensure_node_deps "$WORK_DIR/pkg$s"
+          _detail "Staged npm:" "$s"
+        done < <(find "$e" -mindepth 1 -maxdepth 1 -newer "${_STAGE_MARKER:-$e}" 2>/dev/null || true)
+        ;;
+      *)
+        _stage_tree "$e"
+        _ensure_node_deps "$WORK_DIR/pkg$e"
+        _detail "Staged npm:" "$e"
+        ;;
+    esac
+  done
+  return 0
+}
+
+_ensure_node_deps() {
+  local dir="$1" has_deps log rc=0
+  [[ -f "$dir/package.json" ]] || return 0
+  [[ -d "$dir/node_modules" ]] && return 0
+  has_deps=$(python3 - "$dir/package.json" <<'PYEOF' 2>/dev/null || true
+import json
+import sys
+d = json.load(open(sys.argv[1], encoding="utf-8"))
+print("yes" if d.get("dependencies") else "")
+PYEOF
+)
+  [[ -n "$has_deps" ]] || return 0
+  command -v npm >/dev/null 2>&1 || { _warn "npm not found, node dependencies were not installed"; return 0; }
+  _progress "Installing npm dependencies into the package..."
+  log=$(mktemp)
+  (cd "$dir" && npm install --omit=dev --no-audit --no-fund --no-package-lock) > "$log" 2>&1 || rc=$?
+  if [[ $rc -ne 0 ]]; then
+    _fatal "npm dependencies could not be installed (exit $rc)"
+    tail -n 8 "$log" | sed 's/^/      /'
+    rm -f "$log"
+    exit 1
+  fi
+  rm -f "$log"
+  _ok "npm dependencies installed"
+  return 0
+}
+
+_stage_new_files() {
+  local f
+  [[ -n "$_STAGE_MARKER" ]] || return 0
+  while IFS= read -r f; do
+    [[ -z "$f" ]] && continue
+    if [[ -e "$WORK_DIR/pkg$f" || -L "$WORK_DIR/pkg$f" ]]; then
+      continue
+    fi
+    _stage_tree "$f"
+  done < <(find "$PREFIX" \( -path "$PREFIX/tmp" -o -path "$PREFIX/var" -o -path "$PREFIX/etc/apt" \) -prune -o \( -type f -o -type l \) -newer "$_STAGE_MARKER" -print 2>/dev/null || true)
+  return 0
+}
+
+_PY_DIST_COUNT=0
+
+_vendor_script_requirements() {
+  local req="" rf w libdir="$WORK_DIR/pkg$PREFIX/lib/$PACKAGE"
+  [[ -d "$libdir" && ! -d "$libdir/.pydeps" ]] || return 0
+  [[ "$_PY_DIST_COUNT" -eq 0 ]] || return 0
+  for rf in "$SRC_ROOT/requirements.txt" "$libdir/requirements.txt"; do
+    if [[ -f "$rf" ]]; then
+      req="$rf"
+      break
+    fi
+  done
+  [[ -n "$req" ]] || return 0
+  [[ -n "$(find "$libdir" -maxdepth 3 -name '*.py' -print -quit 2>/dev/null)" ]] || return 0
+  _pip_vendor_requirements "$req" "$libdir/.pydeps"
+  for w in "$WORK_DIR/pkg$PREFIX/bin/"*; do
+    [[ -f "$w" && ! -L "$w" ]] || continue
+    grep -q "lib/$PACKAGE" "$w" || continue
+    head -n1 "$w" | grep -qE '^#!.*(bash|sh)' || continue
+    if grep -q '\.pydeps' "$w"; then
+      continue
+    fi
+    sed -i "1a export PYTHONPATH=\"$PREFIX/lib/$PACKAGE/.pydeps\${PYTHONPATH:+:\$PYTHONPATH}\"" "$w"
+    _detail "Patched wrapper:" "${w#"$WORK_DIR"/pkg}"
+  done
+  return 0
+}
+
+_stage_python_closure() {
+  local helper="$WORK_DIR/.tas_py_stage.py" out rc=0
+  command -v python3 >/dev/null 2>&1 || return 0
+  [[ -n "$_STAGE_MARKER" ]] || return 0
+  cat > "$helper" <<'PYEOF'
+import os
+import re
+import shutil
+import subprocess
+import sys
+from importlib import metadata
+
+pkg, orig, stage, prefix, deps_out, marker_path = sys.argv[1:7]
+marker = os.path.getmtime(marker_path)
+SKIP = {"pip", "setuptools", "wheel", "pkg-resources", "distribute"}
+
+try:
+    from packaging.requirements import Requirement
+except Exception:
+    Requirement = None
+
+
+def norm(name):
+    return re.sub(r"[-_.]+", "-", name or "").lower()
+
+
+def find_dist(name):
+    want = norm(name)
+    for d in metadata.distributions():
+        if norm(d.metadata["Name"]) == want:
+            return d
+    return None
+
+
+def requirement_names(dist):
+    names = []
+    for raw in dist.requires or []:
+        if Requirement is not None:
+            try:
+                req = Requirement(raw)
+                if req.marker is not None and not req.marker.evaluate({"extra": ""}):
+                    continue
+                names.append(req.name)
+                continue
+            except Exception:
+                pass
+        spec, _, mk = raw.partition(";")
+        if "extra" in mk:
+            continue
+        m = re.match(r"\s*([A-Za-z0-9][A-Za-z0-9._-]*)", spec)
+        if m:
+            names.append(m.group(1))
+    return names
+
+
+def dist_files(dist):
+    out = []
+    for f in dist.files or []:
+        p = os.path.normpath(str(dist.locate_file(f)))
+        if p.endswith(".pyc") or "__pycache__" in p:
+            continue
+        if os.path.isfile(p) or os.path.islink(p):
+            out.append(p)
+    return out
+
+
+def owner(path, own_names):
+    r = subprocess.run(["dpkg", "-S", path], capture_output=True, text=True)
+    if r.returncode != 0:
+        return None
+    name = r.stdout.split(":")[0].strip()
+    return None if name in own_names else name
+
+
+own_names = {pkg, orig}
+roots = []
+named = find_dist(pkg) or find_dist(orig)
+if named is not None:
+    roots.append(named)
+for d in metadata.distributions():
+    p = getattr(d, "_path", None)
+    try:
+        if p is not None and os.path.getmtime(str(p)) > marker:
+            roots.append(d)
+    except OSError:
+        pass
+
+seen = {}
+queue = list(roots)
+while queue:
+    d = queue.pop()
+    key = norm(d.metadata["Name"])
+    if key in seen or key in SKIP:
+        continue
+    seen[key] = d
+    for n in requirement_names(d):
+        if norm(n) in SKIP or norm(n) in seen:
+            continue
+        dep = find_dist(n)
+        if dep is not None:
+            queue.append(dep)
+
+system_deps = set()
+staged = 0
+for key, d in sorted(seen.items()):
+    files = dist_files(d)
+    if not files:
+        continue
+    own = owner(files[0], own_names)
+    if own:
+        system_deps.add(own)
+        continue
+    for p in files:
+        if not p.startswith(prefix + "/"):
+            continue
+        dst = stage + p
+        os.makedirs(os.path.dirname(dst), exist_ok=True)
+        if os.path.lexists(dst):
+            os.remove(dst)
+        if os.path.islink(p):
+            os.symlink(os.readlink(p), dst)
+        else:
+            shutil.copy2(p, dst)
+        staged += 1
+    print("python-dist", key, len(files))
+
+with open(deps_out, "w") as fh:
+    fh.write("\n".join(sorted(system_deps)) + ("\n" if system_deps else ""))
+print("python-files", staged)
+PYEOF
+  out=$(python3 "$helper" "$PACKAGE" "$PKG_NAME_ORIGINAL" "$WORK_DIR/pkg" "$PREFIX" "$WORK_DIR/.py_system_deps" "$_STAGE_MARKER" 2>&1) || rc=$?
+  rm -f "$helper"
+  if [[ $rc -ne 0 ]]; then
+    _warn "Python dependency staging failed (exit $rc)"
+    printf '%s\n' "$out" | tail -n 5 | sed 's/^/      /'
+    return 0
+  fi
+  local line
+  _PY_DIST_COUNT=$(printf '%s\n' "$out" | grep -c '^python-dist' || true)
+  while IFS= read -r line; do
+    case "$line" in
+      python-dist*) _detail "Staged pip dist:" "${line#python-dist }" ;;
+      python-files*) _detail "Python files:" "${line#python-files }" ;;
+    esac
+  done <<< "$out"
+  return 0
+}
+
+_pip_vendor_requirements() {
+  local req="$1" dest="$2" line name loc owner_pkg
+  local -a failed=()
+  [[ -f "$req" ]] || return 0
+  if ! command -v pip >/dev/null 2>&1; then
+    _warn "pip not found, requirements.txt was not installed"
+    return 0
+  fi
+  mkdir -p "$dest"
+  _progress "Bundling Python requirements..."
+  if pip install --no-cache-dir --disable-pip-version-check --target "$dest" -r "$req" >/dev/null 2>&1; then
+    _ok "Python requirements bundled"
+    return 0
+  fi
+  _warn "Bulk requirements install failed, retrying one by one"
+  while IFS= read -r line || [[ -n "$line" ]]; do
+    line="${line%%#*}"
+    line="$(printf '%s' "$line" | xargs 2>/dev/null || true)"
+    [[ -z "$line" || "$line" == -* ]] && continue
+    if pip install --no-cache-dir --disable-pip-version-check --target "$dest" "$line" >/dev/null 2>&1; then
+      continue
+    fi
+    name="${line%%[<>=!~;\[ ]*}"
+    loc="$(python3 - "$name" <<'PYEOF' 2>/dev/null || true
+import sys
+from importlib import metadata
+d = metadata.distribution(sys.argv[1])
+print(d.locate_file(d.files[0]))
+PYEOF
+)"
+    owner_pkg=""
+    if [[ -n "$loc" ]]; then
+      owner_pkg="$(dpkg -S "$loc" 2>/dev/null | head -n1 | cut -d: -f1 || true)"
+    fi
+    if [[ -n "$owner_pkg" ]]; then
+      _add_dep "$owner_pkg"
+      _info "$name is provided by Termux package $owner_pkg"
+      continue
+    fi
+    failed+=("$line")
+  done < "$req"
+  if [[ ${#failed[@]} -gt 0 ]]; then
+    _fatal "Python requirements could not be installed: ${failed[*]}"
+    exit 1
+  fi
+  _ok "Python requirements bundled"
+  return 0
+}
+
+_infer_runtime_deps() {
+  local f head
+  while IFS= read -r f; do
+    [[ -f "$f" ]] || continue
+    head="$(head -n 6 "$f" 2>/dev/null | tr -d '\0' || true)"
+    if printf '%s' "$head" | grep -qE '(^|[ /])python[0-9.]*([ "]|$)'; then _add_dep python; fi
+    if printf '%s' "$head" | grep -qE '(^|[ /])node([ "]|$)'; then _add_dep nodejs; fi
+    if printf '%s' "$head" | grep -qE '(^|[ /])perl([ "]|$)'; then _add_dep perl; fi
+    if printf '%s' "$head" | grep -qE '(^|[ /])ruby([ "]|$)'; then _add_dep ruby; fi
+    if printf '%s' "$head" | grep -qE '(^|[ /])php[0-9.]*([ "]|$)'; then _add_dep php; fi
+  done < <(find -L "$WORK_DIR/pkg$PREFIX/bin" -maxdepth 1 -type f 2>/dev/null || true)
+  return 0
+}
+
+_check_staged_links() {
+  local l t
+  while IFS= read -r l; do
+    [[ -z "$l" ]] && continue
+    t="$(readlink "$l")"
+    case "$t" in
+      "$WORK_DIR"/*|"$ROOT_DIR"/*)
+        _warn "Symlink points into the build directory: ${l#"$WORK_DIR"/pkg} -> $t"
+        ;;
+      /*) ;;
+      *)
+        if [[ ! -e "$l" ]]; then
+          _warn "Dangling symlink: ${l#"$WORK_DIR"/pkg} -> $t"
+        fi
+        ;;
+    esac
+  done < <(find "$WORK_DIR/pkg" -type l 2>/dev/null || true)
+  return 0
+}
+
 PACKAGE="${1:-}"
 ROOT_DIR="$(cd "$(dirname "$0")" && pwd)"
 PACKAGES_DIR="$ROOT_DIR/packages"
@@ -131,12 +529,12 @@ if [[ ! -s "$BUILD_SH" ]] || ! grep -qE '[^[:space:]]' "$BUILD_SH"; then
   exit 1
 fi
 
-_SYNTAX_ERR=$(bash -n "$BUILD_SH" 2>&1) || true
-_SYNTAX_EXIT=$?
+_SYNTAX_EXIT=0
+_SYNTAX_ERR=$(bash -n "$BUILD_SH" 2>&1) || _SYNTAX_EXIT=$?
 if [[ $_SYNTAX_EXIT -ne 0 ]] || [[ -n "$_SYNTAX_ERR" ]]; then
   _fatal "Syntax error in build.sh"
   echo ""
-  _ERR_LINE=$(echo "$_SYNTAX_ERR" | grep -oP '(?<=line )\d+' | head -1)
+  _ERR_LINE=$(echo "$_SYNTAX_ERR" | sed -n 's/.*line \([0-9][0-9]*\).*/\1/p' | head -1)
   _ERR_MSG=$(echo "$_SYNTAX_ERR" | sed "s|$BUILD_SH: ||g")
   printf "  ${BRED}╭─ Syntax Error${R}\n"
   printf "  ${BRED}│${R}\n"
@@ -359,8 +757,6 @@ if [[ -n "${TERMUX_PKG_DEPENDS:-}" ]]; then
 
     [[ "$_PKG_STATUS" -eq 0 ]] && break
 
-    # Mirror rate limits (HTTP 429) and half-synced indexes (hash mismatch)
-    # are transient: back off with jitter, refresh the index, then try again.
     if (( _attempt < _DEPS_MAX_ATTEMPTS )); then
       _delay=$(( _attempt * 20 + RANDOM % 15 ))
       _warn "Dependency install failed (exit $_PKG_STATUS), retry $_attempt/$(( _DEPS_MAX_ATTEMPTS - 1 )) in ${_delay}s"
@@ -371,8 +767,6 @@ if [[ -n "${TERMUX_PKG_DEPENDS:-}" ]]; then
     fi
   done
 
-  # A dependency that is still missing here would only surface later as
-  # "cargo/go/npm: command not found", so stop now with the real cause.
   _MISSING_DEPS=()
   if [[ "$_PKG_STATUS" -ne 0 ]]; then
     for dep in "${_DEPS_ARRAY[@]}"; do
@@ -402,6 +796,7 @@ _check_rust_env() {
   declare -f termux_step_make > /dev/null 2>&1 && command -v cargo &>/dev/null && needs_rust=1
 
   [[ "$needs_rust" -eq 0 ]] && return 0
+  [[ -n "${TAS_RUST_CHECKED:-}" ]] && return 0
 
   if ! command -v rustc &>/dev/null || ! command -v cargo &>/dev/null; then
     _skip "Rust/Cargo not found, skipping rust check"
@@ -450,8 +845,8 @@ _check_rust_env() {
 
     rm -f "$HOME/.cargo/.package-cache" 2>/dev/null || true
 
-    if [[ -d "$ROOT_DIR/build/$PACKAGE" ]]; then
-      find "$ROOT_DIR/build/$PACKAGE" -name "Cargo.toml" -maxdepth 3 2>/dev/null \
+    if [[ -d "$WORK_DIR" ]]; then
+      find "$WORK_DIR" -name "Cargo.toml" -maxdepth 3 2>/dev/null \
         | while read -r _ct; do
         _pd=$(dirname "$_ct")
         if [[ -d "$_pd/target" ]]; then
@@ -468,7 +863,8 @@ _check_rust_env() {
     echo ""
     printf "  ${BCYAN}[>>]${R}  ${BOLD}Restarting build...${R}\n"
     echo ""
-    exec "$0" "$@"
+    export TAS_RUST_CHECKED=1
+    exec "$0" "${_ORIG_ARGS[@]}"
   else
     _ok "Rust environment OK  (rustc $rustc_ver)"
   fi
@@ -810,23 +1206,19 @@ elif [[ -n "$PREBUILT_DEB" ]]; then
     _INSTALL_PID=$!
     while kill -0 "$_INSTALL_PID" 2>/dev/null; do
       _sc="${_spin_chars:$(( _spin_i % ${#_spin_chars} )):1}"
-      printf "
- ${BGREEN}[${BCYAN} %s ${BGREEN}]${R} Running custom install...%-20s" "$_sc" " "
+      printf "\r ${BGREEN}[${BCYAN} %s ${BGREEN}]${R} Running custom install...%-20s" "$_sc" " "
       sleep 0.15
       (( _spin_i++ )) || true
     done
     wait "$_INSTALL_PID" || _INSTALL_EXIT=$?
-    printf "
-%*s
-" "$(tput cols 2>/dev/null || echo 80)" ""
+    printf "\r%*s\r" "$(tput cols 2>/dev/null || echo 80)" ""
     _INSTALL_OUTPUT=$(cat "$_INSTALL_LOG")
     rm -f "$_INSTALL_LOG"
 
     if [[ $_INSTALL_EXIT -ne 0 ]]; then
       _fatal "termux_step_make_install() failed (exit $_INSTALL_EXIT)"
       echo "$_INSTALL_OUTPUT" | tail -10 | while IFS= read -r line; do
-        printf "  ${BRED}│${R}  %s
-" "$line"
+        printf "  ${BRED}│${R}  %s\n" "$line"
       done
       exit 1
     else
@@ -837,23 +1229,11 @@ elif [[ -n "$PREBUILT_DEB" ]]; then
     _progress "Staging installed files..."
     _staged=0
     for _src_path in "$PREFIX/bin/$PACKAGE" "$PREFIX/lib/$PACKAGE"; do
-      if [[ -e "$_src_path" ]]; then
-        _dst="$WORK_DIR/pkg$_src_path"
-        mkdir -p "$(dirname "$_dst")"
-        cp -r "$_src_path" "$_dst"
+      if [[ -e "$_src_path" || -L "$_src_path" ]]; then
+        _stage_tree "$_src_path"
         _staged=$(( _staged + 1 ))
         _detail "Staged:" "$_src_path"
       fi
-    done
-    find "$PREFIX/bin" -name "$PACKAGE" -type f 2>/dev/null | while read -r _f; do
-      _dst="$WORK_DIR/pkg$_f"
-      mkdir -p "$(dirname "$_dst")"
-      cp "$_f" "$_dst" 2>/dev/null || true
-    done
-    find "$PREFIX/lib/$PACKAGE" -type f 2>/dev/null | while read -r _f; do
-      _dst="$WORK_DIR/pkg$_f"
-      mkdir -p "$(dirname "$_dst")"
-      cp "$_f" "$_dst" 2>/dev/null || true
     done
     _detail "Files staged:" "$_staged"
     _ok "Custom install completed"
@@ -934,7 +1314,9 @@ EOF
 
 elif declare -f termux_step_make_install > /dev/null 2>&1; then
   _step "Mode: Custom termux_step_make_install()"
-  touch "$WORK_DIR/.pip_bin_before"
+  _STAGE_MARKER="$WORK_DIR/.pip_bin_before"
+  touch "$_STAGE_MARKER"
+  sleep 1
   export TERMUX_PREFIX="$PREFIX"
   export TERMUX_PKG_SRCDIR="$SRC_ROOT"
   export PATH="$PREFIX/bin:$PATH"
@@ -1085,187 +1467,86 @@ elif declare -f termux_step_make_install > /dev/null 2>&1; then
   _progress "Staging installed files..."
   mkdir -p "$WORK_DIR/pkg$PREFIX/bin" "$WORK_DIR/pkg$PREFIX/lib"
 
-  if [[ -f "$PREFIX/bin/$PACKAGE" ]]; then
-    install -Dm755 "$PREFIX/bin/$PACKAGE" "$WORK_DIR/pkg$PREFIX/bin/$PACKAGE"
-    _detail "Staged bin:" "$PREFIX/bin/$PACKAGE"
-  fi
-
-  if [[ -f "$WORK_DIR/.pip_bin_before" ]]; then
-    while IFS= read -r _new_bin; do
-      _bin_name=$(basename "$_new_bin")
-      if [[ ! -f "$WORK_DIR/pkg$PREFIX/bin/$_bin_name" ]]; then
-        install -Dm755 "$_new_bin" "$WORK_DIR/pkg$PREFIX/bin/$_bin_name"
-        _detail "Staged new bin:" "$_new_bin"
-      fi
-    done < <(find "$PREFIX/bin" -type f -newer "$WORK_DIR/.pip_bin_before" 2>/dev/null || true)
-  fi
-
-  _PY_SITE_CANDIDATES=()
-  _SYS_SITE=$(python3 -c "import site; print(site.getsitepackages()[0])" 2>/dev/null || true)
-  [[ -n "$_SYS_SITE" ]] && _PY_SITE_CANDIDATES+=("$_SYS_SITE")
-  while IFS= read -r _s; do
-    _PY_SITE_CANDIDATES+=("$_s")
-  done < <(find "$PREFIX/lib" -maxdepth 2 -type d -name "site-packages" 2>/dev/null)
-  mapfile -t _PY_SITE_CANDIDATES < <(printf '%s\n' "${_PY_SITE_CANDIDATES[@]}" | sort -u)
-
-  _STAGED_PY=false
-  for _PY_SITE in "${_PY_SITE_CANDIDATES[@]}"; do
-    [[ -d "$_PY_SITE" ]] || continue
-
-    _EP_FILE=$(find "$_PY_SITE" -maxdepth 3 \
-      \( -iname "entry_points.txt" -path "*${PACKAGE}*" \
-         -o -iname "RECORD" -path "*${PACKAGE}*" \) \
-      2>/dev/null | grep "entry_points" | head -1 || true)
-
-    if [[ -n "$_EP_FILE" ]]; then
-      grep -A50 "\[console_scripts\]" "$_EP_FILE" 2>/dev/null | grep "=" | \
-      while IFS='=' read -r _ep_name _; do
-        _ep_name=$(echo "$_ep_name" | tr -d ' ')
-        [[ -z "$_ep_name" ]] && continue
-        for _bdir in "$PREFIX/bin" "$(python3 -c 'import sys; print(sys.prefix)' 2>/dev/null)/bin"; do
-          if [[ -f "$_bdir/$_ep_name" ]]; then
-            install -Dm755 "$_bdir/$_ep_name" "$WORK_DIR/pkg$PREFIX/bin/$_ep_name"
-            _detail "Staged script:" "$_bdir/$_ep_name"
-            break
-          fi
-        done
-      done
+  for _cand in "$PREFIX/bin/$PACKAGE" "$PREFIX/bin/$PKG_NAME_ORIGINAL"; do
+    if [[ -e "$_cand" || -L "$_cand" ]]; then
+      _stage_tree "$_cand"
+      _detail "Staged bin:" "$_cand"
     fi
+  done
+  _stage_new_bins
+  _stage_python_closure
 
-    _PY_PKG=$(find "$_PY_SITE" -maxdepth 1 -type d \
-      \( -iname "${PACKAGE}" -o -iname "${PACKAGE}-*" \) 2>/dev/null | \
-      grep -v "dist-info\|egg-info" | head -1 || true)
-
-    if [[ -n "$_PY_PKG" && "$_STAGED_PY" == "false" ]]; then
-      _PY_SITE_DEST="$WORK_DIR/pkg$_PY_SITE"
-      mkdir -p "$_PY_SITE_DEST"
-      cp -r "$_PY_PKG" "$_PY_SITE_DEST/"
-      find "$_PY_SITE" -maxdepth 1 \
-        \( -iname "${PACKAGE}-*.dist-info" -o -iname "${PACKAGE}-*.egg-info" \) \
-        -exec cp -r {} "$_PY_SITE_DEST/" \; 2>/dev/null || true
-      _detail "Staged pip pkg:" "$_PY_PKG"
-      _STAGED_PY=true
+  for _libname in "$PACKAGE" "$PKG_NAME_ORIGINAL"; do
+    if [[ -d "$PREFIX/lib/$_libname" ]]; then
+      _stage_tree "$PREFIX/lib/$_libname"
+      _detail "Staged lib:" "$PREFIX/lib/$_libname"
     fi
   done
 
-  if [[ "$_STAGED_PY" == "false" ]]; then
-    _FALLBACK=$(find "$PREFIX/lib" -maxdepth 3 -type d -iname "${PACKAGE}" 2>/dev/null | \
-      grep -v "dist-info\|egg-info" | head -1 || true)
-    if [[ -n "$_FALLBACK" ]]; then
-      _FALLBACK_PARENT=$(dirname "$_FALLBACK")
-      _FALLBACK_DEST="$WORK_DIR/pkg$_FALLBACK_PARENT"
-      mkdir -p "$_FALLBACK_DEST"
-      cp -r "$_FALLBACK" "$_FALLBACK_DEST/"
-      find "$_FALLBACK_PARENT" -maxdepth 1 \
-        \( -iname "${PACKAGE}-*.dist-info" -o -iname "${PACKAGE}-*.egg-info" \) \
-        -exec cp -r {} "$_FALLBACK_DEST/" \; 2>/dev/null || true
-      _detail "Staged fallback pip:" "$_FALLBACK"
-      _STAGED_PY=true
+  _stage_node_modules
+
+  for _sub in "share/$PACKAGE" "share/doc/$PACKAGE" "etc/$PACKAGE" "include/$PACKAGE"; do
+    if [[ -d "$PREFIX/$_sub" ]]; then
+      _stage_tree "$PREFIX/$_sub"
+      _detail "Staged:" "$PREFIX/$_sub"
     fi
-  fi
+  done
 
-  if [[ -d "$PREFIX/lib/$PACKAGE" ]]; then
-    cp -r "$PREFIX/lib/$PACKAGE" "$WORK_DIR/pkg$PREFIX/lib/"
-    _detail "Staged lib:" "$PREFIX/lib/$PACKAGE"
-  fi
+  _stage_new_files
+  _vendor_script_requirements
 
-  if [[ -n "${PKG_NAME_ORIGINAL:-}" && "$PKG_NAME_ORIGINAL" != "$PACKAGE" ]]; then
-    if [[ -d "$PREFIX/lib/$PKG_NAME_ORIGINAL" ]]; then
-      mkdir -p "$WORK_DIR/pkg$PREFIX/lib"
-      cp -r "$PREFIX/lib/$PKG_NAME_ORIGINAL" "$WORK_DIR/pkg$PREFIX/lib/"
-      _detail "Staged lib (original name):" "$PREFIX/lib/$PKG_NAME_ORIGINAL"
-    fi
-  fi
-
-  if [[ -d "$PREFIX/lib/node_modules/$PACKAGE" ]]; then
-    mkdir -p "$WORK_DIR/pkg$PREFIX/lib/node_modules"
-    cp -r "$PREFIX/lib/node_modules/$PACKAGE" "$WORK_DIR/pkg$PREFIX/lib/node_modules/"
-    _detail "Staged npm:" "$PREFIX/lib/node_modules/$PACKAGE"
-  fi
-
-  if [[ -d "$PREFIX/share/$PACKAGE" ]]; then
-    mkdir -p "$WORK_DIR/pkg$PREFIX/share"
-    cp -r "$PREFIX/share/$PACKAGE" "$WORK_DIR/pkg$PREFIX/share/"
-    _detail "Staged share:" "$PREFIX/share/$PACKAGE"
-  fi
-
-  if [[ -d "$PREFIX/share/doc/$PACKAGE" ]]; then
-    mkdir -p "$WORK_DIR/pkg$PREFIX/share/doc"
-    cp -r "$PREFIX/share/doc/$PACKAGE" "$WORK_DIR/pkg$PREFIX/share/doc/"
-  fi
-
-  _STAGED_COUNT=$(find "$WORK_DIR/pkg$PREFIX" -type f 2>/dev/null | grep -v "DEBIAN" | wc -l)
+  _STAGED_COUNT=$(find "$WORK_DIR/pkg$PREFIX" \( -type f -o -type l \) 2>/dev/null | wc -l)
   if [[ "$_STAGED_COUNT" -eq 0 ]]; then
-    _warn "Staging found no files — attempting emergency capture from PREFIX"
-    if [[ -f "$PREFIX/bin/$PACKAGE" ]]; then
-      install -Dm755 "$PREFIX/bin/$PACKAGE" "$WORK_DIR/pkg$PREFIX/bin/$PACKAGE"
-      _detail "Emergency bin:" "$PREFIX/bin/$PACKAGE"
-    fi
-    for _sp in "${_PY_SITE_CANDIDATES[@]:-}"; do
-      [[ -d "$_sp" ]] || continue
-      _epkg=$(find "$_sp" -maxdepth 1 -type d 2>/dev/null | \
-        awk -F/ '{print $NF}' | grep -i "^${PACKAGE}" | grep -v "dist-info\|egg-info" | head -1 || true)
-      if [[ -n "$_epkg" ]]; then
-        _SP_DEST="$WORK_DIR/pkg$_sp"
-        mkdir -p "$_SP_DEST"
-        cp -r "$_sp/$_epkg" "$_SP_DEST/"
-        find "$_sp" -maxdepth 1 \
-          \( -iname "${_epkg}-*.dist-info" -o -iname "${_epkg}-*.egg-info" \) \
-          -exec cp -r {} "$_SP_DEST/" \; 2>/dev/null || true
-        _detail "Emergency pip:" "$_sp/$_epkg"
-        break
-      fi
-    done
-    _STAGED_COUNT=$(find "$WORK_DIR/pkg$PREFIX" -type f 2>/dev/null | grep -v "DEBIAN" | wc -l)
-    if [[ "$_STAGED_COUNT" -gt 0 ]]; then
-      _ok "Emergency capture succeeded ($_STAGED_COUNT file(s))"
-    else
-      _warn "Staging empty — .deb will contain no files (package may still be installed on device)"
-    fi
+    _warn "Staging empty — .deb will contain no files"
   else
     _detail "Files staged:" "$_STAGED_COUNT"
   fi
 
   _LIB_PKG_DIR="$WORK_DIR/pkg$PREFIX/lib/$PACKAGE"
   _BIN_PKG="$WORK_DIR/pkg$PREFIX/bin/$PACKAGE"
-  if [[ -d "$_LIB_PKG_DIR" && ! -f "$_BIN_PKG" ]]; then
+  if [[ -d "$_LIB_PKG_DIR" && ! -e "$_BIN_PKG" && ! -L "$_BIN_PKG" ]]; then
     mkdir -p "$WORK_DIR/pkg$PREFIX/bin"
 
     _ENTRY=""
     _ENTRY_TYPE=""
+    _MOD_NAME=""
+    _PKG_US="${PACKAGE//-/_}"
+    _ORIG_US="${PKG_NAME_ORIGINAL//-/_}"
 
-    if [[ -f "$_LIB_PKG_DIR/$PACKAGE/__main__.py" ]]; then
-      _ENTRY_TYPE="module"
-    elif [[ -f "$_LIB_PKG_DIR/__main__.py" ]]; then
-      _ENTRY="$PREFIX/lib/$PACKAGE/__main__.py"
-      _ENTRY_TYPE="script"
-    elif [[ -f "$_LIB_PKG_DIR/$PACKAGE/main.py" ]]; then
-      _ENTRY="$PREFIX/lib/$PACKAGE/$PACKAGE/main.py"
-      _ENTRY_TYPE="script"
-    elif [[ -f "$_LIB_PKG_DIR/main.py" ]]; then
-      _ENTRY="$PREFIX/lib/$PACKAGE/main.py"
-      _ENTRY_TYPE="script"
-    elif [[ -f "$_LIB_PKG_DIR/${PACKAGE}.py" ]]; then
-      _ENTRY="$PREFIX/lib/$PACKAGE/${PACKAGE}.py"
-      _ENTRY_TYPE="script"
+    for _cand in "$_PKG_US" "$PACKAGE" "$_ORIG_US"; do
+      if [[ -f "$_LIB_PKG_DIR/$_cand/__main__.py" ]]; then
+        _MOD_NAME="$_cand"
+        _ENTRY_TYPE="module"
+        break
+      fi
+    done
+
+    if [[ -z "$_ENTRY_TYPE" ]]; then
+      for _cand in "__main__.py" "$_PKG_US/main.py" "main.py" "${PACKAGE}.py" "${_PKG_US}.py"; do
+        if [[ -f "$_LIB_PKG_DIR/$_cand" ]]; then
+          _ENTRY="$PREFIX/lib/$PACKAGE/$_cand"
+          _ENTRY_TYPE="script"
+          break
+        fi
+      done
     fi
 
     if [[ "$_ENTRY_TYPE" == "module" ]]; then
       cat > "$_BIN_PKG" <<LAUNCHEREOF
 #!/data/data/com.termux/files/usr/bin/bash
-cd "/data/data/com.termux/files/usr/lib/$PACKAGE"
-exec python3 -m $PACKAGE "\$@"
+export PYTHONPATH="$PREFIX/lib/$PACKAGE/.pydeps:$PREFIX/lib/$PACKAGE\${PYTHONPATH:+:\$PYTHONPATH}"
+exec python3 -m $_MOD_NAME "\$@"
 LAUNCHEREOF
       chmod +x "$_BIN_PKG"
-      _ok "Created Python module launcher: $PREFIX/bin/$PACKAGE → python3 -m $PACKAGE"
+      _ok "Created Python module launcher: $PREFIX/bin/$PACKAGE → python3 -m $_MOD_NAME"
     elif [[ "$_ENTRY_TYPE" == "script" && -n "$_ENTRY" ]]; then
       cat > "$_BIN_PKG" <<LAUNCHEREOF
 #!/data/data/com.termux/files/usr/bin/bash
-cd "/data/data/com.termux/files/usr/lib/$PACKAGE"
-exec python3 "${_ENTRY}" "\$@"
+export PYTHONPATH="$PREFIX/lib/$PACKAGE/.pydeps:$PREFIX/lib/$PACKAGE\${PYTHONPATH:+:\$PYTHONPATH}"
+exec python3 "$_ENTRY" "\$@"
 LAUNCHEREOF
       chmod +x "$_BIN_PKG"
-      _ok "Created Python script launcher: $PREFIX/bin/$PACKAGE → ${_ENTRY}"
+      _ok "Created Python script launcher: $PREFIX/bin/$PACKAGE → $_ENTRY"
     fi
   fi
 
@@ -1290,12 +1571,15 @@ else
     fi
 
     _progress "Running npm install -g..."
+    _STAGE_MARKER="$WORK_DIR/.pip_bin_before"
+    touch "$_STAGE_MARKER"
+    sleep 1
     _NPM_LOG=$(mktemp)
     _NPM_EXIT=0
 
     _spin_chars='⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏'
     _spin_i=0
-    npm install -g --prefix "$PREFIX" "$_NODE_SRC_DIR" > "$_NPM_LOG" 2>&1 &
+    npm install -g --install-links --prefix "$PREFIX" "$_NODE_SRC_DIR" > "$_NPM_LOG" 2>&1 &
     _NPM_PID=$!
     while kill -0 "$_NPM_PID" 2>/dev/null; do
       _sc="${_spin_chars:$(( _spin_i % ${#_spin_chars} )):1}"
@@ -1324,45 +1608,9 @@ else
 
     _ok "npm install completed"
 
-    _NPM_BIN=$(find "$PREFIX/bin" -name "$PACKAGE" -o -name "${PACKAGE}.js" 2>/dev/null | head -n1 || true)
-    if [[ -n "$_NPM_BIN" ]]; then
-      mkdir -p "$WORK_DIR/pkg$PREFIX/bin"
-      install -Dm755 "$_NPM_BIN" "$WORK_DIR/pkg$PREFIX/bin/$(basename "$_NPM_BIN")"
-      _detail "Binary:" "$_NPM_BIN"
-    fi
-
-    _NPM_LIB="$PREFIX/lib/node_modules/$PACKAGE"
-    if [[ -d "$_NPM_LIB" ]]; then
-      mkdir -p "$WORK_DIR/pkg$PREFIX/lib/node_modules"
-      cp -r "$_NPM_LIB" "$WORK_DIR/pkg$PREFIX/lib/node_modules/"
-      _detail "Lib:" "$_NPM_LIB"
-
-      if [[ -d "$PREFIX/lib/node_modules" ]]; then
-        _PKG_DEP_FILE="$_NPM_LIB/package.json"
-        if [[ -f "$_PKG_DEP_FILE" ]]; then
-          _PKG_DEPS=$(python3 -c "
-import json, sys
-try:
-    d = json.load(open('$_PKG_DEP_FILE'))
-    deps = list(d.get('dependencies', {}).keys())
-    print(' '.join(deps))
-except:
-    print('')
-" 2>/dev/null || echo "")
-          if [[ -n "$_PKG_DEPS" ]]; then
-            _progress "Staging npm peer dependencies..."
-            for _dep in $_PKG_DEPS; do
-              _dep_path="$PREFIX/lib/node_modules/$_dep"
-              if [[ -d "$_dep_path" ]]; then
-                cp -r "$_dep_path" "$WORK_DIR/pkg$PREFIX/lib/node_modules/" 2>/dev/null || true
-                _detail "Staged dep:" "$_dep"
-              fi
-            done
-            _ok "npm peer dependencies staged"
-          fi
-        fi
-      fi
-    fi
+    mkdir -p "$WORK_DIR/pkg$PREFIX/bin" "$WORK_DIR/pkg$PREFIX/lib/node_modules"
+    _stage_new_bins
+    _stage_node_modules
 
   else
 
@@ -1397,7 +1645,7 @@ except:
       _detail "Install:" "$PREFIX/bin/$PACKAGE"
     else
       mkdir -p "$WORK_DIR/pkg$PREFIX/lib/$PACKAGE"
-      cp -r "$SRC_ROOT"/. "$WORK_DIR/pkg$PREFIX/lib/$PACKAGE/" 2>/dev/null || {
+      cp -a "$SRC_ROOT"/. "$WORK_DIR/pkg$PREFIX/lib/$PACKAGE/" 2>/dev/null || {
         find "$SRC_ROOT" -maxdepth 3 -type f | while read -r _f; do
           _rel="${_f#$SRC_ROOT/}"
           _dst="$WORK_DIR/pkg$PREFIX/lib/$PACKAGE/$_rel"
@@ -1433,12 +1681,27 @@ except:
           INTERPRETER="bash"
         fi
 
+        INTERPRETER="$(basename "$INTERPRETER")"
+        case "$INTERPRETER" in
+          python*) INTERPRETER="python3" ;;
+        esac
+
         mkdir -p "$WORK_DIR/pkg$PREFIX/bin"
-        if echo "$INTERPRETER" | grep -q "python"; then
+        if [[ "$INTERPRETER" == "python3" ]]; then
+          _REQ_FILE=""
+          for _rf in "$SRC_ROOT/requirements.txt" "$(dirname "$MAIN_FILE")/requirements.txt"; do
+            if [[ -f "$_rf" ]]; then
+              _REQ_FILE="$_rf"
+              break
+            fi
+          done
+          if [[ -n "$_REQ_FILE" ]]; then
+            _pip_vendor_requirements "$_REQ_FILE" "$WORK_DIR/pkg$PREFIX/lib/$PACKAGE/.pydeps"
+          fi
           cat > "$WORK_DIR/pkg$PREFIX/bin/$PACKAGE" <<EOF
 #!/data/data/com.termux/files/usr/bin/bash
-export PYTHONPATH="$PREFIX/lib/$PACKAGE\${PYTHONPATH:+:\$PYTHONPATH}"
-exec $INTERPRETER "$PREFIX/lib/$PACKAGE/$MAIN_REL" "\$@"
+export PYTHONPATH="$PREFIX/lib/$PACKAGE/.pydeps:$PREFIX/lib/$PACKAGE\${PYTHONPATH:+:\$PYTHONPATH}"
+exec python3 "$PREFIX/lib/$PACKAGE/$MAIN_REL" "\$@"
 EOF
         else
           cat > "$WORK_DIR/pkg$PREFIX/bin/$PACKAGE" <<EOF
@@ -1488,23 +1751,45 @@ fi
 
 _section "Generating Package Metadata"
 
+_check_staged_links
+_infer_runtime_deps
+_add_dep_list "${TERMUX_PKG_DEPENDS:-}"
+_add_dep_list "${DEB_DEPENDS:-}"
+if [[ -f "$WORK_DIR/.py_system_deps" ]]; then
+  while IFS= read -r _sd; do
+    _add_dep "$_sd"
+  done < "$WORK_DIR/.py_system_deps"
+fi
+
+_DEPENDS_LINE=""
+for _d in "${_FINAL_DEPS[@]:-}"; do
+  [[ -z "$_d" ]] && continue
+  if _is_build_only_dep "$_d"; then
+    continue
+  fi
+  _DEPENDS_LINE="${_DEPENDS_LINE:+$_DEPENDS_LINE, }$_d"
+done
+
 CONTROL_DIR="$WORK_DIR/pkg/DEBIAN"
 mkdir -p "$CONTROL_DIR"
 chmod 0755 "$CONTROL_DIR"
 
-cat > "$CONTROL_DIR/control" <<EOF
-Package: ${TERMUX_PKG_NAME:-$PACKAGE}
-Version: ${TERMUX_PKG_VERSION:-0.0.1}
-Architecture: ${ARCH}
-Maintainer: ${TERMUX_PKG_MAINTAINER:-unknown}
-Description: ${TERMUX_PKG_DESCRIPTION:-No description}
-EOF
+{
+  echo "Package: ${TERMUX_PKG_NAME:-$PACKAGE}"
+  echo "Version: ${TERMUX_PKG_VERSION:-0.0.1}"
+  echo "Architecture: ${ARCH}"
+  echo "Maintainer: ${TERMUX_PKG_MAINTAINER:-unknown}"
+  [[ -n "$_DEPENDS_LINE" ]] && echo "Depends: $_DEPENDS_LINE"
+  [[ -n "${TERMUX_PKG_HOMEPAGE:-}" ]] && echo "Homepage: $TERMUX_PKG_HOMEPAGE"
+  echo "Description: ${TERMUX_PKG_DESCRIPTION:-No description}"
+} > "$CONTROL_DIR/control"
 
 _ok "Control file written"
 _detail "   Package   :" "${TERMUX_PKG_NAME:-$PACKAGE}"
 _detail "   Version   :" "${TERMUX_PKG_VERSION:-0.0.1}"
 _detail "   Arch      :" "$ARCH"
 _detail "   Maintainer:" "${TERMUX_PKG_MAINTAINER:-unknown}"
+_detail "   Depends   :" "${_DEPENDS_LINE:-(none)}"
 
 _section "Building .deb Package"
 
