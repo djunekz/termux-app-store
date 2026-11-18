@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-11-18T11:18:45.008051+00:00",
-  "total": 88,
+  "generated_at": "2026-11-18T11:22:40.250802+00:00",
+  "total": 87,
   "packages": [
     {
       "package": "aichat",
@@ -239,25 +239,6 @@
       "platform_independent": false,
       "depends": [
         "golang"
-      ]
-    },
-    {
-      "package": "clickjacking-tester",
-      "version": "0.0.0+d75d5fc",
-      "maintainer": "@termux-app-store",
-      "description": "A python script designed to check if the website if vulnerable of clickjacking and create a poc",
-      "homepage": "https://github.com/D4Vinci/Clickjacking-Tester",
-      "license": "GPL-3.0",
-      "download_size": "Unknown",
-      "installed_size": "Unknown",
-      "source": "https://github.com/djunekz/termux-app-store",
-      "srcurl": "https://github.com/D4Vinci/Clickjacking-Tester/archive/d75d5fcc62cef0031db9493b30911cd70c9bd606.tar.gz",
-      "sha256": "295aac00657fc24152d67a8c9c3766b24381de5f696f18631aa5b4ce6086336b",
-      "recipe_sha256": "c6ada0021c2989d3dd7579fcc4a4c107abaa2168ac7d460e84aaa2bfab33d839",
-      "platform_independent": false,
-      "depends": [
-        "python",
-        "python-pip"
       ]
     },
     {
