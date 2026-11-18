@@ -11,6 +11,9 @@ and this project adheres to semantic versioning.
 - Package `cloudflair` - Removed
 - Package `clickjacking-tester` - Removed
 
+### Added
+- Package `leaf` v1.29.3 - Terminal Markdown previewer — GUI-like experience.
+
 ---
 
 ## [v0.12.6] - 2026-11-18
