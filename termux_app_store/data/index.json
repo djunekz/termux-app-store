@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-11-19T10:14:21.019428+00:00",
-  "total": 88,
+  "generated_at": "2026-11-19T11:09:47.402029+00:00",
+  "total": 87,
   "packages": [
     {
       "package": "aichat",
@@ -924,26 +924,6 @@
         "termux-api",
         "zlib",
         "zstd"
-      ]
-    },
-    {
-      "package": "myserver",
-      "version": "1.0",
-      "maintainer": "@termux-app-store",
-      "description": "myserver — auto-packaged by termux-build-init",
-      "homepage": "https://github.com/Rajkumrdusad/MyServer",
-      "license": "UNKNOWN",
-      "download_size": "Unknown",
-      "installed_size": "Unknown",
-      "source": "https://github.com/djunekz/termux-app-store",
-      "srcurl": "https://github.com/Rajkumrdusad/MyServer/archive/refs/tags/v1.0.tar.gz",
-      "sha256": "5203c0be0eb9e689c93e45c700555c2dfe4623a3eca17a230a4a404a87f4253a",
-      "recipe_sha256": "dbab24a7a26797981e13292af1f5dce876d348c7c52146854a9b324af4c0f508",
-      "platform_independent": false,
-      "depends": [
-        "php",
-        "python",
-        "python-pip"
       ]
     },
     {
