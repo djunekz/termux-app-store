@@ -60,6 +60,7 @@ and this project adheres to semantic versioning.
 ### Update
 - Package `termux-sync` v1.3.6 → v1.3.8
 - Package `tdoc` v2.3.0 → v2.3.1
+- Package `userfinder` v0.0.0+a08a9a6 → v1.0
 
 ---
 
