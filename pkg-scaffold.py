@@ -3,6 +3,7 @@
 # Semi-Auto create build.sh
 # github.com/djunekz/termux-app-store
 
+import ast
 import hashlib
 import json
 import os
@@ -332,6 +333,26 @@ def validate_pkg_name(val):
     return None
 
 
+def validate_command_name(val):
+    if not re.match(r"^[A-Za-z0-9][A-Za-z0-9._-]*$", val):
+        return "Command name may only contain letters, numbers, dots, hyphens and underscores."
+    return None
+
+
+_MAKE_BIN_RE = re.compile(
+    r"\b(?:cp|install|mv|ln)\b[^\n]*?\s"
+    r"(?:\$[({](?:DESTDIR|BINDIR|bindir|PREFIX|prefix)[)}](?:/bin)?|/usr(?:/local)?/bin)/([A-Za-z0-9][A-Za-z0-9._-]*)\s*$",
+    re.M,
+)
+
+
+def command_from_makefile(body):
+    if not body:
+        return ""
+    m = _MAKE_BIN_RE.search(body)
+    return m.group(1) if m else ""
+
+
 def validate_version(val):
     if not VERSION_RE.match(val):
         return "Version must start with a digit (e.g. 1.0.0, 2.3.4-rc1). No 'v' prefix."
@@ -562,11 +583,35 @@ termux_step_make_install() {{
 }}""",
     "make": """\
 termux_step_make() {{
-    make -j"$(nproc)" PREFIX="$TERMUX_PREFIX"
+    local _mk _t _target=""
+    for _mk in GNUmakefile makefile Makefile; do
+        [ -f "$_mk" ] && break
+    done
+    for _t in all {pkg} build release; do
+        if grep -qE "^$_t[[:space:]]*:" "$_mk"; then
+            _target="$_t"
+            break
+        fi
+    done
+    if [ -n "$_target" ]; then
+        make -j"$(nproc)" PREFIX="$TERMUX_PREFIX" "$_target"
+    fi
 }}
 
 termux_step_make_install() {{
-    make install PREFIX="$TERMUX_PREFIX"
+    local _mk
+    for _mk in GNUmakefile makefile Makefile; do
+        [ -f "$_mk" ] && break
+    done
+    if grep -qE '^install[[:space:]]*:' "$_mk" \\
+        && ! grep -A8 -E '^install[[:space:]]*:' "$_mk" | grep -q 'sudo'; then
+        make install PREFIX="$TERMUX_PREFIX" DESTDIR=""
+    elif [ -x "{pkg}" ]; then
+        install -Dm755 "{pkg}" "$TERMUX_PREFIX/bin/{pkg}"
+    else
+        echo "No usable 'make install' target and no built binary named {pkg}" >&2
+        return 1
+    fi
 }}""",
     "cmake": '''\
 TERMUX_PKG_EXTRA_CONFIGURE_ARGS="
@@ -678,6 +723,79 @@ def _repo_parts(repo_url):
     return (m.group(1), m.group(2)) if m else (None, None)
 
 
+_PIP_ALIASES = {
+    "yaml": "pyyaml",
+    "bs4": "beautifulsoup4",
+    "cv2": "opencv-python",
+    "PIL": "pillow",
+    "sklearn": "scikit-learn",
+    "dateutil": "python-dateutil",
+    "dotenv": "python-dotenv",
+    "OpenSSL": "pyopenssl",
+    "Crypto": "pycryptodome",
+    "serial": "pyserial",
+    "git": "gitpython",
+    "jwt": "pyjwt",
+    "socks": "pysocks",
+    "attr": "attrs",
+    "magic": "python-magic",
+    "websocket": "websocket-client",
+    "docx": "python-docx",
+    "zmq": "pyzmq",
+    "telegram": "python-telegram-bot",
+    "slugify": "python-slugify",
+    "discord": "discord.py",
+}
+_REPO_DIRS = set()
+_PIP_NAME_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]*$")
+
+
+def infer_python_requirements(source, local_names):
+    try:
+        tree = ast.parse(source)
+    except (SyntaxError, ValueError):
+        return []
+    stdlib = set(getattr(sys, "stdlib_module_names", ())) or set(sys.builtin_module_names)
+    found = []
+
+    def guarded(node):
+        for h in node.handlers:
+            if h.type is None:
+                return True
+            elts = h.type.elts if isinstance(h.type, ast.Tuple) else [h.type]
+            if any(getattr(e, "id", "") in ("ImportError", "ModuleNotFoundError", "Exception") for e in elts):
+                return True
+        return False
+
+    def visit(body):
+        for n in body:
+            if isinstance(n, ast.Import):
+                found.extend(a.name.split(".")[0] for a in n.names)
+            elif isinstance(n, ast.ImportFrom):
+                if n.level == 0 and n.module:
+                    found.append(n.module.split(".")[0])
+            elif isinstance(n, ast.If):
+                if not any(k in ast.dump(n.test) for k in ("version_info", "platform", "TYPE_CHECKING")):
+                    visit(n.body)
+                    visit(n.orelse)
+            elif isinstance(n, ast.With):
+                visit(n.body)
+            elif isinstance(n, ast.Try):
+                if not guarded(n):
+                    visit(n.body)
+                visit(n.orelse)
+
+    visit(tree.body)
+    names = []
+    for mod in found:
+        if mod in stdlib or mod == "__future__" or mod in local_names:
+            continue
+        pip_name = _PIP_ALIASES.get(mod, mod)
+        if _PIP_NAME_RE.match(pip_name) and pip_name not in names:
+            names.append(pip_name)
+    return names
+
+
 def fetch_repo_tree(repo_url, default_branch="main"):
     owner, repo = _repo_parts(repo_url)
     if not owner:
@@ -689,6 +807,8 @@ def fetch_repo_tree(repo_url, default_branch="main"):
         tree = json.loads(body).get("tree", [])
     except Exception:
         return None
+    _REPO_DIRS.clear()
+    _REPO_DIRS.update(t["path"] for t in tree if t.get("type") == "tree")
     return [{"path": t["path"], "size": t.get("size", 0)} for t in tree if t.get("type") == "blob"]
 
 
@@ -758,6 +878,18 @@ def rank_entrypoints(found, pkg):
     return sorted(found, key=score)
 
 
+_COMPILED_EXT = (".c", ".cc", ".cpp", ".cxx", ".h", ".hpp", ".s", ".asm", ".zig", ".nim", ".f90")
+_COMPILER_RE = re.compile(r"\$\((?:CC|CXX|CFLAGS|LDFLAGS)\)|\b(?:gcc|g\+\+|clang|clang\+\+|rustc|cargo|go build)\b")
+
+
+def _makefile_builds_something(body, filenames):
+    if any(f.lower().endswith(_COMPILED_EXT) for f in filenames):
+        return True
+    if body is None:
+        return True
+    return bool(_COMPILER_RE.search(body))
+
+
 def detect_method_from_github(repo_url, default_branch="main", files=None):
     if files is None:
         files = fetch_repo_tree(repo_url, default_branch)
@@ -773,6 +905,12 @@ def detect_method_from_github(repo_url, default_branch="main", files=None):
                 return method, sig
         else:
             if sig in filenames:
+                if method == "make":
+                    owner, repo = _repo_parts(repo_url)
+                    body = _http_get(f"https://raw.githubusercontent.com/{owner}/{repo}/{default_branch}/{sig}")
+                    if not _makefile_builds_something(body, filenames):
+                        info(f"Ignoring {sig}: it does not compile anything, looking for a script instead")
+                        continue
                 return method, sig
 
     return None, None
@@ -789,6 +927,22 @@ def build_sh_content(data):
 
     template = INSTALL_TEMPLATES.get(method, INSTALL_TEMPLATES["unknown"])
     install_fn = template.format(pkg=pkg, entrypoint=entrypoint)
+    command = data.get("command") or pkg
+    if validate_command_name(command):
+        raise ValueError(f"invalid command name: {command!r}")
+    if command != pkg and method in ("python-script", "shell", "perl", "lua", "php"):
+        install_fn = install_fn.replace(f"$TERMUX_PREFIX/bin/{pkg}", f"$TERMUX_PREFIX/bin/{command}")
+    pip_names = [n for n in data.get("pip_requirements", []) if _PIP_NAME_RE.match(n)]
+    if method == "python-script" and pip_names:
+        marker = '    cp -r . "$libdir/"\n'
+        install_fn = install_fn.replace(
+            marker,
+            marker
+            + '    pip install --no-cache-dir --disable-pip-version-check --target "$libdir/.pydeps" '
+            + " ".join(pip_names)
+            + "\n",
+            1,
+        )
 
     base_dep = DEPENDS_FOR_METHOD.get(method, "")
     extra_dep = data.get("depends", "").strip()
@@ -1072,6 +1226,46 @@ def main():
             )
             blank()
 
+    command = pkg_name
+    if method in ("python-script", "shell", "perl", "lua", "php") and github_url and _repo_files is not None:
+        _mk_names = [f["path"] for f in _repo_files if f["path"] in ("Makefile", "makefile", "GNUmakefile")]
+        if _mk_names:
+            _owner, _repo = _repo_parts(github_url)
+            _mk_body = _http_get(f"https://raw.githubusercontent.com/{_owner}/{_repo}/{_default_branch}/{_mk_names[0]}")
+            _cmd = command_from_makefile(_mk_body)
+            if _cmd and _cmd != pkg_name:
+                ok(f"{_mk_names[0]} installs the program as {BCYN}{_cmd}{R}")
+                command = ask(
+                    "Command name users will type",
+                    default=_cmd,
+                    validator=validate_command_name,
+                    hint="the upstream project documents this name",
+                )
+                blank()
+
+    pip_requirements = []
+    if method == "python-script" and github_url and _repo_files is not None:
+        if "requirements.txt" in {f["path"] for f in _repo_files}:
+            info("requirements.txt found: it is installed automatically while building.")
+        else:
+            _owner, _repo = _repo_parts(github_url)
+            _src = _http_get(f"https://raw.githubusercontent.com/{_owner}/{_repo}/{_default_branch}/{entrypoint}")
+            if _src:
+                _local = {Path(f["path"]).stem for f in _repo_files if f["path"].endswith(".py")} | set(_REPO_DIRS)
+                _mods = infer_python_requirements(_src, _local)
+                if _mods:
+                    blank()
+                    ok(f"{entrypoint} imports third-party modules: {BCYN}{', '.join(_mods)}{R}")
+                    _ans = ask_optional(
+                        "Python modules to install with pip",
+                        default=", ".join(_mods),
+                        hint="comma-separated pip names; type - to install nothing",
+                    )
+                    for _m in _ans.replace(" ", "").split(","):
+                        if _m and _m != "-" and _PIP_NAME_RE.match(_m) and _m not in pip_requirements:
+                            pip_requirements.append(_m)
+                    blank()
+
     subsection("Step 6  --  Additional Dependencies (optional)")
     blank()
 
@@ -1127,6 +1321,8 @@ def main():
         "method": method,
         "entrypoint": entrypoint,
         "depends": extra_dep,
+        "pip_requirements": pip_requirements,
+        "command": command,
     }
 
     packages_dir = find_packages_dir()

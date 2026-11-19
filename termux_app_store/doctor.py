@@ -1286,6 +1286,12 @@ PIP_ALIASES = {
     "socks": "pysocks",
     "attr": "attrs",
     "magic": "python-magic",
+    "websocket": "websocket-client",
+    "docx": "python-docx",
+    "zmq": "pyzmq",
+    "telegram": "python-telegram-bot",
+    "slugify": "python-slugify",
+    "discord": "discord.py",
 }
 TERMUX_PY_PKGS = {
     "numpy": "python-numpy",
