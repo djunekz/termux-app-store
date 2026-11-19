@@ -19,3 +19,4 @@ exec bash "/data/data/com.termux/files/usr/lib/userfinder/UserFinder.sh" "$@"
 WRAPPER
     chmod 0755 "$TERMUX_PREFIX/bin/userfinder"
 }
+
