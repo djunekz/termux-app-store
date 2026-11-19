@@ -10,6 +10,7 @@ and this project adheres to semantic versioning.
 ### Removed
 - Package `cloudflair` - Removed
 - Package `clickjacking-tester` - Removed
+- Package `myserver` - Removed
 
 ### Added
 - Package `leaf` v1.29.3 - Terminal Markdown previewer — GUI-like experience.
