@@ -21,6 +21,12 @@ and this project adheres to semantic versioning.
 - `tests/test_install_runtime_fixes.py` - new tests that check every `pkg-scaffold.py` template with `bash -n`, the dependency handling of the generated `build.sh`, and the staging, `Depends` and restart logic of `build-package.sh`
 
 ### Changed
+- `.github/workflows/build-packages-debs.yml` - the workflow now also starts on every push to `master` that touches `packages/*/build.sh`, so a merged update PR builds its `.deb` without a manual run; before this it only ran on the weekly schedule or when `update_index.yml` dispatched it
+- `.github/workflows/build-packages-debs.yml` - on a push the packages to build come from the files changed between `github.event.before` and the pushed commit instead of `HEAD~1:tools/index.json`, which found nothing as soon as another commit landed after the index commit
+- `.github/workflows/build-packages-debs.yml` - every push, scheduled and manual run without a package name also adds packages whose `TERMUX_PKG_VERSION` is not in the published `tools/index.json` (at most 20), so a build that was skipped or failed is picked up by the next run
+- `.github/workflows/build-packages-debs.yml` - runs are queued with a `concurrency` group so two publishes never push to `gh-pages` at the same time
+- `.github/workflows/build-packages-debs.yml` - the publish job regenerates `tools/index.json` with `tools/build.py`, so it no longer depends on `update_index.yml` having already committed the new index
+- `.github/workflows/update_index.yml` - removed the step that dispatched `build-packages-debs.yml` with `PAT_TOKEN`; it only printed a warning on failure and is replaced by the push trigger
 - `build-package.sh` - the generated `.deb` now has a `Depends:` line built from `TERMUX_PKG_DEPENDS`, the runtime found in the installed launchers (`python`, `nodejs`, `perl`, `ruby`, `php`) and the Termux packages that own Python dependencies; build-only toolchains (`rust`, `golang`, `clang`, `cmake`, `make`, `pkg-config` and similar) are left out, and a `Homepage:` field is written
 - `build-package.sh` - Node.js packages found automatically are installed with `npm install -g --install-links`, so npm copies the package and its dependencies instead of linking to the build folder
 - `pkg-scaffold.py` - the `pip` template installs the dependencies of the project instead of using `--no-deps`, the `npm` template uses `--install-links`, and the `lua` template copies the whole project and sets `LUA_PATH`
@@ -41,7 +47,7 @@ and this project adheres to semantic versioning.
 - `pkg-scaffold.py` - the `php` wrapper now uses the explicit Termux `bash` path instead of `#!/usr/bin/env`, so it also works where `termux-exec` is not active; the `ruby` template no longer prints `ls` output or depends on `&&` / `||` precedence; the placeholder comment is no longer written into `build.sh` for the `unknown` method
 - `pkg-scaffold.py` - GitHub URLs with a trailing slash or `.git` are accepted and normalised for the generated `SRCURL`, release tags such as `release-2.0` give a valid version, an invalid homepage falls back to the repository URL, duplicated dependencies are removed, at most 25 extensionless files are checked for a shebang, narrow terminals no longer crash the layout, and `--help` prints usage
 
-### Updated
+### Update
 - Package `termux-sync` v1.3.6 → v1.3.8
 
 ---

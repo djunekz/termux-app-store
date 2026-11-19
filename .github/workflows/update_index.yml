@@ -123,45 +123,6 @@ jobs:
             exit 1
           fi
 
-      - name: Trigger build-packages-debs
-        if: steps.check_changes.outputs.changed == 'true'
-        env:
-          CHANGED_PKGS: ${{ steps.detect_pkgs.outputs.changed_packages }}
-          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
-          REPOSITORY: ${{ github.repository }}
-        run: |
-
-          if [[ -z "$CHANGED_PKGS" ]]; then
-            echo "No package version changes — skipping build trigger"
-            exit 0
-          fi
-
-          echo "Triggering build for changed packages: $CHANGED_PKGS"
-
-          PKG_COUNT=$(echo "$CHANGED_PKGS" | wc -w)
-
-          if [[ "$PKG_COUNT" -eq 1 ]]; then
-            PAYLOAD=$(printf '{"ref":"master","inputs":{"package":"%s","force":"false"}}' "$CHANGED_PKGS")
-          else
-            PAYLOAD='{"ref":"master","inputs":{"package":"","force":"false"}}'
-          fi
-
-          HTTP_STATUS=$(curl -s -o /tmp/trigger_response.json -w "%{http_code}" \
-            -X POST \
-            -H "Authorization: token ${PAT_TOKEN}" \
-            -H "Accept: application/vnd.github+json" \
-            -H "X-GitHub-Api-Version: 2022-11-28" \
-            "https://api.github.com/repos/${REPOSITORY}/actions/workflows/build-packages-debs.yml/dispatches" \
-            -d "$PAYLOAD")
-
-          if [[ "$HTTP_STATUS" == "204" ]]; then
-            echo "✅ build-packages-debs triggered successfully"
-            echo "   Packages: $CHANGED_PKGS"
-          else
-            echo "⚠️  Trigger returned HTTP $HTTP_STATUS"
-            cat /tmp/trigger_response.json || true
-          fi
-
       - name: Summary
         env:
           INDEX_CHANGED: ${{ steps.check_changes.outputs.changed }}
@@ -185,7 +146,7 @@ jobs:
                 echo "- \`$pkg\`" >> $GITHUB_STEP_SUMMARY
               done
               echo "" >> $GITHUB_STEP_SUMMARY
-              echo "🚀 build-packages-debs workflow triggered" >> $GITHUB_STEP_SUMMARY
+              echo "🚀 build-packages-debs starts from the push event of the merge" >> $GITHUB_STEP_SUMMARY
             fi
           else
             echo "ℹ️ No changes detected in index.json" >> $GITHUB_STEP_SUMMARY

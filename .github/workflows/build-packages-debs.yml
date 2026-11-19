@@ -4,6 +4,10 @@ permissions:
   contents: read
 
 on:
+  push:
+    branches: [master]
+    paths:
+      - 'packages/*/build.sh'
   schedule:
     - cron: '0 2 * * 0'
   workflow_dispatch:
@@ -20,6 +24,10 @@ on:
         options:
           - 'false'
           - 'true'
+
+concurrency:
+  group: build-package-debs
+  cancel-in-progress: false
 
 jobs:
   quality:
@@ -59,7 +67,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
-          fetch-depth: 2
+          fetch-depth: 0
           persist-credentials: false
 
       - name: Detect packages to build
@@ -68,10 +76,44 @@ jobs:
           SPECIFIC_INPUT: ${{ github.event.inputs.package }}
           FORCE_INPUT: ${{ github.event.inputs.force }}
           TRIGGER_INPUT: ${{ github.event_name }}
+          BEFORE_SHA: ${{ github.event.before }}
+          AFTER_SHA: ${{ github.sha }}
         run: |
           SPECIFIC="$SPECIFIC_INPUT"
           FORCE="$FORCE_INPUT"
           TRIGGER="$TRIGGER_INPUT"
+
+          find_unpublished() {
+            curl -fsSL --max-time 30 "https://djunekz.github.io/termux-app-store/tools/index.json" -o /tmp/published_index.json 2>/dev/null || return 0
+            python3 - <<'PYEOF'
+          import json
+          import os
+          import re
+
+          safe = re.compile(r'^[A-Za-z0-9][A-Za-z0-9._+-]*$')
+          try:
+              with open('/tmp/published_index.json', encoding='utf-8') as fh:
+                  published = {p['package']: p.get('version', '') for p in json.load(fh).get('packages', [])}
+          except (OSError, ValueError, KeyError):
+              raise SystemExit(0)
+          if not published:
+              raise SystemExit(0)
+          missing = []
+          for name in sorted(os.listdir('packages')):
+              path = f'packages/{name}/build.sh'
+              if not safe.match(name) or not os.path.isfile(path):
+                  continue
+              version = ''
+              with open(path, encoding='utf-8', errors='replace') as fh:
+                  for line in fh:
+                      if line.startswith('TERMUX_PKG_VERSION='):
+                          version = line.split('=', 1)[1].strip().strip('"\'')
+                          break
+              if version and '$' not in version and published.get(name) != version:
+                  missing.append(name)
+          print(' '.join(missing[:20]))
+          PYEOF
+          }
 
           if [[ -n "$SPECIFIC" ]]; then
             PKGS=$(echo "$SPECIFIC" | tr ',' ' ')
@@ -80,6 +122,12 @@ jobs:
             done
           elif [[ "$FORCE" == "true" || "$TRIGGER" == "schedule" ]]; then
             PKGS=$(ls packages/ 2>/dev/null | tr '\n' ' ')
+          elif [[ "$TRIGGER" == "push" ]]; then
+            PKGS=""
+            if [[ "$BEFORE_SHA" =~ ^[0-9a-f]{40}$ && ! "$BEFORE_SHA" =~ ^0+$ ]] && git cat-file -e "${BEFORE_SHA}^{commit}" 2>/dev/null; then
+              PKGS=$(git diff --name-only --diff-filter=AM "$BEFORE_SHA" "$AFTER_SHA" -- 'packages/*/build.sh' | cut -d/ -f2 | sort -u | tr '\n' ' ')
+            fi
+            PKGS=$(echo "$PKGS $(find_unpublished)" | tr ' ' '\n' | sed '/^$/d' | sort -u | tr '\n' ' ')
           else
             PKGS=$(python3 -c "
           import json, subprocess
@@ -530,6 +578,9 @@ jobs:
             echo "Added: $fname"
           done
           echo "Pool total: $(ls gh-pages/pool/main/*.deb 2>/dev/null | wc -l) .deb files"
+
+      - name: Regenerate index from packages
+        run: python3 tools/build.py
 
       - name: Publish checksum-enriched index
         run: |
