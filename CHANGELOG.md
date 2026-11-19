@@ -36,6 +36,9 @@ and this project adheres to semantic versioning.
 - `pkg-scaffold.py` - the `php` wrapper used `#!/usr/bin/env`, which does not exist in Termux; the `ruby` template no longer prints `ls` output or depends on `&&` / `||` precedence; the placeholder comment is no longer written into `build.sh` for the `unknown` method
 - `pkg-scaffold.py` - GitHub URLs with a trailing slash or `.git` are accepted and normalised for the generated `SRCURL`, release tags such as `release-2.0` give a valid version, an invalid homepage falls back to the repository URL, duplicated dependencies are removed, at most 25 extensionless files are checked for a shebang, narrow terminals no longer crash the layout, and `--help` prints usage
 
+### Update
+- Package `termux-sync` v1.3.6 → v1.3.8
+
 ---
 
 ## [v0.12.6] - 2026-11-18
