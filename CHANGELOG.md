@@ -13,6 +13,11 @@ and this project adheres to semantic versioning.
 
 ### Added
 - Package `leaf` v1.29.3 - Terminal Markdown previewer — GUI-like experience.
+- `build-tester.py` - new `Runtime` check that warns about `pip install` / `npm install` failures that are ignored (`|| echo`, `|| true`, `2>/dev/null ||`), `--no-deps` used everywhere, hyphenated `python -m` names, wrappers that `cd`, and `python` / `nodejs` missing from `TERMUX_PKG_DEPENDS`
+- `build-tester.py` - `--deep` now downloads the source and compares `requirements.txt`, `pyproject.toml`, `setup.py`, `setup.cfg` and `package.json` with what `build.sh` really installs; dependencies that are declared but never installed are reported as errors
+- `tas doctor --modules [package]` - checks installed TAS packages on the device: imports of the entry script that cannot be found, Node.js dependencies missing from `node_modules`, broken symlinks and missing `Depends`; `--fix` runs the suggested `pkg install`, `pip install` or `npm install` command
+- `tas doctor` - new `Package runtime` check in the `Build` section that points to `--modules` when an installed package is broken
+- `tests/test_runtime_tools.py` - tests for the new `build-tester.py` and `doctor.py` checks
 - `tests/test_install_runtime_fixes.py` - new tests that check every `pkg-scaffold.py` template with `bash -n`, the dependency handling of the generated `build.sh`, and the staging, `Depends` and restart logic of `build-package.sh`
 
 ### Changed
@@ -25,7 +30,7 @@ and this project adheres to semantic versioning.
 - `build-package.sh` - packages failed at run time with `No module named ...` or `Cannot find module ...` because their dependencies never reached the `.deb`: Python dependencies installed by `pip` are now staged together with the whole dependency tree of the package (and of every distribution installed during the build), skipping files that already belong to a Termux package
 - `build-package.sh` - `npm install -g .` links `lib/node_modules/<name>` to the build folder without installing dependencies; the link was copied as a link (dangling on the device) and the `bin` entry was copied as a plain file, which broke every relative `require`; links are now resolved, `bin` symlinks are kept, missing production dependencies are installed into the staged copy, and the staged npm package is found even when its npm name differs from the package name
 - `build-package.sh` - the Python module launcher used the package name with hyphens (`python3 -m my-tool`) and changed into the library folder; it now looks for the real module folder with `__main__.py`, uses `PYTHONPATH` and no longer changes the current directory
-- `build-package.sh` - generated wrappers for Python scripts use `python3` instead of the shebang path of the upstream script (`/usr/bin/python3` does not exist in Termux), and bundle `requirements.txt` into `lib/<package>/.pydeps`; wrappers written by older `build.sh` files are patched to include it, and a requirement that cannot be installed now stops the build with the name of the requirement
+- `build-package.sh` - generated wrappers for Python scripts call `python3` by name instead of the shebang path of the upstream script (`/usr/bin/python3` only works when `termux-exec` is active), and bundle `requirements.txt` into `lib/<package>/.pydeps`; wrappers written by older `build.sh` files are patched to include it, and a requirement that cannot be installed now stops the build with the name of the requirement
 - `build-package.sh` - every file the install step wrote under `PREFIX` (gems, extra data, plugins) is now captured, not only when nothing else was staged
 - `build-package.sh` - the automatic restart after a Rust update ran `exec "$0" "$@"` inside a function, so the package name was lost; the original arguments are kept and the restart can only happen once
 - `build-package.sh` - the spinner of the custom install step for prebuilt `.deb` files printed raw line breaks instead of carriage returns and flooded the terminal
@@ -33,10 +38,10 @@ and this project adheres to semantic versioning.
 - `build-package.sh` - any unexpected failure now prints the line number and command (`ERR` trap with `set -E`) instead of exiting silently in the middle of the build, as in the `openclaw-termux` log after `Staged npm`
 - `build-package.sh` - warns about staged symlinks that point into the build folder or are dangling
 - `pkg-scaffold.py` - the `python-script` template installs `requirements.txt` into `lib/<package>/.pydeps`, puts it on `PYTHONPATH`, no longer changes the current directory and no longer creates `__init__.py` files inside the upstream source
-- `pkg-scaffold.py` - the `php` wrapper used `#!/usr/bin/env`, which does not exist in Termux; the `ruby` template no longer prints `ls` output or depends on `&&` / `||` precedence; the placeholder comment is no longer written into `build.sh` for the `unknown` method
+- `pkg-scaffold.py` - the `php` wrapper now uses the explicit Termux `bash` path instead of `#!/usr/bin/env`, so it also works where `termux-exec` is not active; the `ruby` template no longer prints `ls` output or depends on `&&` / `||` precedence; the placeholder comment is no longer written into `build.sh` for the `unknown` method
 - `pkg-scaffold.py` - GitHub URLs with a trailing slash or `.git` are accepted and normalised for the generated `SRCURL`, release tags such as `release-2.0` give a valid version, an invalid homepage falls back to the repository URL, duplicated dependencies are removed, at most 25 extensionless files are checked for a shebang, narrow terminals no longer crash the layout, and `--help` prints usage
 
-### Update
+### Updated
 - Package `termux-sync` v1.3.6 → v1.3.8
 
 ---

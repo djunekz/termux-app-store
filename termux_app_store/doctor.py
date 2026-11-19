@@ -2,7 +2,10 @@
 # Termux App Store -- Smart Doctor
 # github.com/djunekz/termux-app-store
 
+import ast
 import hashlib
+import importlib.machinery
+import importlib.util
 import json
 import os
 import platform
@@ -1267,6 +1270,423 @@ def run_fix(check: Check, mode_fix: bool):
     return False
 
 
+PIP_ALIASES = {
+    "yaml": "pyyaml",
+    "bs4": "beautifulsoup4",
+    "cv2": "opencv-python",
+    "PIL": "pillow",
+    "sklearn": "scikit-learn",
+    "dateutil": "python-dateutil",
+    "dotenv": "python-dotenv",
+    "OpenSSL": "pyopenssl",
+    "Crypto": "pycryptodome",
+    "serial": "pyserial",
+    "git": "gitpython",
+    "jwt": "pyjwt",
+    "socks": "pysocks",
+    "attr": "attrs",
+    "magic": "python-magic",
+}
+TERMUX_PY_PKGS = {
+    "numpy": "python-numpy",
+    "scipy": "python-scipy",
+    "pandas": "python-pandas",
+    "cryptography": "python-cryptography",
+    "lxml": "python-lxml",
+    "PIL": "python-pillow",
+}
+_NAME_OK = re.compile(r"^[A-Za-z0-9_.+-]+$")
+_PY_RE = r"(?:\S*/)?python[\d.]*"
+
+
+def _stdlib_names():
+    names = getattr(sys, "stdlib_module_names", None)
+    return set(names) if names else set(sys.builtin_module_names)
+
+
+def _import_guarded(node):
+    for h in node.handlers:
+        if h.type is None:
+            return True
+        elts = h.type.elts if isinstance(h.type, ast.Tuple) else [h.type]
+        names = [getattr(e, "id", getattr(e, "attr", "")) for e in elts]
+        if any(n in ("ImportError", "ModuleNotFoundError", "Exception", "BaseException") for n in names):
+            return True
+    return False
+
+
+def required_imports(path):
+    try:
+        tree = ast.parse(Path(path).read_text(encoding="utf-8", errors="replace"))
+    except (SyntaxError, ValueError, OSError):
+        return []
+    found = []
+
+    def visit(body):
+        for n in body:
+            if isinstance(n, ast.Import):
+                for a in n.names:
+                    found.append((0, a.name, True))
+            elif isinstance(n, ast.ImportFrom):
+                mod = n.module or ""
+                if n.level == 0 and mod:
+                    found.append((0, mod, True))
+                elif n.level == 0:
+                    continue
+                else:
+                    found.append((n.level, mod, False))
+                for a in n.names:
+                    found.append((n.level, f"{mod}.{a.name}" if mod else a.name, False))
+            elif isinstance(n, ast.If):
+                test = ast.dump(n.test)
+                if not any(k in test for k in ("version_info", "platform", "TYPE_CHECKING", "os")):
+                    visit(n.body)
+                    visit(n.orelse)
+            elif isinstance(n, (ast.With, ast.For, ast.While)):
+                visit(n.body)
+            elif isinstance(n, ast.Try):
+                if not _import_guarded(n):
+                    visit(n.body)
+                visit(n.orelse)
+                visit(n.finalbody)
+
+    visit(tree.body)
+    return found
+
+
+def _find_spec(name, extra):
+    try:
+        spec = importlib.util.find_spec(name)
+        if spec is not None:
+            return spec
+    except (ImportError, ValueError, AttributeError):
+        pass
+    try:
+        return importlib.machinery.PathFinder.find_spec(name, list(extra) + sys.path)
+    except (ImportError, ValueError):
+        return None
+
+
+def _resolve_local(dotted, roots):
+    parts = [p for p in dotted.split(".") if p]
+    if not parts:
+        return None
+    for r in roots:
+        p = Path(r).joinpath(*parts)
+        if p.with_suffix(".py").is_file():
+            return p.with_suffix(".py")
+        if (p / "__init__.py").is_file():
+            return p / "__init__.py"
+    return None
+
+
+def parse_launcher(path):
+    info = {"kind": None, "script": None, "module": None, "pythonpath": [], "node_target": None}
+    try:
+        raw = Path(path).read_bytes()[:65536]
+    except OSError:
+        return info
+    if b"\0" in raw:
+        return info
+    text = raw.decode("utf-8", "replace")
+    for var in ("${PREFIX}", "$PREFIX", "${TERMUX_PREFIX}", "$TERMUX_PREFIX"):
+        text = text.replace(var, _PFX)
+    first = text.splitlines()[0] if text else ""
+
+    m = re.search(rf"exec\s+{_PY_RE}\s+-m\s+([\w.]+)", text)
+    if m:
+        info.update(kind="python", module=m.group(1))
+    else:
+        m = re.search(rf"exec\s+{_PY_RE}\s+(?:-\S+\s+)*[\"']?(/[^\"'\s]+\.py)", text)
+        if m:
+            info.update(kind="python", script=m.group(1))
+        elif first.startswith("#!") and "python" in first:
+            info.update(kind="python", script=str(path))
+
+    if info["kind"] is None:
+        m = re.search(r"exec\s+(?:\S*/)?node\s+(?:-\S+\s+)*[\"']?(/[^\"'\s]+)", text) or re.search(
+            r"require\(\s*[\"'](/[^\"']+)[\"']", text
+        )
+        if m:
+            info.update(kind="node", node_target=m.group(1))
+        elif first.startswith("#!") and re.search(r"\bnode\b", first):
+            info.update(kind="node", node_target=str(path))
+
+    for m in re.finditer(r"PYTHONPATH=[\"']?([^\"'\n]+)", text):
+        for part in m.group(1).split(":"):
+            part = re.sub(r"\$\{[^}]*\}", "", part).strip().rstrip("$")
+            if part.startswith("/"):
+                info["pythonpath"].append(part)
+    return info
+
+
+def scan_python_launcher(path, own_tops=()):
+    info = parse_launcher(path)
+    if info["kind"] != "python":
+        return None
+    extra = list(info["pythonpath"])
+    stdlib = _stdlib_names()
+    missing = {}
+    queue = []
+
+    if info["script"]:
+        script = Path(info["script"])
+        extra.append(str(script.parent))
+        queue.append(script)
+    elif info["module"]:
+        top = info["module"].split(".")[0]
+        spec = _find_spec(top, extra)
+        if spec is None:
+            return {top: str(path)}
+        locs = list(spec.submodule_search_locations or [])
+        if locs:
+            main = Path(locs[0]) / "__main__.py"
+            queue.append(main if main.is_file() else Path(locs[0]) / "__init__.py")
+        elif spec.origin and spec.origin.endswith(".py"):
+            queue.append(Path(spec.origin))
+
+    own_tops = set(own_tops)
+    seen = set()
+    while queue and len(seen) < 150:
+        f = queue.pop()
+        if f in seen or not f.is_file():
+            continue
+        seen.add(f)
+        for level, dotted, required in required_imports(f):
+            if level:
+                base = f.parent
+                for _ in range(level - 1):
+                    base = base.parent
+                target = _resolve_local(dotted, [str(base)])
+                if target:
+                    queue.append(target)
+                continue
+            top = dotted.split(".")[0]
+            if top in stdlib or top == "__future__":
+                continue
+            local = _resolve_local(dotted, extra)
+            if local is None and top in own_tops:
+                local = _resolve_local(dotted, sys.path)
+            if local is not None:
+                queue.append(local)
+                continue
+            if required and _find_spec(top, extra) is None:
+                missing.setdefault(top, str(f))
+    return missing
+
+
+def scan_node_launcher(path):
+    info = parse_launcher(path)
+    target = info["node_target"]
+    if target is None and os.path.islink(path):
+        target = os.path.realpath(path)
+        info["kind"] = "node"
+    if info["kind"] != "node" or not target:
+        return None
+    if not os.path.exists(target):
+        return {"dir": None, "missing": [], "problem": f"{target} does not exist"}
+    d = Path(os.path.realpath(target)).parent
+    pkg_dir = None
+    for _ in range(6):
+        if (d / "package.json").is_file():
+            pkg_dir = d
+            break
+        if d.parent == d:
+            break
+        d = d.parent
+    if pkg_dir is None:
+        return None
+    try:
+        data = json.loads((pkg_dir / "package.json").read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return None
+    deps = sorted((data.get("dependencies") or {}).keys())
+    missing = []
+    for dep in deps:
+        ok = os.path.isdir(os.path.join(_PFX, "lib", "node_modules", dep))
+        p = pkg_dir
+        while not ok:
+            if (p / "node_modules" / dep).exists():
+                ok = True
+            if p.parent == p:
+                break
+            p = p.parent
+        if not ok:
+            missing.append(dep)
+    return {"dir": str(pkg_dir), "missing": missing, "problem": None}
+
+
+def _run_list(cmd, timeout=15):
+    try:
+        r = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout)
+        return r.stdout, r.returncode
+    except Exception:
+        return "", 1
+
+
+def _dpkg_files(pkg):
+    out, rc = _run_list(["dpkg", "-L", pkg])
+    return [ln for ln in out.splitlines() if ln.startswith("/")] if rc == 0 else []
+
+
+def _dpkg_installed(name):
+    out, rc = _run_list(["dpkg-query", "-W", "-f=${Status}", name])
+    return rc == 0 and "install ok installed" in out
+
+
+def _tas_like_packages():
+    out, rc = _run_list(["dpkg-query", "-W", "-f=${Package}\t${Maintainer}\t${Status}\n"])
+    if rc != 0:
+        return []
+    names = []
+    for ln in out.splitlines():
+        parts = ln.split("\t")
+        if len(parts) != 3 or "install ok installed" not in parts[2]:
+            continue
+        maint = parts[1].strip()
+        if maint.startswith("@") and maint not in ("@termux", "@termux-user-repository"):
+            names.append(parts[0])
+    return sorted(names)
+
+
+def _fix_cmd_for_modules(mods):
+    pkgs, pips = [], []
+    for m in mods:
+        if m in TERMUX_PY_PKGS:
+            pkgs.append(TERMUX_PY_PKGS[m])
+        else:
+            pips.append(PIP_ALIASES.get(m, m))
+    pkgs = [p for p in dict.fromkeys(pkgs) if _NAME_OK.match(p)]
+    pips = [p for p in dict.fromkeys(pips) if _NAME_OK.match(p)]
+    cmds = []
+    if pkgs:
+        cmds.append("pkg install -y " + " ".join(shlex.quote(p) for p in pkgs))
+    if pips:
+        cmds.append("python3 -m pip install --break-system-packages " + " ".join(shlex.quote(p) for p in pips))
+    return " && ".join(cmds) or None
+
+
+def diagnose_package_runtime(pkg):
+    checks = []
+    files = _dpkg_files(pkg)
+    if not files:
+        return [Check(f"{pkg}", WARN, "package files not found (is it installed?)", category="Runtime")]
+
+    own_tops = set()
+    for f in files:
+        m = re.search(r"/(?:site|dist)-packages/([^/]+)", f)
+        if m:
+            own_tops.add(re.sub(r"\.(?:py|so.*)$", "", m.group(1).split(".")[0]))
+
+    for f in files:
+        if os.path.islink(f) and not os.path.exists(f):
+            checks.append(
+                Check(
+                    f"{pkg}: broken link",
+                    FAIL,
+                    f"{f} -> {os.readlink(f)}",
+                    fix_cmd=f"pkg reinstall -y {shlex.quote(pkg)}" if _NAME_OK.match(pkg) else None,
+                    fix_hint="The package was built with a link that points outside the .deb. "
+                    "Reinstall after the maintainer rebuilds it.",
+                    category="Runtime",
+                )
+            )
+
+    bin_dir = os.path.join(_PFX, "bin")
+    for f in files:
+        if os.path.dirname(f) != bin_dir or not os.path.exists(f):
+            continue
+        name = os.path.basename(f)
+        py_missing = scan_python_launcher(f, own_tops)
+        if py_missing:
+            mods = sorted(py_missing)
+            checks.append(
+                Check(
+                    f"{pkg}: {name}",
+                    FAIL,
+                    "No module named: " + ", ".join(mods),
+                    fix_cmd=_fix_cmd_for_modules(mods),
+                    fix_hint="Install the missing modules. Ask the maintainer to rebuild the package so they are bundled.",
+                    category="Runtime",
+                )
+            )
+        node = scan_node_launcher(f)
+        if node and node["problem"]:
+            checks.append(Check(f"{pkg}: {name}", FAIL, node["problem"], category="Runtime"))
+        elif node and node["missing"]:
+            d = node["dir"]
+            checks.append(
+                Check(
+                    f"{pkg}: {name}",
+                    FAIL,
+                    "Cannot find module: " + ", ".join(node["missing"][:6]),
+                    fix_cmd=f"cd {shlex.quote(d)} && npm install --omit=dev --no-audit --no-fund",
+                    fix_hint="Install the Node.js dependencies of the package.",
+                    category="Runtime",
+                )
+            )
+
+    out, rc = _run_list(["dpkg-query", "-W", "-f=${Depends}", pkg])
+    if rc == 0 and out.strip():
+        for dep in out.split(","):
+            alts = [a.strip().split()[0] for a in dep.split("|") if a.strip()]
+            if alts and not any(_dpkg_installed(a) for a in alts):
+                first = alts[0]
+                checks.append(
+                    Check(
+                        f"{pkg}: dependency",
+                        FAIL,
+                        f"{first} is not installed",
+                        fix_cmd=f"pkg install -y {shlex.quote(first)}" if _NAME_OK.match(first) else None,
+                        category="Runtime",
+                    )
+                )
+
+    if not checks:
+        checks.append(Check(f"{pkg}", PASS, "launchers, modules and dependencies look fine", category="Runtime"))
+    return checks
+
+
+def diagnose_runtime(names=None):
+    if not _which("dpkg"):
+        return [Check("Package runtime", SKIP, "dpkg not available", category="Runtime")]
+    names = list(names) if names else _tas_like_packages()
+    if not names:
+        return [
+            Check(
+                "Package runtime",
+                INFO,
+                "no TAS packages found, pass names: tas doctor --modules <pkg>",
+                category="Runtime",
+            )
+        ]
+    checks = []
+    for n in names:
+        if not _NAME_OK.match(n):
+            checks.append(Check(n, WARN, "invalid package name", category="Runtime"))
+            continue
+        checks.extend(diagnose_package_runtime(n))
+    return checks
+
+
+def chk_package_runtime():
+    checks = diagnose_runtime()
+    bad = [c for c in checks if c.status == FAIL]
+    if bad:
+        pkgs = sorted({c.name.split(":")[0] for c in bad})
+        return Check(
+            "Package runtime",
+            FAIL,
+            f"{len(bad)} problem(s) in: {', '.join(pkgs[:4])}",
+            fix_hint="Run: tas doctor --modules --fix",
+            category="Build",
+        )
+    real = [c for c in checks if c.status == PASS]
+    if real:
+        return Check("Package runtime", PASS, f"{len(real)} package(s) checked", category="Build")
+    return Check("Package runtime", checks[0].status, checks[0].detail, category="Build")
+
+
 SECTIONS = [
     ("System", [chk_termux, chk_arch, chk_storage]),
     ("Python", [chk_python, chk_pip, chk_textual, chk_python_importpath]),
@@ -1274,7 +1694,7 @@ SECTIONS = [
     ("TAS Installation", [chk_tas_binary, chk_tas_wrapper, chk_tas_version, chk_tas_can_run, chk_tasctl]),
     ("Repository", [chk_repo_file, chk_apt_lists]),
     ("Project", [chk_packages_dir, chk_build_package_sh, chk_termux_build, chk_build_sh_scan]),
-    ("Build", [chk_last_build, chk_output_dir, chk_installed_tas_pkgs]),
+    ("Build", [chk_last_build, chk_output_dir, chk_installed_tas_pkgs, chk_package_runtime]),
     ("Network", [chk_network, chk_github]),
 ]
 ALL_FNS = [fn for _, fns in SECTIONS for fn in fns]
@@ -1344,6 +1764,7 @@ def print_help():
         ("(no args)", "Full environment diagnosis"),
         ("--fix", "Diagnose + auto-fix all fixable issues"),
         ("--pkg <name>", "Deep diagnosis of one package's build.sh"),
+        ("--modules [name]", "Find missing modules in installed packages"),
         ("--brief", "One-line-per-check output"),
         ("--json", "JSON output for CI / scripting"),
         ("--help", "Show this help"),
@@ -1365,7 +1786,7 @@ def print_help():
         ("TAS Installation", "binary, wrapper, version, importable, tasctl"),
         ("Repository", "apt sources.list.d/tas.list, list freshness"),
         ("Project", "packages/, build-package.sh, termux-build, build.sh scan"),
-        ("Build", "incomplete builds, output .deb, installed packages"),
+        ("Build", "incomplete builds, output .deb, installed packages, missing modules"),
         ("Network", "repo URL, GitHub API"),
     ]
     lw2 = max(len(c[0]) for c in cats) + 2
@@ -1395,6 +1816,8 @@ def print_help():
     code("tas doctor --fix")
     code("tas doctor --pkg baxter")
     code("tas doctor --pkg mypackage --fix")
+    code("tas doctor --modules")
+    code("tas doctor --modules holehe --fix")
     code("tas doctor --brief")
     code("tas doctor --json | python3 -m json.tool")
     blank()
@@ -1406,6 +1829,7 @@ def main():
     mode_brief = "--brief" in args
     mode_json = "--json" in args
     mode_help = "--help" in args or "-h" in args
+    mode_modules = "--modules" in args
     mode_pkg = None
     if "--pkg" in args:
         i = args.index("--pkg")
@@ -1418,6 +1842,28 @@ def main():
     if mode_help:
         print_help()
         sys.exit(0)
+
+    if mode_modules:
+        i = args.index("--modules")
+        names = [a for a in args[i + 1 :] if not a.startswith("-")]
+        section("Package runtime check")
+        blank()
+        checks = diagnose_runtime(names)
+        for c in checks:
+            c.print_line()
+            run_fix(c, mode_fix)
+        blank()
+        n_fail = sum(1 for c in checks if c.status == FAIL)
+        if n_fail:
+            callout(
+                "FAIL",
+                f"{n_fail} problem(s) found. Run 'tas doctor --modules --fix' to apply the suggested fixes.",
+                "fail",
+            )
+        else:
+            callout("PASS", "No missing modules or dependencies found.", "pass")
+        blank()
+        sys.exit(1 if n_fail else 0)
 
     if mode_pkg:
         section(f"build.sh diagnosis: {mode_pkg}")

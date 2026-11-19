@@ -814,6 +814,287 @@ def test_deps_available(values: dict) -> list:
     return issues
 
 
+SWALLOW_RE = re.compile(r"\|\|\s*(true\b|:|echo\b|printf\b)|2>\s*/dev/null\s*\|\|")
+PIP_RE = re.compile(r"\b(?:pip3?|python3?\s+-m\s+pip)\s+install\b")
+NPM_RE = re.compile(r"\b(?:npm\s+(?:install|i|ci)|yarn\s+(?:install|add)|pnpm\s+(?:install|i|add))\b")
+SOURCE_FILES = ("requirements.txt", "pyproject.toml", "setup.py", "setup.cfg", "package.json")
+MAX_SOURCE_BYTES = 200 * 1024 * 1024
+
+
+def _code_lines(lines: list) -> list:
+    return [(i, ln) for i, ln in enumerate(lines, 1) if ln.strip() and not ln.strip().startswith("#")]
+
+
+def test_runtime_deps(lines: list, values: dict) -> list:
+    issues = []
+    code = _code_lines(lines)
+    text = "\n".join(ln for _, ln in code)
+    depends = values.get("TERMUX_PKG_DEPENDS", "").lower()
+    dep_names = {d.strip().split()[0] for d in depends.split(",") if d.strip()}
+
+    swallowed_pip = [i for i, ln in code if PIP_RE.search(ln) and SWALLOW_RE.search(ln)]
+    swallowed_npm = [i for i, ln in code if NPM_RE.search(ln) and SWALLOW_RE.search(ln)]
+    if swallowed_pip:
+        shown = ", ".join(str(n) for n in swallowed_pip[:6]) + (" ..." if len(swallowed_pip) > 6 else "")
+        issues.append(
+            Issue(
+                WARN,
+                "Runtime",
+                f"{len(swallowed_pip)} pip install command(s) ignore failure (lines {shown}), "
+                "the package can fail later with 'No module named ...'",
+                line=swallowed_pip[0],
+                hint="Remove '|| echo', '|| true' and '2>/dev/null' so the build stops when a dependency cannot be installed.",
+            )
+        )
+    if swallowed_npm:
+        shown = ", ".join(str(n) for n in swallowed_npm[:6])
+        issues.append(
+            Issue(
+                WARN,
+                "Runtime",
+                f"{len(swallowed_npm)} npm install command(s) ignore failure (lines {shown}), "
+                "the package can fail later with 'Cannot find module'",
+                line=swallowed_npm[0],
+                hint="Remove '|| true' so the build stops when a dependency cannot be installed.",
+            )
+        )
+
+    pip_lines = [ln for _, ln in code if PIP_RE.search(ln)]
+    if pip_lines and all("--no-deps" in ln for ln in pip_lines):
+        issues.append(
+            Issue(
+                WARN,
+                "Runtime",
+                "every pip install uses --no-deps, dependencies of the project are never installed",
+                hint="Drop --no-deps or install the dependencies from requirements.txt.",
+            )
+        )
+
+    for i, ln in code:
+        if re.search(r"-m\s+[\w.]*-[\w.-]*", ln) and re.search(r"python3?", ln):
+            issues.append(
+                Issue(
+                    FAIL,
+                    "Runtime",
+                    "python -m is called with a hyphenated name, Python modules use underscores",
+                    line=i,
+                    hint="Use the real module name, for example 'python3 -m my_tool' instead of 'python3 -m my-tool'.",
+                )
+            )
+        if re.match(r"^\s*cd\s+[\"']?/data/data/com\.termux", ln):
+            issues.append(
+                Issue(
+                    WARN,
+                    "Runtime",
+                    "wrapper changes directory, relative file arguments given by the user will break",
+                    line=i,
+                    hint="Set PYTHONPATH (or NODE_PATH) instead of using cd.",
+                )
+            )
+
+    uses_python_launcher = bool(re.search(r"exec\s+(?:\S*/)?python3?\b", text))
+    uses_node_launcher = bool(re.search(r"exec\s+(?:\S*/)?node\b|#!\S*node\b", text)) or bool(NPM_RE.search(text))
+    if uses_python_launcher and "python" not in dep_names:
+        issues.append(
+            Issue(
+                WARN,
+                "Runtime",
+                "launcher runs python3 but python is not in TERMUX_PKG_DEPENDS",
+                hint='Add TERMUX_PKG_DEPENDS="python" so users get Python when they install the package.',
+            )
+        )
+    if uses_node_launcher and "nodejs" not in dep_names:
+        issues.append(
+            Issue(
+                WARN,
+                "Runtime",
+                "package runs Node.js but nodejs is not in TERMUX_PKG_DEPENDS",
+                hint='Add TERMUX_PKG_DEPENDS="nodejs" so users get Node.js when they install the package.',
+            )
+        )
+
+    has_install_fn = "termux_step_make_install" in text
+    if has_install_fn and uses_node_launcher and not NPM_RE.search(text):
+        issues.append(
+            Issue(
+                WARN,
+                "Runtime",
+                "Node.js package is copied without installing its dependencies",
+                hint="Run 'npm install --omit=dev' in the package folder, or use 'npm install -g --install-links .'. "
+                "Use --deep to check whether the source declares dependencies.",
+            )
+        )
+    if uses_python_launcher and has_install_fn and not pip_lines and "requirements" not in text:
+        issues.append(
+            Issue(
+                INFO,
+                "Runtime",
+                "no dependency install step, requirements.txt is bundled automatically only if the source has one",
+                hint="Use --deep to check whether the source declares dependencies in pyproject.toml or setup.py.",
+            )
+        )
+
+    if not any(i.level in (WARN, FAIL) for i in issues):
+        issues.append(Issue(PASS, "Runtime", "No runtime dependency problems found"))
+    return issues
+
+
+def _dep_name(spec: str) -> str:
+    m = re.match(r"\s*([A-Za-z0-9][A-Za-z0-9._-]*)", spec)
+    return m.group(1).lower().replace("_", "-") if m else ""
+
+
+def _parse_python_deps(name: str, content: str) -> list:
+    found = []
+    if name == "requirements.txt":
+        for ln in content.splitlines():
+            ln = ln.split("#", 1)[0].strip()
+            if ln and not ln.startswith("-"):
+                found.append(_dep_name(ln))
+    elif name == "pyproject.toml":
+        try:
+            import tomllib
+
+            data = tomllib.loads(content)
+        except Exception:
+            return []
+        for spec in (data.get("project") or {}).get("dependencies", []) or []:
+            found.append(_dep_name(spec))
+        for spec in ((data.get("tool") or {}).get("poetry") or {}).get("dependencies", {}) or {}:
+            if spec.lower() != "python":
+                found.append(_dep_name(spec))
+    elif name == "setup.py":
+        m = re.search(r"install_requires\s*=\s*\[(.*?)\]", content, re.S)
+        if m:
+            found.extend(_dep_name(s) for s in re.findall(r"[\"']([^\"']+)[\"']", m.group(1)))
+    elif name == "setup.cfg":
+        m = re.search(r"install_requires\s*=\s*\n((?:[ \t]+.+\n?)+)", content)
+        if m:
+            found.extend(_dep_name(ln) for ln in m.group(1).splitlines() if ln.strip())
+    return sorted({d for d in found if d})
+
+
+def _read_source_files(src: str) -> dict:
+    import tarfile
+    import tempfile
+    import zipfile
+
+    out = {}
+    with tempfile.NamedTemporaryFile(suffix=".src") as tmp:
+        req = urllib.request.Request(src, headers={"User-Agent": "tas-build-tester/1.0"})
+        total = 0
+        with urllib.request.urlopen(req, timeout=TIMEOUT_DL) as r:
+            while True:
+                chunk = r.read(65536)
+                if not chunk:
+                    break
+                total += len(chunk)
+                if total > MAX_SOURCE_BYTES:
+                    raise ValueError("source is larger than 200 MiB")
+                tmp.write(chunk)
+        tmp.flush()
+
+        def wanted(path):
+            parts = [p for p in path.split("/") if p]
+            return len(parts) <= 3 and parts and parts[-1] in SOURCE_FILES
+
+        if zipfile.is_zipfile(tmp.name):
+            with zipfile.ZipFile(tmp.name) as z:
+                for n in z.namelist():
+                    if wanted(n) and n.split("/")[-1] not in out:
+                        out[n.split("/")[-1]] = z.read(n)[:1_000_000].decode("utf-8", "replace")
+        elif tarfile.is_tarfile(tmp.name):
+            with tarfile.open(tmp.name) as t:
+                for m in t.getmembers():
+                    base = m.name.split("/")[-1]
+                    if m.isfile() and wanted(m.name) and base not in out:
+                        fh = t.extractfile(m)
+                        if fh:
+                            out[base] = fh.read(1_000_000).decode("utf-8", "replace")
+    return out
+
+
+def test_source_deps_deep(values: dict, lines: list) -> list:
+    src = values.get("TERMUX_PKG_SRCURL", "")
+    if not src.startswith(("http://", "https://")) or "${" in src:
+        return [Issue(SKIP, "Source deps", "No network URL to inspect")]
+    if src.endswith((".deb", ".AppImage")):
+        return [Issue(SKIP, "Source deps", "Prebuilt file, nothing to inspect")]
+
+    log("Reading dependency files from the source...")
+    try:
+        files = _read_source_files(src)
+    except Exception as e:
+        return [Issue(WARN, "Source deps", f"Could not inspect the source: {e}")]
+
+    code = _code_lines(lines)
+    text = "\n".join(ln for _, ln in code)
+    depends = values.get("TERMUX_PKG_DEPENDS", "").lower()
+    has_install_fn = "termux_step_make_install" in text
+    pip_lines = [ln for _, ln in code if PIP_RE.search(ln)]
+    pip_text = "\n".join(pip_lines).lower().replace("_", "-")
+    installs_project = any(
+        re.search(r"install\s+(?:[^|&;]*\s)?(?:\.|-e\s+\.|-r\s+\S+)(?:\s|$)", ln) and "--no-deps" not in ln
+        for ln in pip_lines
+    )
+    issues = []
+
+    py_deps = []
+    for fname in ("pyproject.toml", "setup.py", "setup.cfg"):
+        if fname in files:
+            py_deps = _parse_python_deps(fname, files[fname])
+            if py_deps:
+                break
+    if py_deps:
+        missing = [
+            d for d in py_deps if d not in pip_text and f"python-{d}" not in depends and d not in depends.split(", ")
+        ]
+        if has_install_fn and not installs_project and missing:
+            issues.append(
+                Issue(
+                    FAIL,
+                    "Source deps",
+                    f"Python dependencies declared by the source are never installed: {', '.join(missing[:8])}",
+                    hint="Use 'pip install . --prefix=\"$TERMUX_PREFIX\"' or install each dependency, "
+                    "so the package does not fail with 'No module named ...'.",
+                )
+            )
+        else:
+            issues.append(Issue(PASS, "Source deps", f"Python dependencies are covered ({len(py_deps)})"))
+    elif "requirements.txt" in files:
+        req = _parse_python_deps("requirements.txt", files["requirements.txt"])
+        if req:
+            issues.append(
+                Issue(
+                    INFO, "Source deps", f"requirements.txt lists {len(req)} package(s), build-package.sh bundles them"
+                )
+            )
+
+    if "package.json" in files:
+        try:
+            pkg = json.loads(files["package.json"])
+        except ValueError:
+            pkg = {}
+        node_deps = sorted((pkg.get("dependencies") or {}).keys())
+        bundled = pkg.get("bundledDependencies") or pkg.get("bundleDependencies")
+        if node_deps and not bundled:
+            if has_install_fn and not NPM_RE.search(text):
+                issues.append(
+                    Issue(
+                        FAIL,
+                        "Source deps",
+                        f"Node.js dependencies declared by the source are never installed: {', '.join(node_deps[:8])}",
+                        hint="Run 'npm install --omit=dev' in the package folder, or use 'npm install -g --install-links .'.",
+                    )
+                )
+            else:
+                issues.append(Issue(PASS, "Source deps", f"Node.js dependencies are covered ({len(node_deps)})"))
+
+    if not issues:
+        issues.append(Issue(INFO, "Source deps", "Source declares no dependency files"))
+    return issues
+
+
 class PackageResult:
     def __init__(self, pkg_name, build_sh):
         self.pkg_name = pkg_name
@@ -884,6 +1165,7 @@ def run_tests(pkg_name, build_sh: Path, deep=False, check_deps=False) -> Package
     result.add(test_prefix_usage(lines))
     result.add(test_install_function(lines, values))
     result.add(test_wrapper_script(lines, values))
+    result.add(test_runtime_deps(lines, values))
 
     result.add(test_url_reachable(values))
 
@@ -892,6 +1174,7 @@ def run_tests(pkg_name, build_sh: Path, deep=False, check_deps=False) -> Package
 
     if deep:
         result.add(test_sha256_deep(values))
+        result.add(test_source_deps_deep(values, lines))
 
     return result
 
@@ -1007,7 +1290,7 @@ def print_help():
     blank()
     rows = [
         ("<package>", "Test a single package"),
-        ("<package> --deep", "Test + download & verify SHA256"),
+        ("<package> --deep", "Test + verify SHA256 + check source dependencies"),
         ("<package> --deps", "Test + check deps via pkg info"),
         ("--all", "Test all packages in packages/"),
         ("--all --brief", "Test all, one line per package"),
