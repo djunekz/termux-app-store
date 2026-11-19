@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-11-19T11:09:47.402029+00:00",
+  "generated_at": "2026-11-19T11:18:47.269799+00:00",
   "total": 87,
   "packages": [
     {
@@ -644,19 +644,18 @@
       "package": "hash-buster",
       "version": "3.0",
       "maintainer": "@termux-app-store",
-      "description": "hash-buster — auto-packaged by termux-build-init",
+      "description": "Crack hashes in seconds.",
       "homepage": "https://github.com/UltimateHackers/Hash-Buster",
-      "license": "UNKNOWN",
+      "license": "MIT",
       "download_size": "Unknown",
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
-      "srcurl": "https://github.com/UltimateHackers/Hash-Buster/archive/refs/tags/v3.0.tar.gz",
+      "srcurl": "https://github.com/UltimateHackers/Hash-Buster/archive/refs/tags/v${TERMUX_PKG_VERSION}.tar.gz",
       "sha256": "b6581a0ce55deab0f2fba7c670b00da1e3909bc24db51f0a85d6d47aa8a8cb2c",
-      "recipe_sha256": "8fb1c623061e9b5c07a9336feeef133c4a8e27b0b9d2ee7dd2f0ea4c696dd863",
+      "recipe_sha256": "072ffb2b2cbde99c8ccc6926d718970706478be35321cb472828c582dfbf9b3d",
       "platform_independent": false,
       "depends": [
-        "python",
-        "python-pip"
+        "python"
       ]
     },
     {
@@ -805,19 +804,18 @@
       "package": "killchain",
       "version": "0.0.0+fef616f",
       "maintainer": "@termux-app-store",
-      "description": "killchain — auto-packaged by termux-build-init",
+      "description": "A unified console to perform the \"kill chain\" stages of attacks.",
       "homepage": "https://github.com/ruped24/killchain",
-      "license": "UNKNOWN",
+      "license": "MIT",
       "download_size": "Unknown",
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/ruped24/killchain/archive/fef616f66ae18b9855cdd7f58a586551fcd3cdcb.tar.gz",
       "sha256": "c6b0bd9887ca2bb9ded7084ec7a3e907d5625c272de1df6db92789461323c609",
-      "recipe_sha256": "eefafe6ea3b53e5d95f19b6da148df8bc2f5051839fd838ccf07097f0d620135",
+      "recipe_sha256": "e4c97fe1827004100103ed1db47abe28d63c6d7a46795894e432a801802c61f0",
       "platform_independent": false,
       "depends": [
-        "python",
-        "python-pip"
+        "python"
       ]
     },
     {
@@ -1427,15 +1425,15 @@
       "package": "userfinder",
       "version": "0.0.0+a08a9a6",
       "maintainer": "@termux-app-store",
-      "description": "userfinder — auto-packaged by termux-build-init",
+      "description": "OSINT tool for finding profiles by username",
       "homepage": "https://github.com/mishakorzik/UserFinder",
-      "license": "UNKNOWN",
+      "license": "GPL-3.0",
       "download_size": "Unknown",
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/mishakorzik/UserFinder/archive/a08a9a682b743fae9c84c9794d88b5b0e98946a7.tar.gz",
       "sha256": "da66d1d975f7325a4ef96ba8fb0641d788d8434e4e0de748423e769dd6bdb1a6",
-      "recipe_sha256": "b2109465b85f5f7528ff971f393c4c825a1e4266101866b69829afdc462ad510",
+      "recipe_sha256": "10ef47e02d54a273851b24c2011e2880301f44d79e3aa7cde6796b009950d635",
       "platform_independent": false
     },
     {
