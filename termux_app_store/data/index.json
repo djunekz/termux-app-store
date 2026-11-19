@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-11-17T21:25:49.054987+00:00",
-  "total": 89,
+  "generated_at": "2026-11-19T02:26:09.686643+00:00",
+  "total": 88,
   "packages": [
     {
       "package": "aichat",
@@ -239,44 +239,6 @@
       "platform_independent": false,
       "depends": [
         "golang"
-      ]
-    },
-    {
-      "package": "clickjacking-tester",
-      "version": "0.0.0+d75d5fc",
-      "maintainer": "@termux-app-store",
-      "description": "A python script designed to check if the website if vulnerable of clickjacking and create a poc",
-      "homepage": "https://github.com/D4Vinci/Clickjacking-Tester",
-      "license": "GPL-3.0",
-      "download_size": "Unknown",
-      "installed_size": "Unknown",
-      "source": "https://github.com/djunekz/termux-app-store",
-      "srcurl": "https://github.com/D4Vinci/Clickjacking-Tester/archive/d75d5fcc62cef0031db9493b30911cd70c9bd606.tar.gz",
-      "sha256": "295aac00657fc24152d67a8c9c3766b24381de5f696f18631aa5b4ce6086336b",
-      "recipe_sha256": "c6ada0021c2989d3dd7579fcc4a4c107abaa2168ac7d460e84aaa2bfab33d839",
-      "platform_independent": false,
-      "depends": [
-        "python",
-        "python-pip"
-      ]
-    },
-    {
-      "package": "cloudflair",
-      "version": "0.0.0+13e3d80",
-      "maintainer": "@termux-app-store",
-      "description": "🔎 Find origin servers of websites behind CloudFlare by using Internet-wide scan data from Censys.",
-      "homepage": "https://blog.christophetd.fr/bypassing-cloudflare-using-internet-wide-scan-data/",
-      "license": "UNKNOWN",
-      "download_size": "Unknown",
-      "installed_size": "Unknown",
-      "source": "https://github.com/djunekz/termux-app-store",
-      "srcurl": "https://github.com/christophetd/CloudFlair/archive/13e3d806e6e730412a2f73b46f34d8a5677b163c.tar.gz",
-      "sha256": "1b17f9ce64f0af6fecdbede5c3621052537d720137cdd97b5aeed115a535e7dc",
-      "recipe_sha256": "7ae58ab1e73e33463691aea4582f9d723c651f390bd54975fc76ca7eefb94248",
-      "platform_independent": false,
-      "depends": [
-        "python",
-        "python-pip"
       ]
     },
     {
@@ -893,6 +855,25 @@
       ]
     },
     {
+      "package": "leaf",
+      "version": "1.29.3",
+      "maintainer": "@termux-app-store",
+      "description": "Terminal Markdown previewer — GUI-like experience.",
+      "homepage": "https://leaf.rivolink.mg",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/RivoLink/leaf/archive/refs/tags/${TERMUX_PKG_VERSION}.tar.gz",
+      "sha256": "6d7343042c072f0065d4357666aa3530a3fce03d79cea7378fe20e816e2b5240",
+      "recipe_sha256": "46e12ae5bae157ed08bcd0ab6a3f85da1455eee7681e4cac8a4974edec461e23",
+      "platform_independent": false,
+      "depends": [
+        "rust",
+        "bash"
+      ]
+    },
+    {
       "package": "lux",
       "version": "0.24.1",
       "maintainer": "@termux-app-store",
@@ -1246,7 +1227,7 @@
     },
     {
       "package": "termux-sync",
-      "version": "1.3.6",
+      "version": "1.3.8",
       "maintainer": "@termux-app-store",
       "description": "OpenSource Backup and restore your entire Termux environment across devices.",
       "homepage": "https://github.com/djunekz/termux-sync",
@@ -1255,8 +1236,8 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/djunekz/termux-sync/archive/refs/tags/v${TERMUX_PKG_VERSION}.tar.gz",
-      "sha256": "e475417d49de4039711c8e30d8b39999a599b0c739bf8e83ea5b3fbf754ebef6",
-      "recipe_sha256": "075c10c70ef34b8f28f662061f59381f9517107e12a7831df273aba5831a8059",
+      "sha256": "df0f4f052390de2bc952cb98fa3d42e63e6d99baa6a16bdf0d5d29c4f4e9a234",
+      "recipe_sha256": "05f68c43a677d2f3f7b3e26b5d480beb3f649dcf6bb5a981d099391b812446b7",
       "platform_independent": false,
       "depends": [
         "git",

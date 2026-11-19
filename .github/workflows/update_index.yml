@@ -33,11 +33,12 @@ jobs:
         run: |
           echo "Running build.py to generate index.json..."
           python3 tools/build.py
+          cp tools/index.json termux_app_store/data/index.json
 
       - name: Check for changes
         id: check_changes
         run: |
-          if git diff --quiet tools/index.json; then
+          if git diff --quiet tools/index.json termux_app_store/data/index.json; then
             echo "changed=false" >> $GITHUB_OUTPUT
             echo "No changes detected in index.json"
           else
@@ -100,7 +101,7 @@ jobs:
           git config --local user.email "258522831+termuxappstore@users.noreply.github.com"
           git config --local user.name "Termux App Store"
           git remote set-url origin https://x-access-token:${PAT_TOKEN}@github.com/djunekz/termux-app-store.git
-          git add tools/index.json
+          git add tools/index.json termux_app_store/data/index.json
           git commit -m "chore: update index.json"
 
           MAX_RETRIES=3
