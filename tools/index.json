@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-11-19T11:44:47.163202+00:00",
+  "generated_at": "2026-11-19T11:45:42.892574+00:00",
   "total": 87,
   "packages": [
     {
@@ -652,7 +652,7 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/UltimateHackers/Hash-Buster/archive/refs/tags/v${TERMUX_PKG_VERSION}.tar.gz",
       "sha256": "b6581a0ce55deab0f2fba7c670b00da1e3909bc24db51f0a85d6d47aa8a8cb2c",
-      "recipe_sha256": "514a54c05245ca808c686585f1d4bbb0a773dde0818f30ee9a0cb441a9cfe444",
+      "recipe_sha256": "bda62c58b54387fa1360a5127df87fad4e454bae5ce2726c4c87d0b61158bd55",
       "platform_independent": false,
       "depends": [
         "python",
@@ -813,11 +813,10 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/ruped24/killchain/archive/fef616f66ae18b9855cdd7f58a586551fcd3cdcb.tar.gz",
       "sha256": "c6b0bd9887ca2bb9ded7084ec7a3e907d5625c272de1df6db92789461323c609",
-      "recipe_sha256": "eae09b6189e050eae3a3fe75dffbb1efe40590b2a8c95d6f0058dc41336d0e76",
+      "recipe_sha256": "e4c97fe1827004100103ed1db47abe28d63c6d7a46795894e432a801802c61f0",
       "platform_independent": false,
       "depends": [
-        "python",
-        "python-pip"
+        "python"
       ]
     },
     {
@@ -1435,7 +1434,7 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/mishakorzik/UserFinder/archive/a08a9a682b743fae9c84c9794d88b5b0e98946a7.tar.gz",
       "sha256": "da66d1d975f7325a4ef96ba8fb0641d788d8434e4e0de748423e769dd6bdb1a6",
-      "recipe_sha256": "50e2f05af9594f7c82a4a2facb3af703182aeb569a1ce4277a678c20c6500865",
+      "recipe_sha256": "bbd9bf14702df04afa657c810c1abdfbc6c29f710146e1f003168334150d4b8f",
       "platform_independent": false
     },
     {
