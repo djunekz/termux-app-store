@@ -40,7 +40,7 @@ _cleanup_on_interrupt() {
 trap '_cleanup_on_interrupt' INT TERM
 
 _width() {
-  local w; w=$(tput cols 2>/dev/null)
+  local w; w=$(tput cols 2>/dev/null || true)
   [[ "$w" =~ ^[0-9]+$ ]] && echo "$w" || echo 60
 }
 
@@ -91,6 +91,7 @@ _FINAL_DEPS=()
 
 _on_error() {
   local rc="$1" line="$2" cmd="$3"
+  [[ "$BASH_SUBSHELL" -eq 0 ]] || return 0
   printf "\n ${BG_RED}${BLACK}${BOLD} ERROR ${R} ${BRED}line %s: %s (exit %s)${R}\n" "$line" "$cmd" "$rc" >&2
 }
 trap '_on_error "$?" "$LINENO" "$BASH_COMMAND"' ERR

@@ -43,6 +43,7 @@ and this project adheres to semantic versioning.
 - `build-package.sh` - the spinner of the custom install step for prebuilt `.deb` files printed raw line breaks instead of carriage returns and flooded the terminal
 - `build-package.sh` - the syntax check no longer reads `$?` after `|| true`, and the error line is read without `grep -P`
 - `build-package.sh` - any unexpected failure now prints the line number and command (`ERR` trap with `set -E`) instead of exiting silently in the middle of the build, as in the `openclaw-termux` log after `Staged npm`
+- `build-package.sh` - the new error trap no longer prints `ERROR line N: tput cols` on images without `tput` (such as termux-docker in CI): terminal width lookups cannot fail anymore and the trap only reports failures of the main script, not of command substitutions or background steps
 - `build-package.sh` - warns about staged symlinks that point into the build folder or are dangling
 - `pkg-scaffold.py` - the `python-script` template installs `requirements.txt` into `lib/<package>/.pydeps`, puts it on `PYTHONPATH`, no longer changes the current directory and no longer creates `__init__.py` files inside the upstream source
 - `pkg-scaffold.py` - the `php` wrapper now uses the explicit Termux `bash` path instead of `#!/usr/bin/env`, so it also works where `termux-exec` is not active; the `ruby` template no longer prints `ls` output or depends on `&&` / `||` precedence; the placeholder comment is no longer written into `build.sh` for the `unknown` method
