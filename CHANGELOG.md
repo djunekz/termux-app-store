@@ -33,6 +33,8 @@ and this project adheres to semantic versioning.
 - `build-package.sh` - Node.js packages found automatically are installed with `npm install -g --install-links`, so npm copies the package and its dependencies instead of linking to the build folder
 - `pkg-scaffold.py` - the `pip` template installs the dependencies of the project instead of using `--no-deps`, the `npm` template uses `--install-links`, and the `lua` template copies the whole project and sets `LUA_PATH`
 - `termux_app_store/data/build-package.sh` - synced with `build-package.sh`
+- Package `hash-buster` v3.0 - Updated metadata
+- Package `killchain` v0.0.0+fef616f - Updated metadata
 
 ### Fixed
 - `build-package.sh` - packages failed at run time with `No module named ...` or `Cannot find module ...` because their dependencies never reached the `.deb`: Python dependencies installed by `pip` are now staged together with the whole dependency tree of the package (and of every distribution installed during the build), skipping files that already belong to a Termux package
