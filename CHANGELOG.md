@@ -39,6 +39,7 @@ and this project adheres to semantic versioning.
 - `termux_app_store/data/build-package.sh` - synced with `build-package.sh`
 - Package `hash-buster` v3.0 - Updated metadata
 - Package `killchain` v0.0.0+fef616f - Updated metadata
+- Package `userfinder` v0.0.0+a08a9a6 → Updated metadata
 
 ### Fixed
 - `build-package.sh` - packages failed at run time with `No module named ...` or `Cannot find module ...` because their dependencies never reached the `.deb`: Python dependencies installed by `pip` are now staged together with the whole dependency tree of the package (and of every distribution installed during the build), skipping files that already belong to a Termux package
@@ -66,7 +67,6 @@ and this project adheres to semantic versioning.
 ### Update
 - Package `termux-sync` v1.3.6 → v1.3.8
 - Package `tdoc` v2.3.0 → v2.3.1
-- Package `userfinder` v0.0.0+a08a9a6 → v1.0
 
 ---
 
