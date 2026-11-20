@@ -174,7 +174,7 @@ def _jobs(path: Path) -> list:
 
 
 def _commits(step: str) -> bool:
-    return "git commit" in step
+    return "git commit" in step or "ci/publish_gh_pages.sh" in step
 
 
 def _condition(step: str):

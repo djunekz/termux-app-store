@@ -692,11 +692,10 @@ jobs:
           cd gh-pages
           git config user.email "258522831+termuxappstore@users.noreply.github.com"
           git config user.name "Termux App Store"
-          git add -A
           COUNT=$(ls pool/main/*.deb 2>/dev/null | wc -l || echo 0)
           MSG="pkg: update pool — ${COUNT} .deb files [$(date -u +%Y-%m-%dT%H:%M:%SZ)]"
-          git diff --staged --quiet && echo "Nothing to commit" || \
-            (git commit -m "$MSG" && git push origin HEAD:gh-pages && echo "Pushed: $MSG")
+          cd ..
+          bash ci/publish_gh_pages.sh gh-pages "$MSG"
 
       - name: Summary
         run: |

@@ -247,16 +247,6 @@ jobs:
           cd gh-pages
           git config user.email "258522831+termuxappstore@users.noreply.github.com"
           git config user.name "Termux App Store"
-          git add -A
           MSG="repo: termux-app-store v${VERSION}, ${TOTAL} pkgs in index [$(date -u +%Y-%m-%dT%H:%M:%SZ)]"
-          if git rev-parse HEAD >/dev/null 2>&1; then
-            if git diff --staged --quiet; then
-              echo "Nothing to commit"
-            else
-              git commit -m "$MSG"
-              git push origin HEAD:gh-pages
-            fi
-          else
-            git commit -m "$MSG"
-            git push origin HEAD:gh-pages
-          fi
+          cd ..
+          bash ci/publish_gh_pages.sh gh-pages "$MSG"
