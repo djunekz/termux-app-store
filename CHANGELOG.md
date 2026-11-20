@@ -47,6 +47,8 @@ and this project adheres to semantic versioning.
 - `build-package.sh` - the syntax check no longer reads `$?` after `|| true`, and the error line is read without `grep -P`
 - `build-package.sh` - any unexpected failure now prints the line number and command (`ERR` trap with `set -E`) instead of exiting silently in the middle of the build, as in the `openclaw-termux` log after `Staged npm`
 - `build-package.sh` - the new error trap no longer prints `ERROR line N: tput cols` on images without `tput` (such as termux-docker in CI): terminal width lookups cannot fail anymore and the trap only reports failures of the main script, not of command substitutions or background steps
+- `build-package.sh` - commands installed from Python scripts no longer print `SyntaxWarning: invalid escape sequence` from the upstream source every time they start (Python 3.12 reports it whenever the main script is compiled, and the main script is not cached); the launchers it generates, and bash wrappers written by existing `build.sh` files that run `python`, now set `PYTHONWARNINGS=ignore::SyntaxWarning`
+- `build-package.sh` - the staging log no longer lists the same `bin` and `lib` path twice when the original and the sanitised package name are equal, and no longer prints `Python files: 0`
 - `build-package.sh` - warns about staged symlinks that point into the build folder or are dangling
 - `pkg-scaffold.py` - the `python-script` template installs `requirements.txt` into `lib/<package>/.pydeps`, puts it on `PYTHONPATH`, no longer changes the current directory and no longer creates `__init__.py` files inside the upstream source
 - `pkg-scaffold.py` - a `Makefile` is no longer chosen when the repo has no compiled sources and the makefile never calls a compiler (for example Hash-Buster, whose `install` target runs `sudo cp ... /usr/bin`); the wizard then falls back to the script methods, so `make` is not run and the build no longer stops with `sudo: No such file or directory`
@@ -56,6 +58,7 @@ and this project adheres to semantic versioning.
 - `pkg-scaffold.py` and `termux_app_store/doctor.py` - added module-to-pip-name aliases for `websocket` (`websocket-client`), `docx`, `zmq`, `telegram`, `slugify` and `discord`, so `import websocket` no longer leads to the unrelated `websocket` package
 - `pkg-scaffold.py` - the `php` wrapper now uses the explicit Termux `bash` path instead of `#!/usr/bin/env`, so it also works where `termux-exec` is not active; the `ruby` template no longer prints `ls` output or depends on `&&` / `||` precedence; the placeholder comment is no longer written into `build.sh` for the `unknown` method
 - `pkg-scaffold.py` - GitHub URLs with a trailing slash or `.git` are accepted and normalised for the generated `SRCURL`, release tags such as `release-2.0` give a valid version, an invalid homepage falls back to the repository URL, duplicated dependencies are removed, at most 25 extensionless files are checked for a shebang, narrow terminals no longer crash the layout, and `--help` prints usage
+
 
 ### Update
 - Package `termux-sync` v1.3.6 → v1.3.8

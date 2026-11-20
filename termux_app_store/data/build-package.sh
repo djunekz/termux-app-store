@@ -395,7 +395,11 @@ PYEOF
   while IFS= read -r line; do
     case "$line" in
       python-dist*) _detail "Staged pip dist:" "${line#python-dist }" ;;
-      python-files*) _detail "Python files:" "${line#python-files }" ;;
+      python-files*)
+        if [[ "${line#python-files }" != "0" ]]; then
+          _detail "Python files:" "${line#python-files }"
+        fi
+        ;;
     esac
   done <<< "$out"
   return 0
@@ -461,6 +465,20 @@ _infer_runtime_deps() {
     if printf '%s' "$head" | grep -qE '(^|[ /])ruby([ "]|$)'; then _add_dep ruby; fi
     if printf '%s' "$head" | grep -qE '(^|[ /])php[0-9.]*([ "]|$)'; then _add_dep php; fi
   done < <(find -L "$WORK_DIR/pkg$PREFIX/bin" -maxdepth 1 -type f 2>/dev/null || true)
+  return 0
+}
+
+_silence_python_syntax_warnings() {
+  local w
+  for w in "$WORK_DIR/pkg$PREFIX/bin/"*; do
+    [[ -f "$w" && ! -L "$w" ]] || continue
+    head -n1 "$w" | grep -qE '^#!.*(bash|/sh)' || continue
+    grep -qE 'exec[[:space:]]+([^[:space:]]*/)?python[0-9.]*' "$w" || continue
+    if grep -q 'PYTHONWARNINGS' "$w"; then
+      continue
+    fi
+    sed -i '1a export PYTHONWARNINGS="ignore::SyntaxWarning${PYTHONWARNINGS:+,$PYTHONWARNINGS}"' "$w"
+  done
   return 0
 }
 
@@ -1468,7 +1486,12 @@ elif declare -f termux_step_make_install > /dev/null 2>&1; then
   _progress "Staging installed files..."
   mkdir -p "$WORK_DIR/pkg$PREFIX/bin" "$WORK_DIR/pkg$PREFIX/lib"
 
-  for _cand in "$PREFIX/bin/$PACKAGE" "$PREFIX/bin/$PKG_NAME_ORIGINAL"; do
+  _STAGE_NAMES=("$PACKAGE")
+  if [[ "$PKG_NAME_ORIGINAL" != "$PACKAGE" ]]; then
+    _STAGE_NAMES+=("$PKG_NAME_ORIGINAL")
+  fi
+
+  for _cand in "${_STAGE_NAMES[@]/#/$PREFIX/bin/}"; do
     if [[ -e "$_cand" || -L "$_cand" ]]; then
       _stage_tree "$_cand"
       _detail "Staged bin:" "$_cand"
@@ -1477,7 +1500,7 @@ elif declare -f termux_step_make_install > /dev/null 2>&1; then
   _stage_new_bins
   _stage_python_closure
 
-  for _libname in "$PACKAGE" "$PKG_NAME_ORIGINAL"; do
+  for _libname in "${_STAGE_NAMES[@]}"; do
     if [[ -d "$PREFIX/lib/$_libname" ]]; then
       _stage_tree "$PREFIX/lib/$_libname"
       _detail "Staged lib:" "$PREFIX/lib/$_libname"
@@ -1536,6 +1559,7 @@ elif declare -f termux_step_make_install > /dev/null 2>&1; then
       cat > "$_BIN_PKG" <<LAUNCHEREOF
 #!/data/data/com.termux/files/usr/bin/bash
 export PYTHONPATH="$PREFIX/lib/$PACKAGE/.pydeps:$PREFIX/lib/$PACKAGE\${PYTHONPATH:+:\$PYTHONPATH}"
+export PYTHONWARNINGS="ignore::SyntaxWarning\${PYTHONWARNINGS:+,\$PYTHONWARNINGS}"
 exec python3 -m $_MOD_NAME "\$@"
 LAUNCHEREOF
       chmod +x "$_BIN_PKG"
@@ -1544,6 +1568,7 @@ LAUNCHEREOF
       cat > "$_BIN_PKG" <<LAUNCHEREOF
 #!/data/data/com.termux/files/usr/bin/bash
 export PYTHONPATH="$PREFIX/lib/$PACKAGE/.pydeps:$PREFIX/lib/$PACKAGE\${PYTHONPATH:+:\$PYTHONPATH}"
+export PYTHONWARNINGS="ignore::SyntaxWarning\${PYTHONWARNINGS:+,\$PYTHONWARNINGS}"
 exec python3 "$_ENTRY" "\$@"
 LAUNCHEREOF
       chmod +x "$_BIN_PKG"
@@ -1702,6 +1727,7 @@ else
           cat > "$WORK_DIR/pkg$PREFIX/bin/$PACKAGE" <<EOF
 #!/data/data/com.termux/files/usr/bin/bash
 export PYTHONPATH="$PREFIX/lib/$PACKAGE/.pydeps:$PREFIX/lib/$PACKAGE\${PYTHONPATH:+:\$PYTHONPATH}"
+export PYTHONWARNINGS="ignore::SyntaxWarning\${PYTHONWARNINGS:+,\$PYTHONWARNINGS}"
 exec python3 "$PREFIX/lib/$PACKAGE/$MAIN_REL" "\$@"
 EOF
         else
@@ -1752,6 +1778,7 @@ fi
 
 _section "Generating Package Metadata"
 
+_silence_python_syntax_warnings
 _check_staged_links
 _infer_runtime_deps
 _add_dep_list "${TERMUX_PKG_DEPENDS:-}"
