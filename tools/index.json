@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-11-20T06:20:20.745245+00:00",
+  "generated_at": "2026-11-20T20:51:25.197628+00:00",
   "total": 87,
   "packages": [
     {
@@ -1424,7 +1424,7 @@
     },
     {
       "package": "userfinder",
-      "version": "1.0",
+      "version": "0.0.0+a08a9a6",
       "maintainer": "@termux-app-store",
       "description": "OSINT tool for finding profiles by username",
       "homepage": "https://github.com/mishakorzik/UserFinder",
@@ -1434,8 +1434,12 @@
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/mishakorzik/UserFinder/archive/a08a9a682b743fae9c84c9794d88b5b0e98946a7.tar.gz",
       "sha256": "da66d1d975f7325a4ef96ba8fb0641d788d8434e4e0de748423e769dd6bdb1a6",
-      "recipe_sha256": "bbd9bf14702df04afa657c810c1abdfbc6c29f710146e1f003168334150d4b8f",
-      "platform_independent": false
+      "recipe_sha256": "c024361527980902ce0ab68b26e4e3b4405e462d644e89e7fe2185142018279a",
+      "platform_independent": false,
+      "depends": [
+        "curl",
+        "jq"
+      ]
     },
     {
       "package": "uv",
