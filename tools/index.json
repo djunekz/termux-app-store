@@ -1,0 +1,2025 @@
+{
+  "version": "1.0",
+  "repository": "https://github.com/djunekz/termux-app-store",
+  "generated_at": "2026-11-20T20:53:21.917978+00:00",
+  "total": 87,
+  "packages": [
+    {
+      "package": "aichat",
+      "version": "0.30.0",
+      "maintainer": "@termux-app-store",
+      "description": "All-in-one LLM CLI tool featuring Shell Assistant, Chat-REPL, RAG, AI Tools & Agents, with access to OpenAI, Claude, Gemini, Ollama, Groq, and more.",
+      "homepage": "https://github.com/sigoden/aichat",
+      "license": "Apache-2.0",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/sigoden/aichat/archive/refs/tags/v0.30.0.tar.gz",
+      "sha256": "e194cc89afc213a6e3169738221cae641c347421c4f2aacd5d6f4f7cc6edb387",
+      "recipe_sha256": "11caae4bf22377c30ab5e5d7ad5e986ac350874cf2bb3f82b9deddbbd3e8f082",
+      "platform_independent": false,
+      "depends": [
+        "rust"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "5678afe7ade592a3bccef63905aa48fde195bca14689fa0ab7dd7b9baa7fa738"
+      }
+    },
+    {
+      "package": "ani-cli",
+      "version": "5.1",
+      "maintainer": "@termux-app-store",
+      "description": "A cli tool to browse and play anime",
+      "homepage": "https://github.com/pystardust/ani-cli",
+      "license": "GPL-3.0",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/pystardust/ani-cli/releases/download/v${TERMUX_PKG_VERSION}/ani-cli",
+      "sha256": "f99a1dac807004becfb732a5518a0f2ded9dc08b467805abd03df5d580becd46",
+      "recipe_sha256": "4e35b26dce900f670b1409d27c51f545eebb30675507f91bc3bbd5c74e9f033e",
+      "platform_independent": false,
+      "depends": [
+        "nodejs",
+        "aria2",
+        "ffmpeg",
+        "fzf",
+        "grep",
+        "sed",
+        "wget"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "b8c406d12784428b2f1fdbe2573788c47e196c210182ab143424085a9062d356",
+        "arm": "2dd7a4b8726dadfe6ee8448f6b39edb306b1b3c8f11909c314520e039817d94a",
+        "x86_64": "b28b29390ca02f9ca8a5a98e740661fedb342aaa7487d0442663ecf0ed7fd067",
+        "i686": "965d9f6958ecd381822739a7144f309ebfc9b0e5598710725cd9ffc2b09866e4"
+      }
+    },
+    {
+      "package": "aura",
+      "version": "0.11.0",
+      "maintainer": "@termux-app-store",
+      "description": "Adaptive Unified Runtime Assistant",
+      "homepage": "https://github.com/djunekz/aura",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/djunekz/aura/archive/refs/tags/v${TERMUX_PKG_VERSION}.zip",
+      "sha256": "8fc2fa3b596a3148ab222e6d6edc96f53bad82ea92f0d266858eb42792abdd9a",
+      "recipe_sha256": "a79459ca780ae1e462f616ae7a0f01bf6d5cee783175ad0154fbdd759f08ab37",
+      "platform_independent": false,
+      "depends": [
+        "nodejs"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "7cb0c6a18cee8c9390fc5661069798300d8a69d0200ff5cdcefce4db73d39f49",
+        "arm": "6e1debc10443e6aea63ba1ac1d9923e53f5dac782682302565df383aebb5d29b",
+        "x86_64": "3a74add7377ae081a4daa4e369640af56f3b23631d0ad2e59edc66d0580638e8",
+        "i686": "523a3f435086aa4c718cca7a69165c26d5f358d0d513869eb49e1d33e2b54740"
+      }
+    },
+    {
+      "package": "auxscan",
+      "version": "0.0.0+4551c2f",
+      "maintainer": "@termux-app-store",
+      "description": "Vulnerability Scanner to automate certain tasks",
+      "homepage": "https://github.com/Gameye98/Auxscan",
+      "license": "UNKNOWN",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/Gameye98/Auxscan/archive/4551c2f418070217a33297bdd981d6fddf1a6492.tar.gz",
+      "sha256": "44c08fa9d4e2d1b2d8bb5bac1118f5915ff801b58d93716214172d859144e11f",
+      "recipe_sha256": "74e0fd2106eb76cbc6f87cac206a6b3d989f7804830604e9f28a4f4cf02b39fa",
+      "platform_independent": false,
+      "depends": [
+        "python",
+        "python-pip"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "c25dc5330516779eb823f79e1df2710ea7ed0b322f603b829ae356254418446d"
+      }
+    },
+    {
+      "package": "bashxt",
+      "version": "3.0",
+      "maintainer": "@termux-app-store",
+      "description": "basic command, code color, shortcut keyboar, etc information",
+      "homepage": "https://github.com/djunekz/bashxt",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/djunekz/bashxt/releases/download/v${TERMUX_PKG_VERSION}/bashxt_${TERMUX_PKG_VERSION}_all.deb",
+      "sha256": "12345652b542a95342c61043d426b422f2a1eced944cdaffc70efc782781231e",
+      "recipe_sha256": "02ba21c331a37b60bb6d0d2cd279d0026ee6b8f7018a384a6fc3a0391cace5ab",
+      "platform_independent": false,
+      "sha256_by_arch": {
+        "aarch64": "23bb33a0d4eb7d3db78f767ff21af2789d29f5c3033f4eb1d3709d0ccb2c1b4a",
+        "arm": "afb07f6f84a1b55820eeb4b1f36281adc9eb4cae49f121185f189eaa5d45841a",
+        "x86_64": "22be5863b3f1299ee33300b140c85a437548b72bcd973fd40fa47a7cdbab2bc4",
+        "i686": "f381f0359e81082c1a702f00ea171551f587d036497d19af9396c9e6a540acae"
+      }
+    },
+    {
+      "package": "basic",
+      "version": "1.2.0",
+      "maintainer": "@termux-app-store",
+      "description": "Simulator Terminal learning basic command for beginner",
+      "homepage": "https://github.com/djunekz/basic",
+      "license": "GPL-3.0",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/djunekz/basic/releases/download/${TERMUX_PKG_VERSION}/basic_${TERMUX_PKG_VERSION}_all.deb",
+      "sha256": "440657aa7347b38f6dd380630f293e496954279829b0cdbd4508fbe5bfdd167d",
+      "recipe_sha256": "db94186c15ff610278679c2cc64fa2a7444cad6624a816ee23948c0fe1c49294",
+      "platform_independent": false,
+      "depends": [
+        "python"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "e899252708c1aa3e0488a2c83a14695c709cac68416959b991f0a91dcc737d44",
+        "arm": "989843cf9b878d4d82e7e0ed5dc1c626a65b54434c086f634c201dcf110e0c41",
+        "x86_64": "d1e184f98be7d027d772b967ae80b37156307d77f375b4cd003841a2fc3695b2",
+        "i686": "268de5773131b0e5e3cad8e4d1c617bc5f92ce357f8b67ccf44189343ae42008"
+      }
+    },
+    {
+      "package": "baxter",
+      "version": "1.4.0",
+      "maintainer": "@djunekz",
+      "description": "Encrypt and decrypt files termux",
+      "homepage": "https://github.com/djunekz/baxter",
+      "license": "Apache-2.0",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/djunekz/baxter/releases/download/v${TERMUX_PKG_VERSION}/baxter-v${TERMUX_PKG_VERSION}.tar.gz",
+      "sha256": "9afaf26be0c206b15c04225f128a85717c665b66305cef5a2b0dc765863b79f0",
+      "recipe_sha256": "701f763b4ad62a2916002a3014eb2f680ef693c49a78abd7e87bef05c550d52d",
+      "platform_independent": false,
+      "depends": [
+        "nodejs"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "a5e729573b8ee2edbfd9f07017de2b0512bf49b8509d63a9a6229539ddcf1c9a"
+      }
+    },
+    {
+      "package": "bing-ip2hosts",
+      "version": "1.0.5",
+      "maintainer": "@termux-app-store",
+      "description": "bingip2hosts is a Bing.com web scraper that discovers websites by IP address",
+      "homepage": "https://github.com/urbanadventurer/bing-ip2hosts",
+      "license": "GPL-3.0",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/urbanadventurer/bing-ip2hosts/archive/refs/tags/v1.0.5.tar.gz",
+      "sha256": "0a198af8d7876d7adb9c0517025bd6443d13399a188615a078cf3e45e120f19e",
+      "recipe_sha256": "a7c2eda1decad9e6274c7017f509347408feac85e3a6815e2b4c4e5b245364e8",
+      "platform_independent": false,
+      "sha256_by_arch": {
+        "aarch64": "538c3505998e543bf5304536e15c1ed6e475b29699afec37e2c73f75b8355a8f",
+        "arm": "a25b098910d4d91ab028cdb7a379cecd4426e503dd381c378e91521aa46b191e",
+        "x86_64": "b344608beb08e6f874d56b8d50cf40894013d1198cb34b01d5ee885b20630a1f",
+        "i686": "f47b0fd71d17a4072a0bc64760a66dd56f72feec2049e6021410b4b1a04a1adf"
+      }
+    },
+    {
+      "package": "binwalk",
+      "version": "3.1.0",
+      "maintainer": "@termux-app-store",
+      "description": "Firmware Analysis Tool",
+      "homepage": "https://github.com/ReFirmLabs/binwalk",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/ReFirmLabs/binwalk/archive/refs/tags/v3.1.0.tar.gz",
+      "sha256": "06f595719417b70a592580258ed980237892eadc198e02363201abe6ca59e49a",
+      "recipe_sha256": "89f4e6eb10727d362a20748acc3b65009a46d3f8aac07ff5f39a003274a1390d",
+      "platform_independent": false,
+      "depends": [
+        "rust",
+        "pkg-config",
+        "fontconfig"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "69f018eb3809b5fb277f15901b1d34bf903ac772dafb0bb5bc3de455a0307421"
+      }
+    },
+    {
+      "package": "bit",
+      "version": "1.1.2",
+      "maintainer": "@termux-app-store",
+      "description": "Bit is a modern Git CLI",
+      "homepage": "https://github.com/chriswalz/bit",
+      "license": "Apache-2.0",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/chriswalz/bit/archive/refs/tags/v1.1.2.tar.gz",
+      "sha256": "563ae6b0fa279cb8ea8f66b4b455c7cb74a9e65a0edbe694505b2c8fc719b2ff",
+      "recipe_sha256": "f5d3306d2dce17f71a2b825388120bd752ebf4b049c1fe03c03e2b22490d4de7",
+      "platform_independent": false,
+      "depends": [
+        "golang"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "b4288a41649a8c9edac9e115f12f639554383c0aa688a6ec6c47702cbf55a4ed"
+      }
+    },
+    {
+      "package": "bower",
+      "version": "1.8.12",
+      "maintainer": "@termux-app-store",
+      "description": "A package manager for the web",
+      "homepage": "https://github.com/bower/bower",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://api.github.com/repos/bower/bower/tarball/v${TERMUX_PKG_VERSION}",
+      "sha256": "d54d92c4a12c674e79ed38742bd82b797098c24e67391c963555cf4a23855e01",
+      "recipe_sha256": "2afae370928b60da8e95f88ebe2ae9c2dbd0f39af230368c275a0a4cadc2de98",
+      "platform_independent": false,
+      "depends": [
+        "nodejs"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "3c9d3f26ea14622224b3295757120e92747c4e355a41a8fe571e81092d6e1f38",
+        "arm": "183df8d62ee9e13fb7f1d383ee2b8d614156db72da9fbf7c1e5c9a3df2eeccdf",
+        "x86_64": "db93f80db3656e141e44cc841042d2b344489f0419bcb026e3d13d3a2aa354c0",
+        "i686": "2466ed1b0b0d893d99a96892e16627b04ae1625b5caf895ab645d11ef6101e4d"
+      }
+    },
+    {
+      "package": "broot",
+      "version": "1.62.0",
+      "maintainer": "@termux-app-store",
+      "description": "A new way to see and navigate directory trees : https://dystroy.org/broot",
+      "homepage": "https://github.com/Canop/broot",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/Canop/broot/archive/refs/tags/v1.62.0.tar.gz",
+      "sha256": "7c3445a6eef45fe67fe2e1f4e0e1f9dca796237d6303615e31b07798cc1716ba",
+      "recipe_sha256": "ffd238fb51cf179204336b19651787fcb2876a92802fe4c1ef84df3e62904836",
+      "platform_independent": false,
+      "depends": [
+        "rust"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "70be36cd56f248800cde767167f340816cfb1145fd3acd0a44694162207efe1b"
+      }
+    },
+    {
+      "package": "brutespray",
+      "version": "2.7.6",
+      "maintainer": "@termux-app-store",
+      "description": "Fast, multi-protocol credential brute-forcer. Parses Nmap, Nessus, and Nexpose output to automatically test default and custom credentials across 30+ protocols.",
+      "homepage": "https://pkg.go.dev/github.com/x90skysn3k/brutespray/v2",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/x90skysn3k/brutespray/archive/refs/tags/v2.7.6.tar.gz",
+      "sha256": "3541e1fd691a429989747556b37c354e45aeeb6776fb14ce825e6db90b958191",
+      "recipe_sha256": "8f0305b63674975be90cb0777a45eba57001b5b1bf76b770f4f4dbe2c335b5d5",
+      "platform_independent": false,
+      "depends": [
+        "golang"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "825bd0198822e2cec2edcb105645cb2cf75769929e447f6af0b0fc8c2cd8185c"
+      }
+    },
+    {
+      "package": "cmseek",
+      "version": "1.1.3",
+      "maintainer": "@termux-app-store",
+      "description": "CMS Detection and Exploitation suite - Scan WordPress, Joomla, Drupal and over 180 other CMSs",
+      "homepage": "https://github.com/Tuhinshubhra/CMSeeK",
+      "license": "GPL-3.0",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/Tuhinshubhra/CMSeeK/archive/refs/tags/v.1.1.3.tar.gz",
+      "sha256": "2e7562c7d9e131cc0a3623922df92fbfd98dd8e8e6b0321002c4fd5e06531249",
+      "recipe_sha256": "06e33ff4ba9db08febbdc515608f9f2529cae95d5fd41760d46b09c3e07e1749",
+      "platform_independent": false,
+      "depends": [
+        "python",
+        "python-pip"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "84d2a570948840f28d54af5467bf7da8ed0af516dbca0dc741cdeed1457026ba",
+        "arm": "7b1e77a30447a1c120d43ad8ded4cf8f021c8a52b77aa77f229140e8e35d1402",
+        "x86_64": "fde9ab7412008894a2f65fb066787e44fc680c1669a40f6a77753c8b3e9d0d2c",
+        "i686": "6764d8b0eaebcbfb77f6d03607485bbb720da74989235d61677b3594ab92173a"
+      }
+    },
+    {
+      "package": "cmsmap",
+      "version": "0.0.0+59dd0e2",
+      "maintainer": "@termux-app-store",
+      "description": "CMSmap is a python open source CMS scanner that automates the process of detecting security flaws of the most popular CMSs.",
+      "homepage": "https://github.com/Dionach/CMSmap",
+      "license": "GPL-3.0",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/Dionach/CMSmap/archive/59dd0e2b3b0c751c6da2b0565374ab83c736b0e6.tar.gz",
+      "sha256": "37644d93c791528c83f069a8c9fee78ebba0527ef1cf35b5752aa5037561fbc2",
+      "recipe_sha256": "9b5f577828c6282a22df70284f7440097070d006316c928a00fbfc742e9634d8",
+      "platform_independent": false,
+      "depends": [
+        "python",
+        "python-pip"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "af7f46f7c769bf52ca20bb1e9430f348e5839bd8b49e42a39e07b830708427d0",
+        "arm": "14cf8edf9a494fbf3d66e8e526dc9472425207488c14e93657caed40cb6d1dae",
+        "x86_64": "f7a14c1c89015899fd0ef9fce47f8569ba495aed1eac3f573f7067d32d8f9873",
+        "i686": "063ee534b8b3d068c926bb5c7fdf311ec1633d792cb7cacb90708034f3fedd33"
+      }
+    },
+    {
+      "package": "commix",
+      "version": "4.1",
+      "maintainer": "@termux-app-store",
+      "description": "Automated All-in-One OS Command Injection Exploitation Tool",
+      "homepage": "https://commixproject.com",
+      "license": "NOASSERTION",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/commixproject/commix/archive/refs/tags/v4.1.tar.gz",
+      "sha256": "d71e6a98231c2eb434eb9cc1b835523ad5618578309e2f835c40d767f2af79de",
+      "recipe_sha256": "1e755df02af5489b3091106cd71effd6d7cf12095e82d10d72a4b7308682176b",
+      "platform_independent": false,
+      "depends": [
+        "python",
+        "python-pip"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "66c55aadc5ab7280b8286aa53b81d1a8f081a262cfc2b5b53a786b95bc40664b",
+        "arm": "257232ef27fa70ee4ca900845dd00e7b2cb417200c1f39c3f96956785458056b",
+        "x86_64": "bdb8bc6d81e23a02bf9f5e97127e9a947401cc9a66b6df22b3a191c5da5079fd",
+        "i686": "faa24543a7f3f1dd3a9654380e85f0a45ed5d76d0c5b492e41fbce1c5ff87072"
+      }
+    },
+    {
+      "package": "crowbar",
+      "version": "4.2",
+      "maintainer": "@termux-app-store",
+      "description": "Crowbar is brute forcing tool that can be used during penetration tests. It is developed to support protocols that are not currently supported by thc-hydra and other popular brute forcing tools.",
+      "homepage": "https://github.com/galkan/crowbar",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/galkan/crowbar/archive/refs/tags/v4.2.tar.gz",
+      "sha256": "b65cd4c39e50a4311d075f9c219b2ebb7ba06a48f8e4e5cb0082d48412bcb23d",
+      "recipe_sha256": "8a26779a719603e4a1c6a1348ec5f5677ef20458750085a2ab5f8126c105b499",
+      "platform_independent": false,
+      "depends": [
+        "python",
+        "python-pip"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "af0cf720b292dc538c57a1484213a82c30ddf5cb990024e422424291c6b795f0",
+        "arm": "b9ee655ef548be9ee20cb00289d3888eb9c60b9f97bf12e4ceca46e34c059edc",
+        "x86_64": "507ac9afe355b4b737698814d93d50b88e4e5ad6320008c1e3f9c2a86750080c",
+        "i686": "24e1da5d052367396760b8e58b0c2a0c38127717d378940ce477856355e3f16b"
+      }
+    },
+    {
+      "package": "cupp",
+      "version": "0.0.0+b77f1ae",
+      "maintainer": "@termux-app-store",
+      "description": "cupp — auto-packaged by termux-build-init",
+      "homepage": "https://github.com/Mebus/cupp",
+      "license": "UNKNOWN",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/Mebus/cupp/archive/b77f1ae66c10ab2d0fa09c67017949fb5ba187aa.tar.gz",
+      "sha256": "2b88e3df1af6df952dfe6b08d151fe017f527388e35dd44940b4e6bcfc16d918",
+      "recipe_sha256": "3111f19bcb60a9021b1f0d81908afba6bea0b7837fc2fb8bb3cfa2cdac488444",
+      "platform_independent": false,
+      "depends": [
+        "python",
+        "python-pip"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "1020f64712b4bf62ef6c89fb59bbb6fba25cb4ac6ba7bb170399f0482e6bdf69",
+        "arm": "909370617704f7daa63bbff9fbf55805b4731f4b843c9fb03ce92faa57de9450",
+        "x86_64": "e32e0fea09c8c820e926cb38390095e806a215bae0f1e34bb53726ebc47ba9d2",
+        "i686": "b8b3e5ce238b0bc83689e7858670d4f86e5d65eb22c8d7d13a9e8450cee22811"
+      }
+    },
+    {
+      "package": "cybertuz",
+      "version": "1.0.2-2",
+      "maintainer": "@termux-app-store",
+      "description": "Comprehensive Educational Learning Platform for Termux",
+      "homepage": "https://github.com/djunekz/cybertuz",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/djunekz/cybertuz/archive/refs/tags/v${TERMUX_PKG_VERSION}.tar.gz",
+      "sha256": "bb13587b662be15317a3d32c9f2f8bbfb4b602ff745d201b981c1022e0c7a0f9",
+      "recipe_sha256": "b2ae95c3631faad22bd65a9a04442f38d02d384c3917bd4c708a499193f12fd4",
+      "platform_independent": true,
+      "depends": [
+        "nmap",
+        "python",
+        "whois",
+        "curl",
+        "dnsutils"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "6896b63d3ec01631904de0058a81235cac15180395471722f1d199dd60478409",
+        "arm": "a0dce53efa1505c1c1d18b89be1cc0618f5df127d451d8cc21ecf9bc1da1e1b4",
+        "x86_64": "cd67ec8886d907180768ac3c93bf6ad6be65aa64930fbbae3427877e8c9d82a2",
+        "i686": "d8dd0a2f23d75dd56ae174e01f51ef4efd15ef153dfba8f1411170599969d052"
+      }
+    },
+    {
+      "package": "dalfox",
+      "version": "3.3.0",
+      "maintainer": "@termux-app-store",
+      "description": "🌙🦊 Dalfox is a powerful open-source XSS scanner and utility focused on automation.",
+      "homepage": "https://dalfox.hahwul.com",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/hahwul/dalfox/archive/refs/tags/v3.3.0.tar.gz",
+      "sha256": "9613d8266b7fa7348829590caed0af567ba7cd0137075add913d8037066dd9dd",
+      "recipe_sha256": "741a2ad95a8f3120b09a04d23cc7ea212d41eb648d8d7a98ad54d16e2b3290ab",
+      "platform_independent": false,
+      "depends": [
+        "rust"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "837628a0c4a27f06dc76aa4ad1891d6958f15526c854de9519f7628e85353c20"
+      }
+    },
+    {
+      "package": "djangohunter",
+      "version": "0.0.0+a5a715e",
+      "maintainer": "@termux-app-store",
+      "description": "djangohunter — auto-packaged by termux-build-init",
+      "homepage": "https://github.com/6IX7ine/djangohunter",
+      "license": "UNKNOWN",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/6IX7ine/djangohunter/archive/a5a715ee393f463dddf48d1b893eaaede241c58a.tar.gz",
+      "sha256": "1d753e468b7acb3c856079a0316c6c001cf23e36d57134caadb33dbf81ee7ada",
+      "recipe_sha256": "59db48e0226593f1f4d27990b9a6d1b395a684017f7f6207420ac4426e5b698e",
+      "platform_independent": false,
+      "depends": [
+        "python",
+        "python-pip"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "242e37aa17dc38f50c4c8d0408e040f7cfeda7898d4607c112fecbdfd33a532a"
+      }
+    },
+    {
+      "package": "dnsmap",
+      "version": "0.0.0+d2f89e0",
+      "maintainer": "@termux-app-store",
+      "description": "fork of http://code.google.com/p/dnsmap/source/checkout",
+      "homepage": "https://github.com/makefu/dnsmap",
+      "license": "UNKNOWN",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/makefu/dnsmap/archive/d2f89e0e97969961d53e2222839cdd079d7b4ed2.tar.gz",
+      "sha256": "65bdf7f1f95df1ba1bb28d0b0be52c40b329df4107d8a3d29895824e511eabe3",
+      "recipe_sha256": "46f35d3264b328498d282a75f090f353777345664d8b72fb3da7ca6a3f525698",
+      "platform_independent": false,
+      "sha256_by_arch": {
+        "aarch64": "10ac140f0c8e6a926adc1f52851fb259ece7d86efe7a7e2eabdb3e3172271271"
+      }
+    },
+    {
+      "package": "dnsrecon",
+      "version": "1.6.3",
+      "maintainer": "@termux-app-store",
+      "description": "DNS Enumeration Script",
+      "homepage": "https://github.com/darkoperator/dnsrecon",
+      "license": "GPL-2.0",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/darkoperator/dnsrecon/archive/refs/tags/1.6.3.tar.gz",
+      "sha256": "7f7e230bb3fae959ff37ac19d1c1deea25089ac6a1bbbbf3b4e26e78ed96bd7a",
+      "recipe_sha256": "fcbbcf5e08882566705e853d9c4e4adc04dfd2171eb6e3141a7fce8d0cca184a",
+      "platform_independent": false,
+      "depends": [
+        "python",
+        "python-pip"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "12be2f9adf9157a678386dc5bef20a231bf029558d067a484fe97098267f0768",
+        "arm": "939abc0a4ab52c98d1753af1e4b2a4d097f2ccdbcd952ac19691b2bd6b65c332",
+        "x86_64": "11ca3f777a355104f024e11b77c12ad92164a7936ba6caf7651d8bae16091f60",
+        "i686": "9fd55da505b7aeae34aea36958050bded983a027e0ce788ce403d8069888ed51"
+      }
+    },
+    {
+      "package": "doona",
+      "version": "0.0.0+7a4796c",
+      "maintainer": "@termux-app-store",
+      "description": "Network based protocol fuzzer",
+      "homepage": "https://github.com/wireghoul/doona",
+      "license": "UNKNOWN",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/wireghoul/doona/archive/7a4796cb4b898c251068e64f7524d125d50c8421.tar.gz",
+      "sha256": "b0207257047d7d0c5bcd58052f836560dfe2fac421faef60f6bf642a9c7c5df3",
+      "recipe_sha256": "a445b0d484065b0581e6e29210d263cb7a95b2e31f621c56689536cf9e664117",
+      "platform_independent": false,
+      "depends": [
+        "perl"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "9c4aebe01b280aa945c55acad449856f0f57154a91f9ae13f925f5f80eb1992f",
+        "arm": "09139eaabe590e25a21d0509748f7ddcd44aed341484bbd404002eb6160f174a",
+        "x86_64": "f0be3af3d52a537117b06e90c08b957e830a58d8dc7ed96633cf92ad9d461829",
+        "i686": "cb4173d52d1a5ffb4d9492584be9f1da387160cbc19817b60d5e7779f220c1be"
+      }
+    },
+    {
+      "package": "dust",
+      "version": "1.2.7",
+      "maintainer": "@termux-app-store",
+      "description": "A more intuitive version of du in rust",
+      "homepage": "https://github.com/bootandy/dust",
+      "license": "Apache-2.0",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/bootandy/dust/archive/refs/tags/v1.2.7.tar.gz",
+      "sha256": "923a2eed637d2ea5f4ad5f820b6f87cc6e0081cfa4bc5ed1fe09278dd74db963",
+      "recipe_sha256": "b9aa93c0b3c3bf24dcc66ae0800155badaf84fc57e5d99c64a7a1e4bf27c6e93",
+      "platform_independent": false,
+      "depends": [
+        "rust"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "ad3ad255f31ed946e699e9ef6613fa1cc1800c9fcd595021657aa86edf5f7248"
+      }
+    },
+    {
+      "package": "elpscrk",
+      "version": "0.0.0+53caddb",
+      "maintainer": "@termux-app-store",
+      "description": "An Intelligent wordlist generator based on user profiling, permutations, and statistics. (Named after the same tool in Mr.Robot series S01E01)",
+      "homepage": "https://github.com/D4Vinci/elpscrk",
+      "license": "GPL-3.0",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/D4Vinci/elpscrk/archive/53caddb29512e7c7f06768ef6c9669788ee08e2b.tar.gz",
+      "sha256": "42661eb304d50b8b8036d74b187d790940fc70568abe74b80fc4597454ef634a",
+      "recipe_sha256": "767da5b1d728a02d04c36a8565aade9488ece3d430d27987f576293f15515f7a",
+      "platform_independent": false,
+      "depends": [
+        "python",
+        "python-pip",
+        "python-psutil"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "f6878bfda57a784c711354bcbf520a58b09f912d4e8f124d1296ce4bb6e19d64",
+        "arm": "ef20340bb36cc5e8844b2265d0a9da34157c1b13bfbdb90264fa545b8efc1d87",
+        "x86_64": "ace6c91d796f8b2a5da6163770b8f9065525aa943c5bfc593df428796402262b",
+        "i686": "cfb726e5e71c42be5ba3db7a1495ee92a6e5c8ffeb76b9df6f5bd6321d1dfb89"
+      }
+    },
+    {
+      "package": "encrypt",
+      "version": "1.1",
+      "maintainer": "@djunekz",
+      "description": "ELF binary for file python/python3 with build deb package",
+      "homepage": "https://github.com/djunekz/encrypt",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/djunekz/encrypt/archive/refs/tags/${TERMUX_PKG_VERSION}.zip",
+      "sha256": "07d954452ed93a1aec029e727da275004bdb67940743a41b357f333b7cc36d5a",
+      "recipe_sha256": "71ed10a7b474a6f3cd99734652ea56fe1e039e75e33110985d2648d461467d52",
+      "platform_independent": false,
+      "sha256_by_arch": {
+        "aarch64": "f048c59b282fa656fc59682971781074013026ec634a8f8bd63c4c15705c482f"
+      }
+    },
+    {
+      "package": "eternal-scanner",
+      "version": "2.2",
+      "maintainer": "@termux-app-store",
+      "description": "An internet scanner for exploit CVE-2017-0144 (Eternal Blue) & CVE-2017-0145 (Eternal Romance)",
+      "homepage": "https://github.com/peterpt/eternal_scanner",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/peterpt/eternal_scanner/archive/refs/tags/2.2.tar.gz",
+      "sha256": "104bf52263192824556afbe5aa061b888310dd8de2afc0ee520d456595db884b",
+      "recipe_sha256": "31e6cdb23ea5796265b543609d4402af77d8649126fb968283163454c662ab3c",
+      "platform_independent": false,
+      "depends": [
+        "python",
+        "python-pip"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "6d23b2dd94271fbe86ce7e6c9fef09b7fcc119e14428a40f67b14bf957299a43",
+        "arm": "4e63ff26c5ba3ed36093ade4a3bfe3d8fb5decc8c8fc5eb95f4447cbc2ab01ef",
+        "x86_64": "c1fed093ad84863a4e885be6b970dc83149794b5c1cc1a36ff8e97ed637d1913",
+        "i686": "e0661af25547f4304ab91ce47e56607b7e852491ecd6dcaa485d14ef1b1525f3"
+      }
+    },
+    {
+      "package": "evilginx2",
+      "version": "3.3.0",
+      "maintainer": "@termux-app-store",
+      "description": "Standalone man-in-the-middle attack framework used for phishing login credentials along with session cookies, allowing for the bypass of 2-factor authentication",
+      "homepage": "https://github.com/kgretzky/evilginx2",
+      "license": "BSD-3-Clause",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/kgretzky/evilginx2/archive/refs/tags/v3.3.0.tar.gz",
+      "sha256": "6d33f0d0b4b569af5207102512945502ed37090879dcf6987322d670912a4133",
+      "recipe_sha256": "7de29ab8c0f3f68835b950dc77f7e5e5566ae38c330da3fb7d97f3ee4910eb48",
+      "platform_independent": false,
+      "depends": [
+        "golang"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "76b91ecda65e93c425d189ef98a388aa9e49f510b594535797527c80e1a2d79f"
+      }
+    },
+    {
+      "package": "fbvid",
+      "version": "0.0.0+3786551",
+      "maintainer": "@termux-app-store",
+      "description": "Facebook Video Downloader (CLI) For Linux Systems Coded in PHP",
+      "homepage": "https://github.com/Tuhinshubhra/fbvid",
+      "license": "UNKNOWN",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/Tuhinshubhra/fbvid/archive/37865517a3f13a53acaf0fbc5dbf02f68bab7a01.tar.gz",
+      "sha256": "de8c174dc5bce8ec4c0af8f9939f6b00635b341fe1e5b78303cad73e3e5c03a7",
+      "recipe_sha256": "44945490ab5fe6642d5f7aafb7bc78562199f87443f9650ee479f7263d9ae864",
+      "platform_independent": false,
+      "depends": [
+        "php"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "ecc133cf4bcc9ff33d1094e427241ed0d4f0cafb50c682c92ea56ada4d6c4229",
+        "arm": "d8ed1f24734af718675931ff23587c8275c32c50e3d22d9e3a788a5aead3f98e",
+        "x86_64": "f56909c03c35ae3b2ec09c572b9e18d0c41ef5e72cb532bc52eae5300d6a731c",
+        "i686": "52a978dfaaa520fb6087ff9f8fcbdb5ada83286bb8563c98893f07241da07a46"
+      }
+    },
+    {
+      "package": "fd",
+      "version": "10.5.2",
+      "maintainer": "@termux-app-store",
+      "description": "A simple, fast and user-friendly alternative to 'find'",
+      "homepage": "https://github.com/sharkdp/fd",
+      "license": "Apache-2.0",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/sharkdp/fd/releases/download/v${TERMUX_PKG_VERSION}/fd-v${TERMUX_PKG_VERSION}-aarch64-unknown-linux-musl.tar.gz",
+      "sha256": "63ea52cb31586e6d98efa2f06d73d542f16c7d0c4af0f07b579aaf9714cf907a",
+      "recipe_sha256": "9829a5403867cdf2a1247af399ab2df682736b86ce3e2021c7fe398d1542becb",
+      "platform_independent": false,
+      "sha256_by_arch": {
+        "aarch64": "de761b68372791978585c194be8c9b8ea50dca047d8853b0aea191ea43ffd19d"
+      }
+    },
+    {
+      "package": "fuckshitup",
+      "version": "0.0.0+91e555c",
+      "maintainer": "@termux-app-store",
+      "description": "php-cli vulnerability scanner",
+      "homepage": "https://github.com/Smaash/fuckshitup",
+      "license": "UNKNOWN",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/Smaash/fuckshitup/archive/91e555c704fe48f26b71392c77a658f463014150.tar.gz",
+      "sha256": "5b0931fd97faf4005cb305c05443a01faebe8e601a5b5105a18b23a334c600db",
+      "recipe_sha256": "685f1deb375602aa299ebb1d975ec5163705c04199135e55ba1dc67970bab484",
+      "platform_independent": false,
+      "depends": [
+        "php"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "6d63c2ebda97bf58aa724d5f564e396babb6ab60edff2de303af2574afe7a8e1",
+        "arm": "8e3b12318e60d6f5f94833fb5beecc44eae3a8510ac8b5e168172d6cb4b91c11",
+        "x86_64": "d4d5476ba0bf1a7bc33edf91cadcbe6a4d845494be677e4b76cb65601ed3538f",
+        "i686": "43c290d2d272eca0bbda23a73ff3e9a87d5dffaf609b02c1629f69f0259c83c6"
+      }
+    },
+    {
+      "package": "get",
+      "version": "0.0.0+14b0bc3",
+      "maintainer": "@termux-app-store",
+      "description": "Get is a simple script to retrieve an ip from hostname or vice-versa .",
+      "homepage": "https://github.com/peterpt/get",
+      "license": "UNKNOWN",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/peterpt/get/archive/14b0bc3f922abbe3d11087051b9b9c06f37284f4.tar.gz",
+      "sha256": "4d28e816c7ecbdf3d2a812e3dbd6c7639c7a03eca35e0c01700d0ac46419efe7",
+      "recipe_sha256": "c1df8490f2bab50c308e006f42254fe383332180f0764eaead18e7213fb4664a",
+      "platform_independent": false,
+      "sha256_by_arch": {
+        "aarch64": "81758bc1bd5041ecb459e766fa6cead02cd4e462c4d7362acb86df07ff902ae0",
+        "arm": "5ec60de2044f3b6070d998650aa9a315a0e76f2117f4c7b7722968f7240d7574",
+        "x86_64": "ebcf72aa1b91d27784884cab8be1d175f7b7d12337a504de2270c0776f5e7516",
+        "i686": "db2db898ae3f794f92311b3c5d682462d7d462ac9e919951861fc98cc2c7c15a"
+      }
+    },
+    {
+      "package": "goblinwordgenerator",
+      "version": "0.0.0+6afad56",
+      "maintainer": "@termux-app-store",
+      "description": "Python wordlist generator",
+      "homepage": "https://github.com/UndeadSec/GoblinWordGenerator",
+      "license": "BSD-3-Clause",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/UndeadSec/GoblinWordGenerator/archive/6afad5658e7bda00441428efeb0ae35cc4397302.tar.gz",
+      "sha256": "f5a51887f2551e533bc3ab495bf95d9d4b1d16394cb8a5298e8389d7cd192e61",
+      "recipe_sha256": "5bbadc49fa7ccd57ec67ed329a2598bd732371cfb01e72f7d227a570c10a156a",
+      "platform_independent": false,
+      "depends": [
+        "python",
+        "python-pip"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "c1e97d4c5e033f890ea12e6ae0c0349e85931e4c5cf523cc54963343b013f684",
+        "arm": "7d394d0434d298058b3285dccf5d4517e77c65f87c36240e6dc286c3f309ce4e",
+        "x86_64": "b288f829b92c7dd34fd8095c64572aca58102f2b0bb5ede6c4597320f69eb76c",
+        "i686": "56559979ee6f50ab37e65a839b6919d76f8b0cd8e3ff2ed2c07fe98f0d9a2045"
+      }
+    },
+    {
+      "package": "gobuster",
+      "version": "3.8.2",
+      "maintainer": "@termux-app-store",
+      "description": "Directory/File, DNS and VHost busting tool written in Go",
+      "homepage": "https://github.com/OJ/gobuster",
+      "license": "Apache-2.0",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/OJ/gobuster/archive/refs/tags/v3.8.2.tar.gz",
+      "sha256": "6919232eafbd0c4bbc9664d7f434b6a8d82133aa09f1400341ef6985ceff208a",
+      "recipe_sha256": "44fb0a2ec3310618fa3c581367fb934fe93e4d9224f99a4232d4cf8469c99a4c",
+      "platform_independent": false,
+      "depends": [
+        "golang"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "042f22d9b2ecdc7a040d5c7a01623027ef5f9bec8310e95c1077fd60ee85e547"
+      }
+    },
+    {
+      "package": "hash-buster",
+      "version": "3.0",
+      "maintainer": "@termux-app-store",
+      "description": "Crack hashes in seconds.",
+      "homepage": "https://github.com/UltimateHackers/Hash-Buster",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/UltimateHackers/Hash-Buster/archive/refs/tags/v${TERMUX_PKG_VERSION}.tar.gz",
+      "sha256": "b6581a0ce55deab0f2fba7c670b00da1e3909bc24db51f0a85d6d47aa8a8cb2c",
+      "recipe_sha256": "bda62c58b54387fa1360a5127df87fad4e454bae5ce2726c4c87d0b61158bd55",
+      "platform_independent": false,
+      "depends": [
+        "python",
+        "python-pip"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "4df71ef250012c90f3b6578f7907d1c6e439ac4eba67e8d9fe284927961015c7",
+        "arm": "34b2bac72e971c40b0b924964d6d0261ccf3574a491e6ca988a44fcfa48bd9b5",
+        "x86_64": "e89881e23dca4dec3574ac97cb609eb1ffdc2ac76d2e1a35dbdd85a5edc7df4f",
+        "i686": "fd5f29b9fa79b649b17394dd132b26f9988aae0fd8b51044e88fbcc1016488e5"
+      }
+    },
+    {
+      "package": "holehe",
+      "version": "0.0.0+14da70f",
+      "maintainer": "@termux-app-store",
+      "description": "holehe allows you to check if the mail is used on different sites like twitter, instagram and will retrieve information on sites with the forgotten password function.",
+      "homepage": "https://github.com/megadose/holehe",
+      "license": "GPL-3.0",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/megadose/holehe/archive/14da70f588538936b20d238783c5e28a0772a2b3.tar.gz",
+      "sha256": "4a69a7c7d5e65bc66f0bf990b3fdeae258074665359f7b6c3b3c12965ed69891",
+      "recipe_sha256": "1a1d3e6b7e72a773151d6595454884233453095d362e607f816d1a7d622dcfbc",
+      "platform_independent": false,
+      "depends": [
+        "python",
+        "python-pip"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "c6f7d2b3abacbe903b55b9e0afbccf064e27a229d21e0e9c9d86a6ed33907678",
+        "arm": "422d286e137555e8ce83597f4566b3e666a5e13bdd1b11c5dbf43aecc5072b31",
+        "x86_64": "648c2be34de97541139d061be6fbd4749e08574aee430bec8e0f475cffb639c2",
+        "i686": "d4540ca17b5e478e6dae21032ddc156a9f991cd013b930eb3fe282dee7ddec94"
+      }
+    },
+    {
+      "package": "ht-wps-breaker",
+      "version": "0.0.0+e218bdf",
+      "maintainer": "@termux-app-store",
+      "description": "HT-WPS Breaker (High Touch WPS Breaker)",
+      "homepage": "https://github.com/SilentGhostX/HT-WPS-Breaker",
+      "license": "UNKNOWN",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/SilentGhostX/HT-WPS-Breaker/archive/e218bdfa34364eabe6de2e982264451d2c597ff5.tar.gz",
+      "sha256": "867c609f5abbe16e64721d559e6615411dd09c45abc834e4c98dd9755093048d",
+      "recipe_sha256": "12a6f9598509a4e23a077fa7dcb07b95ed5a969618a70ef476d440836f79018f",
+      "platform_independent": false,
+      "sha256_by_arch": {
+        "aarch64": "22837565bf6503e32109fb8dc1f0ca9e02cce69797efc2ecc57e8ddf4a718ed4",
+        "arm": "e178db8fb30e6d4cf4cbbe39ee5e68a9e6fbebc0c094fab83fe3a577a34799c9",
+        "x86_64": "fd74679ce4401eeaecde1645fd585b1fb62f93b629fe022d71faaf6dad48dd1a",
+        "i686": "19bb5ad05a9215bbc9155db1e87d807c7d12b20bdaada200e8d3e149c2088f7a"
+      }
+    },
+    {
+      "package": "hunner",
+      "version": "0.0.0+5e46a45",
+      "maintainer": "@termux-app-store",
+      "description": "Hacking framework",
+      "homepage": "https://github.com/b3-v3r/Hunner",
+      "license": "UNKNOWN",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/b3-v3r/Hunner/archive/5e46a4532469df816e0a4329671cb76fb1300d74.tar.gz",
+      "sha256": "e6f6ebfae6e0c442fb4d6c489c72b9d446fc2e87d08e9acc5a6a3b5d5151c278",
+      "recipe_sha256": "76ab549252da7c9bc86b83103122a0c5d3a8827896e01071befdc2afeec46a5b",
+      "platform_independent": false,
+      "depends": [
+        "python",
+        "python-pip"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "97b3f0bd946fbad6c99c329a11d46b43ebc5ac2d6535b0551d7593086a544369",
+        "arm": "fe5a13a67efe55e517e99541dc276f05d123f9ddcfbc56de39759a54fdc015f5",
+        "x86_64": "f8d3be8083cdb768c042fdf5ba3030d9cf235739e39931befddc5d7f6f2153ee",
+        "i686": "b5dbbeb0d8bf4bb579f37b45e7b15d5bf55474a2b62bbd8a04e61acb800d6c63"
+      }
+    },
+    {
+      "package": "impulse",
+      "version": "1.0.0",
+      "maintainer": "@termux-app-store",
+      "description": "Denial-of-Service ToolKit with multiple attack methods",
+      "homepage": "https://github.com/LimerBoy/Impulse",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/djunekz/archive/releases/download/v${TERMUX_PKG_VERSION}/impulse.tar.gz",
+      "sha256": "d03e1a4c74a09b63900ffd1bc889bbc8f5720b83914b1a2fdd5453fb23a63c18",
+      "recipe_sha256": "c77243a6fb9ba8d31ef9038c726279a5ffbd9876beef6b2a42e0aff388a1fc0c",
+      "platform_independent": true,
+      "depends": [
+        "python"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "082d0b38ca3804ead0a8e9838528dc9e6c6c153c55cbdb32ec33bf53f48a78f4",
+        "arm": "f40ced561ed9e4f6ef4630e4590ccf546acc47f54f72bd764684d53400c889e5",
+        "x86_64": "4bd2ee92e78f9e484956dccf409fa5402aa3e40267f6f795b0d2230517a19016",
+        "i686": "6d05cfba105d5090117b4b54d16b1c2f927124f4cc83e8259e5663974ef92c36"
+      }
+    },
+    {
+      "package": "infoooze",
+      "version": "1.2.2",
+      "maintainer": "@termux-app-store",
+      "description": "A OSINT tool which helps you to quickly find information effectively.",
+      "homepage": "https://github.com/devxprite/infoooze",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://api.github.com/repos/devxprite/infoooze/tarball/v1.2.2",
+      "sha256": "4a02d4b6e878f9abb76d340574199bf4b6bf4eb0edb252e7eb6967903e121d62",
+      "recipe_sha256": "c715257f4705509466b6e79663f32b1f311cc1a2c196a67d90b6b5cc22ba3e90",
+      "platform_independent": false,
+      "depends": [
+        "nodejs"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "78991516d2c9d66b2c86f32baa4e82f93227631fa2d6681f5190f23290b4f835",
+        "arm": "2e96c3055c7b726ceaf1398ad7f0f5925201d253e0ab2c3b1f438a71fd59f29e",
+        "x86_64": "dd14f51216eeb1c11e7d6889ab04376591888af2701dad2e51639d50fcd0ac59",
+        "i686": "8800098f05061dd22117f887f7534f290f88fac61c87ffa9f4e819e783f1d415"
+      }
+    },
+    {
+      "package": "instareporter",
+      "version": "0.0.0+c8e1527",
+      "maintainer": "@termux-app-store",
+      "description": "Instagram Mass Reporting Tool",
+      "homepage": "https://github.com/muneebwanee/InstaReporter",
+      "license": "GPL-3.0",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/muneebwanee/InstaReporter/archive/c8e15277c0481f2cefa339b03818c412c0ab3186.tar.gz",
+      "sha256": "d0f3a77fd24ff76e72d3274104d4993f687fbc6f4117754e6ce1ff121372921f",
+      "recipe_sha256": "a34d7d8d95414223a4a6ba674ecf7db3d2730219dd3c91437a05f6a5d3272f4f",
+      "platform_independent": false,
+      "depends": [
+        "python",
+        "python-pip"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "5548f3e68a7f8840322061ebcd21ae0135dbfd835f60e5ac2a1bb592ac173c16",
+        "arm": "96e0c9e229f8cde82a9e952e7f8be8fc0ef57e627de9b730b50137d781043afd",
+        "x86_64": "7f5dda925cce831df08635e421914cce672edeaec10f8d4534a3c1db34f38496",
+        "i686": "0a1702b2d8aea3500b0f4b1ebcd061bfba0a658570d8b298cd00640c87aef233"
+      }
+    },
+    {
+      "package": "ip-tracker",
+      "version": "0.0.0+728535e",
+      "maintainer": "@termux-app-store",
+      "description": "Track anyone's IP just opening a link!",
+      "homepage": "https://kasroudra.github.io/IP-Tracker",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/KasRoudra/IP-Tracker/archive/728535ebc14e650d5309f72ee5d78b2d194e7649.tar.gz",
+      "sha256": "28ca93cebf7cd59e76c9eb798f119bb594f633130d9f1d2c5c9d953a5e2a4a09",
+      "recipe_sha256": "f3b0a19b26adde71ba622b6b14e5c34e0307c5da6006a860b32b07fc9b46cde9",
+      "platform_independent": false,
+      "sha256_by_arch": {
+        "aarch64": "38e671ec26f4b4b2a1562e22dfc6061ee611739857f7e0d4c6133914e0cec89e",
+        "arm": "6007395cabe97dd86f772e14617aba4de4464c546eed3602de4e7f833f2792d2",
+        "x86_64": "7078f63d26acb7927dcab3302c46a3f7c174d2570430e5867dc09611d1f1650f",
+        "i686": "a1099fcdb711e690770b42dcbbc132247baa7e2867c848f2636da8bc4ea918b6"
+      }
+    },
+    {
+      "package": "ipgeolocation",
+      "version": "2.0.4",
+      "maintainer": "@termux-app-store",
+      "description": "Retrieve IP Geolocation information",
+      "homepage": "https://github.com/maldevel/IPGeoLocation",
+      "license": "GPL-3.0",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/maldevel/IPGeoLocation/archive/refs/tags/2.0.4.tar.gz",
+      "sha256": "fabc086113f89f9e8fe1ed7fbfec776780d43df63c67401c48b8f36948fa9ecb",
+      "recipe_sha256": "ce6e53d9a71490a671b77725b0a583ab4e72345289d456151527a6b8afedd2f5",
+      "platform_independent": false,
+      "depends": [
+        "python",
+        "python-pip"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "ecc3ce6202c2f785d2bbd1131ef69036b1e7c4401e43db2342a704ba160892af",
+        "arm": "ef769775a246d0ded8eab110d27af17b9df247e7cd79341d6ae59c00e7cb41dc",
+        "x86_64": "54eb03776dc3e6dd5e9d25bba55fb010a4a5dc816c896083f79fa8bc77ea4d1e",
+        "i686": "3c7c1206cd1eb4bca413b32f45cea396d015daf96c578414dd0c944aefd6cddc"
+      }
+    },
+    {
+      "package": "killchain",
+      "version": "0.0.0+fef616f",
+      "maintainer": "@termux-app-store",
+      "description": "A unified console to perform the \"kill chain\" stages of attacks.",
+      "homepage": "https://github.com/ruped24/killchain",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/ruped24/killchain/archive/fef616f66ae18b9855cdd7f58a586551fcd3cdcb.tar.gz",
+      "sha256": "c6b0bd9887ca2bb9ded7084ec7a3e907d5625c272de1df6db92789461323c609",
+      "recipe_sha256": "e4c97fe1827004100103ed1db47abe28d63c6d7a46795894e432a801802c61f0",
+      "platform_independent": false,
+      "depends": [
+        "python"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "d4e4ac5115d955800a864a2040b8f6a5fc51bad81e60d4120d2a174f2228222c",
+        "arm": "854fb74110dde3be81d5b931a6b8c3f9ab1496ae14759e6314c05ed9657e6676",
+        "x86_64": "cabebab37e1d83658858a369dade640bf122caaee9609d896d46e979a3b89cbf",
+        "i686": "31c4744a7532ef07e95cf23f71399ff1d50c88dc3d92023422c263ff282c7686"
+      }
+    },
+    {
+      "package": "lalin",
+      "version": "0.0.0+ab55979",
+      "maintainer": "@termux-app-store",
+      "description": "this script automatically install any package for pentest with uptodate tools , and lazy command for run the tools like lazynmap , install another and update to new #actually for lazy people hahaha #and Lalin is remake the lazykali with fixed bugs , added new features and uptodate tools . It's compatible with the latest release of Kali (Rolling)",
+      "homepage": "https://github.com/Screetsec/LALIN",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/Screetsec/LALIN/archive/ab559794057a31ba9e38a4200073e5ca2d1f429a.tar.gz",
+      "sha256": "482d6f88dbf07f82693372ddcea0444779b67f525d65fc50cb45be0c4aa1128a",
+      "recipe_sha256": "76982b8be754a46afd5b73c1366deb1536d326878c1b389707d04ab110b7ad82",
+      "platform_independent": false,
+      "sha256_by_arch": {
+        "aarch64": "a7f991e61d98a03bb33be943b2f91f12ffaef8cc7f8ecf72a98233465bc6e3ab",
+        "arm": "3668f711e14d0d88d718577f5577c72edd220e575d94862ed716c53790bccf84",
+        "x86_64": "2bf702d3b12c353ef09210b28be1f66dd7727030456a84f745eea3245b791de1",
+        "i686": "057fe33adaf5270042adfbc45a7bec8cb546022a1bf5c745907304206a1a8dfc"
+      }
+    },
+    {
+      "package": "lazymux",
+      "version": "0.0.0+3b4e747",
+      "maintainer": "@termux-app-store",
+      "description": "termux tool installer",
+      "homepage": "https://github.com/Gameye98/Lazymux",
+      "license": "UNKNOWN",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/Gameye98/Lazymux/archive/3b4e747e1bdd10f1240f78018ac8ee6fff6d0379.tar.gz",
+      "sha256": "d30e4ee4e6490b2e6fa288a03f3120426d6bdea53c0f7a04f7d7ec7815e8a5e0",
+      "recipe_sha256": "46f6a578048341866a3233a21ce3829340baa683f6e987f73ec18093884a916a",
+      "platform_independent": false,
+      "depends": [
+        "python",
+        "python-pip"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "a1d538defb6b96313d96fb9497e6879584d85105043d75ba6b5b79c2daf377e3",
+        "arm": "ce70bcec5684797bae05bf6e4901f2d7010af7d21bbfb58e2220ca2059901698",
+        "x86_64": "f629b980c6b17cb5143834f69a5533d33969d4d37cbaad9caf53d93c500f260e",
+        "i686": "90feeceed9aa5cd029ecf1512d07a72d3e26c95db66d41e8c5c206effbbd5573"
+      }
+    },
+    {
+      "package": "leaf",
+      "version": "1.29.3",
+      "maintainer": "@termux-app-store",
+      "description": "Terminal Markdown previewer — GUI-like experience.",
+      "homepage": "https://leaf.rivolink.mg",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/RivoLink/leaf/archive/refs/tags/${TERMUX_PKG_VERSION}.tar.gz",
+      "sha256": "6d7343042c072f0065d4357666aa3530a3fce03d79cea7378fe20e816e2b5240",
+      "recipe_sha256": "46e12ae5bae157ed08bcd0ab6a3f85da1455eee7681e4cac8a4974edec461e23",
+      "platform_independent": false,
+      "depends": [
+        "rust",
+        "bash"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "d2a739aa5d94beae84ded553d10a8bf86819cbba63935fd5af3b6656eb9d42b6"
+      }
+    },
+    {
+      "package": "lux",
+      "version": "0.24.1",
+      "maintainer": "@termux-app-store",
+      "description": "Fast and simple video download library and CLI tool written in Go",
+      "homepage": "https://github.com/iawia002/lux",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/iawia002/lux/releases/download/v${TERMUX_PKG_VERSION}/lux_${TERMUX_PKG_VERSION}_Linux_arm64.tar.gz",
+      "sha256": "479b09290b8ddda43c994ec5685649eb4635f4bd24ff24e494eddaae473879d7",
+      "recipe_sha256": "8df25e3c38390e0ba591c53cac3f7074b8d00ad19fa205b08a2e399c6ad3e0db",
+      "platform_independent": false,
+      "sha256_by_arch": {
+        "aarch64": "afe4c469d8331a552403f344cf11006d696abd2dd7591ff3e449dd73ae9af7f6"
+      }
+    },
+    {
+      "package": "merlin",
+      "version": "1.1.5",
+      "maintainer": "@termux-app-store",
+      "description": "Analyst website vulnerabillity scanner",
+      "homepage": "https://github.com/djunekz/merlin",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/djunekz/merlin/archive/refs/tags/${TERMUX_PKG_VERSION}.tar.gz",
+      "sha256": "b0aad1281ba139f39b81be912237fc2f76e586bf5f0b89a7bac2918baeddbb00",
+      "recipe_sha256": "726be907bf86672de143167a90e3862ef1378baf26e4c4d734ac8a6248ad951a",
+      "platform_independent": false,
+      "sha256_by_arch": {
+        "aarch64": "8bcd22388b155162de59051d8986479c89eb93b66fa089a606dd4b4f2f694dd5",
+        "arm": "713e17056a4f506f1b2f570672fd29c3e22d28073f9e96d3648698b920f40f7e",
+        "x86_64": "30703cdfbf60cde99223a66f1302fd40c07786d70a4f745b29d40c63fca1788a",
+        "i686": "2321bf56511cb12c0e528c68fa8e4f98ca3c8607895b1de2905f940d631550b9"
+      }
+    },
+    {
+      "package": "miflasher",
+      "version": "2.0.4",
+      "maintainer": "@termux-app-store",
+      "description": "A lightweight CLI tool to flash and manage Xiaomi firmware packages (Fastboot/ROM) easily and safely",
+      "homepage": "https://github.com/djunekz/miflasher",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/djunekz/miflasher/archive/refs/tags/v${TERMUX_PKG_VERSION}.tar.gz",
+      "sha256": "acd4d7af7b302fdec83a3d6e13f9f009c99b22be8b7872f7755dd39f400a84eb",
+      "recipe_sha256": "19c804297a568a978bb3090a6c58b96cb35437eae6a528e38845708399d0909e",
+      "platform_independent": false,
+      "depends": [
+        "brotli",
+        "libc++",
+        "liblz4",
+        "termux-api",
+        "zlib",
+        "zstd"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "fc9fc74317e129c5ac82e9ea8d69552fecd8e572735fa1e5861616a74b0b5f48",
+        "arm": "e132e8af5f58e54aa51b262eeac03a65138940d87c16cd3cc27a0b56e2ad090d",
+        "x86_64": "c0441021496788a260aa51c3f811c157deb5098561dbcfbb5cffae49b6809473",
+        "i686": "7381698476e99a18665b16c3f315c2429dd912feef9edf1a19dc343890014386"
+      }
+    },
+    {
+      "package": "orchat",
+      "version": "1.4.6",
+      "maintainer": "@termux-app-store",
+      "description": "A powerful, feature-rich command-line interface for interacting with AI models through OpenRouter.",
+      "homepage": "https://github.com/oop7/OrChat",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/oop7/OrChat/archive/refs/tags/v1.4.6.tar.gz",
+      "sha256": "fbe070754e2d66c3f724e496241975f0cd4e209c7c590cca395c38cabd3b65ae",
+      "recipe_sha256": "faeb6c9d72a4fe96b903be640b7e0016204a638fcf1b1e652bbc2021b75e4d38",
+      "platform_independent": false,
+      "depends": [
+        "python",
+        "python-pip"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "a8a68ca8517c2d5fc127af8bd9287faea0a39adeade5ab89382fcad6f166ca24"
+      }
+    },
+    {
+      "package": "padrelivio",
+      "version": "1.0.0",
+      "maintainer": "@enrilinux",
+      "description": "ASCII art of Padre Livio Fanzaga",
+      "homepage": "https://github.com/enrilinux/padrelivio",
+      "license": "Public Domain",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/enrilinux/padrelivio/archive/refs/tags/v1.0.0.tar.gz",
+      "sha256": "bb24ca52056bf8ee66b0b696d948647c19dc9c20d37e9e36fe915b254540bf10",
+      "recipe_sha256": "ab16f2c2f4cdcb0fee2f8ab9847205e5c624fec229626202000c9ce38db3b8dd",
+      "platform_independent": true,
+      "sha256_by_arch": {
+        "aarch64": "3a5243a7cd5019541fc15173fe9c3780450bb48cbe48ea801ee41c30f91ae0b9",
+        "arm": "71505e045c62ced5ff4343620fe4e7e46d50e0cf20fc138c97e66e7b0855dde7",
+        "x86_64": "f2f7445cd9b67728196804dc3dcaa476e69e6a53a481c582803bf5097e3e19de",
+        "i686": "e9091c02896d3e5469fcf3279dc469973cb4af23a041fb7409fffa11348b7943"
+      }
+    },
+    {
+      "package": "parsero",
+      "version": "0.0.0+e5b585a",
+      "maintainer": "@termux-app-store",
+      "description": "Parsero | Robots.txt audit tool",
+      "homepage": "http://www.behindthefirewalls.com/",
+      "license": "GPL-2.0",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/behindthefirewalls/Parsero/archive/e5b585a19b79426975a825cafa4cc8a353cd267e.tar.gz",
+      "sha256": "1780ddf21a5e51ef192529e108be10d516df7ad3a6822676b49abe36415259ef",
+      "recipe_sha256": "afe6d47dee843cb2dc975b6ab50c65044677d553d1416704693b30415111931f",
+      "platform_independent": false,
+      "depends": [
+        "python",
+        "python-pip"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "2d78962af20f682464d0f18057e6be40475411ed123038ec3e6b66eb1a4866d8",
+        "arm": "bc86e0d335a63adf973c304f5ac4b393f7ce11b50c1ba3137184c89f28fdbe39",
+        "x86_64": "3d59d83bfea97a9ce08a55e37d2e405e9346d8ec282850490aa139ecdaa0ef30",
+        "i686": "c9b55a461978d7e7d3bae7b8df80902631df930eb0afeb668d896f54a15ed134"
+      }
+    },
+    {
+      "package": "photon",
+      "version": "1.3.0",
+      "maintainer": "@termux-app-store",
+      "description": "Incredibly fast crawler designed for OSINT.",
+      "homepage": "https://github.com/s0md3v/Photon",
+      "license": "GPL-3.0",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/s0md3v/Photon/archive/refs/tags/v1.3.0.tar.gz",
+      "sha256": "99a8bc0f52b46a37acd8e0877ea4231ea7b3d9f8b603c90c6641837117d7666f",
+      "recipe_sha256": "4b0b45da2a5eacebe06c51fae1fd563f0e0714d6ccc9465e358b35712995635f",
+      "platform_independent": false,
+      "depends": [
+        "python",
+        "python-pip"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "1fbafe640e7fa347b59f6607b9c48e32f69775877034363422664fa4c875d748"
+      }
+    },
+    {
+      "package": "pmcli",
+      "version": "0.2.5",
+      "maintainer": "Djunekz <gab288.gab288@passinbox.com>",
+      "description": "Terminal-based project manager CLI",
+      "homepage": "https://github.com/djunekz/pmcli",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/djunekz/pmcli/archive/refs/tags/v${TERMUX_PKG_VERSION}.tar.gz",
+      "sha256": "3727d34028be004377ccde30260af1b021b960db42ee43964f350cc39d904f79",
+      "recipe_sha256": "d095d52e5976d3834cbb5711f04463389d5e961affe17ed60b84022bb6fb3ab1",
+      "platform_independent": false,
+      "depends": [
+        "rust",
+        "openssl",
+        "zlib"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "baa0f0b1b2ef9c50a6200d13e6f5d7843ffe8b61d370d7d80f71851ea43abc0c"
+      }
+    },
+    {
+      "package": "pnpm",
+      "version": "12.21.0",
+      "maintainer": "@termux-app-store",
+      "description": "Fast, disk space efficient package manager",
+      "homepage": "https://github.com/pnpm/pnpm",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://registry.npmjs.org/pnpm/-/pnpm-${TERMUX_PKG_VERSION}.tgz",
+      "sha256": "0791469382b579869c51827759876616bc3eae5296d8fa880bbc3c9c1e8cf6f7",
+      "recipe_sha256": "fd2555ef9c54751ac8b4add0d40561bc05bfaefc0e7bd8032395a7c6e7a0db1f",
+      "platform_independent": false,
+      "depends": [
+        "nodejs"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "55467dc9a336266ca980aa17f9cdc5742fb74fa077e78efb15193f5a0ecd1238",
+        "arm": "68113d620b5223c68349933994aab5f475ac8ae37e5445ab53360b1fd621c3e5",
+        "x86_64": "57e9738f7240241a46b5ed443a2c05da29a81735a62e055aabcc88bcfd1a54e8",
+        "i686": "2212e6f0332c575b728a30184ec54c415919513d3551c7719c766007cbc66ff7"
+      }
+    },
+    {
+      "package": "pymaker",
+      "version": "1.0.0",
+      "maintainer": "@termux-app-store",
+      "description": "Simple tool for create python script",
+      "homepage": "https://github.com/droidv1/pymaker",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/djunekz/archive/releases/download/v${TERMUX_PKG_VERSION}/pymaker-${TERMUX_PKG_VERSION}.tar.gz",
+      "sha256": "2fe03f6839e7b550f888d477628b852d648ea4ed688643122d3c182d495564e4",
+      "recipe_sha256": "ad96bfa39d420a0a584ac5149d8fd41129b97849a29963f725a1d9af6596c2c5",
+      "platform_independent": true,
+      "depends": [
+        "python"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "86733b04e8d4619f70c7bb02c91e567b6370a04c81cdd6269929a7c9f149a73a",
+        "arm": "840b7afbfa8e46df1de1e325eea6ae715b3ec14d46594fcbaad1b627f70a8c5b",
+        "x86_64": "a01348c273d8fba72086691176b6197bc1358c3fa401f2e74d49aa16fd1f1b11",
+        "i686": "7ffc982540f4623581d2a99319e5d41a68db5a9ad9216537172d61da25fe9120"
+      }
+    },
+    {
+      "package": "red-hawk",
+      "version": "0.0.0+fa54e23",
+      "maintainer": "@termux-app-store",
+      "description": "All in one tool for Information Gathering, Vulnerability Scanning and Crawling. A must have tool for all penetration testers",
+      "homepage": "https://github.com/Tuhinshubhra/RED_HAWK",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/Tuhinshubhra/RED_HAWK/archive/fa54e23a97bd025b735a53de3445a9c3dfd96d01.tar.gz",
+      "sha256": "ac7bb90ca2951db8bd3c082863bbf62bbccbc1fe91f02c723209d8812b0c074c",
+      "recipe_sha256": "43697e86bd0dece7c6915048cafc078f9b081fd972a9a3e57bd5903d88eef942",
+      "platform_independent": false,
+      "depends": [
+        "php"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "883c991597b90df5278bcb9cdbde77c0bd52f1880a613c6fcd855a28ad571b0a",
+        "arm": "fc81bb721bd3469ae395821b22c9c26b6bb3b00ee9a74eb424dacca3bd7eff50",
+        "x86_64": "4e6d40a7b9cf01ec8a766ab0d2d6e5a1342286867124e9da070a5ae83196c568",
+        "i686": "31c21fa2440511eca8c2c78212d8d37d0c8c29b9a6b6ddf5d2170a0dcfad90c9"
+      }
+    },
+    {
+      "package": "ssrfmap",
+      "version": "0.0.0+290e07d",
+      "maintainer": "@termux-app-store",
+      "description": "Automatic SSRF fuzzer and exploitation tool",
+      "homepage": "https://github.com/swisskyrepo/SSRFmap",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/swisskyrepo/SSRFmap/archive/290e07d75c52d68e021b6d0b4200c2a41ea20365.tar.gz",
+      "sha256": "f4d01953a07d64b5ad8e96aefb22d984518c2a43f5ecd71efbd034194660bfff",
+      "recipe_sha256": "c1408b0ae5135976034ecb0342e96437fbdc84d06e6563741f52345dd6e5cad9",
+      "platform_independent": false,
+      "depends": [
+        "python",
+        "python-pip"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "a6243a5d29712f96665753ba342efd1a9656f3d2a25c5b389a6f935f7223cc77"
+      }
+    },
+    {
+      "package": "sublist3r",
+      "version": "1.1",
+      "maintainer": "@termux-app-store",
+      "description": "Fast subdomains enumeration tool for penetration testers",
+      "homepage": "https://github.com/aboul3la/Sublist3r",
+      "license": "GPL-2.0",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/aboul3la/Sublist3r/archive/refs/tags/1.1.tar.gz",
+      "sha256": "7bb915954bb0db9a8f0a3be2a38bc77e932174be5e8d02c7d5dd4bc56ec30195",
+      "recipe_sha256": "ce39b52f85631bb1e2d2b7ec7bd2e25abc3ff1a4de01e31f4e0645e1551460f6",
+      "platform_independent": false,
+      "depends": [
+        "python",
+        "python-pip"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "2e1852cb7b1dbe0a6a11a680839febac623393c6aa70a9bc0ffcd90f6889f44a"
+      }
+    },
+    {
+      "package": "tdoc",
+      "version": "2.3.1",
+      "maintainer": "@djunekz",
+      "description": "TDOC - Diagnostic and repair utility for Termux environment",
+      "homepage": "https://github.com/djunekz/tdoc",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/djunekz/tdoc/archive/refs/tags/v${TERMUX_PKG_VERSION}.tar.gz",
+      "sha256": "dc914ef444d44f7ab4d40d0faafd52b44039df1a9b7a568ea3634e71c92905f3",
+      "recipe_sha256": "db597acb134fc7b9172ba7517e2b30785eb19425949c35ce4c746dcebc300a72",
+      "platform_independent": true,
+      "depends": [
+        "bash",
+        "coreutils",
+        "curl",
+        "git",
+        "gnupg",
+        "termux-tools"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "67cbf57a2f7e5ed8df616a485f91cf4b122ce15a90409a83981d6255d107deb2",
+        "arm": "826a206b7ff8204dd58fb27097124911b283bcb94f2322d203070197c5dc3817",
+        "x86_64": "3c9ef213ed63b1bcbf2b166002e4b853cac17bafab99b9ac3fe7575c4c227205",
+        "i686": "26a329196489d61c65000ce6c8fdbf09b205f18f4a77bd9e89676d751de73584"
+      }
+    },
+    {
+      "package": "tere",
+      "version": "1.6.0",
+      "maintainer": "@termux-app-store",
+      "description": "Terminal file explorer",
+      "homepage": "https://github.com/mgunyho/tere",
+      "license": "EUPL-1.2",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/mgunyho/tere/archive/refs/tags/v1.6.0.tar.gz",
+      "sha256": "7db94216b94abd42f48105c90e0e777593aaf867472615eb94dc2f77bb6a3cfb",
+      "recipe_sha256": "c0a029a6e8a07a40a9a6af5eb6fc2063a8aefff580bb898a4508fc6235ffcd89",
+      "platform_independent": false,
+      "depends": [
+        "rust"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "9ea52ee34baf8990cb6d24c7db5c4d4d710d2270c4174746b07ffe4fbf60a776"
+      }
+    },
+    {
+      "package": "termstyle",
+      "version": "2.0.0",
+      "maintainer": "@djunekz",
+      "description": "Simple tool for change color, command prompt, and cursor termux",
+      "homepage": "https://github.com/djunekz/termstyle",
+      "license": "GPL-3.0",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/djunekz/termstyle/releases/download/${TERMUX_PKG_VERSION}/termstyle_${TERMUX_PKG_VERSION}_all.deb",
+      "sha256": "d747df182b4e3a899ae95ac5bef0e834f61783cc9bf12c26d9166ba84957963f",
+      "recipe_sha256": "512461d6d9ed372450211f5cc3fe16bad172dc1fbdb1cacd686359812cbbf841",
+      "platform_independent": false,
+      "depends": [
+        "python"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "c60849693656c1f792828a9a1e7673cfd7921f448c11e359becc2d7f1c2a5902"
+      }
+    },
+    {
+      "package": "termux-ai",
+      "version": "0.0.0+0dea995",
+      "maintainer": "@termux-app-store",
+      "description": "Interactive AI tool for Termux with 10+ providers and 50+ image models ✨",
+      "homepage": "https://github.com/Anon4You/Termux-Ai",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/Anon4You/Termux-Ai/archive/0dea9953a863fb0df884a4fefa01b82ae01924a2.tar.gz",
+      "sha256": "f5a4c4f7c6f77377dfd80fd86070070452d6277de1522ec044f8254907c8e64d",
+      "recipe_sha256": "372c1c1c5ec87aa2788c0229f797c5fa84b0f66f11ebb33295739346445afa79",
+      "platform_independent": false,
+      "sha256_by_arch": {
+        "aarch64": "b23cef8d6a3d4f3c30e7b6fe61b8f89d9dd8832e9277b1da990e52642d2d1823",
+        "arm": "c0695de4c93ebdc4817ef6e9d6f761422a4d937dd5d14e6bd61724612e57c980",
+        "x86_64": "d4b963a5cb7970e814bda612ad5c2317560deec8b7953003895d3c90004d1691",
+        "i686": "6cc940d99dc40dcf144d8fc26a4d2f620c9739a9d4bfddc7411cf5bd7bb5c8c8"
+      }
+    },
+    {
+      "package": "termux-fm",
+      "version": "1.0.0",
+      "maintainer": "@termux-app-store",
+      "description": "TUI file manager root for Termux",
+      "homepage": "https://github.com/enrilinux/termux-fm",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/enrilinux/termux-fm/archive/refs/tags/1.0.0.tar.gz",
+      "sha256": "bd273c29f85cf3361f64714afa370cc361041e16dd088187e0d7cbc67c04b92e",
+      "recipe_sha256": "259076756ab3dd20ed9a980153a4bb4d22742e5aefac73f354ec97760c229c08",
+      "platform_independent": false,
+      "depends": [
+        "ncurses",
+        "libandroid-selinux",
+        "clang",
+        "make"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "33ee21c69d175f6f938b988311c97b6dc02e233bba9402fa0ab7bb3efe360ff7"
+      }
+    },
+    {
+      "package": "termux-sync",
+      "version": "1.3.8",
+      "maintainer": "@termux-app-store",
+      "description": "OpenSource Backup and restore your entire Termux environment across devices.",
+      "homepage": "https://github.com/djunekz/termux-sync",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/djunekz/termux-sync/archive/refs/tags/v${TERMUX_PKG_VERSION}.tar.gz",
+      "sha256": "df0f4f052390de2bc952cb98fa3d42e63e6d99baa6a16bdf0d5d29c4f4e9a234",
+      "recipe_sha256": "05f68c43a677d2f3f7b3e26b5d480beb3f649dcf6bb5a981d099391b812446b7",
+      "platform_independent": false,
+      "depends": [
+        "git",
+        "python",
+        "python-pip"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "14324aefdf3a1bb8a1a1b1c337ef923974f2fd4fd982a6bdf593086e39d921f9",
+        "arm": "6938de94ea1c2b7564c3c38220a783e0bec7cdd877e858b681d71edddfe18163",
+        "x86_64": "ec1e25c6d3b453d918fba00bf9fa78daf0a6188c403201f5330f4ea8e1584d0c",
+        "i686": "164bc5f0bafdce4fabaf05ca288b976e28ddc22f2cb7fb559a949ebb86509886"
+      }
+    },
+    {
+      "package": "termux-tui",
+      "version": "2.9.5",
+      "maintainer": "@opsonusdh",
+      "description": "A futuristic Jarvis-style terminal dashboard for Termux",
+      "homepage": "https://github.com/opsonusdh/Termux-TUI",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/opsonusdh/Termux-TUI/archive/refs/tags/v${TERMUX_PKG_VERSION}.zip",
+      "sha256": "ae189b47863f724ccddf8ea77de7707a1840a94d613658d5c90b988c13b4adba",
+      "recipe_sha256": "2cb682ba344a79f788d02d9c380a7a1062cf825f728e41ad150b790836e0576d",
+      "platform_independent": false,
+      "depends": [
+        "python",
+        "python-pip",
+        "python-yt-dlp"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "6671b1a2b3439911c1cb2261b7714964a25df3fe172ef2728f93d661dfdd80bb",
+        "arm": "79d8d8f4dcef3cf4bf858bb00c77d045958a708eb3a60594b7ae827f39607e43",
+        "x86_64": "7d45f7f2970930a61f3df5e11093d0c9d3d728967e11ec71caf57cfd2a5b5008",
+        "i686": "6578d22a12cf13fccbe73668dbf0924669d17420cc3cf5ae4e47daabea471f6f"
+      }
+    },
+    {
+      "package": "termuxalpine",
+      "version": "0.0.0+6c5d10c",
+      "maintainer": "@termux-app-store",
+      "description": "Use TermuxAlpine.sh calling to install Alpine Linux in Termux on Android. This setup script will attempt to set Alpine Linux up in your Termux environment.",
+      "homepage": "https://github.com/Hax4us/TermuxAlpine",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/Hax4us/TermuxAlpine/archive/6c5d10ca41273fccc2370cb969b94211018ba3e3.tar.gz",
+      "sha256": "6f2473ea2a292f3b85ceeb778f259289bcaa5e1e7dd7947b1b58ccc63310a6e1",
+      "recipe_sha256": "b3a4bd2121220956b9135df512694c78afd0edba99d0f3180d6f026765ac5a8a",
+      "platform_independent": false,
+      "sha256_by_arch": {
+        "aarch64": "5baa3eeacfee75ef88fc4d3de8e727a341125132d86e81cf06fffd22f793d02d",
+        "arm": "04b20e616094a752dd6599927c0cf878e93aa1714f4e4e6b68cb07140759be53",
+        "x86_64": "2b9b4b5e6317f831850952e4f40ea0e4bf36a72ce3a7ec0a957a4a6a3529204c",
+        "i686": "953b1bb380f0c1a30222f5bcc94d8624a0d17201b77d6ac3a29783d52ff71e23"
+      }
+    },
+    {
+      "package": "termuxbackup",
+      "version": "1.0.0",
+      "maintainer": "@termux-app-store",
+      "description": "Termux TUI backup tool",
+      "homepage": "https://github.com/enrilinux/termuxbackup",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/enrilinux/termuxbackup/archive/refs/tags/1.0.0.tar.gz",
+      "sha256": "805508cf783deab6931a06ae71d0c8094be931c03ff035485f8755ed8e654a8d",
+      "recipe_sha256": "34ac7d9a0940c92972410dca39337e708d3531d3ff0b33720df11c0bd89d6a41",
+      "platform_independent": false,
+      "depends": [
+        "ncurses",
+        "coreutils",
+        "findutils",
+        "grep",
+        "sed",
+        "gawk",
+        "tar",
+        "gzip",
+        "pigz"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "c6b3fc54c7bfa0e0ff5451fc5ec0819b5354bdbc498f1283c741e8c69de81194"
+      }
+    },
+    {
+      "package": "the-eye",
+      "version": "0.0.0+51cfb45",
+      "maintainer": "@termux-app-store",
+      "description": "Simple security surveillance script for linux distributions.",
+      "homepage": "https://github.com/EgeBalci/The-Eye",
+      "license": "GPL-3.0",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/EgeBalci/The-Eye/archive/51cfb45eaa031928c6815c4c8dd509ef5930abf8.tar.gz",
+      "sha256": "ce14826a7bc817d96fe0180bc9d952c91259bdfcd0681cd53af6ec03d6fd3b30",
+      "recipe_sha256": "dd41bc294d60b04e317017fedcee941d95b32bbe3f5ed7f306550ff89780be4d",
+      "platform_independent": false,
+      "depends": [
+        "golang"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "583dcae1714ebe91a6b0d640baf82d67dcf3ed9c473288eff61437cf4c663d6b"
+      }
+    },
+    {
+      "package": "ttyper",
+      "version": "1.6.0",
+      "maintainer": "@termux-app-store",
+      "description": "Terminal-based typing test.",
+      "homepage": "https://github.com/max-niederman/ttyper",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/max-niederman/ttyper/archive/refs/tags/v1.6.0.tar.gz",
+      "sha256": "f7e4ff2f803483b17f35aa0c02977326a0546a95f5b465b4dd34ff17e45b4021",
+      "recipe_sha256": "713df70c9ddd1d058c645e0c5442b98f63f25cea9682e883c6b176e83b234747",
+      "platform_independent": false,
+      "depends": [
+        "rust"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "53d67e93d3cd1c651fa31eedd93a4906135582924cee75752d9bf233da73d04d"
+      }
+    },
+    {
+      "package": "tui-info",
+      "version": "1.0.0",
+      "maintainer": "@enrilinux",
+      "description": "A TUI system information tool for Android/Termux",
+      "homepage": "https://github.com/enrilinux/tui-info",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/enrilinux/tui-info/archive/refs/tags/1.0.0.tar.gz",
+      "sha256": "093866eb613a800427995ba02cb8637a9df3f2a5aff256236f38a8664e0c2a1d",
+      "recipe_sha256": "c604a031d642671b3ce5d4369424ab0a7abb55780c049b0321c39d119472be09",
+      "platform_independent": false,
+      "depends": [
+        "ncurses",
+        "clang",
+        "make"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "f37c5b00e3b5e5e59bec4e7868308735eb08ff5140fd1d6beb009c20db444907"
+      }
+    },
+    {
+      "package": "tui-notes",
+      "version": "1.0.0",
+      "maintainer": "@enrilinux",
+      "description": "TUI note manager for Termux",
+      "homepage": "https://github.com/enrilinux/tui-notes",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/enrilinux/tui-notes/archive/refs/tags/1.0.0.tar.gz",
+      "sha256": "4591bc692ab043aba3f458e050e1aed8a569ca50f82f61e7660cd43254413108",
+      "recipe_sha256": "506fd20b001ca4648ae687e82cdf06046e5cae234fc00a18229504ed426fc9e4",
+      "platform_independent": false,
+      "depends": [
+        "ncurses",
+        "nano",
+        "clang",
+        "make"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "86ea92a053b625754542e66b5d36ab283129ab393f292196cd46a4d46cfd54d5"
+      }
+    },
+    {
+      "package": "tuifimanager",
+      "version": "5.2.6",
+      "maintainer": "@termux-app-store",
+      "description": "A terminal-based TUI file manager",
+      "homepage": "https://github.com/GiorgosXou/TUIFIManager",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://api.github.com/repos/GiorgosXou/TUIFIManager/tarball/v.${TERMUX_PKG_VERSION}",
+      "sha256": "4f323aefd84e35177411445c32ed2d48140b0fd1fec688bbcdee0992841e0f00",
+      "recipe_sha256": "25f86d573d77a70060f0a4273c677cb14ff5e6b28528b65fcbb400a63b2d5379",
+      "platform_independent": false,
+      "depends": [
+        "python"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "aa1a133827e8f4f216afb1545900a0b253c15050b5fcb8a3f47bc96a9db1b843",
+        "arm": "ce432c0e8d4707e117c626ec43d97a2c21eb93d5cc5f4aee9d1ea4b6992d0fd2",
+        "x86_64": "a43aef4559101213f121f18527d9b61cb29973d5a6b4a56068111be4fa19d3b8",
+        "i686": "6ccdd4006c0bbd070c7b7266087c95c9dfa4502ce84d00a6a9cd77a0de1f6c7a"
+      }
+    },
+    {
+      "package": "tx",
+      "version": "1.0.0",
+      "maintainer": "@termux-app-store",
+      "description": "Advance Terminal Editor Ultimate",
+      "homepage": "https://github.com/djunekz/termux-app-store",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/djunekz/archive/releases/download/v${TERMUX_PKG_VERSION}/tx",
+      "sha256": "b1afdfb86640188aaa555c9f4b0c5a1cb4194b07c8d8d06e23ba5ca64670f418",
+      "recipe_sha256": "2d6039f86c9e8a5698f4d0cb23a6fcd79eaabebc3fa43c934be559d9c4fa3757",
+      "platform_independent": false,
+      "depends": [
+        "python",
+        "ncurses"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "9ced8100dbe4afc30cd2307ae352bf8aaf3b07e59a21a4033c795c47b9dae97a"
+      }
+    },
+    {
+      "package": "unmineable",
+      "version": "0.1.5",
+      "maintainer": "@termux-app-store",
+      "description": "Mining multiple coins cryptocurrency with simple setup and pool unmineable",
+      "homepage": "https://github.com/djunekz/unmineable",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/djunekz/unmineable/archive/refs/tags/v${TERMUX_PKG_VERSION}.tar.gz",
+      "sha256": "b82b0be329003a53667fde8c22e1385963caf97446a03e07c06089883d35cb36",
+      "recipe_sha256": "23e6bbe65d00fef4b299026be5d8c78f6cd992506dd1bd809f61d410779cbec4",
+      "platform_independent": false,
+      "depends": [
+        "cmake",
+        "make",
+        "clang",
+        "libuv",
+        "openssl",
+        "build-essential"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "9bf99988ca289ab594882adf115232f3a9ca20d63aaaaa8a17a40e52b0dd064f",
+        "arm": "9717f4ac29f8e0ea83856746943f04c2caa1d416050b585367ca5256f85a6bf4",
+        "x86_64": "b17bdef86c20340ca8d571e551c39de6bf5231fee2dfebd00013e5206e1a27ab",
+        "i686": "f9a50999480bbd4a959601f2fb3e25c96acc6b26f8adf72360f3a42487b142db"
+      }
+    },
+    {
+      "package": "userfinder",
+      "version": "0.0.0+a08a9a6",
+      "maintainer": "@termux-app-store",
+      "description": "OSINT tool for finding profiles by username",
+      "homepage": "https://github.com/mishakorzik/UserFinder",
+      "license": "GPL-3.0",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/mishakorzik/UserFinder/archive/a08a9a682b743fae9c84c9794d88b5b0e98946a7.tar.gz",
+      "sha256": "da66d1d975f7325a4ef96ba8fb0641d788d8434e4e0de748423e769dd6bdb1a6",
+      "recipe_sha256": "c024361527980902ce0ab68b26e4e3b4405e462d644e89e7fe2185142018279a",
+      "platform_independent": false,
+      "depends": [
+        "curl",
+        "jq"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "769865e877e0ae196da90b1f141820f85bda1eec38725931d22dc8962e39591d",
+        "arm": "203ab0d9bcc4b2b50db0432116cb1da176627cefbc6adf2a7e4c83e982086570",
+        "x86_64": "61bf8a7a96c04140b68026c5a343d818f46b28c734a7d608e054a6d5a20bfaaf",
+        "i686": "6b82289fb1ddaf0c21aa75ace174e94ad760389a1e55354dee364f2fc5c365e7"
+      }
+    },
+    {
+      "package": "uv",
+      "version": "0.13.9",
+      "maintainer": "@termux-app-store",
+      "description": "An extremely fast Python package and project manager, written in Rust.",
+      "homepage": "https://github.com/astral-sh/uv",
+      "license": "Apache-2.0",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/astral-sh/uv/releases/download/${TERMUX_PKG_VERSION}/uv-aarch64-unknown-linux-musl.tar.gz",
+      "sha256": "37fbb7c5bc66cf99c12aa881949d216181e201dec449772c4329e56487d61179",
+      "recipe_sha256": "c4ad423031c632336dfc6c8c04f6cb3e8cfe41343c9a40cb8a21597f37d56a4b",
+      "platform_independent": false,
+      "sha256_by_arch": {
+        "aarch64": "00d582a2bf81406ae056252d99b8905c979477105e5edd8896a9c32ed19d0ab7"
+      }
+    },
+    {
+      "package": "viu",
+      "version": "1.6.1",
+      "maintainer": "@termux-app-store",
+      "description": "Terminal image viewer with native support for iTerm and Kitty",
+      "homepage": "https://github.com/atanunq/viu",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/atanunq/viu/archive/refs/tags/v1.6.1.tar.gz",
+      "sha256": "639c1fe14aee5e34b635de041ac77177e2959cf26072d8ef69c444b15c8273bd",
+      "recipe_sha256": "7f58e75b7d3a627e01e3c41c04633c9f82163e56433768600b270d8f342233a7",
+      "platform_independent": false,
+      "depends": [
+        "rust"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "7e0b8ad589bc69bfae404682011ea2fceb7d2bffa44e2648885344ad2724bfa7"
+      }
+    },
+    {
+      "package": "webshake",
+      "version": "1.0.2",
+      "maintainer": "Djunekz",
+      "description": "Scan vulnerabilities and analyze websites",
+      "homepage": "https://github.com/djunekz/webshake",
+      "license": "Custom",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/djunekz/webshake/releases/download/v${TERMUX_PKG_VERSION}/webshake-${TERMUX_PKG_VERSION}.tar.gz",
+      "sha256": "4312838c7d201f1540923dfbeeeb21d8af4ae9896a2ce18357208805a859cbe8",
+      "recipe_sha256": "1ca1179147b36711f7e0740cfa142b1f0238946d0c605e7bfc49074776a7dd6d",
+      "platform_independent": false,
+      "sha256_by_arch": {
+        "aarch64": "e704679cd2a70e7d05130e7eaed8b753c7c2b38b6a862f93c5ee9ef4f59b8ee1",
+        "arm": "38bffd4326a5f3bb81fa01168147287dd1e654ae9e696cf56e4498ca7d44a54e",
+        "x86_64": "05c8d8e45abd15047dd14a89e985847503756b2d9ae382a0df752129f54fb253",
+        "i686": "4c19cd46320763b2e171c52a8adfffa60522e6c2e47d8414740751413143f922"
+      }
+    },
+    {
+      "package": "xeuledoc",
+      "version": "0.0.0+8a500d1",
+      "maintainer": "@termux-app-store",
+      "description": "Fetch information about a public Google document.",
+      "homepage": "https://malfrats.industries/",
+      "license": "GPL-3.0",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/Malfrats/xeuledoc/archive/8a500d1cd385d79b33a0defc7cfa8d10832b364b.tar.gz",
+      "sha256": "a35c3d5b6b29eb588491d9abeae9f15d3a7248ef22df119eb5a46e0cfb131a24",
+      "recipe_sha256": "0f6ab6b30fa07f6ac4b476cb359afb5c489dc3c23cb084386b7eaa5919b829aa",
+      "platform_independent": false,
+      "depends": [
+        "python",
+        "python-pip"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "6906bf98d09537b6d467b4f9fb137a9a05ef237b4e779d66fb40435f3ec94238",
+        "arm": "208eb97b51f8ddfe73c87d02aef0f5a654baa0116f21bd2165c725d5231c5498",
+        "x86_64": "62aa5a1551dbc3e55fefe1c1632ec72998868ca84c1abfb51d9f92c67126df38",
+        "i686": "5a7f16abc0ed651d84e641697fe1c8b9397772c736d030b54c6ba979a491e933"
+      }
+    },
+    {
+      "package": "xsstrike",
+      "version": "3.1.6",
+      "maintainer": "@termux-app-store",
+      "description": "Most advanced XSS scanner.",
+      "homepage": "https://github.com/s0md3v/XSStrike",
+      "license": "GPL-3.0",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/s0md3v/XSStrike/archive/refs/tags/3.1.6.tar.gz",
+      "sha256": "d8c6c2f4dbcee5836d552cc193cad4b6dfa6c9a9471680d5d2f2b3d278b021f2",
+      "recipe_sha256": "465fbff8fdcc719d34770912d79b04536c4df40fa912c7f20c1e38cf36301cf5",
+      "platform_independent": false,
+      "depends": [
+        "python",
+        "python-pip"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "1746ab19d4fff4f2efa8397a7d731f426d38377e0fa6aea139a26b7596c0eb30"
+      }
+    },
+    {
+      "package": "ytfzf",
+      "version": "2.6.2",
+      "maintainer": "@termux-app-store",
+      "description": "A posix script to find and watch youtube videos from the terminal. (Without API)",
+      "homepage": "https://github.com/pystardust/ytfzf",
+      "license": "GPL-3.0",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/pystardust/ytfzf/archive/refs/tags/v2.6.2.tar.gz",
+      "sha256": "73280e4ef4f490400a42bf582b713803c523587b0b30269859eaa6f2693ec9b1",
+      "recipe_sha256": "d58b0febf20e85b79b967f2da47bafd7cf1886f81b02d2be393ebc9cbab49755",
+      "platform_independent": false,
+      "depends": [
+        "imlib2",
+        "jack",
+        "jack2",
+        "libcaca",
+        "libid3tag",
+        "libsixel",
+        "libuchardet",
+        "luajit",
+        "mpv",
+        "openal-soft"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "b6036735fde9134c28921f01628acad2ce9f63181bad9858c155c20c49472b57",
+        "arm": "056881a82bc4148dd60c0ade0358799e82848bdad615156b1bb0ca16fc420317",
+        "x86_64": "9a9dd4d9b8ea6789ac4a2c62e21058358ba72fbed451a200be2581f19ed4131d",
+        "i686": "e1bcd76faaa1b4f795f7192f200bd6ae7f43f17137f6667d3e3818b4ea7d241b"
+      }
+    },
+    {
+      "package": "zora",
+      "version": "2.0.0",
+      "maintainer": "@termux-app-store",
+      "description": "The ultimate OSINT framework",
+      "homepage": "https://github/djunekz/termux-app-store",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/djunekz/archive/releases/download/v${TERMUX_PKG_VERSION}/zora",
+      "sha256": "73290a0820c195cc73b4e2467d26c25942ec4a67694d1a13592bb85d8adad945",
+      "recipe_sha256": "c8964521d4fd1822774cf19acc811e586e96cda5c0575f290fe8469ed176155c",
+      "platform_independent": false,
+      "depends": [
+        "python"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "37357aa36668ed292a89c589d6897696be7eddeaacbe64b5949a336da4a7d821"
+      }
+    },
+    {
+      "package": "zorabuilder",
+      "version": "2.0.0",
+      "maintainer": "@termux-app-store",
+      "description": "Builder python standalone ELF",
+      "homepage": "https://github.com/djunekz/termux-app-store",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/djunekz/archive/releases/download/v${TERMUX_PKG_VERSION}/zorabuilder",
+      "sha256": "5e2d3004b819cb0cbab257656663ef684b7f19ef0578c1c8b99ea18f16dbfaa7",
+      "recipe_sha256": "c2c8978329915cf76121b56f0faf96170b9fd0fad000bfc48918d26f39669d35",
+      "platform_independent": false,
+      "depends": [
+        "python",
+        "binutils"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "fbc9c8f69073e54ca53ea8ead5242e7451adf49010cb9337875faa9cfd4bd41d"
+      }
+    },
+    {
+      "package": "zoracrypter",
+      "version": "1.0.0",
+      "maintainer": "@termux-app-store",
+      "description": "Encrypter Stealth Binary Builder",
+      "homepage": "https://github.com/djunekz/termux-app-store",
+      "license": "MIT",
+      "download_size": "Unknown",
+      "installed_size": "Unknown",
+      "source": "https://github.com/djunekz/termux-app-store",
+      "srcurl": "https://github.com/djunekz/archive/releases/download/v${TERMUX_PKG_VERSION}/zoracrypter",
+      "sha256": "b0ef430b15d793100ba926c3c3082b606b7391e00cfaea0da28ccbce3446b55d",
+      "recipe_sha256": "2128d45968f7962f5da4c360b15f46d56044ed0c87c42e3c41a78525c3d638be",
+      "platform_independent": false,
+      "depends": [
+        "clang",
+        "python"
+      ],
+      "sha256_by_arch": {
+        "aarch64": "1ed66eaf7c2cba11b5cd113c5cbb5ba5fc70d5cd865e1e6085440116165eaea2"
+      }
+    }
+  ]
+}
