@@ -65,7 +65,7 @@ and this project adheres to semantic versioning.
 - `pkg-scaffold.py` - GitHub URLs with a trailing slash or `.git` are accepted and normalised for the generated `SRCURL`, release tags such as `release-2.0` give a valid version, an invalid homepage falls back to the repository URL, duplicated dependencies are removed, at most 25 extensionless files are checked for a shebang, narrow terminals no longer crash the layout, and `--help` prints usage
 
 ### Update
-- Package `termux-sync` v1.3.6 → v1.3.8
+- Package `termux-sync` v1.3.6 → v1.3.9
 - Package `tdoc` v2.3.0 → v2.3.1
 
 ---
