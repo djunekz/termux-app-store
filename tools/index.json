@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-11-22T05:43:18.539580+00:00",
+  "generated_at": "2026-11-22T22:23:13.990432+00:00",
   "total": 87,
   "packages": [
     {
@@ -1574,21 +1574,21 @@
     },
     {
       "package": "zorabuilder",
-      "version": "2.0.0",
+      "version": "2.1.0",
       "maintainer": "@termux-app-store",
-      "description": "Builder python standalone ELF",
-      "homepage": "https://github.com/djunekz/termux-app-store",
+      "description": "Bundle a Python script and its dependencies into a single ELF binary for Termux/Android. Embedded loader, zlib-compressed payload, optional UPX and isolated mode.",
+      "homepage": "https://djunekz.github.io",
       "license": "MIT",
       "download_size": "Unknown",
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
-      "srcurl": "https://github.com/djunekz/archive/releases/download/v${TERMUX_PKG_VERSION}/zorabuilder",
-      "sha256": "5e2d3004b819cb0cbab257656663ef684b7f19ef0578c1c8b99ea18f16dbfaa7",
-      "recipe_sha256": "c2c8978329915cf76121b56f0faf96170b9fd0fad000bfc48918d26f39669d35",
+      "srcurl": "https://github.com/djunekz/zorabuilder/archive/refs/tags/v${TERMUX_PKG_VERSION}.tar.gz",
+      "sha256": "f689991dca3660ffb83ed2eb41658d469ea1eecca8c6d3b5ad6164b50d2d6abf",
+      "recipe_sha256": "e6f6df040bfb664735ecaae988be99a03f1e472400d5a83ae3335fdf8cea9933",
       "platform_independent": false,
       "depends": [
         "python",
-        "binutils"
+        "python-pip"
       ]
     },
     {
