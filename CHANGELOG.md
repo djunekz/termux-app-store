@@ -68,6 +68,7 @@ and this project adheres to semantic versioning.
 - Package `termux-sync` v1.3.6 → v1.3.9
 - Package `tdoc` v2.3.0 → v2.3.1
 - Package `zorabuilder` v2.0.0 → v2.1.0
+- Package `pnpm` v12.21.0 → v12.23.0
 
 ---
 
