@@ -2,9 +2,9 @@ TERMUX_PKG_HOMEPAGE=https://djunekz.github.io
 TERMUX_PKG_DESCRIPTION="Bundle a Python script and its dependencies into a single ELF binary for Termux/Android. Embedded loader, zlib-compressed payload, optional UPX and isolated mode."
 TERMUX_PKG_LICENSE="MIT"
 TERMUX_PKG_MAINTAINER="@termux-app-store"
-TERMUX_PKG_VERSION=2.1.0
+TERMUX_PKG_VERSION=2.1.1
 TERMUX_PKG_SRCURL=https://github.com/djunekz/zorabuilder/archive/refs/tags/v${TERMUX_PKG_VERSION}.tar.gz
-TERMUX_PKG_SHA256=f689991dca3660ffb83ed2eb41658d469ea1eecca8c6d3b5ad6164b50d2d6abf
+TERMUX_PKG_SHA256=8ee01b487cf9d7cb1c763e8c671773254456ae437649d871bf96f2878f852121
 TERMUX_PKG_DEPENDS="python, python-pip"
 TERMUX_PKG_BUILD_IN_SRC=true
 
