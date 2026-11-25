@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-11-25T10:38:11.842189+00:00",
+  "generated_at": "2026-11-25T21:31:03.461158+00:00",
   "total": 87,
   "packages": [
     {
@@ -24,7 +24,7 @@
     },
     {
       "package": "ani-cli",
-      "version": "5.1",
+      "version": "5.2",
       "maintainer": "@termux-app-store",
       "description": "A cli tool to browse and play anime",
       "homepage": "https://github.com/pystardust/ani-cli",
@@ -33,8 +33,8 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/pystardust/ani-cli/releases/download/v${TERMUX_PKG_VERSION}/ani-cli",
-      "sha256": "f99a1dac807004becfb732a5518a0f2ded9dc08b467805abd03df5d580becd46",
-      "recipe_sha256": "4e35b26dce900f670b1409d27c51f545eebb30675507f91bc3bbd5c74e9f033e",
+      "sha256": "60f10c12f2397811d137a76156555803d0913985fe73499dafda1a84771fe917",
+      "recipe_sha256": "9b21298df7547fd867d4636cc94c9ed2499592623295367d5d6da4a57e2ad9b4",
       "platform_independent": false,
       "depends": [
         "nodejs",
@@ -449,7 +449,7 @@
     },
     {
       "package": "dust",
-      "version": "1.2.7",
+      "version": "1.2.8",
       "maintainer": "@termux-app-store",
       "description": "A more intuitive version of du in rust",
       "homepage": "https://github.com/bootandy/dust",
@@ -457,9 +457,9 @@
       "download_size": "Unknown",
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
-      "srcurl": "https://github.com/bootandy/dust/archive/refs/tags/v1.2.7.tar.gz",
-      "sha256": "923a2eed637d2ea5f4ad5f820b6f87cc6e0081cfa4bc5ed1fe09278dd74db963",
-      "recipe_sha256": "b9aa93c0b3c3bf24dcc66ae0800155badaf84fc57e5d99c64a7a1e4bf27c6e93",
+      "srcurl": "https://github.com/bootandy/dust/archive/refs/tags/v1.2.8.tar.gz",
+      "sha256": "2df7ea0258025b2061e1a1819ee7fc48b69fbf8c084c5f0e51a457f37695453e",
+      "recipe_sha256": "b3ace00515285c2d7ad7b31565e796dd0a6b186e511c7ec1accde5f29495319e",
       "platform_independent": false,
       "depends": [
         "rust"
