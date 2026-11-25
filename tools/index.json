@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-11-25T07:36:20.089172+00:00",
+  "generated_at": "2026-11-25T10:38:11.842189+00:00",
   "total": 87,
   "packages": [
     {
@@ -1556,20 +1556,21 @@
     },
     {
       "package": "zora",
-      "version": "2.0.0",
+      "version": "2.2.0",
       "maintainer": "@termux-app-store",
-      "description": "The ultimate OSINT framework",
-      "homepage": "https://github/djunekz/termux-app-store",
+      "description": "A modular OSINT and network-reconnaissance toolkit",
+      "homepage": "https://github.com/djunekz/zora",
       "license": "MIT",
       "download_size": "Unknown",
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
-      "srcurl": "https://github.com/djunekz/archive/releases/download/v${TERMUX_PKG_VERSION}/zora",
-      "sha256": "73290a0820c195cc73b4e2467d26c25942ec4a67694d1a13592bb85d8adad945",
-      "recipe_sha256": "c8964521d4fd1822774cf19acc811e586e96cda5c0575f290fe8469ed176155c",
+      "srcurl": "https://github.com/djunekz/zora/archive/refs/tags/v${TERMUX_PKG_VERSION}.tar.gz",
+      "sha256": "ed8a2589051cd38e14f54108bd268770a5e69d25e26a09efc916d2d36eaa571c",
+      "recipe_sha256": "b2203346efc79e1b8a178d7d825c8fabf62c66689b48bcac02a0af5f156dc8db",
       "platform_independent": false,
       "depends": [
-        "python"
+        "python",
+        "python-pip"
       ]
     },
     {
