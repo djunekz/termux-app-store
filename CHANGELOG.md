@@ -71,6 +71,8 @@ and this project adheres to semantic versioning.
 - Package `pnpm` v12.21.0 → v12.23.0
 - Package `brutespray` v2.7.6 → v2.7.8
 - Package `uv` v0.13.9 → v0.13.10
+- Package `ani-cli` v5.1 → v5.2
+- Package `dust` v1.2.7 → v1.2.8
 
 ---
 
