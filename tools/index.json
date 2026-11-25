@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "repository": "https://github.com/djunekz/termux-app-store",
-  "generated_at": "2026-11-24T11:38:26.339135+00:00",
+  "generated_at": "2026-11-24T22:15:16.976159+00:00",
   "total": 87,
   "packages": [
     {
@@ -225,7 +225,7 @@
     },
     {
       "package": "brutespray",
-      "version": "2.7.7",
+      "version": "2.7.8",
       "maintainer": "@termux-app-store",
       "description": "Fast, multi-protocol credential brute-forcer. Parses Nmap, Nessus, and Nexpose output to automatically test default and custom credentials across 30+ protocols.",
       "homepage": "https://pkg.go.dev/github.com/x90skysn3k/brutespray/v2",
@@ -233,9 +233,9 @@
       "download_size": "Unknown",
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
-      "srcurl": "https://github.com/x90skysn3k/brutespray/archive/refs/tags/v2.7.7.tar.gz",
-      "sha256": "b947d28beb94a0e60cc349946afedae0ce30a9d0a2135fbe049b0c1b31eab2ab",
-      "recipe_sha256": "1720373f85e5aef5f3ad8c88e71e192fe454881afe9ff614eb71d7eac506c29c",
+      "srcurl": "https://github.com/x90skysn3k/brutespray/archive/refs/tags/v2.7.8.tar.gz",
+      "sha256": "aa65a26d3ee3822df467eaefeda953f708fc9fa58fcc6704e6ab41307580af46",
+      "recipe_sha256": "51face72b6fb5a03d80f2731f9204a863b07fb880a6bcf77b91375629aeda746",
       "platform_independent": false,
       "depends": [
         "golang"
@@ -1443,7 +1443,7 @@
     },
     {
       "package": "uv",
-      "version": "0.13.9",
+      "version": "0.13.10",
       "maintainer": "@termux-app-store",
       "description": "An extremely fast Python package and project manager, written in Rust.",
       "homepage": "https://github.com/astral-sh/uv",
@@ -1452,8 +1452,8 @@
       "installed_size": "Unknown",
       "source": "https://github.com/djunekz/termux-app-store",
       "srcurl": "https://github.com/astral-sh/uv/releases/download/${TERMUX_PKG_VERSION}/uv-aarch64-unknown-linux-musl.tar.gz",
-      "sha256": "37fbb7c5bc66cf99c12aa881949d216181e201dec449772c4329e56487d61179",
-      "recipe_sha256": "c4ad423031c632336dfc6c8c04f6cb3e8cfe41343c9a40cb8a21597f37d56a4b",
+      "sha256": "68174084fe40b6300361c5b2038066120dc62c92920c22a0f31f6fc74b066b57",
+      "recipe_sha256": "0a03e269f1a99e0ebfafeef3cf603183bfa9d50325131843cc5bcfeccc940158",
       "platform_independent": false
     },
     {
