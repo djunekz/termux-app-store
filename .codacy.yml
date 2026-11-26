@@ -1,0 +1,5 @@
+---
+engines:
+  shellcheck:
+    exclude_paths:
+      - "packages/**/build.sh"
